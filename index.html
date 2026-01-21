@@ -3,63 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Extraordinary Branding</title>
+    <title>Mafita Dubu | Luxury Experience</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        /* Amfani da Montserrat: Font mai tsada da kwarjini */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Outfit:wght@400;600&display=swap');
         
         body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
+            font-family: 'Outfit', sans-serif; 
             background: #ffffff;
             min-height: 100vh;
         }
 
-        /* Extraordinary Glitter Effect */
+        /* MAFITA DUBU Extraordinary Glitter & Blinking */
         .mafita-brand-glitter {
             display: none;
-            font-size: 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
             font-weight: 900;
             text-align: center;
             background: linear-gradient(
-                to right, 
-                #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000
+                45deg, 
+                #ff0055, #ffdd00, #00ff88, #0099ff, #6600ff, #ff0055
             );
-            background-size: 400% auto;
+            background-size: 300% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: glitterMove 3s linear infinite, blinkFade 0.8s ease-in-out infinite;
-            filter: drop-shadow(0 0 12px rgba(0,0,0,0.15));
-            letter-spacing: -1.5px;
+            animation: moveGradient 2s linear infinite, brandBlink 0.6s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(0,0,0,0.2));
+            letter-spacing: -2px;
+            text-transform: uppercase;
         }
 
-        @keyframes glitterMove {
-            to { background-position: 400% center; }
+        @keyframes moveGradient {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
         }
 
-        @keyframes blinkFade {
-            0%, 100% { opacity: 1; transform: scale(1.03); }
-            50% { opacity: 0.4; transform: scale(1); }
+        @keyframes brandBlink {
+            0%, 100% { opacity: 1; transform: scale(1.05); }
+            50% { opacity: 0.6; transform: scale(1); }
         }
 
-        .welcome-text {
+        .welcome-msg {
+            font-family: 'Montserrat', sans-serif;
             color: #1e3a8a;
-            font-weight: 800;
-            font-size: 1.5rem;
+            font-weight: 700;
+            font-size: 1.6rem;
+            letter-spacing: -1px;
         }
 
-        /* Sequential Box Pulse */
-        @keyframes staggeredPulse {
-            0%, 100% { transform: scale(1); border-color: #f1f5f9; }
-            50% { transform: scale(1.04); border-color: #059669; box-shadow: 0 12px 25px -8px rgba(5, 150, 105, 0.3); }
-        }
-
+        /* Premium Box Styles */
         .premium-card {
             background: white;
-            border: 2px solid #f1f5f9;
-            animation: staggeredPulse 4s infinite ease-in-out;
-            transition: all 0.3s ease;
+            border: 2px solid #f8fafc;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.05);
+            animation: sequentialPulse 4s infinite ease-in-out;
+        }
+
+        @keyframes sequentialPulse {
+            0%, 100% { transform: scale(1); border-color: #f8fafc; }
+            50% { transform: scale(1.05); border-color: #00ff88; box-shadow: 0 20px 40px -10px rgba(0, 255, 136, 0.2); }
         }
 
         .card-1 { animation-delay: 0s; }
@@ -72,75 +78,75 @@
 </head>
 <body class="pb-28">
 
-    <nav class="bg-white sticky top-0 z-50 border-b border-gray-100 px-6 py-5 flex justify-between items-center">
-        <h1 class="text-xl font-black italic text-blue-900 tracking-tighter">MAFITA DUBU</h1>
-        <div class="flex space-x-4 text-blue-900">
-            <i class="fa-solid fa-bell"></i>
-            <i class="fa-solid fa-wallet"></i>
+    <nav class="bg-white px-6 py-6 flex justify-between items-center border-b border-gray-50">
+        <div class="text-xl font-black italic text-blue-900 tracking-tighter">M/D</div>
+        <div class="flex space-x-5 text-gray-400">
+            <i class="fa-solid fa-search"></i>
+            <i class="fa-solid fa-bars-staggered"></i>
         </div>
     </nav>
 
-    <section class="px-8 py-14 text-center">
-        <div class="min-h-[120px] flex flex-col items-center justify-center">
-            <div id="typing-area">
-                <h2 id="typed-element" class="welcome-text"></h2>
+    <section class="px-8 py-16 text-center">
+        <div class="min-h-[140px] flex items-center justify-center">
+            <div id="text-holder">
+                <h2 id="typed-output" class="welcome-msg"></h2>
             </div>
-            <div id="brand-glitter-box" class="mafita-brand-glitter">
+            <div id="glitter-brand" class="mafita-brand-glitter">
                 MAFITA DUBU
             </div>
         </div>
     </section>
 
     <section class="max-w-7xl mx-auto px-6 grid grid-cols-2 gap-6">
-        <div class="premium-card card-1 p-6 rounded-[2.5rem] flex flex-col items-center">
-            <div class="w-14 h-14 bg-blue-50 text-blue-700 rounded-2xl flex items-center justify-center text-2xl mb-3"><i class="fa-solid fa-graduation-cap"></i></div>
-            <span class="font-bold text-gray-800 text-xs text-center">Koyon Sana'a</span>
+        <div class="premium-card card-1 p-8 rounded-[3rem] flex flex-col items-center">
+            <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-graduation-cap"></i></div>
+            <span class="font-bold text-gray-800 text-xs">Koyon Sana'a</span>
         </div>
-        <div class="premium-card card-2 p-6 rounded-[2.5rem] flex flex-col items-center">
-            <div class="w-14 h-14 bg-yellow-50 text-yellow-700 rounded-2xl flex items-center justify-center text-2xl mb-3"><i class="fa-solid fa-lightbulb"></i></div>
-            <span class="font-bold text-gray-800 text-xs text-center">Mafitar Rayuwa</span>
+        <div class="premium-card card-2 p-8 rounded-[3rem] flex flex-col items-center">
+            <div class="w-16 h-16 bg-yellow-50 text-yellow-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-lightbulb"></i></div>
+            <span class="font-bold text-gray-800 text-xs">Mafita</span>
         </div>
-        <div class="premium-card card-3 p-6 rounded-[2.5rem] flex flex-col items-center">
-            <div class="w-14 h-14 bg-red-50 text-red-700 rounded-2xl flex items-center justify-center text-2xl mb-3"><i class="fa-solid fa-user-tie"></i></div>
-            <span class="font-bold text-gray-800 text-xs text-center">Kwararru</span>
+        <div class="premium-card card-3 p-8 rounded-[3rem] flex flex-col items-center">
+            <div class="w-16 h-16 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-user-doctor"></i></div>
+            <span class="font-bold text-gray-800 text-xs text-center">Nemi Kwararre</span>
         </div>
-        <div class="premium-card card-4 p-6 rounded-[2.5rem] flex flex-col items-center">
-            <div class="w-14 h-14 bg-green-50 text-green-700 rounded-2xl flex items-center justify-center text-2xl mb-3"><i class="fa-solid fa-shield-check"></i></div>
-            <span class="font-bold text-gray-800 text-xs text-center">Escrow Wallet</span>
+        <div class="premium-card card-4 p-8 rounded-[3rem] flex flex-col items-center">
+            <div class="w-16 h-16 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-shield-halved"></i></div>
+            <span class="font-bold text-gray-800 text-xs">Escrow</span>
         </div>
-        <a href="market.html" class="premium-card card-5 p-6 rounded-[2.5rem] flex flex-col items-center">
-            <div class="w-14 h-14 bg-purple-50 text-purple-700 rounded-2xl flex items-center justify-center text-2xl mb-3"><i class="fa-solid fa-shop"></i></div>
-            <span class="font-bold text-gray-800 text-xs text-center">Yan Kasuwa</span>
+        <a href="market.html" class="premium-card card-5 p-8 rounded-[3rem] flex flex-col items-center">
+            <div class="w-16 h-16 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-shop"></i></div>
+            <span class="font-bold text-gray-800 text-xs">Kasuwa</span>
         </a>
-        <div class="premium-card card-6 p-6 rounded-[2.5rem] flex flex-col items-center">
-            <div class="w-14 h-14 bg-orange-50 text-orange-700 rounded-2xl flex items-center justify-center text-2xl mb-3"><i class="fa-solid fa-link"></i></div>
-            <span class="font-bold text-gray-800 text-xs text-center">AdChain</span>
+        <div class="premium-card card-6 p-8 rounded-[3rem] flex flex-col items-center">
+            <div class="w-16 h-16 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-chart-line"></i></div>
+            <span class="font-bold text-gray-800 text-xs">AdChain</span>
         </div>
     </section>
 
-    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md h-16 bg-white/90 backdrop-blur-sm shadow-2xl rounded-2xl flex items-center justify-around border border-gray-100 z-50">
-        <i class="fa-solid fa-house text-blue-900 text-xl"></i>
-        <i class="fa-solid fa-search text-gray-300"></i>
-        <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white text-2xl -mt-10 border-4 border-white shadow-lg"><i class="fa-solid fa-plus"></i></div>
-        <i class="fa-solid fa-bell text-gray-300"></i>
-        <i class="fa-solid fa-user text-gray-300"></i>
+    <div class="fixed bottom-8 left-1/2 -translate-x-1/2 w-[90%] max-w-md h-20 bg-white/80 backdrop-blur-lg shadow-2xl rounded-[2.5rem] flex items-center justify-around px-5 border border-white">
+        <i class="fa-solid fa-house-chimney text-blue-900 text-2xl"></i>
+        <i class="fa-solid fa-compass text-gray-300 text-2xl"></i>
+        <div class="w-14 h-14 bg-green-600 rounded-full flex items-center justify-center text-white text-3xl -mt-12 border-8 border-white shadow-lg"><i class="fa-solid fa-plus"></i></div>
+        <i class="fa-solid fa-bell text-gray-300 text-2xl"></i>
+        <i class="fa-solid fa-circle-user text-gray-300 text-2xl"></i>
     </div>
 
     <script>
-        const typingArea = document.getElementById('typing-area');
-        const brandGlitterBox = document.getElementById('brand-glitter-box');
-        let firstRun = true;
+        const textHolder = document.getElementById('text-holder');
+        const glitterBrand = document.getElementById('glitter-brand');
+        let initialLoad = true;
 
-        function runAnimationCycle() {
-            typingArea.style.display = 'block';
-            brandGlitterBox.style.display = 'none';
+        function startMasterAnimation() {
+            textHolder.style.display = 'block';
+            glitterBrand.style.display = 'none';
 
-            let stringData = [];
-            if (firstRun) {
-                stringData = ['Barka da zuwa shafin,'];
-                firstRun = false;
+            let messageList = [];
+            if (initialLoad) {
+                messageList = ['Barka da zuwa shafin,'];
+                initialLoad = false;
             } else {
-                stringData = [
+                messageList = [
                     'Maganin kowace matsala ta rayuwa.',
                     'Yi bincike akan kowace irin matsala ko bukata.',
                     'Nemi kwararre a kowane fanni.',
@@ -149,30 +155,30 @@
                 ];
             }
 
-            new Typed('#typed-element', {
-                strings: stringData,
-                typeSpeed: 60,
-                backSpeed: 40,
+            new Typed('#typed-output', {
+                strings: messageList,
+                typeSpeed: 50,
+                backSpeed: 30,
                 showCursor: false,
                 onComplete: () => {
                     setTimeout(() => {
-                        triggerBigBrand();
+                        switchToGlitter();
                     }, 1000);
                 }
             });
         }
 
-        function triggerBigBrand() {
-            typingArea.style.display = 'none';
-            brandGlitterBox.style.display = 'block';
-            
-            // Show brand for 10 seconds as requested
+        function switchToGlitter() {
+            textHolder.style.display = 'none';
+            glitterBrand.style.display = 'block';
+
+            // Glittering for 10 seconds
             setTimeout(() => {
-                runAnimationCycle();
+                startMasterAnimation();
             }, 10000);
         }
 
-        runAnimationCycle();
+        startMasterAnimation();
     </script>
 </body>
 </html>
