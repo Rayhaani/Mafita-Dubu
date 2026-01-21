@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | The Global Standard</title>
+    <title>Mafita Dubu | Professional UI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
@@ -16,7 +16,6 @@
             margin: 0;
         }
 
-        /* Diamond Glitter Animation */
         .master-glitter {
             font-family: 'Archivo Black', sans-serif;
             background: radial-gradient(circle, #fff 10%, transparent 11%),
@@ -31,14 +30,12 @@
         @keyframes glitterMove { to { background-position: 0 0, 300% center; } }
         @keyframes brandBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
 
-        /* Rotating Logo */
         .rotating-logo {
             background: linear-gradient(135deg, #1e3a8a, #059669);
             animation: rotateMe 8s linear infinite;
         }
         @keyframes rotateMe { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* Breathing Boxes */
         .breathing-card {
             background: white;
             border: 1.5px solid #f1f5f9;
@@ -49,7 +46,6 @@
             50% { transform: scale(1.04); border-color: #10b981; }
         }
 
-        /* Black Info Box Style */
         .info-box {
             background-color: #000000;
             border-radius: 2rem;
@@ -58,12 +54,7 @@
             margin-top: 3rem;
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
         }
-        .red-arrow {
-            color: #ef4444;
-            font-weight: 900;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
+        .red-arrow { color: #ef4444; font-weight: 900; margin-right: 12px; }
     </style>
 </head>
 <body class="pb-40">
@@ -118,40 +109,10 @@
     <section class="px-6 mt-12 mb-20">
         <div class="info-box max-w-md mx-auto">
             <h3 class="text-xl font-black mb-8 text-center border-b border-white/10 pb-4 uppercase tracking-widest">WHY MAFITA DUBU?</h3>
-            
-            <div class="space-y-6">
-                <div class="flex items-start">
-                    <span class="red-arrow">»</span>
-                    <div><h5 class="font-bold text-sm">Hyper-Local Search:</h5><p class="text-[11px] text-gray-400 mt-1">Nemi kwararre ko dan kasuwa mafi kusa da kai (Radius based) a ko'ina kake a fadin kasar nan.</p></div>
-                </div>
-                <div class="flex items-start">
-                    <span class="red-arrow">»</span>
-                    <div><h5 class="font-bold text-sm">Verified Professionals:</h5><p class="text-[11px] text-gray-400 mt-1">Duk kwararren da zaka gani an tantance shi da tsarin AI da kuma KYC na gaskiya.</p></div>
-                </div>
-                <div class="flex items-start">
-                    <span class="red-arrow">»</span>
-                    <div><h5 class="font-bold text-sm">Secure Escrow Protocol:</h5><p class="text-[11px] text-gray-400 mt-1">Hulda da kowa cikin aminci. Ba a sakin kudi har sai ka gamsu da aikin da aka yi maka.</p></div>
-                </div>
-                <div class="flex items-start">
-                    <span class="red-arrow">»</span>
-                    <div><h5 class="font-bold text-sm">AdChain Revenue:</h5><p class="text-[11px] text-gray-400 mt-1">Maida lokacinka kudi ta hanyar kallon tallace-tallace masu amfani da karbar AdTokens.</p></div>
-                </div>
-                <div class="flex items-start">
-                    <span class="red-arrow">»</span>
-                    <div><h5 class="font-bold text-sm">Global Market Access:</h5><p class="text-[11px] text-gray-400 mt-1">Bude shagonka ga duniya. Kayanka zasu iya isa kowane lungu da sako na duniya cikin sauki.</p></div>
-                </div>
-                <div class="flex items-start">
-                    <span class="red-arrow">»</span>
-                    <div><h5 class="font-bold text-sm">Smart Dispute Resolution:</h5><p class="text-[11px] text-gray-400 mt-1">Tsarin sulhu na zamani wanda ke tabbatar da adalci tsakanin dan kasuwa da mai siye.</p></div>
-                </div>
-                <div class="flex items-start">
-                    <span class="red-arrow">»</span>
-                    <div><h5 class="font-bold text-sm">24/7 Expert Support:</h5><p class="text-[11px] text-gray-400 mt-1">Samun amsoshin matsalolinka na sana'a ko rayuwa daga kwararru a kowane lokaci.</p></div>
-                </div>
-                <div class="flex items-start">
-                    <span class="red-arrow">»</span>
-                    <div><h5 class="font-bold text-sm">Zero Boundaries:</h5><p class="text-[11px] text-gray-400 mt-1">Ba'a taba yin aiki mai mahimmanci irin wannan ba wanda ya dunkule kowa a guri guda don cin gajiyar juna.</p></div>
-                </div>
+            <div class="space-y-6" id="features-list">
+                <div class="flex items-start"><span class="red-arrow">»</span><div><h5 class="font-bold text-sm">Hyper-Local Search:</h5><p class="text-[11px] text-gray-400 mt-1">Nemi kwararre ko dan kasuwa mafi kusa da kai a ko'ina kake.</p></div></div>
+                <div class="flex items-start"><span class="red-arrow">»</span><div><h5 class="font-bold text-sm">Secure Escrow:</h5><p class="text-[11px] text-gray-400 mt-1">Ba a sakin kudi har sai ka gamsu da aikin da aka yi maka.</p></div></div>
+                <div class="flex items-start"><span class="red-arrow">»</span><div><h5 class="font-bold text-sm">AdChain Earnings:</h5><p class="text-[11px] text-gray-400 mt-1">Maida lokacinka kudi ta hanyar kallon tallace-tallace masu amfani.</p></div></div>
             </div>
         </div>
     </section>
@@ -167,26 +128,52 @@
     <script>
         const typeWrapper = document.getElementById('type-wrapper');
         const glitterBrand = document.getElementById('glitter-brand');
+        let isFirstTime = true;
+        let messageIndex = 0;
+        
+        const otherMessages = [
+            'Maganin kowace matsala ta rayuwa.',
+            'Yi bincike akan kowace irin matsala ko bukata.',
+            'Nemi kwararre a kowane fanni.',
+            'Yi kasuwanci a cikin aminci.',
+            'Kalli talla ka samu kudi.'
+        ];
 
-        function startSequence() {
+        function showGlitter() {
+            typeWrapper.style.display = 'none';
+            glitterBrand.classList.remove('hidden');
+            glitterBrand.style.display = 'block';
+            
+            setTimeout(() => {
+                glitterBrand.style.display = 'none';
+                glitterBrand.classList.add('hidden');
+                showNextMessage();
+            }, 10000); // 10 Seconds Blinking
+        }
+
+        function showNextMessage() {
             typeWrapper.style.display = 'block';
-            glitterBrand.classList.add('hidden');
+            
+            let currentText = isFirstTime ? 'Barka da zuwa Shafin Mafita Dubu.' : otherMessages[messageIndex];
 
             new Typed('#typed-msg', {
-                strings: ['Barka da zuwa shafin,', 'Maganin kowace matsala ta rayuwa.', 'Yi bincike akan komai.', 'Yi kasuwanci a cikin aminci.'],
+                strings: [currentText],
                 typeSpeed: 50,
-                backSpeed: 30,
                 showCursor: false,
                 onComplete: () => {
                     setTimeout(() => {
-                        typeWrapper.style.display = 'none';
-                        glitterBrand.classList.remove('hidden');
-                        setTimeout(startSequence, 8000); // Wait 8s then restart
-                    }, 1500);
+                        if(isFirstTime) {
+                            isFirstTime = false;
+                        } else {
+                            messageIndex = (messageIndex + 1) % otherMessages.length;
+                        }
+                        showGlitter();
+                    }, 2000);
                 }
             });
         }
-        startSequence();
+
+        window.onload = showNextMessage;
     </script>
 </body>
     </html>
