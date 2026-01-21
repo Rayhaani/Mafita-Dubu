@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Advanced Animations</title>
+    <title>Mafita Dubu | The Masterpiece</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
@@ -23,10 +23,27 @@
             font-weight: 800;
         }
 
-        /* Special Blinking Animation */
+        /* MAFITA DUBU Blinking Animation */
+        @keyframes brandBlink {
+            0%, 100% { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 15px rgba(5, 150, 105, 0.4)); }
+            50% { opacity: 0.3; transform: scale(1); filter: drop-shadow(0 0 5px rgba(30, 58, 138, 0.2)); }
+        }
+
+        .brand-glow {
+            display: none;
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            animation: brandBlink 1s infinite;
+            background: linear-gradient(to right, #1e3a8a, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Box Sequential Blinking */
         @keyframes pulseGlow {
-            0%, 100% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border-color: #f1f5f9; }
-            50% { transform: scale(1.05); box-shadow: 0 10px 30px -5px rgba(5, 150, 105, 0.3); border-color: #059669; }
+            0%, 100% { transform: scale(1); border-color: #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+            50% { transform: scale(1.05); border-color: #059669; box-shadow: 0 10px 30px -5px rgba(5, 150, 105, 0.3); }
         }
 
         .premium-card {
@@ -36,15 +53,12 @@
             animation: pulseGlow 3s infinite ease-in-out;
         }
 
-        /* Sequential Delays for 6 Boxes */
         .card-1 { animation-delay: 0s; }
         .card-2 { animation-delay: 0.5s; }
         .card-3 { animation-delay: 1s; }
         .card-4 { animation-delay: 1.5s; }
         .card-5 { animation-delay: 2s; }
         .card-6 { animation-delay: 2.5s; }
-
-        .premium-card:active { transform: scale(0.95); animation: none; }
     </style>
 </head>
 <body class="pb-28">
@@ -57,79 +71,74 @@
     </nav>
 
     <section class="px-8 py-10 text-center">
-        <div class="min-h-[80px]">
-             <h2 id="typed-welcome" class="text-2xl md:text-4xl welcome-text"></h2>
+        <div class="min-h-[120px] flex flex-col items-center justify-center">
+            <div id="typing-container">
+                <h2 id="typed-welcome" class="text-2xl md:text-3xl welcome-text"></h2>
+            </div>
+            <div id="brand-container" class="brand-glow">
+                MAFITA DUBU
+            </div>
         </div>
     </section>
 
     <section class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-3 gap-6">
-        
         <div class="premium-card card-1 p-6 rounded-3xl flex flex-col items-center">
-            <div class="w-14 h-14 bg-blue-50 text-blue-700 rounded-2xl flex items-center justify-center text-2xl mb-3">
-                <i class="fa-solid fa-graduation-cap"></i>
-            </div>
+            <div class="w-14 h-14 bg-blue-50 text-blue-700 rounded-2xl flex items-center justify-center text-2xl mb-3"><i class="fa-solid fa-graduation-cap"></i></div>
             <span class="font-bold text-gray-800 text-sm">Koyon Sana'a</span>
         </div>
-
-        <div class="premium-card card-2 p-6 rounded-3xl flex flex-col items-center text-center">
-            <div class="w-14 h-14 bg-yellow-50 text-yellow-700 rounded-2xl flex items-center justify-center text-2xl mb-3">
-                <i class="fa-solid fa-lightbulb"></i>
-            </div>
-            <span class="font-bold text-gray-800 text-sm leading-tight">Mafita</span>
-        </div>
-
-        <div class="premium-card card-3 p-6 rounded-3xl flex flex-col items-center">
-            <div class="w-14 h-14 bg-red-50 text-red-700 rounded-2xl flex items-center justify-center text-2xl mb-3">
-                <i class="fa-solid fa-user-tie"></i>
-            </div>
-            <span class="font-bold text-gray-800 text-sm">Kwararru</span>
-        </div>
-
-        <div class="premium-card card-4 p-6 rounded-3xl flex flex-col items-center">
-            <div class="w-14 h-14 bg-green-50 text-green-700 rounded-2xl flex items-center justify-center text-2xl mb-3">
-                <i class="fa-solid fa-shield-halved"></i>
-            </div>
-            <span class="font-bold text-gray-800 text-sm">Escrow Wallet</span>
-        </div>
-
-        <a href="market.html" class="premium-card card-5 p-6 rounded-3xl flex flex-col items-center">
-            <div class="w-14 h-14 bg-purple-50 text-purple-700 rounded-2xl flex items-center justify-center text-2xl mb-3">
-                <i class="fa-solid fa-shop"></i>
-            </div>
-            <span class="font-bold text-gray-800 text-sm">Yan Kasuwa</span>
-        </a>
-
-        <div class="premium-card card-6 p-6 rounded-3xl flex flex-col items-center">
-            <div class="w-14 h-14 bg-orange-50 text-orange-700 rounded-2xl flex items-center justify-center text-2xl mb-3">
-                <i class="fa-solid fa-coins"></i>
-            </div>
-            <span class="font-bold text-gray-800 text-sm">AdChain</span>
-        </div>
-
+        <div class="premium-card card-2 p-6 rounded-3xl flex flex-col items-center"><div class="w-14 h-14 bg-yellow-50 text-yellow-700 rounded-2xl flex items-center justify-center text-2xl mb-3"><i class="fa-solid fa-lightbulb"></i></div><span class="font-bold text-gray-800 text-sm">Mafita</span></div>
+        <div class="premium-card card-3 p-6 rounded-3xl flex flex-col items-center"><div class="w-14 h-14 bg-red-50 text-red-700 rounded-2xl flex items-center justify-center text-2xl mb-3"><i class="fa-solid fa-user-tie"></i></div><span class="font-bold text-gray-800 text-sm">Kwararru</span></div>
+        <div class="premium-card card-4 p-6 rounded-3xl flex flex-col items-center"><div class="w-14 h-14 bg-green-50 text-green-700 rounded-2xl flex items-center justify-center text-2xl mb-3"><i class="fa-solid fa-shield-halved"></i></div><span class="font-bold text-gray-800 text-sm">Escrow Wallet</span></div>
+        <a href="market.html" class="premium-card card-5 p-6 rounded-3xl flex flex-col items-center"><div class="w-14 h-14 bg-purple-50 text-purple-700 rounded-2xl flex items-center justify-center text-2xl mb-3"><i class="fa-solid fa-shop"></i></div><span class="font-bold text-gray-800 text-sm">Yan Kasuwa</span></a>
+        <div class="premium-card card-6 p-6 rounded-3xl flex flex-col items-center"><div class="w-14 h-14 bg-orange-50 text-orange-700 rounded-2xl flex items-center justify-center text-2xl mb-3"><i class="fa-solid fa-coins"></i></div><span class="font-bold text-gray-800 text-sm">AdChain</span></div>
     </section>
 
     <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md h-16 bg-white shadow-xl rounded-2xl flex items-center justify-around border border-gray-100">
         <i class="fa-solid fa-house text-blue-900 text-xl"></i>
         <i class="fa-solid fa-compass text-gray-300"></i>
-        <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white text-2xl -mt-10 border-4 border-white shadow-lg">
-            <i class="fa-solid fa-plus"></i>
-        </div>
+        <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white text-2xl -mt-10 border-4 border-white shadow-lg"><i class="fa-solid fa-plus"></i></div>
         <i class="fa-solid fa-bell text-gray-300"></i>
         <i class="fa-solid fa-user text-gray-300"></i>
     </div>
 
     <script>
-        var typed = new Typed('#typed-welcome', {
-            strings: [
-                'Barka da zuwa Mafita Dubu,',
-                'Koyi sana\'a kowace iri.',
-                'Nemi kwararre a kowane fanni.',
-                'Yi kasuwanci cikin aminci.'
-            ],
-            typeSpeed: 50,
-            backSpeed: 30,
-            loop: true
-        });
+        const typingContainer = document.getElementById('typing-container');
+        const brandContainer = document.getElementById('brand-container');
+
+        function startTyping() {
+            typingContainer.style.display = 'block';
+            brandContainer.style.display = 'none';
+
+            new Typed('#typed-welcome', {
+                strings: [
+                    'Barka da zuwa Shafin Mafita Dubu, maganin kowane irin matsala ta rayuwa.',
+                    'Koyi sana\'a kowace iri.',
+                    'Nemi kwararre a kowane fanni.',
+                    'Yi kasuwanci a cikin aminci.'
+                ],
+                typeSpeed: 50,
+                backSpeed: 30,
+                showCursor: false,
+                onComplete: (self) => {
+                    setTimeout(() => {
+                        showBrand();
+                    }, 1000);
+                }
+            });
+        }
+
+        function showBrand() {
+            typingContainer.style.display = 'none';
+            brandContainer.style.display = 'block';
+
+            // Blinking for 20 seconds
+            setTimeout(() => {
+                startTyping();
+            }, 20000);
+        }
+
+        // Start initial cycle
+        startTyping();
     </script>
 </body>
 </html>
