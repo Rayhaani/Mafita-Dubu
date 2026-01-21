@@ -3,135 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | The Global Standard</title>
+    <title>Mafita Dubu | Professional Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
     <style>
-        /* Global Standard Font: Outfit */
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+        /* Komawa kan font mai natsuwa */
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
         
         body { 
-            font-family: 'Outfit', sans-serif; 
-            background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: #fdfdfd;
             min-height: 100vh;
         }
 
-        /* Animated Welcome Text with Glow */
+        /* Welcome Text Style */
         .welcome-text {
-            background: linear-gradient(to right, #1e3a8a, #059669, #7c3aed);
+            background: linear-gradient(to right, #1e3a8a, #059669);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 800;
-            filter: drop-shadow(0 0 8px rgba(5, 150, 105, 0.2));
-            letter-spacing: -0.02em;
         }
 
         /* Senior Dev Card Style */
         .premium-card {
             background: white;
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
         }
 
-        .premium-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 25px 40px -10px rgba(30, 58, 138, 0.15);
-            border-color: #059669;
-        }
-
-        /* Typing Cursor Customization */
-        .typed-cursor {
-            color: #059669;
-            font-size: 1.5rem;
+        .premium-card:active {
+            transform: scale(0.95);
         }
     </style>
 </head>
 <body class="pb-28">
 
-    <nav class="bg-white/70 backdrop-blur-xl sticky top-0 z-50 border-b border-gray-100 px-6 py-5">
+    <nav class="bg-white sticky top-0 z-50 border-b border-gray-100 px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <h1 class="text-3xl font-extrabold tracking-tighter">
+            <h1 class="text-2xl font-extrabold">
                 <span class="text-blue-900">Mafita</span><span class="text-green-600">Dubu</span>
             </h1>
-            <div class="flex items-center space-x-4">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-900 to-green-600 flex items-center justify-center text-white shadow-lg">
-                    <i class="fa-solid fa-user-astronaut"></i>
-                </div>
-            </div>
+            <i class="fa-solid fa-wallet text-blue-900 text-xl"></i>
         </div>
     </nav>
 
-    <section class="px-8 py-14 text-center">
-        <div class="min-h-[100px] flex items-center justify-center">
-             <h2 id="typed-welcome" class="text-3xl md:text-5xl welcome-text"></h2>
+    <section class="px-8 py-10 text-center">
+        <div class="min-h-[80px]">
+             <h2 id="typed-welcome" class="text-2xl md:text-4xl welcome-text"></h2>
         </div>
         
-        <div class="relative max-w-xl mx-auto mt-10 group">
-            <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-green-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-            <input type="text" placeholder="Me kake nema yau?..." 
-                   class="relative w-full py-5 px-8 rounded-2xl bg-white border-0 focus:ring-2 focus:ring-green-500 transition-all outline-none text-gray-700 text-lg shadow-xl">
-            <button class="absolute right-3 top-3 bg-blue-900 hover:bg-green-600 text-white p-3 rounded-xl shadow-lg transition-all active:scale-90">
-                <i class="fa-solid fa-magnifying-glass text-lg"></i>
+        <div class="relative max-w-lg mx-auto mt-6">
+            <input type="text" placeholder="Nemi kwararre ko snacks..." 
+                   class="w-full py-4 px-6 rounded-2xl bg-gray-50 border border-gray-200 focus:ring-2 focus:ring-green-500 outline-none">
+            <button class="absolute right-2 top-2 bg-blue-900 text-white p-2.5 rounded-xl">
+                <i class="fa-solid fa-search"></i>
             </button>
         </div>
     </section>
 
-    <section class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-3 gap-8">
+    <section class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-3 gap-5">
         
-        <a href="javascript:void(0)" class="premium-card p-10 rounded-[3rem] flex flex-col items-center group">
-            <div class="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center text-4xl mb-5 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
+        <div class="premium-card p-6 rounded-3xl flex flex-col items-center">
+            <div class="w-14 h-14 bg-blue-100 text-blue-700 rounded-2xl flex items-center justify-center text-2xl mb-3">
                 <i class="fa-solid fa-graduation-cap"></i>
             </div>
-            <span class="font-bold text-slate-800 text-lg tracking-tight">Koyon Sana'a</span>
-        </a>
+            <span class="font-bold text-gray-800 text-sm">Koyon Sana'a</span>
+        </div>
 
-        <a href="javascript:void(0)" class="premium-card p-10 rounded-[3rem] flex flex-col items-center group">
-            <div class="w-20 h-20 bg-yellow-50 text-yellow-600 rounded-3xl flex items-center justify-center text-4xl mb-5 group-hover:bg-yellow-500 group-hover:text-white transition-all duration-500">
+        <div class="premium-card p-6 rounded-3xl flex flex-col items-center text-center">
+            <div class="w-14 h-14 bg-yellow-100 text-yellow-700 rounded-2xl flex items-center justify-center text-2xl mb-3">
                 <i class="fa-solid fa-lightbulb"></i>
             </div>
-            <span class="font-bold text-slate-800 text-lg tracking-tight">Mafita</span>
-        </a>
+            <span class="font-bold text-gray-800 text-sm leading-tight">Mafitar Rayuwa</span>
+        </div>
 
-        <a href="javascript:void(0)" class="premium-card p-10 rounded-[3rem] flex flex-col items-center group">
-            <div class="w-20 h-20 bg-red-50 text-red-600 rounded-3xl flex items-center justify-center text-4xl mb-5 group-hover:bg-red-600 group-hover:text-white transition-all duration-500">
+        <div class="premium-card p-6 rounded-3xl flex flex-col items-center">
+            <div class="w-14 h-14 bg-red-100 text-red-700 rounded-2xl flex items-center justify-center text-2xl mb-3">
                 <i class="fa-solid fa-user-tie"></i>
             </div>
-            <span class="font-bold text-slate-800 text-lg tracking-tight">Kwararru</span>
-        </a>
+            <span class="font-bold text-gray-800 text-sm">Kwararru</span>
+        </div>
 
-        <a href="javascript:void(0)" class="premium-card p-10 rounded-[3rem] flex flex-col items-center group">
-            <div class="w-20 h-20 bg-green-50 text-green-600 rounded-3xl flex items-center justify-center text-4xl mb-5 group-hover:bg-green-600 group-hover:text-white transition-all duration-500">
-                <i class="fa-solid fa-shield-heart"></i>
+        <div class="premium-card p-6 rounded-3xl flex flex-col items-center">
+            <div class="w-14 h-14 bg-green-100 text-green-700 rounded-2xl flex items-center justify-center text-2xl mb-3">
+                <i class="fa-solid fa-shield-halved"></i>
             </div>
-            <span class="font-bold text-slate-800 text-lg tracking-tight">Escrow</span>
-        </a>
+            <span class="font-bold text-gray-800 text-sm">Escrow Wallet</span>
+        </div>
 
-        <a href="market.html" class="premium-card p-10 rounded-[3rem] flex flex-col items-center group">
-            <div class="w-20 h-20 bg-purple-50 text-purple-600 rounded-3xl flex items-center justify-center text-4xl mb-5 group-hover:bg-purple-600 group-hover:text-white transition-all duration-500">
+        <a href="market.html" class="premium-card p-6 rounded-3xl flex flex-col items-center">
+            <div class="w-14 h-14 bg-purple-100 text-purple-700 rounded-2xl flex items-center justify-center text-2xl mb-3">
                 <i class="fa-solid fa-shop"></i>
             </div>
-            <span class="font-bold text-slate-800 text-lg tracking-tight text-center">Yan Kasuwa</span>
+            <span class="font-bold text-gray-800 text-sm">Yan Kasuwa</span>
         </a>
 
-        <a href="javascript:void(0)" class="premium-card p-10 rounded-[3rem] flex flex-col items-center group">
-            <div class="w-20 h-20 bg-orange-50 text-orange-600 rounded-3xl flex items-center justify-center text-4xl mb-5 group-hover:bg-orange-500 group-hover:text-white transition-all duration-500">
+        <div class="premium-card p-6 rounded-3xl flex flex-col items-center">
+            <div class="w-14 h-14 bg-orange-100 text-orange-700 rounded-2xl flex items-center justify-center text-2xl mb-3">
                 <i class="fa-solid fa-coins"></i>
             </div>
-            <span class="font-bold text-slate-800 text-lg tracking-tight">AdChain</span>
-        </a>
+            <span class="font-bold text-gray-800 text-sm">AdChain</span>
+        </div>
 
     </section>
 
-    <div class="fixed bottom-8 left-1/2 -translate-x-1/2 w-[92%] max-w-md h-20 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.15)] rounded-[2rem] flex items-center justify-around px-4 border border-gray-50 z-50">
-        <button class="text-blue-900 text-2xl"><i class="fa-solid fa-house-chimney"></i></button>
-        <button class="text-slate-300 text-2xl hover:text-blue-900 transition"><i class="fa-solid fa-compass"></i></button>
-        <div class="w-16 h-16 bg-gradient-to-tr from-blue-900 to-green-600 rounded-full flex items-center justify-center text-white text-3xl -mt-12 border-8 border-[#f0f4f8] shadow-xl active:scale-90 transition-all">
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md h-16 bg-white shadow-xl rounded-2xl flex items-center justify-around border border-gray-100">
+        <i class="fa-solid fa-house text-blue-900 text-xl"></i>
+        <i class="fa-solid fa-compass text-gray-300"></i>
+        <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white text-2xl -mt-10 border-4 border-white shadow-lg">
             <i class="fa-solid fa-plus"></i>
         </div>
-        <button class="text-slate-300 text-2xl hover:text-blue-900 transition"><i class="fa-solid fa-comment-dots"></i></button>
-        <button class="text-slate-300 text-2xl hover:text-blue-900 transition"><i class="fa-solid fa-circle-user"></i></button>
+        <i class="fa-solid fa-bell text-gray-300"></i>
+        <i class="fa-solid fa-user text-gray-300"></i>
     </div>
 
     <script>
@@ -143,13 +128,11 @@
                 'Nemi kwararre a kowane fanni.',
                 'Yi kasuwanci cikin aminci.'
             ],
-            typeSpeed: 60,
-            backSpeed: 40,
+            typeSpeed: 50,
+            backSpeed: 30,
             loop: true,
-            cursorChar: '_',
+            cursorChar: '|'
         });
     </script>
-
 </body>
 </html>
-
