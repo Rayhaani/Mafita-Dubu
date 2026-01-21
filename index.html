@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | The Masterpiece</title>
+    <title>Mafita Dubu | The Ultimate UI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
     <style>
-        /* Amfani da Archivo Black don kauri da fadi */
         @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;700;900&display=swap');
         
         body { 
@@ -18,68 +17,75 @@
             margin: 0;
         }
 
-        /* 1. Very Thick, Wide & Impressive Glitter (Archivo Black) */
-        .glitter-text {
-            display: none;
+        /* Diamond Glitter Animation (Iri daya a sama da tsakiya) */
+        .master-glitter {
             font-family: 'Archivo Black', sans-serif;
-            font-size: 2.8rem;
-            text-align: center;
             background: radial-gradient(circle, #fff 10%, transparent 11%),
                         linear-gradient(to right, #ff0000, #ffdd00, #00ff88, #0099ff, #6600ff, #ff0000);
-            background-size: 10px 10px, 300% auto;
+            background-size: 8px 8px, 300% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: glitterMove 2.5s linear infinite, brandBlink 0.6s ease-in-out infinite;
-            filter: drop-shadow(0 0 15px rgba(0,0,0,0.2));
+            animation: glitterMove 2s linear infinite, brandBlink 0.6s ease-in-out infinite;
             text-transform: uppercase;
-            letter-spacing: -1px; /* Archivo Black ya fi kyau a hade kadan */
-            line-height: 1.1;
         }
 
         @keyframes glitterMove { to { background-position: 0 0, 300% center; } }
-        @keyframes brandBlink { 0%, 100% { opacity: 1; transform: scale(1.04); } 50% { opacity: 0.6; transform: scale(1); } }
+        @keyframes brandBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
 
-        /* 2. Nav Brand (Thick & Professional) */
-        .nav-brand {
-            font-family: 'Inter', sans-serif;
-            font-weight: 900; /* Extremely Thick */
-            letter-spacing: -1px;
-            animation: navBlink 2s ease-in-out infinite;
+        /* Logo Rotation Restored */
+        .rotating-logo {
+            background: linear-gradient(135deg, #1e3a8a, #059669);
+            box-shadow: 0 0 15px rgba(5, 150, 105, 0.5);
+            animation: rotateMe 8s linear infinite;
         }
-        @keyframes navBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        @keyframes rotateMe { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* 3. Sequential Breathing Boxes */
+        /* Sequential Breathing Boxes */
         .breathing-card {
             background: white;
             border: 1.5px solid #f1f5f9;
             animation: boxBreath 4s infinite ease-in-out;
-            transition: all 0.3s ease;
         }
         @keyframes boxBreath {
-            0%, 100% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-            50% { transform: scale(1.05); box-shadow: 0 20px 30px -10px rgba(0,0,0,0.1); border-color: #10b981; }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); border-color: #10b981; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         }
         .box-1 { animation-delay: 0s; } .box-2 { animation-delay: 0.6s; }
         .box-3 { animation-delay: 1.2s; } .box-4 { animation-delay: 1.8s; }
         .box-5 { animation-delay: 2.4s; } .box-6 { animation-delay: 3s; }
 
-        /* 4. Custom Footer (Based on your screenshot) */
-        .ad-banner {
-            background: linear-gradient(135deg, #1e40af, #2563eb);
+        /* What You'll Unlock (Black Box Style) */
+        .info-box {
+            background-color: #000000;
             border-radius: 1.5rem;
-            box-shadow: 0 12px 25px -10px rgba(37, 99, 235, 0.5);
+            color: #ffffff;
+            padding: 2rem 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        .red-arrow {
+            color: #ef4444;
+            font-size: 1.2rem;
+            font-weight: 900;
+            margin-right: 12px;
+            margin-top: 4px;
         }
     </style>
 </head>
-<body class="pb-44">
+<body class="pb-32">
 
-    <nav class="bg-white px-6 py-5 flex justify-between items-center sticky top-0 z-50 border-b border-slate-200">
+    <nav class="bg-white/95 backdrop-blur-md px-6 py-5 flex justify-between items-center sticky top-0 z-50 border-b border-slate-200">
         <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-900 to-green-600 flex items-center justify-center text-white font-black text-xs shadow-lg">MD</div>
-            <h1 class="text-xl nav-brand text-blue-900 uppercase">MAFITA DUBU</h1>
+            <div class="w-10 h-10 rounded-xl rotating-logo flex items-center justify-center text-white font-black text-[10px] shadow-lg">MD</div>
+            <h1 class="text-lg master-glitter tracking-tighter">MAFITA DUBU</h1>
         </div>
         <div class="flex space-x-5 text-blue-900 text-xl">
-            <i class="fa-solid fa-bell relative"><span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span></i>
+            <i class="fa-solid fa-bell-active"></i>
             <i class="fa-solid fa-wallet"></i>
         </div>
     </nav>
@@ -87,15 +93,15 @@
     <section class="px-8 py-16 text-center">
         <div class="min-h-[140px] flex flex-col items-center justify-center">
             <div id="type-wrapper">
-                <h2 id="typed-msg" class="text-2xl font-extrabold text-slate-800"></h2>
+                <h2 id="typed-msg" class="text-2xl font-black text-slate-800"></h2>
             </div>
-            <div id="glitter-brand" class="glitter-text">
+            <div id="glitter-brand" class="glitter-text master-glitter text-5xl hidden">
                 MAFITA DUBU
             </div>
         </div>
     </section>
 
-    <section class="max-w-7xl mx-auto px-6 grid grid-cols-2 gap-5 mb-10">
+    <section class="max-w-7xl mx-auto px-6 grid grid-cols-2 gap-5">
         <div class="breathing-card box-1 p-7 rounded-[2.5rem] flex flex-col items-center">
             <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-graduation-cap"></i></div>
             <span class="font-bold text-slate-700 text-xs">Koyon Sana'a</span>
@@ -106,7 +112,7 @@
         </div>
         <div class="breathing-card box-3 p-7 rounded-[2.5rem] flex flex-col items-center">
             <div class="w-16 h-16 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-user-doctor"></i></div>
-            <span class="font-bold text-slate-700 text-xs text-center">Nemi Kwararre</span>
+            <span class="font-bold text-slate-700 text-xs">Nemi Kwararre</span>
         </div>
         <div class="breathing-card box-4 p-7 rounded-[2.5rem] flex flex-col items-center">
             <div class="w-16 h-16 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-shield-halved"></i></div>
@@ -114,7 +120,7 @@
         </div>
         <a href="market.html" class="breathing-card box-5 p-7 rounded-[2.5rem] flex flex-col items-center">
             <div class="w-16 h-16 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-shop"></i></div>
-            <span class="font-bold text-slate-700 text-xs text-center">Yan Kasuwa</span>
+            <span class="font-bold text-slate-700 text-xs">Yan Kasuwa</span>
         </a>
         <div class="breathing-card box-6 p-7 rounded-[2.5rem] flex flex-col items-center">
             <div class="w-16 h-16 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-link"></i></div>
@@ -122,28 +128,52 @@
         </div>
     </section>
 
-    <div class="fixed bottom-0 left-0 right-0 px-4 pb-6 z-50">
-        <div class="ad-banner max-w-md mx-auto p-5 flex justify-between items-center mb-[-20px] relative z-10">
-            <div class="pr-2">
-                <h4 class="text-white font-bold text-[15px]">Kalli Talla, Sami Lada</h4>
-                <p class="text-blue-100 text-[10px]">Fara samun AdTokens yanzu</p>
-            </div>
-            <button class="bg-white/20 text-white px-4 py-2 rounded-xl font-bold text-xs whitespace-nowrap">
-                Fara Yanzu
-            </button>
-        </div>
-
-        <div class="bg-white shadow-[0_-10px_40px_rgba(0,0,0,0.1)] rounded-[2.2rem] h-20 flex items-center justify-around px-2 border border-slate-50">
-            <i class="fa-solid fa-house text-blue-900 text-2xl"></i>
-            <i class="fa-solid fa-compass text-slate-300 text-2xl"></i>
+    <section class="px-6 mb-20">
+        <div class="info-box max-w-md mx-auto">
+            <h3 class="text-xl font-bold mb-8 text-center border-b border-white/10 pb-4">Me Zaka Samu a MAFITA DUBU?</h3>
             
-            <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-3xl -mt-16 border-[6px] border-[#f1f5f9] shadow-xl">
-                <i class="fa-solid fa-plus"></i>
+            <div class="info-item">
+                <span class="red-arrow">»</span>
+                <div>
+                    <h5 class="font-bold text-sm">Hanyoyin Samun Kudi:</h5>
+                    <p class="text-[11px] text-gray-400 mt-1 leading-relaxed">Daga kallon talla (AdChain) zuwa kasuwanci na gaskiya, kofa a bude take.</p>
+                </div>
             </div>
 
-            <i class="fa-solid fa-message text-slate-300 text-2xl"></i>
-            <i class="fa-solid fa-user text-slate-300 text-2xl"></i>
+            <div class="info-item">
+                <span class="red-arrow">»</span>
+                <div>
+                    <h5 class="font-bold text-sm">Escrow Wallet Security:</h5>
+                    <p class="text-[11px] text-gray-400 mt-1 leading-relaxed">Karka taba tsoron asarar kudi. Escrow dinmu yana kare mai siye da mai siyarwa.</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="red-arrow">»</span>
+                <div>
+                    <h5 class="font-bold text-sm">Koyon Sana'o'i na Zamani:</h5>
+                    <p class="text-[11px] text-gray-400 mt-1 leading-relaxed">Koyi sana'o'in dogaro da kai daga kwararrun da suka kware a fannoni daban-daban.</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="red-arrow">»</span>
+                <div>
+                    <h5 class="font-bold text-sm">Hadin Gwiwa da Kasashen Duniya:</h5>
+                    <p class="text-[11px] text-gray-400 mt-1 leading-relaxed">Sanya kayanka su kai ko'ina a duniya ta amfani da dandalinmu na Yan Kasuwa.</p>
+                </div>
+            </div>
         </div>
+    </section>
+
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] h-20 bg-white shadow-2xl rounded-[2.5rem] flex items-center justify-around px-2 border border-slate-50 z-50">
+        <i class="fa-solid fa-house text-blue-900 text-2xl"></i>
+        <i class="fa-solid fa-compass text-slate-300 text-2xl"></i>
+        <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-3xl -mt-16 border-[6px] border-[#f1f5f9] shadow-xl">
+            <i class="fa-solid fa-plus"></i>
+        </div>
+        <i class="fa-solid fa-message text-slate-300 text-2xl"></i>
+        <i class="fa-solid fa-user text-slate-300 text-2xl"></i>
     </div>
 
     <script>
@@ -151,16 +181,15 @@
         const glitterBrand = document.getElementById('glitter-brand');
         let isFirst = true;
 
-        function runCycle() {
+        function runAnimation() {
             typeWrapper.style.display = 'block';
-            glitterBrand.style.display = 'none';
+            glitterBrand.classList.add('hidden');
 
             let msgs = isFirst ? ['Barka da zuwa shafin,'] : [
                 'Maganin kowace matsala ta rayuwa.',
                 'Yi bincike akan komai.',
                 'Nemi kwararre a kowane fanni.',
-                'Yi kasuwanci a cikin aminci.',
-                'Kalli talla ka samu kudi.'
+                'Yi kasuwanci a cikin aminci.'
             ];
             isFirst = false;
 
@@ -169,17 +198,18 @@
                 typeSpeed: 50,
                 backSpeed: 30,
                 showCursor: false,
-                onComplete: () => { setTimeout(showBrand, 1500); }
+                onComplete: () => { 
+                    setTimeout(() => {
+                        typeWrapper.style.display = 'none';
+                        glitterBrand.classList.remove('hidden');
+                        glitterBrand.style.display = 'block';
+                    }, 1500);
+                }
             });
         }
-
-        function showBrand() {
-            typeWrapper.style.display = 'none';
-            glitterBrand.style.display = 'block';
-            setTimeout(runCycle, 10000);
-        }
-
-            runCycle();
+        runAnimation();
+        setInterval(() => { if(glitterBrand.style.display === 'block') runAnimation(); }, 12000);
     </script>
 </body>
-</html>
+                    </html>
+    
