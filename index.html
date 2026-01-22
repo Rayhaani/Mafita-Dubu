@@ -21,52 +21,58 @@
         @keyframes blinkText { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         .logo-text { font-weight: 800; font-size: 1.5rem; color: #1e3a8a; animation: blinkText 1.5s infinite; }
 
-        /* HERO SLIDER - FIXED HEIGHT & NO CROPPING */
+        /* HERO SLIDER - STABLE VERSION */
         #hero-slider { 
             position: relative; 
-            height: 380px; /* Tsayin da ya dace da waya */
+            height: 420px; /* Tsayin da zai bar kowa ya fito */
             overflow: hidden; 
             border-radius: 2.2rem; 
             margin: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            background: #d1d5db;
+            background: #e5e7eb; /* Background kafin hoton ya loda */
         }
         
         .slide { 
             position: absolute; 
             inset: 0; 
-            display: none; /* Boye duka slides tukunna */
+            opacity: 0; 
+            visibility: hidden;
+            transition: opacity 0.8s ease-in-out;
         }
         
         .slide.active { 
-            display: block; /* Nuna slide mai aiki kawai */
+            opacity: 1; 
+            visibility: visible;
+            z-index: 10;
         }
         
         .slide img { 
             width: 100%; 
             height: 100%; 
             object-fit: cover; 
-            object-position: center 15%; /* Wannan zai nuna kawuna radau */
+            object-position: center 10%; /* Wannan zai nuna kawunan mutane duka */
         }
         
         .slide-overlay {
             position: absolute; bottom: 0; left: 0; width: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 15%, transparent);
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 15%, transparent);
             padding: 35px 20px;
+            z-index: 20;
         }
 
         .caption-text { 
-            color: #E8E4D9; /* Deep Milk */
-            font-size: 1.35rem; 
+            color: #E8E4D9; 
+            font-size: 1.4rem; 
             font-weight: 800; 
             text-transform: uppercase; 
             line-height: 1.1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        /* Breathing Boxes - Pure White on Milk Background */
+        /* Action Cards */
         @keyframes strongBreathe {
             0%, 100% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-            50% { transform: scale(1.04); box-shadow: 0 15px 30px rgba(0,0,0,0.12); }
+            50% { transform: scale(1.04); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
         }
         .action-card {
             background: #FFFFFF;
@@ -75,17 +81,16 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 25px 10px;
+            padding: 22px 10px;
             border: 1px solid #E5E7EB;
         }
         .card-label { font-size: 11px; font-weight: 800; text-transform: uppercase; margin-top: 8px; }
 
-        /* Why Section (Black) */
+        /* Why Section */
         .why-container { background: #000; color: white; border-radius: 2.5rem; padding: 45px 25px; margin: 25px 15px; }
         .red-arrow { color: #ff0000; font-size: 1.5rem; font-weight: 900; margin-right: 12px; }
         .why-item { display: flex; align-items: flex-start; margin-bottom: 30px; }
         .item-header { font-weight: 800; font-size: 1.1rem; }
-        .item-body { color: #9ca3af; font-size: 0.95rem; line-height: 1.6; }
     </style>
 </head>
 <body class="pb-32">
@@ -100,23 +105,23 @@
 
     <div id="hero-slider">
         <div class="slide active">
-            <img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg">
+            <img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg" alt="Escrow">
             <div class="slide-overlay"><h2 class="caption-text">Yi Kasuwanci a Cikin <br>Cikakken Aminci</h2></div>
         </div>
         <div class="slide">
-            <img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg">
+            <img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg" alt="Work">
             <div class="slide-overlay"><h2 class="caption-text">Nemi Kwararren Ma'aikaci <br>a Kowane Fanni</h2></div>
         </div>
         <div class="slide">
-            <img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg">
+            <img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg" alt="Market">
             <div class="slide-overlay"><h2 class="caption-text">Tallatawa Duniya <br>Hajarka Cikin Sauki</h2></div>
         </div>
         <div class="slide">
-            <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg">
+            <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg" alt="Solution">
             <div class="slide-overlay"><h2 class="caption-text">Bincika Maganin <br>Dukkanin Matsaloli</h2></div>
         </div>
         <div class="slide">
-            <img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg">
+            <img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg" alt="Skills">
             <div class="slide-overlay"><h2 class="caption-text">Koyi Sana'a Kowace Iri <br>a Cikin Sauki</h2></div>
         </div>
     </div>
@@ -134,31 +139,37 @@
         <h3 class="text-2xl font-extrabold mb-10 italic">WHAT YOU'LL UNLOCK:</h3>
         <div class="why-item">
             <span class="red-arrow">»</span>
-            <div><span class="item-header">Kwararru, Ba Masu Koyo Ba:</span><p class="item-body">Sanya aikin ka a hannun mutanen da suka san aiki.</p></div>
+            <div><span class="item-header">Kwararru, Ba Masu Koyo Ba:</span><p class="text-gray-400">Sanya aikin ka a hannun mutanen da suka san aiki.</p></div>
         </div>
         <div class="why-item">
             <span class="red-arrow">»</span>
-            <div><span class="item-header">Tsaro 100%, Babu Zamba:</span><p class="item-body">Muna rike da kudin ka a matsayin amana (Escrow).</p></div>
+            <div><span class="item-header">Tsaro 100%, Babu Zamba:</span><p class="text-gray-400">Muna rike da kudin ka a matsayin amana.</p></div>
         </div>
     </section>
 
     <script>
-        // Cikakken Slider Script
-        const slides = document.querySelectorAll('.slide');
-        let currentSlide = 0;
+        // Strong Slider Script - No disappearing
+        const sliderSlides = document.querySelectorAll('.slide');
+        let currentIdx = 0;
 
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            slides[index].classList.add('active');
+        function rotateSlides() {
+            // Cire active a duka
+            sliderSlides.forEach(s => {
+                s.classList.remove('active');
+            });
+            
+            // Kara lissafi
+            currentIdx++;
+            if (currentIdx >= sliderSlides.length) {
+                currentIdx = 0;
+            }
+            
+            // Nuna na gaba
+            sliderSlides[currentIdx].classList.add('active');
         }
 
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        }
-
-        // Fara Slider duk bayan seconds 4
-        setInterval(nextSlide, 4000);
+        // Fara canzawa duk bayan seconds 4.5
+        setInterval(rotateSlides, 4500);
     </script>
 </body>
 </html>
