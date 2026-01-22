@@ -3,146 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Global Market</title>
+    <title>Global Market | Mafita Dubu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,800;1,800&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; margin: 0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; margin: 0; overflow-x: hidden; }
 
-        .market-title {
+        /* MULTI-COLOR BOLD & BLINKING TITLE */
+        .global-market-title {
+            font-size: 1.6rem;
             font-weight: 900;
-            background: linear-gradient(90deg, #1e3a8a, #2563eb, #1e3a8a);
-            background-size: 200% auto;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #e11d48, #f59e0b, #10b981, #3b82f6, #6366f1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shine 3s linear infinite;
+            display: inline-block;
+            animation: blink-animation 1s steps(5, start) infinite, gradient-move 3s linear infinite;
+            background-size: 200% auto;
         }
-        @keyframes shine { to { background-position: 200% center; } }
 
-        .search-box {
+        @keyframes blink-animation { to { visibility: hidden; } }
+        @keyframes gradient-move { to { background-position: 200% center; } }
+
+        /* FUTURISTIC SEARCH BARS */
+        .search-container {
+            perspective: 1000px;
+        }
+
+        .neon-search {
             background: white;
-            border-radius: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
+            border-radius: 1.5rem;
+            position: relative;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
         }
 
-        .product-grid { display: grid; grid-cols: 2; gap: 15px; padding: 15px; }
-        
-        .distance-tag {
-            background: #dcfce7;
-            color: #166534;
-            padding: 2px 8px;
-            border-radius: 10px;
+        .neon-search:hover {
+            transform: translateY(-5px) rotateX(5deg);
+            box-shadow: 0 20px 30px -10px rgba(59, 130, 246, 0.3);
+            border-color: #3b82f6;
+        }
+
+        .near-you-btn {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            border-radius: 1.5rem;
+            color: white;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+            overflow: hidden;
+        }
+
+        .near-you-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            animation: sweep 3s infinite;
+        }
+
+        @keyframes sweep {
+            0% { transform: translate(-100%, -100%) rotate(45deg); }
+            100% { transform: translate(100%, 100%) rotate(45deg); }
+        }
+
+        /* DISTANCE TAGS */
+        .distance-badge {
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
             font-size: 10px;
             font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
         }
 
         .nav-bottom {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            background: white; display: flex; justify-content: space-around;
-            padding: 15px 0; border-radius: 2rem 2rem 0 0;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 100;
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            width: 90%; background: white; border-radius: 2.5rem;
+            padding: 15px; display: flex; justify-content: space-around;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1); z-index: 100;
         }
     </style>
 </head>
-<body class="pb-24">
+<body class="pb-32">
 
-    <nav class="p-5 bg-white sticky top-0 z-50 shadow-sm flex items-center justify-between">
-        <a href="index.html" class="text-blue-900 text-xl"><i class="fa-solid fa-arrow-left"></i></a>
-        <h1 class="market-title text-xl uppercase italic">Global Market</h1>
-        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center"><i class="fa-solid fa-user text-blue-900"></i></div>
+    <nav class="p-5 flex justify-between items-center bg-white sticky top-0 z-50 shadow-sm">
+        <a href="index.html" class="text-blue-900 text-xl font-bold"><i class="fa-solid fa-arrow-left"></i></a>
+        <h1 class="global-market-title">GLOBAL MARKET</h1>
+        <div class="text-blue-600 text-xl"><i class="fa-solid fa-map-location-dot"></i></div>
     </nav>
 
-    <div class="p-4 space-y-3">
-        <div class="search-box flex items-center p-3">
-            <i class="fa-solid fa-magnifying-glass text-gray-400 mr-2"></i>
-            <input type="text" placeholder="Bincika ko'ina a duniya (Global Search)" class="w-full outline-none text-sm bg-transparent">
+    <div class="p-6 search-container space-y-4">
+        <div class="neon-search flex items-center p-4">
+            <div class="bg-blue-50 w-10 h-10 rounded-full flex items-center justify-center mr-3 text-blue-600">
+                <i class="fa-solid fa-earth-africa"></i>
+            </div>
+            <input type="text" placeholder="GLOBAL SEARCH..." class="w-full outline-none text-sm font-bold text-gray-700 bg-transparent placeholder-gray-400">
+            <i class="fa-solid fa-magnifying-glass text-blue-500"></i>
         </div>
 
-        <button onclick="activateGPS()" class="w-full bg-blue-50 border border-blue-200 rounded-2xl p-3 flex items-center justify-between">
+        <button onclick="startGPS()" class="near-you-btn w-full p-4 flex items-center justify-between group">
             <div class="flex items-center">
-                <i class="fa-solid fa-location-crosshairs text-blue-600 mr-2"></i>
-                <span class="text-blue-900 font-bold text-sm">Bincika kusa da kai (Near You)</span>
+                <div class="bg-white/20 w-10 h-10 rounded-full flex items-center justify-center mr-3">
+                    <i class="fa-solid fa-location-crosshairs text-white animate-spin-slow"></i>
+                </div>
+                <span class="font-black italic text-sm tracking-wider">NEAR YOU</span>
             </div>
-            <i class="fa-solid fa-chevron-right text-blue-400 text-xs"></i>
+            <div class="flex items-center text-[10px] font-bold opacity-80 uppercase">
+                Find local vendors <i class="fa-solid fa-chevron-right ml-2"></i>
+            </div>
         </button>
     </div>
 
-    <div class="px-4">
-        <h2 class="text-gray-400 font-bold text-xs uppercase mb-3">Kayayyakin Sayarwa</h2>
-        
-        <div class="grid grid-cols-2 gap-4" id="product-list">
-            
-            <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100">
-                <img src="https://i.postimg.cc/85zTqXzM/iphone.jpg" class="w-full h-32 object-cover">
-                <div class="p-3">
-                    <div class="flex justify-between items-start mb-1">
-                        <h3 class="font-bold text-xs italic">iPhone 13 Pro</h3>
-                        <span class="distance-tag" id="dist-1">Duniya</span>
-                    </div>
-                    <p class="text-green-600 font-extrabold text-sm">₦450k</p>
-                    <p class="text-[9px] text-gray-400 mt-1"><i class="fa-solid fa-shop"></i> Global Vendor</p>
+    <div class="px-5">
+        <h2 class="text-gray-400 font-bold text-[10px] uppercase tracking-widest mb-4">Featured Varieties</h2>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-gray-100 p-2">
+                <div class="relative">
+                    <img src="https://i.postimg.cc/85zTqXzM/iphone.jpg" class="w-full h-36 object-cover rounded-[1.5rem]">
+                    <div class="absolute top-2 right-2 distance-badge" id="d1">Global</div>
+                </div>
+                <div class="p-2">
+                    <h3 class="font-extrabold text-xs italic text-gray-800">iPhone 13 Pro</h3>
+                    <p class="text-blue-600 font-black text-sm mt-1">₦450,000</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100">
-                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff" class="w-full h-32 object-cover">
-                <div class="p-3">
-                    <div class="flex justify-between items-start mb-1">
-                        <h3 class="font-bold text-xs italic">Nike Sport</h3>
-                        <span class="distance-tag" id="dist-2">Kusa</span>
-                    </div>
-                    <p class="text-green-600 font-extrabold text-sm">₦25k</p>
-                    <p class="text-[9px] text-gray-400 mt-1"><i class="fa-solid fa-shop"></i> Ahmad Collections</p>
+            <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-gray-100 p-2">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff" class="w-full h-36 object-cover rounded-[1.5rem]">
+                    <div class="absolute top-2 right-2 distance-badge" id="d2">Local</div>
+                </div>
+                <div class="p-2">
+                    <h3 class="font-extrabold text-xs italic text-gray-800">Nike Sneakers</h3>
+                    <p class="text-blue-600 font-black text-sm mt-1">₦35,000</p>
                 </div>
             </div>
-
-            <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100">
-                <img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg" class="w-full h-32 object-cover">
-                <div class="p-3">
-                    <div class="flex justify-between items-start mb-1">
-                        <h3 class="font-bold text-xs italic">Kayan Lambu</h3>
-                        <span class="distance-tag" id="dist-3">Kusa</span>
-                    </div>
-                    <p class="text-green-600 font-extrabold text-sm">₦5k</p>
-                    <p class="text-[9px] text-gray-400 mt-1"><i class="fa-solid fa-shop"></i> Fresh Mart</p>
-                </div>
-            </div>
-
         </div>
     </div>
 
     <div class="nav-bottom">
-        <a href="index.html" class="text-gray-400 text-xl"><i class="fa-solid fa-house"></i></a>
-        <a href="#" class="text-blue-600 text-xl"><i class="fa-solid fa-compass"></i></a>
-        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-lg -mt-10 border-4 border-white">
+        <a href="index.html" class="text-gray-400 text-2xl"><i class="fa-solid fa-house"></i></a>
+        <a href="#" class="text-blue-900 text-2xl"><i class="fa-solid fa-compass"></i></a>
+        <div class="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-lg -mt-12 border-4 border-white">
             <i class="fa-solid fa-plus"></i>
         </div>
-        <a href="#" class="text-gray-400 text-xl"><i class="fa-solid fa-message"></i></a>
-        <a href="#" class="text-gray-400 text-xl"><i class="fa-solid fa-user"></i></a>
+        <a href="#" class="text-gray-400 text-2xl"><i class="fa-solid fa-comment-dots"></i></a>
+        <a href="#" class="text-gray-400 text-2xl"><i class="fa-solid fa-user"></i></a>
     </div>
 
     <script>
-        function activateGPS() {
-            // Simulation na GPS searching
-            const tags = [
-                { id: 'dist-1', dist: '15.4 km away' },
-                { id: 'dist-2', dist: '0.8 km away' },
-                { id: 'dist-3', dist: '2.5 km away' }
-            ];
-
-            alert("GPS yana binciko dillalai mafi kusa da kai...");
-
-            tags.forEach(tag => {
-                const el = document.getElementById(tag.id);
-                el.innerText = tag.dist;
-                el.style.background = '#dbeafe';
-                el.style.color = '#1e40af';
-            });
+        function startGPS() {
+            const btn = document.querySelector('.near-you-btn');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch animate-spin mr-2"></i> SCANNING AREA...';
+            
+            setTimeout(() => {
+                document.getElementById('d1').innerText = '12.5 KM';
+                document.getElementById('d2').innerText = '0.4 KM';
+                btn.innerHTML = '<i class="fa-solid fa-check-circle mr-2"></i> LOCATED';
+                btn.style.background = 'linear-gradient(135deg, #059669 0%, #10b981 100%)';
+            }, 2000);
         }
     </script>
 </body>
-            </html>
-            
+    </html>
+    
