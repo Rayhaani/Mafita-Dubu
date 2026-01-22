@@ -25,6 +25,7 @@
         @keyframes rotateMe { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .breathing-card { background: white; border: 1.5px solid #f1f5f9; animation: boxBreath 4s infinite ease-in-out; }
         @keyframes boxBreath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); border-color: #10b981; } }
+        .red-arrow { color: #ef4444; font-weight: 900; margin-right: 12px; }
     </style>
 </head>
 <body class="pb-40">
@@ -47,6 +48,18 @@
             <i class="fa-solid fa-graduation-cap text-blue-600 text-3xl mb-4"></i>
             <span class="font-bold text-slate-700 text-xs text-center">Koyon Sana'a</span>
         </div>
+        <div class="breathing-card p-7 rounded-[2.5rem] flex flex-col items-center">
+            <i class="fa-solid fa-lightbulb text-yellow-600 text-3xl mb-4"></i>
+            <span class="font-bold text-slate-700 text-xs text-center">Mafitar Rayuwa</span>
+        </div>
+        <div class="breathing-card p-7 rounded-[2.5rem] flex flex-col items-center">
+            <i class="fa-solid fa-user-doctor text-red-600 text-3xl mb-4"></i>
+            <span class="font-bold text-slate-700 text-xs text-center">Nemi Kwararre</span>
+        </div>
+        <div class="breathing-card p-7 rounded-[2.5rem] flex flex-col items-center">
+            <i class="fa-solid fa-shield-halved text-green-600 text-3xl mb-4"></i>
+            <span class="font-bold text-slate-700 text-xs text-center">Escrow Wallet</span>
+        </div>
         
         <a href="market.html" class="breathing-card p-7 rounded-[2.5rem] flex flex-col items-center">
             <i class="fa-solid fa-shop text-purple-600 text-3xl mb-4"></i>
@@ -57,6 +70,30 @@
             <i class="fa-solid fa-bolt text-orange-600 text-3xl mb-4"></i>
             <span class="font-bold text-slate-700 text-xs text-center">AdChain</span>
         </div>
+        <div class="breathing-card p-7 rounded-[2.5rem] flex flex-col items-center">
+            <i class="fa-solid fa-hand-holding-dollar text-emerald-600 text-3xl mb-4"></i>
+            <span class="font-bold text-slate-700 text-xs text-center">Zuba Jari</span>
+        </div>
+        <div class="breathing-card p-7 rounded-[2.5rem] flex flex-col items-center">
+            <i class="fa-solid fa-users-viewfinder text-indigo-600 text-3xl mb-4"></i>
+            <span class="font-bold text-slate-700 text-xs text-center">Al'umma</span>
+        </div>
+    </section>
+
+    <section class="px-6 mt-16 mb-20">
+        <div class="bg-black rounded-[3rem] p-10 text-white shadow-2xl">
+            <h3 class="text-xl font-black mb-8 text-center border-b border-white/10 pb-4">WHY MAFITA DUBU?</h3>
+            <div class="space-y-6 text-sm">
+                <div class="flex items-start"><span class="red-arrow">»</span><p>Hyper-Local Search: Nemi kwararre kusa da kai.</p></div>
+                <div class="flex items-start"><span class="red-arrow">»</span><p>Verified Professionals: Amintattun ma'aikata.</p></div>
+                <div class="flex items-start"><span class="red-arrow">»</span><p>Secure Escrow: Kariyar kudin mai siye.</p></div>
+                <div class="flex items-start"><span class="red-arrow">»</span><p>AdChain Earnings: Kudi ta hanyar talla.</p></div>
+                <div class="flex items-start"><span class="red-arrow">»</span><p>Global Market: Bude shagonka ga duniya.</p></div>
+                <div class="flex items-start"><span class="red-arrow">»</span><p>Dispute Resolution: Tsarin sulhun gaskiya.</p></div>
+                <div class="flex items-start"><span class="red-arrow">»</span><p>24/7 Support: Taimako a kowane lokaci.</p></div>
+                <div class="flex items-start"><span class="red-arrow">»</span><p>Zero Boundaries: Hadin kan yan kasuwa.</p></div>
+            </div>
+        </div>
     </section>
 
     <script>
@@ -64,7 +101,7 @@
         const glitterBrand = document.getElementById('glitter-brand');
         let isFirstTime = true;
         let messageIndex = 0;
-        const otherMessages = ['Maganin kowace matsala ta rayuwa.', 'Yi bincike akan kowace irin matsala.', 'Nemi kwararre a kowane fanni.', 'Yi kasuwanci a cikin aminci.', 'Kalli talla ka samu kudi.'];
+        const otherMessages = ['Maganin kowace matsala ta rayuwa.', 'Yi bincike akan kowace matsala.', 'Nemi kwararre a kowane fanni.', 'Yi kasuwanci a cikin aminci.', 'Kalli talla ka samu kudi.'];
         function showGlitter() {
             typeWrapper.style.display = 'none';
             glitterBrand.style.display = 'block';
@@ -87,4 +124,5 @@
         window.onload = showNextMessage;
     </script>
 </body>
-</html>
+    </html>
+    
