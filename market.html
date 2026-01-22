@@ -9,7 +9,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;600;700;900&display=swap');
         
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
         
         .master-glitter {
             font-family: 'Archivo Black', sans-serif;
@@ -22,20 +22,27 @@
         }
         @keyframes glitterMove { to { background-position: 0 0, 300% center; } }
 
-        /* Modal Animation */
+        /* Pulsing Dot for Live Status */
+        .live-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 1);
+            animation: pulse-green 2s infinite;
+        }
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
         #productModal { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; pointer-events: none; }
         #productModal.active { opacity: 1; pointer-events: auto; }
         .modal-content { transform: translateY(100%); transition: all 0.4s ease; }
         #productModal.active .modal-content { transform: translateY(0); }
-
-        .feature-tag {
-            background: linear-gradient(90deg, #ef4444, #f59e0b);
-            color: white;
-            font-size: 8px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 900;
-        }
     </style>
 </head>
 <body class="pb-32">
@@ -44,51 +51,40 @@
         <div class="flex justify-between items-center mb-4">
             <a href="index.html" class="text-2xl text-blue-900"><i class="fa-solid fa-arrow-left"></i></a>
             <h1 class="text-xl master-glitter">GLOBAL MARKET</h1>
-            <div class="flex space-x-4">
-                <i class="fa-solid fa-microphone-lines text-green-600 text-xl animate-pulse"></i>
-                <i class="fa-solid fa-cart-shopping text-blue-900 text-xl"></i>
-            </div>
+            <i class="fa-solid fa-cart-shopping text-blue-900 text-xl"></i>
         </div>
         <div class="relative">
-            <input type="text" placeholder="Nemi kaya ko kwararre a kusa da kai..." class="w-full bg-slate-100 border-none rounded-2xl py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-blue-500">
+            <input type="text" placeholder="Nemi kaya mafi kusa da kai..." class="w-full bg-slate-100 border-none rounded-2xl py-3 pl-12 pr-4 text-sm outline-none">
             <i class="fa-solid fa-location-dot absolute left-4 top-1/2 -translate-y-1/2 text-blue-600"></i>
         </div>
     </header>
 
-    <div class="px-6 py-2 bg-blue-900 text-white text-[10px] flex justify-between items-center">
-        <span><i class="fa-solid fa-shield-halved mr-1"></i> Escrow Secured Market</span>
-        <span class="font-bold text-yellow-400">PoR Technology Active</span>
-    </div>
-
-    <div class="flex overflow-x-auto space-x-3 px-6 py-4 no-scrollbar bg-white">
-        <span class="bg-blue-900 text-white px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap">Duk Kaya</span>
-        <span class="border border-slate-200 px-5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap">Electronics</span>
-        <span class="border border-slate-200 px-5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap">Kayan Mata</span>
-        <span class="border border-slate-200 px-5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap">Abinci</span>
-    </div>
-
-    <main class="px-6 grid grid-cols-2 gap-4 mt-4">
-        <div onclick="openModal('Smart Watch S8', '₦15,000', 'Wannan agogon yana da fasahar VCB da PoR. An tantance shi daga TechHub.')" class="bg-white rounded-[1.5rem] overflow-hidden shadow-sm border border-slate-100 active:scale-95 transition-transform">
-            <div class="h-32 bg-slate-200 relative">
-                <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400" class="w-full h-full object-cover">
-                <span class="feature-tag absolute top-2 left-2">LIVE BIDDING</span>
+    <main class="px-6 grid grid-cols-2 gap-4 mt-6">
+        <div onclick="openModal('Iphone 13 Pro', '₦450,000', 'Original phone, Battery health 98%')" class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-50 relative">
+            <div class="h-36 bg-slate-200 relative">
+                <img src="https://images.unsplash.com/photo-1632661674596-df8be070a5c5?w=400" class="w-full h-full object-cover">
+                <span class="absolute top-3 left-3 bg-white/90 px-2 py-1 rounded-full text-[9px] font-bold text-blue-900 shadow-sm">
+                    <span class="live-dot"></span> Online
+                </span>
+                <span class="absolute bottom-2 right-2 bg-black/50 backdrop-blur-md text-white text-[8px] px-2 py-1 rounded-md">0.8km away</span>
             </div>
-            <div class="p-3">
-                <h3 class="font-bold text-xs text-slate-800">Smart Watch S8</h3>
-                <p class="text-green-600 font-black text-sm mt-1">₦15,000</p>
-                <p class="text-[9px] text-blue-500 mt-1"><i class="fa-solid fa-coins mr-1"></i>Pay with AdTokens</p>
+            <div class="p-3 text-center">
+                <h3 class="font-bold text-xs truncate">Iphone 13 Pro</h3>
+                <p class="text-green-600 font-black text-sm mt-1">₦450k</p>
             </div>
         </div>
 
-        <div onclick="openModal('Designer Sneakers', '₦25,000', 'Original footwear tare da bidiyon PoR na gaske.')" class="bg-white rounded-[1.5rem] overflow-hidden shadow-sm border border-slate-100 active:scale-95 transition-transform">
-            <div class="h-32 bg-slate-200 relative">
-                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400" class="w-full h-full object-cover">
-                <span class="feature-tag absolute top-2 left-2">VERIFIED PoR</span>
+        <div onclick="openModal('Nike Air Max', '₦35,000', 'Very comfortable, original size 42')" class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-50 relative">
+            <div class="h-36 bg-slate-200 relative">
+                <img src="https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400" class="w-full h-full object-cover">
+                <span class="absolute top-3 left-3 bg-white/90 px-2 py-1 rounded-full text-[9px] font-bold text-slate-400 shadow-sm">
+                    <i class="fa-solid fa-clock mr-1"></i> Offline
+                </span>
+                <span class="absolute bottom-2 right-2 bg-black/50 backdrop-blur-md text-white text-[8px] px-2 py-1 rounded-md">1.5km away</span>
             </div>
-            <div class="p-3">
-                <h3 class="font-bold text-xs text-slate-800">Designer Sneakers</h3>
-                <p class="text-green-600 font-black text-sm mt-1">₦25,000</p>
-                <p class="text-[9px] text-slate-400 mt-1"><i class="fa-solid fa-location-arrow mr-1"></i>2km Near You</p>
+            <div class="p-3 text-center">
+                <h3 class="font-bold text-xs truncate">Nike Air Max</h3>
+                <p class="text-green-600 font-black text-sm mt-1">₦35k</p>
             </div>
         </div>
     </main>
@@ -97,23 +93,26 @@
         <div class="modal-content w-full bg-white rounded-t-[3rem] p-8">
             <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6"></div>
             
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <h2 id="modalTitle" class="text-2xl font-black text-slate-900">Product Name</h2>
-                    <p id="modalPrice" class="text-xl font-bold text-green-600">₦0.00</p>
-                </div>
-                <div class="bg-green-100 text-green-600 p-3 rounded-2xl">
-                    <i class="fa-solid fa-microphone-lines text-2xl"></i>
+            <h2 id="modalTitle" class="text-2xl font-black text-slate-900 mb-1">Product</h2>
+            <p id="modalPrice" class="text-xl font-bold text-green-600 mb-4">₦0.00</p>
+            <p id="modalDesc" class="text-slate-500 text-sm mb-8">Details...</p>
+
+            <div class="bg-slate-50 rounded-2xl p-4 mb-8">
+                <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-3 tracking-widest">Tsarin Escrow (Yadda yake aiki)</h4>
+                <div class="flex justify-between items-center text-[10px] font-bold">
+                    <div class="flex flex-col items-center text-blue-600"><i class="fa-solid fa-wallet mb-1"></i><span>Biya</span></div>
+                    <div class="h-[1px] bg-blue-200 flex-1 mx-2"></div>
+                    <div class="flex flex-col items-center text-slate-300"><i class="fa-solid fa-vault mb-1"></i><span>Rumbu</span></div>
+                    <div class="h-[1px] bg-slate-200 flex-1 mx-2"></div>
+                    <div class="flex flex-col items-center text-slate-300"><i class="fa-solid fa-truck-ramp-box mb-1"></i><span>Karba</span></div>
+                    <div class="h-[1px] bg-slate-200 flex-1 mx-2"></div>
+                    <div class="flex flex-col items-center text-slate-300"><i class="fa-solid fa-circle-check mb-1"></i><span>Saki Kudin</span></div>
                 </div>
             </div>
 
-            <p id="modalDesc" class="text-slate-500 text-sm leading-relaxed mb-8">
-                Bayanan kaya za su fito a nan...
-            </p>
-
             <div class="grid grid-cols-2 gap-4">
-                <button class="bg-blue-900 text-white py-4 rounded-2xl font-bold flex items-center justify-center space-x-2">
-                    <i class="fa-solid fa-shield-check"></i>
+                <button onclick="alert('Tsarin Escrow ya fara aiki! Kudinka zai zauna a rumbun Mafita Dubu.')" class="bg-blue-900 text-white py-4 rounded-2xl font-bold flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-shield-halved"></i>
                     <span>Siyan Escrow</span>
                 </button>
                 <button class="bg-green-600 text-white py-4 rounded-2xl font-bold flex items-center justify-center space-x-2">
@@ -122,16 +121,14 @@
                 </button>
             </div>
             
-            <button onclick="closeModal()" class="w-full mt-4 py-3 text-slate-400 font-bold text-sm">Koma Baya</button>
+            <button onclick="closeModal()" class="w-full mt-4 py-3 text-slate-400 font-bold text-sm">Rufe</button>
         </div>
     </div>
 
-    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] h-20 bg-white shadow-2xl rounded-[2.5rem] flex items-center justify-around px-2 border border-slate-50 z-50">
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] h-20 bg-white shadow-2xl rounded-[2.5rem] flex items-center justify-around z-50">
         <a href="index.html"><i class="fa-solid fa-house text-slate-300 text-2xl"></i></a>
         <i class="fa-solid fa-compass text-blue-900 text-2xl"></i>
-        <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-3xl -mt-16 border-[6px] border-[#f8fafc] shadow-xl">
-            <i class="fa-solid fa-plus"></i>
-        </div>
+        <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-3xl -mt-16 border-[6px] border-[#f8fafc] shadow-xl"><i class="fa-solid fa-plus"></i></div>
         <i class="fa-solid fa-message text-slate-300 text-2xl"></i>
         <i class="fa-solid fa-user text-slate-300 text-2xl"></i>
     </div>
@@ -143,11 +140,9 @@
             document.getElementById('modalDesc').innerText = desc;
             document.getElementById('productModal').classList.add('active');
         }
-
         function closeModal() {
             document.getElementById('productModal').classList.remove('active');
         }
     </script>
 </body>
-  </html>
-  
+</html>
