@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
     
     <style>
+        /* FONT DIN MAFITA DUBU A KO'INA */
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F2EFE9; margin: 0; overflow-x: hidden; }
 
         /* LOGO MAI JUYAWA */
@@ -32,17 +33,12 @@
         .slide.active { opacity: 1; }
         .slide img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* NAN NE GYARAN HOTUNAN: */
-        
-        /* 1. Hoton mutane 3 (Aminci) - Mun sa shi ya fito duka */
-        .aminci-fix { object-position: 50% 15% !important; }
-        
-        /* 2. Hoton mutumin hagu (Kayan lambu) */
+        /* GYARAN HOTUNA - KADA A YANKE JIKIN MUTANE */
+        .aminci-fix { object-position: center 18% !important; } /* Wannan zai nuna mutane 3 duka */
         .veggie-fix { object-position: 15% center !important; }
-        
-        /* 3. Sauran hotunan */
         .standard-fix { object-position: center 10%; }
 
+        /* CAPTIONS MASU FONT DIN LOGO DA ADO */
         .overlay {
             position: absolute;
             bottom: 30px;
@@ -50,12 +46,13 @@
             padding: 0 20px;
             color: white;
             text-align: center;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.9);
+            text-shadow: 2px 2px 12px rgba(0,0,0,1); /* Kara duhun inuwa don kar rubutu ya bace */
             z-index: 10;
         }
-        .overlay h2 { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; }
+        .overlay h2 { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif; }
         .overlay .highlight { color: #fbbf24; display: block; font-size: 1.2rem; }
 
+        /* BOXES MASU ADO */
         .card-blink {
             background: white;
             border-radius: 1.2rem;
@@ -69,10 +66,11 @@
             text-decoration: none;
         }
         @keyframes cardFade { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.97); } }
-        .card-text { font-size: 9px; font-weight: 800; margin-top: 10px; text-transform: uppercase; color: #1e3a8a; white-space: nowrap; }
+        .card-text { font-size: 9px; font-weight: 800; margin-top: 10px; text-transform: uppercase; color: #1e3a8a; font-family: 'Plus Jakarta Sans', sans-serif; }
 
+        /* BLACK BOX REASONS */
         .famous-black-box { background: #000; color: #fff; padding: 50px 25px; border-radius: 2.5rem 2.5rem 0 0; margin-top: 40px; }
-        .famous-header { font-size: 32px; font-weight: 800; margin-bottom: 40px; }
+        .famous-header { font-size: 30px; font-weight: 800; margin-bottom: 40px; }
         .reason-row { display: flex; align-items: flex-start; margin-bottom: 35px; }
         .reason-arrow { color: #ff3b30; font-size: 1.2rem; margin-right: 15px; margin-top: 4px; }
         .reason-content b { font-weight: 800; font-size: 1.1rem; display: block; margin-bottom: 6px; }
@@ -121,29 +119,22 @@
         <div class="card-blink"><i class="fa-solid fa-lightbulb text-2xl text-red-600"></i><p class="card-text">Mafita</p></div>
         <div class="card-blink"><i class="fa-solid fa-user-tie text-2xl text-yellow-600"></i><p class="card-text">Sashen Kwararru</p></div>
         <div class="card-blink"><i class="fa-solid fa-shield-halved text-2xl text-green-600"></i><p class="card-text">Escrow Service</p></div>
-        
-        <a href="market.html" class="card-blink">
-            <i class="fa-solid fa-shop text-2xl text-purple-600"></i>
-            <p class="card-text">Yan Kasuwa</p>
-        </a>
-
+        <a href="market.html" class="card-blink"><i class="fa-solid fa-shop text-2xl text-purple-600"></i><p class="card-text">Yan Kasuwa</p></a>
         <div class="card-blink"><i class="fa-solid fa-link text-2xl text-indigo-600"></i><p class="card-text">AdChain</p></div>
     </div>
 
     <div class="famous-black-box">
         <h2 class="famous-header">What You'll Unlock:</h2>
-        <div class="reason-row">
-            <div class="reason-arrow">»</div>
-            <div class="reason-content"><b>End of Scams & Fraud:</b><p>Muna amfani da AI ta zamani wajen tace dukkan mu'amala. A nan, dukiyar ka tana nan a kulle cikin amana.</p></div>
-        </div>
-        <div class="reason-row">
-            <div class="reason-arrow">»</div>
-            <div class="reason-content"><b>The Trust Engine (Escrow):</b><p>Tsarin mu yana rike da kudi har sai ka gamsu 100% da aikin da aka yi maka. Kaine mai iko.</p></div>
-        </div>
-        <div class="reason-row">
-            <div class="reason-arrow">»</div>
-            <div class="reason-content"><b>Elite Connection:</b><p>Muna hada ka da kwararrun da aka tantance a cikin dakiku don kammala ayyukanka cikin sauri.</p></div>
-        </div>
+        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>End of Scams & Fraud:</b><p>Muna amfani da AI ta zamani wajen tace dukkan mu'amala. A nan, dukiyar ka tana nan a kulle cikin amana.</p></div></div>
+        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>The Trust Engine (Escrow):</b><p>Tsarin mu yana rike da kudi har sai ka gamsu 100% da aikin da aka yi maka.</p></div></div>
+        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Elite Connection:</b><p>Muna hada ka da kwararrun da aka tantance a cikin dakiku don kammala ayyukanka.</p></div></div>
+        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Modern Skill Acquisition:</b><p>Koyi sana'o'in da za su baka kudi yau-yau, ba gobe ba. Koyi a zamanance.</p></div></div>
+        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Hyper-Growth AdChain:</b><p>Tallata hajarka ga miliyoyin mutane ta hanyar tsarin mu na AdChain.</p></div></div>
+        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>AI Problem Solver:</b><p>Muna da amsar kowace damuwarka. Injin mu na AI yana nan don kai.</p></div></div>
+        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Global Trade Standards:</b><p>Mun gina tsarin da zai maida kowane Bahaushe mai nasara a duniyar digital.</p></div></div>
+        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Zero Middleman Fees:</b><p>Mun kashe tsarin dillanci. Kai tsaye zaka yi mu'amala da wanda kake bukata.</p></div></div>
+        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Production-Ready Results:</b><p>Kowane darasi an tsara shi ne don ka fara samun amfani a take.</p></div></div>
+        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Future-Proof Security:</b><p>Sashin tsaro namu yana aiki 24/7 don kare bayanan ka da asusun ka.</p></div></div>
     </div>
 
     <script>
@@ -156,5 +147,4 @@
         }, 3500);
     </script>
 </body>
-                                                                                                 </html>
-                                                                                                 
+</html>
