@@ -6,7 +6,7 @@
     <title>Mafita Dubu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,700;0,800;1,800&display=swap" rel="stylesheet">
     
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F2EFE9; margin: 0; overflow-x: hidden; }
@@ -14,17 +14,22 @@
         .rotating-logo { animation: spin 4s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* WALWALI DA KALAR KUDI GA SUNAN MAFITA DUBU */
+        /* GYARAN SUNA: BOLD, WALWALI DA BLINKING */
         .brand-name {
-            font-weight: 900;
-            font-size: 1.4rem;
-            background: linear-gradient(90deg, #ffd700, #ffffff, #ffd700);
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #1e3a8a; /* Deep Royal Blue */
+            position: relative;
+            display: inline-block;
+            animation: blinker 1.5s linear infinite;
+            background: linear-gradient(90deg, #1e3a8a, #ffffff, #1e3a8a);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shine 2s linear infinite;
+            animation: shine 2s linear infinite, blinker 1.5s linear infinite;
         }
         @keyframes shine { to { background-position: 200% center; } }
+        @keyframes blinker { 50% { opacity: 0.3; } }
 
         .hero-slider {
             position: relative;
@@ -39,23 +44,41 @@
         .slide.active { opacity: 1; }
         .slide img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* CAPTIONS: ITALICS DA BOLD */
+        /* GYARAN KAWUNAN HOTUNA */
+        .veggie-fix { object-position: 15% 10% !important; } /* Kar kansa ya yanke */
+        .adchain-fix { object-position: center 5% !important; } /* Kar kansa ya yanke */
+        .standard-fix { object-position: center 10%; }
+
+        /* CAPTIONS STYLE: BOLD ITALIC PLUS JAKARTA */
         .overlay {
             position: absolute;
-            bottom: 30px;
+            bottom: 40px;
             width: 100%;
             padding: 0 20px;
             color: white;
             text-align: center;
-            text-shadow: 2px 2px 15px rgba(0,0,0,1);
             z-index: 10;
         }
-        .overlay h2 { font-size: 1.2rem; font-weight: 800; font-style: italic; text-transform: uppercase; }
-        .overlay .highlight { color: #fbbf24; display: block; font-size: 1.3rem; font-style: italic; }
+        .overlay h2 { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.3rem; 
+            font-weight: 800; 
+            font-style: italic; 
+            text-transform: uppercase; 
+            text-shadow: 3px 3px 15px rgba(0,0,0,1);
+            line-height: 1.2;
+        }
+        .overlay .highlight { 
+            color: #fbbf24; 
+            display: block; 
+            font-size: 1.5rem; 
+            font-weight: 800;
+            font-style: italic;
+            margin-top: 5px;
+        }
 
-        /* 6 BOXES: SABON KALA (SLATE BLUE) WANDA YA DACE DA BACKGROUND */
         .card-blink {
-            background: #e2e8f0; /* Slate blue mai haske */
+            background: #e2e8f0;
             border-radius: 1.2rem;
             padding: 20px 5px;
             text-align: center;
@@ -70,9 +93,8 @@
         @keyframes cardFade { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.98); } }
         .card-text { font-size: 9px; font-weight: 800; margin-top: 10px; text-transform: uppercase; color: #1e3a8a; }
 
-        /* WHY MAFITA DUBU: RAGI GIRMAN FONT */
         .famous-black-box { background: #000; color: #fff; padding: 40px 20px; border-radius: 2.5rem 2.5rem 0 0; margin-top: 30px; }
-        .famous-header { font-size: 24px; font-weight: 800; margin-bottom: 30px; }
+        .famous-header { font-size: 22px; font-weight: 800; margin-bottom: 30px; text-transform: uppercase; }
         .reason-row { display: flex; align-items: flex-start; margin-bottom: 25px; }
         .reason-arrow { color: #ff3b30; font-size: 1rem; margin-right: 12px; margin-top: 3px; }
         .reason-content b { font-weight: 800; font-size: 0.95rem; display: block; margin-bottom: 4px; }
@@ -91,19 +113,19 @@
 
     <div class="hero-slider">
         <div class="slide active">
-            <img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg">
+            <img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg" class="standard-fix">
             <div class="overlay"><h2>Yi Kasuwanci a Cikin <span class="highlight">Cikakken Aminci</span></h2></div>
         </div>
         <div class="slide">
-            <img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg">
+            <img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg" class="standard-fix">
             <div class="overlay"><h2>Nemi Kwararren Ma'aikaci <span class="highlight">a Kowane Fanni</span></h2></div>
         </div>
         <div class="slide">
-            <img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg">
+            <img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg" class="veggie-fix">
             <div class="overlay"><h2>Tallatawa Duniya <span class="highlight">Hajarka a Cikin Sauki</span></h2></div>
         </div>
         <div class="slide">
-            <img src="https://i.postimg.cc/bYC4xVzK/Chat-GPT-Image-Jan-22-2026-01-57-37-PM.png">
+            <img src="https://i.postimg.cc/bYC4xVzK/Chat-GPT-Image-Jan-22-2026-01-57-37-PM.png" class="adchain-fix">
             <div class="overlay"><h2>Yi Aiki mai Sauki <span class="highlight">ka Samu Kudi</span></h2></div>
         </div>
     </div>
@@ -113,10 +135,7 @@
         <div class="card-blink"><i class="fa-solid fa-lightbulb text-2xl text-red-700"></i><p class="card-text">Mafita</p></div>
         <div class="card-blink"><i class="fa-solid fa-user-tie text-2xl text-yellow-700"></i><p class="card-text">Sashen Kwararru</p></div>
         <div class="card-blink"><i class="fa-solid fa-shield-halved text-2xl text-green-700"></i><p class="card-text">Escrow Service</p></div>
-        <a href="market.html" class="card-blink">
-            <i class="fa-solid fa-shop text-2xl text-purple-700"></i>
-            <p class="card-text">Yan Kasuwa</p>
-        </a>
+        <a href="market.html" class="card-blink"><i class="fa-solid fa-shop text-2xl text-purple-700"></i><p class="card-text">Yan Kasuwa</p></a>
         <div class="card-blink"><i class="fa-solid fa-link text-2xl text-indigo-700"></i><p class="card-text">AdChain</p></div>
     </div>
 
@@ -144,5 +163,4 @@
         }, 3500);
     </script>
 </body>
-    </html>
-    
+</html>
