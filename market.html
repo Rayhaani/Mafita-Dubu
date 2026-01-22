@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Market Live | Mafita Dubu</title>
+    <title>Mafita Global Market</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,800;1,800&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; margin: 0; overflow-x: hidden; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; margin: 0; }
 
         .market-title {
             font-weight: 900;
-            background: linear-gradient(90deg, #ff0000, #2563eb, #00ff00);
+            background: linear-gradient(90deg, #1e3a8a, #2563eb, #1e3a8a);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -21,150 +21,128 @@
         }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* Kyamara Overlay */
-        #camera-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: black; z-index: 1000;
-        }
-        video { width: 100%; height: 100%; object-fit: cover; }
-
-        /* AI Voice Animation */
-        .voice-wave {
-            display: none;
-            position: fixed;
-            bottom: 100px; left: 50%;
-            transform: translateX(-50%);
-            background: rgba(30, 58, 138, 0.9);
-            padding: 20px; border-radius: 50px;
-            color: white; z-index: 1000;
-            text-align: center; width: 80%;
+        .search-box {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
         }
 
-        .dot-flashing {
-            display: inline-block; width: 10px; height: 10px;
-            border-radius: 5px; background-color: #fbbf24;
-            animation: dotFlashing 1s infinite linear alternate;
-        }
-        @keyframes dotFlashing { 0% { opacity: 0.2; } 100% { opacity: 1; } }
-
-        .product-card { background: white; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .product-grid { display: grid; grid-cols: 2; gap: 15px; padding: 15px; }
         
-        .nav-bottom {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            width: 90%; background: white; border-radius: 2.5rem;
-            padding: 15px; display: flex; justify-content: space-around;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1); z-index: 100;
+        .distance-tag {
+            background: #dcfce7;
+            color: #166534;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 800;
         }
-        .plus-btn {
-            width: 55px; height: 55px; background: #10b981;
-            border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; color: white; font-size: 24px;
-            margin-top: -40px; border: 5px solid #F8FAFC;
+
+        .nav-bottom {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: white; display: flex; justify-content: space-around;
+            padding: 15px 0; border-radius: 2rem 2rem 0 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 100;
         }
     </style>
 </head>
-<body class="pb-32">
+<body class="pb-24">
 
-    <div id="camera-overlay">
-        <video id="video" autoplay playsinline></video>
-        <button onclick="closeCamera()" class="absolute top-10 right-5 text-white text-3xl"><i class="fa-solid fa-circle-xmark"></i></button>
-        <div class="absolute bottom-10 w-full text-center text-green-400 font-bold animate-pulse">LIVE PROOF OF REALITY MODE</div>
-    </div>
-
-    <div id="voice-ui" class="voice-wave">
-        <p class="mb-2 italic">AI tana jin muryarka...</p>
-        <div class="flex justify-center gap-2">
-            <div class="dot-flashing"></div>
-            <div class="dot-flashing" style="animation-delay: 0.2s"></div>
-            <div class="dot-flashing" style="animation-delay: 0.4s"></div>
-        </div>
-        <button onclick="stopVoice()" class="mt-4 text-xs bg-red-500 px-4 py-1 rounded-full">Gama Ciniki</button>
-    </div>
-
-    <nav class="p-5 flex justify-between items-center bg-white sticky top-0 z-50 shadow-sm">
-        <a href="index.html" class="text-blue-900 text-xl font-bold"><i class="fa-solid fa-arrow-left"></i></a>
+    <nav class="p-5 bg-white sticky top-0 z-50 shadow-sm flex items-center justify-between">
+        <a href="index.html" class="text-blue-900 text-xl"><i class="fa-solid fa-arrow-left"></i></a>
         <h1 class="market-title text-xl uppercase italic">Global Market</h1>
-        <div class="text-blue-600 text-xl"><i class="fa-solid fa-map-location-dot"></i></div>
+        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center"><i class="fa-solid fa-user text-blue-900"></i></div>
     </nav>
 
-    <div class="grid grid-cols-2 gap-4 px-4 mt-6">
+    <div class="p-4 space-y-3">
+        <div class="search-box flex items-center p-3">
+            <i class="fa-solid fa-magnifying-glass text-gray-400 mr-2"></i>
+            <input type="text" placeholder="Bincika ko'ina a duniya (Global Search)" class="w-full outline-none text-sm bg-transparent">
+        </div>
+
+        <button onclick="activateGPS()" class="w-full bg-blue-50 border border-blue-200 rounded-2xl p-3 flex items-center justify-between">
+            <div class="flex items-center">
+                <i class="fa-solid fa-location-crosshairs text-blue-600 mr-2"></i>
+                <span class="text-blue-900 font-bold text-sm">Bincika kusa da kai (Near You)</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-blue-400 text-xs"></i>
+        </button>
+    </div>
+
+    <div class="px-4">
+        <h2 class="text-gray-400 font-bold text-xs uppercase mb-3">Kayayyakin Sayarwa</h2>
         
-        <div class="product-card">
-            <div class="relative">
-                <img src="https://i.postimg.cc/85zTqXzM/iphone.jpg" class="w-full h-40 object-cover">
-                <button onclick="startCamera()" class="absolute top-2 left-2 bg-black/60 text-green-400 px-2 py-1 rounded-full text-[10px] font-bold">
-                    <i class="fa-solid fa-video animate-pulse"></i> PoR LIVE
-                </button>
+        <div class="grid grid-cols-2 gap-4" id="product-list">
+            
+            <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100">
+                <img src="https://i.postimg.cc/85zTqXzM/iphone.jpg" class="w-full h-32 object-cover">
+                <div class="p-3">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="font-bold text-xs italic">iPhone 13 Pro</h3>
+                        <span class="distance-tag" id="dist-1">Duniya</span>
+                    </div>
+                    <p class="text-green-600 font-extrabold text-sm">₦450k</p>
+                    <p class="text-[9px] text-gray-400 mt-1"><i class="fa-solid fa-shop"></i> Global Vendor</p>
+                </div>
             </div>
-            <div class="p-3">
-                <h3 class="font-bold text-sm italic">Iphone 13 Pro</h3>
-                <p class="text-green-600 font-extrabold text-lg">₦450k</p>
-                <button onclick="startVoice()" class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-xl text-[10px] font-bold italic border border-blue-100">
-                    <i class="fa-solid fa-microphone"></i> Ciniki da Murya
-                </button>
-            </div>
-        </div>
 
-        <div class="product-card">
-            <div class="relative">
-                <img src="https://i.postimg.cc/bYC4xVzK/Chat-GPT-Image-Jan-22-2026-01-57-37-PM.png" class="w-full h-40 object-cover">
-                <div class="absolute top-2 left-2 bg-yellow-500 text-white px-2 py-1 rounded-full text-[10px] font-bold">AdToken Pay</div>
+            <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff" class="w-full h-32 object-cover">
+                <div class="p-3">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="font-bold text-xs italic">Nike Sport</h3>
+                        <span class="distance-tag" id="dist-2">Kusa</span>
+                    </div>
+                    <p class="text-green-600 font-extrabold text-sm">₦25k</p>
+                    <p class="text-[9px] text-gray-400 mt-1"><i class="fa-solid fa-shop"></i> Ahmad Collections</p>
+                </div>
             </div>
-            <div class="p-3">
-                <h3 class="font-bold text-sm italic">Samsung S22</h3>
-                <p class="text-green-600 font-extrabold text-lg">₦380k</p>
-                <button class="mt-2 w-full bg-purple-50 text-purple-600 py-2 rounded-xl text-[10px] font-bold italic border border-purple-100">
-                    <i class="fa-solid fa-shield"></i> Hologram Scan
-                </button>
-            </div>
-        </div>
 
+            <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100">
+                <img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg" class="w-full h-32 object-cover">
+                <div class="p-3">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="font-bold text-xs italic">Kayan Lambu</h3>
+                        <span class="distance-tag" id="dist-3">Kusa</span>
+                    </div>
+                    <p class="text-green-600 font-extrabold text-sm">₦5k</p>
+                    <p class="text-[9px] text-gray-400 mt-1"><i class="fa-solid fa-shop"></i> Fresh Mart</p>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <div class="nav-bottom">
-        <a href="index.html" class="text-gray-400 text-2xl"><i class="fa-solid fa-house"></i></a>
-        <a href="#" class="text-blue-900 text-2xl"><i class="fa-solid fa-compass"></i></a>
-        <div class="plus-btn"><i class="fa-solid fa-plus"></i></div>
-        <a href="#" class="text-gray-400 text-2xl"><i class="fa-solid fa-comment-dots"></i></a>
-        <a href="#" class="text-gray-400 text-2xl"><i class="fa-solid fa-user"></i></a>
+        <a href="index.html" class="text-gray-400 text-xl"><i class="fa-solid fa-house"></i></a>
+        <a href="#" class="text-blue-600 text-xl"><i class="fa-solid fa-compass"></i></a>
+        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-lg -mt-10 border-4 border-white">
+            <i class="fa-solid fa-plus"></i>
+        </div>
+        <a href="#" class="text-gray-400 text-xl"><i class="fa-solid fa-message"></i></a>
+        <a href="#" class="text-gray-400 text-xl"><i class="fa-solid fa-user"></i></a>
     </div>
 
     <script>
-        // FUNCTION NA POR (KYAMARA)
-        async function startCamera() {
-            const overlay = document.getElementById('camera-overlay');
-            const video = document.getElementById('video');
-            overlay.style.display = 'block';
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-                video.srcObject = stream;
-            } catch (err) {
-                alert("Kyamara ba zata iya budewa ba: " + err);
-                overlay.style.display = 'none';
-            }
-        }
+        function activateGPS() {
+            // Simulation na GPS searching
+            const tags = [
+                { id: 'dist-1', dist: '15.4 km away' },
+                { id: 'dist-2', dist: '0.8 km away' },
+                { id: 'dist-3', dist: '2.5 km away' }
+            ];
 
-        function closeCamera() {
-            const video = document.getElementById('video');
-            const stream = video.srcObject;
-            if (stream) {
-                const tracks = stream.getTracks();
-                tracks.forEach(track => track.stop());
-            }
-            document.getElementById('camera-overlay').style.display = 'none';
-        }
+            alert("GPS yana binciko dillalai mafi kusa da kai...");
 
-        // FUNCTION NA VOICE BARGAINING
-        function startVoice() {
-            document.getElementById('voice-ui').style.display = 'block';
-        }
-
-        function stopVoice() {
-            document.getElementById('voice-ui').style.display = 'none';
-            alert("AI ta tura tayinka ga mai shago!");
+            tags.forEach(tag => {
+                const el = document.getElementById(tag.id);
+                el.innerText = tag.dist;
+                el.style.background = '#dbeafe';
+                el.style.color = '#1e40af';
+            });
         }
     </script>
 </body>
-</html>
+            </html>
+            
