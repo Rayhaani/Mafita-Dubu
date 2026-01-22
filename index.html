@@ -3,32 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Final Version</title>
+    <title>Mafita Dubu | Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
     <style>
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #F2EFE9; 
+            background-color: #F2EFE9; /* Milk color */
             margin: 0; 
             overflow-x: hidden;
         }
 
-        /* Logo & Header */
+        /* Header & Logo */
         @keyframes rotateLogo { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .logo-icon { animation: rotateLogo 10s linear infinite; }
         @keyframes blinkText { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         .logo-text { font-weight: 800; font-size: 1.5rem; color: #1e3a8a; animation: blinkText 1.5s infinite; }
 
-        /* HERO SLIDER - FULL FIX */
+        /* HERO SLIDER GYARAN GASKIYA */
         #hero-slider { 
             position: relative; 
-            height: 350px; /* Fixed height don daidaituwa */
+            height: 400px; /* Tsayin da zai sa hoton ya fito radau */
             overflow: hidden; 
-            border-radius: 2.5rem; 
-            margin: 10px 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 2.2rem; 
+            margin: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         .slide { 
             position: absolute; 
@@ -41,23 +41,29 @@
         .slide img { 
             width: 100%; 
             height: 100%; 
-            object-fit: cover; /* Wannan zai sa hoton ya cika akwatin */
-            object-position: center 20%; /* Wannan zai sa fuskoki su fito su duka */
+            object-fit: cover; /* Cika akwatin gaba daya */
+            object-position: 50% 10%; /* Fito da kawuna radau */
         }
         
         .slide-overlay {
             position: absolute; bottom: 0; left: 0; width: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 20%, transparent);
-            padding: 25px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 20%, transparent);
+            padding: 30px 20px;
             z-index: 20;
         }
 
-        .caption-text { color: #E8E4D9; font-size: 1.25rem; font-weight: 800; text-transform: uppercase; line-height: 1.1; }
+        .caption-text { 
+            color: #E8E4D9; /* Deep Milk Caption */
+            font-size: 1.35rem; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            line-height: 1.1; 
+        }
 
         /* Breathing Boxes */
         @keyframes strongBreathe {
             0%, 100% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-            50% { transform: scale(1.04); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
+            50% { transform: scale(1.05); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
         }
         .action-card {
             background: #FFFFFF;
@@ -66,27 +72,27 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 22px 10px;
+            padding: 25px 10px;
             border: 1px solid #E5E7EB;
         }
         .card-label { font-size: 11px; font-weight: 800; text-transform: uppercase; margin-top: 8px; color: #1a1a1a; }
 
-        /* Why Section */
-        .why-black-box { background: #000; color: white; border-radius: 2.5rem; padding: 40px 25px; margin: 25px 15px; }
-        .red-arrow { color: #ff0000; font-size: 1.4rem; font-weight: 900; margin-right: 12px; }
-        .why-item { display: flex; align-items: flex-start; margin-bottom: 25px; }
-        .item-header { font-weight: 800; font-size: 1.05rem; display: block; }
-        .item-body { color: #9ca3af; font-size: 0.9rem; line-height: 1.5; }
+        /* Why Section (Baki) */
+        .why-container { background: #000; color: white; border-radius: 2.5rem; padding: 45px 25px; margin: 25px 15px; }
+        .red-arrow { color: #ff0000; font-size: 1.5rem; font-weight: 900; margin-right: 12px; }
+        .why-item { display: flex; align-items: flex-start; margin-bottom: 30px; }
+        .item-header { font-weight: 800; font-size: 1.1rem; color: #fff; }
+        .item-body { color: #9ca3af; font-size: 0.95rem; line-height: 1.6; }
     </style>
 </head>
-<body class="pb-24">
+<body class="pb-32">
 
-    <nav class="px-6 py-4 flex justify-between items-center bg-white sticky top-0 z-[100] border-b border-gray-100">
+    <nav class="px-6 py-5 flex justify-between items-center bg-white sticky top-0 z-[100] border-b border-gray-100">
         <div class="flex items-center space-x-3">
-            <div class="logo-icon w-9 h-9 bg-blue-900 rounded-xl flex items-center justify-center text-white"><i class="fa-solid fa-m"></i></div>
+            <div class="logo-icon w-10 h-10 bg-blue-900 rounded-xl flex items-center justify-center text-white"><i class="fa-solid fa-m"></i></div>
             <h1 class="logo-text">MafitaDubu</h1>
         </div>
-        <div class="flex space-x-5 text-gray-400 text-xl"><i class="fa-solid fa-bell"></i><i class="fa-solid fa-wallet"></i></div>
+        <div class="flex space-x-5 text-gray-500 text-xl"><i class="fa-solid fa-bell"></i><i class="fa-solid fa-wallet"></i></div>
     </nav>
 
     <div id="hero-slider">
@@ -106,17 +112,21 @@
             <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg">
             <div class="slide-overlay"><h2 class="caption-text">Bincika Maganin <br>Dukkanin Matsaloli</h2></div>
         </div>
+        <div class="slide">
+            <img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg">
+            <div class="slide-overlay"><h2 class="caption-text">Koyi Sana'a Kowace Iri <br>a Cikin Sauki</h2></div>
+        </div>
     </div>
 
-    <div class="grid grid-cols-2 gap-4 px-4 mt-6">
+    <div class="grid grid-cols-2 gap-4 px-4 mt-8">
         <div class="action-card"><i class="fa-solid fa-graduation-cap text-2xl text-blue-600"></i><span class="card-label">Koyon Sana'a</span></div>
         <div class="action-card"><i class="fa-solid fa-lightbulb text-2xl text-red-600"></i><span class="card-label">Mafitar Rayuwa</span></div>
         <div class="action-card"><i class="fa-solid fa-user-tie text-2xl text-yellow-600"></i><span class="card-label">Nemi Kwararre</span></div>
         <div class="action-card"><i class="fa-solid fa-shield-halved text-2xl text-green-600"></i><span class="card-label">Escrow Wallet</span></div>
     </div>
 
-    <section class="why-black-box">
-        <h3 class="text-xl font-extrabold mb-8 italic">WHAT YOU'LL UNLOCK:</h3>
+    <section class="why-container">
+        <h3 class="text-2xl font-extrabold mb-10 italic">WHAT YOU'LL UNLOCK:</h3>
         <div class="why-item">
             <span class="red-arrow">»</span>
             <div><span class="item-header">Kwararru, Ba Masu Koyo Ba:</span><p class="item-body">Sanya aikin ka a hannun mutanen da suka san aiki.</p></div>
@@ -128,20 +138,17 @@
     </section>
 
     <script>
-        // JavaScript don slider ya dinga canzawa
-        let slides = document.querySelectorAll('.slide');
+        // Javascript don canza hotuna
+        const slides = document.querySelectorAll('.slide');
         let currentSlide = 0;
 
-        function showNextSlide() {
+        function nextSlide() {
             slides[currentSlide].classList.remove('active');
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add('active');
         }
 
-        // Fara canzawa duk bayan seconds 4
-        setInterval(showNextSlide, 4000);
+        setInterval(nextSlide, 4000); // Canzawa duk bayan seconds 4
     </script>
 </body>
 </html>
-
-                
