@@ -10,42 +10,45 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F2EFE9; margin: 0; padding: 0; }
         
-        /* GYARAN SLIDER DA KAWUNAN MUTANE */
+        /* WANNAN SHINE GYARAN ASALIN HOTO */
         .slider-container {
             position: relative;
-            width: 94%; /* Faɗin akwatin */
-            height: 320px; /* Rage tsayin kaɗan don hoton ya fi zama daidai */
-            margin: 15px auto;
-            border-radius: 2rem; /* Gefen da yake zagaye */
-            overflow: hidden; /* Wannan zai tilasta hoton ya bi zagayen gefen */
-            background: #d1d5db;
+            width: 100%; /* Cika gefe da gefe na waya */
+            height: 450px; /* Kara tsayin domin hotunan waya ne (Long) */
+            margin: 0 auto;
+            background: #F2EFE9; /* Kalar milk don ya hade da background */
+            overflow: hidden;
         }
 
         .myslide {
             display: none;
             width: 100%;
             height: 100%;
+            text-align: center;
         }
 
         .myslide img {
             width: 100%;
             height: 100%;
-            /* WANNAN SHINE MAGANIN YANKE KAWUNA */
-            object-fit: cover; 
-            object-position: top center; /* Zai nuna saman hoton inda kawuna suke */
+            /* WANNAN ZAI FITAR DA HOTON A ASALINSA */
+            object-fit: contain; 
+            /* Kar a yanke komai */
+            background-color: #F2EFE9;
         }
 
         .caption {
             position: absolute;
-            bottom: 0;
-            width: 100%;
-            background: linear-gradient(transparent, rgba(0,0,0,0.85));
-            padding: 25px 15px;
+            bottom: 20px;
+            width: 90%;
+            left: 5%;
+            background: rgba(0, 0, 0, 0.7); /* Baki mai nuna gaskiya */
+            padding: 15px;
             color: white;
-            font-size: 1.15rem;
+            border-radius: 1rem;
+            font-size: 1rem;
             font-weight: 800;
-            text-transform: uppercase;
-            line-height: 1.2;
+            text-align: center;
+            z-index: 30;
         }
 
         .action-card {
@@ -53,7 +56,7 @@
             border-radius: 1.5rem;
             padding: 20px 10px;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
     </style>
 </head>
@@ -68,11 +71,26 @@
     </nav>
 
     <div class="slider-container">
-        <div class="myslide"><img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg"><div class="caption">Yi Kasuwanci a Cikin <br>Cikakken Aminci</div></div>
-        <div class="myslide"><img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg"><div class="caption">Nemi Kwararren Ma'aikaci <br>a Kowane Fanni</div></div>
-        <div class="myslide"><img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg"><div class="caption">Tallatawa Duniya <br>Hajarka Cikin Sauki</div></div>
-        <div class="myslide"><img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg"><div class="caption">Bincika Maganin <br>Dukkanin Matsaloli</div></div>
-        <div class="myslide"><img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg"><div class="caption">Koyi Sana'a Kowace Iri <br>a Cikin Sauki</div></div>
+        <div class="myslide">
+            <img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg">
+            <div class="caption">YI KASUWANCI A CIKIN <br><span class="text-yellow-400">CIKAKKEN AMINCI</span></div>
+        </div>
+        <div class="myslide">
+            <img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg">
+            <div class="caption">NEMI KWARARREN MA'AIKACI <br><span class="text-yellow-400">A KOWANE FANNI</span></div>
+        </div>
+        <div class="myslide">
+            <img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg">
+            <div class="caption">TALLATAWA DUNIYA <br><span class="text-yellow-400">HAJARKA CIKIN SAUKI</span></div>
+        </div>
+        <div class="myslide">
+            <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg">
+            <div class="caption">BINCIKA MAGANIN <br><span class="text-yellow-400">DUKKANIN MATSALOLI</span></div>
+        </div>
+        <div class="myslide">
+            <img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg">
+            <div class="caption">KOYI SANA'A KOWACE IRI <br><span class="text-yellow-400">A CIKIN SAUKI</span></div>
+        </div>
     </div>
 
     <div class="grid grid-cols-2 gap-4 px-4 mt-6">
@@ -92,8 +110,9 @@
             slideIndex++;
             if (slideIndex > slides.length) {slideIndex = 1}    
             slides[slideIndex-1].style.display = "block";  
-            setTimeout(showSlides, 3500); 
+            setTimeout(showSlides, 4000); 
         }
     </script>
 </body>
-</html>
+                </html>
+                
