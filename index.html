@@ -10,102 +10,45 @@
     
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F2EFE9; margin: 0; }
-        .rotating-logo { animation: spin 4s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        .brand-blink { animation: blinker 1.5s linear infinite; color: #1e3a8a; }
-        @keyframes blinker { 50% { opacity: 0.2; } }
-
-        .hero-slider {
-            position: relative;
-            width: 95%;
-            height: 420px;
-            margin: 15px auto;
-            border-radius: 2.5rem;
-            overflow: hidden;
-            background: #000;
-        }
+        .hero-slider { position: relative; width: 95%; height: 420px; margin: 15px auto; border-radius: 2.5rem; overflow: hidden; background: #000; }
         .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; }
         .slide.active { opacity: 1; }
         
-        /* GYARA NA MUSAMMAN GA HOTUNAN */
         .slide img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* Wannan zai karkata hoton kayan lambu zuwa fuskar mutumin mai blue riga */
-        .veggie-fix { object-position: 85% 15% !important; }
-        /* Sauran hotunan su tsaya a sama kadan don kawuna su fito */
+        /* WANNAN SHINE GYARAN: Tilasta hoton ya koma hagu (Left) */
+        .veggie-fix { object-position: 15% center !important; }
         .standard-fix { object-position: center 10%; }
 
-        .overlay {
-            position: absolute;
-            bottom: 30px;
-            width: 100%;
-            padding: 0 20px;
-            color: white;
-            text-align: center;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
-            z-index: 10;
-        }
+        .overlay { position: absolute; bottom: 30px; width: 100%; padding: 0 20px; color: white; text-align: center; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); z-index: 10; }
         .overlay h2 { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; }
         .overlay .highlight { color: #fbbf24; display: block; font-size: 1.2rem; }
 
-        .card-blink {
-            background: white;
-            border-radius: 1.2rem;
-            padding: 20px 5px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            animation: cardFade 2s infinite ease-in-out;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-        }
-        @keyframes cardFade { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(0.97); } }
+        .card-blink { background: white; border-radius: 1.2rem; padding: 20px 5px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); animation: cardFade 2s infinite ease-in-out; display: flex; flex-direction: column; align-items: center; text-decoration: none; }
+        @keyframes cardFade { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.97); } }
         .card-text { font-size: 9px; font-weight: 800; margin-top: 10px; text-transform: uppercase; color: #1e3a8a; white-space: nowrap; }
 
         .famous-black-box { background: #000; color: #fff; padding: 50px 25px; border-radius: 2.5rem 2.5rem 0 0; margin-top: 40px; }
-        .famous-header { font-size: 32px; font-weight: 800; margin-bottom: 40px; letter-spacing: -1px; }
+        .famous-header { font-size: 32px; font-weight: 800; margin-bottom: 40px; }
         .reason-row { display: flex; align-items: flex-start; margin-bottom: 35px; }
-        .reason-arrow { color: #ff3b30; font-size: 1.2rem; margin-right: 15px; margin-top: 4px; }
+        .reason-arrow { color: #ff3b30; font-size: 1.2rem; margin-right: 15px; }
         .reason-content b { font-weight: 800; font-size: 1.1rem; display: block; margin-bottom: 6px; }
         .reason-content p { color: #a1a1a1; font-size: 1rem; line-height: 1.4; }
     </style>
 </head>
-<body class="pb-10">
-
+<body>
     <nav class="p-5 flex justify-between items-center bg-white sticky top-0 z-50">
-        <div class="flex items-center space-x-2">
-            <div class="w-10 h-10 bg-blue-900 rounded-xl flex items-center justify-center text-white font-extrabold rotating-logo">M</div>
-            <span class="font-extrabold text-xl brand-blink">MafitaDubu</span>
-        </div>
-        <div class="flex space-x-4 text-gray-400 text-lg"><i class="fa-solid fa-bell"></i><i class="fa-solid fa-wallet"></i></div>
+        <span class="font-extrabold text-xl text-blue-900">MafitaDubu</span>
+        <div class="flex space-x-4 text-gray-400"><i class="fa-solid fa-bell"></i><i class="fa-solid fa-wallet"></i></div>
     </nav>
 
     <div class="hero-slider">
-        <div class="slide active">
-            <img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg" class="standard-fix">
-            <div class="overlay"><h2>Yi Kasuwanci a Cikin <span class="highlight">Cikakken Aminci</span></h2></div>
-        </div>
-        <div class="slide">
-            <img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg" class="standard-fix">
-            <div class="overlay"><h2>Nemi Kwararren Ma'aikaci <span class="highlight">a Kowane Fanni</span></h2></div>
-        </div>
-        <div class="slide">
-            <img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg" class="veggie-fix">
-            <div class="overlay"><h2>Tallatawa Duniya <span class="highlight">Hajarka a Cikin Sauki</span></h2></div>
-        </div>
-        <div class="slide">
-            <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg" class="standard-fix">
-            <div class="overlay"><h2>Bincika Maganin <span class="highlight">Matsaloli da Damuwarka</span></h2></div>
-        </div>
-        <div class="slide">
-            <img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg" class="standard-fix">
-            <div class="overlay"><h2>Koyi Sana'a Kowace Iri <span class="highlight">a Zamanance</span></h2></div>
-        </div>
-        <div class="slide">
-            <img src="https://i.postimg.cc/bYC4xVzK/Chat-GPT-Image-Jan-22-2026-01-57-37-PM.png" class="standard-fix">
-            <div class="overlay"><h2>Yi Aiki mai Sauki <span class="highlight">ka Samu Kudi</span></h2></div>
-        </div>
+        <div class="slide active"><img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg" class="standard-fix"><div class="overlay"><h2>Yi Kasuwanci a Cikin <span class="highlight">Cikakken Aminci</span></h2></div></div>
+        <div class="slide"><img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg" class="standard-fix"><div class="overlay"><h2>Nemi Kwararren Ma'aikaci <span class="highlight">a Kowane Fanni</span></h2></div></div>
+        <div class="slide"><img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg" class="veggie-fix"><div class="overlay"><h2>Tallatawa Duniya <span class="highlight">Hajarka a Cikin Sauki</span></h2></div></div>
+        <div class="slide"><img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg" class="standard-fix"><div class="overlay"><h2>Bincika Maganin <span class="highlight">Matsaloli</span></h2></div></div>
+        <div class="slide"><img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg" class="standard-fix"><div class="overlay"><h2>Koyi Sana'a <span class="highlight">a Zamanance</span></h2></div></div>
+        <div class="slide"><img src="https://i.postimg.cc/bYC4xVzK/Chat-GPT-Image-Jan-22-2026-01-57-37-PM.png" class="standard-fix"><div class="overlay"><h2>Yi Aiki <span class="highlight">ka Samu Kudi</span></h2></div></div>
     </div>
 
     <div class="grid grid-cols-2 gap-4 px-4 mt-6">
@@ -128,26 +71,16 @@
             <div class="reason-arrow">»</div>
             <div class="reason-content"><b>End of Scams & Fraud:</b><p>Muna amfani da AI ta zamani wajen tace dukkan mu'amala. A nan, dukiyar ka tana nan a kulle cikin amana.</p></div>
         </div>
-        <div class="reason-row">
-            <div class="reason-arrow">»</div>
-            <div class="reason-content"><b>The Trust Engine (Escrow):</b><p>Tsarin mu yana rike da kudi har sai ka gamsu 100% da aikin da aka yi maka. Kaine mai iko.</p></div>
-        </div>
-        <div class="reason-row">
-            <div class="reason-arrow">»</div>
-            <div class="reason-content"><b>Elite Connection:</b><p>Muna hada ka da kwararrun da aka tantance a cikin dakiku don kammala ayyukanka cikin sauri.</p></div>
-        </div>
     </div>
 
     <script>
         const slides = document.querySelectorAll('.slide');
         let currentSlide = 0;
-        function nextSlide() {
+        setInterval(() => {
             slides[currentSlide].classList.remove('active');
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add('active');
-        }
-        setInterval(nextSlide, 3500);
+        }, 3500);
     </script>
 </body>
-    </html>
-            
+</html>
