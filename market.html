@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yan Kasuwa | Mafita Dubu World</title>
+    <title>Yan Kasuwa | Mafita Dubu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;600;700;900&display=swap');
-        
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        
         .master-glitter {
             font-family: 'Archivo Black', sans-serif;
             background: radial-gradient(circle, #fff 10%, transparent 11%),
@@ -21,127 +19,76 @@
             animation: glitterMove 2s linear infinite;
         }
         @keyframes glitterMove { to { background-position: 0 0, 300% center; } }
-
-        /* Pulsing Dot for Live Status */
-        .live-dot {
-            height: 8px;
-            width: 8px;
-            background-color: #10b981;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 5px;
-            box-shadow: 0 0 0 0 rgba(16, 185, 129, 1);
-            animation: pulse-green 2s infinite;
-        }
-        @keyframes pulse-green {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-        }
-
-        #productModal { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; pointer-events: none; }
-        #productModal.active { opacity: 1; pointer-events: auto; }
-        .modal-content { transform: translateY(100%); transition: all 0.4s ease; }
-        #productModal.active .modal-content { transform: translateY(0); }
+        .drawer { transition: transform 0.4s ease-in-out; transform: translateY(100%); position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; background: white; border-radius: 3rem 3rem 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,0.1); }
+        .drawer.active { transform: translateY(0); }
+        .overlay { display: none; position: fixed; inset: 0; background: black/50; z-index: 90; }
+        .overlay.active { display: block; }
     </style>
 </head>
 <body class="pb-32">
+
+    <div id="overlay" class="overlay" onclick="closeAll()"></div>
 
     <header class="bg-white sticky top-0 z-50 border-b border-slate-100 px-6 py-4">
         <div class="flex justify-between items-center mb-4">
             <a href="index.html" class="text-2xl text-blue-900"><i class="fa-solid fa-arrow-left"></i></a>
             <h1 class="text-xl master-glitter">GLOBAL MARKET</h1>
-            <i class="fa-solid fa-cart-shopping text-blue-900 text-xl"></i>
+            <i class="fa-solid fa-map-location-dot text-blue-600 text-xl"></i>
         </div>
         <div class="relative">
-            <input type="text" placeholder="Nemi kaya mafi kusa da kai..." class="w-full bg-slate-100 border-none rounded-2xl py-3 pl-12 pr-4 text-sm outline-none">
-            <i class="fa-solid fa-location-dot absolute left-4 top-1/2 -translate-y-1/2 text-blue-600"></i>
+            <input type="text" placeholder="Nemi kaya mafi kusa..." class="w-full bg-slate-100 border-none rounded-2xl py-3 pl-12 text-sm outline-none">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
         </div>
     </header>
 
-    <main class="px-6 grid grid-cols-2 gap-4 mt-6">
-        <div onclick="openModal('Iphone 13 Pro', '₦450,000', 'Original phone, Battery health 98%')" class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-50 relative">
-            <div class="h-36 bg-slate-200 relative">
-                <img src="https://images.unsplash.com/photo-1632661674596-df8be070a5c5?w=400" class="w-full h-full object-cover">
-                <span class="absolute top-3 left-3 bg-white/90 px-2 py-1 rounded-full text-[9px] font-bold text-blue-900 shadow-sm">
-                    <span class="live-dot"></span> Online
-                </span>
-                <span class="absolute bottom-2 right-2 bg-black/50 backdrop-blur-md text-white text-[8px] px-2 py-1 rounded-md">0.8km away</span>
+    <section class="px-6 mt-4">
+        <div class="bg-blue-700 rounded-[2.5rem] p-6 text-white flex justify-between items-center shadow-lg relative overflow-hidden">
+            <div>
+                <h2 class="text-lg font-black">Kalli Talla, Sami Lada</h2>
+                <p class="text-[10px] opacity-80 mt-1">Fara samun AdTokens yanzu</p>
             </div>
-            <div class="p-3 text-center">
-                <h3 class="font-bold text-xs truncate">Iphone 13 Pro</h3>
-                <p class="text-green-600 font-black text-sm mt-1">₦450k</p>
-            </div>
+            <button class="bg-white text-blue-700 px-5 py-2.5 rounded-2xl font-black text-xs">Fara Yanzu</button>
         </div>
+    </section>
 
-        <div onclick="openModal('Nike Air Max', '₦35,000', 'Very comfortable, original size 42')" class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-50 relative">
-            <div class="h-36 bg-slate-200 relative">
-                <img src="https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400" class="w-full h-full object-cover">
-                <span class="absolute top-3 left-3 bg-white/90 px-2 py-1 rounded-full text-[9px] font-bold text-slate-400 shadow-sm">
-                    <i class="fa-solid fa-clock mr-1"></i> Offline
-                </span>
-                <span class="absolute bottom-2 right-2 bg-black/50 backdrop-blur-md text-white text-[8px] px-2 py-1 rounded-md">1.5km away</span>
-            </div>
-            <div class="p-3 text-center">
-                <h3 class="font-bold text-xs truncate">Nike Air Max</h3>
-                <p class="text-green-600 font-black text-sm mt-1">₦35k</p>
-            </div>
+    <main class="px-6 grid grid-cols-2 gap-4 mt-8">
+        <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-50">
+            <div class="h-36 bg-slate-200"><img src="https://via.placeholder.com/150" class="w-full h-full object-cover"></div>
+            <div class="p-3 text-center"><h3 class="font-bold text-xs truncate">Sabuwar Haja</h3><p class="text-green-600 font-black text-sm">₦5,000</p></div>
         </div>
     </main>
 
-    <div id="productModal" class="fixed inset-0 z-[60] bg-black/60 flex items-end">
-        <div class="modal-content w-full bg-white rounded-t-[3rem] p-8">
-            <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6"></div>
-            
-            <h2 id="modalTitle" class="text-2xl font-black text-slate-900 mb-1">Product</h2>
-            <p id="modalPrice" class="text-xl font-bold text-green-600 mb-4">₦0.00</p>
-            <p id="modalDesc" class="text-slate-500 text-sm mb-8">Details...</p>
-
-            <div class="bg-slate-50 rounded-2xl p-4 mb-8">
-                <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-3 tracking-widest">Tsarin Escrow (Yadda yake aiki)</h4>
-                <div class="flex justify-between items-center text-[10px] font-bold">
-                    <div class="flex flex-col items-center text-blue-600"><i class="fa-solid fa-wallet mb-1"></i><span>Biya</span></div>
-                    <div class="h-[1px] bg-blue-200 flex-1 mx-2"></div>
-                    <div class="flex flex-col items-center text-slate-300"><i class="fa-solid fa-vault mb-1"></i><span>Rumbu</span></div>
-                    <div class="h-[1px] bg-slate-200 flex-1 mx-2"></div>
-                    <div class="flex flex-col items-center text-slate-300"><i class="fa-solid fa-truck-ramp-box mb-1"></i><span>Karba</span></div>
-                    <div class="h-[1px] bg-slate-200 flex-1 mx-2"></div>
-                    <div class="flex flex-col items-center text-slate-300"><i class="fa-solid fa-circle-check mb-1"></i><span>Saki Kudin</span></div>
-                </div>
+    <div id="uploadDrawer" class="drawer p-8 h-[75vh]">
+        <div class="w-12 h-1 bg-slate-200 mx-auto mb-8"></div>
+        <h2 class="text-2xl font-black mb-6">Saka Kaya</h2>
+        <div class="space-y-4">
+            <div class="h-40 border-2 border-dashed border-slate-200 rounded-3xl flex flex-col items-center justify-center text-slate-400">
+                <i class="fa-solid fa-image text-3xl mb-2"></i><span class="text-[10px] font-bold">DAUKI HOTO</span>
             </div>
-
-            <div class="grid grid-cols-2 gap-4">
-                <button onclick="alert('Tsarin Escrow ya fara aiki! Kudinka zai zauna a rumbun Mafita Dubu.')" class="bg-blue-900 text-white py-4 rounded-2xl font-bold flex items-center justify-center space-x-2">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <span>Siyan Escrow</span>
-                </button>
-                <button class="bg-green-600 text-white py-4 rounded-2xl font-bold flex items-center justify-center space-x-2">
-                    <i class="fa-brands fa-whatsapp"></i>
-                    <span>Yi Magana</span>
-                </button>
-            </div>
-            
-            <button onclick="closeModal()" class="w-full mt-4 py-3 text-slate-400 font-bold text-sm">Rufe</button>
+            <input type="text" placeholder="Sunan Kaya" class="w-full bg-slate-50 p-4 rounded-2xl border-none outline-none">
+            <input type="number" placeholder="Farashi" class="w-full bg-slate-50 p-4 rounded-2xl border-none outline-none">
+            <button class="w-full bg-blue-900 text-white py-5 rounded-3xl font-black mt-4 shadow-xl">WALLAFA YANZU</button>
         </div>
     </div>
 
-    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] h-20 bg-white shadow-2xl rounded-[2.5rem] flex items-center justify-around z-50">
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] h-20 bg-white shadow-2xl rounded-[2.5rem] flex items-center justify-around z-50 px-2">
         <a href="index.html"><i class="fa-solid fa-house text-slate-300 text-2xl"></i></a>
         <i class="fa-solid fa-compass text-blue-900 text-2xl"></i>
-        <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-3xl -mt-16 border-[6px] border-[#f8fafc] shadow-xl"><i class="fa-solid fa-plus"></i></div>
+        <div onclick="openUpload()" class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-3xl -mt-16 border-[6px] border-[#f8fafc] shadow-xl">
+            <i class="fa-solid fa-plus"></i>
+        </div>
         <i class="fa-solid fa-message text-slate-300 text-2xl"></i>
         <i class="fa-solid fa-user text-slate-300 text-2xl"></i>
     </div>
 
     <script>
-        function openModal(title, price, desc) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalPrice').innerText = price;
-            document.getElementById('modalDesc').innerText = desc;
-            document.getElementById('productModal').classList.add('active');
+        function openUpload() {
+            document.getElementById('uploadDrawer').classList.add('active');
+            document.getElementById('overlay').classList.add('active');
         }
-        function closeModal() {
-            document.getElementById('productModal').classList.remove('active');
+        function closeAll() {
+            document.getElementById('uploadDrawer').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
         }
     </script>
 </body>
