@@ -14,8 +14,17 @@
         .rotating-logo { animation: spin 4s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        .brand-blink { animation: blinker 1.5s linear infinite; color: #1e3a8a; }
-        @keyframes blinker { 50% { opacity: 0.2; } }
+        /* WALWALI DA KALAR KUDI GA SUNAN MAFITA DUBU */
+        .brand-name {
+            font-weight: 900;
+            font-size: 1.4rem;
+            background: linear-gradient(90deg, #ffd700, #ffffff, #ffd700);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 2s linear infinite;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
 
         .hero-slider {
             position: relative;
@@ -29,12 +38,8 @@
         .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; }
         .slide.active { opacity: 1; }
         .slide img { width: 100%; height: 100%; object-fit: cover; }
-        
-        /* GYARAN HOTUNA - DON KAWADAR DA FARIN ABUN NAN */
-        .aminci-fix { object-position: 50% 10% !important; } 
-        .veggie-fix { object-position: 15% center !important; }
-        .standard-fix { object-position: center 10%; }
 
+        /* CAPTIONS: ITALICS DA BOLD */
         .overlay {
             position: absolute;
             bottom: 30px;
@@ -42,33 +47,36 @@
             padding: 0 20px;
             color: white;
             text-align: center;
-            text-shadow: 2px 2px 12px rgba(0,0,0,1);
+            text-shadow: 2px 2px 15px rgba(0,0,0,1);
             z-index: 10;
         }
-        .overlay h2 { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; }
-        .overlay .highlight { color: #fbbf24; display: block; font-size: 1.2rem; }
+        .overlay h2 { font-size: 1.2rem; font-weight: 800; font-style: italic; text-transform: uppercase; }
+        .overlay .highlight { color: #fbbf24; display: block; font-size: 1.3rem; font-style: italic; }
 
+        /* 6 BOXES: SABON KALA (SLATE BLUE) WANDA YA DACE DA BACKGROUND */
         .card-blink {
-            background: white;
+            background: #e2e8f0; /* Slate blue mai haske */
             border-radius: 1.2rem;
             padding: 20px 5px;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             animation: cardFade 2s infinite ease-in-out;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-decoration: none;
+            border: 1px solid #cbd5e1;
         }
-        @keyframes cardFade { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.97); } }
+        @keyframes cardFade { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.98); } }
         .card-text { font-size: 9px; font-weight: 800; margin-top: 10px; text-transform: uppercase; color: #1e3a8a; }
 
-        .famous-black-box { background: #000; color: #fff; padding: 50px 25px; border-radius: 2.5rem 2.5rem 0 0; margin-top: 40px; }
-        .famous-header { font-size: 30px; font-weight: 800; margin-bottom: 40px; }
-        .reason-row { display: flex; align-items: flex-start; margin-bottom: 35px; }
-        .reason-arrow { color: #ff3b30; font-size: 1.2rem; margin-right: 15px; margin-top: 4px; }
-        .reason-content b { font-weight: 800; font-size: 1.1rem; display: block; margin-bottom: 6px; }
-        .reason-content p { color: #a1a1a1; font-size: 1rem; line-height: 1.4; }
+        /* WHY MAFITA DUBU: RAGI GIRMAN FONT */
+        .famous-black-box { background: #000; color: #fff; padding: 40px 20px; border-radius: 2.5rem 2.5rem 0 0; margin-top: 30px; }
+        .famous-header { font-size: 24px; font-weight: 800; margin-bottom: 30px; }
+        .reason-row { display: flex; align-items: flex-start; margin-bottom: 25px; }
+        .reason-arrow { color: #ff3b30; font-size: 1rem; margin-right: 12px; margin-top: 3px; }
+        .reason-content b { font-weight: 800; font-size: 0.95rem; display: block; margin-bottom: 4px; }
+        .reason-content p { color: #a1a1a1; font-size: 0.85rem; line-height: 1.4; }
     </style>
 </head>
 <body class="pb-10">
@@ -76,45 +84,40 @@
     <nav class="p-5 flex justify-between items-center bg-white sticky top-0 z-50">
         <div class="flex items-center space-x-2">
             <div class="w-10 h-10 bg-blue-900 rounded-xl flex items-center justify-center text-white font-extrabold rotating-logo">M</div>
-            <span class="font-extrabold text-xl brand-blink">MafitaDubu</span>
+            <span class="brand-name">MafitaDubu</span>
         </div>
         <div class="flex space-x-4 text-gray-400 text-lg"><i class="fa-solid fa-bell"></i><i class="fa-solid fa-wallet"></i></div>
     </nav>
 
     <div class="hero-slider">
         <div class="slide active">
-            <img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg" class="aminci-fix">
+            <img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg">
             <div class="overlay"><h2>Yi Kasuwanci a Cikin <span class="highlight">Cikakken Aminci</span></h2></div>
         </div>
         <div class="slide">
-            <img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg" class="standard-fix">
+            <img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg">
             <div class="overlay"><h2>Nemi Kwararren Ma'aikaci <span class="highlight">a Kowane Fanni</span></h2></div>
         </div>
         <div class="slide">
-            <img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg" class="veggie-fix">
+            <img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg">
             <div class="overlay"><h2>Tallatawa Duniya <span class="highlight">Hajarka a Cikin Sauki</span></h2></div>
         </div>
         <div class="slide">
-            <img src="https://i.postimg.cc/bYC4xVzK/Chat-GPT-Image-Jan-22-2026-01-57-37-PM.png" class="standard-fix">
+            <img src="https://i.postimg.cc/bYC4xVzK/Chat-GPT-Image-Jan-22-2026-01-57-37-PM.png">
             <div class="overlay"><h2>Yi Aiki mai Sauki <span class="highlight">ka Samu Kudi</span></h2></div>
-        </div>
-        <div class="slide">
-            <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg" class="standard-fix">
-            <div class="overlay"><h2>Bincika Maganin <span class="highlight">Dukkan Matsaloli</span></h2></div>
-        </div>
-        <div class="slide">
-            <img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg" class="standard-fix">
-            <div class="overlay"><h2>Koyi Sana'a <span class="highlight">a Zamanance</span></h2></div>
         </div>
     </div>
 
     <div class="grid grid-cols-2 gap-4 px-4 mt-6">
-        <div class="card-blink"><i class="fa-solid fa-graduation-cap text-2xl text-blue-600"></i><p class="card-text">Koyon Sana'a</p></div>
-        <div class="card-blink"><i class="fa-solid fa-lightbulb text-2xl text-red-600"></i><p class="card-text">Mafita</p></div>
-        <div class="card-blink"><i class="fa-solid fa-user-tie text-2xl text-yellow-600"></i><p class="card-text">Sashen Kwararru</p></div>
-        <div class="card-blink"><i class="fa-solid fa-shield-halved text-2xl text-green-600"></i><p class="card-text">Escrow Service</p></div>
-        <a href="market.html" class="card-blink"><i class="fa-solid fa-shop text-2xl text-purple-600"></i><p class="card-text">Yan Kasuwa</p></a>
-        <div class="card-blink"><i class="fa-solid fa-link text-2xl text-indigo-600"></i><p class="card-text">AdChain</p></div>
+        <div class="card-blink"><i class="fa-solid fa-graduation-cap text-2xl text-blue-700"></i><p class="card-text">Koyon Sana'a</p></div>
+        <div class="card-blink"><i class="fa-solid fa-lightbulb text-2xl text-red-700"></i><p class="card-text">Mafita</p></div>
+        <div class="card-blink"><i class="fa-solid fa-user-tie text-2xl text-yellow-700"></i><p class="card-text">Sashen Kwararru</p></div>
+        <div class="card-blink"><i class="fa-solid fa-shield-halved text-2xl text-green-700"></i><p class="card-text">Escrow Service</p></div>
+        <a href="market.html" class="card-blink">
+            <i class="fa-solid fa-shop text-2xl text-purple-700"></i>
+            <p class="card-text">Yan Kasuwa</p>
+        </a>
+        <div class="card-blink"><i class="fa-solid fa-link text-2xl text-indigo-700"></i><p class="card-text">AdChain</p></div>
     </div>
 
     <div class="famous-black-box">
@@ -122,13 +125,13 @@
         <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>End of Scams & Fraud:</b><p>Muna amfani da AI ta zamani wajen kare dukiyar ka.</p></div></div>
         <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>The Trust Engine:</b><p>Tsarin Escrow zai rike kudi har sai ka gamsu.</p></div></div>
         <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Elite Connection:</b><p>Haduwa da kwararru a cikin dakika guda.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Modern Skill:</b><p>Koyi sana'o'in digital na zamani.</p></div></div>
+        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Modern Skill:</b><p>Koyi sana'o'in digital na zamani yau-yau.</p></div></div>
         <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Hyper-Growth AdChain:</b><p>Tallata hajarka ga miliyoyin mutane.</p></div></div>
         <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>AI Problem Solver:</b><p>Maganin kowace irin matsala ta kasuwanci.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Global Trade Standards:</b><p>Maida Bahaushe babban dan kasuwan zamani.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Zero Middleman Fees:</b><p>Mun kashe tsarin dillanci tsakanin ku.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Production-Ready Results:</b><p>Fara samun amfani a take bayan fara aiki.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Future-Proof Security:</b><p>Tabbatar da amincin asusunka a kowane lokaci.</p></div></div>
+        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Global Trade Standards:</b><p>Maida kowane Bahaushe babban dan kasuwa.</p></div></div>
+        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Zero Middleman Fees:</b><p>Babu kudin dillanci a tsakanin ku.</p></div></div>
+        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Fast Results:</b><p>Fara samun amfani a take bayan fara aiki.</p></div></div>
+        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>24/7 Security:</b><p>Tabbatar da amincin asusunka koyaushe.</p></div></div>
     </div>
 
     <script>
@@ -141,4 +144,5 @@
         }, 3500);
     </script>
 </body>
-</html>
+    </html>
+    
