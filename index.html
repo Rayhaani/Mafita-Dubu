@@ -3,131 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Home</title>
+    <title>Mafita Dubu | Professional Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
+        body { font-family: 'Outfit', sans-serif; background-color: #000; color: white; margin: 0; }
+        .syne-font { font-family: 'Syne', sans-serif; }
         
-        .master-glitter {
-            font-family: 'Archivo Black', sans-serif;
-            background: linear-gradient(to right, #ff0000, #ffdd00, #00ff88, #0099ff, #6600ff, #ff0000);
+        .brand-logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #ff4d4d, #f9cb28, #20e3b2, #21a1f1, #a97cf8, #ff4d4d);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: glitterMove 3s linear infinite;
+            animation: shine 3s linear infinite;
         }
-        @keyframes glitterMove { to { background-position: 200% center; } }
+        @keyframes shine { to { background-position: 200% center; } }
 
-        #hero-slider { position: relative; height: 450px; overflow: hidden; border-radius: 2.5rem; margin: 15px; background: #000; }
-        .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease-in-out; display: flex; flex-direction: column; justify-content: flex-end; }
+        #hero-slider { position: relative; height: 500px; overflow: hidden; border-radius: 0 0 3rem 3rem; background: #000; }
+        .slide { position: absolute; inset: 0; opacity: 0; transition: all 1.2s ease-in-out; }
         .slide.active { opacity: 1; z-index: 10; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); }
         
-        /* Shigar da Overlay don tabbatar da rubutu ya fito koda hoton bai bude ba */
-        .slide::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 20%, transparent); z-index: 1; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 0; }
-        
-        .slide-content { position: relative; z-index: 2; padding: 40px 25px; transform: translateY(20px); opacity: 0; transition: all 0.8s ease-out 0.4s; }
-        .slide.active .slide-content { transform: translateY(0); opacity: 1; }
+        .slide-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,1) 20%, transparent);
+            padding: 50px 25px;
+        }
 
-        .breathing-card { background: white; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .caption-text { font-family: 'Syne', sans-serif; font-weight: 800; line-height: 1.1; text-transform: uppercase; }
+
+        /* --- THE BREATHING EFFECT --- */
+        @keyframes breathe {
+            0% { transform: scale(1); box-shadow: 0 0 0px rgba(255,255,255,0); }
+            50% { transform: scale(1.03); box-shadow: 0 0 15px rgba(255,255,255,0.05); }
+            100% { transform: scale(1); box-shadow: 0 0 0px rgba(255,255,255,0); }
+        }
+
+        .action-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.8rem;
+            animation: breathe 4s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        /* Daban-daban Pulse kalar kowane button idan an taba */
+        .card-blue:active { border-color: #3b82f6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); transform: scale(0.95); }
+        .card-red:active { border-color: #ef4444; box-shadow: 0 0 20px rgba(239, 68, 68, 0.4); transform: scale(0.95); }
+        .card-yellow:active { border-color: #eab308; box-shadow: 0 0 20px rgba(234, 179, 8, 0.4); transform: scale(0.95); }
+        .card-green:active { border-color: #22c55e; box-shadow: 0 0 20px rgba(34, 197, 94, 0.4); transform: scale(0.95); }
+        .card-purple:active { border-color: #a855f7; box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); transform: scale(0.95); }
+        .card-orange:active { border-color: #f97316; box-shadow: 0 0 20px rgba(249, 115, 22, 0.4); transform: scale(0.95); }
+
+        .red-arrow { color: #ff0000; font-weight: 900; margin-right: 12px; }
     </style>
 </head>
-<body class="pb-32">
+<body>
 
-    <nav class="bg-white/95 backdrop-blur-md px-6 py-5 sticky top-0 z-[100] border-b flex justify-between items-center">
-        <div class="flex items-center space-x-2">
-            <div class="w-10 h-10 bg-blue-900 rounded-xl flex items-center justify-center text-white font-black text-xs">MD</div>
-            <h1 class="text-xl master-glitter tracking-tighter">MAFITA DUBU</h1>
+    <nav class="p-6 flex justify-between items-center sticky top-0 z-[100] bg-black/80 backdrop-blur-xl border-b border-white/5">
+        <div class="flex items-center space-x-3">
+            <div class="w-11 h-11 bg-white flex items-center justify-center rounded-2xl">
+                <span class="text-black font-black text-sm">MD</span>
+            </div>
+            <h1 class="brand-logo tracking-tighter">MAFITA DUBU</h1>
         </div>
     </nav>
 
     <div id="hero-slider">
-        <div class="slide active">
-            <img src="https://images.pexels.com/photos/4622293/pexels-photo-4622293.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Koyon Sana'a">
-            <div class="slide-content">
-                <span class="bg-blue-600 text-[8px] font-bold px-3 py-1 rounded-full text-white uppercase mb-2 inline-block">Sana'a</span>
-                <h2 class="text-white text-2xl font-black italic">MUNA KOYAR DA KOWACE IRIN SANA'A TA ZAMANI.</h2>
-            </div>
-        </div>
-
-        <div class="slide">
-            <img src="https://images.pexels.com/photos/5717541/pexels-photo-5717541.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Mafita">
-            <div class="slide-content">
-                <span class="bg-red-600 text-[8px] font-bold px-3 py-1 rounded-full text-white uppercase mb-2 inline-block">Mafita</span>
-                <h2 class="text-white text-2xl font-black italic">MUNA DA MAGANIN KOWACE IRIN MATSALAR RAYUWA.</h2>
-            </div>
-        </div>
-
-        <div class="slide">
-            <img src="https://images.pexels.com/photos/9875441/pexels-photo-9875441.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Kwararre">
-            <div class="slide-content">
-                <span class="bg-yellow-500 text-[8px] font-bold px-3 py-1 rounded-full text-white uppercase mb-2 inline-block">Kwararru</span>
-                <h2 class="text-white text-2xl font-black italic">MUNA DA KWARARRU A KOWANE FANNI A KUSA DA KAI.</h2>
-            </div>
-        </div>
-
-        <div class="slide">
-            <img src="https://images.pexels.com/photos/6248990/pexels-photo-6248990.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Escrow">
-            <div class="slide-content">
-                <span class="bg-green-600 text-[8px] font-bold px-3 py-1 rounded-full text-white uppercase mb-2 inline-block">Amana</span>
-                <h2 class="text-white text-2xl font-black italic">KUDINKA YANA NAN LAFIYA HAR SAI KA GAMSITU.</h2>
-            </div>
-        </div>
-
-        <div class="slide">
-            <img src="https://images.pexels.com/photos/5710002/pexels-photo-5710002.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Market">
-            <div class="slide-content">
-                <span class="bg-purple-600 text-[8px] font-bold px-3 py-1 rounded-full text-white uppercase mb-2 inline-block">Kasuwa</span>
-                <h2 class="text-white text-2xl font-black italic">BUDE SHAGONKA KA FARA SAYARWA GA DUNIYA.</h2>
-            </div>
-        </div>
-
-        <div class="slide">
-            <img src="https://images.pexels.com/photos/6190858/pexels-photo-6190858.jpeg?auto=compress&cs=tinysrgb&w=800" alt="AdChain">
-            <div class="slide-content">
-                <span class="bg-orange-500 text-[8px] font-bold px-3 py-1 rounded-full text-white uppercase mb-2 inline-block">Lada</span>
-                <h2 class="text-white text-2xl font-black italic">KALLI TALLA KA SAMU KUDI CIKIN FARIN CIKI.</h2>
-            </div>
-        </div>
+        <div class="slide active"><img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg"><div class="slide-overlay"><h2 class="caption-text text-4xl text-white">YI KASUWANCI A CIKIN <br><span class="text-green-500">CIKAKKEN AMINCI</span></h2></div></div>
+        <div class="slide"><img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg"><div class="slide-overlay"><h2 class="caption-text text-4xl text-white">NEMI <span class="text-blue-500">KWARARREN</span> MA'AIKACI</h2></div></div>
+        <div class="slide"><img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg"><div class="slide-overlay"><h2 class="caption-text text-4xl text-white">TALLATAWA DUNIYA <span class="text-yellow-500">HAJARKA</span></h2></div></div>
+        <div class="slide"><img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg"><div class="slide-overlay"><h2 class="caption-text text-4xl text-white">BINCIKA <span class="text-red-500">MAGANIN</span> MATSALOLI</h2></div></div>
+        <div class="slide"><img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg"><div class="slide-overlay"><h2 class="caption-text text-4xl text-white">KOYI <span class="text-purple-500">SANA'A</span> A ZAMANANCE</h2></div></div>
+        <div class="slide"><img src="https://i.postimg.cc/bYC4xVzK/Chat-GPT-Image-Jan-22-2026-01-57-37-PM.png"><div class="slide-overlay"><h2 class="caption-text text-4xl text-white">YI AIKI KA <span class="text-orange-500">SAMU KUDI</span></h2></div></div>
     </div>
 
-    <section class="px-6 grid grid-cols-2 gap-4 mt-8">
-        <div class="breathing-card p-5 rounded-[2rem] flex flex-col items-center">
-            <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-graduation-cap"></i></div>
-            <span class="text-[8.5px] font-black uppercase whitespace-nowrap">Koyon Sana'a</span>
+    <section class="grid grid-cols-2 gap-4 p-5 -mt-10 relative z-50">
+        <div class="action-card card-blue p-7 flex flex-col items-center">
+            <i class="fa-solid fa-graduation-cap text-2xl text-blue-500 mb-3"></i>
+            <span class="text-[11px] font-bold uppercase whitespace-nowrap">Koyon Sana'a</span>
         </div>
-        <div class="breathing-card p-5 rounded-[2rem] flex flex-col items-center">
-            <div class="w-12 h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-lightbulb"></i></div>
-            <span class="text-[8.5px] font-black uppercase whitespace-nowrap">Mafitar Rayuwa</span>
+        <div class="action-card card-red p-7 flex flex-col items-center">
+            <i class="fa-solid fa-lightbulb text-2xl text-red-500 mb-3"></i>
+            <span class="text-[11px] font-bold uppercase whitespace-nowrap">Mafitar Rayuwa</span>
         </div>
-        <div class="breathing-card p-5 rounded-[2rem] flex flex-col items-center">
-            <div class="w-12 h-12 bg-yellow-50 text-yellow-600 rounded-xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-user-tie"></i></div>
-            <span class="text-[8.5px] font-black uppercase whitespace-nowrap">Nemi Kwararre</span>
+        <div class="action-card card-yellow p-7 flex flex-col items-center">
+            <i class="fa-solid fa-user-tie text-2xl text-yellow-500 mb-3"></i>
+            <span class="text-[11px] font-bold uppercase whitespace-nowrap">Nemi Kwararre</span>
         </div>
-        <div class="breathing-card p-5 rounded-[2rem] flex flex-col items-center">
-            <div class="w-12 h-12 bg-green-50 text-green-600 rounded-xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-vault"></i></div>
-            <span class="text-[8.5px] font-black uppercase whitespace-nowrap">Escrow Wallet</span>
+        <div class="action-card card-green p-7 flex flex-col items-center">
+            <i class="fa-solid fa-vault text-2xl text-green-500 mb-3"></i>
+            <span class="text-[11px] font-bold uppercase whitespace-nowrap">Escrow Wallet</span>
         </div>
-        <a href="market.html" class="breathing-card p-5 rounded-[2rem] flex flex-col items-center">
-            <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-shop"></i></div>
-            <span class="text-[8.5px] font-black uppercase whitespace-nowrap">Yan Kasuwa</span>
+        <a href="market.html" class="action-card card-purple p-7 flex flex-col items-center">
+            <i class="fa-solid fa-shop text-2xl text-purple-500 mb-3"></i>
+            <span class="text-[11px] font-bold uppercase whitespace-nowrap">Yan Kasuwa</span>
         </a>
-        <div class="breathing-card p-5 rounded-[2rem] flex flex-col items-center">
-            <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-bolt"></i></div>
-            <span class="text-[8.5px] font-black uppercase whitespace-nowrap">AdChain</span>
+        <div class="action-card card-orange p-7 flex flex-col items-center">
+            <i class="fa-solid fa-bolt text-2xl text-orange-500 mb-3"></i>
+            <span class="text-[11px] font-bold uppercase whitespace-nowrap">AdChain</span>
         </div>
     </section>
 
-    <section class="px-6 mt-12 mb-24">
-        <div class="bg-black rounded-[3rem] p-10 text-white border border-white/5">
-            <h3 class="text-xl font-black mb-8 border-b border-white/10 pb-4 italic">Me ya sa za ka zaɓe mu?</h3>
-            <div class="space-y-6 text-[13px] opacity-90">
-                <p>✓ Muna da kwararru amintattu wadanda aka tantance.</p>
-                <p>✓ Kudinka yana nan lafiya har sai ka tabbatar da inganci.</p>
-                <p>✓ AdChain yana juya lokacinka zuwa dukiya ta hanyar talla.</p>
+    <section class="px-6 mt-12 mb-20">
+        <div class="bg-black p-8 rounded-[2.5rem] border border-white/10 shadow-2xl">
+            <h3 class="syne-font text-2xl font-black mb-10 text-white italic">WHAT YOU'LL UNLOCK:</h3>
+            <div class="space-y-10">
+                <div class="flex items-start"><span class="red-arrow">»</span><div><h4 class="text-lg font-bold mb-1 italic">Kwararru, Ba Masu Koyo Ba:</h4><p class="text-slate-400 text-sm">Mun tace kwararru mafi inganci a kusa da kai don baka sakamako mai kyan gani.</p></div></div>
+                <div class="flex items-start"><span class="red-arrow">»</span><div><h4 class="text-lg font-bold mb-1 italic">Tsaro 100%, Babu Zamba:</h4><p class="text-slate-400 text-sm">Ba za mu taba sakin kudi ga mai aiki ba har sai ka tabbatar an yi maka aiki yadda kake so.</p></div></div>
+                <div class="flex items-start"><span class="red-arrow">»</span><div><h4 class="text-lg font-bold mb-1 italic">Maganin Damuwa a Dunƙule:</h4><p class="text-slate-400 text-sm">Mafita Dubu ta gina tsarin shawara da taimako ga kowace matsalar rayuwa.</p></div></div>
+                <div class="flex items-start"><span class="red-arrow">»</span><div><h4 class="text-lg font-bold mb-1 italic">Samun Kudinka a Aljihunka:</h4><p class="text-slate-400 text-sm">Tare da AdChain, samun kudi ta hanyar talla ya zama mafi sauki da nishadi ga kowa.</p></div></div>
             </div>
+            <button class="w-full mt-12 bg-white text-black font-black py-5 rounded-3xl text-lg hover:invert">SHIGA MAFITA DUBU YANZU</button>
         </div>
     </section>
 
@@ -142,4 +133,6 @@
         setInterval(nextSlide, 5000);
     </script>
 </body>
-</html>
+                </html>
+
+            
