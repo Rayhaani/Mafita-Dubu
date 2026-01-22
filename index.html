@@ -3,167 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu</title>
+    <title>Global Market | Mafita Dubu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,800;1,800&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F2EFE9; margin: 0; overflow-x: hidden; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; margin: 0; }
 
-        .rotating-logo { animation: spin 4s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* SUNAN MAFITA DUBU: BOLD, WALWALI DA BLINKING */
-        .brand-name {
+        /* WALWALI GA SUNAN MARKET */
+        .market-title {
             font-weight: 900;
-            font-size: 1.5rem;
-            background: linear-gradient(90deg, #1e3a8a, #ffffff, #1e3a8a);
+            background: linear-gradient(90deg, #2563eb, #9333ea, #2563eb);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shine 2s linear infinite, blinker 1.5s linear infinite;
+            animation: shine 3s linear infinite;
         }
         @keyframes shine { to { background-position: 200% center; } }
-        @keyframes blinker { 50% { opacity: 0.3; } }
 
-        .hero-slider {
+        /* KATI MAI KYAU (PREMIUM CARD) */
+        .feature-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
             position: relative;
-            width: 95%;
-            height: 420px;
-            margin: 15px auto;
-            border-radius: 2.5rem;
             overflow: hidden;
-            background: #000;
         }
-        .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; }
-        .slide.active { opacity: 1; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* GYARAN KAWUNAN HOTUNA */
-        .veggie-fix { object-position: center 5% !important; } 
-        .adchain-fix { object-position: center 2% !important; } 
-        .standard-fix { object-position: center 10%; }
-
-        /* CAPTIONS: BOLD ITALIC PLUS JAKARTA */
-        .overlay {
-            position: absolute;
-            bottom: 40px;
-            width: 100%;
-            padding: 0 20px;
-            color: white;
-            text-align: center;
-            z-index: 10;
-        }
-        .overlay h2 { 
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.3rem; 
-            font-weight: 800; 
-            font-style: italic; 
-            text-transform: uppercase; 
-            text-shadow: 3px 3px 15px rgba(0,0,0,1);
-        }
-        .overlay .highlight { 
-            color: #fbbf24; 
-            display: block; 
-            font-size: 1.5rem; 
-            font-weight: 800;
-            font-style: italic;
-        }
-
-        .card-blink {
-            background: #e2e8f0;
-            border-radius: 1.2rem;
-            padding: 20px 5px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            animation: cardFade 2s infinite ease-in-out;
+        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            text-decoration: none;
-            border: 1px solid #cbd5e1;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
         }
-        @keyframes cardFade { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.98); } }
-        .card-text { font-size: 9px; font-weight: 800; margin-top: 10px; text-transform: uppercase; color: #1e3a8a; }
 
-        .famous-black-box { background: #000; color: #fff; padding: 40px 20px; border-radius: 2.5rem 2.5rem 0 0; margin-top: 30px; }
-        .famous-header { font-size: 22px; font-weight: 800; margin-bottom: 30px; text-transform: uppercase; }
-        .reason-row { display: flex; align-items: flex-start; margin-bottom: 25px; }
-        .reason-arrow { color: #ff3b30; font-size: 1rem; margin-right: 12px; margin-top: 3px; }
-        .reason-content b { font-weight: 800; font-size: 0.95rem; display: block; margin-bottom: 4px; }
-        .reason-content p { color: #a1a1a1; font-size: 0.85rem; line-height: 1.4; }
+        .status-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .nav-bottom {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            padding: 15px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            z-index: 100;
+        }
     </style>
 </head>
-<body class="pb-10">
+<body class="pb-32">
 
-    <nav class="p-5 flex justify-between items-center bg-white sticky top-0 z-50">
-        <div class="flex items-center space-x-2">
-            <div class="w-10 h-10 bg-blue-900 rounded-xl flex items-center justify-center text-white font-extrabold rotating-logo">M</div>
-            <span class="brand-name">MafitaDubu</span>
-        </div>
-        <div class="flex space-x-4 text-gray-400 text-lg"><i class="fa-solid fa-bell"></i><i class="fa-solid fa-wallet"></i></div>
+    <nav class="p-5 flex justify-between items-center bg-white sticky top-0 z-50 shadow-sm">
+        <a href="index.html" class="text-gray-600 text-xl"><i class="fa-solid fa-arrow-left"></i></a>
+        <h1 class="market-title text-2xl uppercase italic">Global Market</h1>
+        <div class="text-blue-600 text-xl"><i class="fa-solid fa-map-location-dot"></i></div>
     </nav>
 
-    <div class="hero-slider">
-        <div class="slide active">
-            <img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg" class="standard-fix">
-            <div class="overlay"><h2>Yi Kasuwanci a Cikin <span class="highlight">Cikakken Aminci</span></h2></div>
-        </div>
-        <div class="slide">
-            <img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg" class="standard-fix">
-            <div class="overlay"><h2>Nemi Kwararren Ma'aikaci <span class="highlight">a Kowane Fanni</span></h2></div>
-        </div>
-        <div class="slide">
-            <img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg" class="veggie-fix">
-            <div class="overlay"><h2>Tallatawa Duniya <span class="highlight">Hajarka a Cikin Sauki</span></h2></div>
-        </div>
-        <div class="slide">
-            <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg" class="standard-fix">
-            <div class="overlay"><h2>Bincika Maganin <span class="highlight">Dukkan Matsaloli</span></h2></div>
-        </div>
-        <div class="slide">
-            <img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg" class="standard-fix">
-            <div class="overlay"><h2>Koyi Sana'a <span class="highlight">a Zamanance</span></h2></div>
-        </div>
-        <div class="slide">
-            <img src="https://i.postimg.cc/bYC4xVzK/Chat-GPT-Image-Jan-22-2026-01-57-37-PM.png" class="adchain-fix">
-            <div class="overlay"><h2>Yi Aiki mai Sauki <span class="highlight">ka Samu Kudi</span></h2></div>
+    <div class="p-5">
+        <div class="bg-blue-600 rounded-3xl p-6 text-white relative overflow-hidden">
+            <div class="relative z-10">
+                <h3 class="font-extrabold text-xl mb-1 italic">AdChain Rewards</h3>
+                <p class="text-blue-100 text-sm mb-4">Sami AdTokens yanzu ka yi siyayya</p>
+                <button class="bg-white text-blue-600 px-6 py-2 rounded-full font-bold text-sm">Fara Yanzu</button>
+            </div>
+            <i class="fa-solid fa-coins absolute -right-5 -bottom-5 text-8xl text-blue-500 opacity-30"></i>
         </div>
     </div>
 
-    <div class="grid grid-cols-2 gap-4 px-4 mt-6">
-        <div class="card-blink"><i class="fa-solid fa-graduation-cap text-2xl text-blue-700"></i><p class="card-text">Koyon Sana'a</p></div>
-        <div class="card-blink"><i class="fa-solid fa-lightbulb text-2xl text-red-700"></i><p class="card-text">Mafita</p></div>
-        <div class="card-blink"><i class="fa-solid fa-user-tie text-2xl text-yellow-700"></i><p class="card-text">Sashen Kwararru</p></div>
-        <div class="card-blink"><i class="fa-solid fa-shield-halved text-2xl text-green-700"></i><p class="card-text">Escrow Service</p></div>
-        <a href="market.html" class="card-blink"><i class="fa-solid fa-shop text-2xl text-purple-700"></i><p class="card-text">Yan Kasuwa</p></a>
-        <div class="card-blink"><i class="fa-solid fa-link text-2xl text-indigo-700"></i><p class="card-text">AdChain</p></div>
+    <div class="px-5">
+        <h2 class="text-gray-400 font-bold text-xs uppercase tracking-widest mb-4">Advanced Features</h2>
+        
+        <div class="grid grid-cols-1 gap-4">
+            
+            <div class="feature-card">
+                <span class="status-tag bg-green-100 text-green-600">PoR Live</span>
+                <div class="feature-icon bg-green-100 text-green-600"><i class="fa-solid fa-video"></i></div>
+                <h4 class="font-extrabold text-blue-900 italic">Proof of Reality (PoR)</h4>
+                <p class="text-gray-500 text-sm mt-2">Dole mai siyarwa ya ɗauki bidiyon kayan "Live" don tabbatar da abin da kake gani shine za a aiko maka.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon bg-purple-100 text-purple-600"><i class="fa-solid fa-microphone-lines"></i></div>
+                <h4 class="font-extrabold text-blue-900 italic">Voice ciniki (VCB)</h4>
+                <p class="text-gray-500 text-sm mt-2">AI ɗinmu zai yi magana da mai shago ya kulla yarjejeniya da muryarka kai tsaye.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon bg-red-100 text-red-600"><i class="fa-solid fa-street-view"></i></div>
+                <h4 class="font-extrabold text-blue-900 italic">Geo-Fenced Shopping</h4>
+                <p class="text-gray-500 text-sm mt-2">Duba kayan da ake siyarwa a daidai layin da kake "Live" a kan taswira.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon bg-blue-100 text-blue-600"><i class="fa-solid fa-shield-halved"></i></div>
+                <h4 class="font-extrabold text-blue-900 italic">Hologram Security</h4>
+                <p class="text-gray-500 text-sm mt-2">Scanning na musamman kafin sakin kuɗi don tabbatar da ingancin kaya.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon bg-yellow-100 text-yellow-600"><i class="fa-solid fa-wallet"></i></div>
+                <h4 class="font-extrabold text-blue-900 italic">AdToken Pay</h4>
+                <p class="text-gray-500 text-sm mt-2">Yi amfani da AdTokens ɗin da ka samu wajen biyan kuɗin kaya ba tare da Naira ba.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon bg-indigo-100 text-indigo-600"><i class="fa-solid fa-bolt"></i></div>
+                <h4 class="font-extrabold text-blue-900 italic">Flash Delivery</h4>
+                <p class="text-gray-500 text-sm mt-2">Isar da sako cikin sauri ta hanyar amfani da kwararrun direbobin mu dake kusa da kai.</p>
+            </div>
+
+        </div>
     </div>
 
-    <div class="famous-black-box">
-        <h2 class="famous-header">What You'll Unlock:</h2>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>End of Scams & Fraud:</b><p>Muna amfani da AI ta zamani wajen kare dukiyar ka.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>The Trust Engine:</b><p>Tsarin Escrow zai rike kudi har sai ka gamsu.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Elite Connection:</b><p>Haduwa da kwararru a cikin dakika guda.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Modern Skill:</b><p>Koyi sana'o'in digital na zamani yau-yau.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Hyper-Growth AdChain:</b><p>Tallata hajarka ga miliyoyin mutane.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>AI Problem Solver:</b><p>Maganin kowace irin matsala ta kasuwanci.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Global Trade Standards:</b><p>Maida kowane Bahaushe babban dan kasuwa.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Zero Middleman Fees:</b><p>Babu kudin dillanci a tsakanin ku.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Fast Results:</b><p>Fara samun amfani a take bayan fara aiki.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>24/7 Security:</b><p>Tabbatar da amincin asusunka koyaushe.</p></div></div>
+    <div class="nav-bottom">
+        <a href="index.html" class="text-gray-400 text-xl"><i class="fa-solid fa-house"></i></a>
+        <a href="#" class="text-blue-600 text-xl"><i class="fa-solid fa-compass"></i></a>
+        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-lg -mt-10 border-4 border-white">
+            <i class="fa-solid fa-plus"></i>
+        </div>
+        <a href="#" class="text-gray-400 text-xl"><i class="fa-solid fa-message"></i></a>
+        <a href="#" class="text-gray-400 text-xl"><i class="fa-solid fa-user"></i></a>
     </div>
 
-    <script>
-        const slides = document.querySelectorAll('.slide');
-        let currentSlide = 0;
-        setInterval(() => {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }, 3500);
-    </script>
 </body>
     </html>
-                                                                                                                                                                   
+    
