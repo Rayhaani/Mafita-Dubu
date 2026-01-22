@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Professional Home</title>
+    <title>Mafita Dubu | Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;700;900&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
+        
         .master-glitter {
             font-family: 'Archivo Black', sans-serif;
             background: linear-gradient(to right, #ff0000, #ffdd00, #00ff88, #0099ff, #6600ff, #ff0000);
@@ -19,31 +20,23 @@
         }
         @keyframes glitterMove { to { background-position: 200% center; } }
 
-        #hero-slider { position: relative; height: 480px; overflow: hidden; border-radius: 2.5rem; margin: 15px; background: #111; box-shadow: 0 25px 50px rgba(0,0,0,0.3); }
+        #hero-slider { position: relative; height: 450px; overflow: hidden; border-radius: 2.5rem; margin: 15px; background: #000; }
         .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease-in-out; display: flex; flex-direction: column; justify-content: flex-end; }
         .slide.active { opacity: 1; z-index: 10; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: -1; }
         
-        /* Animations */
-        .zoom-effect.active img { animation: zoomIn 7s infinite alternate; }
-        .slide-effect.active img { animation: slideIn 7s infinite alternate; }
-        @keyframes zoomIn { from { transform: scale(1); } to { transform: scale(1.25); } }
-        @keyframes slideIn { from { transform: translateX(-5%); } to { transform: translateX(5%); } }
-
-        .slide-content { 
-            background: linear-gradient(to top, rgba(0,0,0,1) 30%, transparent); 
-            padding: 40px 25px; 
-            transform: translateY(20px); opacity: 0;
-            transition: all 0.8s ease-out 0.4s;
-        }
+        /* Shigar da Overlay don tabbatar da rubutu ya fito koda hoton bai bude ba */
+        .slide::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 20%, transparent); z-index: 1; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 0; }
+        
+        .slide-content { position: relative; z-index: 2; padding: 40px 25px; transform: translateY(20px); opacity: 0; transition: all 0.8s ease-out 0.4s; }
         .slide.active .slide-content { transform: translateY(0); opacity: 1; }
-        
-        .breathing-card { background: white; border: 1px solid #e2e8f0; }
+
+        .breathing-card { background: white; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body class="pb-32">
 
-    <nav class="bg-white/90 backdrop-blur-md px-6 py-5 sticky top-0 z-[100] border-b flex justify-between items-center">
+    <nav class="bg-white/95 backdrop-blur-md px-6 py-5 sticky top-0 z-[100] border-b flex justify-between items-center">
         <div class="flex items-center space-x-2">
             <div class="w-10 h-10 bg-blue-900 rounded-xl flex items-center justify-center text-white font-black text-xs">MD</div>
             <h1 class="text-xl master-glitter tracking-tighter">MAFITA DUBU</h1>
@@ -51,83 +44,89 @@
     </nav>
 
     <div id="hero-slider">
-        <div class="slide zoom-effect active">
-            <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?q=80&w=800" alt="Koyon Sana'a">
+        <div class="slide active">
+            <img src="https://images.pexels.com/photos/4622293/pexels-photo-4622293.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Koyon Sana'a">
             <div class="slide-content">
-                <h2 class="text-white text-2xl font-black italic uppercase">Muna koyar da kowace irin sana'a.</h2>
+                <span class="bg-blue-600 text-[8px] font-bold px-3 py-1 rounded-full text-white uppercase mb-2 inline-block">Sana'a</span>
+                <h2 class="text-white text-2xl font-black italic">MUNA KOYAR DA KOWACE IRIN SANA'A TA ZAMANI.</h2>
             </div>
         </div>
 
-        <div class="slide slide-effect">
-            <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=800" alt="Mafita">
+        <div class="slide">
+            <img src="https://images.pexels.com/photos/5717541/pexels-photo-5717541.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Mafita">
             <div class="slide-content">
-                <h2 class="text-white text-2xl font-black italic uppercase">Muna da maganin kowace matsala.</h2>
+                <span class="bg-red-600 text-[8px] font-bold px-3 py-1 rounded-full text-white uppercase mb-2 inline-block">Mafita</span>
+                <h2 class="text-white text-2xl font-black italic">MUNA DA MAGANIN KOWACE IRIN MATSALAR RAYUWA.</h2>
             </div>
         </div>
 
-        <div class="slide zoom-effect">
-            <img src="https://images.unsplash.com/photo-1521791136364-798a7bc0d262?q=80&w=800" alt="Kwararre">
+        <div class="slide">
+            <img src="https://images.pexels.com/photos/9875441/pexels-photo-9875441.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Kwararre">
             <div class="slide-content">
-                <h2 class="text-white text-2xl font-black italic uppercase">Muna da kwararru a kowane fanni.</h2>
+                <span class="bg-yellow-500 text-[8px] font-bold px-3 py-1 rounded-full text-white uppercase mb-2 inline-block">Kwararru</span>
+                <h2 class="text-white text-2xl font-black italic">MUNA DA KWARARRU A KOWANE FANNI A KUSA DA KAI.</h2>
             </div>
         </div>
 
-        <div class="slide slide-effect">
-            <img src="https://images.unsplash.com/photo-1521790311536-00a8c23865a2?q=80&w=800" alt="Escrow">
+        <div class="slide">
+            <img src="https://images.pexels.com/photos/6248990/pexels-photo-6248990.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Escrow">
             <div class="slide-content">
-                <h2 class="text-white text-2xl font-black italic uppercase">Kudinka yana nan lafiya 100%.</h2>
+                <span class="bg-green-600 text-[8px] font-bold px-3 py-1 rounded-full text-white uppercase mb-2 inline-block">Amana</span>
+                <h2 class="text-white text-2xl font-black italic">KUDINKA YANA NAN LAFIYA HAR SAI KA GAMSITU.</h2>
             </div>
         </div>
 
-        <div class="slide zoom-effect">
-            <img src="https://images.unsplash.com/photo-1488459711615-228f395b063d?q=80&w=800" alt="Market">
+        <div class="slide">
+            <img src="https://images.pexels.com/photos/5710002/pexels-photo-5710002.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Market">
             <div class="slide-content">
-                <h2 class="text-white text-2xl font-black italic uppercase">Bude shagonka ga daukacin duniya.</h2>
+                <span class="bg-purple-600 text-[8px] font-bold px-3 py-1 rounded-full text-white uppercase mb-2 inline-block">Kasuwa</span>
+                <h2 class="text-white text-2xl font-black italic">BUDE SHAGONKA KA FARA SAYARWA GA DUNIYA.</h2>
             </div>
         </div>
 
-        <div class="slide slide-effect">
-            <img src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?q=80&w=800" alt="AdChain">
+        <div class="slide">
+            <img src="https://images.pexels.com/photos/6190858/pexels-photo-6190858.jpeg?auto=compress&cs=tinysrgb&w=800" alt="AdChain">
             <div class="slide-content">
-                <h2 class="text-white text-2xl font-black italic uppercase">Kalli talla ka samu kudi cikin farin ciki.</h2>
+                <span class="bg-orange-500 text-[8px] font-bold px-3 py-1 rounded-full text-white uppercase mb-2 inline-block">Lada</span>
+                <h2 class="text-white text-2xl font-black italic">KALLI TALLA KA SAMU KUDI CIKIN FARIN CIKI.</h2>
             </div>
         </div>
     </div>
 
     <section class="px-6 grid grid-cols-2 gap-4 mt-8">
-        <div class="breathing-card p-5 rounded-[2.2rem] flex flex-col items-center">
+        <div class="breathing-card p-5 rounded-[2rem] flex flex-col items-center">
             <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-graduation-cap"></i></div>
-            <span class="text-[9px] font-black uppercase tracking-tight whitespace-nowrap">Koyon Sana'a</span>
+            <span class="text-[8.5px] font-black uppercase whitespace-nowrap">Koyon Sana'a</span>
         </div>
-        <div class="breathing-card p-5 rounded-[2.2rem] flex flex-col items-center">
+        <div class="breathing-card p-5 rounded-[2rem] flex flex-col items-center">
             <div class="w-12 h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-lightbulb"></i></div>
-            <span class="text-[9px] font-black uppercase tracking-tight whitespace-nowrap">Mafitar Rayuwa</span>
+            <span class="text-[8.5px] font-black uppercase whitespace-nowrap">Mafitar Rayuwa</span>
         </div>
-        <div class="breathing-card p-5 rounded-[2.2rem] flex flex-col items-center">
+        <div class="breathing-card p-5 rounded-[2rem] flex flex-col items-center">
             <div class="w-12 h-12 bg-yellow-50 text-yellow-600 rounded-xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-user-tie"></i></div>
-            <span class="text-[9px] font-black uppercase tracking-tight whitespace-nowrap">Nemi Kwararre</span>
+            <span class="text-[8.5px] font-black uppercase whitespace-nowrap">Nemi Kwararre</span>
         </div>
-        <div class="breathing-card p-5 rounded-[2.2rem] flex flex-col items-center">
+        <div class="breathing-card p-5 rounded-[2rem] flex flex-col items-center">
             <div class="w-12 h-12 bg-green-50 text-green-600 rounded-xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-vault"></i></div>
-            <span class="text-[9px] font-black uppercase tracking-tight whitespace-nowrap">Escrow Wallet</span>
+            <span class="text-[8.5px] font-black uppercase whitespace-nowrap">Escrow Wallet</span>
         </div>
-        <a href="market.html" class="breathing-card p-5 rounded-[2.2rem] flex flex-col items-center">
+        <a href="market.html" class="breathing-card p-5 rounded-[2rem] flex flex-col items-center">
             <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-shop"></i></div>
-            <span class="text-[9px] font-black uppercase tracking-tight whitespace-nowrap">Yan Kasuwa</span>
+            <span class="text-[8.5px] font-black uppercase whitespace-nowrap">Yan Kasuwa</span>
         </a>
-        <div class="breathing-card p-5 rounded-[2.2rem] flex flex-col items-center">
+        <div class="breathing-card p-5 rounded-[2rem] flex flex-col items-center">
             <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-bolt"></i></div>
-            <span class="text-[9px] font-black uppercase tracking-tight whitespace-nowrap">AdChain</span>
+            <span class="text-[8.5px] font-black uppercase whitespace-nowrap">AdChain</span>
         </div>
     </section>
 
     <section class="px-6 mt-12 mb-24">
-        <div class="bg-slate-950 rounded-[3rem] p-10 text-white relative overflow-hidden">
-            <h3 class="text-xl font-black mb-8 border-b border-white/10 pb-4 italic tracking-tighter">Dalilin Zabar Mu</h3>
-            <div class="space-y-6 text-sm opacity-90">
-                <p>✓ Kwararru amintattu wadanda aka tantance su kusa da kai.</p>
-                <p>✓ Tsarin Escrow dake kare kudin ka har sai ka gamsu.</p>
-                <p>✓ AdChain dake juya lokacin ka zuwa dukiya ta hanyar talla.</p>
+        <div class="bg-black rounded-[3rem] p-10 text-white border border-white/5">
+            <h3 class="text-xl font-black mb-8 border-b border-white/10 pb-4 italic">Me ya sa za ka zaɓe mu?</h3>
+            <div class="space-y-6 text-[13px] opacity-90">
+                <p>✓ Muna da kwararru amintattu wadanda aka tantance.</p>
+                <p>✓ Kudinka yana nan lafiya har sai ka tabbatar da inganci.</p>
+                <p>✓ AdChain yana juya lokacinka zuwa dukiya ta hanyar talla.</p>
             </div>
         </div>
     </section>
@@ -143,5 +142,4 @@
         setInterval(nextSlide, 5000);
     </script>
 </body>
-                    </html>
-                    
+</html>
