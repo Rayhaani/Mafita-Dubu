@@ -3,101 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Premium</title>
+    <title>Mafita Dubu | Professional Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Mayar da asalin Font mai kyau na farko */
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #F4F1EA; /* Exact Milk/Off-white from screenshot */
+            background-color: #F5F3EF; /* Asalin Milk color din screenshot din */
             color: #1a1a1a; 
             margin: 0; 
         }
 
-        /* Logo Rotation & Blinking Text */
+        /* Logo Blinking & Rotation */
         @keyframes rotateLogo { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .logo-icon { animation: rotateLogo 6s linear infinite; }
+        .logo-img { animation: rotateLogo 8s linear infinite; }
 
-        @keyframes blinkText { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
         .logo-text { 
             font-weight: 800; 
-            font-size: 1.4rem; 
+            font-size: 1.5rem; 
             color: #1e3a8a; 
-            animation: blinkText 1.5s ease-in-out infinite;
+            animation: blink 1.5s infinite; 
+            letter-spacing: -0.5px;
         }
 
-        /* Hero Slider with Head-Focus Fix */
+        /* Hero Slider - Gyaran Kanshin Mutane */
         #hero-slider { 
             position: relative; 
-            height: 450px; 
+            height: 420px; 
             overflow: hidden; 
-            border-radius: 2.5rem; 
+            border-radius: 2.2rem; 
             margin: 15px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
-        .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease-in-out; }
+        .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s ease; }
         .slide.active { opacity: 1; z-index: 10; }
         
-        /* Focus on Top (Kawuna su fito) */
+        /* Wannan zai tabbatar mutanen gefe da kawuna sun fito */
         .slide img { 
-            width: 100%; height: 100%; 
+            width: 100%; 
+            height: 100%; 
             object-fit: cover; 
-            object-position: top; /* Wannan zai nuna kan mutane */
+            object-position: 50% 5%; /* Tura hoton kasa kadan don kan mutum ya fito */
         }
         
         .slide-overlay {
             position: absolute; bottom: 0; left: 0; width: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            padding: 30px 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 20%, transparent);
+            padding: 35px 20px;
         }
 
-        /* Professional Captions (No plain white) */
-        .cap-gold { color: #fbbf24; font-weight: 800; font-size: 1.3rem; }
-        .cap-blue { color: #60a5fa; font-weight: 800; font-size: 1.3rem; }
+        /* Professional Captions */
+        .caption-text {
+            font-weight: 800;
+            font-size: 1.35rem;
+            line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+        .text-accent { color: #facc15; } /* Gold color for impact */
 
         /* Breathing Boxes */
-        @keyframes boxBreathe {
-            0%, 100% { transform: scale(1); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-            50% { transform: scale(1.04); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.9; box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
         }
         .action-card {
             background: white;
-            border-radius: 1.5rem;
-            animation: boxBreathe 3s ease-in-out infinite;
+            border-radius: 1.6rem;
+            padding: 24px 12px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 22px 10px;
-            border: 1px solid rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.04);
+            animation: breathe 4s ease-in-out infinite;
         }
 
-        /* Why Section - Exactly like Screenshot */
-        .why-black-box {
+        /* Why Section - Exact Famous AI Style */
+        .why-container {
             background: #000;
-            color: white;
-            border-radius: 2.5rem;
+            border-radius: 2.8rem;
             padding: 45px 25px;
             margin: 20px;
+            color: white;
         }
-        .red-arrow { color: #ff0000; font-size: 1.5rem; font-weight: 900; margin-right: 12px; }
+        .red-arrow { color: #ff0000; font-weight: 900; font-size: 1.4rem; margin-right: 12px; flex-shrink: 0; }
         .why-item { display: flex; align-items: flex-start; margin-bottom: 30px; }
-        .item-title { font-weight: 800; font-size: 1.1rem; display: block; margin-bottom: 5px; color: #fff; }
-        .item-text { color: #a1a1aa; font-size: 0.92rem; line-height: 1.6; }
+        .why-title { font-weight: 800; font-size: 1.15rem; color: #fff; display: block; margin-bottom: 4px; }
+        .why-desc { color: #a1a1aa; font-size: 0.95rem; line-height: 1.6; }
     </style>
 </head>
-<body class="pb-28">
+<body class="pb-32">
 
     <nav class="px-6 py-5 flex justify-between items-center bg-white/90 backdrop-blur-md sticky top-0 z-[100] border-b border-gray-100">
         <div class="flex items-center space-x-3">
-            <div class="logo-icon w-10 h-10 bg-blue-900 rounded-xl flex items-center justify-center text-white shadow-lg">
-                <i class="fa-solid fa-m"></i>
-            </div>
-            <h1 class="logo-text">MAFITA DUBU</h1>
+            <div class="logo-img w-10 h-10 bg-blue-900 rounded-xl flex items-center justify-center text-white font-black text-xl">M</div>
+            <h1 class="logo-text">MafitaDubu</h1>
         </div>
-        <div class="flex space-x-4 text-gray-400">
+        <div class="flex space-x-5 text-gray-500 text-xl">
             <i class="fa-solid fa-bell"></i>
             <i class="fa-solid fa-wallet"></i>
         </div>
@@ -106,94 +111,95 @@
     <div id="hero-slider">
         <div class="slide active">
             <img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg">
-            <div class="slide-overlay"><h2 class="cap-gold text-shadow-lg uppercase tracking-tight">Yi Kasuwanci a Cikin <br>Cikakken Aminci</h2></div>
+            <div class="slide-overlay"><h2 class="caption-text text-white">Yi Kasuwanci a Cikin <br><span class="text-accent">Cikakken Aminci</span></h2></div>
         </div>
         <div class="slide">
             <img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg">
-            <div class="slide-overlay"><h2 class="cap-blue uppercase tracking-tight">Nemi Kwararren Ma'aikaci <br>a Kowane Fanni</h2></div>
+            <div class="slide-overlay"><h2 class="caption-text text-white">Nemi <span class="text-accent">Kwararre</span> a <br>Kowane Fanni</h2></div>
         </div>
         <div class="slide">
             <img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg">
-            <div class="slide-overlay"><h2 class="cap-gold uppercase tracking-tight">Tallatawa Duniya Hajarka <br>a Cikin Sauki</h2></div>
+            <div class="slide-overlay"><h2 class="caption-text text-white">Tallatawa Duniya <br><span class="text-accent">Hajarka</span> Cikin Sauki</h2></div>
         </div>
         <div class="slide">
             <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg">
-            <div class="slide-overlay"><h2 class="cap-blue uppercase tracking-tight">Bincika Maganin Dukkanin <br>Matsaloli da Damuwarka</h2></div>
+            <div class="slide-overlay"><h2 class="caption-text text-white">Bincika Maganin <br><span class="text-accent">Matsalolinka</span></h2></div>
         </div>
         <div class="slide">
             <img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg">
-            <div class="slide-overlay"><h2 class="cap-gold uppercase tracking-tight">Koyi Sana'a Kowace Iri <br>a Cikin Sauki</h2></div>
+            <div class="slide-overlay"><h2 class="caption-text text-white">Koyi <span class="text-accent">Sana'a</span> a <br>Cikin Sauki</h2></div>
         </div>
         <div class="slide">
             <img src="https://i.postimg.cc/bYC4xVzK/Chat-GPT-Image-Jan-22-2026-01-57-37-PM.png">
-            <div class="slide-overlay"><h2 class="cap-blue uppercase tracking-tight">Yi Aiki mai Sauki <br>ka Samu Kudi</h2></div>
+            <div class="slide-overlay"><h2 class="caption-text text-white">Yi Aiki Mai Sauki <br><span class="text-accent">Ka Samu Kudi</span></h2></div>
         </div>
     </div>
 
     <div class="grid grid-cols-2 gap-4 px-4 mt-8">
         <div class="action-card">
-            <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-3 shadow-inner"><i class="fa-solid fa-graduation-cap"></i></div>
             <span class="text-[11px] font-extrabold uppercase whitespace-nowrap">Koyon Sana'a</span>
         </div>
         <div class="action-card">
-            <div class="w-12 h-12 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-lightbulb"></i></div>
+            <div class="w-12 h-12 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-2xl mb-3 shadow-inner"><i class="fa-solid fa-lightbulb"></i></div>
             <span class="text-[11px] font-extrabold uppercase whitespace-nowrap">Mafitar Rayuwa</span>
         </div>
         <div class="action-card">
-            <div class="w-12 h-12 bg-yellow-50 text-yellow-600 rounded-2xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-user-tie"></i></div>
+            <div class="w-12 h-12 bg-yellow-50 text-yellow-600 rounded-2xl flex items-center justify-center text-2xl mb-3 shadow-inner"><i class="fa-solid fa-user-tie"></i></div>
             <span class="text-[11px] font-extrabold uppercase whitespace-nowrap">Nemi Kwararre</span>
         </div>
         <div class="action-card">
-            <div class="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-vault"></i></div>
+            <div class="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center text-2xl mb-3 shadow-inner"><i class="fa-solid fa-shield-halved"></i></div>
             <span class="text-[11px] font-extrabold uppercase whitespace-nowrap">Escrow Wallet</span>
         </div>
         <a href="market.html" class="action-card">
-            <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-shop"></i></div>
+            <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mb-3 shadow-inner"><i class="fa-solid fa-shop"></i></div>
             <span class="text-[11px] font-extrabold uppercase whitespace-nowrap">Yan Kasuwa</span>
         </a>
         <div class="action-card">
-            <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-bolt"></i></div>
+            <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center text-2xl mb-3 shadow-inner"><i class="fa-solid fa-bolt"></i></div>
             <span class="text-[11px] font-extrabold uppercase whitespace-nowrap">AdChain</span>
         </div>
     </div>
 
-    <section class="why-black-box">
-        <h3 class="text-2xl font-black mb-10 italic tracking-tight">What You'll Unlock:</h3>
+    <section class="why-container">
+        <h3 class="text-2xl font-black mb-10 italic uppercase tracking-tighter">What You'll Unlock:</h3>
         
         <div class="why-item">
             <span class="red-arrow">»</span>
             <div>
-                <span class="item-title">Famous AI Magic App Builder:</span>
-                <p class="item-text">Turn your ideas into apps in minutes. No code, no fuss, just type a sentence and watch the magic happen.</p>
+                <span class="why-title">Kwararru, Ba Masu Koyo Ba:</span>
+                <p class="why-desc">Sanya aikin ka a hannun mutanen da suka san aiki. Mun tace kwararru mafi inganci a kusa da kai don baka sakamako na kwarai.</p>
             </div>
         </div>
 
         <div class="why-item">
             <span class="red-arrow">»</span>
             <div>
-                <span class="item-title">Build in Hours, Not Months:</span>
-                <p class="item-text">Screw 6-month dev cycles. Describe it. Famous.ai builds it. Your competition is still booking Zoom calls.</p>
+                <span class="why-title">Tsaro 100%, Babu Zamba:</span>
+                <p class="why-desc">Muna rike da kudin ka a matsayin amana (Escrow). Ba za mu taba sakin kudi ga mai aiki ba har sai ka gamsu da aikin da aka yi maka.</p>
             </div>
         </div>
 
         <div class="why-item">
             <span class="red-arrow">»</span>
             <div>
-                <span class="item-title">Real Apps, Not Pretty Toys:</span>
-                <p class="item-text">Most AI tools slap together a cute demo. Famous builds real engines — full-stack, database-backed, revenue-ready monsters.</p>
+                <span class="why-title">Maganin Damuwa a Dunƙule:</span>
+                <p class="why-desc">Kada ka sake barin damuwa ta cinye ka. Mafita Dubu ta gina tsarin da zai baka mafita ga kowace irin matsalar rayuwa.</p>
             </div>
         </div>
 
         <div class="why-item">
             <span class="red-arrow">»</span>
             <div>
-                <span class="item-title">No Walls. No Limits. No Bullsh*t:</span>
-                <p class="item-text">Edit anything. Break anything. Scale anything. This is YOUR app — not some sandbox you're renting from a robot.</p>
+                <span class="why-title">Samun Kudinka a Aljihunka:</span>
+                <p class="why-desc">Juya lokacin ka zuwa dukiya. Tare da AdChain, samun kudi ta hanyar talla ya zama mafi sauki ga kowa a ko'ina.</p>
             </div>
         </div>
     </section>
 
     <script>
+        // Slider Logic
         let slides = document.querySelectorAll('.slide');
         let currentSlide = 0;
         function nextSlide() {
@@ -204,5 +210,5 @@
         setInterval(nextSlide, 5000);
     </script>
 </body>
-                </html>
-    
+                                                                                    </html>
+                                                                                    
