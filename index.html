@@ -3,19 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Professional UI</title>
+    <title>Mafita Dubu | Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;700;900&display=swap');
-        
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: #f1f5f9; 
-            margin: 0;
-        }
-
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
         .master-glitter {
             font-family: 'Archivo Black', sans-serif;
             background: radial-gradient(circle, #fff 10%, transparent 11%),
@@ -24,155 +18,68 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: glitterMove 2s linear infinite, brandBlink 0.6s ease-in-out infinite;
-            text-transform: uppercase;
         }
-
         @keyframes glitterMove { to { background-position: 0 0, 300% center; } }
         @keyframes brandBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
-
-        .rotating-logo {
-            background: linear-gradient(135deg, #1e3a8a, #059669);
-            animation: rotateMe 8s linear infinite;
-        }
+        .rotating-logo { background: linear-gradient(135deg, #1e3a8a, #059669); animation: rotateMe 8s linear infinite; }
         @keyframes rotateMe { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        .breathing-card {
-            background: white;
-            border: 1.5px solid #f1f5f9;
-            animation: boxBreath 4s infinite ease-in-out;
-        }
-        @keyframes boxBreath {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.04); border-color: #10b981; }
-        }
-
-        .info-box {
-            background-color: #000000;
-            border-radius: 2rem;
-            color: #ffffff;
-            padding: 2.5rem 1.5rem;
-            margin-top: 3rem;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-        }
-        .red-arrow { color: #ef4444; font-weight: 900; margin-right: 12px; flex-shrink: 0; }
+        .breathing-card { background: white; border: 1.5px solid #f1f5f9; animation: boxBreath 4s infinite ease-in-out; }
+        @keyframes boxBreath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); border-color: #10b981; } }
     </style>
 </head>
 <body class="pb-40">
-
     <nav class="bg-white/95 backdrop-blur-md px-6 py-5 flex justify-between items-center sticky top-0 z-50 border-b border-slate-200">
         <div class="flex items-center space-x-3">
             <div class="w-10 h-10 rounded-xl rotating-logo flex items-center justify-center text-white font-black text-[10px] shadow-lg">MD</div>
             <h1 class="text-lg master-glitter tracking-tighter">MAFITA DUBU</h1>
         </div>
-        <div class="flex space-x-5 text-blue-900 text-xl">
-            <i class="fa-solid fa-bell"></i>
-            <i class="fa-solid fa-wallet"></i>
-        </div>
     </nav>
 
     <section class="px-8 py-20 text-center">
         <div class="min-h-[120px] flex items-center justify-center">
-            <div id="type-wrapper">
-                <h2 id="typed-msg" class="text-2xl font-black text-slate-800"></h2>
-            </div>
+            <div id="type-wrapper"><h2 id="typed-msg" class="text-2xl font-black text-slate-800"></h2></div>
             <h1 id="glitter-brand" class="master-glitter text-5xl hidden">MAFITA DUBU</h1>
         </div>
     </section>
 
     <section class="max-w-7xl mx-auto px-6 grid grid-cols-2 gap-5">
         <div class="breathing-card p-7 rounded-[2.5rem] flex flex-col items-center">
-            <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-graduation-cap"></i></div>
-            <span class="font-bold text-slate-700 text-xs">Koyon Sana'a</span>
+            <i class="fa-solid fa-graduation-cap text-blue-600 text-3xl mb-4"></i>
+            <span class="font-bold text-slate-700 text-xs text-center">Koyon Sana'a</span>
         </div>
+        
+        <a href="market.html" class="breathing-card p-7 rounded-[2.5rem] flex flex-col items-center">
+            <i class="fa-solid fa-shop text-purple-600 text-3xl mb-4"></i>
+            <span class="font-bold text-slate-700 text-xs text-center">Yan Kasuwa</span>
+        </a>
+
         <div class="breathing-card p-7 rounded-[2.5rem] flex flex-col items-center">
-            <div class="w-16 h-16 bg-yellow-50 text-yellow-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-lightbulb"></i></div>
-            <span class="font-bold text-slate-700 text-xs">Mafitar Rayuwa</span>
-        </div>
-        <div class="breathing-card p-7 rounded-[2.5rem] flex flex-col items-center">
-            <div class="w-16 h-16 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-user-doctor"></i></div>
-            <span class="font-bold text-slate-700 text-xs">Nemi Kwararre</span>
-        </div>
-        <div class="breathing-card p-7 rounded-[2.5rem] flex flex-col items-center">
-            <div class="w-16 h-16 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-shield-halved"></i></div>
-            <span class="font-bold text-slate-700 text-xs">Escrow Wallet</span>
-        </div>
-        <div class="breathing-card p-7 rounded-[2.5rem] flex flex-col items-center">
-            <div class="w-16 h-16 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-shop"></i></div>
-            <span class="font-bold text-slate-700 text-xs">Yan Kasuwa</span>
-        </div>
-        <div class="breathing-card p-7 rounded-[2.5rem] flex flex-col items-center">
-            <div class="w-16 h-16 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-bolt"></i></div>
-            <span class="font-bold text-slate-700 text-xs">AdChain</span>
+            <i class="fa-solid fa-bolt text-orange-600 text-3xl mb-4"></i>
+            <span class="font-bold text-slate-700 text-xs text-center">AdChain</span>
         </div>
     </section>
-
-    <section class="px-6 mt-12 mb-20">
-        <div class="info-box max-w-md mx-auto">
-            <h3 class="text-xl font-black mb-8 text-center border-b border-white/10 pb-4">WHY MAFITA DUBU?</h3>
-            <div class="space-y-6">
-                <div class="flex items-start"><span class="red-arrow">»</span><div><h5 class="font-bold text-sm">Hyper-Local Search:</h5><p class="text-[11px] text-gray-400 mt-1">Nemi kwararre ko dan kasuwa mafi kusa da kai a ko'ina kake.</p></div></div>
-                <div class="flex items-start"><span class="red-arrow">»</span><div><h5 class="font-bold text-sm">Verified Professionals:</h5><p class="text-[11px] text-gray-400 mt-1">Tantance kwararru ta hanyar AI don tabbatar da ingancin aiki.</p></div></div>
-                <div class="flex items-start"><span class="red-arrow">»</span><div><h5 class="font-bold text-sm">Secure Escrow Protocol:</h5><p class="text-[11px] text-gray-400 mt-1">Kudi yana nan lafiya har sai ka gamsu 100% da aikin da aka yi maka.</p></div></div>
-                <div class="flex items-start"><span class="red-arrow">»</span><div><h5 class="font-bold text-sm">AdChain Earnings:</h5><p class="text-[11px] text-gray-400 mt-1">Samun kudi ta hanyar kallon tallace-tallace masu amfani.</p></div></div>
-                <div class="flex items-start"><span class="red-arrow">»</span><div><h5 class="font-bold text-sm">Global Market:</h5><p class="text-[11px] text-gray-400 mt-1">Bude shagonka ga duniya baki daya cikin sauki.</p></div></div>
-                <div class="flex items-start"><span class="red-arrow">»</span><div><h5 class="font-bold text-sm">Dispute Resolution:</h5><p class="text-[11px] text-gray-400 mt-1">Tsarin sulhu na gaskiya tsakanin dan kasuwa da abokin ciniki.</p></div></div>
-                <div class="flex items-start"><span class="red-arrow">»</span><div><h5 class="font-bold text-sm">24/7 Expert Support:</h5><p class="text-[11px] text-gray-400 mt-1">Samun taimako daga kwararru a kowane lokaci.</p></div></div>
-                <div class="flex items-start"><span class="red-arrow">»</span><div><h5 class="font-bold text-sm">Zero Boundaries:</h5><p class="text-[11px] text-gray-400 mt-1">Ba'a taba yin aiki mai mahimmanci irin wannan ba wanda ya dunkule kowa a guri guda.</p></div></div>
-            </div>
-        </div>
-    </section>
-
-    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] h-20 bg-white shadow-2xl rounded-[2.5rem] flex items-center justify-around px-2 border border-slate-50 z-50">
-        <i class="fa-solid fa-house text-blue-900 text-2xl"></i>
-        <i class="fa-solid fa-compass text-slate-300 text-2xl"></i>
-        <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-3xl -mt-16 border-[6px] border-[#f1f5f9] shadow-xl"><i class="fa-solid fa-plus"></i></div>
-        <i class="fa-solid fa-message text-slate-300 text-2xl"></i>
-        <i class="fa-solid fa-user text-slate-300 text-2xl"></i>
-    </div>
 
     <script>
         const typeWrapper = document.getElementById('type-wrapper');
         const glitterBrand = document.getElementById('glitter-brand');
         let isFirstTime = true;
         let messageIndex = 0;
-        
-        const otherMessages = [
-            'Maganin kowace matsala ta rayuwa.',
-            'Yi bincike akan kowace irin matsala ko bukata.',
-            'Nemi kwararre a kowane fanni.',
-            'Yi kasuwanci a cikin aminci.',
-            'Kalli talla ka samu kudi.'
-        ];
-
+        const otherMessages = ['Maganin kowace matsala ta rayuwa.', 'Yi bincike akan kowace irin matsala.', 'Nemi kwararre a kowane fanni.', 'Yi kasuwanci a cikin aminci.', 'Kalli talla ka samu kudi.'];
         function showGlitter() {
             typeWrapper.style.display = 'none';
-            glitterBrand.classList.remove('hidden');
             glitterBrand.style.display = 'block';
-            
-            setTimeout(() => {
-                glitterBrand.style.display = 'none';
-                glitterBrand.classList.add('hidden');
-                showNextMessage();
-            }, 10000); 
+            setTimeout(() => { glitterBrand.style.display = 'none'; showNextMessage(); }, 10000);
         }
-
         function showNextMessage() {
             typeWrapper.style.display = 'block';
             let currentText = isFirstTime ? 'Barka da zuwa Shafin.' : otherMessages[messageIndex];
-
             new Typed('#typed-msg', {
-                strings: [currentText],
-                typeSpeed: 50,
-                showCursor: false,
+                strings: [currentText], typeSpeed: 50, showCursor: false,
                 onComplete: () => {
                     setTimeout(() => {
-                        if(isFirstTime) {
-                            isFirstTime = false;
-                            showGlitter();
-                        } else {
-                            messageIndex = (messageIndex + 1) % otherMessages.length;
-                            showGlitter();
-                        }
+                        if(isFirstTime) isFirstTime = false;
+                        else messageIndex = (messageIndex + 1) % otherMessages.length;
+                        showGlitter();
                     }, 2000);
                 }
             });
