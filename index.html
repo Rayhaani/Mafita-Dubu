@@ -10,102 +10,106 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F2EFE9; margin: 0; }
         
-        /* SLIDER CONTAINER */
-        .slider-box {
+        /* WANNAN SHINE GYARAN DA ZAI DAIDAITA HOTON */
+        .slider-section {
             width: 100%;
             background-color: #F2EFE9;
             overflow: hidden;
-            position: relative;
         }
 
         .myslide {
             display: none;
             width: 100%;
+            animation: fadeIn 0.5s;
         }
 
-        /* Hoto zai fito a asalin tsayinsa */
         .myslide img {
             width: 100%;
-            height: auto; /* Zai dauki asalin tsayin hoton */
+            height: auto; /* Hoton zai fito duka (full height) */
             display: block;
         }
 
-        /* Rubutun Caption a kasan hoto (ba a samansa ba) */
-        .caption-bar {
-            background-color: #333; /* Dark background don rubutu ya fito */
-            color: #fff;
+        /* Rubutu a gindin hoto */
+        .caption-text {
+            background-color: #1e3a8a; /* Blue mai duhu */
+            color: #ffffff;
             text-align: center;
             padding: 15px 10px;
-            font-size: 0.95rem;
+            font-size: 14px;
             font-weight: 800;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        /* ACTION CARDS */
-        .action-card {
-            background: #fff;
-            border-radius: 1.2rem;
-            padding: 15px 5px;
+        @keyframes fadeIn { from {opacity: 0.4} to {opacity: 1} }
+
+        /* CARDS */
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 20px 10px;
             text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
-        .card-text { font-size: 9px; font-weight: 800; margin-top: 8px; color: #1e3a8a; }
     </style>
 </head>
 <body class="pb-10">
 
-    <nav class="p-4 flex justify-between items-center bg-white sticky top-0 z-50 border-b border-gray-100">
+    <nav class="p-4 flex justify-between items-center bg-white sticky top-0 z-50">
         <div class="flex items-center space-x-2">
             <div class="w-8 h-8 bg-blue-900 rounded-lg flex items-center justify-center text-white font-bold">M</div>
-            <span class="text-blue-900 font-extrabold text-lg">MafitaDubu</span>
+            <span class="text-blue-900 font-extrabold text-xl">MafitaDubu</span>
         </div>
-        <div class="flex space-x-4 text-gray-500"><i class="fa-solid fa-bell"></i><i class="fa-solid fa-wallet"></i></div>
+        <div class="flex space-x-4 text-gray-500 text-lg">
+            <i class="fa-solid fa-bell"></i>
+            <i class="fa-solid fa-wallet"></i>
+        </div>
     </nav>
 
-    <div class="slider-box">
+    <div class="slider-section">
         <div class="myslide">
             <img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg">
-            <div class="caption-bar">Yi Kasuwanci a Cikin <span class="text-yellow-400">Cikakken Aminci</span></div>
+            <div class="caption-text">Yi Kasuwanci a Cikin <span class="text-yellow-400">Cikakken Aminci</span></div>
         </div>
         <div class="myslide">
             <img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg">
-            <div class="caption-bar">Nemi Kwararren Ma'aikaci <span class="text-yellow-400">a Kowane Fanni</span></div>
+            <div class="caption-text">Nemi Kwararren Ma'aikaci <span class="text-yellow-400">a Kowane Fanni</span></div>
         </div>
         <div class="myslide">
             <img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg">
-            <div class="caption-bar">Tallatawa Duniya <span class="text-yellow-400">Hajarka Cikin Sauki</span></div>
+            <div class="caption-text">Tallatawa Duniya <span class="text-yellow-400">Hajarka Cikin Sauki</span></div>
         </div>
         <div class="myslide">
             <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg">
-            <div class="caption-bar">Bincika Maganin <span class="text-yellow-400">Dukkanin Matsaloli</span></div>
+            <div class="caption-text">Bincika Maganin <span class="text-yellow-400">Dukkanin Matsaloli</span></div>
         </div>
         <div class="myslide">
             <img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg">
-            <div class="caption-bar">Koyi Sana'a Kowace Iri <span class="text-yellow-400">a Cikin Sauki</span></div>
+            <div class="caption-text">Koyi Sana'a Kowace Iri <span class="text-yellow-400">a Cikin Sauki</span></div>
         </div>
     </div>
 
-    <div class="grid grid-cols-2 gap-4 px-4 mt-6">
-        <div class="action-card"><i class="fa-solid fa-graduation-cap text-xl text-blue-600"></i><p class="card-text uppercase">Koyon Sana'a</p></div>
-        <div class="action-card"><i class="fa-solid fa-lightbulb text-xl text-red-600"></i><p class="card-text uppercase">Mafitar Rayuwa</p></div>
-        <div class="action-card"><i class="fa-solid fa-user-tie text-xl text-yellow-600"></i><p class="card-text uppercase">Nemi Kwararre</p></div>
-        <div class="action-card"><i class="fa-solid fa-shield-halved text-xl text-green-600"></i><p class="card-text uppercase">Escrow Wallet</p></div>
+    <div class="grid grid-cols-2 gap-4 px-4 mt-8">
+        <div class="card"><i class="fa-solid fa-graduation-cap text-2xl text-blue-600"></i><p class="text-[10px] font-black mt-2 text-blue-900">KOYON SANA'A</p></div>
+        <div class="card"><i class="fa-solid fa-lightbulb text-2xl text-red-600"></i><p class="text-[10px] font-black mt-2 text-blue-900">MAFITAR RAYUWA</p></div>
+        <div class="card"><i class="fa-solid fa-user-tie text-2xl text-yellow-600"></i><p class="text-[10px] font-black mt-2 text-blue-900">NEMI KWARARRE</p></div>
+        <div class="card"><i class="fa-solid fa-shield-halved text-2xl text-green-600"></i><p class="text-[10px] font-black mt-2 text-blue-900">ESCROW WALLET</p></div>
     </div>
 
     <script>
-        let index = 0;
+        let slideIndex = 0;
         const slides = document.getElementsByClassName("myslide");
 
-        function autoSlide() {
+        function showSlides() {
             for (let i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
+                slides[i].style.display = "none";  
             }
-            index++;
-            if (index > slides.length) { index = 1; }
-            slides[index - 1].style.display = "block";
-            setTimeout(autoSlide, 3500);
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+            slides[slideIndex-1].style.display = "block";  
+            setTimeout(showSlides, 3000); // Canzawa duk bayan 3 seconds
         }
-        autoSlide();
+        showSlides();
     </script>
 </body>
 </html>
