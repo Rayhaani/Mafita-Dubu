@@ -6,24 +6,22 @@
     <title>Mafita Dubu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F2EFE9; margin: 0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F2EFE9; margin: 0; overflow-x: hidden; }
 
-        /* LOGO MAI JURIYA */
+        /* LOGO & BRAND ANIMATIONS */
         .rotating-logo { animation: spin 4s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* MAFITA DUBU MAI BLINKING */
         .brand-blink { animation: blinker 1.5s linear infinite; color: #1e3a8a; }
         @keyframes blinker { 50% { opacity: 0.2; } }
 
-        /* SLIDER SYSTEM (HOTUNA 6) */
+        /* SLIDER SYSTEM - EXACTLY 6 IMAGES */
         .hero-slider {
             position: relative;
             width: 95%;
-            height: 400px;
+            height: 420px;
             margin: 15px auto;
             border-radius: 2.5rem;
             overflow: hidden;
@@ -31,39 +29,46 @@
         }
         .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; }
         .slide.active { opacity: 1; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
         
         .overlay {
             position: absolute;
             bottom: 0;
             width: 100%;
-            background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            padding: 25px 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
             color: white;
             text-align: center;
         }
-        .overlay h2 { font-size: 1.1rem; font-weight: 800; line-height: 1.3; text-transform: uppercase; }
+        .overlay h2 { font-size: 1rem; font-weight: 800; text-transform: uppercase; }
+        .overlay .highlight { color: #fbbf24; display: block; }
 
-        /* BOXES GUDA 6 MASU BLINKING */
+        /* BOXES SYSTEM - NO LINE BREAKS */
         .card-blink {
             background: white;
-            border-radius: 1.5rem;
+            border-radius: 1.2rem;
             padding: 20px 5px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             animation: cardFade 2s infinite ease-in-out;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            white-space: nowrap; /* Tabbatar da rubutu bai karye ba */
         }
-        @keyframes cardFade { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(0.96); } }
+        @keyframes cardFade { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(0.97); } }
+        .card-text { font-size: 9px; font-weight: 800; margin-top: 10px; text-transform: uppercase; }
 
-        /* FAMOUS AI STYLE SECTION */
-        .famous-section { background: #000; color: #fff; padding: 40px 20px; border-radius: 2.5rem 2.5rem 0 0; margin-top: 30px; }
-        .reason-item { margin-bottom: 25px; border-left: 4px solid #fbbf24; padding-left: 15px; }
-        .reason-title { color: #fbbf24; font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 5px; display: block; }
-        .reason-desc { color: #ccc; font-size: 0.9rem; line-height: 1.5; }
+        /* FAMOUS AI EXACT STYLE FOR REASONS */
+        .famous-black-box { 
+            background: #000; 
+            color: #fff; 
+            padding: 50px 25px; 
+            border-radius: 2.5rem 2.5rem 0 0; 
+            margin-top: 40px; 
+        }
+        .famous-header { font-size: 32px; font-weight: 400; margin-bottom: 40px; letter-spacing: -1px; }
+        .reason-row { display: flex; align-items: flex-start; margin-bottom: 35px; }
+        .reason-arrow { color: #ff3b30; font-size: 1.2rem; margin-right: 15px; margin-top: 4px; }
+        .reason-content b { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1.1rem; display: block; margin-bottom: 6px; }
+        .reason-content p { color: #a1a1a1; font-size: 1rem; line-height: 1.4; font-weight: 400; }
     </style>
 </head>
 <body class="pb-10">
@@ -77,65 +82,98 @@
     </nav>
 
     <div class="hero-slider">
-        <div class="slide active"><img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg"><div class="overlay"><h2>Tallatawa Duniya <br><span class="text-yellow-400">Hajarka Cikin Sauki</span></h2></div></div>
-        <div class="slide"><img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg"><div class="overlay"><h2>Yi Kasuwanci a Cikin <br><span class="text-yellow-400">Cikakken Aminci</span></h2></div></div>
-        <div class="slide"><img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg"><div class="overlay"><h2>Nemi Kwararren Ma'aikaci <br><span class="text-yellow-400">a Kowane Fanni</span></h2></div></div>
-        <div class="slide"><img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg"><div class="overlay"><h2>Bincika Maganin <br><span class="text-yellow-400">Dukkanin Matsaloli</span></h2></div></div>
-        <div class="slide"><img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg"><div class="overlay"><h2>Koyi Sana'a Kowace Iri <br><span class="text-yellow-400">a Cikin Sauki</span></h2></div></div>
-        <div class="slide"><img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg"><div class="overlay"><h2>Shiga Dunyar <br><span class="text-yellow-400">Cikakken Cigaba</span></h2></div></div>
+        <div class="slide active">
+            <img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg">
+            <div class="overlay"><h2>Yi Kasuwanci a Cikin <span class="highlight">Cikakken Aminci</span></h2></div>
+        </div>
+        <div class="slide">
+            <img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg">
+            <div class="overlay"><h2>Nemi Kwararren Ma'aikaci <span class="highlight">a Kowane Fanni</span></h2></div>
+        </div>
+        <div class="slide">
+            <img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg">
+            <div class="overlay"><h2>Tallatawa Duniya <span class="highlight">Hajarka a Cikin Sauki</span></h2></div>
+        </div>
+        <div class="slide">
+            <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg">
+            <div class="overlay"><h2>Bincika Maganin <span class="highlight">Dukkanin Matsaloli da Damuwarka</span></h2></div>
+        </div>
+        <div class="slide">
+            <img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg">
+            <div class="overlay"><h2>Koyi Sana'a Kowace Iri <span class="highlight">a Cikin Sauki kuma a Zamanance</span></h2></div>
+        </div>
+        <div class="slide">
+            <img src="https://i.postimg.cc/bYC4xVzK/Chat-GPT-Image-Jan-22-2026-01-57-37-PM.png">
+            <div class="overlay"><h2>Yi Aiki mai Sauki <span class="highlight">ka Samu Kudi</span></h2></div>
+        </div>
     </div>
 
     <div class="grid grid-cols-2 gap-4 px-4 mt-6">
-        <div class="card-blink"><i class="fa-solid fa-graduation-cap text-2xl text-blue-600"></i><p class="text-[9px] font-extrabold mt-2 uppercase">Koyon Sana'a</p></div>
-        <div class="card-blink"><i class="fa-solid fa-lightbulb text-2xl text-red-600"></i><p class="text-[9px] font-extrabold mt-2 uppercase">Mafitar Rayuwa</p></div>
-        <div class="card-blink"><i class="fa-solid fa-user-tie text-2xl text-yellow-600"></i><p class="text-[9px] font-extrabold mt-2 uppercase">Nemi Kwararre</p></div>
-        <div class="card-blink"><i class="fa-solid fa-shield-halved text-2xl text-green-600"></i><p class="text-[9px] font-extrabold mt-2 uppercase">Escrow Wallet</p></div>
-        <div class="card-blink"><i class="fa-solid fa-handshake text-2xl text-purple-600"></i><p class="text-[9px] font-extrabold mt-2 uppercase">Hadin Gwiwa</p></div>
-        <div class="card-blink"><i class="fa-solid fa-briefcase text-2xl text-indigo-600"></i><p class="text-[9px] font-extrabold mt-2 uppercase">Ayyuka</p></div>
+        <div class="card-blink"><i class="fa-solid fa-graduation-cap text-2xl text-blue-600"></i><p class="card-text">Koyon Sana'a</p></div>
+        <div class="card-blink"><i class="fa-solid fa-lightbulb text-2xl text-red-600"></i><p class="card-text">Mafita</p></div>
+        <div class="card-blink"><i class="fa-solid fa-user-tie text-2xl text-yellow-600"></i><p class="card-text">Sashen Kwararru</p></div>
+        <div class="card-blink"><i class="fa-solid fa-shield-halved text-2xl text-green-600"></i><p class="card-text">Escrow Service</p></div>
+        <div class="card-blink"><i class="fa-solid fa-shop text-2xl text-purple-600"></i><p class="card-text">Yan Kasuwa</p></div>
+        <div class="card-blink"><i class="fa-solid fa-link text-2xl text-indigo-600"></i><p class="card-text">AdChain</p></div>
     </div>
 
-    <div class="famous-section">
-        <h2 class="text-2xl font-extrabold mb-10 text-center tracking-tight">WHY CHOOSE MAFITA DUBU?</h2>
+    <div class="famous-black-box">
+        <h2 class="famous-header">What You'll Unlock:</h2>
         
-        <div class="reason-item">
-            <span class="reason-title">1. No Scams, Just Results:</span>
-            <p class="reason-desc">We use advanced AI to filter out bad actors before they even think of touching your business. Security is our DNA.</p>
+        <div class="reason-row">
+            <div class="reason-arrow">»</div>
+            <div class="reason-content">
+                <b>End of Scams & Fraud:</b>
+                <p>Muna amfani da AI ta zamani wajen tace dukkan mu'amala. A nan, dukiyar ka tana nan a kulle cikin amana, babu damar yaudara.</p>
+            </div>
         </div>
-        <div class="reason-item">
-            <span class="reason-title">2. Bulletproof Escrow:</span>
-            <p class="reason-desc">Your money never leaves our vault until you confirm the job is perfect. You hold the keys to every transaction.</p>
+
+        <div class="reason-row">
+            <div class="reason-arrow">»</div>
+            <div class="reason-content">
+                <b>The Trust Engine (Escrow):</b>
+                <p>Maimakon tsoron tura kudi, tsarin mu yana rike da kudi har sai ka gamsu 100% da aikin da aka yi maka. Kaine mai iko da kudin ka.</p>
+            </div>
         </div>
-        <div class="reason-item">
-            <span class="reason-title">3. Hybrid Marketplace:</span>
-            <p class="reason-desc">Unlike regular apps, we blend education, real-world skills, and a massive trade network into one powerful engine.</p>
+
+        <div class="reason-row">
+            <div class="reason-arrow">»</div>
+            <div class="reason-content">
+                <b>Elite Connection in Seconds:</b>
+                <p>Muna hada ka da kwararrun da aka tantance a cikin dakiku. Kar ka sake bata lokaci wajen neman wanda zai yi maka aiki.</p>
+            </div>
         </div>
-        <div class="reason-item">
-            <span class="reason-title">4. Zero Middleman Fees:</span>
-            <p class="reason-desc">We’ve killed the middleman. You deal directly with experts, keeping more profit in your pocket where it belongs.</p>
+
+        <div class="reason-row">
+            <div class="reason-arrow">»</div>
+            <div class="reason-content">
+                <b>Modern Skill Acquisition:</b>
+                <p>Mafita Dubu ba kawai neman kudi bane; wuri ne na koyon sana'o'in da za su baka kudi yau-yau, ba gobe ba. Koyi a zamanance.</p>
+            </div>
         </div>
-        <div class="reason-item">
-            <span class="reason-title">5. Production-Ready Learning:</span>
-            <p class="reason-desc">Our courses aren't just theory. We teach skills that generate income the same day you finish learning.</p>
+
+        <div class="reason-row">
+            <div class="reason-arrow">»</div>
+            <div class="reason-content">
+                <b>Hyper-Growth AdChain:</b>
+                <p>Tallata hajarka ga miliyoyin mutane ta hanyar tsarin mu na AdChain. Mun rushe bangon dake tsakanin ka da abokan ciniki.</p>
+            </div>
         </div>
-        <div class="reason-item">
-            <span class="reason-title">6. Deep AI Intelligence:</span>
-            <p class="reason-desc">Our search engine doesn't just find links; it finds solutions to your life and business problems in seconds.</p>
+
+        <div class="reason-row">
+            <div class="reason-arrow">»</div>
+            <div class="reason-content">
+                <b>Personalized AI Solutions:</b>
+                <p>Muna da amsar kowace damuwarka. In kana neman mafita ga matsalar sana'a ko rayuwa, Injin mu na AI yana nan don kai.</p>
+            </div>
         </div>
-        <div class="reason-item">
-            <span class="reason-title">7. Global Vision, Local Trust:</span>
-            <p class="reason-desc">We bring global standards to our local market, ensuring you compete at the highest level without fear.</p>
-        </div>
-        <div class="reason-item">
-            <span class="reason-title">8. 24/7 Shield Protection:</span>
-            <p class="reason-desc">Our systems work while you sleep. Constant monitoring means your assets and identity are always safe.</p>
-        </div>
-        <div class="reason-item">
-            <span class="reason-title">9. Elite Network of Experts:</span>
-            <p class="reason-desc">We don't just host anyone. Only the top-tier professionals pass our verification to serve you.</p>
-        </div>
-        <div class="reason-item">
-            <span class="reason-title">10. Future-Proof Platform:</span>
-            <p class="reason-desc">Mafita Dubu isn't a website; it's a revolutionary machine built to lead the next century of African trade.</p>
+
+        <div class="reason-row">
+            <div class="reason-arrow">»</div>
+            <div class="reason-content">
+                <b>The Future of Northern Trade:</b>
+                <p>Wannan ba website bane; juyin juya hali ne. Mun gina tsarin da zai maida kowane Bahaushe mai nasara a duniyar digital.</p>
+            </div>
         </div>
     </div>
 
@@ -147,7 +185,7 @@
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add('active');
         }
-        setInterval(nextSlide, 3000);
+        setInterval(nextSlide, 3500);
     </script>
 </body>
 </html>
