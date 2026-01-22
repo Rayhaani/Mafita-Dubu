@@ -10,60 +10,63 @@
     <style>
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #F2EFE9; /* Milk color */
+            background-color: #F2EFE9; 
             margin: 0; 
-            overflow-x: hidden;
+            color: #1a1a1a;
         }
 
-        /* Header & Logo */
+        /* Logo & Header */
         @keyframes rotateLogo { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .logo-icon { animation: rotateLogo 10s linear infinite; }
         @keyframes blinkText { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         .logo-text { font-weight: 800; font-size: 1.5rem; color: #1e3a8a; animation: blinkText 1.5s infinite; }
 
-        /* HERO SLIDER GYARAN GASKIYA */
+        /* HERO SLIDER - FIXED HEIGHT & NO CROPPING */
         #hero-slider { 
             position: relative; 
-            height: 400px; /* Tsayin da zai sa hoton ya fito radau */
+            height: 380px; /* Tsayin da ya dace da waya */
             overflow: hidden; 
             border-radius: 2.2rem; 
             margin: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: #d1d5db;
         }
+        
         .slide { 
             position: absolute; 
             inset: 0; 
-            opacity: 0; 
-            transition: opacity 1s ease-in-out; 
+            display: none; /* Boye duka slides tukunna */
         }
-        .slide.active { opacity: 1; z-index: 10; }
+        
+        .slide.active { 
+            display: block; /* Nuna slide mai aiki kawai */
+        }
         
         .slide img { 
             width: 100%; 
             height: 100%; 
-            object-fit: cover; /* Cika akwatin gaba daya */
-            object-position: 50% 10%; /* Fito da kawuna radau */
+            object-fit: cover; 
+            object-position: center 15%; /* Wannan zai nuna kawuna radau */
         }
         
         .slide-overlay {
             position: absolute; bottom: 0; left: 0; width: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.85) 20%, transparent);
-            padding: 30px 20px;
-            z-index: 20;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 15%, transparent);
+            padding: 35px 20px;
         }
 
         .caption-text { 
-            color: #E8E4D9; /* Deep Milk Caption */
+            color: #E8E4D9; /* Deep Milk */
             font-size: 1.35rem; 
             font-weight: 800; 
             text-transform: uppercase; 
-            line-height: 1.1; 
+            line-height: 1.1;
         }
 
-        /* Breathing Boxes */
+        /* Breathing Boxes - Pure White on Milk Background */
         @keyframes strongBreathe {
             0%, 100% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-            50% { transform: scale(1.05); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+            50% { transform: scale(1.04); box-shadow: 0 15px 30px rgba(0,0,0,0.12); }
         }
         .action-card {
             background: #FFFFFF;
@@ -75,13 +78,13 @@
             padding: 25px 10px;
             border: 1px solid #E5E7EB;
         }
-        .card-label { font-size: 11px; font-weight: 800; text-transform: uppercase; margin-top: 8px; color: #1a1a1a; }
+        .card-label { font-size: 11px; font-weight: 800; text-transform: uppercase; margin-top: 8px; }
 
-        /* Why Section (Baki) */
+        /* Why Section (Black) */
         .why-container { background: #000; color: white; border-radius: 2.5rem; padding: 45px 25px; margin: 25px 15px; }
         .red-arrow { color: #ff0000; font-size: 1.5rem; font-weight: 900; margin-right: 12px; }
         .why-item { display: flex; align-items: flex-start; margin-bottom: 30px; }
-        .item-header { font-weight: 800; font-size: 1.1rem; color: #fff; }
+        .item-header { font-weight: 800; font-size: 1.1rem; }
         .item-body { color: #9ca3af; font-size: 0.95rem; line-height: 1.6; }
     </style>
 </head>
@@ -123,6 +126,8 @@
         <div class="action-card"><i class="fa-solid fa-lightbulb text-2xl text-red-600"></i><span class="card-label">Mafitar Rayuwa</span></div>
         <div class="action-card"><i class="fa-solid fa-user-tie text-2xl text-yellow-600"></i><span class="card-label">Nemi Kwararre</span></div>
         <div class="action-card"><i class="fa-solid fa-shield-halved text-2xl text-green-600"></i><span class="card-label">Escrow Wallet</span></div>
+        <div class="action-card"><i class="fa-solid fa-shop text-2xl text-purple-600"></i><span class="card-label">Yan Kasuwa</span></div>
+        <div class="action-card"><i class="fa-solid fa-bolt text-2xl text-orange-600"></i><span class="card-label">AdChain</span></div>
     </div>
 
     <section class="why-container">
@@ -138,17 +143,22 @@
     </section>
 
     <script>
-        // Javascript don canza hotuna
+        // Cikakken Slider Script
         const slides = document.querySelectorAll('.slide');
         let currentSlide = 0;
 
-        function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
         }
 
-        setInterval(nextSlide, 4000); // Canzawa duk bayan seconds 4
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Fara Slider duk bayan seconds 4
+        setInterval(nextSlide, 4000);
     </script>
 </body>
 </html>
