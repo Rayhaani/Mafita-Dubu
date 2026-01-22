@@ -6,7 +6,7 @@
     <title>Mafita Dubu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,700;0,800;1,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,800;1,800&display=swap" rel="stylesheet">
     
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F2EFE9; margin: 0; overflow-x: hidden; }
@@ -14,14 +14,10 @@
         .rotating-logo { animation: spin 4s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* GYARAN SUNA: BOLD, WALWALI DA BLINKING */
+        /* SUNAN MAFITA DUBU: BOLD, WALWALI DA BLINKING */
         .brand-name {
-            font-weight: 800;
+            font-weight: 900;
             font-size: 1.5rem;
-            color: #1e3a8a; /* Deep Royal Blue */
-            position: relative;
-            display: inline-block;
-            animation: blinker 1.5s linear infinite;
             background: linear-gradient(90deg, #1e3a8a, #ffffff, #1e3a8a);
             background-size: 200% auto;
             -webkit-background-clip: text;
@@ -45,11 +41,11 @@
         .slide img { width: 100%; height: 100%; object-fit: cover; }
 
         /* GYARAN KAWUNAN HOTUNA */
-        .veggie-fix { object-position: 15% 10% !important; } /* Kar kansa ya yanke */
-        .adchain-fix { object-position: center 5% !important; } /* Kar kansa ya yanke */
+        .veggie-fix { object-position: center 5% !important; } 
+        .adchain-fix { object-position: center 2% !important; } 
         .standard-fix { object-position: center 10%; }
 
-        /* CAPTIONS STYLE: BOLD ITALIC PLUS JAKARTA */
+        /* CAPTIONS: BOLD ITALIC PLUS JAKARTA */
         .overlay {
             position: absolute;
             bottom: 40px;
@@ -66,7 +62,6 @@
             font-style: italic; 
             text-transform: uppercase; 
             text-shadow: 3px 3px 15px rgba(0,0,0,1);
-            line-height: 1.2;
         }
         .overlay .highlight { 
             color: #fbbf24; 
@@ -74,7 +69,6 @@
             font-size: 1.5rem; 
             font-weight: 800;
             font-style: italic;
-            margin-top: 5px;
         }
 
         .card-blink {
@@ -125,6 +119,14 @@
             <div class="overlay"><h2>Tallatawa Duniya <span class="highlight">Hajarka a Cikin Sauki</span></h2></div>
         </div>
         <div class="slide">
+            <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg" class="standard-fix">
+            <div class="overlay"><h2>Bincika Maganin <span class="highlight">Dukkan Matsaloli</span></h2></div>
+        </div>
+        <div class="slide">
+            <img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg" class="standard-fix">
+            <div class="overlay"><h2>Koyi Sana'a <span class="highlight">a Zamanance</span></h2></div>
+        </div>
+        <div class="slide">
             <img src="https://i.postimg.cc/bYC4xVzK/Chat-GPT-Image-Jan-22-2026-01-57-37-PM.png" class="adchain-fix">
             <div class="overlay"><h2>Yi Aiki mai Sauki <span class="highlight">ka Samu Kudi</span></h2></div>
         </div>
@@ -163,4 +165,5 @@
         }, 3500);
     </script>
 </body>
-</html>
+    </html>
+                                                                                                                                                                   
