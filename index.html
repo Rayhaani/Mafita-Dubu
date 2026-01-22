@@ -6,13 +6,15 @@
     <title>Mafita Dubu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F2EFE9; margin: 0; overflow-x: hidden; }
+        /* AMFANI DA FONT DIN MAFITA DUBU A KO'INA */
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F2EFE9; margin: 0; }
 
         .rotating-logo { animation: spin 4s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
+        
         .brand-blink { animation: blinker 1.5s linear infinite; color: #1e3a8a; }
         @keyframes blinker { 50% { opacity: 0.2; } }
 
@@ -23,30 +25,32 @@
             margin: 15px auto;
             border-radius: 2.5rem;
             overflow: hidden;
-            background-color: #000;
+            background: #000;
         }
         .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; }
         .slide.active { opacity: 1; }
         
-        /* NAN NE CSS DIN DA NA GYARA DOMIN KAWUNA SU FITO */
+        /* GYARAN HOTON TALLATAWA (Kawuna su fito) */
         .slide img { 
             width: 100%; 
             height: 100%; 
             object-fit: cover; 
-            object-position: center 5%; 
+            object-position: center 15%; 
         }
         
+        /* CIRE BAKIN SHACI DA KARA WA CAPTIONS ADO */
         .overlay {
             position: absolute;
-            bottom: 0;
+            bottom: 30px;
             width: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px;
+            padding: 0 20px;
             color: white;
             text-align: center;
+            /* Inuwa don rubutu ya fito radau ba tare da bakin shaci ba */
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8), -1px -1px 0px rgba(0,0,0,0.5);
         }
-        .overlay h2 { font-size: 1rem; font-weight: 800; text-transform: uppercase; }
-        .overlay .highlight { color: #fbbf24; display: block; }
+        .overlay h2 { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; line-height: 1.2; }
+        .overlay .highlight { color: #fbbf24; display: block; font-size: 1.2rem; }
 
         .card-blink {
             background: white;
@@ -55,10 +59,23 @@
             text-align: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             animation: cardFade 2s infinite ease-in-out;
-            white-space: nowrap;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         @keyframes cardFade { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(0.97); } }
-        .card-text { font-size: 9px; font-weight: 800; margin-top: 10px; text-transform: uppercase; }
+        
+        /* FONT DIN BOXES */
+        .card-text { 
+            font-size: 9px; 
+            font-weight: 800; 
+            margin-top: 10px; 
+            text-transform: uppercase; 
+            color: #1e3a8a;
+            white-space: nowrap;
+        }
 
         .famous-black-box { 
             background: #000; 
@@ -67,11 +84,11 @@
             border-radius: 2.5rem 2.5rem 0 0; 
             margin-top: 40px; 
         }
-        .famous-header { font-size: 32px; font-weight: 400; margin-bottom: 40px; letter-spacing: -1px; }
+        .famous-header { font-size: 32px; font-weight: 800; margin-bottom: 40px; letter-spacing: -1px; }
         .reason-row { display: flex; align-items: flex-start; margin-bottom: 35px; }
         .reason-arrow { color: #ff3b30; font-size: 1.2rem; margin-right: 15px; margin-top: 4px; }
-        .reason-content b { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1.1rem; display: block; margin-bottom: 6px; }
-        .reason-content p { color: #a1a1a1; font-size: 1rem; line-height: 1.4; font-weight: 400; }
+        .reason-content b { font-weight: 800; font-size: 1.1rem; display: block; margin-bottom: 6px; }
+        .reason-content p { color: #a1a1a1; font-size: 1rem; line-height: 1.4; }
     </style>
 </head>
 <body class="pb-10">
@@ -99,11 +116,11 @@
         </div>
         <div class="slide">
             <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg">
-            <div class="overlay"><h2>Bincika Maganin <span class="highlight">Dukkanin Matsaloli da Damuwarka</span></h2></div>
+            <div class="overlay"><h2>Bincika Maganin <span class="highlight">Matsaloli da Damuwarka</span></h2></div>
         </div>
         <div class="slide">
             <img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg">
-            <div class="overlay"><h2>Koyi Sana'a Kowace Iri <span class="highlight">a Cikin Sauki kuma a Zamanance</span></h2></div>
+            <div class="overlay"><h2>Koyi Sana'a Kowace Iri <span class="highlight">a Zamanance</span></h2></div>
         </div>
         <div class="slide">
             <img src="https://i.postimg.cc/bYC4xVzK/Chat-GPT-Image-Jan-22-2026-01-57-37-PM.png">
@@ -116,7 +133,12 @@
         <div class="card-blink"><i class="fa-solid fa-lightbulb text-2xl text-red-600"></i><p class="card-text">Mafita</p></div>
         <div class="card-blink"><i class="fa-solid fa-user-tie text-2xl text-yellow-600"></i><p class="card-text">Sashen Kwararru</p></div>
         <div class="card-blink"><i class="fa-solid fa-shield-halved text-2xl text-green-600"></i><p class="card-text">Escrow Service</p></div>
-        <div class="card-blink"><i class="fa-solid fa-shop text-2xl text-purple-600"></i><p class="card-text">Yan Kasuwa</p></div>
+        
+        <a href="marketplace.html" class="card-blink">
+            <i class="fa-solid fa-shop text-2xl text-purple-600"></i>
+            <p class="card-text">Yan Kasuwa</p>
+        </a>
+
         <div class="card-blink"><i class="fa-solid fa-link text-2xl text-indigo-600"></i><p class="card-text">AdChain</p></div>
     </div>
 
