@@ -9,12 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* AMFANI DA FONT DIN MAFITA DUBU A KO'INA */
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F2EFE9; margin: 0; }
-
         .rotating-logo { animation: spin 4s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
-        
         .brand-blink { animation: blinker 1.5s linear infinite; color: #1e3a8a; }
         @keyframes blinker { 50% { opacity: 0.2; } }
 
@@ -30,15 +27,14 @@
         .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; }
         .slide.active { opacity: 1; }
         
-        /* GYARAN HOTON TALLATAWA (Kawuna su fito) */
-        .slide img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            object-position: center 15%; 
-        }
+        /* GYARA NA MUSAMMAN GA HOTUNAN */
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* CIRE BAKIN SHACI DA KARA WA CAPTIONS ADO */
+        /* Wannan zai karkata hoton kayan lambu zuwa fuskar mutumin mai blue riga */
+        .veggie-fix { object-position: 85% 15% !important; }
+        /* Sauran hotunan su tsaya a sama kadan don kawuna su fito */
+        .standard-fix { object-position: center 10%; }
+
         .overlay {
             position: absolute;
             bottom: 30px;
@@ -46,10 +42,10 @@
             padding: 0 20px;
             color: white;
             text-align: center;
-            /* Inuwa don rubutu ya fito radau ba tare da bakin shaci ba */
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8), -1px -1px 0px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+            z-index: 10;
         }
-        .overlay h2 { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; line-height: 1.2; }
+        .overlay h2 { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; }
         .overlay .highlight { color: #fbbf24; display: block; font-size: 1.2rem; }
 
         .card-blink {
@@ -59,31 +55,15 @@
             text-align: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             animation: cardFade 2s infinite ease-in-out;
-            cursor: pointer;
-            text-decoration: none;
             display: flex;
             flex-direction: column;
             align-items: center;
+            text-decoration: none;
         }
         @keyframes cardFade { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(0.97); } }
-        
-        /* FONT DIN BOXES */
-        .card-text { 
-            font-size: 9px; 
-            font-weight: 800; 
-            margin-top: 10px; 
-            text-transform: uppercase; 
-            color: #1e3a8a;
-            white-space: nowrap;
-        }
+        .card-text { font-size: 9px; font-weight: 800; margin-top: 10px; text-transform: uppercase; color: #1e3a8a; white-space: nowrap; }
 
-        .famous-black-box { 
-            background: #000; 
-            color: #fff; 
-            padding: 50px 25px; 
-            border-radius: 2.5rem 2.5rem 0 0; 
-            margin-top: 40px; 
-        }
+        .famous-black-box { background: #000; color: #fff; padding: 50px 25px; border-radius: 2.5rem 2.5rem 0 0; margin-top: 40px; }
         .famous-header { font-size: 32px; font-weight: 800; margin-bottom: 40px; letter-spacing: -1px; }
         .reason-row { display: flex; align-items: flex-start; margin-bottom: 35px; }
         .reason-arrow { color: #ff3b30; font-size: 1.2rem; margin-right: 15px; margin-top: 4px; }
@@ -103,27 +83,27 @@
 
     <div class="hero-slider">
         <div class="slide active">
-            <img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg">
+            <img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg" class="standard-fix">
             <div class="overlay"><h2>Yi Kasuwanci a Cikin <span class="highlight">Cikakken Aminci</span></h2></div>
         </div>
         <div class="slide">
-            <img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg">
+            <img src="https://i.postimg.cc/bvwwG2Cz/IMG-20260122-WA0039.jpg" class="standard-fix">
             <div class="overlay"><h2>Nemi Kwararren Ma'aikaci <span class="highlight">a Kowane Fanni</span></h2></div>
         </div>
         <div class="slide">
-            <img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg">
+            <img src="https://i.postimg.cc/hjxWhDqb/IMG-20260122-WA0041.jpg" class="veggie-fix">
             <div class="overlay"><h2>Tallatawa Duniya <span class="highlight">Hajarka a Cikin Sauki</span></h2></div>
         </div>
         <div class="slide">
-            <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg">
+            <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg" class="standard-fix">
             <div class="overlay"><h2>Bincika Maganin <span class="highlight">Matsaloli da Damuwarka</span></h2></div>
         </div>
         <div class="slide">
-            <img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg">
+            <img src="https://i.postimg.cc/wB4DfN7x/IMG-20260122-WA0044.jpg" class="standard-fix">
             <div class="overlay"><h2>Koyi Sana'a Kowace Iri <span class="highlight">a Zamanance</span></h2></div>
         </div>
         <div class="slide">
-            <img src="https://i.postimg.cc/bYC4xVzK/Chat-GPT-Image-Jan-22-2026-01-57-37-PM.png">
+            <img src="https://i.postimg.cc/bYC4xVzK/Chat-GPT-Image-Jan-22-2026-01-57-37-PM.png" class="standard-fix">
             <div class="overlay"><h2>Yi Aiki mai Sauki <span class="highlight">ka Samu Kudi</span></h2></div>
         </div>
     </div>
@@ -144,61 +124,17 @@
 
     <div class="famous-black-box">
         <h2 class="famous-header">What You'll Unlock:</h2>
-        
         <div class="reason-row">
             <div class="reason-arrow">»</div>
-            <div class="reason-content">
-                <b>End of Scams & Fraud:</b>
-                <p>Muna amfani da AI ta zamani wajen tace dukkan mu'amala. A nan, dukiyar ka tana nan a kulle cikin amana, babu damar yaudara.</p>
-            </div>
+            <div class="reason-content"><b>End of Scams & Fraud:</b><p>Muna amfani da AI ta zamani wajen tace dukkan mu'amala. A nan, dukiyar ka tana nan a kulle cikin amana.</p></div>
         </div>
-
         <div class="reason-row">
             <div class="reason-arrow">»</div>
-            <div class="reason-content">
-                <b>The Trust Engine (Escrow):</b>
-                <p>Maimakon tsoron tura kudi, tsarin mu yana rike da kudi har sai ka gamsu 100% da aikin da aka yi maka. Kaine mai iko da kudin ka.</p>
-            </div>
+            <div class="reason-content"><b>The Trust Engine (Escrow):</b><p>Tsarin mu yana rike da kudi har sai ka gamsu 100% da aikin da aka yi maka. Kaine mai iko.</p></div>
         </div>
-
         <div class="reason-row">
             <div class="reason-arrow">»</div>
-            <div class="reason-content">
-                <b>Elite Connection in Seconds:</b>
-                <p>Muna hada ka da kwararrun da aka tantance a cikin dakiku. Kar ka sake bata lokaci wajen neman wanda zai yi maka aiki.</p>
-            </div>
-        </div>
-
-        <div class="reason-row">
-            <div class="reason-arrow">»</div>
-            <div class="reason-content">
-                <b>Modern Skill Acquisition:</b>
-                <p>Mafita Dubu ba kawai neman kudi bane; wuri ne na koyon sana'o'in da za su baka kudi yau-yau, ba gobe ba. Koyi a zamanance.</p>
-            </div>
-        </div>
-
-        <div class="reason-row">
-            <div class="reason-arrow">»</div>
-            <div class="reason-content">
-                <b>Hyper-Growth AdChain:</b>
-                <p>Tallata hajarka ga miliyoyin mutane ta hanyar tsarin mu na AdChain. Mun rushe bangon dake tsakanin ka da abokan ciniki.</p>
-            </div>
-        </div>
-
-        <div class="reason-row">
-            <div class="reason-arrow">»</div>
-            <div class="reason-content">
-                <b>Personalized AI Solutions:</b>
-                <p>Muna da amsar kowace damuwarka. In kana neman mafita ga matsalar sana'a ko rayuwa, Injin mu na AI yana nan don kai.</p>
-            </div>
-        </div>
-
-        <div class="reason-row">
-            <div class="reason-arrow">»</div>
-            <div class="reason-content">
-                <b>The Future of Northern Trade:</b>
-                <p>Wannan ba website bane; juyin juya hali ne. Mun gina tsarin da zai maida kowane Bahaushe mai nasara a duniyar digital.</p>
-            </div>
+            <div class="reason-content"><b>Elite Connection:</b><p>Muna hada ka da kwararrun da aka tantance a cikin dakiku don kammala ayyukanka cikin sauri.</p></div>
         </div>
     </div>
 
@@ -213,4 +149,5 @@
         setInterval(nextSlide, 3500);
     </script>
 </body>
-</html>
+    </html>
+            
