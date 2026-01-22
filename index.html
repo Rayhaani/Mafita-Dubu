@@ -11,9 +11,11 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F2EFE9; margin: 0; overflow-x: hidden; }
 
+        /* LOGO MAI JUYAWA */
         .rotating-logo { animation: spin 4s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
+        /* SUNAN MAFITA DUBU MAI BLINKING */
         .brand-blink { animation: blinker 1.5s linear infinite; color: #1e3a8a; }
         @keyframes blinker { 50% { opacity: 0.2; } }
 
@@ -30,8 +32,15 @@
         .slide.active { opacity: 1; }
         .slide img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* GYARAN FUSKA: Hoton kayan lambu ya nuna fuskoki a hagu */
+        /* NAN NE GYARAN HOTUNAN: */
+        
+        /* 1. Hoton mutane 3 (Aminci) - Mun sa shi ya fito duka */
+        .aminci-fix { object-position: 50% 15% !important; }
+        
+        /* 2. Hoton mutumin hagu (Kayan lambu) */
         .veggie-fix { object-position: 15% center !important; }
+        
+        /* 3. Sauran hotunan */
         .standard-fix { object-position: center 10%; }
 
         .overlay {
@@ -70,7 +79,7 @@
         .reason-content p { color: #a1a1a1; font-size: 1rem; line-height: 1.4; }
     </style>
 </head>
-<body>
+<body class="pb-10">
 
     <nav class="p-5 flex justify-between items-center bg-white sticky top-0 z-50">
         <div class="flex items-center space-x-2">
@@ -82,7 +91,7 @@
 
     <div class="hero-slider">
         <div class="slide active">
-            <img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg" class="standard-fix">
+            <img src="https://i.postimg.cc/c1XtX03B/IMG-20260122-WA0038.jpg" class="aminci-fix">
             <div class="overlay"><h2>Yi Kasuwanci a Cikin <span class="highlight">Cikakken Aminci</span></h2></div>
         </div>
         <div class="slide">
@@ -123,16 +132,18 @@
 
     <div class="famous-black-box">
         <h2 class="famous-header">What You'll Unlock:</h2>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>End of Scams & Fraud:</b><p>Muna amfani da AI ta zamani wajen tace dukkan mu'amala. A nan, dukiyar ka tana nan a kulle cikin amana.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>The Trust Engine (Escrow):</b><p>Tsarin mu yana rike da kudi har sai ka gamsu 100% da aikin da aka yi maka. Kaine mai iko da kudin ka.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Elite Connection:</b><p>Muna hada ka da kwararrun da aka tantance a cikin dakiku. Kar ka sake bata lokaci wajen neman ma'aikaci.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Modern Skill Acquisition:</b><p>Wuri ne na koyon sana'o'in da za su baka kudi yau-yau, ba gobe ba. Koyi a zamanance.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Hyper-Growth AdChain:</b><p>Tallata hajarka ga miliyoyin mutane ta hanyar tsarin mu na AdChain.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>AI Problem Solver:</b><p>Muna da amsar kowace damuwarka. Injin mu na AI yana nan don kai.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Global Trade Standards:</b><p>Mun gina tsarin da zai maida kowane Bahaushe mai nasara a duniyar digital.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Zero Middleman Fees:</b><p>Mun kashe tsarin dillanci. Kai tsaye zaka yi mu'amala da wanda kake bukata.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Production-Ready Results:</b><p>Kowane darasi an tsara shi ne don ka fara samun amfani a take.</p></div></div>
-        <div class="reason-row"><div class="reason-arrow">»</div><div class="reason-content"><b>Future-Proof Security:</b><p>Sashin tsaro namu yana aiki 24/7 don kare bayanan ka da asusun ka.</p></div></div>
+        <div class="reason-row">
+            <div class="reason-arrow">»</div>
+            <div class="reason-content"><b>End of Scams & Fraud:</b><p>Muna amfani da AI ta zamani wajen tace dukkan mu'amala. A nan, dukiyar ka tana nan a kulle cikin amana.</p></div>
+        </div>
+        <div class="reason-row">
+            <div class="reason-arrow">»</div>
+            <div class="reason-content"><b>The Trust Engine (Escrow):</b><p>Tsarin mu yana rike da kudi har sai ka gamsu 100% da aikin da aka yi maka. Kaine mai iko.</p></div>
+        </div>
+        <div class="reason-row">
+            <div class="reason-arrow">»</div>
+            <div class="reason-content"><b>Elite Connection:</b><p>Muna hada ka da kwararrun da aka tantance a cikin dakiku don kammala ayyukanka cikin sauri.</p></div>
+        </div>
     </div>
 
     <script>
@@ -145,5 +156,5 @@
         }, 3500);
     </script>
 </body>
-    </html>
-                                    
+                                                                                                 </html>
+                                                                                                 
