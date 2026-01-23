@@ -40,7 +40,18 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+            /* Animation don narke hotuna a juna */
+        @keyframes crossfade {
+            0%, 25% { opacity: 1; }
+            30%, 95% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .img-fade-1 { animation: crossfade 12s infinite; }
+        .img-fade-2 { animation: crossfade 12s infinite 4s; opacity: 0; }
+        .img-fade-3 { animation: crossfade 12s infinite 8s; opacity: 0; }
     </style>
+    
 </head>
 <body class="min-h-screen pb-20">
 
@@ -70,21 +81,22 @@
              alt="Mafita" 
              class="w-full h-full object-cover object-top">
     </header> <div class="px-5 -mt-6"> <div class="grid grid-cols-2 gap-4">
-            
-    <div class="bg-white rounded-[2rem] p-4 shadow-sm flex flex-col items-center justify-center tap-scale border border-gray-100 h-48 overflow-hidden">
-                <lottie-player 
-                    src="https://lottie.host/801a24d0-0690-449e-8c4d-9104084f7041/7pYAnO2o7n.json" 
-                    background="transparent" 
-                    speed="1" 
-                    style="width: 100px; height: 100px;" 
-                    loop 
-                    autoplay>
-                </lottie-player>
-                <div class="mt-2 text-center">
-                    <h4 class="text-blue-900 font-extrabold text-[12px]">Koyon Sana'a</h4>
-                    <p class="text-[8px] text-gray-400 font-bold uppercase">Skills Acquisition</p>
+
+          <div class="relative overflow-hidden h-48 rounded-[2rem] shadow-lg bg-blue-900 tap-scale">
+                <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=500" 
+                     class="absolute inset-0 w-full h-full object-cover opacity-70 img-fade-1">
+                
+                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=500" 
+                     class="absolute inset-0 w-full h-full object-cover opacity-70 img-fade-2">
+                
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=500" 
+                     class="absolute inset-0 w-full h-full object-cover opacity-70 img-fade-3">
+
+                <div class="relative z-10 p-4 h-full flex flex-col justify-end bg-gradient-to-t from-black/80 via-transparent">
+                    <h4 class="text-white font-extrabold text-sm leading-tight">Koyon Sana'a</h4>
+                    <p class="text-[8px] text-blue-200 font-bold uppercase">Skills Acquisition</p>
                 </div>
-                       </div>
+                   </div>
         
 
             <div class="relative overflow-hidden h-48 rounded-[2rem] shadow-lg bg-gray-300 tap-scale">
