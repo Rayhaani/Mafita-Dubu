@@ -13,32 +13,34 @@
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background-color: #F5F1E9; 
             margin: 0; 
-            overflow-x: hidden; 
+            overflow: hidden; 
         }
 
-        /* 1. DUNIA EXACTLY LIKE THE VIDEO (BIGGER & STYLED) */
+        /* DUNIA SIZE ADJUSTED TO MATCH VIDEO */
         .world-container {
-            width: 180px; /* Na mayar da girman kamar na videon */
-            height: 180px; 
-            margin: 40px auto 20px auto;
+            width: 140px; /* An rage girman daga 180px zuwa 140px domin yayi daidai da bidiyon */
+            height: 140px; 
+            margin: 30px auto 20px auto;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
         }
+
         .sphere {
             width: 100%; 
             height: 100%;
             border-radius: 50%;
             background: url('https://upload.wikimedia.org/wikipedia/commons/2/22/Earth_Western_Hemisphere_transparent_background.png');
             background-size: cover;
-            box-shadow: inset -15px -15px 40px rgba(0,0,0,0.4), 0 0 30px rgba(0,0,0,0.1);
+            box-shadow: inset -10px -10px 30px rgba(0,0,0,0.3), 0 5px 20px rgba(0,0,0,0.1);
             animation: rotateWorld 15s linear infinite;
             z-index: 10;
         }
-        @keyframes rotateWorld { from { background-position: 0 0; } to { background-position: 360px 0; } }
 
-        /* 2. PULSE RINGS (KWALLIYAR DA TAKE FITOWA) */
+        @keyframes rotateWorld { from { background-position: 0 0; } to { background-position: 280px 0; } }
+
+        /* REFINED RINGS (LIKE THE VIDEO) */
         .pulse-ring {
             position: absolute;
             top: 50%;
@@ -46,39 +48,42 @@
             transform: translate(-50%, -50%);
             width: 100%;
             height: 100%;
-            border: 1px solid rgba(62, 39, 35, 0.3); /* Dark milk border */
+            border: 1.5px solid rgba(255, 255, 255, 0.8); /* Fari mai sanyi don yayi kyau */
             border-radius: 50%;
-            animation: ringPulse 3s ease-out infinite;
+            animation: ringPulse 4s ease-out infinite;
             z-index: 1;
         }
+
         @keyframes ringPulse {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
-            100% { transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
         }
 
-        /* 3. BLINKING TITLE CASE TEXT */
+        /* TITLE STYLE */
         .blinking-text {
             font-weight: 800;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: #3E2723;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             animation: blinker 1.2s linear infinite;
+            text-transform: capitalize;
         }
-        @keyframes blinker { 50% { opacity: 0.2; } }
+        @keyframes blinker { 50% { opacity: 0.1; } }
         .query-val { color: #D32F2F; font-style: italic; text-transform: uppercase; }
 
-        /* BUTTONS STYLES (NO CHANGES MADE) */
+        /* OVERLAY SETUP */
         #search-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(245, 241, 233, 0.98); backdrop-filter: blur(8px);
+            background: rgba(245, 241, 233, 0.98); backdrop-filter: blur(10px);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             z-index: 2000;
         }
+
         .pearl-btn {
-            width: 280px; padding: 20px; margin: 12px; border-radius: 25px;
+            width: 260px; padding: 18px; margin: 10px; border-radius: 25px;
             background: white; color: #3E2723; font-weight: 800;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.06); border: 1px solid #D7CCC8;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05); border: 1px solid #D7CCC8;
             text-align: center;
         }
     </style>
@@ -89,7 +94,7 @@
         <div class="world-container">
             <div class="sphere"></div>
             <div class="pulse-ring"></div>
-            <div class="pulse-ring" style="animation-delay: 1.5s;"></div>
+            <div class="pulse-ring" style="animation-delay: 2s;"></div>
         </div>
 
         <h2 class="blinking-text">Ina Kake Son Bincika <span class="query-val">"Plants"</span>?</h2>
