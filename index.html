@@ -152,6 +152,23 @@
         <button class="text-gray-400 text-xl"><i class="fa-solid fa-message"></i></button>
         <button class="text-gray-400 text-xl"><i class="fa-solid fa-user"></i></button>
     </div>
-
+    <script>
+        // Wannan zai tilasta wa bidiyon wasa (play)
+        function playAllVideos() {
+            const vids = document.querySelectorAll('video');
+            vids.forEach(v => {
+                v.muted = true;
+                v.play();
+            });
+        }
+        
+        // Zai gwada tashi da zarar shafin ya gama loda komai
+        window.addEventListener('load', playAllVideos);
+        
+        // Idan browser ta ki, zai tashi da zarar ka taba screen din wayarka
+        document.body.addEventListener('click', playAllVideos, {once: true});
+        document.body.addEventListener('touchstart', playAllVideos, {once: true});
+    </script>
+        
 </body>
 </html>
