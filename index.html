@@ -12,41 +12,30 @@
         
         body { 
     font-family: 'Plus Jakarta Sans', sans-serif; 
-    background-color: #F5F1E9; /* Dark Milk */
-    margin: 0; 
-    overflow-x: hidden; 
-        }
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+    
+    body { 
+        font-family: 'Plus Jakarta Sans', sans-serif; 
+        background-color: #F5F1E9; 
+        margin: 0; 
+        overflow-x: hidden; 
+    }
 
-        /* Glassmorphism Effect */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
-        }
+    .tap-scale {
+        transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .tap-scale:active {
+        transform: scale(0.92);
+    }
 
-        /* Micro-animation on click */
-        .tap-scale {
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .tap-scale:active {
-            transform: scale(0.92);
-        }
-
-        /* Gradient Text */
-        .text-gradient {
-            background: linear-gradient(to right, #1e3a8a, #059669);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; 
-
-         lottie-player {
-    width: 100px !important;
-    height: 100px !important;
-    margin: 0 auto;
-         }
-            
-    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
+    lottie-player {
+        width: 100px !important;
+        height: 100px !important;
+        margin: 0 auto;
+    }
+</style>
+    
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-extrabold tracking-tight">
                 <span class="text-blue-900">Mafita</span><span class="text-green-600">Dubu</span>
@@ -79,37 +68,35 @@
             <p class="text-[8px] text-gray-400 font-bold uppercase">Skills</p>
         </div>
 
-        <div class="bg-white rounded-[2.5rem] p-4 shadow-sm flex flex-col items-center justify-center tap-scale border border-gray-100 h-48">
-            <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_gapf49at.json" background="transparent" speed="1" loop autoplay></lottie-player>
-            <h4 class="text-blue-900 font-extrabold text-[12px] mt-2">Mafita</h4>
-            <p class="text-[8px] text-gray-400 font-bold uppercase">Solutions</p>
-        </div>
+            </header>
 
-        <div class="bg-white rounded-[2.5rem] p-4 shadow-sm flex flex-col items-center justify-center tap-scale border border-gray-100 h-48">
-            <lottie-player src="https://assets3.lottiefiles.com/packages/lf20_s47p7dfp.json" background="transparent" speed="1" loop autoplay></lottie-player>
-            <h4 class="text-blue-900 font-extrabold text-[12px] mt-2">Kwararru</h4>
-            <p class="text-[8px] text-gray-400 font-bold uppercase">Experts</p>
-        </div>
+    <div class="px-5 -mt-12 relative z-20">
+        <div class="grid grid-cols-2 gap-4">
+            
+            <div class="bg-white rounded-[2.5rem] p-4 shadow-sm flex flex-col items-center justify-center tap-scale border border-gray-100 h-48">
+                <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_m6cu9atn.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                <h4 class="text-blue-900 font-extrabold text-[12px] mt-2">Koyon Sana'a</h4>
+                <p class="text-[8px] text-gray-400 font-bold uppercase">Skills</p>
+            </div>
 
-        <div class="bg-white rounded-[2.5rem] p-4 shadow-sm flex flex-col items-center justify-center tap-scale border border-gray-100 h-48">
-            <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_yzo76ccl.json" background="transparent" speed="1" loop autoplay></lottie-player>
-            <h4 class="text-blue-900 font-extrabold text-[12px] mt-2">Escrow</h4>
-            <p class="text-[8px] text-gray-400 font-bold uppercase">Security</p>
-        </div>
+            <div class="bg-white rounded-[2.5rem] p-4 shadow-sm flex flex-col items-center justify-center tap-scale border border-gray-100 h-48">
+                <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_gapf49at.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                <h4 class="text-blue-900 font-extrabold text-[12px] mt-2">Mafita</h4>
+                <p class="text-[8px] text-gray-400 font-bold uppercase">Solutions</p>
+            </div>
 
-        <div class="bg-white rounded-[2.5rem] p-4 shadow-sm flex flex-col items-center justify-center tap-scale border border-gray-100 h-48">
-            <lottie-player src="https://assets4.lottiefiles.com/private_files/lf30_8scv2p3m.json" background="transparent" speed="1" loop autoplay></lottie-player>
-            <h4 class="text-blue-900 font-extrabold text-[12px] mt-2">'Yan Kasuwa</h4>
-            <p class="text-[8px] text-gray-400 font-bold uppercase">Market</p>
-        </div>
+            <div class="bg-white rounded-[2.5rem] p-4 shadow-sm flex flex-col items-center justify-center tap-scale border border-gray-100 h-48">
+                <lottie-player src="https://assets3.lottiefiles.com/packages/lf20_s47p7dfp.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                <h4 class="text-blue-900 font-extrabold text-[12px] mt-2">Kwararru</h4>
+                <p class="text-[8px] text-gray-400 font-bold uppercase">Experts</p>
+            </div>
 
-        <div class="bg-white rounded-[2.5rem] p-4 shadow-sm flex flex-col items-center justify-center tap-scale border border-gray-100 h-48">
-            <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_twij9v70.json" background="transparent" speed="1" loop autoplay></lottie-player>
-            <h4 class="text-blue-900 font-extrabold text-[12px] mt-2">AdChain</h4>
-            <p class="text-[8px] text-gray-400 font-bold uppercase">Rewards</p>
+            <div class="bg-white rounded-[2.5rem] p-4 shadow-sm flex flex-col items-center justify-center tap-scale border border-gray-100 h-48">
+                <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_yzo76ccl.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                <h4 class="text-blue-900 font-extrabold text-[12px] mt-2">Escrow</h4>
+                <p class="text-[8px] text-gray-400 font-bold uppercase">Security</p>
+            </div>
+
         </div>
     </div>
-</div>
-            
-            
-            
+    
