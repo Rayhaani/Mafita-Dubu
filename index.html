@@ -42,28 +42,28 @@
         }
             /* Animation don narke hotuna a juna */
                 /* 1. Ma'anar Motsi (Animation Definition) */
+                /* Sabon tsari: Hotuna ba za su ba da sarari ba */
         @keyframes crossfade {
-            0%, 25% { opacity: 1; z-index: 10; }
-            33%, 100% { opacity: 0; z-index: 1; }
+            0% { opacity: 0; }
+            5% { opacity: 1; }
+            33% { opacity: 1; }
+            38% { opacity: 0; }
+            100% { opacity: 0; }
         }
 
-        /* 2. Salon kowane hoto (Image Styles) */
-        .img-fade-1 { 
-            animation: crossfade 12s infinite 0s; 
-        }
-        .img-fade-2 { 
-            animation: crossfade 12s infinite 4s; 
-            opacity: 0; 
-        }
-        .img-fade-3 { 
-            animation: crossfade 12s infinite 8s; 
-            opacity: 0; 
-        }
+        .img-fade-1 { animation: crossfade 12s infinite 0s; }
+        .img-fade-2 { animation: crossfade 12s infinite 4s; }
+        .img-fade-3 { animation: crossfade 12s infinite 8s; }
 
-        /* 3. Bangaren raba lokaci (Delay for Box 2) */
-        .delay-box { 
-            animation-delay: 2s !important; 
+        /* Wannan zai tabbatar koda yaushe akwai hoto a kasa */
+        .relative.overflow-hidden img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
+        
         
             animation-delay: 2s !important; 
         }
@@ -114,6 +114,7 @@
             </div>
 
             <div class="relative overflow-hidden h-48 rounded-[2rem] shadow-lg bg-emerald-900 tap-scale">
+                <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=500" class="absolute inset-0 w-full h-full object-cover opacity-40">
                 <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=500" 
                      class="absolute inset-0 w-full h-full object-cover opacity-70 img-fade-1 delay-box">
                 <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=500" 
