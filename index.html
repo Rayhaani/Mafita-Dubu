@@ -44,17 +44,17 @@
                 /* 1. Ma'anar Motsi (Animation Definition) */
                 /* Sabon tsari: Hotuna ba za su ba da sarari ba */
         /* Sabon Animation don hotuna 4 (Sakan 16 total) */
+
 @keyframes crossfade4 {
-    0%, 15% { opacity: 1; z-index: 10; }
-    25%, 100% { opacity: 0; z-index: 1; }
-}
-
-.img-fade-1 { animation: crossfade4 16s infinite 0s; }
-.img-fade-2 { animation: crossfade4 16s infinite 4s; opacity: 0; }
-.img-fade-3 { animation: crossfade4 16s infinite 8s; opacity: 0; }
-.img-fade-4 { animation: crossfade4 16s infinite 12s; opacity: 0; }
+    0%, 25% { opacity: 1; z-index: 10; }
+    30%, 100% { opacity: 0; z-index: 1; }
+        }
         
-
+        .img-fade-1 { animation: crossfade4 16s infinite 0s; }
+.img-fade-2 { animation: crossfade4 16s infinite 4s; }
+.img-fade-3 { animation: crossfade4 16s infinite 8s; }
+.img-fade-4 { animation: crossfade4 16s infinite 12s; }
+        
         /* Wannan zai tabbatar koda yaushe akwai hoto a kasa */
         .relative.overflow-hidden img {
             position: absolute;
