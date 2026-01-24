@@ -50,6 +50,10 @@
         .img-fade-1 { animation: crossfade 12s infinite; }
         .img-fade-2 { animation: crossfade 12s infinite 4s; opacity: 0; }
         .img-fade-3 { animation: crossfade 12s infinite 8s; opacity: 0; }
+            /* Sabon tsarin raba lokacin motsi */
+        .delay-box { 
+            animation-delay: 2s !important; 
+        }
     </style>
     
 </head>
@@ -82,38 +86,21 @@
              class="w-full h-full object-cover object-top">
     </header> <div class="px-5 -mt-6"> <div class="grid grid-cols-2 gap-4">
 
-          <div class="relative overflow-hidden h-48 rounded-[2rem] shadow-lg bg-blue-900 tap-scale">
-                <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=500" 
-                     class="absolute inset-0 w-full h-full object-cover opacity-70 img-fade-1">
-                
-                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=500" 
-                     class="absolute inset-0 w-full h-full object-cover opacity-70 img-fade-2">
-                
-                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=500" 
-                     class="absolute inset-0 w-full h-full object-cover opacity-70 img-fade-3">
-
-                <div class="relative z-10 p-4 h-full flex flex-col justify-end bg-gradient-to-t from-black/80 via-transparent">
-                    <h4 class="text-white font-extrabold text-sm leading-tight">Koyon Sana'a</h4>
-                    <p class="text-[8px] text-blue-200 font-bold uppercase">Skills Acquisition</p>
-                </div>
-                   </div>
-        
-
-                        <div class="relative overflow-hidden h-48 rounded-[2rem] shadow-lg bg-emerald-900 tap-scale">
+                      <div class="relative overflow-hidden h-48 rounded-[2rem] shadow-lg bg-emerald-900 tap-scale">
                 <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=500" 
-                     class="absolute inset-0 w-full h-full object-cover opacity-70 img-fade-1">
+                     class="absolute inset-0 w-full h-full object-cover opacity-70 img-fade-1 delay-box">
                 
                 <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=500" 
-                     class="absolute inset-0 w-full h-full object-cover opacity-70 img-fade-2">
+                     class="absolute inset-0 w-full h-full object-cover opacity-70 img-fade-2 delay-box">
                 
                 <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=500" 
-                     class="absolute inset-0 w-full h-full object-cover opacity-70 img-fade-3">
+                     class="absolute inset-0 w-full h-full object-cover opacity-70 img-fade-3 delay-box">
 
                 <div class="relative z-10 p-4 h-full flex flex-col justify-end bg-gradient-to-t from-black/80 via-transparent">
                     <h4 class="text-white font-extrabold text-sm leading-tight">Mafita</h4>
                     <p class="text-[8px] text-emerald-200 font-bold uppercase">Daily Solutions</p>
                 </div>
-                        </div>
+                      </div>
         
 
             <div class="relative overflow-hidden h-48 rounded-[2rem] shadow-lg bg-emerald-900 tap-scale">
