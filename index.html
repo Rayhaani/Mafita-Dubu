@@ -63,13 +63,10 @@
             height: 100%;
             object-fit: cover;
         }
-                .delay-box { 
-            animation-delay: 2s !important; 
-                }
-                      /* Delay na musamman don Gidan Kwararru yadda ba zai zo daya da sauran ba */
-        .delay-kwararru { 
-            animation-delay: 4s !important; 
-             }
+                /* Wadannan sune za su raba lokacin kowane gida (Offset) */
+        .group-2 img { animation-delay: 2s !important; }
+        .group-3 img { animation-delay: 4s !important; }
+        
     </style>
     
 </head>
@@ -158,14 +155,11 @@
         </div>
         
 
-            <div class="relative overflow-hidden h-48 rounded-[2rem] shadow-lg bg-indigo-900 tap-scale">
-                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=500&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-70">
-                <div class="relative z-10 p-4 h-full flex flex-col justify-end bg-gradient-to-t from-black/80 via-transparent">
-                    <h4 class="text-white font-extrabold text-sm leading-tight">Escrow</h4>
-                    <p class="text-[8px] text-indigo-100 font-bold uppercase">Secure Trade</p>
-                </div>
-            </div>
-
+            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=500" class="img-fade-1 opacity-70">
+<img src="https://images.unsplash.com/photo-1454165833767-027ffea9e77b?q=80&w=500" class="img-fade-2 opacity-70">
+<img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=500" class="img-fade-3 opacity-70">
+<img src="https://images.unsplash.com/photo-1560520162-809bb77af283?q=80&w=500" class="img-fade-4 opacity-70">
+        
             <div class="relative overflow-hidden h-48 rounded-[2rem] shadow-lg bg-orange-800 tap-scale">
                 <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=500&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-70">
                 <div class="relative z-10 p-4 h-full flex flex-col justify-end bg-gradient-to-t from-black/80 via-transparent">
