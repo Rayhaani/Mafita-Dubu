@@ -46,31 +46,31 @@
         /* Sabon Animation don hotuna 4 (Sakan 16 total) */
 
          /* Sabon Injin Juya Hotuna */
+                /* Sabon Injin Juya Hotuna */
         @keyframes crossfade4 {
             0%, 20% { opacity: 1; z-index: 20; }
             25%, 100% { opacity: 0; z-index: 10; }
         }
 
-        /* Tabbatar dukkan hoto a boye yake (opacity 0) */
+        /* Wannan zai tilasta kowane hoto ya fito radau */
         .img-fade-1, .img-fade-2, .img-fade-3, .img-fade-4 {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
             opacity: 0;
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
-        /* Kunna animation a kowane hoto */
-        .img-fade-1 { animation: crossfade4 16s infinite 0s !important; }
+        /* Kunna wutar animation - Hoton 1 zai fara fitowa */
+        .img-fade-1 { animation: crossfade4 16s infinite 0s !important; opacity: 1 !important; }
         .img-fade-2 { animation: crossfade4 16s infinite 4s !important; }
         .img-fade-3 { animation: crossfade4 16s infinite 8s !important; }
         .img-fade-4 { animation: crossfade4 16s infinite 12s !important; }
+
+        /* Wannan shi ne zai sa Escrow ya jira kadan kafin ya fara nashi */
+        .delay-escrow img { animation-delay: 3s !important; }
         
-        
-                /* Wadannan sune za su raba lokacin kowane gida (Offset) */
-        .group-2 img { animation-delay: 2s !important; }
-        .group-3 img { animation-delay: 4s !important; }
         
     </style>
     
@@ -165,7 +165,7 @@
         
 
 
-       <div class="relative overflow-hidden h-48 rounded-[2rem] shadow-lg bg-indigo-900 tap-scale group-3">
+       <div class="relative overflow-hidden h-48 rounded-[2rem] shadow-lg bg-indigo-900 tap-scale delay-escrow">
     <img src="https://i.postimg.cc/XNL8SNLf/IMG-20260124-WA0060.jpg" 
          class="absolute inset-0 w-full h-full object-cover img-fade-1">
     
