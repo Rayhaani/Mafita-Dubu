@@ -41,17 +41,30 @@
             -webkit-text-fill-color: transparent;
         }
             /* Animation don narke hotuna a juna */
+                /* 1. Ma'anar Motsi (Animation Definition) */
         @keyframes crossfade {
-            0%, 25% { opacity: 1; }
-            30%, 95% { opacity: 0; }
-            100% { opacity: 1; }
+            0%, 25% { opacity: 1; z-index: 10; }
+            33%, 100% { opacity: 0; z-index: 1; }
         }
 
-        .img-fade-1 { animation: crossfade 12s infinite; }
-        .img-fade-2 { animation: crossfade 12s infinite 4s; opacity: 0; }
-        .img-fade-3 { animation: crossfade 12s infinite 8s; opacity: 0; }
-            /* Sabon tsarin raba lokacin motsi */
+        /* 2. Salon kowane hoto (Image Styles) */
+        .img-fade-1 { 
+            animation: crossfade 12s infinite 0s; 
+        }
+        .img-fade-2 { 
+            animation: crossfade 12s infinite 4s; 
+            opacity: 0; 
+        }
+        .img-fade-3 { 
+            animation: crossfade 12s infinite 8s; 
+            opacity: 0; 
+        }
+
+        /* 3. Bangaren raba lokaci (Delay for Box 2) */
         .delay-box { 
+            animation-delay: 2s !important; 
+        }
+        
             animation-delay: 2s !important; 
         }
     </style>
