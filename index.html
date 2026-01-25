@@ -169,24 +169,31 @@
          class="absolute inset-0 w-full h-full object-cover opacity-70 img-fade-4">
 
     <div class="relative z-10 p-4 h-full flex flex-col justify-end bg-gradient-to-t from-black/80 via-transparent">
-        <h4 class="/* Sabon Neon Glow mai kwarjini */
-.neon-text {
-    color: #00f2ff !important; /* Launin Cyan mai daukar ido */
-    font-weight: 800;
+        <h4 class=".neon-text {
+    /* Kalar TrustID (Purple to Cyan Gradient) */
+    background: linear-gradient(90deg, #d400ff, #00d2ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    text-shadow: 
-        0 0 5px rgba(0, 242, 255, 0.8),
-        0 0 15px rgba(0, 242, 255, 0.5),
-        0 0 30px rgba(0, 242, 255, 0.3);
-    animation: pulse-call 1.5s infinite alternate;
+    /* Inuwa mai karfi don raba rubutu da hoto */
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.9));
+    animation: trust-blink 1.2s infinite alternate ease-in-out;
 }
 
-/* Animation din da yake kiran mutum ya taba */
-@keyframes pulse-call {
-    0% { transform: scale(1); opacity: 0.8; filter: brightness(1); }
-    100% { transform: scale(1.05); opacity: 1; filter: brightness(1.5); }
+/* Fasahar Blinking da Pulse */
+@keyframes trust-blink {
+    0% { 
+        opacity: 0.7; 
+        filter: drop-shadow(0px 0px 2px #d400ff) brightness(1);
+    }
+    100% { 
+        opacity: 1; 
+        filter: drop-shadow(0px 0px 15px #00d2ff) brightness(1.8);
+        transform: scale(1.03);
+    }
 }
+            
  font-extrabold text-sm">Koyon Sana'a</h4>
         <p class="text-[8px] text-blue-200 font-bold uppercase">Skills Acquisition</p>
     </div>
@@ -246,24 +253,31 @@
     <div class="absolute inset-0 bg-emerald-900/20 z-0"></div>
 
     <div class="relative z-10 p-4 h-full flex flex-col justify-end bg-gradient-to-t from-black/80 via-transparent">
-        <h4 class="/* Sabon Neon Glow mai kwarjini */
-.neon-text {
-    color: #00f2ff !important; /* Launin Cyan mai daukar ido */
-    font-weight: 800;
+        <h4 class=".neon-text {
+    /* Kalar TrustID (Purple to Cyan Gradient) */
+    background: linear-gradient(90deg, #d400ff, #00d2ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    text-shadow: 
-        0 0 5px rgba(0, 242, 255, 0.8),
-        0 0 15px rgba(0, 242, 255, 0.5),
-        0 0 30px rgba(0, 242, 255, 0.3);
-    animation: pulse-call 1.5s infinite alternate;
+    /* Inuwa mai karfi don raba rubutu da hoto */
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.9));
+    animation: trust-blink 1.2s infinite alternate ease-in-out;
 }
 
-/* Animation din da yake kiran mutum ya taba */
-@keyframes pulse-call {
-    0% { transform: scale(1); opacity: 0.8; filter: brightness(1); }
-    100% { transform: scale(1.05); opacity: 1; filter: brightness(1.5); }
+/* Fasahar Blinking da Pulse */
+@keyframes trust-blink {
+    0% { 
+        opacity: 0.7; 
+        filter: drop-shadow(0px 0px 2px #d400ff) brightness(1);
+    }
+    100% { 
+        opacity: 1; 
+        filter: drop-shadow(0px 0px 15px #00d2ff) brightness(1.8);
+        transform: scale(1.03);
+    }
 }
+            
  font-extrabold text-sm leading-tight">Kwararru</h4>
         <p class="text-[8px] text-emerald-100 font-bold uppercase">Expert Corner</p>
     </div>
