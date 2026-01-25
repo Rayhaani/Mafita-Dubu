@@ -12,69 +12,58 @@
     
     body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F5F1E9; margin: 0; overflow-x: hidden; }
 
-    /* 1. Tambarin Gold Seal (Kasa Tsakiya) */
+    /* Tambarin Zinariya (Premium Certificate Style) */
     .royal-seal {
-        position: absolute;
-        bottom: 15px; 
-        left: 50%;
-        transform: translateX(-50%);
+        margin-top: 8px;
         background: radial-gradient(circle, #ffd700 0%, #b8860b 100%);
-        border: 2px solid #ffffff;
+        border: 1px solid #ffffff;
         border-radius: 50%;
-        width: 40px;
-        height: 40px;
+        width: 32px;
+        height: 32px;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 0 15px rgba(184, 134, 11, 0.8);
-        z-index: 45;
-        animation: royal-glow 2s infinite alternate ease-in-out;
+        box-shadow: 0 0 10px rgba(184, 134, 11, 0.6);
+        animation: seal-pulse 2s infinite alternate;
     }
 
-    @keyframes royal-glow {
-        0% { transform: translateX(-50%) scale(1); filter: brightness(1); }
-        100% { transform: translateX(-50%) scale(1.1); filter: brightness(1.3); }
+    @keyframes seal-pulse {
+        0% { transform: scale(1); filter: brightness(1); }
+        100% { transform: scale(1.1); filter: brightness(1.2); }
     }
 
-    /* 2. Gyaran Animation na Hotuna 4 */
-    @keyframes photo-reveal-cycle {
-        0%, 15% { opacity: 1; z-index: 30; } /* Hoto 1 */
-        20%, 25% { opacity: 0; z-index: 5; }  /* Bacewa (Gap) */
-        30%, 45% { opacity: 1; z-index: 30; } /* Hoto 2 */
-        50%, 55% { opacity: 0; z-index: 5; }  /* Bacewa (Gap) */
-        60%, 75% { opacity: 1; z-index: 30; } /* Hoto 3 */
-        80%, 85% { opacity: 0; z-index: 5; }  /* Bacewa (Gap) */
+    /* Animation na Hotuna (Timing ya zama 4x4) */
+    @keyframes photo-cycle {
+        0%, 15% { opacity: 1; z-index: 30; }  /* Hoto 1 */
+        20%, 25% { opacity: 0; z-index: 5; }   /* BACI (Rubutu ya fito) */
+        30%, 45% { opacity: 1; z-index: 30; }  /* Hoto 2 */
+        50%, 55% { opacity: 0; z-index: 5; }   /* BACI (Rubutu ya fito) */
+        60%, 75% { opacity: 1; z-index: 30; }  /* Hoto 3 */
+        80%, 85% { opacity: 0; z-index: 5; }   /* BACI (Rubutu ya fito) */
         90%, 100% { opacity: 1; z-index: 30; } /* Hoto 4 */
     }
 
     .img-container {
         position: absolute !important;
         inset: 0 !important;
-        width: 100%;
-        height: 100%;
+        width: 100%; height: 100%;
         opacity: 0;
-        animation: photo-reveal-cycle 20s infinite linear;
+        animation: photo-cycle 20s infinite linear;
     }
 
-    .img-1 { animation-delay: 0s; }
-    .img-2 { animation-delay: 5s; }
-    .img-3 { animation-delay: 10s; }
-    .img-4 { animation-delay: 15s; }
+    /* Sanya timing na kowane container daban */
+    /* Anan ne gyaran yake domin kowane hoto ya fito a lokacin sa */
+    .img-box-1 { animation-delay: 0s; }
+    .img-box-2 { animation-delay: 5s; }
+    .img-box-3 { animation-delay: 10s; }
+    .img-box-4 { animation-delay: 15s; }
 
     .neon-text {
         background: linear-gradient(90deg, #d400ff, #00d2ff);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        font-weight: 900 !important;
-        text-transform: uppercase;
-        filter: drop-shadow(0px 0px 5px rgba(0,0,0,0.8));
-    }
-
-    .box-overlay {
-        position: absolute;
-        inset: 0;
-        z-index: 35;
-        background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+        font-weight: 800;
+        font-family: 'Plus Jakarta Sans', sans-serif;
     }
 </style>
     
@@ -123,75 +112,24 @@
         </div>
     </section>
 
-    <div class="px-5 grid grid-cols-2 gap-4 pb-10">
+<div class="px-5 grid grid-cols-2 gap-4 pb-10">
 
     <div class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0a0a0a] shadow-lg">
         <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-            <h4 class="neon-text text-sm">KOYON SANA'A</h4>
-            <p class="text-[7px] text-white/30 uppercase">Skills Training</p>
+            <h4 class="neon-text text-sm">Koyon Sana'a</h4>
+            <div class="royal-seal"><i class="fa-solid fa-bolt text-white text-xs"></i></div>
         </div>
-        <div class="img-container img-1"><img src="https://i.postimg.cc/j2V5zhch/IMG-20260122-WA0044(1).jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-2"><img src="https://i.postimg.cc/0jgQpCnG/IMG-20260124-WA0008.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-3"><img src="https://i.postimg.cc/J0wnbQx5/IMG-20260124-WA0009.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-4"><img src="https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?q=80&w=500" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-    </div>
 
-    <div class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0a0a0a] shadow-lg">
-        <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-            <h4 class="neon-text text-sm">MAFITA</h4>
-            <p class="text-[7px] text-white/30 uppercase">Daily Solutions</p>
+        <div class="img-container img-box-1">
+            <img src="https://i.postimg.cc/j2V5zhch/IMG-20260122-WA0044(1).jpg" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-35"></div>
         </div>
-        <div class="img-container img-1"><img src="https://i.postimg.cc/GtRJvx6H/IMG-20260123-WA0031(1).jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-2"><img src="https://i.postimg.cc/kXKG0d6r/Chat-GPT-Image-Jan-24-2026-05-17-58-PM-png.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-3"><img src="https://i.postimg.cc/GmbL6Tn9/Chat-GPT-Image-Jan-24-2026-05-18-59-PM-png.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-4"><img src="https://i.postimg.cc/SNhkzYs8/Chat-GPT-Image-Jan-24-2026-05-16-08-PM-png.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-    </div>
-
-    <div class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0a0a0a] shadow-lg">
-        <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-            <h4 class="neon-text text-sm">KWARARRU</h4>
-            <p class="text-[7px] text-white/30 uppercase">Expert Corner</p>
+        <div class="img-container img-box-2">
+            <img src="https://i.postimg.cc/0jgQpCnG/IMG-20260124-WA0008.jpg" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-35"></div>
         </div>
-        <div class="img-container img-1"><img src="https://i.postimg.cc/JzcXcxTS/IMG-20260124-WA0029.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-2"><img src="https://i.postimg.cc/Qdm7f7KH/images-20.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-3"><img src="https://i.postimg.cc/dDc7GZGY/IMG-20260122-WA0039-1.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-4"><img src="https://i.postimg.cc/bvKFw4yK/IMG-20260124-WA0028(1).jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-    </div>
-
-    <div class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0a0a0a] shadow-lg">
-        <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-            <h4 class="neon-text text-sm">ESCROW</h4>
-            <p class="text-[7px] text-white/30 uppercase">Amana System</p>
         </div>
-        <div class="img-container img-1"><img src="https://i.postimg.cc/Y0P2spNJ/image-1.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-2"><img src="https://i.postimg.cc/7YCZT2wP/image-3.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-3"><img src="https://i.postimg.cc/hPHP8ttC/image-2.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-4"><img src="https://i.postimg.cc/6QhWNVfx/image-4.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-    </div>
 
-    <div class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0a0a0a] shadow-lg">
-        <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-            <h4 class="neon-text text-sm">'YAN KASUWA</h4>
-            <p class="text-[7px] text-white/30 uppercase">Market Hub</p>
-        </div>
-        <div class="img-container img-1"><img src="https://i.postimg.cc/02LNsdFH/istockphoto-2196140224-612x612.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-2"><img src="https://i.postimg.cc/fRnMFW0w/kano-market.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-3"><img src="https://i.postimg.cc/8s8gqwsT/348s.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-4"><img src="https://images.unsplash.com/photo-1578916171728-46686eac8d58?q=80&w=500" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-    </div>
-
-    <div class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0a0a0a] shadow-lg">
-        <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-            <h4 class="neon-text text-sm">ADCHAIN</h4>
-            <p class="text-[7px] text-white/30 uppercase">Kalli Talla</p>
-        </div>
-        <div class="img-container img-1"><img src="https://i.postimg.cc/sfGLQYvy/ice-cream-poster-ads-design-template-a8ec60c642a4909f9db435ee9e223b47-screen.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-2"><img src="https://i.postimg.cc/qM8ZQpsF/images-25.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-3"><img src="https://i.postimg.cc/FKnP1zvy/images-23.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-        <div class="img-container img-4"><img src="https://i.postimg.cc/bY0QBr54/surprised-happy-african-man-looking-cellphone-read-good-news-holding-phone-sms-sit-sofa-amazed-black.jpg" class="w-full h-full object-cover"><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-lg"></i></div><div class="box-overlay"></div></div>
-    </div>
-
-    </div>
+</div>
         
 
-     
