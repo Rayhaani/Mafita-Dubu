@@ -13,73 +13,11 @@
         body { 
     font-family: 'Plus Jakarta Sans', sans-serif; 
     background-color: #F5F1E9; /* Dark Milk */
-    margin: 0; 
-    overflow-x: hidden; 
+            margin: 0; 
+        overflow-x: hidden; 
         }
 
-        /* Glassmorphism Effect */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
-        }
-
-        /* Micro-animation on click */
-        .tap-scale {
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .tap-scale:active {
-            transform: scale(0.92);
-        }
-
-        /* Gradient Text */
-        .text-gradient {
-            background: linear-gradient(to right, #1e3a8a, #059669);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-            /* Animation don narke hotuna a juna */
-                /* 1. Ma'anar Motsi (Animation Definition) */
-                /* Sabon tsari: Hotuna ba za su ba da sarari ba */
-        /* Sabon Animation don hotuna 4 (Sakan 16 total) */
-
-         /* Sabon Injin Juya Hotuna */
-                /* Sabon Injin Juya Hotuna */
-        @keyframes crossfade4 {
-            0%, 20% { opacity: 1; z-index: 20; }
-            25%, 100% { opacity: 0; z-index: 10; }
-        }
-
-        /* Wannan zai tilasta kowane hoto ya fito radau */
-        .img-fade-1, .img-fade-2, .img-fade-3, .img-fade-4 {
-            position: absolute !important;
-            inset: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            opacity: 0;
-        }
-
-        /* Kunna wutar animation - Hoton 1 zai fara fitowa */
-                /* Sabon saitin da zai sa kowa ya tafi tare 100% */
-        .img-fade-1 { animation: crossfade4 16s infinite 0s !important; }
-        .img-fade-2 { animation: crossfade4 16s infinite 4s !important; }
-        .img-fade-3 { animation: crossfade4 16s infinite 8s !important; }
-        .img-fade-4 { animation: crossfade4 16s infinite 12s !important; }
-        
-                /* Gyaran hoton Escrow na 2 (Kwamfuta ta dawo tsakiya) */
-        .delay-escrow .img-fade-2 { 
-            object-fit: cover !important;
-            object-position: center !important; 
-        }
-
-        /* Gyaran hoton Escrow na 3 (Mutumin ya fito radau) */
-        .delay-escrow .img-fade-3 { 
-            object-fit: cover !important;
-            object-position: right !important; 
-        }
-                /* 1. Glassmorphism & Floating Effect */
+        /* 1. Salon Boxes (Glassmorphism + Floating) */
         .glass-card {
             background: rgba(255, 255, 255, 0.05) !important;
             backdrop-filter: blur(10px);
@@ -90,20 +28,52 @@
 
         @keyframes floating {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
         }
 
-        /* 2. Neon Text Glow */
+        /* 2. Sabon Salon TrustID (Gradient + Walƙiya) */
         .neon-text {
-            color: #fff !important;
-            text-shadow: 0 0 10px #fff, 0 0 20px #00d2ff !important;
-            animation: pulse-glow 2s infinite alternate;
+            background: linear-gradient(90deg, #d400ff, #00d2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900 !important;
+            text-transform: uppercase;
+            filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 1));
+            animation: trust-blink 1.2s infinite alternate ease-in-out;
         }
 
-        @keyframes pulse-glow {
-            from { opacity: 0.7; }
-            to { opacity: 1; }
+        @keyframes trust-blink {
+            0% { opacity: 0.8; filter: brightness(1) drop-shadow(0px 0px 2px #d400ff); }
+            100% { opacity: 1; filter: brightness(1.8) drop-shadow(0px 0px 10px #00d2ff); }
         }
+
+        /* 3. Inuwar Duhu (Overlay) */
+        .box-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+        }
+
+        /* 4. Animation na Hotuna */
+        @keyframes crossfade4 {
+            0%, 20% { opacity: 1; z-index: 20; }
+            25%, 100% { opacity: 0; z-index: 10; }
+        }
+
+        .img-fade-1, .img-fade-2, .img-fade-3, .img-fade-4 {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            opacity: 0;
+        }
+
+        .img-fade-1 { animation: crossfade4 16s infinite 0s !important; }
+        .img-fade-2 { animation: crossfade4 16s infinite 4s !important; }
+        .img-fade-3 { animation: crossfade4 16s infinite 8s !important; }
+        .img-fade-4 { animation: crossfade4 16s infinite 12s !important; }
+        
         
     </style>
     
