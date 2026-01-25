@@ -58,7 +58,6 @@
             inset: 0 !important;
             width: 100% !important;
             height: 100% !important;
-            object-fit: cover !important;
             opacity: 0;
         }
 
@@ -69,7 +68,17 @@
         .img-fade-3 { animation: crossfade4 16s infinite 8s !important; }
         .img-fade-4 { animation: crossfade4 16s infinite 12s !important; }
         
-        
+                /* Gyaran hoton Escrow na 2 (Kwamfuta ta dawo tsakiya) */
+        .delay-escrow .img-fade-2 { 
+            object-fit: cover !important;
+            object-position: center !important; 
+        }
+
+        /* Gyaran hoton Escrow na 3 (Mutumin ya fito radau) */
+        .delay-escrow .img-fade-3 { 
+            object-fit: cover !important;
+            object-position: right !important; 
+        }
         
     </style>
     
@@ -164,7 +173,7 @@
         
 
 
-       <div class="relative overflow-hidden h-48 rounded-[2rem] shadow-lg bg-indigo-900 tap-scale">
+       <div class="relative overflow-hidden h-48 rounded-[2rem] shadow-lg bg-indigo-900 tap-scale delay-escrow">
     <img src="https://i.postimg.cc/XNL8SNLf/IMG-20260124-WA0060.jpg" 
          class="absolute inset-0 w-full h-full object-cover img-fade-1">
     
