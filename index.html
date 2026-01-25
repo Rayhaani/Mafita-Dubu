@@ -8,78 +8,71 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <style>
-               @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F5F1E9; margin: 0; overflow-x: hidden; }
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+    
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F5F1E9; margin: 0; overflow-x: hidden; }
 
-        /* 1. Tambarin Zaiba (Lightning Bolt Badge) */
-        .thunder-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            border: 1.5px solid #00d2ff;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.6);
-            z-index: 40;
-            animation: lightning-strike 2s infinite;
-        }
+    /* 1. Tambarin Gold Seal (Kamar na Certificate) */
+    .royal-seal {
+        position: absolute;
+        bottom: 12px; /* Kasa tsakiya */
+        left: 50%;
+        transform: translateX(-50%);
+        background: radial-gradient(circle, #ffd700 0%, #b8860b 100%);
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 15px rgba(184, 134, 11, 0.9), inset 0 0 8px rgba(255, 255, 255, 0.6);
+        z-index: 45;
+        animation: royal-glow 2s infinite alternate ease-in-out;
+    }
 
-        @keyframes lightning-strike {
-            0%, 100% { transform: scale(1); filter: brightness(1); }
-            50% { transform: scale(1.2); filter: brightness(1.8) drop-shadow(0 0 10px #d400ff); }
-        }
+    @keyframes royal-glow {
+        0% { transform: translateX(-50%) scale(1); filter: brightness(1); }
+        100% { transform: translateX(-50%) scale(1.1); filter: brightness(1.4); }
+    }
 
-        /* 2. Animation na Bayyanar Hoto da Bacewa */
-        /* Wannan zai bar sarari (gap) tsakanin hoto da hoto domin rubutu ya leko */
-        @keyframes photo-cycle {
-            0%, 15% { opacity: 1; z-index: 30; } /* Hoto ya fito */
-            20%, 25% { opacity: 0; z-index: 5; }  /* Hoto ya bace (Gap) */
-            30%, 100% { opacity: 0; z-index: 5; } 
-        }
+    /* 2. Gyaran Animation (Hotuna 4 za su zagaya yanzu) */
+    @keyframes photo-reveal-cycle {
+        0%, 15% { opacity: 1; z-index: 30; visibility: visible; } 
+        20%, 25% { opacity: 0; z-index: 5; visibility: hidden; }  
+        30%, 40% { opacity: 0; z-index: 5; visibility: hidden; } 
+    }
 
-        .img-container {
-            position: absolute !important;
-            inset: 0 !important;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-        }
+    .img-container {
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        animation: photo-reveal-cycle 16s infinite linear;
+    }
 
-        /* Timing na hotuna 4 (da sarari a tsakani) */
-        .img-1 { animation: photo-cycle 16s infinite 0s !important; }
-        .img-2 { animation: photo-cycle 16s infinite 4s !important; }
-        .img-3 { animation: photo-cycle 16s infinite 8s !important; }
-        .img-4 { animation: photo-cycle 16s infinite 12s !important; }
+    /* Timing na kowane hoto cikin sakan 16 */
+    .img-1 { animation-delay: 0s !important; }
+    .img-2 { animation-delay: 4s !important; }
+    .img-3 { animation-delay: 8s !important; }
+    .img-4 { animation-delay: 12s !important; }
 
-        .neon-text {
-            background: linear-gradient(90deg, #d400ff, #00d2ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 900 !important;
-            text-transform: uppercase;
-            filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 1));
-            animation: trust-blink 1.2s infinite alternate ease-in-out;
-        }
+    .neon-text {
+        background: linear-gradient(90deg, #d400ff, #00d2ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 900 !important;
+        text-transform: uppercase;
+        filter: drop-shadow(0px 0px 5px rgba(212, 0, 255, 0.5));
+    }
 
-        @keyframes trust-blink {
-            0% { opacity: 0.8; }
-            100% { opacity: 1; transform: scale(1.05); }
-        }
-
-        .box-overlay {
-            position: absolute;
-            inset: 0;
-            z-index: 35;
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
-                 }
-        
+    .box-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 35;
+        background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+    }
         
     </style>
     
