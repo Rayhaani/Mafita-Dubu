@@ -202,10 +202,10 @@
 .line-1 { width: 24px; height: 2.5px; background: #1a365d; border-radius: 10px; }
 .line-2 { width: 16px; height: 2.5px; background: #1a365d; border-radius: 10px; align-self: flex-end; }
          
-/* ELITE DIAGONAL & REPEATING CARPET */
+/* ELITE DIAGONAL REPEATING CARPET - FIXED VERSION */
 .carpet-wrapper {
     perspective: 2000px;
-    height: 150px;
+    height: 160px; /* Mun kara tsayi kadan */
     width: 100%;
     position: relative;
     display: flex;
@@ -220,11 +220,11 @@
     padding: 25px 45px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 800;
-    font-size: 1.25rem;
+    font-size: 1.15rem; /* Mun rage girman font kadan don ya zauna da kyau */
     text-align: center;
     box-shadow: 0 15px 45px rgba(0,0,0,0.7);
     
-    /* SHAPE: Ornate Tattara (Bottom-Left & Top-Right) */
+    /* SHAPE: Bottom-Left & Top-Right Curves */
     border-radius: 0px 80px 0px 80px; 
     border: 2px solid #b8860b;
     border-left: 10px solid #b8860b;
@@ -233,32 +233,35 @@
     position: absolute;
     width: 85%;
     opacity: 0;
+    visibility: hidden; /* Kar ya rinka leko wa a baya */
     
-    /* ANIMATION: Diagonal Fold tare da INFINITE domin ya rinka maimaitawa */
+    /* ANIMATION: 25 seconds total cycle (5 msgs * 5s) */
     transform-origin: top right; 
     transform: scale(0) rotate(-15deg);
-    animation: diagonal-fold-and-blink 6s ease-in-out infinite;
+    animation: diagonal-fold-loop 25s infinite ease-in-out;
 }
 
-@keyframes diagonal-fold-and-blink {
-    0% { transform: scale(0) rotate(-15deg); opacity: 0; }
-    15% { transform: scale(1) rotate(0deg); opacity: 1; } 
+@keyframes diagonal-fold-loop {
+    /* 0% to 4%: Budewa (Entrance) */
+    0%, 20% { transform: scale(0) rotate(-15deg); opacity: 0; visibility: hidden; }
+    2%, 18% { transform: scale(1) rotate(0deg); opacity: 1; visibility: visible; }
     
-    /* Blinking a sanyaye (Slow Blink) */
-    25%, 45%, 65%, 85% { opacity: 1; color: #ffd700; }
-    35%, 55%, 75% { opacity: 0.2; color: #b8860b; } 
+    /* 4% to 16%: Blinking a tsakiya */
+    5%, 9%, 13%, 17% { opacity: 1; }
+    7%, 11%, 15% { opacity: 0.3; }
     
-    92% { transform: scale(1) rotate(0deg); opacity: 1; }
-    100% { transform: scale(0) rotate(-15deg); opacity: 0; } 
+    /* 18% to 20%: Rufe wa (Exit) */
+    19% { transform: scale(0) rotate(-15deg); opacity: 0; visibility: hidden; }
+    100% { opacity: 0; visibility: hidden; }
 }
 
-/* Lokacin fitowar kowane sako */
+/* RARRABA LOKACI (Timing is Key) */
+/* Kowanne yana da 5 seconds a jere */
 .msg-1 { animation-delay: 0s; }
-.msg-2 { animation-delay: 6s; }
-.msg-3 { animation-delay: 12s; }
-.msg-4 { animation-delay: 18s; }
-.msg-5 { animation-delay: 24s; }
-    
+.msg-2 { animation-delay: 5s; }
+.msg-3 { animation-delay: 10s; }
+.msg-4 { animation-delay: 15s; }
+.msg-5 { animation-delay: 20s; }
     
 </style>
     
