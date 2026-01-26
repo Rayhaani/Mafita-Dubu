@@ -121,31 +121,31 @@
     color: #cccccc;
     line-height: 1.6;
         }
-      /* GLOBAL LOGO STYLING */
+     /* REFINED GLOBAL LOGO - SABON GYARA */
 .premium-global-logo {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
 }
 
 .portal-icon {
     position: relative;
-    width: 42px;
-    height: 42px;
-    background: #000;
+    width: 45px;
+    height: 45px;
+    background: #000; /* Baki domin ya fito a fili */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 15px rgba(184, 134, 11, 0.5);
+    box-shadow: 0 0 15px rgba(184, 134, 11, 0.6);
     overflow: hidden;
 }
 
 .portal-icon::before {
     content: '';
     position: absolute;
-    width: 150%;
-    height: 150%;
+    width: 160%;
+    height: 160%;
     background: conic-gradient(transparent, #ffd700, transparent 30%);
     animation: rotate-portal 3s linear infinite;
 }
@@ -153,8 +153,8 @@
 .portal-icon::after {
     content: '';
     position: absolute;
-    inset: 2px;
-    background: #fff; /* Domin ya yi dace da fari na Header */
+    inset: 3px;
+    background: #000; /* Mun cire fari, mun dawo da baki anan */
     border-radius: 50%;
     z-index: 1;
 }
@@ -168,19 +168,10 @@
     position: relative;
     z-index: 2;
     color: #ffd700;
-    font-size: 18px;
-    filter: drop-shadow(0 0 5px rgba(184, 134, 11, 1));
+    font-size: 20px;
+    filter: drop-shadow(0 0 8px rgba(184, 134, 11, 1));
 }
 
-.brand-main-text {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 800;
-    font-size: 22px;
-    letter-spacing: -0.8px;
-    line-height: 1;
-}
-
-.brand-m { color: #1a365d; }
 .brand-d { 
     background: linear-gradient(135deg, #ffd700, #b8860b);
     -webkit-background-clip: text;
@@ -188,12 +179,29 @@
 }
 
 .brand-tagline {
-    font-size: 8px;
+    font-size: 8.5px;
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #64748b;
     font-weight: 700;
-    }
+}
+    /* MODERN HAMBURGER MENU */
+.modern-menu-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    padding: 10px;
+    background: #f1f5f9;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.modern-menu-btn:hover { background: #e2e8f0; }
+
+.line-1 { width: 24px; height: 2.5px; background: #1a365d; border-radius: 10px; }
+.line-2 { width: 16px; height: 2.5px; background: #1a365d; border-radius: 10px; align-self: flex-end; }
+         
     
 </style>
     
