@@ -202,59 +202,69 @@
 .line-1 { width: 24px; height: 2.5px; background: #1a365d; border-radius: 10px; }
 .line-2 { width: 16px; height: 2.5px; background: #1a365d; border-radius: 10px; align-self: flex-end; }
          
-  /* THE MAGIC CARPET ANIMATION */
-.carpet-container {
-    perspective: 1000px;
-    margin: 20px 0;
-    display: flex;
-    justify-content: center;
-}
-
+  /* THE ELITE GOLDEN CARPET DESIGN */
 .magic-carpet {
     background: #000;
-    color: #ffd700; /* Kalar zinariya daga logo */
-    padding: 15px 30px;
-    border-radius: 10px;
+    color: #ffd700;
+    padding: 20px 40px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 800;
     font-size: 1.2rem;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 0 25px rgba(184, 134, 11, 0.4);
     
-    /* Animation na farko */
+    /* SHAPE MAI BURGEWA: Kusurwoyi daban-daban */
+    border-radius: 40px 5px 40px 5px; 
+    border: 1px solid rgba(255, 215, 0, 0.3);
+
+    /* ANIMATION NA JUYAWA DA HASKE */
     transform-origin: top;
     transform: rotateX(-90deg);
     opacity: 0;
-    animation: unroll-cycle 20s infinite ease-in-out;
+    animation: unroll-cycle 20s infinite ease-in-out, gold-shimmer 2s infinite alternate;
+}
+
+/* TASIRIN HASKEN ZINARI (GOLD BLINKING) */
+@keyframes gold-shimmer {
+    0% { 
+        text-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700;
+        filter: brightness(1);
+    }
+    100% { 
+        text-shadow: 0 0 15px #ffd700, 0 0 25px #ff8c00, 0 0 35px #ffd700;
+        filter: brightness(1.3);
+        transform: scale(1.02);
+    }
 }
 
 @keyframes unroll-cycle {
-    0%, 5% { transform: rotateX(-90deg); opacity: 0; }
-    10%, 25% { transform: rotateX(0deg); opacity: 1; } /* Bayyana */
-    30%, 35% { transform: rotateX(90deg); opacity: 0; } /* Bacewa */
+    0%, 5% { transform: rotateX(-90deg) scale(0.8); opacity: 0; }
+    10%, 25% { transform: rotateX(0deg) scale(1); opacity: 1; }
+    30%, 35% { transform: rotateX(90deg) scale(0.8); opacity: 0; }
     100% { transform: rotateX(90deg); opacity: 0; }
 }
 
-/* Rarraba Lokaci Domin Sakonni Su Bi Juna */
-.msg-1 { animation-delay: 0s; }
-.msg-2 { animation-delay: 4s; }
-.msg-3 { animation-delay: 8s; }
-.msg-4 { animation-delay: 12s; }
-.msg-5 { animation-delay: 16s; }
-
 .carpet-wrapper {
     position: relative;
-    height: 80px;
+    height: 120px;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    perspective: 1200px;
+    margin-bottom: 10px;
 }
 
 .carpet-text {
     position: absolute;
     width: 90%;
-          }
+}
+
+.msg-1 { animation-delay: 0s; }
+.msg-2 { animation-delay: 4s; }
+.msg-3 { animation-delay: 8s; }
+.msg-4 { animation-delay: 12s; }
+.msg-5 { animation-delay: 16s; }
         
 </style>
     
@@ -289,20 +299,14 @@
     </nav>
 
     <header class="pt-4 pb-8 text-center"> 
-    <div class="carpet-wrapper" style="position: relative; height: 100px; width: 100%; display: flex; justify-content: center; align-items: center;">
-        
+    <div class="carpet-wrapper">
         <div class="magic-carpet msg-1 carpet-text">Barka Da Zuwa Shafin Mafita Dubu</div>
-        
         <div class="magic-carpet msg-2 carpet-text">Gidan Samun Biyan Bukatu</div>
-        
         <div class="magic-carpet msg-3 carpet-text">Kasuwanci & Koyon Sana'o'i</div>
-        
         <div class="magic-carpet msg-4 carpet-text">Neman Ilmi Da Bincike</div>
-        
         <div class="magic-carpet msg-5 carpet-text">Da Warware Dukan Matsalolin Rayuwa</div>
-        
     </div>
-          </div>
+    </header>
         
         <div class="relative w-full px-2 mt-4"> <div class="relative w-full h-[450px] overflow-hidden rounded-[2rem] shadow-lg border-2 border-white/30">
         <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg" 
