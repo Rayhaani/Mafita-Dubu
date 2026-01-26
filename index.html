@@ -202,60 +202,63 @@
 .line-1 { width: 24px; height: 2.5px; background: #1a365d; border-radius: 10px; }
 .line-2 { width: 16px; height: 2.5px; background: #1a365d; border-radius: 10px; align-self: flex-end; }
          
-  /* ELITE HORIZONTAL SCROLL DESIGN */
+/* ELITE DIAGONAL SCROLL DESIGN */
 .carpet-wrapper {
     perspective: 2000px;
-    height: 140px;
+    height: 150px;
     width: 100%;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .magic-carpet {
     background: #000;
     color: #ffd700;
-    padding: 22px 45px;
+    padding: 25px 45px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 800;
     font-size: 1.25rem;
     text-align: center;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    box-shadow: 0 15px 45px rgba(0,0,0,0.7);
     
-    /* ELITE SHAPE: Double Gold Edges (Ba Local Ba) */
-    border-radius: 12px;
-    border-left: 10px double #b8860b;
-    border-right: 10px double #b8860b;
+    /* SHAPE MAI TATTARA: Bottom-Left da Top-Right Curves */
+    border-radius: 0px 80px 0px 80px; 
+    border: 2px solid #b8860b;
+    border-left: 10px solid #b8860b;
+    border-right: 10px solid #b8860b;
     
     position: absolute;
     width: 85%;
     opacity: 0;
-    transform-origin: right; /* DAGA DAMA ZUWA HAGU */
-    transform: scaleX(0); 
-    animation: side-unroll-and-blink 5s ease-in-out forwards;
+    
+    /* ANIMATION: Diagonal Fold (Daga kasan hagu zuwa saman dama) */
+    transform-origin: top right; 
+    transform: scale(0) rotate(-15deg);
+    animation: diagonal-fold-and-blink 6s ease-in-out forwards;
 }
 
-/* ANIMATION: Horizontal Unroll + Slow & Smooth Blink */
-@keyframes side-unroll-and-blink {
-    0% { transform: scaleX(0); opacity: 0; }
-    15% { transform: scaleX(1); opacity: 1; } 
+/* TASIRIN NADEWA DA BUDHEWA TA GEFE */
+@keyframes diagonal-fold-and-blink {
+    0% { transform: scale(0) rotate(-15deg); opacity: 0; }
+    15% { transform: scale(1) rotate(0deg); opacity: 1; } /* Budewa */
     
-    /* Blinking a hankali (Slow and Smooth) */
-    25%, 45%, 65%, 85% { opacity: 1; }
-    35%, 55%, 75% { opacity: 0.2; } 
+    /* Blinking a hankali yadda kake so */
+    25%, 45%, 65%, 85% { opacity: 1; color: #ffd700; }
+    35%, 55%, 75% { opacity: 0.2; color: #b8860b; } 
     
-    92% { transform: scaleX(1); opacity: 1; }
-    100% { transform: scaleX(0); opacity: 0; } 
+    92% { transform: scale(1) rotate(0deg); opacity: 1; }
+    100% { transform: scale(0) rotate(-15deg); opacity: 0; } /* Nadhewa zuwa kusurwa */
 }
 
-/* Rarraba lokacin fitowar sakonni */
+/* Rarraba lokaci don sakonni su bi juna */
 .msg-1 { animation-delay: 0s; }
-.msg-2 { animation-delay: 5s; }
-.msg-3 { animation-delay: 10s; }
-.msg-4 { animation-delay: 15s; }
-.msg-5 { animation-delay: 20s; }
+.msg-2 { animation-delay: 6s; }
+.msg-3 { animation-delay: 12s; }
+.msg-4 { animation-delay: 18s; }
+.msg-5 { animation-delay: 24s; }
     
 </style>
     
