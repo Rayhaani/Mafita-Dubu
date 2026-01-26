@@ -88,7 +88,44 @@
         .query-highlight { color: #D32F2F; font-style: italic; }
     </style>
 </head>
-<body>
+<script>
+    // Wannan shine yake sa shafin bincike ya bude da kansa
+    function handleSearch(textbox) {
+        let text = textbox.value;
+
+        // Idan ka rubuta harafi 3 ko fiye
+        if (text.length >= 3) {
+            let overlay = document.getElementById('search-overlay');
+            let display = document.getElementById('query-val');
+
+            // Saka kalmar da ka rubuta a tsakiyar allon
+            if (display) {
+                display.innerText = '"' + text + '"';
+            }
+
+            // Bude shafin
+            overlay.style.display = 'flex';
+            
+            // Kunna animation din
+            setTimeout(() => {
+                overlay.classList.add('active');
+            }, 50);
+        }
+    }
+
+    // Wannan kuma na rufe shafin ne idan ka gama
+    function closeSearch() {
+        let overlay = document.getElementById('search-overlay');
+        overlay.classList.remove('active');
+        
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            document.getElementById('market-search').value = '';
+        }, 500);
+    }
+</script>
+    
+    <body>
 
     <nav class="sticky top-0 z-50 bg-white px-6 py-3 flex flex-col items-center border-b border-gray-100 shadow-sm">
     <h1 class="text-[8px] font-black tracking-[0.4em] text-gray-400 uppercase mb-1">African Elite Ecosystem</h1>
