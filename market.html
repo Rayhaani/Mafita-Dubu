@@ -17,18 +17,24 @@
             overflow-x: hidden; 
         }
 
-        /* 1. GLOBAL MARKET TITLE (BLINKING & MULTICOLOR) */
-        .market-title {
-            font-weight: 900;
-            font-size: 1.4rem;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, #E91E63, #FF9800, #4CAF50, #2196F3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: blink 1.5s infinite;
-        }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        /* SABUWAR KALAR GLITTER (HOLOGRAPHIC) */
+.holographic-text {
+    background: linear-gradient(
+        to right, 
+        #ff00cc, #3333ff, #00ffcc, #ffcc00, #ff00cc
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: move-glitter 3s linear infinite;
+    font-weight: 900;
+    text-transform: uppercase;
+}
 
+@keyframes move-glitter {
+    to { background-position: 200% center; }
+}
+        
         /* 2. 3D WORLD SPHERE */
         .world-box {
             width: 130px; height: 130px; margin: 20px auto;
@@ -84,17 +90,21 @@
 </head>
 <body>
 
-    <nav class="p-5 flex justify-between items-center bg-white shadow-sm border-b border-[#E0D7C6]">
-        <i class="fa-solid fa-arrow-left text-[#5D4037]"></i>
-        <h1 class="market-title italic">GLOBAL MARKET</h1>
-        <i class="fa-solid fa-map-location-dot text-blue-600"></i>
+    <nav class="sticky top-0 z-50 bg-white px-6 py-3 flex flex-col items-center border-b border-gray-100 shadow-sm">
+    <h1 class="text-[8px] font-black tracking-[0.4em] text-gray-400 uppercase mb-1">African Elite Ecosystem</h1>
+    <h2 class="holographic-text text-xl tracking-tight">GLOBAL MARKET</h2>
     </nav>
-
-    <div class="p-6">
-        <div class="search-trigger" onclick="openSearch()">
-            <i class="fa-solid fa-magnifying-glass text-gray-400 mr-2"></i>
-            <span class="text-gray-400 font-bold text-sm italic">Search for vendors...</span>
-        </div>
+    
+    <div class="px-6 py-4">
+    <div class="bg-white border border-gray-200 rounded-2xl flex items-center px-4 py-3 shadow-sm">
+        <i class="fa-solid fa-magnifying-glass text-blue-500 mr-3"></i>
+        <input type="text" 
+               id="market-search" 
+               placeholder="Me kake nema a kasuwa?" 
+               class="bg-transparent border-none outline-none w-full text-sm font-bold text-gray-600"
+               oninput="handleSearch(this)">
+    </div>
+    </div>
 
         <div class="grid grid-cols-2 gap-4 mt-8">
             <div class="bg-white p-3 rounded-2xl shadow-sm border border-[#E0D7C6]">
