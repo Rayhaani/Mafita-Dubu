@@ -202,7 +202,60 @@
 .line-1 { width: 24px; height: 2.5px; background: #1a365d; border-radius: 10px; }
 .line-2 { width: 16px; height: 2.5px; background: #1a365d; border-radius: 10px; align-self: flex-end; }
          
+  /* THE MAGIC CARPET ANIMATION */
+.carpet-container {
+    perspective: 1000px;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.magic-carpet {
+    background: #000;
+    color: #ffd700; /* Kalar zinariya daga logo */
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     
+    /* Animation na farko */
+    transform-origin: top;
+    transform: rotateX(-90deg);
+    opacity: 0;
+    animation: unroll-cycle 20s infinite ease-in-out;
+}
+
+@keyframes unroll-cycle {
+    0%, 5% { transform: rotateX(-90deg); opacity: 0; }
+    10%, 25% { transform: rotateX(0deg); opacity: 1; } /* Bayyana */
+    30%, 35% { transform: rotateX(90deg); opacity: 0; } /* Bacewa */
+    100% { transform: rotateX(90deg); opacity: 0; }
+}
+
+/* Rarraba Lokaci Domin Sakonni Su Bi Juna */
+.msg-1 { animation-delay: 0s; }
+.msg-2 { animation-delay: 4s; }
+.msg-3 { animation-delay: 8s; }
+.msg-4 { animation-delay: 12s; }
+.msg-5 { animation-delay: 16s; }
+
+.carpet-wrapper {
+    position: relative;
+    height: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carpet-text {
+    position: absolute;
+    width: 90%;
+          }
+        
 </style>
     
 </head>
@@ -234,13 +287,22 @@
 
         </div>
     </nav>
-    
 
-    <header class="px-6 py-10 text-center">
-        <div class="inline-block px-4 py-1.5 mb-4 text-xs font-semibold tracking-wider text-green-700 uppercase bg-green-100 rounded-full">
-            Maganin kowace matsala
-        </div>
-        <h2 class="text-4xl font-extrabold text-blue-900 mb-4 leading-tight">Meye Mafitarka <br>Ta Yau?</h2>
+    <header class="pt-4 pb-8 text-center"> 
+    <div class="carpet-wrapper" style="position: relative; height: 100px; width: 100%; display: flex; justify-content: center; align-items: center;">
+        
+        <div class="magic-carpet msg-1 carpet-text">Barka Da Zuwa Shafin Mafita Dubu</div>
+        
+        <div class="magic-carpet msg-2 carpet-text">Gidan Samun Biyan Bukatu</div>
+        
+        <div class="magic-carpet msg-3 carpet-text">Kasuwanci & Koyon Sana'o'i</div>
+        
+        <div class="magic-carpet msg-4 carpet-text">Neman Ilmi Da Bincike</div>
+        
+        <div class="magic-carpet msg-5 carpet-text">Da Warware Dukan Matsalolin Rayuwa</div>
+        
+    </div>
+          </div>
         
         <div class="relative w-full px-2 mt-4"> <div class="relative w-full h-[450px] overflow-hidden rounded-[2rem] shadow-lg border-2 border-white/30">
         <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg" 
