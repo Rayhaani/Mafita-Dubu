@@ -202,7 +202,7 @@
 .line-1 { width: 24px; height: 2.5px; background: #1a365d; border-radius: 10px; }
 .line-2 { width: 16px; height: 2.5px; background: #1a365d; border-radius: 10px; align-self: flex-end; }
          
-/* ELITE DIAGONAL SCROLL DESIGN */
+/* ELITE DIAGONAL & REPEATING CARPET */
 .carpet-wrapper {
     perspective: 2000px;
     height: 150px;
@@ -224,7 +224,7 @@
     text-align: center;
     box-shadow: 0 15px 45px rgba(0,0,0,0.7);
     
-    /* SHAPE MAI TATTARA: Bottom-Left da Top-Right Curves */
+    /* SHAPE: Ornate Tattara (Bottom-Left & Top-Right) */
     border-radius: 0px 80px 0px 80px; 
     border: 2px solid #b8860b;
     border-left: 10px solid #b8860b;
@@ -234,31 +234,31 @@
     width: 85%;
     opacity: 0;
     
-    /* ANIMATION: Diagonal Fold (Daga kasan hagu zuwa saman dama) */
+    /* ANIMATION: Diagonal Fold tare da INFINITE domin ya rinka maimaitawa */
     transform-origin: top right; 
     transform: scale(0) rotate(-15deg);
-    animation: diagonal-fold-and-blink 6s ease-in-out forwards;
+    animation: diagonal-fold-and-blink 6s ease-in-out infinite;
 }
 
-/* TASIRIN NADEWA DA BUDHEWA TA GEFE */
 @keyframes diagonal-fold-and-blink {
     0% { transform: scale(0) rotate(-15deg); opacity: 0; }
-    15% { transform: scale(1) rotate(0deg); opacity: 1; } /* Budewa */
+    15% { transform: scale(1) rotate(0deg); opacity: 1; } 
     
-    /* Blinking a hankali yadda kake so */
+    /* Blinking a sanyaye (Slow Blink) */
     25%, 45%, 65%, 85% { opacity: 1; color: #ffd700; }
     35%, 55%, 75% { opacity: 0.2; color: #b8860b; } 
     
     92% { transform: scale(1) rotate(0deg); opacity: 1; }
-    100% { transform: scale(0) rotate(-15deg); opacity: 0; } /* Nadhewa zuwa kusurwa */
+    100% { transform: scale(0) rotate(-15deg); opacity: 0; } 
 }
 
-/* Rarraba lokaci don sakonni su bi juna */
+/* Lokacin fitowar kowane sako */
 .msg-1 { animation-delay: 0s; }
 .msg-2 { animation-delay: 6s; }
 .msg-3 { animation-delay: 12s; }
 .msg-4 { animation-delay: 18s; }
 .msg-5 { animation-delay: 24s; }
+    
     
 </style>
     
