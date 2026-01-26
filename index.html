@@ -202,52 +202,9 @@
 .line-1 { width: 24px; height: 2.5px; background: #1a365d; border-radius: 10px; }
 .line-2 { width: 16px; height: 2.5px; background: #1a365d; border-radius: 10px; align-self: flex-end; }
          
-  /* THE ELITE FOLDING & BLINKING CARPET */
-.magic-carpet {
-    background: #000;
-    color: #ffd700;
-    padding: 22px 45px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 800;
-    font-size: 1.25rem;
-    text-align: center;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    
-    /* SHAPE: Fancy Scroll */
-    border-radius: 60px 10px 60px 10px;
-    border-left: 5px solid #b8860b;
-    border-right: 5px solid #b8860b;
-
-    /* ANIMATION: Folding & Integrated Blinking */
-    position: absolute;
-    width: 90%;
-    opacity: 0;
-    transform-origin: center;
-    transform: scaleY(0);
-    animation: fold-and-blink 4s ease-in-out forwards;
-}
-
-@keyframes fold-and-blink {
-    0% { transform: scaleY(0); opacity: 0; }
-    15% { transform: scaleY(1); opacity: 1; } /* Budewa tare da sakon */
-    
-    /* Rubutun yana blinking yayin da carpet din ke a bude */
-    25%, 35%, 45%, 55%, 65%, 75% { color: #ffd700; }
-    30%, 40%, 50%, 60%, 70% { color: transparent; } 
-    
-    90% { transform: scaleY(1); opacity: 1; }
-    100% { transform: scaleY(0); opacity: 0; } /* Nadhewa gaba daya */
-}
-
-/* Rarraba lokacin fitowar kowane sako */
-.msg-1 { animation-delay: 0s; }
-.msg-2 { animation-delay: 4s; }
-.msg-3 { animation-delay: 8s; }
-.msg-4 { animation-delay: 12s; }
-.msg-5 { animation-delay: 16s; }
-
+  /* ELITE HORIZONTAL SCROLL DESIGN */
 .carpet-wrapper {
-    perspective: 1200px;
+    perspective: 2000px;
     height: 140px;
     width: 100%;
     position: relative;
@@ -256,6 +213,49 @@
     align-items: center;
     margin-bottom: 20px;
 }
+
+.magic-carpet {
+    background: #000;
+    color: #ffd700;
+    padding: 22px 45px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    
+    /* ELITE SHAPE: Double Gold Edges (Ba Local Ba) */
+    border-radius: 12px;
+    border-left: 10px double #b8860b;
+    border-right: 10px double #b8860b;
+    
+    position: absolute;
+    width: 85%;
+    opacity: 0;
+    transform-origin: right; /* DAGA DAMA ZUWA HAGU */
+    transform: scaleX(0); 
+    animation: side-unroll-and-blink 5s ease-in-out forwards;
+}
+
+/* ANIMATION: Horizontal Unroll + Slow & Smooth Blink */
+@keyframes side-unroll-and-blink {
+    0% { transform: scaleX(0); opacity: 0; }
+    15% { transform: scaleX(1); opacity: 1; } 
+    
+    /* Blinking a hankali (Slow and Smooth) */
+    25%, 45%, 65%, 85% { opacity: 1; }
+    35%, 55%, 75% { opacity: 0.2; } 
+    
+    92% { transform: scaleX(1); opacity: 1; }
+    100% { transform: scaleX(0); opacity: 0; } 
+}
+
+/* Rarraba lokacin fitowar sakonni */
+.msg-1 { animation-delay: 0s; }
+.msg-2 { animation-delay: 5s; }
+.msg-3 { animation-delay: 10s; }
+.msg-4 { animation-delay: 15s; }
+.msg-5 { animation-delay: 20s; }
     
 </style>
     
@@ -289,7 +289,7 @@
         </div>
     </nav>
 
-    <header class="pt-4 pb-2 text-center"> 
+    <div class="pt-6 pb-4 text-center"> 
     <div class="carpet-wrapper">
         <div class="magic-carpet msg-1">Barka Da Zuwa Shafin Mafita Dubu</div>
         <div class="magic-carpet msg-2">Gidan Samun Biyan Bukatu</div>
@@ -297,7 +297,17 @@
         <div class="magic-carpet msg-4">Neman Ilmi Da Bincike</div>
         <div class="magic-carpet msg-5">Da Warware Dukan Matsalolin Rayuwa</div>
     </div>
-    </header>
+</div>
+
+<div class="relative w-full px-4 mb-10"> 
+    <div class="relative w-full h-[480px] overflow-hidden rounded-[2.5rem] shadow-2xl border-4 border-white">
+        <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg" 
+             alt="Mafita" 
+             class="w-full h-full object-cover object-top">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+    </div>
+</div>
+    
 
     <section class="px-6 py-4 -mt-10 mb-6 floating-box delay-1">
         <div class="glass-card p-6 rounded-[2rem] border border-white/20 shadow-2xl">
