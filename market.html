@@ -1,116 +1,55 @@
-<!DOCTYPE html>
-<html lang="ha">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Market | Mafita Dubu</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
-    
-    /* 1. HOLOGRAPHIC TEXT STYLE (Kamar hoton da ka turo) */
-.holographic-text {
-    background: linear-gradient(
-        45deg, 
-        #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%
-    );
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shine 3s linear infinite;
-    font-weight: 800;
-}
+<style>
+    /* 1. HOLOGRAPHIC GLITTER EFFECT */
+    .holographic-text {
+        background: linear-gradient(
+            45deg, 
+            #ff00ff, #00ffff, #ff00ff, #ffff00, #00ff00
+        );
+        background-size: 400% 400%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: glitter-flow 5s ease infinite;
+        font-weight: 900;
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    }
 
-@keyframes shine {
-    to { background-position: 200% center; }
-}
+    @keyframes glitter-flow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
 
-/* 2. REFINED SEARCH BAR STYLE */
-.search-container {
-    background: white;
-    border: 1.5px solid #eee;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.03);
-    transition: all 0.3s ease;
-}
-.search-container:focus-within {
-    border-color: #1a365d;
-    box-shadow: 0 10px 30px rgba(26, 54, 93, 0.1);
-}
-    
-    <style>
-        /* DARK MILK BACKGROUND */
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #F5F1E9; /* Wannan ita ce kalar Dark Milk */
-            margin: 0; 
-            overflow-x: hidden; 
-        }
+    /* 2. REFINED SEARCH BAR */
+    .search-wrapper {
+        background: white;
+        border-radius: 20px;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        margin: 15px 24px;
+        border: 1px solid #eee;
+    }
+</style>
 
-        /* 1. GLOBAL MARKET TITLE (BLINKING & MULTICOLOR) */
-        .market-title {
-            font-weight: 900;
-            font-size: 1.4rem;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, #E91E63, #FF9800, #4CAF50, #2196F3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: blink 1.5s infinite;
-        }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+<div class="sticky top-0 z-50 bg-[#F5F1E9]/80 backdrop-blur-lg">
+    <nav class="bg-white px-6 py-4 flex justify-center items-center border-b border-gray-100">
+        <div class="text-center">
+            <h1 class="text-[8px] font-black tracking-[0.4em] text-gray-400 uppercase mb-1">African Elite Ecosystem</h1>
+            <h2 class="holographic-text text-2xl tracking-tighter">GLOBAL MARKET</h2>
+        </div>
+    </nav>
 
-        /* 2. 3D WORLD SPHERE */
-        .world-box {
-            width: 130px; height: 130px; margin: 20px auto;
-            position: relative;
-        }
-        .sphere {
-            width: 100%; height: 100%;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/2/22/Earth_Western_Hemisphere_transparent_background.png');
-            background-size: cover;
-            border-radius: 50%;
-            box-shadow: inset -10px -10px 30px rgba(0,0,0,0.2), 0 10px 30px rgba(0,0,0,0.1);
-            animation: rotateWorld 12s linear infinite;
-        }
-        @keyframes rotateWorld { from { background-position: 0 0; } to { background-position: 260px 0; } }
+    <div class="search-wrapper">
+        <i class="fa-solid fa-magnifying-glass text-gray-300 mr-3"></i>
+        <input type="text" 
+               id="market-search"
+               placeholder="Me kake nema a kasuwa?" 
+               class="bg-transparent border-none outline-none w-full text-sm font-bold text-gray-600"
+               oninput="checkSearch(this)">
+    </div>
+</div>
 
-        /* 3. PULSE RINGS (ALAMAR JIRAN AMSA) */
-        .ring {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 100%; height: 100%; border: 2px solid #8B4513;
-            border-radius: 50%; opacity: 0; animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0% { scale: 0.8; opacity: 0.5; } 100% { scale: 1.8; opacity: 0; } }
-
-        /* 4. PASSIONATE SEARCH BAR (MINIMALIST) */
-        .search-trigger {
-            width: 260px; margin: 20px auto; padding: 10px 20px;
-            background: white; border-radius: 30px; border: 1px solid #D7CCC8;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-
-        /* 5. PEARL BUTTONS OVERLAY */
-        #search-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(245, 241, 233, 0.98); /* Milk color overlay */
-            backdrop-filter: blur(10px); z-index: 2000;
-            flex-direction: column; align-items: center; justify-content: center;
-        }
-        .pearl-btn {
-            width: 250px; padding: 18px; margin: 10px; border-radius: 20px;
-            background: white; color: #5D4037; font-weight: 800;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05), inset 0 0 10px #F5F1E9;
-            border: 1px solid #D7CCC8; transition: transform 0.4s;
-            text-align: center;
-        }
-        #btn-global { transform: translateX(-500px); }
-        #btn-near { transform: translateX(500px); }
-        .active #btn-global, .active #btn-near { transform: translateX(0); }
-
-        .search-text { font-size: 1.2rem; font-weight: 800; color: #3E2723; text-align: center; margin: 20px; }
-        .query-highlight { color: #D32F2F; font-style: italic; }
-    </style>
-</head>
 <body>
 
 <div class="sticky top-0 z-50 bg-[#F5F1E9]">
