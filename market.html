@@ -154,5 +154,48 @@
             }, 500);
         }
     </script>
+    <script>
+    // WANNAN SHINE AIKIN DA ZAI BUDE SHAFI
+    function handleSearch(textbox) {
+        // 1. Karanta abinda mutum ya rubuta
+        let abindaKaRubuta = textbox.value;
+
+        // 2. Idan ka rubuta harafi 3 ko fiye (misali: "Aur")
+        if (abindaKaRubuta.length >= 3) {
+            
+            // 3. Nemo shafin nan mai hoton duniya (Overlay)
+            let shafinBincike = document.getElementById('search-overlay');
+            
+            // 4. Nemo wurin da za a nuna rubutunka a tsakiya
+            let wurinNunaRubutu = document.getElementById('query-val');
+
+            // 5. Saka rubutunka a wurin don kowa ya gani
+            if (wurinNunaRubutu) {
+                wurinNunaRubutu.innerText = '"' + abindaKaRubuta + '"';
+            }
+
+            // 6. Bude shafin nan take
+            shafinBincike.style.display = 'flex';
+            
+            // 7. Saka kyan gani (Animation)
+            setTimeout(() => {
+                shafinBincike.classList.add('active');
+            }, 50);
+        }
+    }
+
+    // WANNAN SHINE AIKIN DA ZAI RUFE SHAFIN
+    function closeSearch() {
+        let shafinBincike = document.getElementById('search-overlay');
+        shafinBincike.classList.remove('active');
+        
+        setTimeout(() => {
+            shafinBincike.style.display = 'none';
+            // Wanke wurin rubutu
+            document.getElementById('market-search').value = '';
+        }, 500);
+    }
+    </script>
+    
 </body>
 </html>
