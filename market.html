@@ -101,12 +101,12 @@
     </div>
 </div>
 
-        <div class="grid grid-cols-2 gap-4 mt-8">
-            <div class="bg-white p-3 rounded-2xl shadow-sm border border-[#E0D7C6]">
-                <img src="https://i.postimg.cc/85zTqXzM/iphone.jpg" class="rounded-xl h-32 w-full object-cover">
-                <h3 class="font-bold text-xs mt-2">iPhone 13 Pro</h3>
-                <p class="text-green-600 font-black text-sm">₦450k</p>
-            </div>
+        <div class="bg-white p-3 rounded-2xl shadow-sm border border-[#E0D7C6]">
+    <img src="https://images.unsplash.com/photo-1594132049104-1f6b1e62834b?q=80&w=500&auto=format&fit=crop" class="rounded-xl h-32 w-full object-cover">
+    <h3 class="font-bold text-xs mt-2">Premium Wedding Lace</h3>
+    <p class="text-green-600 font-black text-sm">₦85,000</p>
+        </div>
+    
             <div class="bg-white p-3 rounded-2xl shadow-sm border border-[#E0D7C6]">
                 <div class="h-32 bg-gray-100 rounded-xl flex items-center justify-center text-gray-300">Varieties</div>
                 <h3 class="font-bold text-xs mt-2">Kayan Kasuwa</h3>
@@ -136,20 +136,14 @@
 
         <p class="mt-10 text-gray-400 font-bold text-xs cursor-pointer" onclick="closeSearch()">Soke Bincike (Cancel)</p>
     </div>
-
-    <script>
-    let bincikeTimer; // Agogon da zai jira ka gama rubutu
+<script>
+    let bincikeTimer;
 
     function handleSearch(textbox) {
         let kalma = textbox.value;
-        
-        // Duk lokacin da ka danna harafi, zamu sake saita agogon
         clearTimeout(bincikeTimer);
 
-        // Zai jira na sakan 1 (2500ms) bayan ka daina rubutu kafin ya bude
         bincikeTimer = setTimeout(() => {
-            
-            // Idan kalmar ta kai harafi 3 kuma ka daina taba keyboard
             if (kalma.length >= 3) {
                 const overlay = document.getElementById('search-overlay');
                 const display = document.getElementById('query-val');
@@ -158,13 +152,12 @@
                     display.innerText = '"' + kalma + '"';
                 }
 
-                // Bude shafin overlay
                 overlay.style.display = 'flex';
                 setTimeout(() => {
                     overlay.classList.add('active');
                 }, 50);
             }
-        }, 1000); 
+        }, 2500); 
     }
 
     function closeSearch() {
@@ -172,13 +165,10 @@
         overlay.classList.remove('active');
         setTimeout(() => {
             overlay.style.display = 'none';
-            // Wanke search bar din
             document.getElementById('market-search').value = '';
         }, 500);
     }
-    </script>
-    
-        
+</script>      
     
 </body>
 </html>
