@@ -6,28 +6,36 @@
     <title>Global Market | Mafita Dubu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
         /* DARK MILK BACKGROUND */
         body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #F5F1E9; /* Wannan ita ce kalar Dark Milk */
-            margin: 0; 
-            overflow-x: hidden; 
-        }
+    font-family: 'Inter', sans-serif; 
+    background-color: #FDFBF7; /* Milk mai haske sosai */
+    color: #2D2424; /* Baƙin dake kusa da Brown */
+}
 
-        /* 1. GLOBAL MARKET TITLE (BLINKING & MULTICOLOR) */
-        /* GOGE WANNAN (Tsohon Header CSS) */
 .market-title {
+    font-family: 'Playfair Display', serif;
     font-weight: 900;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     text-transform: uppercase;
-    background: linear-gradient(90deg, #E91E63, #FF9800, #4CAF50, #2196F3);
+    /* Kalar 'Deep Gold' (Zinariya) domin kayan aure */
+    background: linear-gradient(135deg, #B8860B, #DAA520, #8B6508);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: blink 1.5s infinite;
+    letter-spacing: 2px;
 }
+
+.african-elite {
+    font-family: 'Inter', sans-serif;
+    color: #A68A64; /* Light Bronze */
+    font-size: 8px;
+    letter-spacing: 0.4em;
+    font-weight: 800;
+}
+        
         
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
