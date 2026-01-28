@@ -130,7 +130,27 @@
 }
 .animate-slide-up { animation: slideUp 0.4s ease-out; }
                                           
-                                                                       
+     /* AI SCANNING LINE ANIMATION */
+@keyframes scan {
+    0% { top: 0%; opacity: 0; }
+    50% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+.animate-scan { animation: scan 3s linear infinite; }
+
+/* SLOW SPIN FOR AI MICROCHIP */
+@keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.animate-spin-slow { animation: spin-slow 10s linear infinite; }
+
+/* REAL GLASSMORPHISM */
+.backdrop-blur-2xl {
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+}
+        
     </style>
 </head>
 <body>
@@ -230,30 +250,66 @@
         }, 500);
     }
 function openAICamera() {
+    // Wannan zai gina sabon futuristic dashboard din
     const menuHTML = `
-        <div id="ai-menu" class="fixed inset-0 z-[3000] flex items-end justify-center bg-black/60 backdrop-blur-xl">
-            <div class="bg-gradient-to-b from-[#2D2424] to-black w-full rounded-t-[40px] p-10 animate-slide-up border-t border-white/10 shadow-2xl">
-                <div class="w-12 h-1.5 bg-gray-600 rounded-full mx-auto mb-10"></div>
-                <h3 class="text-center font-black text-[#FFD700] mb-10 tracking-[0.3em] text-[10px] uppercase">AI Vision Neural Link</h3>
-                <div class="grid grid-cols-2 gap-8 mb-12">
-                    <button class="flex flex-col items-center group">
-                        <div class="w-20 h-20 bg-white/5 border border-white/10 rounded-3xl flex items-center justify-center text-[#FFD700] shadow-[0_0_20px_rgba(255,215,0,0.1)] group-hover:scale-110 transition-all">
-                            <i class="fa-solid fa-camera-retro text-3xl"></i>
+        <div id="ai-vision-overlay" class="fixed inset-0 z-[3000] flex items-center justify-center bg-black/70 backdrop-blur-2xl transition-opacity duration-500">
+            <div id="ai-card" class="w-[90%] max-w-sm bg-[#1A1A1A] rounded-[45px] p-8 border border-[#FFD700]/20 shadow-2xl transform scale-90 opacity-0 transition-all duration-500 relative overflow-hidden">
+                
+                <div class="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#FFD700] to-transparent shadow-[0_0_20px_#FFD700] animate-scan"></div>
+
+                <div class="text-center mb-10">
+                    <div class="w-20 h-20 border-2 border-dashed border-[#FFD700]/40 rounded-full mx-auto flex items-center justify-center mb-4 animate-spin-slow">
+                        <i class="fa-solid fa-microchip text-[#FFD700] text-3xl shadow-[0_0_15px_#FFD700]"></i>
+                    </div>
+                    <h3 class="text-[#FFD700] font-black tracking-[0.4em] text-[10px] uppercase opacity-80">AI Neural Search Active</h3>
+                </div>
+
+                <div class="grid grid-cols-1 gap-5">
+                    <button class="flex items-center p-5 bg-white/5 border border-white/10 rounded-[25px] hover:bg-[#FFD700]/10 transition-all group">
+                        <div class="w-12 h-12 bg-[#FFD700] rounded-2xl flex items-center justify-center text-black shadow-[0_0_20px_rgba(255,215,0,0.5)] group-active:scale-90 transition-transform">
+                            <i class="fa-solid fa-camera-viewfinder text-xl"></i>
                         </div>
-                        <p class="text-[10px] font-black text-white mt-4 tracking-widest">LIVE CAMERA</p>
+                        <div class="ml-5 text-left">
+                            <p class="text-white text-xs font-black tracking-wider">LIVE AI SCAN</p>
+                            <p class="text-[8px] text-gray-500 uppercase">Instant Object Recognition</p>
+                        </div>
                     </button>
-                    <button class="flex flex-col items-center group">
-                        <div class="w-20 h-20 bg-white/5 border border-white/10 rounded-3xl flex items-center justify-center text-white group-hover:scale-110 transition-all">
-                            <i class="fa-solid fa-images text-3xl"></i>
+
+                    <button class="flex items-center p-5 bg-white/5 border border-white/10 rounded-[25px] hover:bg-white/10 transition-all group">
+                        <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-white group-active:scale-90 transition-transform">
+                            <i class="fa-solid fa-images text-xl"></i>
                         </div>
-                        <p class="text-[10px] font-black text-white mt-4 tracking-widest">GALLERY</p>
+                        <div class="ml-5 text-left">
+                            <p class="text-white text-xs font-black tracking-wider">SMART GALLERY</p>
+                            <p class="text-[8px] text-gray-400 uppercase">Search via Saved Media</p>
+                        </div>
                     </button>
                 </div>
-                <button onclick="document.getElementById('ai-menu').remove()" class="w-full py-4 font-black text-gray-500 text-xs tracking-widest uppercase">Terminate</button>
+
+                <button onclick="closeAIVision()" class="w-full mt-10 py-3 text-gray-600 text-[10px] font-black tracking-widest uppercase hover:text-red-500 transition-colors">Terminate Link</button>
             </div>
         </div>
     `;
+    
     document.body.insertAdjacentHTML('beforeend', menuHTML);
+    
+    // Animation don ya fito da salo
+    const overlay = document.getElementById('ai-vision-overlay');
+    const card = document.getElementById('ai-card');
+    setTimeout(() => {
+        card.classList.remove('scale-90', 'opacity-0');
+        card.classList.add('scale-100', 'opacity-100');
+    }, 10);
+}
+
+// Aikin rufe shafin
+function closeAIVision() {
+    const overlay = document.getElementById('ai-vision-overlay');
+    const card = document.getElementById('ai-card');
+    card.classList.add('scale-90', 'opacity-0');
+    setTimeout(() => {
+        overlay.remove();
+    }, 400);
 }
     
 </script>      
