@@ -240,46 +240,52 @@
     padding: 10px 15px;
 }
 
+/* ELITE PROFESSIONAL COMPACT BOX */
+.duet-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 10px 15px;
+}
+
 .industry-mini-box {
     background: white;
-    border-radius: 20px; /* Lankwasar iPhone */
+    border-radius: 24px; /* Shape din iPhone da kake so */
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    border: 1px solid #F0EBE3;
-    height: 200px; /* Matsakaicin girma */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    border: 1px solid #F0F0F0;
+    height: 185px; /* Mun rage tsayin gaba daya */
     position: relative;
-}
-
-.display-area {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-.item-slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-    display: flex;
-    flex-direction: column;
-}
-
-.item-slide.active { 
-    opacity: 1; 
-    z-index: 10; 
 }
 
 .item-slide img {
     width: 100%;
-    height: 130px; /* Girman hoton a cikin karamin box */
+    height: 125px; /* Hoton ya fi karfin komai */
     object-fit: cover;
 }
 
 .item-details {
-    padding: 6px;
-    text-align: center;
-    }
+    padding: 6px 8px;
+    text-align: left; /* Mun maida shi hagu don ya yi professional */
+    background: #fff;
+}
+
+.item-name {
+    font-size: 9px; /* Karami mai kyau */
+    font-weight: 800;
+    color: #3E2723;
+    display: block;
+    margin-bottom: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item-price {
+    font-size: 10px; /* Ya fito radau amma ba mai fadin gaske ba */
+    font-weight: 900;
+    color: #15803d; /* Koren kudi */
+          }
     
     </style>
 </head>
@@ -323,18 +329,11 @@
             <div class="item-slide active">
                 <img src="https://images.unsplash.com/photo-1584273103988-4158655073e5?w=300">
                 <div class="item-details">
-                    <h4 class="text-[9px] font-black">Atamfa</h4>
-                    <p class="text-green-600 font-bold text-[10px]">₦12,500</p>
+                    <span class="item-name">Atamfa High Wax</span>
+                    <span class="item-price">₦12,500</span>
                 </div>
             </div>
-            <div class="item-slide">
-                <img src="https://images.unsplash.com/photo-1610444583737-233777d61247?w=300">
-                <div class="item-details">
-                    <h4 class="text-[9px] font-black">Shadda</h4>
-                    <p class="text-green-600 font-bold text-[10px]">₦75,000</p>
-                </div>
             </div>
-        </div>
     </div>
 
     <div class="industry-mini-box">
@@ -342,20 +341,14 @@
             <div class="item-slide active">
                 <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300">
                 <div class="item-details">
-                    <h4 class="text-[9px] font-black">Nike Red</h4>
-                    <p class="text-green-600 font-bold text-[10px]">₦35,000</p>
+                    <span class="item-name">Nike Sports Red</span>
+                    <span class="item-price">₦35,000</span>
                 </div>
             </div>
-            <div class="item-slide">
-                <img src="https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=300">
-                <div class="item-details">
-                    <h4 class="text-[9px] font-black">Leather Boot</h4>
-                    <p class="text-green-600 font-bold text-[10px]">₦28,000</p>
-                </div>
             </div>
-        </div>
     </div>
         </div>
+    
     
 
     <div id="search-overlay">
