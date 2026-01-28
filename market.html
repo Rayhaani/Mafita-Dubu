@@ -232,42 +232,46 @@
     to { transform: rotate(360deg); }
       }
 
-.category-container {
+/* SABON SALON ELITE SLIDER */
+.industry-box {
     background: white;
-    border-radius: 24px;
-    padding: 20px;
-    margin: 15px 0;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-    border: 1px solid #E0D7C6;
+    border-radius: 28px;
+    padding: 15px;
+    margin: 20px 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+    border: 1.5px solid #F0EBE3;
 }
 
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+.horizontal-scroll {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 15px;
+    padding-bottom: 10px;
 }
 
-.item-card {
-    background: #F9F7F2;
-    border-radius: 18px;
-    padding: 8px;
-    transition: transform 0.3s ease;
+.horizontal-scroll::-webkit-scrollbar { display: none; } /* Boye scrollbar */
+
+.elite-card {
+    min-width: 85%; /* Don sauran su dan leko mutum ya san akwai wasu */
+    scroll-snap-align: center;
+    background: #fff;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid #F5F1E9;
 }
 
-.item-card img {
+.elite-card img {
     width: 100%;
-    height: 120px;
+    height: 250px;
     object-fit: cover;
-    border-radius: 14px;
-    margin-bottom: 8px;
 }
 
-.price-tag {
-    color: #15803d;
-    font-weight: 900;
-    font-size: 11px;
-            }
-         
+.info-section {
+    padding: 15px;
+    background: #fff;
+}
+        
     </style>
 </head>
 <body>
@@ -304,39 +308,56 @@
     </div>
 </div>
     
-        <div class="category-container">
-    <div class="flex justify-between items-center mb-4">
-        <h3 class="text-[#5D4037] font-black text-sm uppercase tracking-wider">Textiles & Apparel</h3>
-        <span class="text-[9px] font-bold text-[#8B6508]">Duba Duka <i class="fa-solid fa-arrow-right ml-1"></i></span>
+        <div class="industry-box">
+    <div class="flex justify-between items-center mb-4 px-2">
+        <h3 class="text-[#5D4037] font-black text-xs uppercase tracking-[0.2em]">Textiles & Clothing</h3>
+        <i class="fa-solid fa-chevron-right text-[#8B6508] text-[10px]"></i>
     </div>
 
-    <div class="product-grid">
-        <div class="item-card">
-            <img src="https://images.unsplash.com/photo-1584273103988-4158655073e5?q=80&w=300" alt="Atamfa">
-            <h4 class="text-[10px] font-bold text-gray-800">Atamfa (Wax)</h4>
-            <p class="price-tag">₦12,500</p>
+    <div class="horizontal-scroll">
+        <div class="elite-card">
+            <img src="https://images.unsplash.com/photo-1584273103988-4158655073e5?w=500">
+            <div class="info-section">
+                <h4 class="font-black text-xs text-[#3E2723]">Atamfa (High Wax)</h4>
+                <p class="text-green-600 font-black text-sm mt-1">₦12,500</p>
+            </div>
         </div>
 
-        <div class="item-card">
-            <img src="https://images.unsplash.com/photo-1594132049104-1f6b1e62834b?q=80&w=300" alt="Lace">
-            <h4 class="text-[10px] font-bold text-gray-800">Premium Lace</h4>
-            <p class="price-tag">₦45,000</p>
+        <div class="elite-card">
+            <img src="https://images.unsplash.com/photo-1594132049104-1f6b1e62834b?w=500">
+            <div class="info-section">
+                <h4 class="font-black text-xs text-[#3E2723]">Premium Swiss Lace</h4>
+                <p class="text-green-600 font-black text-sm mt-1">₦45,000</p>
+            </div>
         </div>
 
-        <div class="item-card">
-            <img src="https://images.unsplash.com/photo-1606233513365-276632c02602?q=80&w=300" alt="Gyale">
-            <h4 class="text-[10px] font-bold text-gray-800">Designer Gyale</h4>
-            <p class="price-tag">₦8,500</p>
+        <div class="elite-card">
+            <img src="https://images.unsplash.com/photo-1606233513365-276632c02602?w=500">
+            <div class="info-section">
+                <h4 class="font-black text-xs text-[#3E2723]">Designer Gyale (Veil)</h4>
+                <p class="text-green-600 font-black text-sm mt-1">₦8,500</p>
+            </div>
         </div>
 
-        <div class="item-card">
-            <img src="https://images.unsplash.com/photo-1610444583737-233777d61247?q=80&w=300" alt="Shadda">
-            <h4 class="text-[10px] font-bold text-gray-800">Gitzener Shadda</h4>
-            <p class="price-tag">₦75,000</p>
+        <div class="elite-card">
+            <img src="https://images.unsplash.com/photo-1610444583737-233777d61247?w=500">
+            <div class="info-section">
+                <h4 class="font-black text-xs text-[#3E2723]">Gitzener Shadda</h4>
+                <p class="text-green-600 font-black text-sm mt-1">₦75,000</p>
+            </div>
         </div>
-        
+
+        <div class="elite-card">
+            <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=500">
+            <div class="info-section">
+                <h4 class="font-black text-xs text-[#3E2723]">Yadi Mai Kyau</h4>
+                <p class="text-green-600 font-black text-sm mt-1">₦15,000</p>
+            </div>
+        </div>
+
         </div>
         </div>
+    
     
 
     <div id="search-overlay">
