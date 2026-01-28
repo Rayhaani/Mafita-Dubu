@@ -115,7 +115,21 @@
     background-color: #F5F1E9 !important; 
     border-bottom: 1px solid rgba(62, 39, 35, 0.1); 
     }  
-    
+    .futuristic-box {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 10px 30px rgba(139, 101, 8, 0.1);
+}
+
+/* Wannan animation din zai sa menu din ya fito daga kasa cikin kyan gani */
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+.animate-slide-up { animation: slideUp 0.4s ease-out; }
+                                                                       
     </style>
 </head>
 <body>
@@ -127,14 +141,23 @@
     </div>
     </nav>
 
-<div class="px-6 py-4">
-    <div class="bg-white border border-gray-200 rounded-2xl flex items-center px-4 py-3 shadow-sm">
-        <i class="fa-solid fa-magnifying-glass text-blue-500 mr-3"></i>
+<div class="px-6 -mt-5 mb-6 relative z-10">
+    <div class="futuristic-box rounded-2xl flex items-center px-4 py-3.5 shadow-2xl">
+        <i class="fa-solid fa-magnifying-glass text-[#8B6508] mr-3"></i>
         <input type="text" 
                id="market-search" 
-               placeholder="Me kake nema a kasuwa?" 
-               class="bg-transparent border-none outline-none w-full text-sm font-bold text-gray-700"
+               placeholder="Mene ne burinka a yau?" 
+               class="bg-transparent border-none outline-none w-full text-sm font-bold text-[#3E2723] placeholder-[#A68A64]"
                oninput="handleSearch(this)">
+
+        <div class="flex items-center space-x-4 border-l border-[#E0D7C6] pl-3 ml-2">
+            <button onclick="openAICamera()" class="text-[#8B6508] hover:scale-110 transition-transform">
+                <i class="fa-solid fa-camera"></i>
+            </button>
+            <button onclick="alert('History is empty')" class="text-gray-400">
+                <i class="fa-solid fa-clock-rotate-left text-xs"></i>
+            </button>
+        </div>
     </div>
 </div>
 
@@ -205,6 +228,24 @@
             document.getElementById('market-search').value = '';
         }, 500);
     }
+function openAICamera() {
+    const menuHTML = `
+        <div id="ai-menu" class="fixed inset-0 z-[3000] flex items-end justify-center bg-black/30 backdrop-blur-sm">
+            <div class="bg-white w-full rounded-t-[40px] p-8 animate-slide-up">
+                <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-8"></div>
+                <h3 class="text-center font-black text-[#3E2723] mb-8 tracking-widest text-[10px] uppercase">AI Visual Search</h3>
+                <div class="grid grid-cols-3 gap-6 mb-10">
+                    <div class="text-center"><div class="w-16 h-16 bg-amber-50 rounded-3xl flex items-center justify-center mx-auto text-amber-600 shadow-inner"><i class="fa-solid fa-camera text-2xl"></i></div><p class="text-[9px] font-bold mt-2">TAKE PHOTO</p></div>
+                    <div class="text-center"><div class="w-16 h-16 bg-blue-50 rounded-3xl flex items-center justify-center mx-auto text-blue-600 shadow-inner"><i class="fa-solid fa-image text-2xl"></i></div><p class="text-[9px] font-bold mt-2">GALLERY</p></div>
+                    <div class="text-center"><div class="w-16 h-16 bg-red-50 rounded-3xl flex items-center justify-center mx-auto text-red-600 shadow-inner"><i class="fa-solid fa-history text-2xl"></i></div><p class="text-[9px] font-bold mt-2">HISTORY</p></div>
+                </div>
+                <button onclick="document.getElementById('ai-menu').remove()" class="w-full py-4 font-black text-gray-400 text-xs">CANCEL</button>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', menuHTML);
+}
+    
 </script>      
     
 </body>
