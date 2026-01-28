@@ -248,60 +248,33 @@
     width: 100%;
     box-sizing: border-box;
 }
-/* ELITE ULTRA-SLIM LAYOUT */
+/* FUTURISTIC ELITE DESIGN */
 .industry-mini-box {
-    background: white;
-    border-radius: 22px; /* Lankwasar iPhone */
-    overflow: hidden;
-    border: 1px solid #f0f0f0;
-    height: 185px; /* Tsawon box din gaba daya */
-    display: flex;
-    flex-direction: column;
+    background: #ffffff;
+    border-radius: 24px;
+    height: 200px; /* Mun ɗan ƙara tsayi don manyan rubutu */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05); /* Shadow mai santsi */
+    border: 1px solid rgba(0,0,0,0.03);
+    transition: transform 0.3s ease;
 }
 
-.item-slide img {
-    width: 100%;
-    height: 140px; /* Hoton ya mamaye 80% na box din */
-    object-fit: cover;
+.industry-mini-box:hover {
+    transform: translateY(-5px); /* Boxes ɗin su rinka ɗan tashi idan an taɓa */
 }
 
 .item-details {
-    padding: 2px 8px; /* Matse padding din sosai */
-    background: #fff;
-    height: 40px; /* Mun rage tsayin sararin rubutun zuwa 40px kacal */
+    padding: 4px 10px;
+    background: linear-gradient(to bottom, #ffffff, #fafafa); /* Gradient mai santsi */
+    height: 45px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.top-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: -2px; /* Matse rubutun kusa da juna */
-}
-
-/* KARA GIRMAN SUNA, TAURARI DA PRICE */
-.item-name {
-    font-size: 12px; /* Mun kara girman daga 8px zuwa 12px */
-    font-weight: 850; /* Mun kara kaurin rubutun */
-    color: #222; /* Mun kara duhun kalar */
-}
-
-.item-stars {
-    font-size: 15px; /* Mun kara girman taurarin sosai daga 11px zuwa 15px */
-    color: #000;
-    font-weight: 900;
-    letter-spacing: -0.5px;
-}
-
-.item-price {
-    font-size: 11px; /* Mun kara girman farashin daga 10px zuwa 11px */
-    font-weight: 950; /* Mun maida shi "Extra Bold" */
-    color: #3E2723; /* Espresso Brown mai nuna alatu */
-    margin-top: 1px;
-        }
+/* Girman rubutu yadda ka nema */
+.item-name { font-size: 11px; font-weight: 850; color: #222; }
+.item-stars { font-size: 14px; color: #000; font-weight: 900; }
+.item-price { font-size: 14px; font-weight: 950; color: #3E2723; text-align: center; }
         
      
     </style>
@@ -341,21 +314,61 @@
 </div>
     
     
-   <div class="duet-grid">
-    <div class="industry-mini-box">
-        <div class="display-area" id="textileFlip">
-            <div class="item-slide active">
-                <img src="HOTON_ATAMFA.jpg">
-                <div class="item-details">
-                    <div class="top-row">
-                        <span class="item-name">Atamfa Wax</span>
-                        <div class="item-stars" data-rating="5"></div>
-                    </div>
-                    <div class="item-price">₦12,500</div>
+   <div class="industry-mini-box">
+    <div class="display-area" id="textileFlip">
+        <div class="item-slide active">
+            <img src="https://images.unsplash.com/photo-1584273103988-4158655073e5?w=400">
+            <div class="item-details">
+                <div class="top-row">
+                    <span class="item-name">Atamfa Wax</span>
+                    <div class="item-stars" data-rating="5"></div>
                 </div>
+                <div class="item-price">₦12,500</div>
+            </div>
+        </div>
+        <div class="item-slide">
+            <img src="https://images.unsplash.com/photo-1594132049104-1f6b1e62834b?w=400">
+            <div class="item-details">
+                <div class="top-row">
+                    <span class="item-name">Premium Lace</span>
+                    <div class="item-stars" data-rating="4"></div>
+                </div>
+                <div class="item-price">₦45,000</div>
+            </div>
+        </div>
+        <div class="item-slide">
+            <img src="https://images.unsplash.com/photo-1610406831032-680415d487f9?w=400">
+            <div class="item-details">
+                <div class="top-row">
+                    <span class="item-name">Getzner Shadda</span>
+                    <div class="item-stars" data-rating="5"></div>
+                </div>
+                <div class="item-price">₦65,000</div>
+            </div>
+        </div>
+        <div class="item-slide">
+            <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=400">
+            <div class="item-details">
+                <div class="top-row">
+                    <span class="item-name">Men Lace Design</span>
+                    <div class="item-stars" data-rating="4"></div>
+                </div>
+                <div class="item-price">₦38,000</div>
+            </div>
+        </div>
+        <div class="item-slide">
+            <img src="https://images.unsplash.com/photo-1582533561751-ef6f6ab93a2e?w=400">
+            <div class="item-details">
+                <div class="top-row">
+                    <span class="item-name">Elite Panties</span>
+                    <div class="item-stars" data-rating="5"></div>
+                </div>
+                <div class="item-price">₦8,500</div>
             </div>
         </div>
     </div>
+   </div>
+    
 
     <div class="industry-mini-box">
         <div class="display-area" id="shoeFlip">
@@ -532,8 +545,8 @@ setInterval(autoScroll, 3000);
         slides[current].classList.remove('active');
         current = (current + 1) % slides.length;
         slides[current].classList.add('active');
-    }, 3500);
-}
+    }, 3000); 
+    }
 
 window.onload = function() {
     initFlip('textileFlip');
