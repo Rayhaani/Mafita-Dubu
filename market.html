@@ -240,57 +240,13 @@
     padding: 10px 15px;
 }
 
-/* ELITE COMPACT DETAILS */
-.industry-mini-box {
-    height: 195px; /* Mun kara tsayin box din kadan */
-    border-radius: 20px;
-    background: white;
-    overflow: hidden;
-    border: 1px solid #eee;
-}
-
-.item-slide img {
-    height: 135px; /* Hoton ya yi daidai */
-    width: 100%;
-    object-fit: cover;
-}
-
-.item-details {
-    padding: 6px 8px;
-    height: 60px; /* Mun kara fadin white space din don price ya fito */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
-
-.top-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.item-name {
-    font-size: 8.5px;
-    font-weight: 800;
-    color: #333;
-}
-
-.item-stars {
-    color: #000; /* Taurari bakaken fata radau */
-    font-size: 8px;
-    font-weight: bold;
-}
-
-.price-row {
-    text-align: center;
-    width: 100%;
-}
-
-.item-price {
-    font-size: 11px;
-    font-weight: 900;
-    color: #3E2723; /* Dark Brown */
-        }
+.industry-mini-box { height: 180px; border-radius: 20px; overflow: hidden; border: 1px solid #eee; }
+.item-details { padding: 0px 8px; background: #fff; height: 38px; display: flex; flex-direction: column; justify-content: center; }
+.top-row { display: flex; justify-content: space-between; align-items: center; }
+.item-name { font-size: 8px; font-weight: 800; color: #333; }
+.item-stars { color: #000; font-size: 11px; font-weight: bold; }
+.item-price { font-size: 10px; font-weight: 900; color: #3E2723; margin-top: -2px; text-align: center; }
+        
         
     </style>
 </head>
@@ -332,53 +288,18 @@
     <div class="industry-mini-box">
         <div class="display-area" id="textileFlip">
             <div class="item-slide active">
-                <img src="https://images.unsplash.com/photo-1584273103988-4158655073e5?w=300">
+                <img src="HOTON_KAYA.jpg">
                 <div class="item-details">
                     <div class="top-row">
                         <span class="item-name">Atamfa Wax</span>
-                        <span class="item-stars">★★★★★</span>
+                        <div class="item-stars" data-rating="4"></div>
                     </div>
-                    <div class="price-row"><span class="item-price">₦12,500</span></div>
-                </div>
-            </div>
-            <div class="item-slide">
-                <img src="https://images.unsplash.com/photo-1594132049104-1f6b1e62834b?w=300">
-                <div class="item-details">
-                    <div class="top-row">
-                        <span class="item-name">Premium Lace</span>
-                        <span class="item-stars">★★★★</span>
-                    </div>
-                    <div class="price-row"><span class="item-price">₦45,000</span></div>
+                    <div class="item-price">₦12,500</div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="industry-mini-box">
-        <div class="display-area" id="shoeFlip">
-            <div class="item-slide active">
-                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300">
-                <div class="item-details">
-                    <div class="top-row">
-                        <span class="item-name">Nike Sports</span>
-                        <span class="item-stars">★★★★★</span>
-                    </div>
-                    <div class="price-row"><span class="item-price">₦35,000</span></div>
-                </div>
-            </div>
-            <div class="item-slide">
-                <img src="https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=300">
-                <div class="item-details">
-                    <div class="top-row">
-                        <span class="item-name">Leather Boot</span>
-                        <span class="item-stars">★★★★</span>
-                    </div>
-                    <div class="price-row"><span class="item-price">₦28,000</span></div>
-                </div>
-            </div>
-        </div>
     </div>
-                </div>
     
 
     <div id="search-overlay">
@@ -546,7 +467,18 @@ window.onload = function() {
     initFlip('textileFlip');
     initFlip('shoeFlip');
 };
-      
+  function renderStars() {
+    document.querySelectorAll('.item-stars').forEach(container => {
+        const rating = parseInt(container.getAttribute('data-rating')) || 0;
+        container.innerHTML = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+    });
+}
+// Tabbatar ka kira renderStars() a cikin window.onload
+window.onload = function() {
+    initFlip('textileFlip');
+    renderStars(); 
+};
+    
     
 </script>      
     
