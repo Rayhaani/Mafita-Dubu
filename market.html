@@ -166,7 +166,29 @@
 
 .gold-scan-inner { background: linear-gradient(145deg, #FFD700, #B8860B) !important; color: #000; }
         
-        
+       /* ELITE CANCEL BUTTON DESIGN */
+.cancel-pill-btn {
+    display: block;
+    width: 160px; /* Rage girman */
+    margin: 30px auto 10px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.3); /* Siririn layin zinariya */
+    border-radius: 30px;
+    color: #FFD700;
+    font-size: 9px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.cancel-pill-btn:active {
+    transform: scale(0.95);
+    background: rgba(255, 215, 0, 0.1);
+}
     </style>
 </head>
 <body>
@@ -269,51 +291,49 @@
     if(existing) existing.remove();
 
     const menuHTML = `
-        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/10 z-[4999] opacity-0 transition-opacity duration-300"></div>
+        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/20 z-[4999] opacity-0 transition-opacity duration-300"></div>
         <div id="ai-sheet" class="ai-bottom-sheet">
             <div class="w-12 h-1 bg-white/10 rounded-full mx-auto mt-4 mb-6"></div>
             
             <div class="px-10 flex justify-between items-center mb-8">
                 <div>
-                    <h2 class="text-white font-black text-[10px] tracking-[0.4em] uppercase">Neural Interface</h2>
-                    <p class="text-[#FFD700] text-[7px] font-bold tracking-widest uppercase opacity-60">System Ready for Scanning</p>
+                    <h2 class="text-white font-black text-[10px] tracking-[0.4em] uppercase italic">Neural Vision</h2>
+                    <p class="text-[#FFD700] text-[7px] font-bold tracking-widest uppercase opacity-80">Advanced Asset Identification</p>
                 </div>
-                <div class="w-6 h-6 border border-white/10 rounded-full flex items-center justify-center">
-                    <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-                </div>
+                <i class="fa-solid fa-bolt-auto text-[#FFD700] text-xs animate-pulse"></i>
             </div>
 
             <div class="flex justify-around items-center px-4">
-                <button class="flex flex-col items-center group">
+                <button class="flex flex-col items-center">
                     <div class="silver-lightning-box">
                         <div class="box-inner gold-scan-inner">
-                            <i class="fa-solid fa-expand text-xl"></i>
+                            <i class="fa-solid fa-qrcode text-black text-xl"></i>
                         </div>
                     </div>
-                    <span class="text-[8px] text-white mt-3 font-bold tracking-widest uppercase">Scan</span>
+                    <span class="text-[8px] text-white mt-3 font-black tracking-widest uppercase">Scan</span>
                 </button>
 
-                <button class="flex flex-col items-center group">
+                <button class="flex flex-col items-center">
                     <div class="silver-lightning-box">
                         <div class="box-inner">
-                            <i class="fa-solid fa-camera text-white/90 text-xl"></i>
+                            <i class="fa-solid fa-camera-retro text-white/90 text-xl z-10"></i>
                         </div>
                     </div>
-                    <span class="text-[8px] text-white/70 mt-3 font-bold tracking-widest uppercase">Camera</span>
+                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Camera</span>
                 </button>
 
-                <button class="flex flex-col items-center group">
+                <button class="flex flex-col items-center">
                     <div class="silver-lightning-box">
                         <div class="box-inner">
-                            <i class="fa-solid fa-images text-white/90 text-xl"></i>
+                            <i class="fa-solid fa-images text-white/90 text-xl z-10"></i>
                         </div>
                     </div>
-                    <span class="text-[8px] text-white/70 mt-3 font-bold tracking-widest uppercase">Gallery</span>
+                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Gallery</span>
                 </button>
             </div>
             
-            <button onclick="closeAIVision()" class="w-full mt-10 py-4 text-white font-bold text-[9px] tracking-[0.3em] uppercase border-t border-white/5 bg-white/5 hover:text-[#FFD700] transition-all">
-                Soke Bincike (Cancel)
+            <button onclick="closeAIVision()" class="cancel-pill-btn">
+                Soke Bincike
             </button>
         </div>
     `;
@@ -323,20 +343,7 @@
         document.getElementById('ai-overlay').classList.add('opacity-100');
         document.getElementById('ai-sheet').classList.add('active');
     }, 10);
-}
-
-function closeAIVision() {
-    const overlay = document.getElementById('ai-overlay');
-    const sheet = document.getElementById('ai-sheet');
-    
-    if(overlay) overlay.classList.remove('opacity-100');
-    if(sheet) sheet.classList.remove('active');
-    
-    setTimeout(() => {
-        if(overlay) overlay.remove();
-        if(sheet) sheet.remove();
-    }, 400);
-}
+ }
      
 </script>      
     
