@@ -240,41 +240,35 @@
     padding: 10px 15px;
 }
 
-/* ELITE PROFESSIONAL COMPACT BOX */
-.duet-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    padding: 10px 15px;
-}
-
+/* ELITE COMPACT DETAILS */
 .industry-mini-box {
+    height: 165px; /* Mun rage tsayin gaba daya */
+    border-radius: 22px;
     background: white;
-    border-radius: 24px; /* Shape din iPhone da kake so */
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     border: 1px solid #F0F0F0;
-    height: 185px; /* Mun rage tsayin gaba daya */
-    position: relative;
+    overflow: hidden;
 }
 
 .item-slide img {
     width: 100%;
-    height: 125px; /* Hoton ya fi karfin komai */
+    height: 135px; /* Mun bar hoton ya mamaye kusan duka box din */
     object-fit: cover;
 }
 
 .item-details {
-    padding: 6px 8px;
-    text-align: left; /* Mun maida shi hagu don ya yi professional */
+    padding: 2px 8px; /* Mun matse padding din (sama da kasa) zuwa 2px kawai */
     background: #fff;
+    height: 30px; /* Mun takaita tsayin farin sararin zuwa 30px kawai */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .item-name {
-    font-size: 9px; /* Karami mai kyau */
-    font-weight: 800;
-    color: #3E2723;
-    display: block;
+    font-size: 8.5px;
+    font-weight: 700;
+    color: #333;
+    line-height: 1;
     margin-bottom: 1px;
     white-space: nowrap;
     overflow: hidden;
@@ -282,11 +276,12 @@
 }
 
 .item-price {
-    font-size: 10px; /* Ya fito radau amma ba mai fadin gaske ba */
+    font-size: 9px;
     font-weight: 900;
-    color: #15803d; /* Koren kudi */
-          }
-    
+    color: #15803d;
+    line-height: 1;
+}
+        
     </style>
 </head>
 <body>
