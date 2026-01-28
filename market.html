@@ -254,14 +254,14 @@
     height: 135px; /* Mun bar hoton ya mamaye kusan duka box din */
     object-fit: cover;
 }
-/* ELITE MINIMALIST BOX - FINAL VERSION */
+    /* ELITE COMPACT DETAILS - BLACK STARS EDITION */
 .item-details {
-    padding: 3px 6px;
+    padding: 5px 8px; /* Kara sarari kadan don price ya fito */
     background: #fff;
-    height: 42px; /* Mun rage tsayin don box din ya samu sarari */
+    height: 48px; /* Mun daidaita tsayin */
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .top-row {
@@ -272,31 +272,32 @@
 }
 
 .item-name {
-    font-size: 7.5px; /* Mun dan rage don kada ya tura box din */
+    font-size: 8px;
     font-weight: 800;
     color: #333;
-    max-width: 60%;
+    max-width: 65%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .item-stars {
-    font-size: 6px; /* Matse taurari kadan */
-    color: #000000; /* Baki radau don ya fito fili */
-    letter-spacing: -1px;
+    font-size: 8px; /* Mun kara girman taurarin kadan */
+    color: #000000; /* Baki radau kamar yadda kake so */
+    letter-spacing: -0.5px;
+    font-weight: bold;
 }
 
 .price-row {
     text-align: center;
     width: 100%;
-    margin-top: 2px;
 }
 
 .item-price {
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 900;
     color: #3E2723; /* Dark Espresso Brown */
+    display: block;
 }
         
     </style>
@@ -336,40 +337,60 @@
 </div>
     
     <div class="duet-grid">
-    <div class="industry-mini-box">
-        <div class="display-area" id="textileFlip">
-            <div class="item-slide active">
-                <img src="https://images.unsplash.com/photo-1584273103988-4158655073e5?w=300">
-                <div class="item-details">
-                    <div class="top-row">
-                        <span class="item-name">Atamfa Wax</span>
-                        <span class="item-stars">★★★★★</span>
-                    </div>
-                    <div class="price-row">
-                        <span class="item-price">₦12,500</span>
-                    </div>
-                </div>
+    <div class="display-area" id="textileFlip">
+    <div class="item-slide active">
+        <img src="https://images.unsplash.com/photo-1584273103988-4158655073e5?w=300">
+        <div class="item-details">
+            <div class="top-row">
+                <span class="item-name">Atamfa Wax</span>
+                <span class="item-stars">★★★★★</span>
+            </div>
+            <div class="price-row">
+                <span class="item-price">₦12,500</span>
             </div>
         </div>
+    </div>
+    <div class="item-slide">
+        <img src="https://images.unsplash.com/photo-1594132049104-1f6b1e62834b?w=300">
+        <div class="item-details">
+            <div class="top-row">
+                <span class="item-name">Premium Lace</span>
+                <span class="item-stars">★★★★</span>
+            </div>
+            <div class="price-row">
+                <span class="item-price">₦45,000</span>
+            </div>
+        </div>
+    </div>
     </div>
 
-    <div class="industry-mini-box">
         <div class="display-area" id="shoeFlip">
-            <div class="item-slide active">
-                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300">
-                <div class="item-details">
-                    <div class="top-row">
-                        <span class="item-name">Nike Sports</span>
-                        <span class="item-stars">★★★★</span>
-                    </div>
-                    <div class="price-row">
-                        <span class="item-price">₦35,000</span>
-                    </div>
-                </div>
+    <div class="item-slide active">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300">
+        <div class="item-details">
+            <div class="top-row">
+                <span class="item-name">Nike Sports</span>
+                <span class="item-stars">★★★★★</span>
+            </div>
+            <div class="price-row">
+                <span class="item-price">₦35,000</span>
             </div>
         </div>
     </div>
+    <div class="item-slide">
+        <img src="https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=300">
+        <div class="item-details">
+            <div class="top-row">
+                <span class="item-name">Leather Boot</span>
+                <span class="item-stars">★★★★</span>
+            </div>
+            <div class="price-row">
+                <span class="item-price">₦28,000</span>
+            </div>
+        </div>
     </div>
+        </div>
+        
     
 
     <div id="search-overlay">
