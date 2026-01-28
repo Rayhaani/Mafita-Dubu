@@ -222,6 +222,50 @@
     background: #8B6508;
     border-radius: 50%;
 }
+       .camera-glow-box {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    background: #fff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Don hasken ya tsaya a ciki */
+    border: 1px solid #E0D7C6;
+}
+
+/* Wannan shi ne asalin hasken dake zagayawa */
+.camera-glow-box::before {
+    content: '';
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    background: conic-gradient(transparent, transparent, transparent, #FFD700);
+    animation: rotate-glow 3s linear infinite;
+}
+
+/* Wannan zai rufe tsakiyar hasken domin ya zama border kawai */
+.camera-glow-box::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: white;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+@keyframes rotate-glow {
+    100% { transform: rotate(360deg); }
+}
+
+.camera-icon-content {
+    position: relative;
+    z-index: 2; /* Don icon ya hau kan komai */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
         
         
     </style>
@@ -243,12 +287,17 @@
             
             <div class="flex items-center space-x-2">
                 
-                <button onclick="openAICamera()" class="ai-camera-trigger ml-2">
-    <div class="flex flex-col items-center">
-        <div class="w-4 h-1 bg-[#8B6508] rounded-t-sm mb-[-1px]"></div> <div class="camera-lens"></div> </div>
-    
-    <span class="absolute top-1 right-1 w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                <button onclick="openAICamera()" class="ml-2 active:scale-95 transition-transform">
+    <div class="camera-glow-box">
+        <div class="camera-icon-content">
+            <div class="w-3.5 h-1 bg-[#8B6508] rounded-t-sm mb-[-1px]"></div>
+            <div class="w-5 h-4 border-2 border-[#8B6508] rounded-sm flex items-center justify-center">
+                <div class="w-2 h-2 bg-[#8B6508] rounded-full"></div>
+            </div>
+        </div>
+    </div>
                 </button>
+                
                 
                 
                 <button class="bg-gradient-to-r from-[#8B6508] to-[#B8860B] w-8 h-8 rounded-full flex items-center justify-center text-white shadow-lg">
