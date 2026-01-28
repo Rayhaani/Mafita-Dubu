@@ -240,9 +240,13 @@
             
             <div class="flex items-center space-x-2">
                 
-                <button onclick="openAICamera()" class="w-10 h-10 rounded-full flex items-center justify-center text-[#8B6508] hover:bg-amber-50/80 transition-all ml-1">
-    <i class="fa-solid fa-camera-retro text-xl"></i>
+                <button onclick="openAICamera()" class="ai-camera-trigger group ml-2">
+    <div class="relative flex items-center justify-center">
+        <i class="fa-solid fa-camera-viewfinder text-2xl text-[#8B6508] group-hover:text-[#FFD700] transition-colors"></i>
+        <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#FFD700] rounded-full border-2 border-white animate-pulse"></span>
+    </div>
                 </button>
+                
                 
                 <button class="bg-gradient-to-r from-[#8B6508] to-[#B8860B] w-8 h-8 rounded-full flex items-center justify-center text-white shadow-lg">
                     <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
