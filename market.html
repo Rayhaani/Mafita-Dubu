@@ -248,27 +248,30 @@
     width: 100%;
     box-sizing: border-box;
 }
-/* FUTURISTIC MASTER LAYOUT */
+/* ELITE FUTURISTIC GRID */
 .duet-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr; /* Tilasta boxes biyu kacal */
     gap: 12px;
     padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .industry-mini-box {
     background: #fff;
-    border-radius: 24px;
-    height: 205px; /* Tsayin da zai dauki manyan rubutu */
+    border-radius: 22px;
+    height: 195px; /* Tsayin da zai dauki komai radau */
     overflow: hidden;
-    position: relative;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    position: relative; /* Dole don flipping ya yi aiki */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
     border: 1px solid #f0f0f0;
 }
 
 .display-area {
-    height: 100%;
     width: 100%;
+    height: 100%;
+    position: relative;
 }
 
 .item-slide {
@@ -276,29 +279,29 @@
     top: 0; left: 0;
     width: 100%; height: 100%;
     opacity: 0;
-    transition: opacity 0.5s ease; /* Transition mai santsi */
+    transition: opacity 0.6s ease-in-out;
     display: flex;
     flex-direction: column;
 }
 
-.item-slide.active { opacity: 1; z-index: 1; }
+.item-slide.active { opacity: 1; z-index: 2; }
 
 .item-slide img {
     width: 100%;
-    height: 145px; /* Girman hoton */
+    height: 140px; /* Hoton ya mamaye kashi 75% */
     object-fit: cover;
 }
 
 .item-details {
     padding: 2px 10px;
-    height: 60px;
+    height: 55px; /* Siririn sarari mai kyan gani */
     background: #fff;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-/* Girman rubutu yadda ka nema */
+/* Girman rubutu na musamman */
 .top-row { display: flex; justify-content: space-between; align-items: center; }
 .item-name { font-size: 11px; font-weight: 850; color: #222; }
 .item-stars { font-size: 13px; color: #000; font-weight: 900; }
@@ -345,12 +348,21 @@
     <div class="industry-mini-box">
         <div class="display-area" id="textileFlip">
             <div class="item-slide active">
-                <img src="URL_ATAMFA">
+                <img src="HOTON_ATAMFA.jpg">
                 <div class="item-details">
                     <div class="top-row"><span class="item-name">Atamfa</span><div class="item-stars" data-rating="5"></div></div>
                     <div class="item-price">₦12,500</div>
                 </div>
             </div>
+            </div>
+    </div>
+
+    <div class="industry-mini-box">
+        <div class="display-area" id="shoeFlip">
+            </div>
+    </div>
+    </div>
+    
             <div class="item-slide">
                 <img src="URL_LACE">
                 <div class="item-details">
@@ -631,11 +643,14 @@ window.onload = function() {
 };
   function renderStars() {
     document.querySelectorAll('.item-stars').forEach(el => {
-        const r = parseInt(el.dataset.rating) || 0;
-        el.innerHTML = '★'.repeat(r) + '☆'.repeat(5-r);
+        const rating = parseInt(el.dataset.rating) || 0;
+        // Wannan zai nuna bakaken taurari ★ da fararen ☆ don ragowa
+        el.innerHTML = '★'.repeat(rating) + '☆'.repeat(5 - rating);
     });
 }
-// Kira shi a window.onload
+
+// Kira renderStars() a cikin window.onload
+    
     
 // Tabbatar ka kira renderStars() a cikin window.onload
 window.onload = function() {
