@@ -198,13 +198,14 @@
 
 .cancel-breathing:active { transform: scale(0.9); }
        
-       .temu-style-camera {
-    width: 42px; height: 34px;
+      .temu-style-camera {
+    width: 34px; height: 28px; /* Mun rage su daga 42x34 */
     background: #111;
-    border-radius: 8px;
+    border-radius: 6px;
     display: flex; align-items: center; justify-content: center;
     position: relative;
     overflow: hidden;
+      } 
 }
 
 .temu-style-camera::after {
@@ -253,10 +254,11 @@
                 <button onclick="openAICamera()" class="ml-2 active:scale-90 transition-transform">
     <div class="temu-style-camera">
         <div class="camera-inner">
-            <i class="fa-solid fa-camera text-white text-base"></i>
+            <i class="fa-solid fa-camera text-white text-[10px]"></i>
         </div>
     </div>
                 </button>
+                
                 
                 <button class="bg-gradient-to-r from-[#8B6508] to-[#B8860B] w-8 h-8 rounded-full flex items-center justify-center text-white shadow-lg">
                     <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
