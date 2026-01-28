@@ -121,84 +121,49 @@
     50% { opacity: 1; }
     100% { transform: translateY(300%); opacity: 0; }
 }
-       /* ELITE SILVER-LIGHTNING SHEET */
+        /* ELITE SILVER-GLOW SHEET */
 .ai-bottom-sheet {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    background: #050505;
-    /* Walkiyar Zarba (Silver Neon Border) */
-    border: 1.5px solid rgba(255, 255, 255, 0.4);
-    border-radius: 45px 45px 0 0;
+    background: #0a0a0a;
+    /* Walkiyar Zarba (Silver Border) a zagaye */
+    border: 1.5px solid rgba(220, 220, 220, 0.4);
+    border-radius: 40px 40px 0 0;
     z-index: 5000;
-    height: 270px;
+    height: 260px;
     transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 -15px 40px rgba(255, 255, 255, 0.05);
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0 -10px 30px rgba(255, 255, 255, 0.1);
 }
 .ai-bottom-sheet.active { transform: translateY(0); }
 
-/* BOXES MASU ZAGAYEN ZARBA */
-.silver-lightning-box {
-    width: 65px; height: 65px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 22px;
+/* BOXES MAI WALKIYAR ZARBA */
+.silver-box {
+    width: 60px; height: 60px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(220, 220, 220, 0.2); /* Silver border */
+    border-radius: 18px;
     display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
 }
 
-/* WALKIYAR DA KE ZAGAYEWA */
-.silver-lightning-box::before {
+/* ANIMATION NA ZARBA DAKE ZAGAYEWA */
+.silver-box::after {
     content: '';
     position: absolute;
-    width: 150%; height: 150%;
-    background: conic-gradient(transparent, transparent, #ffffff, transparent);
-    animation: lightning-spin 3s linear infinite;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: conic-gradient(transparent, transparent, transparent, #ffffff);
+    animation: rotate-silver 4s linear infinite;
+    opacity: 0.3;
 }
-@keyframes lightning-spin { 100% { transform: rotate(360deg); } }
+@keyframes rotate-silver { 100% { transform: rotate(360deg); } }
 
-/* CIKIN BOX DIN */
-.box-inner {
-    position: absolute; inset: 2px;
-    background: #0a0a0a; border-radius: 20px;
-    display: flex; align-items: center; justify-content: center; z-index: 10;
-}
-
-.gold-scan-inner { background: linear-gradient(145deg, #FFD700, #B8860B) !important; color: #000; }
-        
-       /* ELITE BREATHING CANCEL TEXT */
-.cancel-text-link {
-    display: block;
-    width: fit-content;
-    margin: 25px auto 10px;
-    color: #FFD700;
-    font-size: 13px;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    background: none;
-    border: none;
-    letter-spacing: 1px;
-    /* Animation na numfashi */
-    animation: breathing-glow 2.5s ease-in-out infinite;
-    transition: transform 0.2s ease;
-}
-
-@keyframes breathing-glow {
-    0%, 100% { 
-        opacity: 0.5; 
-        transform: scale(1); 
-        text-shadow: 0 0 0px rgba(255, 215, 0, 0);
-    }
-    50% { 
-        opacity: 1; 
-        transform: scale(1.08); 
-        text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
-    }
-}
-
-.cancel-text-link:active {
-    transform: scale(0.9);
+.active-scan {
+    background: linear-gradient(145deg, #FFD700, #B8860B);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    border: none !important;
 }
         
     </style>
@@ -305,35 +270,41 @@
     const menuHTML = `
         <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
         <div id="ai-sheet" class="ai-bottom-sheet">
-            <div class="w-12 h-1 bg-white/10 rounded-full mx-auto mt-4 mb-6"></div>
+            <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
             
             <div class="px-10 flex justify-between items-center mb-8">
                 <div>
-                    <h2 class="text-white font-black text-[10px] tracking-[0.4em] uppercase italic">Neural Vision</h2>
-                    <p class="text-[#FFD700] text-[7px] font-bold tracking-widest uppercase opacity-60">System Ready</p>
+                    <h2 class="text-white font-black text-[11px] tracking-[0.3em] uppercase italic">Neural Vision</h2>
+                    <p class="text-[#FFD700] text-[7px] font-bold tracking-widest uppercase opacity-80">Advanced Asset Identification</p>
                 </div>
-                <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_#22c55e]"></div>
+                <i class="fa-solid fa-bolt-auto text-[#FFD700] text-xs animate-pulse"></i>
             </div>
 
             <div class="flex justify-around items-center px-4">
-                <button class="flex flex-col items-center">
-                    <div class="silver-lightning-box"><div class="box-inner gold-scan-inner"><i class="fa-solid fa-expand text-xl"></i></div></div>
-                    <span class="text-[8px] text-white mt-3 font-bold tracking-widest uppercase">Scan</span>
+                <button class="flex flex-col items-center group">
+                    <div class="silver-box active-scan">
+                        <i class="fa-solid fa-qrcode text-black text-xl"></i>
+                    </div>
+                    <span class="text-[8px] text-white mt-3 font-black tracking-widest uppercase">Scan</span>
                 </button>
 
-                <button class="flex flex-col items-center">
-                    <div class="silver-lightning-box"><div class="box-inner"><i class="fa-solid fa-camera text-white/90 text-xl"></i></div></div>
-                    <span class="text-[8px] text-white/70 mt-3 font-bold tracking-widest uppercase">Camera</span>
+                <button class="flex flex-col items-center group">
+                    <div class="silver-box">
+                        <i class="fa-solid fa-camera-retro text-white/90 text-xl z-10"></i>
+                    </div>
+                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Camera</span>
                 </button>
 
-                <button class="flex flex-col items-center">
-                    <div class="silver-lightning-box"><div class="box-inner"><i class="fa-solid fa-images text-white/90 text-xl"></i></div></div>
-                    <span class="text-[8px] text-white/70 mt-3 font-bold tracking-widest uppercase">Gallery</span>
+                <button class="flex flex-col items-center group">
+                    <div class="silver-box">
+                        <i class="fa-solid fa-images text-white/90 text-xl z-10"></i>
+                    </div>
+                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Gallery</span>
                 </button>
             </div>
             
-            <button onclick="closeAIVision()" class="cancel-text-link">
-                Cancel
+            <button onclick="closeAIVision()" class="w-full mt-10 py-3 text-[#FFD700] text-[9px] font-black tracking-[0.4em] uppercase border-t border-white/5 hover:bg-white/5 transition-all">
+                Terminate Link
             </button>
         </div>
     `;
@@ -343,24 +314,10 @@
         document.getElementById('ai-overlay').classList.add('opacity-100');
         document.getElementById('ai-sheet').classList.add('active');
     }, 10);
-}
-
-// RUFE SHAFIN (Wannan dole ne ya kasance a waje)
-function closeAIVision() {
-    const overlay = document.getElementById('ai-overlay');
-    const sheet = document.getElementById('ai-sheet');
-    
-    if(sheet) sheet.classList.remove('active');
-    if(overlay) overlay.classList.remove('opacity-100');
-    
-    setTimeout(() => {
-        if(sheet) sheet.remove();
-        if(overlay) overlay.remove();
-    }, 400);
-}
+        }
     
      
 </script>      
     
 </body>
-</html>
+            </html>
