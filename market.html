@@ -121,30 +121,31 @@
     50% { opacity: 1; }
     100% { transform: translateY(300%); opacity: 0; }
 }
-/* MODERN AI BOTTOM SHEET */
-/* CLEAN TEMU-STYLE SHEET */
+  /* ULTRA-LUXURY AI BOTTOM SHEET */
 .ai-bottom-sheet {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    background: #ffffff; /* Fari kamar na Temu */
-    border-top: 1px solid #eeeeee;
-    border-radius: 20px 20px 0 0;
+    background: rgba(15, 15, 15, 0.95); /* Deep Obsidian */
+    backdrop-filter: blur(15px);
+    border-top: 2px solid #FFD700;
+    border-radius: 45px 45px 0 0;
     z-index: 5000;
-    height: 280px; /* Matsakaicin girma */
+    height: 220px; /* Slim & Elegant */
     transform: translateY(100%);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 -5px 25px rgba(0,0,0,0.1);
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0 -20px 40px rgba(0,0,0,0.6);
 }
+
 .ai-bottom-sheet.active { transform: translateY(0); }
 
-/* LIGHT OVERLAY (Ba dusudusu) */
-.temu-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.3); /* Duhu kadan kawai */
-    z-index: 4999;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+/* GLOWING AMBIENCE */
+.ai-glow {
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 150px; height: 2px;
+    background: #FFD700;
+    box-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700;
+    opacity: 0.5;
 }
         
         
@@ -250,51 +251,64 @@
     if(existing) existing.remove();
 
     const menuHTML = `
-        <div id="ai-overlay" class="temu-overlay" onclick="closeAIVision()"></div>
-        <div id="ai-sheet" class="ai-bottom-sheet">
-            <div class="w-10 h-1 bg-gray-300 rounded-full mx-auto my-3"></div>
+        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-500"></div>
+        <div id="ai-sheet" class="ai-bottom-sheet overflow-hidden">
+            <div class="ai-glow"></div>
+            <div class="w-10 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
             
-            <div class="text-center py-2 border-b border-gray-50 mb-4">
-                <p class="text-[10px] text-green-600 font-bold"><i class="fa-solid fa-shield-check"></i> All data will be encrypted</p>
+            <div class="px-8 flex justify-between items-center mb-8">
+                <div>
+                    <h3 class="text-white font-black text-[11px] tracking-[0.3em] uppercase">Neural Link</h3>
+                    <p class="text-[#FFD700] text-[7px] font-bold tracking-widest opacity-80 uppercase">World Class AI Interface</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="text-white/50 text-[8px] font-bold uppercase tracking-tighter">System Ready</span>
+                </div>
             </div>
 
-            <div class="space-y-1 px-2">
-                <button class="w-full flex items-center p-4 hover:bg-gray-50 rounded-xl transition-colors">
-                    <div class="w-10 h-10 flex items-center justify-center text-gray-700 text-xl"><i class="fa-solid fa-camera"></i></div>
-                    <span class="ml-4 text-sm font-semibold text-gray-800">Take photo</span>
+            <div class="flex justify-around items-center px-4">
+                <button class="flex flex-col items-center group">
+                    <div class="w-14 h-14 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-2xl flex items-center justify-center text-black shadow-[0_0_20px_rgba(255,215,0,0.3)] group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-camera-viewfinder text-xl"></i>
+                    </div>
+                    <span class="text-[8px] text-white mt-3 font-black tracking-widest uppercase">Scan</span>
                 </button>
 
-                <button class="w-full flex items-center p-4 hover:bg-gray-50 rounded-xl transition-colors">
-                    <div class="w-10 h-10 flex items-center justify-center text-gray-700 text-xl"><i class="fa-solid fa-image"></i></div>
-                    <span class="ml-4 text-sm font-semibold text-gray-800">Select from album</span>
+                <button class="flex flex-col items-center group">
+                    <div class="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-white group-hover:bg-white/10 transition-all">
+                        <i class="fa-solid fa-bolt-lightning text-xl text-[#FFD700]"></i>
+                    </div>
+                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Intel</span>
                 </button>
 
-                <button class="w-full flex items-center p-4 hover:bg-gray-50 rounded-xl transition-colors">
-                    <div class="w-10 h-10 flex items-center justify-center text-gray-700 text-xl"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                    <span class="ml-4 text-sm font-semibold text-gray-800">Search history</span>
+                <button class="flex flex-col items-center group">
+                    <div class="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-white group-hover:bg-white/10 transition-all">
+                        <i class="fa-solid fa-grid-2 text-xl"></i>
+                    </div>
+                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Assets</span>
                 </button>
             </div>
-
-            <button onclick="closeAIVision()" class="w-full py-4 text-sm font-bold text-gray-900 border-t border-gray-100 mt-2">Cancel</button>
+            
+            <button onclick="closeAIVision()" class="w-full mt-8 py-2 text-white/30 text-[8px] font-bold tracking-[0.4em] uppercase hover:text-white transition-colors">Terminate</button>
         </div>
     `;
 
     document.body.insertAdjacentHTML('beforeend', menuHTML);
     setTimeout(() => {
-        document.getElementById('ai-overlay').style.opacity = '1';
+        document.getElementById('ai-overlay').classList.add('opacity-100');
         document.getElementById('ai-sheet').classList.add('active');
     }, 10);
 }
 
 function closeAIVision() {
-    document.getElementById('ai-overlay').style.opacity = '0';
+    document.getElementById('ai-overlay').classList.remove('opacity-100');
     document.getElementById('ai-sheet').classList.remove('active');
     setTimeout(() => {
         document.getElementById('ai-overlay').remove();
         document.getElementById('ai-sheet').remove();
-    }, 300);
+    }, 500);
 }
-    
     
     
 </script>      
