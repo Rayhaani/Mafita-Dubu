@@ -248,29 +248,30 @@
     width: 100%;
     box-sizing: border-box;
 }
-/* ELITE FUTURISTIC GRID */
+/* ULTRA-MODERN FLEX GRID */
 .duet-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Tilasta boxes biyu kacal */
-    gap: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
     padding: 10px;
     width: 100%;
     box-sizing: border-box;
 }
 
 .industry-mini-box {
+    flex: 1; /* Raba sararin gida biyu daidai */
     background: #fff;
-    border-radius: 22px;
-    height: 195px; /* Tsayin da zai dauki komai radau */
+    border-radius: 25px;
+    height: 210px; /* Mun kara tsayin don manyan rubutu */
     overflow: hidden;
-    position: relative; /* Dole don flipping ya yi aiki */
-    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    position: relative;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
     border: 1px solid #f0f0f0;
 }
 
 .display-area {
+    height: 145px; /* Tsaitsayen hoton */
     width: 100%;
-    height: 100%;
     position: relative;
 }
 
@@ -279,35 +280,31 @@
     top: 0; left: 0;
     width: 100%; height: 100%;
     opacity: 0;
-    transition: opacity 0.6s ease-in-out;
-    display: flex;
-    flex-direction: column;
+    transition: opacity 0.8s ease;
 }
 
-.item-slide.active { opacity: 1; z-index: 2; }
+.item-slide.active { opacity: 1; z-index: 5; }
 
 .item-slide img {
-    width: 100%;
-    height: 140px; /* Hoton ya mamaye kashi 75% */
+    width: 100%; height: 100%;
     object-fit: cover;
 }
 
 .item-details {
-    padding: 2px 10px;
-    height: 55px; /* Siririn sarari mai kyan gani */
+    height: 65px; /* Filin rubutu */
+    padding: 5px 10px;
     background: #fff;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 /* Girman rubutu na musamman */
 .top-row { display: flex; justify-content: space-between; align-items: center; }
-.item-name { font-size: 11px; font-weight: 850; color: #222; }
+.item-name { font-size: 11px; font-weight: 850; color: #111; }
 .item-stars { font-size: 13px; color: #000; font-weight: 900; }
-.item-price { font-size: 14px; font-weight: 950; color: #3E2723; text-align: center; margin-top: 2px; }
-        
-     
+.item-price { font-size: 14px; font-weight: 950; color: #3E2723; text-align: center; }
+    
     </style>
 </head>
 <body>
@@ -344,25 +341,16 @@
     </div>
 </div>
     
-    <div class="duet-grid">
+<div class="duet-grid">
     <div class="industry-mini-box">
         <div class="display-area" id="textileFlip">
             <div class="item-slide active">
-                <img src="HOTON_ATAMFA.jpg">
+                <img src="URL_ATAMFA">
                 <div class="item-details">
                     <div class="top-row"><span class="item-name">Atamfa</span><div class="item-stars" data-rating="5"></div></div>
                     <div class="item-price">₦12,500</div>
                 </div>
             </div>
-            </div>
-    </div>
-
-    <div class="industry-mini-box">
-        <div class="display-area" id="shoeFlip">
-            </div>
-    </div>
-    </div>
-    
             <div class="item-slide">
                 <img src="URL_LACE">
                 <div class="item-details">
@@ -370,94 +358,21 @@
                     <div class="item-price">₦45,000</div>
                 </div>
             </div>
-            <div class="item-slide">
-                <img src="URL_GETZNER">
-                <div class="item-details">
-                    <div class="top-row"><span class="item-name">Getzner</span><div class="item-stars" data-rating="5"></div></div>
-                    <div class="item-price">₦65,000</div>
-                </div>
             </div>
-            <div class="item-slide">
-                <img src="URL_MEN_LACE">
-                <div class="item-details">
-                    <div class="top-row"><span class="item-name">Men Lace</span><div class="item-stars" data-rating="5"></div></div>
-                    <div class="item-price">₦38,000</div>
-                </div>
-            </div>
-            <div class="item-slide">
-                <img src="URL_PANTIES">
-                <div class="item-details">
-                    <div class="top-row"><span class="item-name">Panties</span><div class="item-stars" data-rating="4"></div></div>
-                    <div class="item-price">₦8,500</div>
-                </div>
-            </div>
-        </div>
     </div>
-
-    <div class="industry-mini-box">
-        </div>
-    </div>
-    
-   
-        <div class="item-slide">
-            <img src="https://images.unsplash.com/photo-1594132049104-1f6b1e62834b?w=400">
-            <div class="item-details">
-                <div class="top-row">
-                    <span class="item-name">Premium Lace</span>
-                    <div class="item-stars" data-rating="4"></div>
-                </div>
-                <div class="item-price">₦45,000</div>
-            </div>
-        </div>
-        <div class="item-slide">
-            <img src="https://images.unsplash.com/photo-1610406831032-680415d487f9?w=400">
-            <div class="item-details">
-                <div class="top-row">
-                    <span class="item-name">Getzner Shadda</span>
-                    <div class="item-stars" data-rating="5"></div>
-                </div>
-                <div class="item-price">₦65,000</div>
-            </div>
-        </div>
-        <div class="item-slide">
-            <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=400">
-            <div class="item-details">
-                <div class="top-row">
-                    <span class="item-name">Men Lace Design</span>
-                    <div class="item-stars" data-rating="4"></div>
-                </div>
-                <div class="item-price">₦38,000</div>
-            </div>
-        </div>
-        <div class="item-slide">
-            <img src="https://images.unsplash.com/photo-1582533561751-ef6f6ab93a2e?w=400">
-            <div class="item-details">
-                <div class="top-row">
-                    <span class="item-name">Elite Panties</span>
-                    <div class="item-stars" data-rating="5"></div>
-                </div>
-                <div class="item-price">₦8,500</div>
-            </div>
-        </div>
-    </div>
-   </div>
-    
 
     <div class="industry-mini-box">
         <div class="display-area" id="shoeFlip">
             <div class="item-slide active">
-                <img src="HOTON_TAKAlMI.jpg">
+                <img src="URL_SHOE">
                 <div class="item-details">
-                    <div class="top-row">
-                        <span class="item-name">Nike Sports</span>
-                        <div class="item-stars" data-rating="4"></div>
-                    </div>
+                    <div class="top-row"><span class="item-name">Nike Sports</span><div class="item-stars" data-rating="5"></div></div>
                     <div class="item-price">₦35,000</div>
                 </div>
             </div>
         </div>
     </div>
-   </div>
+</div>
     
 
     <div id="search-overlay">
@@ -630,26 +545,23 @@ function renderStars() {
     });
 }
 
+function initFlip(id) {
+    let slides = document.querySelectorAll(`#${id} .item-slide`);
+    let current = 0;
+    if(slides.length <= 1) return;
+    setInterval(() => {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+    }, 3500);
+}
+
 window.onload = function() {
     initFlip('textileFlip');
     initFlip('shoeFlip');
     renderStars();
 };
     
-
-window.onload = function() {
-    initFlip('textileFlip');
-    initFlip('shoeFlip');
-};
-  function renderStars() {
-    document.querySelectorAll('.item-stars').forEach(el => {
-        const rating = parseInt(el.dataset.rating) || 0;
-        // Wannan zai nuna bakaken taurari ★ da fararen ☆ don ragowa
-        el.innerHTML = '★'.repeat(rating) + '☆'.repeat(5 - rating);
-    });
-}
-
-// Kira renderStars() a cikin window.onload
     
     
 // Tabbatar ka kira renderStars() a cikin window.onload
