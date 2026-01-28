@@ -199,38 +199,35 @@
 .cancel-breathing:active { transform: scale(0.9); }
        
       .temu-style-camera {
-    width: 34px; height: 28px; /* Mun rage su daga 42x34 */
+    width: 34px; height: 28px;
     background: #111;
     border-radius: 6px;
     display: flex; align-items: center; justify-content: center;
     position: relative;
     overflow: hidden;
-      } 
 }
 
+/* Wannan shi ne bangaren da muka gyara */
 .temu-style-camera::after {
     content: '';
     position: absolute;
-    inset: -2px;
+    width: 200%; /* Mun kara girman hasken daga 150% zuwa 200% */
+    height: 200%;
     background: conic-gradient(from 0deg, transparent, transparent, #FFD700);
     animation: rotate-glow 3s linear infinite;
 }
 
-/* Wannan Layer din ne zai sa hasken ya zama border */
 .camera-inner {
     position: absolute;
     inset: 1.5px;
     background: #111;
-    border-radius: 7px;
+    border-radius: 5px;
     z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
-@keyframes rotate-glow {
-    100% { transform: rotate(360deg); }
-}
+        
         
     </style>
 </head>
