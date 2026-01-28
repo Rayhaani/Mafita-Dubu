@@ -302,42 +302,36 @@
     const menuHTML = `
         <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
         <div id="ai-sheet" class="ai-bottom-sheet">
-            <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
+            <div class="w-12 h-1 bg-white/10 rounded-full mx-auto mt-4 mb-6"></div>
             
             <div class="px-10 flex justify-between items-center mb-8">
                 <div>
-                    <h2 class="text-white font-black text-[11px] tracking-[0.3em] uppercase italic">Neural Vision</h2>
-                    <p class="text-[#FFD700] text-[7px] font-bold tracking-widest uppercase opacity-80">Advanced Asset Identification</p>
+                    <h2 class="text-white font-black text-[10px] tracking-[0.4em] uppercase italic">Neural Vision</h2>
+                    <p class="text-[#FFD700] text-[7px] font-bold tracking-widest uppercase opacity-60">System Ready</p>
                 </div>
-                <i class="fa-solid fa-bolt-auto text-[#FFD700] text-xs animate-pulse"></i>
+                <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_#22c55e]"></div>
             </div>
 
             <div class="flex justify-around items-center px-4">
-                <button class="flex flex-col items-center group">
-                    <div class="silver-box active-scan">
-                        <i class="fa-solid fa-qrcode text-black text-xl"></i>
-                    </div>
-                    <span class="text-[8px] text-white mt-3 font-black tracking-widest uppercase">Scan</span>
+                <button class="flex flex-col items-center">
+                    <div class="silver-lightning-box"><div class="box-inner gold-scan-inner"><i class="fa-solid fa-expand text-xl"></i></div></div>
+                    <span class="text-[8px] text-white mt-3 font-bold tracking-widest uppercase">Scan</span>
                 </button>
 
-                <button class="flex flex-col items-center group">
-                    <div class="silver-box">
-                        <i class="fa-solid fa-camera-retro text-white/90 text-xl z-10"></i>
-                    </div>
-                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Camera</span>
+                <button class="flex flex-col items-center">
+                    <div class="silver-lightning-box"><div class="box-inner"><i class="fa-solid fa-camera text-white/90 text-xl"></i></div></div>
+                    <span class="text-[8px] text-white/70 mt-3 font-bold tracking-widest uppercase">Camera</span>
                 </button>
 
-                <button class="flex flex-col items-center group">
-                    <div class="silver-box">
-                        <i class="fa-solid fa-images text-white/90 text-xl z-10"></i>
-                    </div>
-                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Gallery</span>
+                <button class="flex flex-col items-center">
+                    <div class="silver-lightning-box"><div class="box-inner"><i class="fa-solid fa-images text-white/90 text-xl"></i></div></div>
+                    <span class="text-[8px] text-white/70 mt-3 font-bold tracking-widest uppercase">Gallery</span>
                 </button>
             </div>
             
-            <button onclick="closeAIVision()" class="cancel-breathing">
-    Cancel
-</button>
+            <button type="button" onclick="closeAIVision()" class="cancel-breathing">
+                Cancel
+            </button>
         </div>
     `;
 
@@ -346,7 +340,20 @@
         document.getElementById('ai-overlay').classList.add('opacity-100');
         document.getElementById('ai-sheet').classList.add('active');
     }, 10);
-        }
+}
+
+function closeAIVision() {
+    const overlay = document.getElementById('ai-overlay');
+    const sheet = document.getElementById('ai-sheet');
+    
+    if(sheet) sheet.classList.remove('active');
+    if(overlay) overlay.classList.remove('opacity-100');
+    
+    setTimeout(() => {
+        if(sheet) sheet.remove();
+        if(overlay) overlay.remove();
+    }, 400);
+               }
     
      
 </script>      
