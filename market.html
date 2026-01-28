@@ -265,7 +265,48 @@
     text-align: left;
 }
         
-        
+    .industry-box {
+    background: white;
+    border-radius: 28px;
+    padding: 15px;
+    margin: 20px auto;
+    width: 90%;
+    border: 1.5px solid #F0EBE3;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+}
+
+.display-area {
+    position: relative;
+    width: 100%;
+    height: 320px; /* Matsakaicin girman katin iPhone */
+    overflow: hidden;
+    border-radius: 22px;
+}
+
+.item-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.item-slide.active { opacity: 1; position: relative; }
+
+.item-slide img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 22px 22px 0 0;
+}
+
+.item-details {
+    padding: 15px;
+    background: #fff;
+    text-align: center;
+        }
+    
     </style>
 </head>
 <body>
@@ -302,45 +343,34 @@
     </div>
 </div>
     
-        <div class="duet-container">
-    <div class="flex justify-between items-center mb-3 px-1">
-        <h3 class="text-[#5D4037] font-black text-xs uppercase tracking-wider">Textiles & Apparel</h3>
-        <span class="text-[9px] font-bold text-[#8B6508]">Duba Duka</span>
-    </div>
-
-    <div class="auto-slider" id="textileSlider">
-        <div class="iphone-card">
-            <img src="https://images.unsplash.com/photo-1584273103988-4158655073e5?w=300">
-            <div class="iphone-info">
-                <h4 class="text-[10px] font-black text-gray-800">Atamfa (Wax)</h4>
-                <p class="text-green-600 font-black text-xs">₦12,500</p>
+        <div class="industry-box">
+    <h3 class="text-[#5D4037] font-black text-[10px] uppercase tracking-widest mb-3 text-center">Textiles & Apparel</h3>
+    
+    <div class="display-area" id="textileDisplay">
+        <div class="item-slide active">
+            <img src="https://images.unsplash.com/photo-1584273103988-4158655073e5?w=500">
+            <div class="item-details">
+                <h4 class="font-bold text-xs">Atamfa (Wax)</h4>
+                <p class="text-green-600 font-black">₦12,500</p>
             </div>
         </div>
 
-        <div class="iphone-card">
-            <img src="https://images.unsplash.com/photo-1594132049104-1f6b1e62834b?w=300">
-            <div class="iphone-info">
-                <h4 class="text-[10px] font-black text-gray-800">Premium Lace</h4>
-                <p class="text-green-600 font-black text-xs">₦45,000</p>
+        <div class="item-slide">
+            <img src="https://images.unsplash.com/photo-1594132049104-1f6b1e62834b?w=500">
+            <div class="item-details">
+                <h4 class="font-bold text-xs">Premium Lace</h4>
+                <p class="text-green-600 font-black">₦45,000</p>
             </div>
         </div>
 
-        <div class="iphone-card">
-            <img src="https://images.unsplash.com/photo-1606233513365-276632c02602?w=300">
-            <div class="iphone-info">
-                <h4 class="text-[10px] font-black text-gray-800">Designer Gyale</h4>
-                <p class="text-green-600 font-black text-xs">₦8,500</p>
+        <div class="item-slide">
+            <img src="https://images.unsplash.com/photo-1610444583737-233777d61247?w=500">
+            <div class="item-details">
+                <h4 class="font-bold text-xs">Gitzener Shadda</h4>
+                <p class="text-green-600 font-black">₦75,000</p>
             </div>
         </div>
-
-        <div class="iphone-card">
-            <img src="https://images.unsplash.com/photo-1610444583737-233777d61247?w=300">
-            <div class="iphone-info">
-                <h4 class="text-[10px] font-black text-gray-800">Gitzener Shadda</h4>
-                <p class="text-green-600 font-black text-xs">₦75,000</p>
-            </div>
-        </div>
-
+        
         </div>
         </div>
     
@@ -485,7 +515,20 @@ function autoScroll() {
 // Zai rinka sliding duk bayan sakan 3
 setInterval(autoScroll, 3000);
     
-     
+   function startFlipping(boxId) {
+    const slides = document.querySelectorAll(`#${boxId} .item-slide`);
+    let current = 0;
+
+    setInterval(() => {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+    }, 4000); // Zai rinka canzawa duk bayan sakan 4
+}
+
+// Fara aikin Textile Box
+startFlipping('textileDisplay');
+    
 </script>      
     
 </body>
