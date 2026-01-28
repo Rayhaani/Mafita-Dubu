@@ -248,39 +248,59 @@
     width: 100%;
     box-sizing: border-box;
 }
-
+/* ELITE ULTRA-SLIM LAYOUT */
 .industry-mini-box {
     background: white;
-    border-radius: 20px;
+    border-radius: 22px; /* Lankwasar iPhone */
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
     border: 1px solid #f0f0f0;
-    height: 190px; /* Mun dawo da tsayin don komai ya zauna */
+    height: 185px; /* Tsawon box din gaba daya */
     display: flex;
     flex-direction: column;
-}
-
-.display-area {
-    flex: 1; /* Hoto ya dauki sauran filin */
-    position: relative;
-    overflow: hidden;
 }
 
 .item-slide img {
     width: 100%;
-    height: 145px; /* Girman hoton ya fito radau */
+    height: 140px; /* Hoton ya mamaye 80% na box din */
     object-fit: cover;
 }
 
 .item-details {
-    padding: 4px 8px;
+    padding: 2px 8px; /* Matse padding din sosai */
     background: #fff;
-    height: 45px; /* Matsakaicin siriri mai kyau */
+    height: 40px; /* Mun rage tsayin sararin rubutun zuwa 40px kacal */
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-        
+
+.top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: -2px; /* Matse rubutun kusa da juna */
+}
+
+.item-name {
+    font-size: 8px;
+    font-weight: 800;
+    color: #333;
+}
+
+.item-stars {
+    color: #000; /* Bakaken taurari */
+    font-size: 11px; /* Girman da ka nema */
+    font-weight: bold;
+}
+
+.item-price {
+    font-size: 10px;
+    font-weight: 900;
+    color: #3E2723; /* Espresso Brown */
+    text-align: center;
+    width: 100%;
+}
      
     </style>
 </head>
