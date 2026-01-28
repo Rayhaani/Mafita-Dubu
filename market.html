@@ -248,33 +248,61 @@
     width: 100%;
     box-sizing: border-box;
 }
-/* FUTURISTIC ELITE DESIGN */
-.industry-mini-box {
-    background: #ffffff;
-    border-radius: 24px;
-    height: 200px; /* Mun ɗan ƙara tsayi don manyan rubutu */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05); /* Shadow mai santsi */
-    border: 1px solid rgba(0,0,0,0.03);
-    transition: transform 0.3s ease;
+/* FUTURISTIC MASTER LAYOUT */
+.duet-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 10px;
 }
 
-.industry-mini-box:hover {
-    transform: translateY(-5px); /* Boxes ɗin su rinka ɗan tashi idan an taɓa */
+.industry-mini-box {
+    background: #fff;
+    border-radius: 24px;
+    height: 205px; /* Tsayin da zai dauki manyan rubutu */
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    border: 1px solid #f0f0f0;
+}
+
+.display-area {
+    height: 100%;
+    width: 100%;
+}
+
+.item-slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease; /* Transition mai santsi */
+    display: flex;
+    flex-direction: column;
+}
+
+.item-slide.active { opacity: 1; z-index: 1; }
+
+.item-slide img {
+    width: 100%;
+    height: 145px; /* Girman hoton */
+    object-fit: cover;
 }
 
 .item-details {
-    padding: 4px 10px;
-    background: linear-gradient(to bottom, #ffffff, #fafafa); /* Gradient mai santsi */
-    height: 45px;
+    padding: 2px 10px;
+    height: 60px;
+    background: #fff;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 /* Girman rubutu yadda ka nema */
+.top-row { display: flex; justify-content: space-between; align-items: center; }
 .item-name { font-size: 11px; font-weight: 850; color: #222; }
-.item-stars { font-size: 14px; color: #000; font-weight: 900; }
-.item-price { font-size: 14px; font-weight: 950; color: #3E2723; text-align: center; }
+.item-stars { font-size: 13px; color: #000; font-weight: 900; }
+.item-price { font-size: 14px; font-weight: 950; color: #3E2723; text-align: center; margin-top: 2px; }
         
      
     </style>
@@ -313,19 +341,52 @@
     </div>
 </div>
     
-    
-   <div class="industry-mini-box">
-    <div class="display-area" id="textileFlip">
-        <div class="item-slide active">
-            <img src="https://images.unsplash.com/photo-1584273103988-4158655073e5?w=400">
-            <div class="item-details">
-                <div class="top-row">
-                    <span class="item-name">Atamfa Wax</span>
-                    <div class="item-stars" data-rating="5"></div>
+    <div class="duet-grid">
+    <div class="industry-mini-box">
+        <div class="display-area" id="textileFlip">
+            <div class="item-slide active">
+                <img src="URL_ATAMFA">
+                <div class="item-details">
+                    <div class="top-row"><span class="item-name">Atamfa</span><div class="item-stars" data-rating="5"></div></div>
+                    <div class="item-price">₦12,500</div>
                 </div>
-                <div class="item-price">₦12,500</div>
+            </div>
+            <div class="item-slide">
+                <img src="URL_LACE">
+                <div class="item-details">
+                    <div class="top-row"><span class="item-name">Premium Lace</span><div class="item-stars" data-rating="4"></div></div>
+                    <div class="item-price">₦45,000</div>
+                </div>
+            </div>
+            <div class="item-slide">
+                <img src="URL_GETZNER">
+                <div class="item-details">
+                    <div class="top-row"><span class="item-name">Getzner</span><div class="item-stars" data-rating="5"></div></div>
+                    <div class="item-price">₦65,000</div>
+                </div>
+            </div>
+            <div class="item-slide">
+                <img src="URL_MEN_LACE">
+                <div class="item-details">
+                    <div class="top-row"><span class="item-name">Men Lace</span><div class="item-stars" data-rating="5"></div></div>
+                    <div class="item-price">₦38,000</div>
+                </div>
+            </div>
+            <div class="item-slide">
+                <img src="URL_PANTIES">
+                <div class="item-details">
+                    <div class="top-row"><span class="item-name">Panties</span><div class="item-stars" data-rating="4"></div></div>
+                    <div class="item-price">₦8,500</div>
+                </div>
             </div>
         </div>
+    </div>
+
+    <div class="industry-mini-box">
+        </div>
+    </div>
+    
+   
         <div class="item-slide">
             <img src="https://images.unsplash.com/photo-1594132049104-1f6b1e62834b?w=400">
             <div class="item-details">
@@ -541,12 +602,28 @@ setInterval(autoScroll, 3000);
   function initFlip(id) {
     let slides = document.querySelectorAll(`#${id} .item-slide`);
     let current = 0;
+    if(slides.length === 0) return;
+    
     setInterval(() => {
         slides[current].classList.remove('active');
         current = (current + 1) % slides.length;
         slides[current].classList.add('active');
-    }, 3000); 
-    }
+    }, 3000);
+}
+
+function renderStars() {
+    document.querySelectorAll('.item-stars').forEach(el => {
+        const r = parseInt(el.dataset.rating) || 0;
+        el.innerHTML = '★'.repeat(r) + '☆'.repeat(5-r);
+    });
+}
+
+window.onload = function() {
+    initFlip('textileFlip');
+    initFlip('shoeFlip');
+    renderStars();
+};
+    
 
 window.onload = function() {
     initFlip('textileFlip');
