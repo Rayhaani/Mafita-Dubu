@@ -122,29 +122,31 @@
     100% { transform: translateY(300%); opacity: 0; }
 }
 /* MODERN AI BOTTOM SHEET */
-/* RAGE GIRMA DA CURE DUSUDUSU */
+/* CLEAN TEMU-STYLE SHEET */
 .ai-bottom-sheet {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    background: #121212; /* Black mai kyau */
-    border-top: 1.5px solid rgba(255, 215, 0, 0.4);
-    border-radius: 30px 30px 0 0;
+    background: #ffffff; /* Fari kamar na Temu */
+    border-top: 1px solid #eeeeee;
+    border-radius: 20px 20px 0 0;
     z-index: 5000;
-    height: 220px; /* Mun rage tsawon sa */
+    height: 280px; /* Matsakaicin girma */
     transform: translateY(100%);
-    transition: transform 0.3s ease-out;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 -5px 25px rgba(0,0,0,0.1);
 }
+.ai-bottom-sheet.active { transform: translateY(0); }
 
-/* RAGE DUHUN BAYA (Like Temu) */
+/* LIGHT OVERLAY (Ba dusudusu) */
 .temu-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.25); /* Haske kadan kamar na Temu */
-    backdrop-filter: blur(2px); /* Rage dusudusu */
+    background: rgba(0, 0, 0, 0.3); /* Duhu kadan kawai */
     z-index: 4999;
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s ease;
 }
+        
         
     </style>
 </head>
@@ -250,37 +252,30 @@
     const menuHTML = `
         <div id="ai-overlay" class="temu-overlay" onclick="closeAIVision()"></div>
         <div id="ai-sheet" class="ai-bottom-sheet">
-            <div class="w-8 h-1 bg-gray-600 rounded-full mx-auto my-3"></div>
+            <div class="w-10 h-1 bg-gray-300 rounded-full mx-auto my-3"></div>
             
-            <div class="flex justify-between items-center px-6 mb-4">
-                <span class="text-[#FFD700] text-[8px] font-black tracking-widest uppercase opacity-70">AI Neural Link</span>
-                <span class="text-green-500 text-[8px] font-bold"><i class="fa-solid fa-shield-halved"></i> Encrypted</span>
+            <div class="text-center py-2 border-b border-gray-50 mb-4">
+                <p class="text-[10px] text-green-600 font-bold"><i class="fa-solid fa-shield-check"></i> All data will be encrypted</p>
             </div>
 
-            <div class="flex justify-around items-center mt-4">
-                <button class="flex flex-col items-center">
-                    <div class="w-12 h-12 bg-white/5 border border-[#FFD700]/20 rounded-2xl flex items-center justify-center text-[#FFD700]">
-                        <i class="fa-solid fa-camera-retro text-xl"></i>
-                    </div>
-                    <span class="text-[7px] text-white mt-2 font-bold tracking-tighter">TAKE PHOTO</span>
+            <div class="space-y-1 px-2">
+                <button class="w-full flex items-center p-4 hover:bg-gray-50 rounded-xl transition-colors">
+                    <div class="w-10 h-10 flex items-center justify-center text-gray-700 text-xl"><i class="fa-solid fa-camera"></i></div>
+                    <span class="ml-4 text-sm font-semibold text-gray-800">Take photo</span>
                 </button>
 
-                <button class="flex flex-col items-center">
-                    <div class="w-12 h-12 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-white/80">
-                        <i class="fa-solid fa-images text-xl"></i>
-                    </div>
-                    <span class="text-[7px] text-white/80 mt-2 font-bold tracking-tighter">ALBUM</span>
+                <button class="w-full flex items-center p-4 hover:bg-gray-50 rounded-xl transition-colors">
+                    <div class="w-10 h-10 flex items-center justify-center text-gray-700 text-xl"><i class="fa-solid fa-image"></i></div>
+                    <span class="ml-4 text-sm font-semibold text-gray-800">Select from album</span>
                 </button>
 
-                <button class="flex flex-col items-center">
-                    <div class="w-12 h-12 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-white/50">
-                        <i class="fa-solid fa-clock-rotate-left text-lg"></i>
-                    </div>
-                    <span class="text-[7px] text-white/50 mt-2 font-bold tracking-tighter">HISTORY</span>
+                <button class="w-full flex items-center p-4 hover:bg-gray-50 rounded-xl transition-colors">
+                    <div class="w-10 h-10 flex items-center justify-center text-gray-700 text-xl"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    <span class="ml-4 text-sm font-semibold text-gray-800">Search history</span>
                 </button>
             </div>
 
-            <button onclick="closeAIVision()" class="w-full mt-6 text-gray-500 text-[9px] font-bold tracking-[0.2em] uppercase">Cancel</button>
+            <button onclick="closeAIVision()" class="w-full py-4 text-sm font-bold text-gray-900 border-t border-gray-100 mt-2">Cancel</button>
         </div>
     `;
 
@@ -299,6 +294,7 @@ function closeAIVision() {
         document.getElementById('ai-sheet').remove();
     }, 300);
 }
+    
     
     
 </script>      
