@@ -166,29 +166,41 @@
 
 .gold-scan-inner { background: linear-gradient(145deg, #FFD700, #B8860B) !important; color: #000; }
         
-       /* ELITE CANCEL BUTTON DESIGN */
-.cancel-pill-btn {
+       /* ELITE BREATHING CANCEL TEXT */
+.cancel-text-link {
     display: block;
-    width: 160px; /* Rage girman */
-    margin: 30px auto 10px;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 215, 0, 0.3); /* Siririn layin zinariya */
-    border-radius: 30px;
+    width: fit-content;
+    margin: 25px auto 10px;
     color: #FFD700;
-    font-size: 9px;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-align: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    letter-spacing: 1px;
+    /* Animation na numfashi */
+    animation: breathing-glow 2.5s ease-in-out infinite;
+    transition: transform 0.2s ease;
 }
 
-.cancel-pill-btn:active {
-    transform: scale(0.95);
-    background: rgba(255, 215, 0, 0.1);
+@keyframes breathing-glow {
+    0%, 100% { 
+        opacity: 0.5; 
+        transform: scale(1); 
+        text-shadow: 0 0 0px rgba(255, 215, 0, 0);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.08); 
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    }
 }
+
+.cancel-text-link:active {
+    transform: scale(0.9);
+}
+        
     </style>
 </head>
 <body>
@@ -291,49 +303,37 @@
     if(existing) existing.remove();
 
     const menuHTML = `
-        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/20 z-[4999] opacity-0 transition-opacity duration-300"></div>
+        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
         <div id="ai-sheet" class="ai-bottom-sheet">
             <div class="w-12 h-1 bg-white/10 rounded-full mx-auto mt-4 mb-6"></div>
             
             <div class="px-10 flex justify-between items-center mb-8">
                 <div>
                     <h2 class="text-white font-black text-[10px] tracking-[0.4em] uppercase italic">Neural Vision</h2>
-                    <p class="text-[#FFD700] text-[7px] font-bold tracking-widest uppercase opacity-80">Advanced Asset Identification</p>
+                    <p class="text-[#FFD700] text-[7px] font-bold tracking-widest uppercase opacity-60">System Ready</p>
                 </div>
-                <i class="fa-solid fa-bolt-auto text-[#FFD700] text-xs animate-pulse"></i>
+                <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_#22c55e]"></div>
             </div>
 
             <div class="flex justify-around items-center px-4">
                 <button class="flex flex-col items-center">
-                    <div class="silver-lightning-box">
-                        <div class="box-inner gold-scan-inner">
-                            <i class="fa-solid fa-qrcode text-black text-xl"></i>
-                        </div>
-                    </div>
-                    <span class="text-[8px] text-white mt-3 font-black tracking-widest uppercase">Scan</span>
+                    <div class="silver-lightning-box"><div class="box-inner gold-scan-inner"><i class="fa-solid fa-expand text-xl"></i></div></div>
+                    <span class="text-[8px] text-white mt-3 font-bold tracking-widest uppercase">Scan</span>
                 </button>
 
                 <button class="flex flex-col items-center">
-                    <div class="silver-lightning-box">
-                        <div class="box-inner">
-                            <i class="fa-solid fa-camera-retro text-white/90 text-xl z-10"></i>
-                        </div>
-                    </div>
-                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Camera</span>
+                    <div class="silver-lightning-box"><div class="box-inner"><i class="fa-solid fa-camera text-white/90 text-xl"></i></div></div>
+                    <span class="text-[8px] text-white/70 mt-3 font-bold tracking-widest uppercase">Camera</span>
                 </button>
 
                 <button class="flex flex-col items-center">
-                    <div class="silver-lightning-box">
-                        <div class="box-inner">
-                            <i class="fa-solid fa-images text-white/90 text-xl z-10"></i>
-                        </div>
-                    </div>
-                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Gallery</span>
+                    <div class="silver-lightning-box"><div class="box-inner"><i class="fa-solid fa-images text-white/90 text-xl"></i></div></div>
+                    <span class="text-[8px] text-white/70 mt-3 font-bold tracking-widest uppercase">Gallery</span>
                 </button>
             </div>
             
-            <button onclick="closeAIVision()" class="cancel-pill-btn">
-                Soke Bincike
+            <button onclick="closeAIVision()" class="cancel-text-link">
+                Cancel
             </button>
         </div>
     `;
@@ -343,7 +343,22 @@
         document.getElementById('ai-overlay').classList.add('opacity-100');
         document.getElementById('ai-sheet').classList.add('active');
     }, 10);
- }
+}
+
+// RUFE SHAFIN (Wannan dole ne ya kasance a waje)
+function closeAIVision() {
+    const overlay = document.getElementById('ai-overlay');
+    const sheet = document.getElementById('ai-sheet');
+    
+    if(sheet) sheet.classList.remove('active');
+    if(overlay) overlay.classList.remove('opacity-100');
+    
+    setTimeout(() => {
+        if(sheet) sheet.remove();
+        if(overlay) overlay.remove();
+    }, 400);
+}
+    
      
 </script>      
     
