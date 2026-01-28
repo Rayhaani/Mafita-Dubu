@@ -121,23 +121,26 @@
     50% { opacity: 1; }
     100% { transform: translateY(300%); opacity: 0; }
 }
-.ai-scan-line {
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+/* MODERN AI BOTTOM SHEET */
+.ai-bottom-sheet {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(180deg, #1A1A1A 0%, #000000 100%);
+    border-top: 2px solid #FFD700;
+    border-radius: 40px 40px 0 0;
+    z-index: 5000;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ai-bottom-sheet.active { transform: translateY(0); }
+
+.scan-line-mini {
+    height: 1px;
     background: linear-gradient(90deg, transparent, #FFD700, transparent);
-    box-shadow: 0 0 15px #FFD700; animation: scan-line 3s linear infinite;
+    width: 100%; position: absolute; top: 50px;
+    animation: scan-move 2s infinite;
 }
-
-/* Wannan zai gyara tazarar dake damunka */
-.header-spacer { margin-top: 25px !important; margin-bottom: 25px !important; }
-
-/* Futuristic Glass Effect */
-.glass-panel {
-    background: rgba(26, 26, 26, 0.95);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 215, 0, 0.2);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-}
-        
+@keyframes scan-move { 0% { top: 60px; } 100% { top: 250px; } }
         
     </style>
 </head>
@@ -237,32 +240,56 @@
     }
 
  function openAICamera() {
-    const overlayHTML = `
-        <div id="ai-vision" class="fixed inset-0 z-[5000] flex items-center justify-center bg-black/80 backdrop-blur-md p-6">
-            <div class="glass-panel w-full max-w-xs rounded-[40px] p-8 relative overflow-hidden animate-slide-up">
-                <div class="ai-scan-line"></div>
-                <div class="text-center mb-10">
-                    <div class="w-16 h-16 border border-[#FFD700]/30 rounded-full mx-auto flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-microchip text-[#FFD700] text-2xl animate-pulse"></i>
-                    </div>
-                    <p class="text-[#FFD700] text-[9px] font-black tracking-[0.3em] uppercase">AI Neural Link Active</p>
-                </div>
-                <div class="space-y-4">
-                    <button class="w-full flex items-center p-4 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-all">
-                        <div class="w-10 h-10 bg-[#FFD700] rounded-xl flex items-center justify-center text-black shadow-[0_0_15px_rgba(255,215,0,0.3)]"><i class="fa-solid fa-camera"></i></div>
-                        <span class="ml-4 text-white text-[10px] font-bold tracking-widest">LIVE SCAN</span>
-                    </button>
-                    <button class="w-full flex items-center p-4 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-all">
-                        <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center text-white"><i class="fa-solid fa-images"></i></div>
-                        <span class="ml-4 text-white text-[10px] font-bold tracking-widest">GALLERY</span>
-                    </button>
-                </div>
-                <button onclick="document.getElementById('ai-vision').remove()" class="w-full mt-8 py-2 text-gray-500 text-[9px] font-bold tracking-widest uppercase">Terminate</button>
+    const oldMenu = document.getElementById('ai-sheet');
+    if(oldMenu) oldMenu.remove();
+
+    const menuHTML = `
+        <div id="ai-sheet-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[4999] opacity-0 transition-opacity duration-300"></div>
+        <div id="ai-sheet" class="ai-bottom-sheet p-8 shadow-2xl">
+            <div class="w-12 h-1.5 bg-gray-700 rounded-full mx-auto mb-8"></div>
+            <div class="scan-line-mini"></div>
+            
+            <div class="flex items-center justify-between mb-8 px-2">
+                <h3 class="text-[#FFD700] font-black tracking-[0.2em] text-[10px] uppercase">AI Neural Scanner</h3>
+                <i class="fa-solid fa-lock text-green-500 text-[9px] opacity-70"> Encrypted</i>
             </div>
+
+            <div class="grid grid-cols-2 gap-6 mb-10">
+                <button class="flex flex-col items-center group">
+                    <div class="w-16 h-16 bg-white/5 border border-[#FFD700]/20 rounded-3xl flex items-center justify-center text-[#FFD700] hover:bg-[#FFD700]/10 transition-all">
+                        <i class="fa-solid fa-camera-retro text-2xl"></i>
+                    </div>
+                    <span class="text-[9px] font-bold text-white mt-3 tracking-widest uppercase">Take Photo</span>
+                </button>
+
+                <button class="flex flex-col items-center group">
+                    <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-3xl flex items-center justify-center text-white hover:bg-white/10 transition-all">
+                        <i class="fa-solid fa-images text-2xl"></i>
+                    </div>
+                    <span class="text-[9px] font-bold text-white/70 mt-3 tracking-widest uppercase">Album</span>
+                </button>
+            </div>
+
+            <button onclick="closeAIVision()" class="w-full py-4 text-gray-500 text-[10px] font-black tracking-[0.3em] uppercase">Cancel</button>
         </div>
     `;
-    document.body.insertAdjacentHTML('beforeend', overlayHTML);
- }
+
+    document.body.insertAdjacentHTML('beforeend', menuHTML);
+    setTimeout(() => {
+        document.getElementById('ai-sheet-overlay').classList.add('opacity-100');
+        document.getElementById('ai-sheet').classList.add('active');
+    }, 10);
+}
+
+function closeAIVision() {
+    document.getElementById('ai-sheet-overlay').classList.remove('opacity-100');
+    document.getElementById('ai-sheet').classList.remove('active');
+    setTimeout(() => {
+        document.getElementById('ai-sheet-overlay').remove();
+        document.getElementById('ai-sheet').remove();
+    }, 400);
+}
+    
     
 </script>      
     
