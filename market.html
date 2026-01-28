@@ -232,80 +232,54 @@
     to { transform: rotate(360deg); }
       }
 
-/* TSARE-TSAREN IPHONE CARD DUET */
-.duet-container {
-    padding: 0 15px;
-    margin-top: 20px;
+/* WANNAN KAWAI ZAKA BARWA BOXES DIN */
+.duet-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Raba layin gida biyu */
+    gap: 10px;
+    padding: 10px 15px;
 }
 
-.auto-slider {
-    display: flex;
-    gap: 12px;
-    overflow-x: hidden; /* Mun boye shi don mu bar JS ya yi sliding */
-    padding-bottom: 10px;
-}
-
-.iphone-card {
-    min-width: calc(50% - 6px); /* Yadda biyu zasu zauna a jere */
+.industry-mini-box {
     background: white;
-    border-radius: 22px; /* Lankwasa irin ta iPhone */
+    border-radius: 20px; /* Lankwasar iPhone */
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    border: 1px solid #f0f0f0;
-}
-
-.iphone-card img {
-    width: 100%;
-    height: 140px; /* Matsakaicin girma don ya zauna biyu */
-    object-fit: cover;
-}
-
-.iphone-info {
-    padding: 10px;
-    text-align: left;
-}
-        
-    .industry-box {
-    background: white;
-    border-radius: 28px;
-    padding: 15px;
-    margin: 20px auto;
-    width: 90%;
-    border: 1.5px solid #F0EBE3;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid #F0EBE3;
+    height: 200px; /* Matsakaicin girma */
+    position: relative;
 }
 
 .display-area {
     position: relative;
     width: 100%;
-    height: 320px; /* Matsakaicin girman katin iPhone */
-    overflow: hidden;
-    border-radius: 22px;
+    height: 100%;
 }
 
 .item-slide {
     position: absolute;
     inset: 0;
     opacity: 0;
-    transition: opacity 1s ease-in-out;
+    transition: opacity 0.8s ease-in-out;
     display: flex;
     flex-direction: column;
 }
 
-.item-slide.active { opacity: 1; position: relative; }
+.item-slide.active { 
+    opacity: 1; 
+    z-index: 10; 
+}
 
 .item-slide img {
     width: 100%;
-    height: 230px;
+    height: 130px; /* Girman hoton a cikin karamin box */
     object-fit: cover;
-    border-radius: 22px 22px 0 0;
 }
 
 .item-details {
-    padding: 15px;
-    background: #fff;
+    padding: 6px;
     text-align: center;
-        }
+    }
     
     </style>
 </head>
@@ -343,35 +317,44 @@
     </div>
 </div>
     
-        <div class="industry-box">
-    <h3 class="text-[#5D4037] font-black text-[10px] uppercase tracking-widest mb-3 text-center">Textiles & Apparel</h3>
-    
-    <div class="display-area" id="textileDisplay">
-        <div class="item-slide active">
-            <img src="https://images.unsplash.com/photo-1584273103988-4158655073e5?w=500">
-            <div class="item-details">
-                <h4 class="font-bold text-xs">Atamfa (Wax)</h4>
-                <p class="text-green-600 font-black">₦12,500</p>
+        <div class="duet-grid">
+    <div class="industry-mini-box">
+        <div class="display-area" id="textileFlip">
+            <div class="item-slide active">
+                <img src="https://images.unsplash.com/photo-1584273103988-4158655073e5?w=300">
+                <div class="item-details">
+                    <h4 class="text-[9px] font-black">Atamfa</h4>
+                    <p class="text-green-600 font-bold text-[10px]">₦12,500</p>
+                </div>
+            </div>
+            <div class="item-slide">
+                <img src="https://images.unsplash.com/photo-1610444583737-233777d61247?w=300">
+                <div class="item-details">
+                    <h4 class="text-[9px] font-black">Shadda</h4>
+                    <p class="text-green-600 font-bold text-[10px]">₦75,000</p>
+                </div>
             </div>
         </div>
+    </div>
 
-        <div class="item-slide">
-            <img src="https://images.unsplash.com/photo-1594132049104-1f6b1e62834b?w=500">
-            <div class="item-details">
-                <h4 class="font-bold text-xs">Premium Lace</h4>
-                <p class="text-green-600 font-black">₦45,000</p>
+    <div class="industry-mini-box">
+        <div class="display-area" id="shoeFlip">
+            <div class="item-slide active">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300">
+                <div class="item-details">
+                    <h4 class="text-[9px] font-black">Nike Red</h4>
+                    <p class="text-green-600 font-bold text-[10px]">₦35,000</p>
+                </div>
+            </div>
+            <div class="item-slide">
+                <img src="https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=300">
+                <div class="item-details">
+                    <h4 class="text-[9px] font-black">Leather Boot</h4>
+                    <p class="text-green-600 font-bold text-[10px]">₦28,000</p>
+                </div>
             </div>
         </div>
-
-        <div class="item-slide">
-            <img src="https://images.unsplash.com/photo-1610444583737-233777d61247?w=500">
-            <div class="item-details">
-                <h4 class="font-bold text-xs">Gitzener Shadda</h4>
-                <p class="text-green-600 font-black">₦75,000</p>
-            </div>
-        </div>
-        
-        </div>
+    </div>
         </div>
     
 
@@ -528,6 +511,22 @@ setInterval(autoScroll, 3000);
 
 // Fara aikin Textile Box
 startFlipping('textileDisplay');
+
+    function initFlip(containerId) {
+    const slides = document.querySelectorAll(`#${containerId} .item-slide`);
+    let current = 0;
+    setInterval(() => {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+    }, 3500); // Sakan 3 da rabi
+}
+
+// Kunna flipping din boxes din
+window.onload = function() {
+    initFlip('textileFlip');
+    initFlip('shoeFlip');
+};
     
 </script>      
     
