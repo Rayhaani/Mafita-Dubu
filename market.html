@@ -121,35 +121,50 @@
     50% { opacity: 1; }
     100% { transform: translateY(300%); opacity: 0; }
 }
-        /* ELITE CYBER-GLASS SHEET */
+        /* ELITE SILVER-GLOW SHEET */
 .ai-bottom-sheet {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    background: rgba(10, 10, 10, 0.95);
-    backdrop-filter: blur(10px); /* Mun rage shi don rage dusudusu */
-    border-top: 2px solid rgba(255, 215, 0, 0.5);
+    background: #0a0a0a;
+    /* Walkiyar Zarba (Silver Border) a zagaye */
+    border: 1.5px solid rgba(220, 220, 220, 0.4);
     border-radius: 40px 40px 0 0;
     z-index: 5000;
-    height: 250px;
+    height: 260px;
     transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.33, 1, 0.68, 1);
-    box-shadow: 0 -20px 60px rgba(0,0,0,0.9);
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0 -10px 30px rgba(255, 255, 255, 0.1);
 }
 .ai-bottom-sheet.active { transform: translateY(0); }
 
-/* NEON GLOW EFFECTS */
-.neon-gold-btn {
-    background: linear-gradient(145deg, #FFD700, #B8860B);
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.5);
+/* BOXES MAI WALKIYAR ZARBA */
+.silver-box {
+    width: 60px; height: 60px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(220, 220, 220, 0.2); /* Silver border */
+    border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
 }
 
-.ai-header-line {
-    width: 60px; height: 4px;
-    background: rgba(255, 215, 0, 0.8);
-    box-shadow: 0 0 10px #FFD700;
-    border-radius: 10px; margin: 15px auto;
-    }
-        
+/* ANIMATION NA ZARBA DAKE ZAGAYEWA */
+.silver-box::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: conic-gradient(transparent, transparent, transparent, #ffffff);
+    animation: rotate-silver 4s linear infinite;
+    opacity: 0.3;
+}
+@keyframes rotate-silver { 100% { transform: rotate(360deg); } }
+
+.active-scan {
+    background: linear-gradient(145deg, #FFD700, #B8860B);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    border: none !important;
+}
         
     </style>
 </head>
@@ -253,44 +268,44 @@
     if(existing) existing.remove();
 
     const menuHTML = `
-        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/20 z-[4999] opacity-0 transition-opacity duration-300"></div>
-        <div id="ai-sheet" class="ai-bottom-sheet overflow-hidden">
-            <div class="ai-header-line"></div>
+        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
+        <div id="ai-sheet" class="ai-bottom-sheet">
+            <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
             
-            <div class="px-10 flex justify-between items-center mb-6">
+            <div class="px-10 flex justify-between items-center mb-8">
                 <div>
-                    <h3 class="text-white font-black text-[10px] tracking-[0.4em] uppercase">NEURAL INTERFACE</h3>
-                    <p class="text-[#FFD700] text-[7px] font-bold tracking-widest opacity-70 uppercase">Global Assets Link Active</p>
+                    <h2 class="text-white font-black text-[11px] tracking-[0.3em] uppercase italic">Neural Vision</h2>
+                    <p class="text-[#FFD700] text-[7px] font-bold tracking-widest uppercase opacity-80">Advanced Asset Identification</p>
                 </div>
-                <div class="w-8 h-8 rounded-full border border-[#FFD700]/30 flex items-center justify-center">
-                    <i class="fa-solid fa-microchip text-[#FFD700] text-xs animate-pulse"></i>
-                </div>
+                <i class="fa-solid fa-bolt-auto text-[#FFD700] text-xs animate-pulse"></i>
             </div>
 
-            <div class="flex justify-around items-center px-4 mt-4">
+            <div class="flex justify-around items-center px-4">
                 <button class="flex flex-col items-center group">
-                    <div class="w-14 h-14 neon-gold-btn rounded-2xl flex items-center justify-center text-black">
-                        <i class="fa-solid fa-expand text-xl"></i>
+                    <div class="silver-box active-scan">
+                        <i class="fa-solid fa-qrcode text-black text-xl"></i>
                     </div>
                     <span class="text-[8px] text-white mt-3 font-black tracking-widest uppercase">Scan</span>
                 </button>
 
                 <button class="flex flex-col items-center group">
-                    <div class="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-white/80 hover:border-[#FFD700]/40 transition-all">
-                        <i class="fa-solid fa-brain-circuit text-xl text-[#FFD700]"></i>
+                    <div class="silver-box">
+                        <i class="fa-solid fa-camera-retro text-white/90 text-xl z-10"></i>
                     </div>
-                    <span class="text-[8px] text-white/50 mt-3 font-black tracking-widest uppercase">Intel</span>
+                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Camera</span>
                 </button>
 
                 <button class="flex flex-col items-center group">
-                    <div class="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-white/80 hover:border-[#FFD700]/40 transition-all">
-                        <i class="fa-solid fa-vault text-xl"></i>
+                    <div class="silver-box">
+                        <i class="fa-solid fa-images text-white/90 text-xl z-10"></i>
                     </div>
-                    <span class="text-[8px] text-white/50 mt-3 font-black tracking-widest uppercase">Vault</span>
+                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Gallery</span>
                 </button>
             </div>
             
-            <button onclick="closeAIVision()" class="w-full mt-8 py-3 text-white/10 text-[8px] font-black tracking-[0.6em] uppercase hover:text-[#FFD700] transition-all">Terminate Link</button>
+            <button onclick="closeAIVision()" class="w-full mt-10 py-3 text-[#FFD700] text-[9px] font-black tracking-[0.4em] uppercase border-t border-white/5 hover:bg-white/5 transition-all">
+                Terminate Link
+            </button>
         </div>
     `;
 
@@ -299,19 +314,9 @@
         document.getElementById('ai-overlay').classList.add('opacity-100');
         document.getElementById('ai-sheet').classList.add('active');
     }, 10);
-}
-
-function closeAIVision() {
-    document.getElementById('ai-overlay').classList.remove('opacity-100');
-    document.getElementById('ai-sheet').classList.remove('active');
-    setTimeout(() => {
-        document.getElementById('ai-overlay').remove();
-        document.getElementById('ai-sheet').remove();
-    }, 400);
-}
+        }
     
      
-    
 </script>      
     
 </body>
