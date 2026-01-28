@@ -121,41 +121,34 @@
     50% { opacity: 1; }
     100% { transform: translateY(300%); opacity: 0; }
 }
-  /* ELITE NEON BOTTOM SHEET */
+        /* ELITE CYBER-GLASS SHEET */
 .ai-bottom-sheet {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    background: rgba(10, 10, 10, 0.98); /* Zurfin baki mai sanyi */
-    backdrop-filter: blur(25px);
-    border-top: 3px solid transparent;
-    background-image: linear-gradient(rgba(10, 10, 10, 0.98), rgba(10, 10, 10, 0.98)), 
-                      linear-gradient(90deg, transparent, #FFD700, transparent);
-    background-origin: border-box;
-    background-clip: content-box, border-box;
-    border-radius: 50px 50px 0 0;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px); /* Mun rage shi don rage dusudusu */
+    border-top: 2px solid rgba(255, 215, 0, 0.5);
+    border-radius: 40px 40px 0 0;
     z-index: 5000;
-    height: 240px;
+    height: 250px;
     transform: translateY(100%);
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow: 0 -15px 50px rgba(0, 0, 0, 0.8), 0 -5px 15px rgba(255, 215, 0, 0.1);
+    transition: transform 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+    box-shadow: 0 -20px 60px rgba(0,0,0,0.9);
+}
+.ai-bottom-sheet.active { transform: translateY(0); }
+
+/* NEON GLOW EFFECTS */
+.neon-gold-btn {
+    background: linear-gradient(145deg, #FFD700, #B8860B);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
-/* GOLDEN SCANNER GLOW */
-.ai-glow-bar {
-    position: absolute;
-    top: 0; left: 50%; transform: translateX(-50%);
-    width: 40%; height: 4px;
-    background: linear-gradient(90deg, transparent, #FFD700, #B8860B, transparent);
-    border-radius: 0 0 10px 10px;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-}
-
-/* FLOATING ICON ANIMATION */
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-}
-.float-icon { animation: float 3s ease-in-out infinite; }
+.ai-header-line {
+    width: 60px; height: 4px;
+    background: rgba(255, 215, 0, 0.8);
+    box-shadow: 0 0 10px #FFD700;
+    border-radius: 10px; margin: 15px auto;
+    }
         
         
     </style>
@@ -260,46 +253,44 @@
     if(existing) existing.remove();
 
     const menuHTML = `
-        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/40 z-[4999] opacity-0 transition-opacity duration-500"></div>
+        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/20 z-[4999] opacity-0 transition-opacity duration-300"></div>
         <div id="ai-sheet" class="ai-bottom-sheet overflow-hidden">
-            <div class="ai-glow-bar"></div>
-            <div class="w-12 h-1.5 bg-white/10 rounded-full mx-auto mt-5 mb-6"></div>
+            <div class="ai-header-line"></div>
             
-            <div class="px-10 flex justify-between items-end mb-8">
+            <div class="px-10 flex justify-between items-center mb-6">
                 <div>
-                    <h3 class="text-white font-black text-[12px] tracking-[0.4em] uppercase">NEURAL LINK</h3>
-                    <div class="flex items-center space-x-2 mt-1">
-                        <div class="w-2 h-2 bg-[#FFD700] rounded-full animate-ping"></div>
-                        <p class="text-[#FFD700] text-[7px] font-black tracking-widest uppercase opacity-80">AI Engine Online</p>
-                    </div>
+                    <h3 class="text-white font-black text-[10px] tracking-[0.4em] uppercase">NEURAL INTERFACE</h3>
+                    <p class="text-[#FFD700] text-[7px] font-bold tracking-widest opacity-70 uppercase">Global Assets Link Active</p>
                 </div>
-                <p class="text-white/30 text-[8px] font-bold uppercase tracking-widest">v2.0 Elite</p>
+                <div class="w-8 h-8 rounded-full border border-[#FFD700]/30 flex items-center justify-center">
+                    <i class="fa-solid fa-microchip text-[#FFD700] text-xs animate-pulse"></i>
+                </div>
             </div>
 
-            <div class="flex justify-around items-center px-6">
-                <button class="flex flex-col items-center group relative">
-                    <div class="w-16 h-16 bg-gradient-to-t from-[#B8860B] to-[#FFD700] rounded-[24px] flex items-center justify-center text-black shadow-[0_10px_20px_rgba(255,215,0,0.3)] float-icon">
-                        <i class="fa-solid fa-expand text-2xl"></i>
+            <div class="flex justify-around items-center px-4 mt-4">
+                <button class="flex flex-col items-center group">
+                    <div class="w-14 h-14 neon-gold-btn rounded-2xl flex items-center justify-center text-black">
+                        <i class="fa-solid fa-expand text-xl"></i>
                     </div>
-                    <span class="text-[9px] text-white mt-4 font-black tracking-widest uppercase group-hover:text-[#FFD700] transition-colors">Scan</span>
+                    <span class="text-[8px] text-white mt-3 font-black tracking-widest uppercase">Scan</span>
                 </button>
 
                 <button class="flex flex-col items-center group">
-                    <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-[24px] flex items-center justify-center text-white/90 hover:border-[#FFD700]/50 transition-all shadow-inner">
-                        <i class="fa-solid fa-brain-circuit text-2xl text-[#FFD700]"></i>
+                    <div class="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-white/80 hover:border-[#FFD700]/40 transition-all">
+                        <i class="fa-solid fa-brain-circuit text-xl text-[#FFD700]"></i>
                     </div>
-                    <span class="text-[9px] text-white/60 mt-4 font-black tracking-widest uppercase">Intel</span>
+                    <span class="text-[8px] text-white/50 mt-3 font-black tracking-widest uppercase">Intel</span>
                 </button>
 
                 <button class="flex flex-col items-center group">
-                    <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-[24px] flex items-center justify-center text-white/90 hover:border-[#FFD700]/50 transition-all shadow-inner">
-                        <i class="fa-solid fa-vault text-2xl"></i>
+                    <div class="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-white/80 hover:border-[#FFD700]/40 transition-all">
+                        <i class="fa-solid fa-vault text-xl"></i>
                     </div>
-                    <span class="text-[9px] text-white/60 mt-4 font-black tracking-widest uppercase">Assets</span>
+                    <span class="text-[8px] text-white/50 mt-3 font-black tracking-widest uppercase">Vault</span>
                 </button>
             </div>
             
-            <button onclick="closeAIVision()" class="w-full mt-8 py-2 text-white/20 text-[9px] font-black tracking-[0.5em] uppercase hover:text-white transition-all">TERMINATE LINK</button>
+            <button onclick="closeAIVision()" class="w-full mt-8 py-3 text-white/10 text-[8px] font-black tracking-[0.6em] uppercase hover:text-[#FFD700] transition-all">Terminate Link</button>
         </div>
     `;
 
@@ -308,7 +299,17 @@
         document.getElementById('ai-overlay').classList.add('opacity-100');
         document.getElementById('ai-sheet').classList.add('active');
     }, 10);
- }
+}
+
+function closeAIVision() {
+    document.getElementById('ai-overlay').classList.remove('opacity-100');
+    document.getElementById('ai-sheet').classList.remove('active');
+    setTimeout(() => {
+        document.getElementById('ai-overlay').remove();
+        document.getElementById('ai-sheet').remove();
+    }, 400);
+}
+    
      
     
 </script>      
