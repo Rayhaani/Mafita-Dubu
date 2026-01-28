@@ -347,6 +347,19 @@
         document.getElementById('ai-sheet').classList.add('active');
     }, 10);
         }
+
+function closeAIVision() {
+    const overlay = document.getElementById('ai-overlay');
+    const sheet = document.getElementById('ai-sheet');
+    
+    if(sheet) sheet.classList.remove('active');
+    if(overlay) overlay.classList.remove('opacity-100');
+    
+    setTimeout(() => {
+        if(sheet) sheet.remove();
+        if(overlay) overlay.remove();
+    }, 400);
+}
     
      
 </script>      
