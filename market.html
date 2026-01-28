@@ -254,46 +254,49 @@
     height: 135px; /* Mun bar hoton ya mamaye kusan duka box din */
     object-fit: cover;
 }
-/* ELITE GLOBAL STANDARD BOX */
+/* ELITE MINIMALIST BOX - FINAL VERSION */
 .item-details {
-    padding: 4px 8px;
+    padding: 3px 6px;
     background: #fff;
-    height: 48px; 
+    height: 42px; /* Mun rage tsayin don box din ya samu sarari */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .top-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .item-name {
-    font-size: 8.5px;
+    font-size: 7.5px; /* Mun dan rage don kada ya tura box din */
     font-weight: 800;
-    color: #3E2723;
-    max-width: 65%;
+    color: #333;
+    max-width: 60%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .item-stars {
-    font-size: 7px;
-    color: #FFD700; /* Zinariya don taurari */
+    font-size: 6px; /* Matse taurari kadan */
+    color: #000000; /* Baki radau don ya fito fili */
+    letter-spacing: -1px;
 }
 
 .price-row {
     text-align: center;
     width: 100%;
+    margin-top: 2px;
 }
 
 .item-price {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 900;
-    color: #5D4037; /* Espresso Brown mai dacewa */
+    color: #3E2723; /* Dark Espresso Brown */
 }
         
     </style>
@@ -332,35 +335,41 @@
     </div>
 </div>
     
-        <div class="duet-grid">
+    <div class="duet-grid">
     <div class="industry-mini-box">
         <div class="display-area" id="textileFlip">
             <div class="item-slide active">
-    <img src="https://images.unsplash.com/photo-1584273103988-4158655073e5?w=300">
-    <div class="item-details">
-        <div class="top-row">
-            <span class="item-name">Atamfa Wax</span>
-            <span class="item-stars">⭐⭐⭐⭐⭐</span>
-        </div>
-        <div class="price-row">
-            <span class="item-price">₦12,500</span>
+                <img src="https://images.unsplash.com/photo-1584273103988-4158655073e5?w=300">
+                <div class="item-details">
+                    <div class="top-row">
+                        <span class="item-name">Atamfa Wax</span>
+                        <span class="item-stars">★★★★★</span>
+                    </div>
+                    <div class="price-row">
+                        <span class="item-price">₦12,500</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-            </div>
 
     <div class="industry-mini-box">
         <div class="display-area" id="shoeFlip">
             <div class="item-slide active">
                 <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300">
                 <div class="item-details">
-                    <span class="item-name">Nike Sports Red</span>
-                    <span class="item-price">₦35,000</span>
+                    <div class="top-row">
+                        <span class="item-name">Nike Sports</span>
+                        <span class="item-stars">★★★★</span>
+                    </div>
+                    <div class="price-row">
+                        <span class="item-price">₦35,000</span>
+                    </div>
                 </div>
             </div>
-            </div>
-    </div>
         </div>
-    
+    </div>
+    </div>
     
 
     <div id="search-overlay">
