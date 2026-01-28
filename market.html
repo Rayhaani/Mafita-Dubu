@@ -242,27 +242,25 @@
 
 /* ELITE COMPACT DETAILS */
 .industry-mini-box {
-    height: 165px; /* Mun rage tsayin gaba daya */
-    border-radius: 22px;
+    height: 195px; /* Mun kara tsayin box din kadan */
+    border-radius: 20px;
     background: white;
-    border: 1px solid #F0F0F0;
     overflow: hidden;
+    border: 1px solid #eee;
 }
 
 .item-slide img {
+    height: 135px; /* Hoton ya yi daidai */
     width: 100%;
-    height: 135px; /* Mun bar hoton ya mamaye kusan duka box din */
     object-fit: cover;
 }
-    /* ELITE COMPACT DETAILS - BLACK STARS EDITION */
 
-    .item-details {
-    padding: 6px 8px; /* Kara sarari kadan */
-    background: #fff;
-    height: 50px; /* Matsakaicin tsayi don price ya zauna daram */
+.item-details {
+    padding: 6px 8px;
+    height: 60px; /* Mun kara fadin white space din don price ya fito */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .top-row {
@@ -271,22 +269,28 @@
     align-items: center;
 }
 
+.item-name {
+    font-size: 8.5px;
+    font-weight: 800;
+    color: #333;
+}
+
 .item-stars {
-    color: #000 !important; /* Bakin tauraro radau */
+    color: #000; /* Taurari bakaken fata radau */
     font-size: 8px;
-    letter-spacing: -1px;
+    font-weight: bold;
 }
 
 .price-row {
     text-align: center;
-    margin-top: 2px;
+    width: 100%;
 }
 
 .item-price {
     font-size: 11px;
     font-weight: 900;
-    color: #3E2723;
-}
+    color: #3E2723; /* Dark Brown */
+        }
         
     </style>
 </head>
@@ -323,7 +327,7 @@
         </div>
     </div>
 </div>
-      
+    
     <div class="duet-grid">
     <div class="industry-mini-box">
         <div class="display-area" id="textileFlip">
@@ -374,7 +378,7 @@
             </div>
         </div>
     </div>
-    </div>
+                </div>
     
 
     <div id="search-overlay">
@@ -535,14 +539,14 @@ setInterval(autoScroll, 3000);
         slides[current].classList.remove('active');
         current = (current + 1) % slides.length;
         slides[current].classList.add('active');
-    }, 3500); 
+    }, 3500);
 }
 
 window.onload = function() {
     initFlip('textileFlip');
     initFlip('shoeFlip');
 };
-    
+      
     
 </script>      
     
