@@ -415,6 +415,8 @@
 
     <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box9"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">KITCHEN</button></div></div>
     <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box10"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">SPORTS</button></div></div>
+    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box11"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">HEALTH</button></div></div>
+    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box12"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">FASHION</button></div></div>
 </div>
     
     
@@ -602,8 +604,31 @@ function initFlip(id) {
     }, 3500); // Flipping bayan kowane sakan 3.5
 }
     
+ let scrollDirection = 1; // 1 na nufin kasa, -1 na nufin sama
+const scrollSpeed = 0.5; // Karamin lamba = tafiyar hankali (Slow motion)
+
+function autoScrollPage() {
+    // Tura shafin kasa ko sama kadan-kadan
+    window.scrollBy(0, scrollDirection * scrollSpeed);
+
+    // Idan ya kai karshen kasa, ya juya sama
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        scrollDirection = -1;
+    }
     
-    
+    // Idan ya dawo karshen sama, ya sake komawa kasa
+    if (window.scrollY <= 0) {
+        scrollDirection = 1;
+    }
+
+    requestAnimationFrame(autoScrollPage);
+}
+
+// Fara tafiyar bayan shafin ya gama loading
+window.addEventListener('load', () => {
+    setTimeout(autoScrollPage, 2000); // Zai jira sakan 2 kafin ya fara tafiya
+});
+     
 </script>      
     
 </body>
