@@ -258,31 +258,17 @@
     box-sizing: border-box;
 }
 
+/* 1. BABBAN BOX */
 .industry-mini-box {
     flex: 1;
-    background: #111; /* Mun canja background din zuwa baki kadan don hasken ya fito */
-    border-radius: 20px;
-    height: 175px;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
-/* 1. BABBAN BOX DIN (Wanda yake dauke da hasken) */
-.industry-mini-box {
-    flex: 1;
-    background: #000; /* Mun sa baki domin hasken ya fito radau */
+    background: #000; 
     border-radius: 25px;
     height: 175px;
     overflow: hidden;
     position: relative;
-    display: flex;
-    flex-direction: column;
 }
 
-/* 2. HASKEN DA YAKE ZAGAYEWA (The Animation) */
+/* 2. HASKEN GEFE */
 .industry-mini-box::before {
     content: '';
     position: absolute;
@@ -293,27 +279,31 @@
     z-index: 0;
 }
 
-/* 3. SHI NE ZAI RUFE SAMAN HASKEN (The Shield) */
+/* 3. SHIELD MAI RUFE HASKE (Wannan zai maida ciki fari) */
 .box-content {
     position: absolute;
-    inset: 3px; /* Wannan shi ne kaurin walkiyar gefe */
-    background: #ffffff !important; /* Dole ya zama fari fes */
+    inset: 3px; /* Kaurin walkiyar */
+    background: #ffffff !important; 
     border-radius: 22px;
-    z-index: 10;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
 }
 
-/* 4. GYARAN DISPLAY AREA */
-.display-area {
-    flex: 1;
-    position: relative;
+/* 4. RUBUTUN BUTTON (Tsakiya daram) */
+.category-btn {
+    background: #1a1a1a;
+    color: #fff;
+    text-align: center;
+    padding: 8px 0;
+    font-size: 10px;
+    font-weight: 800;
     width: 100%;
-    background: #fff;
+    border: none;
+    z-index: 10;
 }
-        
-        
+           
     </style>
 </head>
 <body>
@@ -352,22 +342,23 @@
     
 <div class="duet-grid">
     <div class="industry-mini-box">
-    <div class="box-content"> 
-        <div class="display-area" id="textileFlip">
-            <div class="item-slide active"><img src="URL_HOTON_KA"></div>
+        <div class="box-content">
+            <div class="display-area" id="textileFlip">
+                <div class="item-slide active"><img src="URL_ATAMFA"></div>
+            </div>
+            <button class="category-btn">TEXTILES</button>
         </div>
-        <button class="category-btn">TEXTILES</button>
-    </div> </div>
+    </div>
 
     <div class="industry-mini-box">
-        <div class="display-area" id="shoeFlip">
-            <div class="item-slide active"><img src="URL_SHOE"></div>
-            <div class="item-slide"><img src="URL_BOOT"></div>
+        <div class="box-content">
+            <div class="display-area" id="shoeFlip">
+                <div class="item-slide active"><img src="URL_TAKAMI"></div>
+            </div>
+            <button class="category-btn">FOOTWEAR</button>
         </div>
-        <button class="category-btn">FOOTWEAR</button>
     </div>
 </div>
-
 
     <div id="search-overlay">
         <div class="world-box">
