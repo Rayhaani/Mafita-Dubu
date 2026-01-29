@@ -270,56 +270,49 @@
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
-/* HASKE MAI ZAGAYEWA (The Glow) */
+/* 1. BABBAN BOX DIN (Wanda yake dauke da hasken) */
+.industry-mini-box {
+    flex: 1;
+    background: #000; /* Mun sa baki domin hasken ya fito radau */
+    border-radius: 25px;
+    height: 175px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 2. HASKEN DA YAKE ZAGAYEWA (The Animation) */
 .industry-mini-box::before {
     content: '';
     position: absolute;
-    width: 250%; 
-    height: 250%;
-    /* Kalar hasken (Zinariya/Gold) */
+    width: 250%; height: 250%;
     background: conic-gradient(from 0deg, transparent, transparent, #FFD700);
     animation: rotate-glow 4s linear infinite;
-    top: -75%;
-    left: -75%;
+    top: -75%; left: -75%;
+    z-index: 0;
 }
 
-/* WANNAN SHINE ZAI TSARE HOTON DA BUTTON A CIKI */
+/* 3. SHI NE ZAI RUFE SAMAN HASKEN (The Shield) */
 .box-content {
     position: absolute;
-    inset: 2px; /* Wannan tazarar (2px) ita ce kaurin walkiyar */
-    background: #fff;
-    border-radius: 19px;
-    z-index: 1;
+    inset: 3px; /* Wannan shi ne kaurin walkiyar gefe */
+    background: #ffffff !important; /* Dole ya zama fari fes */
+    border-radius: 22px;
+    z-index: 10;
     display: flex;
     flex-direction: column;
     overflow: hidden;
 }
 
+/* 4. GYARAN DISPLAY AREA */
 .display-area {
     flex: 1;
     position: relative;
     width: 100%;
+    background: #fff;
 }
-
-.category-btn {
-    background: #1a1a1a;
-    color: #fff;
-    text-align: center;
-    padding: 7px 0;
-    font-size: 9px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    border: none;
-    width: 100%;
-    z-index: 2;
-}
-
-/* Animation din walkiyar */
-@keyframes rotate-glow {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-        }
+        
         
     </style>
 </head>
