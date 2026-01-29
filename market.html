@@ -258,17 +258,41 @@
     box-sizing: border-box;
 }
 
-/* RAGE GIRMAN BOXES DA BUTTONS */
 .industry-mini-box {
-    flex: 1; 
-    background: #fff;
-    border-radius: 20px; /* Rage lankwasar kadan */
-    height: 175px; /* Mun rage tsayin daga 220px zuwa 175px */
+    flex: 1;
+    background: #111; /* Mun canja background din zuwa baki kadan don hasken ya fito */
+    border-radius: 20px;
+    height: 175px;
     overflow: hidden;
     position: relative;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.04);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* HASKE MAI ZAGAYEWA (The Glow) */
+.industry-mini-box::before {
+    content: '';
+    position: absolute;
+    width: 250%; 
+    height: 250%;
+    /* Kalar hasken (Zinariya/Gold) */
+    background: conic-gradient(from 0deg, transparent, transparent, #FFD700);
+    animation: rotate-glow 4s linear infinite;
+    top: -75%;
+    left: -75%;
+}
+
+/* WANNAN SHINE ZAI TSARE HOTON DA BUTTON A CIKI */
+.box-content {
+    position: absolute;
+    inset: 2px; /* Wannan tazarar (2px) ita ce kaurin walkiyar */
+    background: #fff;
+    border-radius: 19px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .display-area {
@@ -277,20 +301,25 @@
     width: 100%;
 }
 
-/* RAGE GIRMAN BUTTON */
 .category-btn {
     background: #1a1a1a;
     color: #fff;
     text-align: center;
-    padding: 7px 0; /* Mun rage fadin button din (mara fadi sosai) */
-    font-size: 9px; /* Mun rage girman rubutun button din */
+    padding: 7px 0;
+    font-size: 9px;
     font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
     border: none;
     width: 100%;
+    z-index: 2;
 }
-        
+
+/* Animation din walkiyar */
+@keyframes rotate-glow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+        }
         
     </style>
 </head>
@@ -330,13 +359,12 @@
     
 <div class="duet-grid">
     <div class="industry-mini-box">
+    <div class="box-content"> 
         <div class="display-area" id="textileFlip">
-            <div class="item-slide active"><img src="URL_ATAMFA"></div>
-            <div class="item-slide"><img src="URL_LACE"></div>
-            <div class="item-slide"><img src="URL_GETZNER"></div>
+            <div class="item-slide active"><img src="URL_HOTON_KA"></div>
         </div>
         <button class="category-btn">TEXTILES</button>
-    </div>
+    </div> </div>
 
     <div class="industry-mini-box">
         <div class="display-area" id="shoeFlip">
