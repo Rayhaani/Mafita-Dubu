@@ -258,7 +258,7 @@
     box-sizing: border-box;
 }
 
-/* 1. BABBAN BOX */
+/* 1. BABBAN BOX (Mai kalar baki a kasa don hasken ya fito) */
 .industry-mini-box {
     flex: 1;
     background: #000; 
@@ -266,23 +266,25 @@
     height: 175px;
     overflow: hidden;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* 2. HASKEN GEFE */
+/* 2. HASKE MAI ZAGAYEWA (The Glow Effect) */
 .industry-mini-box::before {
     content: '';
     position: absolute;
     width: 250%; height: 250%;
     background: conic-gradient(from 0deg, transparent, transparent, #FFD700);
     animation: rotate-glow 4s linear infinite;
-    top: -75%; left: -75%;
     z-index: 0;
 }
 
-/* 3. SHIELD MAI RUFE HASKE (Wannan zai maida ciki fari) */
+/* 3. SHIELD MAI RUFE HASKEN (Zai maida cikin box din fari fes) */
 .box-content {
     position: absolute;
-    inset: 3px; /* Kaurin walkiyar */
+    inset: 3px; /* Kaurin walkiyar dake gefe */
     background: #ffffff !important; 
     border-radius: 22px;
     z-index: 1;
@@ -291,7 +293,9 @@
     overflow: hidden;
 }
 
-/* 4. RUBUTUN BUTTON (Tsakiya daram) */
+/* 4. GYARAN DISPLAY AREA DA BUTTON */
+.display-area { flex: 1; position: relative; width: 100%; z-index: 2; }
+
 .category-btn {
     background: #1a1a1a;
     color: #fff;
@@ -301,8 +305,15 @@
     font-weight: 800;
     width: 100%;
     border: none;
-    z-index: 10;
+    z-index: 5;
+    position: relative;
 }
+
+@keyframes rotate-glow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+        
            
     </style>
 </head>
@@ -344,7 +355,9 @@
     <div class="industry-mini-box">
         <div class="box-content">
             <div class="display-area" id="textileFlip">
-                <div class="item-slide active"><img src="URL_ATAMFA"></div>
+                <div class="item-slide active">
+                    <img src="HOTON_TEXTILE.jpg" style="width:100%; height:100%; object-fit:cover;">
+                </div>
             </div>
             <button class="category-btn">TEXTILES</button>
         </div>
@@ -353,13 +366,15 @@
     <div class="industry-mini-box">
         <div class="box-content">
             <div class="display-area" id="shoeFlip">
-                <div class="item-slide active"><img src="URL_TAKAMI"></div>
+                <div class="item-slide active">
+                    <img src="HOTON_TAKAMI.jpg" style="width:100%; height:100%; object-fit:cover;">
+                </div>
             </div>
             <button class="category-btn">FOOTWEAR</button>
         </div>
     </div>
 </div>
-
+    
     <div id="search-overlay">
         <div class="world-box">
             <div class="sphere"></div>
