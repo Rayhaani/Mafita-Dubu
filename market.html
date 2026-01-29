@@ -284,19 +284,24 @@
 /* 3. SHIELD MAI RUFE HASKEN (Zai maida cikin box din fari fes) */
 .box-content {
     position: absolute;
-    /* Mun kara kauri daga 3px zuwa 4px don rufe layin saman */
-    inset: 4px; 
+    /* Wannan zai tilasta shi ya rufe saman sosai */
+    top: 2px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    
     background: #ffffff !important; 
     border-radius: 20px;
     z-index: 5;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    /* Wannan zai goge layin dake fitowa a sama */
+    
+    /* Kara wannan don goge duk wata inuwa */
     border: none;
-    outline: none;
+    box-shadow: none;
 }
-
+        
 /* Wannan zai tabbatar hoton bai bar komai ba a gefe */
 .display-area img {
     width: 100%;
