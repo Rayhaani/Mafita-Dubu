@@ -605,43 +605,46 @@ function initFlip(id) {
 }
     let isPaused = false;
 let scrollPos = 0;
-let direction = 1; // 1 na nufin scroll up (kasa), -1 na nufin scroll down (sama)
-const speed = 0.5; // Gudun tafiyar a hankali
-const rowHeight = 195; // Tsayin layi daya
+let direction = 1; // 1 = Tafiya Kasa, -1 = Komawa Sama
+const speed = 0.6; // Gudun tafiyar a hankali
+const rowHeight = 195; // Tsayin layi daya (Box + Gap)
 
 function startProfessionalScroll() {
     if (!isPaused) {
         window.scrollBy(0, direction * speed);
         scrollPos += speed;
 
-        // Duk lokacin da ya cika tsayin layi daya (Row)
+        // Idan ya rufe layi daya, ya tsaya sakan 10
         if (scrollPos >= rowHeight) {
             isPaused = true;
-            scrollPos = 0; // Reset lissafin layi
-
-            // Jira sakan 10 sannan ya cigaba
-            setTimeout(() => {
-                isPaused = false;
-            }, 10000); 
+            scrollPos = 0;
+            setTimeout(() => { isPaused = false; }, 10000); 
         }
 
-        // Duba idan ya kai karshen kasa gaba daya
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-            direction = -1; // Juya ya fara tafiya sama (Scroll Down effect)
+        // DUBA IDAN YA KAI KARSHE (TAFIYA KASA)
+        if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
+            direction = -1; // Juya ya fara komawa sama
+            scrollPos = 0;
+            isPaused = true; 
+            setTimeout(() => { isPaused = false; }, 5000); // Dan hutu kadan a kasa
         }
         
-        // Duba idan ya dawo farkon shafi sama
-        if (window.scrollY <= 0) {
-            direction = 1; // Juya ya fara tafiya kasa (Scroll Up effect)
+        // DUBA IDAN YA DAWO FARKO (KOMAWA SAMA)
+        if (direction === -1 && window.pageYOffset <= 0) {
+            direction = 1; // Juya ya sake fara tafiya kasa
+            scrollPos = 0;
+            isPaused = true;
+            setTimeout(() => { isPaused = false; }, 5000); // Dan hutu kadan a sama
         }
     }
     requestAnimationFrame(startProfessionalScroll);
 }
 
-// Fara aikin
 window.onload = () => {
-    setTimeout(startProfessionalScroll, 2000);
-};  
+    // Jira sakan 3 kafin komai ya natsa sannan ya fara
+    setTimeout(startProfessionalScroll, 3000);
+};
+    
      
 </script>      
     
