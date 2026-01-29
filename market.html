@@ -607,27 +607,43 @@ function initFlip(id) {
  let scrollDirection = 1; // 1 na nufin kasa, -1 na nufin sama
 const scrollSpeed = 0.5; // Karamin lamba = tafiyar hankali (Slow motion)
 
-function autoScrollPage() {
-    // Tura shafin kasa ko sama kadan-kadan
-    window.scrollBy(0, scrollDirection * scrollSpeed);
+let currentStep = 0;
+const totalRows = 6; // Layuka 6 tunda muna da boxes 12
+const rowHeight = 195; // Tsayin box (180px) + Gap (15px)
+let scrollingDown = true;
 
-    // Idan ya kai karshen kasa, ya juya sama
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-        scrollDirection = -1;
+async function smartScroll() {
+    while (true) {
+        // Idan yana tafiya kasa
+        if (scrollingDown) {
+            if (currentStep < totalRows - 1) {
+                currentStep++;
+                window.scrollTo({ top: currentStep * rowHeight, behavior: 'smooth' });
+                await new Promise(r => setTimeout(r, 10000)); // Jira sakan 10
+            } else {
+                scrollingDown = false; // Ya kai karshe, ya dawo sama
+                await new Promise(r => setTimeout(r, 2000));
+            }
+        } 
+        // Idan yana dawowa sama
+        else {
+            if (currentStep > 0) {
+                currentStep--;
+                window.scrollTo({ top: currentStep * rowHeight, behavior: 'smooth' });
+                await new Promise(r => setTimeout(r, 10000)); // Jira sakan 10
+            } else {
+                scrollingDown = true; // Ya dawo farko, ya sake komawa kasa
+                await new Promise(r => setTimeout(r, 2000));
+            }
+        }
     }
-    
-    // Idan ya dawo karshen sama, ya sake komawa kasa
-    if (window.scrollY <= 0) {
-        scrollDirection = 1;
-    }
-
-    requestAnimationFrame(autoScrollPage);
 }
 
-// Fara tafiyar bayan shafin ya gama loading
+// Fara aikin
 window.addEventListener('load', () => {
-    setTimeout(autoScrollPage, 2000); // Zai jira sakan 2 kafin ya fara tafiya
+    setTimeout(smartScroll, 3000);
 });
+                        
      
 </script>      
     
