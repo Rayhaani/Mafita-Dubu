@@ -603,47 +603,45 @@ function initFlip(id) {
         slides[current].classList.add('active');
     }, 3500); // Flipping bayan kowane sakan 3.5
 }
-    
- let scrollDirection = 1; // 1 na nufin kasa, -1 na nufin sama
-const scrollSpeed = 0.5; // Karamin lamba = tafiyar hankali (Slow motion)
+    let isPaused = false;
+let scrollPos = 0;
+let direction = 1; // 1 na nufin scroll up (kasa), -1 na nufin scroll down (sama)
+const speed = 0.5; // Gudun tafiyar a hankali
+const rowHeight = 195; // Tsayin layi daya
 
-let currentStep = 0;
-const totalRows = 6; // Layuka 6 tunda muna da boxes 12
-const rowHeight = 195; // Tsayin box (180px) + Gap (15px)
-let scrollingDown = true;
+function startProfessionalScroll() {
+    if (!isPaused) {
+        window.scrollBy(0, direction * speed);
+        scrollPos += speed;
 
-async function smartScroll() {
-    while (true) {
-        // Idan yana tafiya kasa
-        if (scrollingDown) {
-            if (currentStep < totalRows - 1) {
-                currentStep++;
-                window.scrollTo({ top: currentStep * rowHeight, behavior: 'smooth' });
-                await new Promise(r => setTimeout(r, 10000)); // Jira sakan 10
-            } else {
-                scrollingDown = false; // Ya kai karshe, ya dawo sama
-                await new Promise(r => setTimeout(r, 2000));
-            }
-        } 
-        // Idan yana dawowa sama
-        else {
-            if (currentStep > 0) {
-                currentStep--;
-                window.scrollTo({ top: currentStep * rowHeight, behavior: 'smooth' });
-                await new Promise(r => setTimeout(r, 10000)); // Jira sakan 10
-            } else {
-                scrollingDown = true; // Ya dawo farko, ya sake komawa kasa
-                await new Promise(r => setTimeout(r, 2000));
-            }
+        // Duk lokacin da ya cika tsayin layi daya (Row)
+        if (scrollPos >= rowHeight) {
+            isPaused = true;
+            scrollPos = 0; // Reset lissafin layi
+
+            // Jira sakan 10 sannan ya cigaba
+            setTimeout(() => {
+                isPaused = false;
+            }, 10000); 
+        }
+
+        // Duba idan ya kai karshen kasa gaba daya
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            direction = -1; // Juya ya fara tafiya sama (Scroll Down effect)
+        }
+        
+        // Duba idan ya dawo farkon shafi sama
+        if (window.scrollY <= 0) {
+            direction = 1; // Juya ya fara tafiya kasa (Scroll Up effect)
         }
     }
+    requestAnimationFrame(startProfessionalScroll);
 }
 
 // Fara aikin
-window.addEventListener('load', () => {
-    setTimeout(smartScroll, 3000);
-});
-                        
+window.onload = () => {
+    setTimeout(startProfessionalScroll, 2000);
+};  
      
 </script>      
     
