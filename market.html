@@ -171,51 +171,48 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
 
 /* 1. BABBAN BOX NA ICONS */
 .silver-box {
-    width: 60px; height: 60px;
-    background: #111; /* Baki domin hasken ya fito radau */
+    width: 65px; height: 65px;
+    background: #000; /* Baki don hasken ya fito radau */
     border-radius: 18px;
     display: flex; align-items: center; justify-content: center;
     position: relative;
-    overflow: hidden;
+    overflow: hidden; /* Wannan zai tabbatar hasken bai fito waje ba */
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* 2. HASKE MAI ZAGAYEWA (SILVER NA GEFE) */
+/* 2. HASKE MAI ZAGAYEWA A CIKI (Rotation Effect) */
 .silver-box::before {
     content: '';
     position: absolute;
-    width: 200%; height: 200%;
+    /* Mun kara girman hasken don ya rufe duk cikin box din */
+    width: 200%; height: 200%; 
     background: conic-gradient(from 0deg, transparent, transparent, #ffffff);
-    animation: rotate-glow 4s linear infinite;
+    animation: rotate-inner 3s linear infinite;
     z-index: 1;
 }
 
 /* 3. NA TSAKIYA (GOLDEN BOX) */
-.active-scan {
-    background: #000 !important;
-}
-
 .active-scan::before {
     background: conic-gradient(from 0deg, transparent, transparent, #FFD700) !important;
-    animation: rotate-glow 2s linear infinite; /* Na tsakiya zai fi sauri kadan */
+    animation: rotate-inner 1.5s linear infinite; /* Na tsakiya ya fi sauri kadan */
 }
 
-/* 4. SHIELD MAI RUFE CIKIN BOX DIN */
-.silver-box i {
-    position: relative;
-    z-index: 10; /* Don icon din ya fito saman hasken */
-}
-
-/* Wannan gurin ne zai maida cikin box din baki amma gefen yana walkiya */
+/* 4. SHIELD (Wannan shi ne zai bar hasken a gefe-gefe na ciki) */
 .icon-inner-bg {
     position: absolute;
-    inset: 2px;
-    background: #0a0a0a;
-    border-radius: 16px;
+    inset: 3px; /* Wannan tazarar ita ce kaurin hasken da kake gani a ciki */
+    background: #0a0a0a; /* Kalar cikin box din */
+    border-radius: 15px;
     z-index: 5;
 }
 
-@keyframes rotate-glow {
+/* 5. ICON DIN KANSA */
+.silver-box i {
+    position: relative;
+    z-index: 10;
+}
+
+@keyframes rotate-inner {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
