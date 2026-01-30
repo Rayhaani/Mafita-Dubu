@@ -101,7 +101,8 @@
             width: 250px; padding: 18px; margin: 10px; border-radius: 20px;
             background: white; color: #5D4037; font-weight: 800;
             box-shadow: 0 10px 20px rgba(0,0,0,0.05), inset 0 0 10px #F5F1E9;
-            border: 1px solid #D7CCC8; transition: transform 0.4s;
+
+border: 1px solid #D7CCC8; transition: transform 0.4s;
             text-align: center;
         }
         #btn-global { transform: translateX(-500px); }
@@ -385,7 +386,8 @@
                 
                 <button onclick="openAICamera()" class="ml-2 active:scale-90 transition-transform">
     <div class="temu-style-camera">
-        <div class="camera-inner">
+
+<div class="camera-inner">
             <i class="fa-solid fa-camera text-white text-[10px]"></i>
         </div>
     </div>
@@ -439,7 +441,7 @@
             <span class="block text-[10px] opacity-60 font-normal">bincika vendors dake kusa da kai</span>
         </button>
 
-        <p class="mt-10 text-gray-400 font-bold text-xs cursor-pointer" onclick="closeSearch()">Soke Bincike (Cancel)</p>
+<p class="mt-10 text-gray-400 font-bold text-xs cursor-pointer" onclick="closeSearch()">Soke Bincike (Cancel)</p>
     </div>
 <script>
     let bincikeTimer;
@@ -478,7 +480,7 @@
     const existing = document.getElementById('ai-sheet');
     if(existing) existing.remove();
 
-    const menuHTML = `
+    const menuHTML = 
         <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
         <div id="ai-sheet" class="ai-bottom-sheet">
             <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
@@ -518,7 +520,7 @@
     Cancel
 </button>
         </div>
-    `;
+    ;
 
     document.body.insertAdjacentHTML('beforeend', menuHTML);
     setTimeout(() => {
@@ -540,9 +542,7 @@ function closeAIVision() {
     }, 400);
 }
     const slider = document.getElementById('textileSlider');
-let scrollAmount = 0;
-
-function autoScroll() {
+let scrollAmount = 0;function autoScroll() {
     const cardWidth = slider.querySelector('.iphone-card').offsetWidth + 12;
     scrollAmount += cardWidth;
     
@@ -643,7 +643,8 @@ function startProfessionalScroll() {
 window.onload = () => {
     // Jira sakan 3 kafin komai ya natsa sannan ya fara
     setTimeout(startProfessionalScroll, 3000);
-};  
+};
+    
      
 </script>      
     
