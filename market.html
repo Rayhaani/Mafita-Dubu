@@ -484,44 +484,44 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     if(existing) existing.remove();
 
     const menuHTML = `
-    <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/40 z-[4999] opacity-0 transition-opacity duration-300"></div>
-    <div id="ai-sheet" class="ai-bottom-sheet">
-        <div class="w-10 h-1 bg-black/10 rounded-full mx-auto mt-4 mb-6"></div>
-        
-        <div class="flex-row-container">
-            <button class="flex flex-col items-center">
-                <div class="silver-box">
-                    <div class="icon-inner-bg"></div>
-                    <i class="fa-solid fa-camera-retro"></i>
-                </div>
-                <span style="color:#333; font-size:9px; font-weight:900; margin-top:10px;">CAMERA</span>
-            </button>
+<div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/40 z-[4999] opacity-0 transition-opacity duration-300"></div>
+        <div id="ai-sheet" class="ai-bottom-sheet">
+            <div class="w-10 h-1 bg-black/10 rounded-full mx-auto mt-4 mb-10"></div>
+            
+            <div class="flex justify-around items-center px-4">
+                <button class="flex flex-col items-center">
+                    <div class="silver-box">
+                        <div class="icon-inner-bg"></div>
+                        <i class="fa-solid fa-camera-retro"></i>
+                    </div>
+                    <span style="color:#333; font-size:9px; font-weight:900; margin-top:10px;">CAMERA</span>
+                </button>
 
-            <button class="flex flex-col items-center">
-                <div class="silver-box active-scan">
-                    <div class="icon-inner-bg"></div>
-                    <i class="fa-solid fa-qrcode text-[#FFD700]"></i>
-                </div>
-                <span style="color:#8B6508; font-size:9px; font-weight:900; margin-top:10px;">SCAN</span>
-            </button>
+                <button class="flex flex-col items-center">
+                    <div class="silver-box active-scan">
+                        <div class="icon-inner-bg"></div>
+                        <i class="fa-solid fa-qrcode text-[#FFD700]"></i>
+                    </div>
+                    <span style="color:#8B6508; font-size:9px; font-weight:900; margin-top:10px;">SCAN</span>
+                </button>
 
-            <button class="flex flex-col items-center">
-                <div class="silver-box">
-                    <div class="icon-inner-bg"></div>
-                    <i class="fa-solid fa-images"></i>
-                </div>
-                <span style="color:#333; font-size:9px; font-weight:900; margin-top:10px;">GALLERY</span>
-            </button>
-        </div>
-    </div>`;
+                <button class="flex flex-col items-center">
+                    <div class="silver-box">
+                        <div class="icon-inner-bg"></div>
+                        <i class="fa-solid fa-images"></i>
+                    </div>
+                    <span style="color:#333; font-size:9px; font-weight:900; margin-top:10px;">GALLERY</span>
+                </button>
+            </div>
+            
+        </div>`;
 
-document.body.insertAdjacentHTML('beforeend', menuHTML);
-setTimeout(() => {
-    document.getElementById('ai-overlay')?.classList.add('opacity-100');
-    document.getElementById('ai-sheet')?.classList.add('active');
-}, 10);
-        
-
+    document.body.insertAdjacentHTML('beforeend', menuHTML);
+    setTimeout(() => {
+        document.getElementById('ai-overlay')?.classList.add('opacity-100');
+        document.getElementById('ai-sheet')?.classList.add('active');
+    }, 10);
+    }
 
     function closeAIVision() {
         const sheet = document.getElementById('ai-sheet');
