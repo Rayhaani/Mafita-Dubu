@@ -140,62 +140,52 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
 .ai-bottom-sheet {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    /* Gradient mai launin zaiba domin ya ba da sheki */
-    background: linear-gradient(145deg, #e0e0e0, #ffffff, #d1d1d1);
-    border-top: 1px solid rgba(255, 255, 255, 0.8);
+    background: linear-gradient(145deg, #e0e0e0, #ffffff, #d1d1d1); /* Kalar Zaiba */
+    border-top: 2px solid #fff;
     border-radius: 35px 35px 0 0;
     z-index: 5000;
-    height: 220px; 
+    height: 220px;
     transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.1, 0.5, 0.1, 1);
-    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease-out;
 }
 
-/* 2. TABBATAR BOXES SUNA DA KYAU A SAMAN SILVER */
-.ai-bottom-sheet span {
-    color: #333333 !important; /* Duhu kadan don rubutu ya fito a silver */
-    font-weight: 900;
+.ai-bottom-sheet.active { transform: translateY(0); }
+
+.silver-box {
+    width: 58px; height: 58px;
+    background: #000;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
 }
 
-/* 3. CANCEL BUTTON A SAMAN SILVER */
-.cancel-breathing {
-    color: #555 !important;
-    background: rgba(0,0,0,0.05);
-    border-radius: 20px;
-}
-        
-
-.active-scan {
-    background: linear-gradient(145deg, #FFD700, #B8860B) !important;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-    border: none !important;
-}
-/* 1. SILVER SHEET BACKGROUND (Zaiba Exactly) */
-.ai-bottom-sheet {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    /* Gradient mai launin zaiba domin ya ba da sheki */
-    background: linear-gradient(145deg, #e0e0e0, #ffffff, #d1d1d1);
-    border-top: 1px solid rgba(255, 255, 255, 0.8);
-    border-radius: 35px 35px 0 0;
-    z-index: 5000;
-    height: 220px; 
-    transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.1, 0.5, 0.1, 1);
-    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+.silver-box::before {
+    content: '';
+    position: absolute;
+    width: 250%; height: 250%;
+    background: conic-gradient(from 0deg, transparent, transparent, #ffffff);
+    animation: rotate-inner 3s linear infinite;
+    z-index: 1;
 }
 
-/* 2. TABBATAR BOXES SUNA DA KYAU A SAMAN SILVER */
-.ai-bottom-sheet span {
-    color: #333333 !important; /* Duhu kadan don rubutu ya fito a silver */
-    font-weight: 900;
+.active-scan::before {
+    background: conic-gradient(from 0deg, transparent, transparent, #FFD700) !important;
 }
 
-/* 3. CANCEL BUTTON A SAMAN SILVER */
-.cancel-breathing {
-    color: #555 !important;
-    background: rgba(0,0,0,0.05);
-    border-radius: 20px;
+.icon-inner-bg {
+    position: absolute;
+    inset: 2.5px;
+    background: #0d0d0d;
+    border-radius: 14px;
+    z-index: 5;
+}
+
+.silver-box i { position: relative; z-index: 10; font-size: 22px; color: white; }
+
+@keyframes rotate-inner {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
         
 
@@ -486,37 +476,45 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     if(existing) existing.remove();
 
     const menuHTML = `
-        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
+        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/40 z-[4999] opacity-0 transition-opacity duration-300"></div>
         <div id="ai-sheet" class="ai-bottom-sheet">
-            <div class="w-10 h-1 bg-black/10 rounded-full mx-auto mt-4 mb-12"></div>
+            <div class="w-10 h-1 bg-black/10 rounded-full mx-auto mt-4 mb-10"></div>
             
-            <div class="flex justify-around items-center px-6">
+            <div class="flex justify-around items-center px-4">
                 <button class="flex flex-col items-center">
-                    <div class="silver-box"><div class="icon-inner-bg"></div><i class="fa-solid fa-camera-retro"></i></div>
-                    <span class="text-[9px] text-black/80 mt-3 font-black uppercase">Camera</span>
+                    <div class="silver-box">
+                        <div class="icon-inner-bg"></div>
+                        <i class="fa-solid fa-camera-retro"></i>
+                    </div>
+                    <span style="color:#333; font-size:9px; font-weight:900; margin-top:10px;">CAMERA</span>
                 </button>
 
                 <button class="flex flex-col items-center">
-                    <div class="silver-box active-scan"><div class="icon-inner-bg"></div><i class="fa-solid fa-qrcode text-[#FFD700]"></i></div>
-                    <span class="text-[9px] text-[#8B6508] mt-3 font-black uppercase">Scan</span>
+                    <div class="silver-box active-scan">
+                        <div class="icon-inner-bg"></div>
+                        <i class="fa-solid fa-qrcode text-[#FFD700]"></i>
+                    </div>
+                    <span style="color:#8B6508; font-size:9px; font-weight:900; margin-top:10px;">SCAN</span>
                 </button>
 
                 <button class="flex flex-col items-center">
-                    <div class="silver-box"><div class="icon-inner-bg"></div><i class="fa-solid fa-images"></i></div>
-                    <span class="text-[9px] text-black/80 mt-3 font-black uppercase">Gallery</span>
+                    <div class="silver-box">
+                        <div class="icon-inner-bg"></div>
+                        <i class="fa-solid fa-images"></i>
+                    </div>
+                    <span style="color:#333; font-size:9px; font-weight:900; margin-top:10px;">GALLERY</span>
                 </button>
             </div>
-            
-            <button onclick="closeAIVision()" class="cancel-breathing" style="margin-top: 30px; display: block; width: 100%; color: #8B6508; font-weight: 900; font-size: 12px;">Cancel</button>
+            <button onclick="closeAIVision()" class="cancel-breathing" style="margin:25px auto; display:block; border:none; background:none; color:#555; font-weight:900;">Cancel</button>
         </div>`;
 
     document.body.insertAdjacentHTML('beforeend', menuHTML);
     setTimeout(() => {
-        document.getElementById('ai-overlay').classList.add('opacity-100');
-        document.getElementById('ai-sheet').classList.add('active');
+        document.getElementById('ai-overlay')?.classList.add('opacity-100');
+        document.getElementById('ai-sheet')?.classList.add('active');
     }, 10);
-        }
-        
+}
+
 
     function closeAIVision() {
         const sheet = document.getElementById('ai-sheet');
