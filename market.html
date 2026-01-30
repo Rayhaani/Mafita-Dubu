@@ -169,53 +169,81 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     border: none !important;
 }
 
-/* 1. BABBAN BOX NA ICONS */
-.silver-box {
-    width: 65px; height: 65px;
-    background: #000; /* Baki don hasken ya fito radau */
-    border-radius: 18px;
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-    overflow: hidden; /* Wannan zai tabbatar hasken bai fito waje ba */
-    border: 1px solid rgba(255, 255, 255, 0.1);
+/* 1. BABBAN BACKGROUND NA SHEET (DARK MILK) */
+.ai-bottom-sheet {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    /* Kalar Dark Milk (Creamy but sophisticated) */
+    background: #E8E2D2; 
+    border-top: 2px solid rgba(139, 101, 8, 0.3);
+    border-radius: 40px 40px 0 0;
+    z-index: 5000;
+    height: 300px;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.1);
 }
 
-/* 2. HASKE MAI ZAGAYEWA A CIKI (Rotation Effect) */
+/* 2. BABBAN BOX NA ICONS */
+.silver-box {
+    width: 75px; height: 75px; /* Mun dan kara girma kadan */
+    background: #111; 
+    border-radius: 22px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* 3. HASKE MAI ZAGAYEWA (Wanda zai mamaye ko'ina) */
 .silver-box::before {
     content: '';
     position: absolute;
-    /* Mun kara girman hasken don ya rufe duk cikin box din */
-    width: 200%; height: 200%; 
+    /* Wannan shi ne sirrin: ya fi box din girma don ya rufe ko'ina */
+    width: 250%; height: 250%; 
     background: conic-gradient(from 0deg, transparent, transparent, #ffffff);
     animation: rotate-inner 3s linear infinite;
     z-index: 1;
 }
 
-/* 3. NA TSAKIYA (GOLDEN BOX) */
+/* 4. NA TSAKIYA (GOLDEN GLOW) */
 .active-scan::before {
     background: conic-gradient(from 0deg, transparent, transparent, #FFD700) !important;
-    animation: rotate-inner 1.5s linear infinite; /* Na tsakiya ya fi sauri kadan */
+    animation: rotate-inner 1.8s linear infinite;
 }
 
-/* 4. SHIELD (Wannan shi ne zai bar hasken a gefe-gefe na ciki) */
+/* 5. SHIELD (SHINGE) MAI BA DA SURA */
 .icon-inner-bg {
     position: absolute;
-    inset: 3px; /* Wannan tazarar ita ce kaurin hasken da kake gani a ciki */
-    background: #0a0a0a; /* Kalar cikin box din */
-    border-radius: 15px;
+    /* Inset 2px zai bar hasken ya fito siriri sosai a gefe kamar neon */
+    inset: 2px; 
+    background: #1a1a1a; /* Cikin box din ya kasance dark */
+    border-radius: 20px;
     z-index: 5;
 }
 
-/* 5. ICON DIN KANSA */
+/* 6. ICON DIN KANSA */
 .silver-box i {
     position: relative;
     z-index: 10;
+    filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+}
+
+/* 7. RUBUTU (TEXT) */
+.ai-bottom-sheet span {
+    color: #5D4037 !important; /* Brownish-black domin ya dace da Milk color */
+    font-weight: 800;
+}
+
+.ai-bottom-sheet h2 {
+    color: #3E2723 !important;
 }
 
 @keyframes rotate-inner {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
-}
+        }
+        
         
     /* CANCEL TEXT BREATHING EFFECT */
 .cancel-breathing {
