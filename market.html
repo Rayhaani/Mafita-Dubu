@@ -168,34 +168,34 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
     border: none !important;
 }
-/* 1. BABBAN BACKGROUND (Mun rage haske zuwa Darker Milk/Latte) */
+/* 1. BACKGROUND DIN SHEET (Bright Creamy Milk) */
 .ai-bottom-sheet {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    background: #C2B29A; /* Wannan kalar ta fi duhu kuma ta fi kyau */
-    border-top: 2px solid rgba(0, 0, 0, 0.1);
-    border-radius: 30px 30px 0 0;
+    background: #F5F5DC; /* Wannan kalar tana da haske da kyau */
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 35px 35px 0 0;
     z-index: 5000;
-    height: 220px; /* Mun rage tsayin sheet din daga 300px */
+    height: 220px; 
     transform: translateY(100%);
-    transition: transform 0.4s ease-out;
+    transition: transform 0.4s cubic-bezier(0.1, 0.5, 0.1, 1);
 }
 
-/* 2. RAGE GIRMAN BOXES DA 50% */
+/* 2. KARA GIRMAN ICONS (Sun koma 58px) */
 .silver-box {
-    width: 45px; height: 45px; /* Mun rage daga 75px zuwa 45px */
+    width: 58px; height: 58px; 
     background: #000; 
-    border-radius: 12px; /* Mun rage radius din ma */
+    border-radius: 16px;
     display: flex; align-items: center; justify-content: center;
     position: relative;
     overflow: hidden;
 }
 
-/* 3. HASKE MAI ZAGAYEWA (Rotating Glow) */
+/* 3. HASKE MAI ZAGAYEWA (The Glow Animation) */
 .silver-box::before {
     content: '';
     position: absolute;
-    width: 250%; height: 250%; 
+    width: 200%; height: 200%; 
     background: conic-gradient(from 0deg, transparent, transparent, #ffffff);
     animation: rotate-inner 3s linear infinite;
     z-index: 1;
@@ -203,47 +203,29 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
 
 .active-scan::before {
     background: conic-gradient(from 0deg, transparent, transparent, #FFD700) !important;
+    animation-duration: 2s;
 }
 
-/* 4. SHIELD (SHINGE) */
+/* 4. SHIELD MAI RUFE TSAKIYA */
 .icon-inner-bg {
     position: absolute;
-    inset: 1.5px; /* Mun rage kaurin shingen don ya yi daidai da sabon girman */
-    background: #0d0d0d;
-    border-radius: 11px;
+    inset: 2px; 
+    background: #0a0a0a;
+    border-radius: 15px;
     z-index: 5;
 }
 
-/* 5. RAGE GIRMAN ICON */
 .silver-box i {
     position: relative;
     z-index: 10;
-    font-size: 14px; /* Mun rage girman icon din shima */
+    font-size: 20px; /* Icon ya kara girma sosai */
+    color: white;
 }
 
-/* 6. RUBUTU (TEXT) */
-.ai-bottom-sheet span {
-    color: #3E2723 !important;
-    font-size: 7px; /* Karamin rubutu mai dadi */
-    font-weight: 800;
-    margin-top: 8px;
-}
-
-/* CANCEL BUTTON STYLE */
-.cancel-breathing {
-    display: block;
-    width: fit-content;
-    margin: 25px auto 10px;
-    color: #3E2723; /* Dark brown domin ya dace da Milk background */
-    font-size: 11px;
-    font-weight: 800;
-    background: rgba(0,0,0,0.05);
-    padding: 8px 25px;
-    border-radius: 20px;
-    cursor: pointer;
-    animation: textPulse 2s ease-in-out infinite;
-    border: none;
-}
+@keyframes rotate-inner {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+    }
         
 
 @keyframes textPulse {
@@ -529,37 +511,41 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
 
     // 2. CAMERA FUNCTION (Tare da Icons 3 da Kwalliyar Gold a Tsakiya)
     function openAICamera() {
-        const existing = document.getElementById('ai-sheet');
-        if(existing) existing.remove();
+    const existing = document.getElementById('ai-sheet');
+    if(existing) existing.remove();
 
-        const menuHTML = `
-            <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
-            <div id="ai-sheet" class="ai-bottom-sheet">
-                <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
-                <div class="px-10 flex justify-between items-center mb-8 text-white font-bold italic">NEURAL VISION</div>
-                <div class="flex justify-around items-center px-4">
-                    <button class="flex flex-col items-center">
-                        <div class="silver-box"><div class="icon-inner-bg"></div><i class="fa-solid fa-camera-retro text-white text-xl"></i></div>
-                        <span class="text-[8px] text-white/70 mt-3 font-black uppercase">Camera</span>
-                    </button>
-                    <button class="flex flex-col items-center">
-                        <div class="silver-box active-scan"><div class="icon-inner-bg"></div><i class="fa-solid fa-qrcode text-[#FFD700] text-xl"></i></div>
-                        <span class="text-[8px] text-[#FFD700] mt-3 font-black uppercase">Scan</span>
-                    </button>
-                    <button class="flex flex-col items-center">
-                        <div class="silver-box"><div class="icon-inner-bg"></div><i class="fa-solid fa-images text-white text-xl"></i></div>
-                        <span class="text-[8px] text-white/70 mt-3 font-black uppercase">Gallery</span>
-                    </button>
-                </div>
-                <button onclick="closeAIVision()" class="cancel-breathing">Cancel</button>
-            </div>`;
+    const menuHTML = `
+        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
+        <div id="ai-sheet" class="ai-bottom-sheet">
+            <div class="w-10 h-1 bg-black/10 rounded-full mx-auto mt-4 mb-12"></div>
+            
+            <div class="flex justify-around items-center px-6">
+                <button class="flex flex-col items-center">
+                    <div class="silver-box"><div class="icon-inner-bg"></div><i class="fa-solid fa-camera-retro"></i></div>
+                    <span class="text-[9px] text-black/80 mt-3 font-black uppercase">Camera</span>
+                </button>
 
-        document.body.insertAdjacentHTML('beforeend', menuHTML);
-        setTimeout(() => {
-            document.getElementById('ai-overlay').classList.add('opacity-100');
-            document.getElementById('ai-sheet').classList.add('active');
-        }, 10);
-    }
+                <button class="flex flex-col items-center">
+                    <div class="silver-box active-scan"><div class="icon-inner-bg"></div><i class="fa-solid fa-qrcode text-[#FFD700]"></i></div>
+                    <span class="text-[9px] text-[#8B6508] mt-3 font-black uppercase">Scan</span>
+                </button>
+
+                <button class="flex flex-col items-center">
+                    <div class="silver-box"><div class="icon-inner-bg"></div><i class="fa-solid fa-images"></i></div>
+                    <span class="text-[9px] text-black/80 mt-3 font-black uppercase">Gallery</span>
+                </button>
+            </div>
+            
+            <button onclick="closeAIVision()" class="cancel-breathing" style="margin-top: 30px; display: block; width: 100%; color: #8B6508; font-weight: 900; font-size: 12px;">Cancel</button>
+        </div>`;
+
+    document.body.insertAdjacentHTML('beforeend', menuHTML);
+    setTimeout(() => {
+        document.getElementById('ai-overlay').classList.add('opacity-100');
+        document.getElementById('ai-sheet').classList.add('active');
+    }, 10);
+        }
+        
 
     function closeAIVision() {
         const sheet = document.getElementById('ai-sheet');
