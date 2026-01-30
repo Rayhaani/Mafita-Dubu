@@ -498,7 +498,8 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
 <p class="mt-10 text-gray-400 font-bold text-xs cursor-pointer" onclick="closeSearch()">Soke Bincike (Cancel)</p>
     </div>
 <script>
-    // 1. SEARCH FUNCTION
+    <script>
+    // 1. SEARCH LOGIC (Daga nan ne search yake aiki)
     function handleSearch(textbox) {
         let kalma = textbox.value;
         if (kalma.length >= 3) {
@@ -519,36 +520,39 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
         }, 500);
     }
 
-    // 2. CAMERA FUNCTION
+    // 2. CAMERA FUNCTION (Tare da Icons 3 da Kwalliyar Gold a Tsakiya)
     function openAICamera() {
-    <div class="flex justify-around items-center px-4">
-    <button class="flex flex-col items-center">
-        <div class="silver-box">
-            <div class="icon-inner-bg"></div>
-            <i class="fa-solid fa-camera-retro text-white text-xl"></i>
-        </div>
-        <span class="text-[8px] text-white/70 mt-3 font-black uppercase">Camera</span>
-    </button>
+        const existing = document.getElementById('ai-sheet');
+        if(existing) existing.remove();
 
-    <button class="flex flex-col items-center">
-        <div class="silver-box active-scan">
-            <div class="icon-inner-bg"></div>
-            <i class="fa-solid fa-qrcode text-[#FFD700] text-xl"></i>
-        </div>
-        <span class="text-[8px] text-[#FFD700] mt-3 font-black uppercase">Scan</span>
-    </button>
+        const menuHTML = `
+            <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
+            <div id="ai-sheet" class="ai-bottom-sheet">
+                <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
+                <div class="px-10 flex justify-between items-center mb-8 text-white font-bold italic">NEURAL VISION</div>
+                <div class="flex justify-around items-center px-4">
+                    <button class="flex flex-col items-center">
+                        <div class="silver-box"><div class="icon-inner-bg"></div><i class="fa-solid fa-camera-retro text-white text-xl"></i></div>
+                        <span class="text-[8px] text-white/70 mt-3 font-black uppercase">Camera</span>
+                    </button>
+                    <button class="flex flex-col items-center">
+                        <div class="silver-box active-scan"><div class="icon-inner-bg"></div><i class="fa-solid fa-qrcode text-[#FFD700] text-xl"></i></div>
+                        <span class="text-[8px] text-[#FFD700] mt-3 font-black uppercase">Scan</span>
+                    </button>
+                    <button class="flex flex-col items-center">
+                        <div class="silver-box"><div class="icon-inner-bg"></div><i class="fa-solid fa-images text-white text-xl"></i></div>
+                        <span class="text-[8px] text-white/70 mt-3 font-black uppercase">Gallery</span>
+                    </button>
+                </div>
+                <button onclick="closeAIVision()" class="cancel-breathing">Cancel</button>
+            </div>`;
 
-    <button class="flex flex-col items-center">
-        <div class="silver-box">
-            <div class="icon-inner-bg"></div>
-            <i class="fa-solid fa-images text-white text-xl"></i>
-        </div>
-        <span class="text-[8px] text-white/70 mt-3 font-black uppercase">Gallery</span>
-    </button>
-</div>
-        
+        document.body.insertAdjacentHTML('beforeend', menuHTML);
+        setTimeout(() => {
+            document.getElementById('ai-overlay').classList.add('opacity-100');
+            document.getElementById('ai-sheet').classList.add('active');
+        }, 10);
     }
-    
 
     function closeAIVision() {
         const sheet = document.getElementById('ai-sheet');
@@ -559,7 +563,7 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
         }, 400);
     }
 
-    // 3. SCROLLING LOGIC
+    // 3. AUTO SCROLLING (Domin boxes su rinka tafiya da kansu)
     let isPaused = false;
     let direction = 1;
     function startProfessionalScroll() {
@@ -575,6 +579,8 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     }
 
     window.onload = () => setTimeout(startProfessionalScroll, 3000);
+</script>
+    
 </script>
     
 </body>
