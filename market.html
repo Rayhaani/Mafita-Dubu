@@ -539,81 +539,18 @@ function closeAIVision() {
         if(overlay) overlay.remove();
     }, 400);
 }
-    <script type="module">
-    // 1. Loading Firebase Libraries
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    const slider = document.getElementById('textileSlider');
+let scrollAmount = 0;
 
-    // 2. Makullin Sirri (Firebase Config)
-    const firebaseConfig = {
-      apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
-      authDomain: "global-market-admin.firebaseapp.com",
-      projectId: "global-market-admin",
-      storageBucket: "global-market-admin.firebasestorage.app",
-      messagingSenderId: "259715265619",
-      appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // 3. Tsarin Kwaso Hotuna Daga Database
-    onSnapshot(collection(db, "kayayyaki"), (snapshot) => {
-        snapshot.forEach((doc) => {
-            const data = doc.data();
-            const box = document.getElementById(doc.id);
-            if (box) {
-                const img = box.querySelector('img');
-                if (img) { 
-                    img.src = data.url; 
-                    img.style.display = 'block'; 
-                }
-            }
-        });
-    });
-
-    // 4. Tsarin Auto-Scroll (Wanda muka gyara dazu)
-    let isPaused = false;
-    let scrollPos = 0;
-    let direction = 1;
-    const speed = 0.6;
-    const rowHeight = 195;
-
-    function startProfessionalScroll() {
-        if (!isPaused) {
-            window.scrollBy(0, direction * speed);
-            scrollPos += speed;
-            if (scrollPos >= rowHeight) {
-                isPaused = true;
-                scrollPos = 0;
-                setTimeout(() => { isPaused = false; }, 10000); 
-            }
-            if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
-                direction = -1;
-                isPaused = true; 
-                setTimeout(() => { isPaused = false; }, 5000);
-            }
-            if (direction === -1 && window.pageYOffset <= 0) {
-                direction = 1;
-                isPaused = true;
-                setTimeout(() => { isPaused = false; }, 5000);
-            }
-        }
-        requestAnimationFrame(startProfessionalScroll);
+function autoScroll() {
+    const cardWidth = slider.querySelector('.iphone-card').offsetWidth + 12;
+    scrollAmount += cardWidth;
+    
+    if (scrollAmount >= slider.scrollWidth - slider.clientWidth) {
+        scrollAmount = 0;
     }
-
-    window.addEventListener('load', () => {
-        setTimeout(startProfessionalScroll, 3000);
-    });
-</script>
-
-<script>
-    // Wannan function din search dinka ne, bar shi a yadda yake
-    function handleSearch(textbox) { /* ... code dinka ... */ }
-    function closeSearch() { /* ... code dinka ... */ }
-    function openAICamera() { /* ... code dinka ... */ }
-    function closeAIVision() { /* ... code dinka ... */ }
-</script>
-
-</body>
-</html>
+    
+    slider.scrollTo({
+        top: 0,
+        left: scrollAmount,
+        behavior: 'smoot
