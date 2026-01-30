@@ -168,100 +168,83 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
     border: none !important;
 }
-
-/* 1. BABBAN BACKGROUND NA SHEET (DARK MILK) */
+/* 1. BABBAN BACKGROUND (Mun rage haske zuwa Darker Milk/Latte) */
 .ai-bottom-sheet {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    /* Kalar Dark Milk (Creamy but sophisticated) */
-    background: #E8E2D2; 
-    border-top: 2px solid rgba(139, 101, 8, 0.3);
-    border-radius: 40px 40px 0 0;
+    background: #C2B29A; /* Wannan kalar ta fi duhu kuma ta fi kyau */
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 30px 30px 0 0;
     z-index: 5000;
-    height: 300px;
+    height: 220px; /* Mun rage tsayin sheet din daga 300px */
     transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease-out;
 }
 
-/* 2. BABBAN BOX NA ICONS */
+/* 2. RAGE GIRMAN BOXES DA 50% */
 .silver-box {
-    width: 75px; height: 75px; /* Mun dan kara girma kadan */
-    background: #111; 
-    border-radius: 22px;
+    width: 45px; height: 45px; /* Mun rage daga 75px zuwa 45px */
+    background: #000; 
+    border-radius: 12px; /* Mun rage radius din ma */
     display: flex; align-items: center; justify-content: center;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
 
-/* 3. HASKE MAI ZAGAYEWA (Wanda zai mamaye ko'ina) */
+/* 3. HASKE MAI ZAGAYEWA (Rotating Glow) */
 .silver-box::before {
     content: '';
     position: absolute;
-    /* Wannan shi ne sirrin: ya fi box din girma don ya rufe ko'ina */
     width: 250%; height: 250%; 
     background: conic-gradient(from 0deg, transparent, transparent, #ffffff);
     animation: rotate-inner 3s linear infinite;
     z-index: 1;
 }
 
-/* 4. NA TSAKIYA (GOLDEN GLOW) */
 .active-scan::before {
     background: conic-gradient(from 0deg, transparent, transparent, #FFD700) !important;
-    animation: rotate-inner 1.8s linear infinite;
 }
 
-/* 5. SHIELD (SHINGE) MAI BA DA SURA */
+/* 4. SHIELD (SHINGE) */
 .icon-inner-bg {
     position: absolute;
-    /* Inset 2px zai bar hasken ya fito siriri sosai a gefe kamar neon */
-    inset: 2px; 
-    background: #1a1a1a; /* Cikin box din ya kasance dark */
-    border-radius: 20px;
+    inset: 1.5px; /* Mun rage kaurin shingen don ya yi daidai da sabon girman */
+    background: #0d0d0d;
+    border-radius: 11px;
     z-index: 5;
 }
 
-/* 6. ICON DIN KANSA */
+/* 5. RAGE GIRMAN ICON */
 .silver-box i {
     position: relative;
     z-index: 10;
-    filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+    font-size: 14px; /* Mun rage girman icon din shima */
 }
 
-/* 7. RUBUTU (TEXT) */
+/* 6. RUBUTU (TEXT) */
 .ai-bottom-sheet span {
-    color: #5D4037 !important; /* Brownish-black domin ya dace da Milk color */
-    font-weight: 800;
-}
-
-.ai-bottom-sheet h2 {
     color: #3E2723 !important;
+    font-size: 7px; /* Karamin rubutu mai dadi */
+    font-weight: 800;
+    margin-top: 8px;
 }
 
-@keyframes rotate-inner {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-        }
-        
-        
-    /* CANCEL TEXT BREATHING EFFECT */
+/* CANCEL BUTTON STYLE */
 .cancel-breathing {
     display: block;
     width: fit-content;
-    margin: 35px auto 10px; /* Ya zauna a tsakiya */
-    color: #FFD700;
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: none; /* Cancel (ba capital duka ba) */
-    background: none;
-    border: none;
+    margin: 25px auto 10px;
+    color: #3E2723; /* Dark brown domin ya dace da Milk background */
+    font-size: 11px;
+    font-weight: 800;
+    background: rgba(0,0,0,0.05);
+    padding: 8px 25px;
+    border-radius: 20px;
     cursor: pointer;
-    letter-spacing: 1px;
-    /* Animation din numfashi */
     animation: textPulse 2s ease-in-out infinite;
-    transition: all 0.3s;
+    border: none;
 }
+        
 
 @keyframes textPulse {
     0%, 100% { 
