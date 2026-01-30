@@ -441,31 +441,52 @@
 
         <p class="mt-10 text-gray-400 font-bold text-xs cursor-pointer" onclick="closeSearch()">Soke Bincike (Cancel)</p>
     </div>
-<script>
-    let bincikeTimer;
+<script type="module">
+    // 1. FIREBASE SETUP
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    function handleSearch(textbox) {
+    const firebaseConfig = {
+      apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
+      authDomain: "global-market-admin.firebaseapp.com",
+      projectId: "global-market-admin",
+      storageBucket: "global-market-admin.firebasestorage.app",
+      messagingSenderId: "259715265619",
+      appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Kwaso Hotuna Live
+    onSnapshot(collection(db, "kayayyaki"), (snapshot) => {
+        snapshot.forEach((doc) => {
+            const data = doc.data();
+            const box = document.getElementById(doc.id);
+            if (box) {
+                const img = box.querySelector('img');
+                if (img) { img.src = data.url; img.style.display = 'block'; }
+            }
+        });
+    });
+
+    // 2. SEARCH FUNCTION (Window scope don GitHub ya gani)
+    let bincikeTimer;
+    window.handleSearch = function(textbox) {
         let kalma = textbox.value;
         clearTimeout(bincikeTimer);
-
         bincikeTimer = setTimeout(() => {
             if (kalma.length >= 3) {
                 const overlay = document.getElementById('search-overlay');
                 const display = document.getElementById('query-val');
-
-                if (display) {
-                    display.innerText = '"' + kalma + '"';
-                }
-
+                if (display) display.innerText = '"' + kalma + '"';
                 overlay.style.display = 'flex';
-                setTimeout(() => {
-                    overlay.classList.add('active');
-                }, 50);
+                setTimeout(() => overlay.classList.add('active'), 50);
             }
         }, 2500); 
     }
 
-    function closeSearch() {
+    window.closeSearch = function() {
         const overlay = document.getElementById('search-overlay');
         overlay.classList.remove('active');
         setTimeout(() => {
@@ -474,83 +495,71 @@
         }, 500);
     }
 
- function openAICamera() {
-    const existing = document.getElementById('ai-sheet');
-    if(existing) existing.remove();
-
-    const menuHTML = `
-        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
-        <div id="ai-sheet" class="ai-bottom-sheet">
-            <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
-            
-            <div class="px-10 flex justify-between items-center mb-8">
-                <div>
-                    <h2 class="text-white font-black text-[11px] tracking-[0.3em] uppercase italic">Neural Vision</h2>
-                    <p class="text-[#FFD700] text-[7px] font-bold tracking-widest uppercase opacity-80">Advanced Asset Identification</p>
+    // 3. CAMERA & AI VISION
+    window.openAICamera = function() {
+        const existing = document.getElementById('ai-sheet');
+        if(existing) existing.remove();
+        const menuHTML = `
+            <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
+            <div id="ai-sheet" class="ai-bottom-sheet">
+                <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
+                <div class="px-10 flex justify-between items-center mb-8">
+                    <div><h2 class="text-white font-black text-[11px] tracking-[0.3em] uppercase italic">Neural Vision</h2><p class="text-[#FFD700] text-[7px] font-bold tracking-widest uppercase opacity-80">Advanced Asset Identification</p></div>
+                    <i class="fa-solid fa-bolt-auto text-[#FFD700] text-xs animate-pulse"></i>
                 </div>
-                <i class="fa-solid fa-bolt-auto text-[#FFD700] text-xs animate-pulse"></i>
-            </div>
-
-            <div class="flex justify-around items-center px-4">
-                <button class="flex flex-col items-center group">
-                    <div class="silver-box active-scan">
-                        <i class="fa-solid fa-qrcode text-black text-xl"></i>
-                    </div>
-                    <span class="text-[8px] text-white mt-3 font-black tracking-widest uppercase">Scan</span>
-                </button>
-
-                <button class="flex flex-col items-center group">
-                    <div class="silver-box">
-                        <i class="fa-solid fa-camera-retro text-white/90 text-xl z-10"></i>
-                    </div>
-                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Camera</span>
-                </button>
-
-                <button class="flex flex-col items-center group">
-                    <div class="silver-box">
-                        <i class="fa-solid fa-images text-white/90 text-xl z-10"></i>
-                    </div>
-                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Gallery</span>
-                </button>
-            </div>
-            
-            <button onclick="closeAIVision()" class="cancel-breathing">
-    Cancel
-</button>
-        </div>
-    `;
-
-    document.body.insertAdjacentHTML('beforeend', menuHTML);
-    setTimeout(() => {
-        document.getElementById('ai-overlay').classList.add('opacity-100');
-        document.getElementById('ai-sheet').classList.add('active');
-    }, 10);
-        }
-
-function closeAIVision() {
-    const overlay = document.getElementById('ai-overlay');
-    const sheet = document.getElementById('ai-sheet');
-    
-    if(sheet) sheet.classList.remove('active');
-    if(overlay) overlay.classList.remove('opacity-100');
-    
-    setTimeout(() => {
-        if(sheet) sheet.remove();
-        if(overlay) overlay.remove();
-    }, 400);
-}
-    const slider = document.getElementById('textileSlider');
-let scrollAmount = 0;
-
-function autoScroll() {
-    const cardWidth = slider.querySelector('.iphone-card').offsetWidth + 12;
-    scrollAmount += cardWidth;
-    
-    if (scrollAmount >= slider.scrollWidth - slider.clientWidth) {
-        scrollAmount = 0;
+                <div class="flex justify-around items-center px-4">
+                    <button class="flex flex-col items-center group"><div class="silver-box active-scan"><i class="fa-solid fa-qrcode text-black text-xl"></i></div><span class="text-[8px] text-white mt-3 font-black tracking-widest uppercase">Scan</span></button>
+                    <button class="flex flex-col items-center group"><div class="silver-box"><i class="fa-solid fa-camera-retro text-white/90 text-xl z-10"></i></div><span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Camera</span></button>
+                    <button class="flex flex-col items-center group"><div class="silver-box"><i class="fa-solid fa-images text-white/90 text-xl z-10"></i></div><span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Gallery</span></button>
+                </div>
+                <button onclick="closeAIVision()" class="cancel-breathing">Cancel</button>
+            </div>`;
+        document.body.insertAdjacentHTML('beforeend', menuHTML);
+        setTimeout(() => {
+            document.getElementById('ai-overlay').classList.add('opacity-100');
+            document.getElementById('ai-sheet').classList.add('active');
+        }, 10);
     }
-    
-    slider.scrollTo({
-        top: 0,
-        left: scrollAmount,
-        behavior: 'smoot
+
+    window.closeAIVision = function() {
+        const overlay = document.getElementById('ai-overlay');
+        const sheet = document.getElementById('ai-sheet');
+        if(sheet) sheet.classList.remove('active');
+        if(overlay) overlay.classList.remove('opacity-100');
+        setTimeout(() => { if(sheet) sheet.remove(); if(overlay) overlay.remove(); }, 400);
+    }
+
+    // 4. PROFESSIONAL AUTO-SCROLL
+    let isPaused = false;
+    let scrollPos = 0;
+    let direction = 1;
+    const speed = 0.6;
+    const rowHeight = 195;
+
+    function startProfessionalScroll() {
+        if (!isPaused) {
+            window.scrollBy(0, direction * speed);
+            scrollPos += speed;
+            if (scrollPos >= rowHeight) {
+                isPaused = true;
+                scrollPos = 0;
+                setTimeout(() => { isPaused = false; }, 10000); 
+            }
+            if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
+                direction = -1;
+                isPaused = true; 
+                setTimeout(() => { isPaused = false; }, 5000);
+            }
+            if (direction === -1 && window.pageYOffset <= 0) {
+                direction = 1;
+                isPaused = true;
+                setTimeout(() => { isPaused = false; }, 5000);
+            }
+        }
+        requestAnimationFrame(startProfessionalScroll);
+    }
+
+    window.addEventListener('load', () => setTimeout(startProfessionalScroll, 3000));
+</script>
+</body>
+</html>
