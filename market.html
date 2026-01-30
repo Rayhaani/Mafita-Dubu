@@ -169,18 +169,55 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     border: none !important;
 }
 
-/* Wannan zai gyara girman box din don su zauna hudu-hudu */
+/* 1. BABBAN BOX NA ICONS */
 .silver-box {
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(220, 220, 220, 0.2);
+    width: 60px; height: 60px;
+    background: #111; /* Baki domin hasken ya fito radau */
     border-radius: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     position: relative;
     overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 2. HASKE MAI ZAGAYEWA (SILVER NA GEFE) */
+.silver-box::before {
+    content: '';
+    position: absolute;
+    width: 200%; height: 200%;
+    background: conic-gradient(from 0deg, transparent, transparent, #ffffff);
+    animation: rotate-glow 4s linear infinite;
+    z-index: 1;
+}
+
+/* 3. NA TSAKIYA (GOLDEN BOX) */
+.active-scan {
+    background: #000 !important;
+}
+
+.active-scan::before {
+    background: conic-gradient(from 0deg, transparent, transparent, #FFD700) !important;
+    animation: rotate-glow 2s linear infinite; /* Na tsakiya zai fi sauri kadan */
+}
+
+/* 4. SHIELD MAI RUFE CIKIN BOX DIN */
+.silver-box i {
+    position: relative;
+    z-index: 10; /* Don icon din ya fito saman hasken */
+}
+
+/* Wannan gurin ne zai maida cikin box din baki amma gefen yana walkiya */
+.icon-inner-bg {
+    position: absolute;
+    inset: 2px;
+    background: #0a0a0a;
+    border-radius: 16px;
+    z-index: 5;
+}
+
+@keyframes rotate-glow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
         
     /* CANCEL TEXT BREATHING EFFECT */
@@ -484,52 +521,32 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
 
     // 2. CAMERA FUNCTION
     function openAICamera() {
-    const existing = document.getElementById('ai-sheet');
-    if(existing) existing.remove();
+    <div class="flex justify-around items-center px-4">
+    <button class="flex flex-col items-center">
+        <div class="silver-box">
+            <div class="icon-inner-bg"></div>
+            <i class="fa-solid fa-camera-retro text-white text-xl"></i>
+        </div>
+        <span class="text-[8px] text-white/70 mt-3 font-black uppercase">Camera</span>
+    </button>
 
-    const menuHTML = `
-        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
-        <div id="ai-sheet" class="ai-bottom-sheet">
-            <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
-            
-            <div class="px-10 flex justify-between items-center mb-8">
-                <div>
-                    <h2 class="text-white font-black text-[11px] tracking-[0.3em] uppercase italic">Neural Vision</h2>
-                </div>
-                <i class="fa-solid fa-bolt-auto text-[#FFD700] text-xs animate-pulse"></i>
-            </div>
+    <button class="flex flex-col items-center">
+        <div class="silver-box active-scan">
+            <div class="icon-inner-bg"></div>
+            <i class="fa-solid fa-qrcode text-[#FFD700] text-xl"></i>
+        </div>
+        <span class="text-[8px] text-[#FFD700] mt-3 font-black uppercase">Scan</span>
+    </button>
 
-            <div class="flex justify-around items-center px-4">
-                <button class="flex flex-col items-center group">
-                    <div class="silver-box">
-                        <i class="fa-solid fa-camera-retro text-white/90 text-xl z-10"></i>
-                    </div>
-                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Camera</span>
-                </button>
-
-                <button class="flex flex-col items-center group">
-                    <div class="silver-box active-scan">
-                        <i class="fa-solid fa-qrcode text-black text-xl"></i>
-                    </div>
-                    <span class="text-[8px] text-white mt-3 font-black tracking-widest uppercase">Scan</span>
-                </button>
-
-                <button class="flex flex-col items-center group">
-                    <div class="silver-box">
-                        <i class="fa-solid fa-images text-white/90 text-xl z-10"></i>
-                    </div>
-                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Gallery</span>
-                </button>
-            </div>
-            
-            <button onclick="closeAIVision()" class="cancel-breathing">Cancel</button>
-        </div>`;
-
-    document.body.insertAdjacentHTML('beforeend', menuHTML);
-    setTimeout(() => {
-        document.getElementById('ai-overlay').classList.add('opacity-100');
-        document.getElementById('ai-sheet').classList.add('active');
-    }, 10);
+    <button class="flex flex-col items-center">
+        <div class="silver-box">
+            <div class="icon-inner-bg"></div>
+            <i class="fa-solid fa-images text-white text-xl"></i>
+        </div>
+        <span class="text-[8px] text-white/70 mt-3 font-black uppercase">Gallery</span>
+    </button>
+</div>
+        
     }
     
 
