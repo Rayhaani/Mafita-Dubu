@@ -168,34 +168,21 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
     border: none !important;
 }
-/* 1. BACKGROUND DIN SHEET (Bright Creamy Milk) */
-.ai-bottom-sheet {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: #F5F5DC; /* Wannan kalar tana da haske da kyau */
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
-    border-radius: 35px 35px 0 0;
-    z-index: 5000;
-    height: 220px; 
-    transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.1, 0.5, 0.1, 1);
-}
-
-/* 2. KARA GIRMAN ICONS (Sun koma 58px) */
+/* 1. BABBAN BOX */
 .silver-box {
-    width: 58px; height: 58px; 
-    background: #000; 
+    width: 58px; height: 58px;
+    background: #000;
     border-radius: 16px;
     display: flex; align-items: center; justify-content: center;
     position: relative;
-    overflow: hidden;
+    overflow: hidden; /* Dole ne ya kasance a nan */
 }
 
-/* 3. HASKE MAI ZAGAYEWA (The Glow Animation) */
+/* 2. HASKE MAI JUYAWA (INNER GLOW) */
 .silver-box::before {
     content: '';
     position: absolute;
-    width: 200%; height: 200%; 
+    width: 250%; height: 250%; /* Mun kara fadin hasken don ya cika ko'ina */
     background: conic-gradient(from 0deg, transparent, transparent, #ffffff);
     animation: rotate-inner 3s linear infinite;
     z-index: 1;
@@ -203,22 +190,22 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
 
 .active-scan::before {
     background: conic-gradient(from 0deg, transparent, transparent, #FFD700) !important;
-    animation-duration: 2s;
 }
 
-/* 4. SHIELD MAI RUFE TSAKIYA */
+/* 3. SHIELD MAI MATSA HASKE ZUWA GEFE */
 .icon-inner-bg {
     position: absolute;
-    inset: 2px; 
+    inset: 2.5px; /* Wannan ne zai raba hasken da icon */
     background: #0a0a0a;
-    border-radius: 15px;
+    border-radius: 14px;
     z-index: 5;
 }
 
+/* 4. ICON */
 .silver-box i {
     position: relative;
     z-index: 10;
-    font-size: 20px; /* Icon ya kara girma sosai */
+    font-size: 22px;
     color: white;
 }
 
@@ -226,8 +213,6 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
-        
-        
 
 @keyframes textPulse {
     0%, 100% { 
