@@ -136,7 +136,7 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
     box-shadow: 0 -10px 30px rgba(255, 255, 255, 0.1);
 }
-/* 1. HASKE MAI ZAGAYEWA */
+/* 1. HASKE MAI ZAGAYEWA (ROTATING GLOW) */
 .silver-box::before {
     content: '';
     position: absolute;
@@ -150,22 +150,35 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     background: conic-gradient(from 0deg, transparent, transparent, #FFD700) !important;
 }
 
-/* 2. SHIELD (SHINGE) - AN GYARA INSET DIN */
+/* 2. SHIELD (SHINGE) - MUN BUDE SHI ZUWA 4PX */
 .icon-inner-bg {
     position: absolute;
-    /* Mun kara sarari kadan (4px) domin hasken ya fito radau */
-    inset: 4px; 
+    inset: 4px; /* Wannan shi ne zai fito da hasken ta gefe */
     background: #0d0d0d;
     border-radius: 12px;
     z-index: 5;
 }
 
-/* 3. KEYFRAME DIN ZAGAYAWA (Rotate) */
+/* 3. ANIMATION DIN ZAGAYAWA */
 @keyframes rotate-inner {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
-          
+
+/* 4. BABBAN SHEET (Kalar da kake so) */
+.ai-bottom-sheet {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #F5F1E9 !important; 
+    border-top: 2px solid #fff;
+    border-radius: 35px 35px 0 0;
+    z-index: 5000;
+    height: 220px;
+    transform: translateY(100%);
+    transition: transform 0.4s ease-out;
+}
+.ai-bottom-sheet.active { transform: translateY(0); }
+        
 
 @keyframes textPulse {
     0%, 100% { 
