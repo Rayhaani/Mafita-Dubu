@@ -645,7 +645,7 @@ window.onload = () => {
     setTimeout(startProfessionalScroll, 3000);
 };
     <script type="module">
-    // 1. FIREBASE SETUP (Hotuna)
+    // 1. FIREBASE SETUP
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
@@ -661,19 +661,25 @@ window.onload = () => {
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    // Kwaso Hotuna daga Firebase
     onSnapshot(collection(db, "kayayyaki"), (snapshot) => {
         snapshot.forEach((doc) => {
             const data = doc.data();
-            const box = document.getElementById(doc.id);
-            if (box) {
-                const img = box.querySelector('img');
-                if (img) { img.src = data.url; img.style.display = 'block'; }
+            const boxArea = document.getElementById(doc.id);
+            if (boxArea) {
+                const img = boxArea.querySelector('img');
+                if (img) { 
+                    img.src = data.url; 
+                    img.style.display = 'block'; 
+                }
             }
         });
     });
 
-    // 2. MAIDO DA CAMERA DA SEARCH (Ta hanyar window scope)
-    window.handleSearch = function(textbox) {
+    // 2. MAIDO DA FUNCTIONS DINKA (Global Scope)
+    // Mun saka 'window.' a gaba don Buttons din HTML su iya ganinsu
+    
+    window.handleSearch = (textbox) => {
         let kalma = textbox.value;
         if (kalma.length >= 3) {
             const overlay = document.getElementById('search-overlay');
@@ -682,26 +688,52 @@ window.onload = () => {
             overlay.style.display = 'flex';
             setTimeout(() => overlay.classList.add('active'), 50);
         }
-    }
+    };
 
-    window.closeSearch = function() {
+    window.closeSearch = () => {
         const overlay = document.getElementById('search-overlay');
         overlay.classList.remove('active');
         setTimeout(() => {
             overlay.style.display = 'none';
             document.getElementById('market-search').value = '';
         }, 500);
-    }
+    };
 
-    window.openAICamera = function() {
-        // ... (Anan zaka bar tsohon code dinka na Camera)
-        const sheet = document.getElementById('ai-sheet') || document.createElement('div');
-        // (Sauran logic dinka na camera ya zauna anan)
-        console.log("Camera opened!"); 
-    }
+    // Wannan ita ce Function din Camera dinka
+    window.openAICamera = () => {
+        const existing = document.getElementById('ai-sheet');
+        if(existing) existing.remove();
+
+        const menuHTML = `
+            <div id="ai-overlay" onclick="window.closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
+            <div id="ai-sheet" class="ai-bottom-sheet">
+                <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
+                <div class="px-10 flex justify-between items-center mb-8 text-white text-[11px]">NEURAL VISION</div>
+                <div class="flex justify-around items-center px-4">
+                    <div class="silver-box active-scan"><i class="fa-solid fa-qrcode text-black"></i></div>
+                    <div class="silver-box"><i class="fa-solid fa-camera-retro text-white"></i></div>
+                    <div class="silver-box"><i class="fa-solid fa-images text-white"></i></div>
+                </div>
+                <button onclick="window.closeAIVision()" class="cancel-breathing">Cancel</button>
+            </div>`;
+        document.body.insertAdjacentHTML('beforeend', menuHTML);
+        setTimeout(() => {
+            document.getElementById('ai-overlay').classList.add('opacity-100');
+            document.getElementById('ai-sheet').classList.add('active');
+        }, 10);
+    };
+
+    window.closeAIVision = () => {
+        const overlay = document.getElementById('ai-overlay');
+        const sheet = document.getElementById('ai-sheet');
+        if(sheet) sheet.classList.remove('active');
+        if(overlay) overlay.classList.remove('opacity-100');
+        setTimeout(() => { 
+            if(sheet) sheet.remove(); 
+            if(overlay) overlay.remove(); 
+        }, 400);
+    };
 </script>
-    
-</script>      
     
 </body>
 </html>
