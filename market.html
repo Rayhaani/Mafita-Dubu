@@ -180,11 +180,22 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     transform: translateY(100%);
     transition: transform 0.4s cubic-bezier(0.1, 0.5, 0.1, 1);
 }
-/* 1. HASKE MAI ZAGAYEWA (A CIKI) */
+
+/* 2. KARA GIRMAN ICONS (Sun koma 58px) */
+.silver-box {
+    width: 58px; height: 58px; 
+    background: #000; 
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 3. HASKE MAI ZAGAYEWA (The Glow Animation) */
 .silver-box::before {
     content: '';
     position: absolute;
-    width: 250%; height: 250%; 
+    width: 200%; height: 200%; 
     background: conic-gradient(from 0deg, transparent, transparent, #ffffff);
     animation: rotate-inner 3s linear infinite;
     z-index: 1;
@@ -192,30 +203,30 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
 
 .active-scan::before {
     background: conic-gradient(from 0deg, transparent, transparent, #FFD700) !important;
+    animation-duration: 2s;
 }
 
-/* 2. SHINGE MAI MATSA HASKEN ZUWA GEFEN CIKI */
+/* 4. SHIELD MAI RUFE TSAKIYA */
 .icon-inner-bg {
     position: absolute;
-    inset: 2.5px; /* Wannan ne yake tura hasken gefe */
-    background: #0a0a0a; 
-    border-radius: 14px;
+    inset: 2px; 
+    background: #0a0a0a;
+    border-radius: 15px;
     z-index: 5;
 }
 
-/* 3. ICON DIN TSAKIYA */
 .silver-box i {
     position: relative;
     z-index: 10;
-    font-size: 22px; 
+    font-size: 20px; /* Icon ya kara girma sosai */
     color: white;
 }
 
-/* 4. ANIMATION DIN JUYAWA */
 @keyframes rotate-inner {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
+        
         
 
 @keyframes textPulse {
