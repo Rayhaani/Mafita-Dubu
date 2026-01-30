@@ -644,8 +644,8 @@ window.onload = () => {
     // Jira sakan 3 kafin komai ya natsa sannan ya fara
     setTimeout(startProfessionalScroll, 3000);
 };
-    
-   <script type="module">
+    <script type="module">
+    // 1. FIREBASE SETUP (Hotuna)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
@@ -661,21 +661,46 @@ window.onload = () => {
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Wannan aikin sa kawai shi ne duba hotuna a Firebase ya saka a Boxes
     onSnapshot(collection(db, "kayayyaki"), (snapshot) => {
         snapshot.forEach((doc) => {
             const data = doc.data();
             const box = document.getElementById(doc.id);
             if (box) {
                 const img = box.querySelector('img');
-                if (img) { 
-                    img.src = data.url; 
-                    img.style.display = 'block'; 
-                }
+                if (img) { img.src = data.url; img.style.display = 'block'; }
             }
         });
     });
+
+    // 2. MAIDO DA CAMERA DA SEARCH (Ta hanyar window scope)
+    window.handleSearch = function(textbox) {
+        let kalma = textbox.value;
+        if (kalma.length >= 3) {
+            const overlay = document.getElementById('search-overlay');
+            const display = document.getElementById('query-val');
+            if (display) display.innerText = '"' + kalma + '"';
+            overlay.style.display = 'flex';
+            setTimeout(() => overlay.classList.add('active'), 50);
+        }
+    }
+
+    window.closeSearch = function() {
+        const overlay = document.getElementById('search-overlay');
+        overlay.classList.remove('active');
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            document.getElementById('market-search').value = '';
+        }, 500);
+    }
+
+    window.openAICamera = function() {
+        // ... (Anan zaka bar tsohon code dinka na Camera)
+        const sheet = document.getElementById('ai-sheet') || document.createElement('div');
+        // (Sauran logic dinka na camera ya zauna anan)
+        console.log("Camera opened!"); 
+    }
 </script>
+    
 </script>      
     
 </body>
