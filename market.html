@@ -139,33 +139,50 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
 .ai-bottom-sheet.active { transform: translateY(0); }
 
 /* BOXES MAI WALKIYAR ZARBA */
-.silver-box {
-    width: 60px; height: 60px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(220, 220, 220, 0.2); /* Silver border */
-    border-radius: 18px;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-}
+<div class="flex justify-around items-center px-4">
+    <button class="flex flex-col items-center group">
+        <div class="silver-box">
+            <i class="fa-solid fa-camera-retro text-white/90 text-xl z-10"></i>
+        </div>
+        <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Camera</span>
+    </button>
 
-/* ANIMATION NA ZARBA DAKE ZAGAYEWA */
-.silver-box::after {
-    content: '';
-    position: absolute;
-    top: -50%; left: -50%; width: 200%; height: 200%;
-    background: conic-gradient(transparent, transparent, transparent, #ffffff);
-    animation: rotate-silver 4s linear infinite;
-    opacity: 0.3;
-}
-@keyframes rotate-silver { 100% { transform: rotate(360deg); } }
+    <button class="flex flex-col items-center group">
+        <div class="silver-box active-scan">
+            <i class="fa-solid fa-qrcode text-black text-xl"></i>
+        </div>
+        <span class="text-[8px] text-white mt-3 font-black tracking-widest uppercase">Scan</span>
+    </button>
+
+    <button class="flex flex-col items-center group">
+        <div class="silver-box">
+            <i class="fa-solid fa-images text-white/90 text-xl z-10"></i>
+        </div>
+        <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Gallery</span>
+    </button>
+</div>
+        
 
 .active-scan {
-    background: linear-gradient(145deg, #FFD700, #B8860B);
+    background: linear-gradient(145deg, #FFD700, #B8860B) !important;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
     border: none !important;
 }
+
+/* Wannan zai gyara girman box din don su zauna hudu-hudu */
+.silver-box {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(220, 220, 220, 0.2);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+        
     /* CANCEL TEXT BREATHING EFFECT */
 .cancel-breathing {
     display: block;
