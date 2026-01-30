@@ -136,66 +136,36 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
     box-shadow: 0 -10px 30px rgba(255, 255, 255, 0.1);
 }
-/* 1. SILVER SHEET BACKGROUND (Zaiba Exactly) */
-.ai-bottom-sheet {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background:  #F5F1E9 !important; /* Kalar Zaiba */
-    border-top: 2px solid #fff;
-    border-radius: 35px 35px 0 0;
-    z-index: 5000;
-    height: 220px;
-    transform: translateY(100%);
-    transition: transform 0.4s ease-out;
-}
-
-.ai-bottom-sheet.active { transform: translateY(0); }
-
-.silver-box {
-    width: 58px; height: 58px;
-    background: #000;
-    border-radius: 16px;
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-    overflow: hidden;
-}
-
-/* WANNAN SHINE ZAI SA WALKIYAR A CIKI */
+/* 1. HASKE MAI ZAGAYEWA */
 .silver-box::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 70%);
-    animation: innerPulse 1.5s ease-in-out infinite;
+    width: 250%; height: 250%;
+    background: conic-gradient(from 0deg, transparent, transparent, #ffffff);
+    animation: rotate-inner 3s linear infinite;
     z-index: 1;
 }
-
-/* SHINE ZAI DINGA BUL-BUL A TSAKIYA */
-@keyframes innerPulse {
-    0%, 100% { opacity: 0.3; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.2); }
-}
-        
 
 .active-scan::before {
     background: conic-gradient(from 0deg, transparent, transparent, #FFD700) !important;
 }
 
+/* 2. SHIELD (SHINGE) - AN GYARA INSET DIN */
 .icon-inner-bg {
     position: absolute;
-    inset: 2.5px;
+    /* Mun kara sarari kadan (4px) domin hasken ya fito radau */
+    inset: 4px; 
     background: #0d0d0d;
-    border-radius: 14px;
+    border-radius: 12px;
     z-index: 5;
 }
 
-.silver-box i { position: relative; z-index: 10; font-size: 22px; color: white; }
-
+/* 3. KEYFRAME DIN ZAGAYAWA (Rotate) */
 @keyframes rotate-inner {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
-        
+          
 
 @keyframes textPulse {
     0%, 100% { 
