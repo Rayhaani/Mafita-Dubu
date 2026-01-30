@@ -484,19 +484,54 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
 
     // 2. CAMERA FUNCTION
     function openAICamera() {
-        const menuHTML = `
-            <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999]"></div>
-            <div id="ai-sheet" class="ai-bottom-sheet">
-                <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
-                <div class="flex justify-around items-center px-4">
-                    <div class="silver-box"><i class="fa-solid fa-camera text-white"></i></div>
-                    <div class="silver-box"><i class="fa-solid fa-qrcode text-white"></i></div>
+    const existing = document.getElementById('ai-sheet');
+    if(existing) existing.remove();
+
+    const menuHTML = `
+        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
+        <div id="ai-sheet" class="ai-bottom-sheet">
+            <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
+            
+            <div class="px-10 flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-white font-black text-[11px] tracking-[0.3em] uppercase italic">Neural Vision</h2>
                 </div>
-                <button onclick="closeAIVision()" class="cancel-breathing">Cancel</button>
-            </div>`;
-        document.body.insertAdjacentHTML('beforeend', menuHTML);
-        setTimeout(() => document.getElementById('ai-sheet').classList.add('active'), 10);
+                <i class="fa-solid fa-bolt-auto text-[#FFD700] text-xs animate-pulse"></i>
+            </div>
+
+            <div class="flex justify-around items-center px-4">
+                <button class="flex flex-col items-center group">
+                    <div class="silver-box">
+                        <i class="fa-solid fa-camera-retro text-white/90 text-xl z-10"></i>
+                    </div>
+                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Camera</span>
+                </button>
+
+                <button class="flex flex-col items-center group">
+                    <div class="silver-box active-scan">
+                        <i class="fa-solid fa-qrcode text-black text-xl"></i>
+                    </div>
+                    <span class="text-[8px] text-white mt-3 font-black tracking-widest uppercase">Scan</span>
+                </button>
+
+                <button class="flex flex-col items-center group">
+                    <div class="silver-box">
+                        <i class="fa-solid fa-images text-white/90 text-xl z-10"></i>
+                    </div>
+                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Gallery</span>
+                </button>
+            </div>
+            
+            <button onclick="closeAIVision()" class="cancel-breathing">Cancel</button>
+        </div>`;
+
+    document.body.insertAdjacentHTML('beforeend', menuHTML);
+    setTimeout(() => {
+        document.getElementById('ai-overlay').classList.add('opacity-100');
+        document.getElementById('ai-sheet').classList.add('active');
+    }, 10);
     }
+    
 
     function closeAIVision() {
         const sheet = document.getElementById('ai-sheet');
