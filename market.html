@@ -444,181 +444,7 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
 <p class="mt-10 text-gray-400 font-bold text-xs cursor-pointer" onclick="closeSearch()">Soke Bincike (Cancel)</p>
     </div>
 <script>
-    let bincikeTimer;
-
-    function handleSearch(textbox) {
-        let kalma = textbox.value;
-        clearTimeout(bincikeTimer);
-
-        bincikeTimer = setTimeout(() => {
-            if (kalma.length >= 3) {
-                const overlay = document.getElementById('search-overlay');
-                const display = document.getElementById('query-val');
-
-                if (display) {
-                    display.innerText = '"' + kalma + '"';
-                }
-
-                overlay.style.display = 'flex';
-                setTimeout(() => {
-                    overlay.classList.add('active');
-                }, 50);
-            }
-        }, 2500); 
-    }
-
-    function closeSearch() {
-        const overlay = document.getElementById('search-overlay');
-        overlay.classList.remove('active');
-        setTimeout(() => {
-            overlay.style.display = 'none';
-            document.getElementById('market-search').value = '';
-        }, 500);
-    }
-
- function openAICamera() {
-    const existing = document.getElementById('ai-sheet');
-    if(existing) existing.remove();
-
-    const menuHTML = 
-        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
-        <div id="ai-sheet" class="ai-bottom-sheet">
-            <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
-            
-            <div class="px-10 flex justify-between items-center mb-8">
-                <div>
-                    <h2 class="text-white font-black text-[11px] tracking-[0.3em] uppercase italic">Neural Vision</h2>
-                    <p class="text-[#FFD700] text-[7px] font-bold tracking-widest uppercase opacity-80">Advanced Asset Identification</p>
-                </div>
-                <i class="fa-solid fa-bolt-auto text-[#FFD700] text-xs animate-pulse"></i>
-            </div>
-
-            <div class="flex justify-around items-center px-4">
-                <button class="flex flex-col items-center group">
-                    <div class="silver-box active-scan">
-                        <i class="fa-solid fa-qrcode text-black text-xl"></i>
-                    </div>
-                    <span class="text-[8px] text-white mt-3 font-black tracking-widest uppercase">Scan</span>
-                </button>
-
-                <button class="flex flex-col items-center group">
-                    <div class="silver-box">
-                        <i class="fa-solid fa-camera-retro text-white/90 text-xl z-10"></i>
-                    </div>
-                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Camera</span>
-                </button>
-
-                <button class="flex flex-col items-center group">
-                    <div class="silver-box">
-                        <i class="fa-solid fa-images text-white/90 text-xl z-10"></i>
-                    </div>
-                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Gallery</span>
-                </button>
-            </div>
-            
-            <button onclick="closeAIVision()" class="cancel-breathing">
-    Cancel
-</button>
-        </div>
-    ;
-
-    document.body.insertAdjacentHTML('beforeend', menuHTML);
-    setTimeout(() => {
-        document.getElementById('ai-overlay').classList.add('opacity-100');
-        document.getElementById('ai-sheet').classList.add('active');
-    }, 10);
-        }
-
-function closeAIVision() {
-    const overlay = document.getElementById('ai-overlay');
-    const sheet = document.getElementById('ai-sheet');
-    
-    if(sheet) sheet.classList.remove('active');
-    if(overlay) overlay.classList.remove('opacity-100');
-    
-    setTimeout(() => {
-        if(sheet) sheet.remove();
-        if(overlay) overlay.remove();
-    }, 400);
-}
-    const slider = document.getElementById('textileSlider');
-let scrollAmount = 0;function autoScroll() {
-    const cardWidth = slider.querySelector('.iphone-card').offsetWidth + 12;
-    scrollAmount += cardWidth;
-    
-    if (scrollAmount >= slider.scrollWidth - slider.clientWidth) {
-        scrollAmount = 0;
-    }
-    
-    // Zai rinka sliding duk bayan sakan 3
-setInterval(autoScroll, 3000);
-    
-   function startFlipping(boxId) {
-    const slides = document.querySelectorAll(#${boxId} .item-slide);
-    let current = 0;
-
-    setInterval(() => {
-        slides[current].classList.remove('active');
-        current = (current + 1) % slides.length;
-        slides[current].classList.add('active');
-    }, 4000); // Zai rinka canzawa duk bayan sakan 4
-}
-
-  function initFlip(id) {
-    let slides = document.querySelectorAll(#${id} .item-slide);
-    let current = 0;
-    if(slides.length === 0) return;
-    
-    setInterval(() => {
-        slides[current].classList.remove('active');
-        current = (current + 1) % slides.length;
-        slides[current].classList.add('active');
-    }, 3000);
-}
-
-
-window.onload = function() {
-    initFlip('textileFlip');
-    initFlip('shoeFlip');
-    initFlip('cosmeticsFlip');
-    initFlip('phoneFlip');
-    // Duk wani sabon ID da ka kara, saka shi a nan
-};
-<script>
-    // 1. MAIDO DA SCROLLING
-    let isPaused = false;
-    let scrollPos = 0;
-    let direction = 1;
-    const speed = 0.6;
-    const rowHeight = 195;
-
-    function startProfessionalScroll() {
-        if (!isPaused) {
-            window.scrollBy(0, direction * speed);
-            scrollPos += speed;
-            if (scrollPos >= rowHeight) {
-                isPaused = true;
-                scrollPos = 0;
-                setTimeout(() => { isPaused = false; }, 10000); 
-            }
-            if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
-                direction = -1;
-                scrollPos = 0;
-                isPaused = true; 
-                setTimeout(() => { isPaused = false; }, 5000);
-            }
-            if (direction === -1 && window.pageYOffset <= 0) {
-                direction = 1;
-                scrollPos = 0;
-                isPaused = true;
-                setTimeout(() => { isPaused = false; }, 5000);
-            }
-        }
-        requestAnimationFrame(startProfessionalScroll);
-    }
-
-    // 2. MAIDO DA SEARCH DA CAMERA FUNCTIONS
-    // Wadannan sune asalin ayyukanka ba tare da module ba
+    // 1. SEARCH FUNCTION
     function handleSearch(textbox) {
         let kalma = textbox.value;
         if (kalma.length >= 3) {
@@ -639,12 +465,47 @@ window.onload = function() {
         }, 500);
     }
 
-    // Fara komai idan shafi ya gama budewa
-    window.onload = () => {
-        setTimeout(startProfessionalScroll, 3000);
-    };
-</script>
-    
+    // 2. CAMERA FUNCTION
+    function openAICamera() {
+        const menuHTML = `
+            <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999]"></div>
+            <div id="ai-sheet" class="ai-bottom-sheet">
+                <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
+                <div class="flex justify-around items-center px-4">
+                    <div class="silver-box"><i class="fa-solid fa-camera text-white"></i></div>
+                    <div class="silver-box"><i class="fa-solid fa-qrcode text-white"></i></div>
+                </div>
+                <button onclick="closeAIVision()" class="cancel-breathing">Cancel</button>
+            </div>`;
+        document.body.insertAdjacentHTML('beforeend', menuHTML);
+        setTimeout(() => document.getElementById('ai-sheet').classList.add('active'), 10);
+    }
+
+    function closeAIVision() {
+        const sheet = document.getElementById('ai-sheet');
+        if(sheet) sheet.classList.remove('active');
+        setTimeout(() => {
+            if(document.getElementById('ai-overlay')) document.getElementById('ai-overlay').remove();
+            if(sheet) sheet.remove();
+        }, 400);
+    }
+
+    // 3. SCROLLING LOGIC
+    let isPaused = false;
+    let direction = 1;
+    function startProfessionalScroll() {
+        if (!isPaused) {
+            window.scrollBy(0, direction * 0.6);
+            if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
+                direction = -1; isPaused = true; setTimeout(() => isPaused = false, 5000);
+            } else if (direction === -1 && window.pageYOffset <= 0) {
+                direction = 1; isPaused = true; setTimeout(() => isPaused = false, 5000);
+            }
+        }
+        requestAnimationFrame(startProfessionalScroll);
+    }
+
+    window.onload = () => setTimeout(startProfessionalScroll, 3000);
 </script>
     
 </body>
