@@ -123,79 +123,31 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     100% { transform: translateY(300%); opacity: 0; }
 }
 /* 1. BABBAN SHEET */
-.ai-bottom-sheet {
+    .ai-bottom-sheet {
     position: fixed;
     bottom: 0; left: 0; right: 0;
     background: #F5F1E9 !important; 
     border-top: 1px solid rgba(0,0,0,0.05);
     border-radius: 30px 30px 0 0;
     z-index: 5000;
-    height: 160px;
+    height: 160px; /* An rage daga 180px zuwa 160px */
     transform: translateY(100%);
     transition: transform 0.4s ease-out;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Icons za su koma sama kadan */
 }
 
-/* Wannan zai raba icons din su bazu (Space Between) */
-.ai-bottom-sheet .flex-row-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-around; /* Wannan ne zai ba su fili a tsakani */
-    align-items: center;
-    padding: 0 20px;
-    margin-top: 10px;
-    }
-        
-        
-/* 2. BOX DIN ICON */
-.silver-box {
-    width: 58px; height: 58px;
-    background: #000;
-    border-radius: 16px;
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-    overflow: hidden; /* Wannan ne zai kulle hasken a ciki */
-    z-index: 1;
-}
+.ai-bottom-sheet.active { transform: translateY(0); }
 
-/* 3. HASKE MAI ZAGAYEWA (INNER GLOW) */
-.silver-box::before {
-    content: '';
-    position: absolute;
-    width: 250%; height: 250%;
-    background: conic-gradient(from 0deg, transparent, transparent, #ffffff);
-    animation: rotate-inner 3s linear infinite;
-    z-index: -1; /* Tura shi bayan komai */
+/* Wannan layin (handle) na sama */
+.ai-bottom-sheet div[class*="rounded-full"] {
+    background: rgba(0, 0, 0, 0.1) !important;
+    width: 40px !important;
+    height: 4px !important;
+    margin-top: 12px !important;
+    margin-bottom: 25px !important;
 }
-
-.active-scan::before {
-    background: conic-gradient(from 0deg, transparent, transparent, #FFD700) !important;
-}
-
-/* 4. SHIELD MAI MATSA HASKE ZUWA GEFE */
-.icon-inner-bg {
-    position: absolute;
-    inset: 4px; /* Sake bude shi kadan domin hasken ya fito radau */
-    background: #0d0d0d;
-    border-radius: 12px;
-    z-index: 2;
-}
-
-.silver-box i {
-    position: relative;
-    z-index: 10;
-    font-size: 22px;
-    color: white;
-}
-
-@keyframes rotate-inner {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-        
 
 @keyframes textPulse {
     0%, 100% { 
