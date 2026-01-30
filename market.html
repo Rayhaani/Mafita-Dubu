@@ -122,6 +122,7 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     50% { opacity: 1; }
     100% { transform: translateY(300%); opacity: 0; }
 }
+/* 1. BABBAN SHEET */
 .ai-bottom-sheet {
     position: fixed;
     bottom: 0; left: 0; right: 0;
@@ -129,7 +130,7 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     border-top: 1px solid rgba(0,0,0,0.05);
     border-radius: 30px 30px 0 0;
     z-index: 5000;
-    height: 180px; 
+    height: 170px; /* An daidaita tsayin */
     transform: translateY(100%);
     transition: transform 0.4s cubic-bezier(0.1, 0.5, 0.1, 1);
     display: flex;
@@ -137,20 +138,29 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     align-items: center;
 }
 
-/* Wannan shi ne zai raba su su bazu */
+.ai-bottom-sheet.active { transform: translateY(0); }
+
+/* 2. WANNAN SHINE ZAI RABA SU RADAU */
 .flex-row-container {
     width: 100% !important;
     display: flex !important;
-    flex-direction: row !important;
-    justify-content: space-evenly !important; /* Wannan zai raba su dadi-dadi */
-    align-items: center !important;
-    margin-top: 20px;
+    justify-content: space-evenly !important; /* Rarraba su dadi-dadi */
+    align-items: flex-start !important;
+    margin-top: 15px;
 }
 
-.ai-bottom-sheet.active { transform: translateY(0); }
+/* 3. DAWO DA GIRMAN BOXES DIN */
+.silver-box {
+    width: 58px !important; 
+    height: 58px !important;
+    background: #000;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
         
-        
-        
+
 .cancel-breathing:active { transform: scale(0.9); }
        
       .temu-style-camera {
@@ -421,37 +431,38 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
 
     // 2. CAMERA FUNCTION (Tare da Icons 3 da Kwalliyar Gold a Tsakiya)
     function openAICamera() {
+    function openAICamera() {
     const existing = document.getElementById('ai-sheet');
     if(existing) existing.remove();
 
     const menuHTML = `
         <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/40 z-[4999] opacity-0 transition-opacity duration-300"></div>
         <div id="ai-sheet" class="ai-bottom-sheet">
-            <div style="width:40px; height:4px; background:rgba(0,0,0,0.1); border-radius:10px; margin-top:12px;"></div>
+            <div style="width:40px; height:4px; background:rgba(0,0,0,0.1); border-radius:10px; margin-top:12px; margin-bottom:15px;"></div>
             
             <div class="flex-row-container">
                 <div style="display:flex; flex-direction:column; align-items:center;">
                     <div class="silver-box">
                         <div class="icon-inner-bg"></div>
-                        <i class="fa-solid fa-camera-retro"></i>
+                        <i class="fa-solid fa-camera-retro" style="color:white; font-size:22px; position:relative; z-index:10;"></i>
                     </div>
-                    <span style="color:#333; font-size:10px; font-weight:900; margin-top:8px;">CAMERA</span>
+                    <span style="color:#333; font-size:10px; font-weight:900; margin-top:10px;">CAMERA</span>
                 </div>
 
                 <div style="display:flex; flex-direction:column; align-items:center;">
                     <div class="silver-box active-scan">
                         <div class="icon-inner-bg"></div>
-                        <i class="fa-solid fa-qrcode text-[#FFD700]"></i>
+                        <i class="fa-solid fa-qrcode" style="color:#FFD700; font-size:22px; position:relative; z-index:10;"></i>
                     </div>
-                    <span style="color:#8B6508; font-size:10px; font-weight:900; margin-top:8px;">SCAN</span>
+                    <span style="color:#8B6508; font-size:10px; font-weight:900; margin-top:10px;">SCAN</span>
                 </div>
 
                 <div style="display:flex; flex-direction:column; align-items:center;">
                     <div class="silver-box">
                         <div class="icon-inner-bg"></div>
-                        <i class="fa-solid fa-images"></i>
+                        <i class="fa-solid fa-images" style="color:white; font-size:22px; position:relative; z-index:10;"></i>
                     </div>
-                    <span style="color:#333; font-size:10px; font-weight:900; margin-top:8px;">GALLERY</span>
+                    <span style="color:#333; font-size:10px; font-weight:900; margin-top:10px;">GALLERY</span>
                 </div>
             </div>
         </div>`;
@@ -461,7 +472,7 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
         document.getElementById('ai-overlay')?.classList.add('opacity-100');
         document.getElementById('ai-sheet')?.classList.add('active');
     }, 10);
-                }
+    }
         
 
     function closeAIVision() {
