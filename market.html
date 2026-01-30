@@ -123,24 +123,11 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     100% { transform: translateY(300%); opacity: 0; }
 }
         /* ELITE SILVER-GLOW SHEET */
+/* 1. BABBAN SHEET */
 .ai-bottom-sheet {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    background: #0a0a0a;
-    /* Walkiyar Zarba (Silver Border) a zagaye */
-    border: 1.5px solid rgba(220, 220, 220, 0.4);
-    border-radius: 40px 40px 0 0;
-    z-index: 5000;
-    height: 260px;
-    transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    box-shadow: 0 -10px 30px rgba(255, 255, 255, 0.1);
-}
-/* 1. HASKE MAI ZAGAYEWA (ROTATING GLOW) */
-.ai-bottom-sheet {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: #F5F1E9 !important;
+    background: #F5F1E9 !important; /* Nan ne zaka canja kalar sheet din */
     border-top: 2px solid #fff;
     border-radius: 35px 35px 0 0;
     z-index: 5000;
@@ -148,46 +135,54 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
     transform: translateY(100%);
     transition: transform 0.4s ease-out;
 }
-
 .ai-bottom-sheet.active { transform: translateY(0); }
 
+/* 2. BOX DIN ICON */
 .silver-box {
     width: 58px; height: 58px;
     background: #000;
     border-radius: 16px;
     display: flex; align-items: center; justify-content: center;
     position: relative;
-    overflow: hidden;
+    overflow: hidden; /* Wannan ne zai kulle hasken a ciki */
+    z-index: 1;
 }
 
+/* 3. HASKE MAI ZAGAYEWA (INNER GLOW) */
 .silver-box::before {
     content: '';
     position: absolute;
     width: 250%; height: 250%;
     background: conic-gradient(from 0deg, transparent, transparent, #ffffff);
     animation: rotate-inner 3s linear infinite;
-    z-index: 1;
+    z-index: -1; /* Tura shi bayan komai */
 }
 
 .active-scan::before {
     background: conic-gradient(from 0deg, transparent, transparent, #FFD700) !important;
 }
 
+/* 4. SHIELD MAI MATSA HASKE ZUWA GEFE */
 .icon-inner-bg {
     position: absolute;
-    inset: 2.5px;
+    inset: 4px; /* Sake bude shi kadan domin hasken ya fito radau */
     background: #0d0d0d;
-    border-radius: 14px;
-    z-index: 5;
+    border-radius: 12px;
+    z-index: 2;
 }
 
-.silver-box i { position: relative; z-index: 10; font-size: 22px; color: white; }
+.silver-box i {
+    position: relative;
+    z-index: 10;
+    font-size: 22px;
+    color: white;
+}
 
 @keyframes rotate-inner {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
-    }
-    
+}
+        
 
 @keyframes textPulse {
     0%, 100% { 
