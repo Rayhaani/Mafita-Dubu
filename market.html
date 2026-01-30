@@ -198,172 +198,39 @@
 
 .cancel-breathing:active { transform: scale(0.9); }
        
-      .temu-style-camera {
-    width: 34px; height: 28px;
+       .temu-style-camera {
+    width: 42px; height: 34px;
     background: #111;
-    border-radius: 6px;
+    border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
     position: relative;
     overflow: hidden;
 }
 
-/* Wannan shi ne bangaren da muka gyara */
 .temu-style-camera::after {
     content: '';
     position: absolute;
-    width: 200%; /* Mun kara girman hasken daga 150% zuwa 200% */
-    height: 200%;
+    inset: -2px;
     background: conic-gradient(from 0deg, transparent, transparent, #FFD700);
     animation: rotate-glow 3s linear infinite;
 }
 
+/* Wannan Layer din ne zai sa hasken ya zama border */
 .camera-inner {
     position: absolute;
     inset: 1.5px;
     background: #111;
-    border-radius: 5px;
+    border-radius: 7px;
     z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-      @keyframes rotate-glow {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-      }
-
-.duet-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr; /* Wannan zai raba su biyu a kowane layi */
-    gap: 12px;
-    padding: 15px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* 1. BABBAN BOX (Mai kalar baki a kasa don hasken ya fito) */
-.industry-mini-box {
-    flex: 1;
-    background: #000; 
-    border-radius: 25px;
-    height: 175px;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* 2. HASKE MAI ZAGAYEWA (The Glow Effect) */
-.industry-mini-box::before {
-    content: '';
-    position: absolute;
-    width: 250%; height: 250%;
-    background: conic-gradient(from 0deg, transparent, transparent, #FFD700);
-    animation: rotate-glow 4s linear infinite;
-    z-index: 0;
-}
-
-/* 3. SHIELD MAI RUFE HASKEN (Zai maida cikin box din fari fes) */
-.box-content {
-    position: absolute;
-    /* Wannan zai tilasta shi ya rufe saman sosai */
-    top: 2px;
-    left: 4px;
-    right: 4px;
-    bottom: 4px;
-    
-    background: #ffffff !important; 
-    border-radius: 20px;
-    z-index: 5;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    
-    /* Kara wannan don goge duk wata inuwa */
-    border: none;
-    box-shadow: none;
-}
-        
-/* Wannan zai tabbatar hoton bai bar komai ba a gefe */
-.display-area img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border: none;
-}
-
-/* 4. GYARAN DISPLAY AREA DA BUTTON */
-.display-area { flex: 1; position: relative; width: 100%; z-index: 2; }
-
-.category-btn {
-    background: #1a1a1a;
-    color: #fff;
-    text-align: center;
-    padding: 8px 0;
-    font-size: 10px;
-    font-weight: 800;
-    width: 100%;
-    border: none;
-    z-index: 5;
-    position: relative;
-}
 
 @keyframes rotate-glow {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-   .category-scroller {
-    display: flex;
-    overflow-x: auto;
-    padding: 15px 10px;
-    gap: 20px;
-    scrollbar-width: none; /* Boye scrollbar na PC */
-}
-
-.category-scroller::-webkit-scrollbar { display: none; } /* Boye scrollbar na Wayar */
-
-.cat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 60px;
-    cursor: pointer;
-}
-
-.icon-circle {
-    width: 50px;
-    height: 50px;
-    background: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    border: 1px solid #E0D7C6;
-    margin-bottom: 5px;
-    transition: all 0.3s;
-}
-
-.icon-circle i {
-    font-size: 18px;
-    color: #8B6508; /* Kalar Gold/Bronze */
-}
-
-.cat-name {
-    font-size: 9px;
-    font-weight: 800;
-    color: #5D4037;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.icon-circle:active {
-    transform: scale(0.9);
-    background: #FFD700;
+    100% { transform: rotate(360deg); }
 }
         
-           
     </style>
 </head>
 <body>
@@ -386,11 +253,10 @@
                 <button onclick="openAICamera()" class="ml-2 active:scale-90 transition-transform">
     <div class="temu-style-camera">
         <div class="camera-inner">
-            <i class="fa-solid fa-camera text-white text-[10px]"></i>
+            <i class="fa-solid fa-camera text-white text-base"></i>
         </div>
     </div>
                 </button>
-                
                 
                 <button class="bg-gradient-to-r from-[#8B6508] to-[#B8860B] w-8 h-8 rounded-full flex items-center justify-center text-white shadow-lg">
                     <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
@@ -399,27 +265,21 @@
         </div>
     </div>
 </div>
-
-<div class="duet-grid">
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box1"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">TEXTILES</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box2"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">FOOTWEAR</button></div></div>
-
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box3"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">ELECTRONICS</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box4"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">COSMETICS</button></div></div>
-
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box5"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">FURNITURE</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box6"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">GROCERIES</button></div></div>
-
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box7"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">AUTO SPARE</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box8"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">PHARMACY</button></div></div>
-
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box9"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">KITCHEN</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box10"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">SPORTS</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box11"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">HEALTH</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box12"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">FASHION</button></div></div>
-</div>
     
+        <div class="bg-white p-3 rounded-2xl shadow-sm border border-[#E0D7C6]">
+    <img src="https://images.unsplash.com/photo-1594132049104-1f6b1e62834b?q=80&w=500&auto=format&fit=crop" class="rounded-xl h-32 w-full object-cover">
+    <h3 class="font-bold text-xs mt-2">Premium Wedding Lace</h3>
+    <p class="text-green-600 font-black text-sm">₦85,000</p>
+        </div>
     
+            <div class="bg-white p-3 rounded-2xl shadow-sm border border-[#E0D7C6]">
+                <div class="h-32 bg-gray-100 rounded-xl flex items-center justify-center text-gray-300">Varieties</div>
+                <h3 class="font-bold text-xs mt-2">Kayan Kasuwa</h3>
+                <p class="text-green-600 font-black text-sm">₦--</p>
+            </div>
+        </div>
+    </div>
+
     <div id="search-overlay">
         <div class="world-box">
             <div class="sphere"></div>
@@ -441,52 +301,31 @@
 
         <p class="mt-10 text-gray-400 font-bold text-xs cursor-pointer" onclick="closeSearch()">Soke Bincike (Cancel)</p>
     </div>
-<script type="module">
-    // 1. FIREBASE SETUP
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
-      authDomain: "global-market-admin.firebaseapp.com",
-      projectId: "global-market-admin",
-      storageBucket: "global-market-admin.firebasestorage.app",
-      messagingSenderId: "259715265619",
-      appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // Kwaso Hotuna Live
-    onSnapshot(collection(db, "kayayyaki"), (snapshot) => {
-        snapshot.forEach((doc) => {
-            const data = doc.data();
-            const box = document.getElementById(doc.id);
-            if (box) {
-                const img = box.querySelector('img');
-                if (img) { img.src = data.url; img.style.display = 'block'; }
-            }
-        });
-    });
-
-    // 2. SEARCH FUNCTION (Window scope don GitHub ya gani)
+<script>
     let bincikeTimer;
-    window.handleSearch = function(textbox) {
+
+    function handleSearch(textbox) {
         let kalma = textbox.value;
         clearTimeout(bincikeTimer);
+
         bincikeTimer = setTimeout(() => {
             if (kalma.length >= 3) {
                 const overlay = document.getElementById('search-overlay');
                 const display = document.getElementById('query-val');
-                if (display) display.innerText = '"' + kalma + '"';
+
+                if (display) {
+                    display.innerText = '"' + kalma + '"';
+                }
+
                 overlay.style.display = 'flex';
-                setTimeout(() => overlay.classList.add('active'), 50);
+                setTimeout(() => {
+                    overlay.classList.add('active');
+                }, 50);
             }
         }, 2500); 
     }
 
-    window.closeSearch = function() {
+    function closeSearch() {
         const overlay = document.getElementById('search-overlay');
         overlay.classList.remove('active');
         setTimeout(() => {
@@ -495,71 +334,74 @@
         }, 500);
     }
 
-    // 3. CAMERA & AI VISION
-    window.openAICamera = function() {
-        const existing = document.getElementById('ai-sheet');
-        if(existing) existing.remove();
-        const menuHTML = `
-            <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
-            <div id="ai-sheet" class="ai-bottom-sheet">
-                <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
-                <div class="px-10 flex justify-between items-center mb-8">
-                    <div><h2 class="text-white font-black text-[11px] tracking-[0.3em] uppercase italic">Neural Vision</h2><p class="text-[#FFD700] text-[7px] font-bold tracking-widest uppercase opacity-80">Advanced Asset Identification</p></div>
-                    <i class="fa-solid fa-bolt-auto text-[#FFD700] text-xs animate-pulse"></i>
+ function openAICamera() {
+    const existing = document.getElementById('ai-sheet');
+    if(existing) existing.remove();
+
+    const menuHTML = `
+        <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/30 z-[4999] opacity-0 transition-opacity duration-300"></div>
+        <div id="ai-sheet" class="ai-bottom-sheet">
+            <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-6"></div>
+            
+            <div class="px-10 flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-white font-black text-[11px] tracking-[0.3em] uppercase italic">Neural Vision</h2>
+                    <p class="text-[#FFD700] text-[7px] font-bold tracking-widest uppercase opacity-80">Advanced Asset Identification</p>
                 </div>
-                <div class="flex justify-around items-center px-4">
-                    <button class="flex flex-col items-center group"><div class="silver-box active-scan"><i class="fa-solid fa-qrcode text-black text-xl"></i></div><span class="text-[8px] text-white mt-3 font-black tracking-widest uppercase">Scan</span></button>
-                    <button class="flex flex-col items-center group"><div class="silver-box"><i class="fa-solid fa-camera-retro text-white/90 text-xl z-10"></i></div><span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Camera</span></button>
-                    <button class="flex flex-col items-center group"><div class="silver-box"><i class="fa-solid fa-images text-white/90 text-xl z-10"></i></div><span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Gallery</span></button>
-                </div>
-                <button onclick="closeAIVision()" class="cancel-breathing">Cancel</button>
-            </div>`;
-        document.body.insertAdjacentHTML('beforeend', menuHTML);
-        setTimeout(() => {
-            document.getElementById('ai-overlay').classList.add('opacity-100');
-            document.getElementById('ai-sheet').classList.add('active');
-        }, 10);
-    }
+                <i class="fa-solid fa-bolt-auto text-[#FFD700] text-xs animate-pulse"></i>
+            </div>
 
-    window.closeAIVision = function() {
-        const overlay = document.getElementById('ai-overlay');
-        const sheet = document.getElementById('ai-sheet');
-        if(sheet) sheet.classList.remove('active');
-        if(overlay) overlay.classList.remove('opacity-100');
-        setTimeout(() => { if(sheet) sheet.remove(); if(overlay) overlay.remove(); }, 400);
-    }
+            <div class="flex justify-around items-center px-4">
+                <button class="flex flex-col items-center group">
+                    <div class="silver-box active-scan">
+                        <i class="fa-solid fa-qrcode text-black text-xl"></i>
+                    </div>
+                    <span class="text-[8px] text-white mt-3 font-black tracking-widest uppercase">Scan</span>
+                </button>
 
-    // 4. PROFESSIONAL AUTO-SCROLL
-    let isPaused = false;
-    let scrollPos = 0;
-    let direction = 1;
-    const speed = 0.6;
-    const rowHeight = 195;
+                <button class="flex flex-col items-center group">
+                    <div class="silver-box">
+                        <i class="fa-solid fa-camera-retro text-white/90 text-xl z-10"></i>
+                    </div>
+                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Camera</span>
+                </button>
 
-    function startProfessionalScroll() {
-        if (!isPaused) {
-            window.scrollBy(0, direction * speed);
-            scrollPos += speed;
-            if (scrollPos >= rowHeight) {
-                isPaused = true;
-                scrollPos = 0;
-                setTimeout(() => { isPaused = false; }, 10000); 
-            }
-            if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
-                direction = -1;
-                isPaused = true; 
-                setTimeout(() => { isPaused = false; }, 5000);
-            }
-            if (direction === -1 && window.pageYOffset <= 0) {
-                direction = 1;
-                isPaused = true;
-                setTimeout(() => { isPaused = false; }, 5000);
-            }
+                <button class="flex flex-col items-center group">
+                    <div class="silver-box">
+                        <i class="fa-solid fa-images text-white/90 text-xl z-10"></i>
+                    </div>
+                    <span class="text-[8px] text-white/70 mt-3 font-black tracking-widest uppercase">Gallery</span>
+                </button>
+            </div>
+            
+            <button onclick="closeAIVision()" class="cancel-breathing">
+    Cancel
+</button>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', menuHTML);
+    setTimeout(() => {
+        document.getElementById('ai-overlay').classList.add('opacity-100');
+        document.getElementById('ai-sheet').classList.add('active');
+    }, 10);
         }
-        requestAnimationFrame(startProfessionalScroll);
-    }
 
-    window.addEventListener('load', () => setTimeout(startProfessionalScroll, 3000));
-</script>
+function closeAIVision() {
+    const overlay = document.getElementById('ai-overlay');
+    const sheet = document.getElementById('ai-sheet');
+    
+    if(sheet) sheet.classList.remove('active');
+    if(overlay) overlay.classList.remove('opacity-100');
+    
+    setTimeout(() => {
+        if(sheet) sheet.remove();
+        if(overlay) overlay.remove();
+    }, 400);
+}
+    
+     
+</script>      
+    
 </body>
 </html>
