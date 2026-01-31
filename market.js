@@ -164,8 +164,3 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-        // Muna ba shi sakan 5 kafin ya ci gaba da tafiya
-        setTimeout(() => { isPaused = false; }, 5000);
-    });
-                               }
-
