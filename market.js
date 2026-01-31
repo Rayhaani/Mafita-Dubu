@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.getElementById('search-overlay');
     const queryVal = document.getElementById('query-val');
 
-    const sampleData = ["Panties", "Pants", "Pancakes", "Shoes", "Shirts", "Laptops"];
+    const sampleData = ["Panties", "Pants", "Pancakes", "Shoes", "Shirts", "Laptops", "Phones", "Jewelry"];
 
     if (searchInput) {
         searchInput.addEventListener('keyup', () => {
