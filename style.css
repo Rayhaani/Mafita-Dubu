@@ -102,8 +102,9 @@ border: 1px solid #D7CCC8; transition: transform 0.4s;
         .query-highlight { color: #D32F2F; font-style: italic; }
    
         nav {
-    background-color: #F5F1E9 !important; 
-    border-bottom: 1px solid rgba(62, 39, 35, 0.1); 
+    background-color: #F5F1E9 !important;
+
+border-bottom: 1px solid rgba(62, 39, 35, 0.1); 
     }  
     /* ULTRA-MODERN GLOW & ANIMATION */
 @keyframes scan-line {
@@ -252,6 +253,7 @@ content: '';
 }
 
 /* 3. SHIELD MAI RUFE HASKEN (Zai maida cikin box din fari fes) */
+
 .box-content {
     position: absolute;
     /* Wannan zai tilasta shi ya rufe saman sosai */
@@ -348,41 +350,4 @@ content: '';
 .icon-circle:active {
     transform: scale(0.9);
     background: #FFD700;
-}
-.suggestion-dropdown {
-    position: absolute;
-    top: 100%; left: 0; right: 0;
-    background: white; border: 1px solid #D7CCC8;
-    border-radius: 0 0 15px 15px;
-    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-    z-index: 9999; /* Mun kara girman wannan domin ya fito fili */
-    display: block;
-}
-.suggestion-dropdown li {
-    padding: 12px; color: #5D4037; cursor: pointer; border-bottom: 1px solid #eee;
-}
-
-/* ADON BUTTONS NA GLOBAL DA NEAR ME */
-.pearl-btn {
-    background: linear-gradient(135deg, #8B6508, #B8860B);
-    color: white;
-    padding: 15px 25px;
-    border-radius: 15px;
-    border: none;
-    margin: 10px 0;
-    width: 85%;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(139, 101, 8, 0.3);
-    transition: all 0.3s ease;
-}
-
-.pearl-btn:active {
-    scale: 0.95;
-}
-
-.query-highlight {
-    color: #FFD700;
-    font-weight: 800;
-        }
-
+                }
