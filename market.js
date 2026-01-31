@@ -38,26 +38,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Wadannan functions din dole su tsaya a waje (Global Scope)
 function selectSuggestion(word) {
-    const input = document.getElementById('mainSearch');
-    const box = document.getElementById('suggestionBox');
-    const queryVal = document.getElementById('query-val');
+    const searchInput = document.getElementById('mainSearch');
+    const suggestionBox = document.getElementById('suggestionBox');
     const overlay = document.getElementById('search-overlay');
+    const queryVal = document.getElementById('query-val');
 
-    // 1. Saka cikakkiyar kalmar da aka zaba (misali 'Panties')
-    input.value = word; 
+    // Wannan zai saka cikakkiyar kalmar da ka danna (ba wadda ka rubuta ba)
+    searchInput.value = word; 
     
-    // 2. Boye dropdown din
-    box.style.display = 'none'; 
-    
-    // 3. Saka kalmar a cikin Overlay din (shafin zabe)
-    if(queryVal) queryVal.innerText = `"${word}"`;
-    
-    // 4. Bude shafin zaben (Global/Near Me)
+    // Boye dropdown din suggestions
+    suggestionBox.style.display = 'none';
+
+    // Saka sunan a cikin "Ina kake son bincika..."
+    if(queryVal) {
+        queryVal.innerText = `"${word}"`; 
+    }
+
+    // Nuna overlay din mai buttons guda biyu
     if(overlay) {
         overlay.style.display = 'flex';
-        overlay.classList.add('active');
+        // Wannan zai tabbatar buttons din sun fito
     }
 }
+
 
 function openAICamera() {
     // Wannan ne kake gani yanzu, zan baka code din kyamarar anan gaba
