@@ -361,3 +361,28 @@ content: '';
 .suggestion-dropdown li {
     padding: 12px; color: #5D4037; cursor: pointer; border-bottom: 1px solid #eee;
 }
+
+/* ADON BUTTONS NA GLOBAL DA NEAR ME */
+.pearl-btn {
+    background: linear-gradient(135deg, #8B6508, #B8860B);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 15px;
+    border: none;
+    margin: 10px 0;
+    width: 85%;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(139, 101, 8, 0.3);
+    transition: all 0.3s ease;
+}
+
+.pearl-btn:active {
+    scale: 0.95;
+}
+
+.query-highlight {
+    color: #FFD700;
+    font-weight: 800;
+        }
+
