@@ -124,7 +124,11 @@ function closeAIVision() {
 let isPaused = false;
 let direction = 1;
 function startProfessionalScroll() {
-    if (!isPaused) {
+    const searchBar = document.getElementById('market-search');
+    // Idan mutum yana rubutu, ko ya danna search bar, mu dakatar da komai
+    const isTyping = searchBar === document.activeElement || (searchBar && searchBar.value.length > 0);
+
+    if (!isPaused && !isTyping) {
         window.scrollBy(0, direction * 0.6);
         if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
             direction = -1; isPaused = true; setTimeout(() => isPaused = false, 5000);
@@ -134,7 +138,6 @@ function startProfessionalScroll() {
     }
     requestAnimationFrame(startProfessionalScroll);
 }
-
 window.onload = () => setTimeout(startProfessionalScroll, 3000);
 
 window.addEventListener('DOMContentLoaded', () => {
