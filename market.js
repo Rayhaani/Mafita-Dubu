@@ -1,26 +1,43 @@
-// 1. SEARCH LOGIC (Daga nan ne search yake aiki)
-    function handleSearch(textbox) {
-        let kalma = textbox.value;
-        if (kalma.length >= 3) {
-            const overlay = document.getElementById('search-overlay');
-            const display = document.getElementById('query-val');
-            if (display) display.innerText = '"' + kalma + '"';
-            overlay.style.display = 'flex';
-            setTimeout(() => overlay.classList.add('active'), 50);
-        }
-    }
+let typingTimer;
+const doneTypingInterval = 3000; // Sakan uku (3 seconds)
 
-    function closeSearch() {
-        const overlay = document.getElementById('search-overlay');
-        overlay.classList.remove('active');
-        setTimeout(() => {
-            overlay.style.display = 'none';
-            document.getElementById('market-search').value = '';
-        }, 500);
-    }
+// 1. SEARCH LOGIC (Gyara don Dropdown da Timer)
+function handleSearch(textbox) {
+    let kalma = textbox.value.trim();
+    
+    // Share timer din idan mutum yana typing
+    clearTimeout(typingTimer);
 
-    // 2. CAMERA FUNCTION (Tare da Icons 3 da Kwalliyar Gold a Tsakiya)
-    function openAICamera() {
+    if (kalma.length >= 3) {
+        // Idan mutum ya tsaya na sakan 3, sai mu tura shi
+        typingTimer = setTimeout(() => {
+            showSearchOverlay(kalma);
+        }, doneTypingInterval);
+    }
+}
+
+// Wannan aikin ne yake nuna Buttons din (Global/Near Me)
+function showSearchOverlay(kalma) {
+    const overlay = document.getElementById('search-overlay');
+    const display = document.getElementById('query-val');
+    
+    if (display) display.innerText = '"' + kalma + '"';
+    
+    overlay.style.display = 'flex';
+    setTimeout(() => overlay.classList.add('active'), 50);
+}
+
+function closeSearch() {
+    const overlay = document.getElementById('search-overlay');
+    overlay.classList.remove('active');
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        document.getElementById('market-search').value = '';
+    }, 500);
+}
+
+// 2. CAMERA FUNCTION (Kamar yadda yake a tsohon code dinka)
+function openAICamera() {
     const existing = document.getElementById('ai-sheet');
     if(existing) existing.remove();
 
@@ -61,31 +78,30 @@
         document.getElementById('ai-overlay')?.classList.add('opacity-100');
         document.getElementById('ai-sheet')?.classList.add('active');
     }, 10);
-    }
-        
+}
 
-    function closeAIVision() {
-        const sheet = document.getElementById('ai-sheet');
-        if(sheet) sheet.classList.remove('active');
-        setTimeout(() => {
-            if(document.getElementById('ai-overlay')) document.getElementById('ai-overlay').remove();
-            if(sheet) sheet.remove();
-        }, 400);
-    }
+function closeAIVision() {
+    const sheet = document.getElementById('ai-sheet');
+    if(sheet) sheet.classList.remove('active');
+    setTimeout(() => {
+        if(document.getElementById('ai-overlay')) document.getElementById('ai-overlay').remove();
+        if(sheet) sheet.remove();
+    }, 400);
+}
 
-    // 3. AUTO SCROLLING (Domin boxes su rinka tafiya da kansu)
-    let isPaused = false;
-    let direction = 1;
-    function startProfessionalScroll() {
-        if (!isPaused) {
-            window.scrollBy(0, direction * 0.6);
-            if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
-                direction = -1; isPaused = true; setTimeout(() => isPaused = false, 5000);
-            } else if (direction === -1 && window.pageYOffset <= 0) {
-                direction = 1; isPaused = true; setTimeout(() => isPaused = false, 5000);
-            }
+// 3. AUTO SCROLLING
+let isPaused = false;
+let direction = 1;
+function startProfessionalScroll() {
+    if (!isPaused) {
+        window.scrollBy(0, direction * 0.6);
+        if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
+            direction = -1; isPaused = true; setTimeout(() => isPaused = false, 5000);
+        } else if (direction === -1 && window.pageYOffset <= 0) {
+            direction = 1; isPaused = true; setTimeout(() => isPaused = false, 5000);
         }
-        requestAnimationFrame(startProfessionalScroll);
     }
+    requestAnimationFrame(startProfessionalScroll);
+}
 
-    window.onload = () => setTimeout(startProfessionalScroll, 3000);
+window.onload = () => setTimeout(startProfessionalScroll, 3000);
