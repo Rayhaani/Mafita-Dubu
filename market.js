@@ -170,14 +170,14 @@ function manualSearch() {
     let kalma = input.value.trim();
     
     if (kalma.length >= 2) {
-        clearTimeout(typingTimer); // Kashe timer din tunda an danna button da kanka
-        showSearchOverlay(kalma);
+        clearTimeout(typingTimer); 
+        showSearchOverlay(kalma); // Wannan zai bude Global/Near Me
         
-        // Boye suggestion box idan yana bude
-        const box = document.getElementById('suggestionList');
-        if(box) box.parentElement.style.display = 'none';
+        const box = document.getElementById('suggestionBox');
+        if(box) box.style.display = 'none';
     }
 }
+
 
 // Don ya yi aiki idan an danna "Enter" a Keyboard
 document.getElementById('market-search').addEventListener('keypress', function (e) {
