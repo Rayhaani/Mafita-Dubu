@@ -38,15 +38,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Wadannan functions din dole su tsaya a waje (Global Scope)
 function selectSuggestion(word) {
-    const searchInput = document.getElementById('mainSearch');
-    const suggestionBox = document.getElementById('suggestionBox');
-    const overlay = document.getElementById('search-overlay');
+    const input = document.getElementById('mainSearch');
+    const box = document.getElementById('suggestionBox');
     const queryVal = document.getElementById('query-val');
+    const overlay = document.getElementById('search-overlay');
 
-    searchInput.value = word;
-    suggestionBox.style.display = 'none';
+    // 1. Saka cikakkiyar kalmar da aka zaba (misali 'Panties')
+    input.value = word; 
+    
+    // 2. Boye dropdown din
+    box.style.display = 'none'; 
+    
+    // 3. Saka kalmar a cikin Overlay din (shafin zabe)
     if(queryVal) queryVal.innerText = `"${word}"`;
-    overlay.style.display = 'flex';
+    
+    // 4. Bude shafin zaben (Global/Near Me)
+    if(overlay) {
+        overlay.style.display = 'flex';
+        overlay.classList.add('active');
+    }
 }
 
 function openAICamera() {
