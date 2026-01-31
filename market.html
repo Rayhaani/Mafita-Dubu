@@ -22,20 +22,9 @@
     <div class="relative group max-w-md mx-auto">
         <div class="absolute -inset-0.5 bg-gradient-to-r from-[#8B6508] to-[#FFD700] rounded-full blur opacity-20 group-hover:opacity-50 transition duration-500"></div>
         <div class="relative bg-white border border-[#E0D7C6] rounded-full flex items-center pr-1.5 pl-5 py-1.5">
-            <div class="search-container" style="position: relative; width: 100%;">
-    <input type="text" id="mainSearch" placeholder="Me kake nema..." autocomplete="off" 
-           class="bg-transparent border-none outline-none w-full text-xs font-bold text-[#3E2723] placeholder-[#A68A64]/50">
-    
-    <div id="suggestionBox" class="suggestion-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: white; z-index: 9999; border: 1px solid #ddd;">
-        <ul id="suggestionList"></ul>
-    </div>
-            </div>
-            
-    <div id="suggestionBox" class="suggestion-dropdown" style="display: none;">
-        <ul id="suggestionList"></ul>
-    </div>
-            </div>
-            
+            <input type="text" id="market-search" placeholder="Me kake nema?" 
+                   class="bg-transparent border-none outline-none w-full text-xs font-bold text-[#3E2723] placeholder-[#A68A64]/50"
+                   oninput="handleSearch(this)">
             
             <div class="flex items-center space-x-2">
                 
@@ -70,7 +59,7 @@
     <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box7"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">AUTO SPARE</button></div></div>
     <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box8"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">PHARMACY</button></div></div>
 
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box9"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">KITCHEN</button></div></div>
+<div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box9"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">KITCHEN</button></div></div>
     <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box10"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">SPORTS</button></div></div>
     <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box11"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">HEALTH</button></div></div>
     <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box12"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">FASHION</button></div></div>
@@ -100,4 +89,3 @@
     
 </body>
 </html>
- 
