@@ -1,40 +1,63 @@
 let typingTimer;
 const doneTypingInterval = 3000; // Sakan uku (3 seconds)
 
-// 1. SEARCH LOGIC (Gyara don Dropdown da Timer)
 function handleSearch(textbox) {
     let kalma = textbox.value.trim();
+    const listContainer = document.getElementById('suggestionList'); 
     
-    // Share timer din idan mutum yana typing
     clearTimeout(typingTimer);
 
-    if (kalma.length >= 3) {
-        // Idan mutum ya tsaya na sakan 3, sai mu tura shi
+    if (kalma.length >= 2) {
+        // Misalan kayayyaki
+        const samples = ["Woman Panties", "Woman Bra", "Men Boxer", "Children Wears", "Pants"];
+        const filtered = samples.filter(i => i.toLowerCase().includes(kalma.toLowerCase()));
+        
+        if(listContainer) {
+            listContainer.parentElement.style.display = 'block';
+            listContainer.innerHTML = filtered.map(item => 
+                `<li onclick="selectItem('${item}')" style="padding:12px; border-bottom:1px solid #eee; cursor:pointer; color:#333; font-weight:bold;">${item}</li>`
+            ).join('');
+        }
+
         typingTimer = setTimeout(() => {
             showSearchOverlay(kalma);
         }, doneTypingInterval);
+    } else {
+        if(listContainer) listContainer.parentElement.style.display = 'none';
     }
 }
 
-// Wannan aikin ne yake nuna Buttons din (Global/Near Me)
+function selectItem(word) {
+    const input = document.getElementById('market-search');
+    if(input) input.value = word;
+    const box = document.getElementById('suggestionList');
+    if(box) box.parentElement.style.display = 'none';
+    showSearchOverlay(word);
+}
+
 function showSearchOverlay(kalma) {
     const overlay = document.getElementById('search-overlay');
     const display = document.getElementById('query-val');
-    
     if (display) display.innerText = '"' + kalma + '"';
-    
-    overlay.style.display = 'flex';
-    setTimeout(() => overlay.classList.add('active'), 50);
+    if (overlay) {
+        overlay.style.display = 'flex';
+        setTimeout(() => overlay.classList.add('active'), 50);
+    }
 }
 
 function closeSearch() {
     const overlay = document.getElementById('search-overlay');
-    overlay.classList.remove('active');
-    setTimeout(() => {
-        overlay.style.display = 'none';
-        document.getElementById('market-search').value = '';
-    }, 500);
-}
+    if(overlay) {
+        overlay.classList.remove('active');
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            const input = document.getElementById('market-search');
+            if(input) input.value = '';
+        }, 500);
+    }
+    }
+
+
 
 // 2. CAMERA FUNCTION (Kamar yadda yake a tsohon code dinka)
 function openAICamera() {
