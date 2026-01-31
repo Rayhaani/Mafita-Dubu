@@ -137,15 +137,30 @@ function startProfessionalScroll() {
 
 window.onload = () => setTimeout(startProfessionalScroll, 3000);
 
-// 1. Idan aka danna Search Bar, dakatar da Scroll
-const searchBar = document.getElementById('market-search');
-if (searchBar) {
-    searchBar.addEventListener('focus', () => {
-        isPaused = true; // Zai tsayar da scrolling
-    });
+window.addEventListener('DOMContentLoaded', () => {
+    const searchBar = document.getElementById('market-search');
+    
+    if (searchBar) {
+        // Idan aka danna wurin rubutu
+        searchBar.addEventListener('focus', () => {
+            isPaused = true; 
+        });
 
-    // 2. Idan aka daina rubutu (aka danna wani wuri), ci gaba da Scroll
-    searchBar.addEventListener('blur', () => {
+        // Idan aka daina rubutu (ko aka danna wani wuri daban)
+        searchBar.addEventListener('blur', () => {
+            // Jira sakan 5 kafin a ci gaba da scroll
+            setTimeout(() => {
+                isPaused = false;
+            }, 5000);
+        });
+
+        // Wannan na ƙasa zai ƙara tabbatar da cewa ko ana typing ma ya tsaya
+        searchBar.addEventListener('input', () => {
+            isPaused = true;
+        });
+    }
+});
+
         // Muna ba shi sakan 5 kafin ya ci gaba da tafiya
         setTimeout(() => { isPaused = false; }, 5000);
     });
