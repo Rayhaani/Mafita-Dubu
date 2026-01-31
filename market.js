@@ -164,3 +164,26 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Wannan zai yi aiki idan an danna Icon din Search
+function manualSearch() {
+    const input = document.getElementById('market-search');
+    let kalma = input.value.trim();
+    
+    if (kalma.length >= 2) {
+        clearTimeout(typingTimer); // Kashe timer din tunda an danna button da kanka
+        showSearchOverlay(kalma);
+        
+        // Boye suggestion box idan yana bude
+        const box = document.getElementById('suggestionList');
+        if(box) box.parentElement.style.display = 'none';
+    }
+}
+
+// Don ya yi aiki idan an danna "Enter" a Keyboard
+document.getElementById('market-search').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        manualSearch();
+    }
+});
+
+
