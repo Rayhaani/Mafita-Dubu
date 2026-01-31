@@ -8,8 +8,16 @@ function handleSearch(textbox) {
     clearTimeout(typingTimer);
 
     if (kalma.length >= 2) {
-        // Misalan kayayyaki
-        const samples = ["Woman Panties", "Woman Bra", "Men Boxer", "Children Wears", "Pants"];
+        // Wannan shi ne babban jerin kayayyakin shafinka na Global Market
+const samples = [
+    "Woman Panties", "Woman Bra", "Woman Gown", "Woman Shoes",
+    "Men Boxer", "Men Singlet", "Men Shirt", "Men Trousers",
+    "Children Wears", "Baby Toys", "Diapers", "Baby Food",
+    "Cosmetics", "Perfumes", "Body Cream", "Makeup Kit",
+    "Electronics", "Smartphones", "Laptops", "Power Banks",
+    "Kitchen Utensils", "Blenders", "Plates", "Spoons"
+];
+        
         const filtered = samples.filter(i => i.toLowerCase().includes(kalma.toLowerCase()));
         
         if(listContainer) {
