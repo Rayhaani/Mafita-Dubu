@@ -177,19 +177,3 @@ function manualSearch() {
         if(box) box.style.display = 'none';
     }
 }
-
-// Don Enter ya yi aiki
-document.getElementById('market-search').addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-        manualSearch();
-    }
-});
-
-// Don ya yi aiki idan an danna "Enter" a Keyboard
-document.getElementById('market-search').addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-        manualSearch();
-    }
-});
-
-
