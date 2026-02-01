@@ -186,21 +186,27 @@ function manualSearch() {
 }
 
 // Function na Camera
-function handleCamera() {
+function handleGallery() {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
-    input.capture = 'environment'; // Zai buɗe kyamara kai tsaye
+    input.multiple = true; 
     
     input.onchange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            closeAIVision(); // Rufe menu din kyamara
-            showSearchOverlay("Hoton Kyamara"); // Tura shi shafin zabe
-        }
+        const files = Array.from(e.target.files);
+        if (files.length === 0) return;
+
+        // Karanta hoton farko don Preview
+        const reader = new FileReader();
+        reader.onload = () => {
+            // Nuna Futuristic Bar ba tare da barin page din ba
+            showFuturisticActionBar(files.length, reader.result);
+        };
+        reader.readAsDataURL(files[0]);
     };
     input.click();
 }
+
 
 // Function na Gallery
 let selectedImages = []; // Wannan zai adana hotunan da aka zaba
@@ -363,42 +369,49 @@ function showFuturisticActionBar(count, imageSrc) {
     const actionBar = document.createElement('div');
     actionBar.id = 'futuristic-action-bar';
     
-    // Style mai kyan gaske (Glassmorphism + Gold Glow)
+    // Professional Futuristic Style (Glassmorphism)
     actionBar.style = `
         position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-        width: 92%; max-width: 450px; height: 75px;
-        background: rgba(15, 15, 15, 0.9); backdrop-filter: blur(20px);
-        border: 1.5px solid rgba(255, 215, 0, 0.4); border-radius: 40px;
+        width: 90%; max-width: 450px; height: 80px;
+        background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 215, 0, 0.5); border-radius: 20px;
         display: flex; align-items: center; justify-content: space-between;
-        padding: 0 15px; z-index: 9999999;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.2);
-        animation: futuristicSlideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        padding: 0 20px; z-index: 9999999;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 15px rgba(255, 215, 0, 0.2);
+        animation: slideInUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     `;
 
     actionBar.innerHTML = `
-        <div onclick="this.parentElement.remove()" style="color: #ff4444; padding: 10px; cursor: pointer;">
-            <i class="fa-solid fa-circle-xmark" style="font-size: 22px;"></i>
+        <div onclick="this.parentElement.remove()" style="color: #ff4d4d; cursor: pointer; font-size: 24px;">
+            <i class="fa-solid fa-circle-xmark"></i>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 12px; cursor: pointer;" onclick="showImagePreview('${imageSrc}')">
-            <div style="background: #FFD700; color: #000; width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; box-shadow: 0 0 10px rgba(255,215,0,0.5);">
+        <div style="display: flex; align-items: center; gap: 15px; cursor: pointer;" onclick="showImagePreview('${imageSrc}')">
+            <div style="background: #FFD700; color: #000; padding: 5px 12px; border-radius: 6px; font-weight: 900; font-size: 16px;">
                 ${count}
             </div>
-            <span style="color: white; font-weight: 500; font-size: 14px; letter-spacing: 0.5px;">Preview</span>
+            <span style="color: white; font-weight: bold; text-transform: uppercase; font-size: 13px; letter-spacing: 1px;">Preview</span>
         </div>
 
-        <button onclick="proceedToAISearch('${imageSrc}')" style="background: #FFD700; color: #000; border: none; height: 50px; padding: 0 35px; border-radius: 30px; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);">
+        <button onclick="openGlobalSearchOverlay('${imageSrc}')" style="background: #FFD700; color: black; border: none; height: 50px; padding: 0 30px; border-radius: 12px; font-weight: 900; font-size: 14px; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(255,215,0,0.3);">
             SELECT
         </button>
 
         <style>
-            @keyframes futuristicSlideUp {
-                from { transform: translate(-50%, 150%); opacity: 0; }
-                to { transform: translate(-50%, 0); opacity: 1; }
+            @keyframes slideInUp {
+                from { bottom: -100px; opacity: 0; }
+                to { bottom: 30px; opacity: 1; }
             }
+            #futuristic-action-bar button:active { transform: scale(0.95); }
         </style>
     `;
 
     document.body.appendChild(actionBar);
 }
 
+// Wannan zai bude Search Overlay dinka na Near Me / Global
+function openGlobalSearchOverlay(image) {
+    document.getElementById('futuristic-action-bar').remove();
+    // Kira babban overlay dinka na search anan
+    showSearchOverlay("Visual Search Processing..."); 
+}
