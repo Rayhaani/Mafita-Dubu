@@ -187,66 +187,81 @@ function manualSearch() {
 }
 
 // Function na Camera
+// 1. FUNCTION NA GALLERY
+function handleGallery(event) {
+    if (event) event.preventDefault();
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.multiple = true; 
+    input.onchange = (e) => {
+        const files = Array.from(e.target.files);
+        if (files.length > 0) {
+            const reader = new FileReader();
+            reader.onload = () => renderFuturisticBar(files.length, reader.result);
+            reader.readAsDataURL(files[0]);
+        }
+    };
+    input.click();
+}
+
+// 2. FUNCTION NA KYAMARA
+function handleCamera(event) {
+    if (event) event.preventDefault();
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.capture = 'environment'; // Wannan zai bude kyamara kai tsaye
+    input.onchange = (e) => {
+        const files = Array.from(e.target.files);
+        if (files.length > 0) {
+            const reader = new FileReader();
+            reader.onload = () => renderFuturisticBar(1, reader.result);
+            reader.readAsDataURL(files[0]);
+        }
+    };
+    input.click();
+}
+
+// 3. DISPLAY BAR (Wanda zai fito a kan kowane page)
 function renderFuturisticBar(count, img) {
-    // 1. Cire tsohon bar idan akwai
     const existing = document.getElementById('temu-style-bar');
     if (existing) existing.remove();
 
-    // 2. Samar da Bar din
     const bar = document.createElement('div');
     bar.id = 'temu-style-bar';
-    
-    // Professional Style (Kamar na Temu amma Futuristic)
     bar.style.cssText = `
-        position: fixed !important;
-        bottom: 30px !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        width: 90% !important;
-        max-width: 450px !important;
-        height: 75px !important;
-        background: #000000 !important;
-        border: 2px solid #FFD700 !important;
-        border-radius: 40px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        padding: 0 10px 0 20px !important;
-        z-index: 99999999999 !important;
-        box-shadow: 0 0 25px rgba(255, 215, 0, 0.4) !important;
+        position: fixed !important; bottom: 25px !important; left: 50% !important;
+        transform: translateX(-50%) !important; width: 92% !important; max-width: 450px !important;
+        height: 75px !important; background: #000 !important; border: 2.5px solid #FFD700 !important;
+        border-radius: 40px !important; display: flex !important; align-items: center !important;
+        justify-content: space-between !important; padding: 0 10px 0 20px !important;
+        z-index: 1000000000 !important; box-shadow: 0 0 30px rgba(255, 215, 0, 0.5) !important;
     `;
 
     bar.innerHTML = `
         <div style="display: flex; align-items: center; gap: 15px;">
-            <span onclick="document.getElementById('temu-style-bar').remove()" style="color: #ff4444; font-size: 28px; cursor: pointer; font-weight: bold;">&times;</span>
+            <span onclick="this.parentElement.parentElement.remove()" style="color: #ff4444; font-size: 30px; cursor: pointer;">&times;</span>
             <div style="display: flex; align-items: center; gap: 8px;">
-                <div style="background: #FFD700; color: #000; width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900;">
-                    ${count}
-                </div>
-                <span style="color: white; font-weight: bold; font-family: sans-serif; font-size: 14px;">PREVIEW</span>
+                <div style="background: #FFD700; color: #000; padding: 2px 10px; border-radius: 8px; font-weight: 900;">${count}</div>
+                <span style="color: white; font-weight: bold; font-size: 14px;">PREVIEW</span>
             </div>
         </div>
-        <button onclick="executeSelect('${img}')" style="background: #FFD700; color: #000; border: none; height: 55px; padding: 0 35px; border-radius: 30px; font-weight: 900; font-size: 15px; cursor: pointer;">
-            SELECT
-        </button>
+        <button onclick="executeSelect('${img}')" style="background: #FFD700; color: #000; border: none; height: 55px; padding: 0 35px; border-radius: 30px; font-weight: 900; font-size: 16px; cursor: pointer;">SELECT</button>
     `;
-
-    // 3. Saka shi a babban jikin HTML
     document.body.appendChild(bar);
 }
 
 function executeSelect(img) {
-    // Cire bar din idan an danna select
     document.getElementById('temu-style-bar').remove();
-    
-    // Kira overlay dinka na search
+    // Tabbatar sunan function din nan ya dace da naka
     if (window.showSearchOverlay) {
         showSearchOverlay(img);
     } else {
-        alert("Select yayi aiki! Amma 'showSearchOverlay' function bai fito ba.");
+        alert("An zaba! Amma Overlay dinka bai fito ba.");
     }
-}
-
+        }
+            
 function showTemuStyleBar(count, imageSrc) {
     // 1. Cire duk wani tsohon bar idan akwai
     const existingBar = document.getElementById('temu-bar');
