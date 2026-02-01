@@ -227,30 +227,38 @@ function handleScan() {
     scannerOverlay.style = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.9); z-index:999999; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;";
 
     // UI Elements: Laser da Border
-    scannerOverlay.innerHTML = `
-        <div style="position:absolute; top:40px; color:white; font-family:sans-serif; text-align:center; z-index:1000002;">
-            <p style="font-weight:bold; letter-spacing:2px; margin-bottom:5px;">AI SCANNER READY</p>
-            <div style="width:50px; height:2px; background:#FFD700; margin:auto;"></div>
-        </div>
+scannerOverlay.innerHTML = `
+    <div style="position:absolute; top:40px; color:white; font-family:sans-serif; text-align:center; z-index:1000002;">
+        <p style="font-weight:bold; letter-spacing:2px; margin:0;">AI SCANNER READY</p>
+        <div style="width:50px; height:2px; background:#FFD700; margin:5px auto;"></div>
+    </div>
+    
+    <button id="close-scan-btn" style="position:absolute; top:30px; right:30px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.3); color:white; width:45px; height:45px; border-radius:50%; font-size:20px; z-index:1000005; cursor:pointer;">
+        <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <div style="position:relative; width:280px; height:280px; border: 2px solid #FFD700; box-shadow: 0 0 20px rgba(255,215,0,0.4); overflow:hidden; border-radius:10px;">
         
-        <button id="close-scan-btn" style="position:absolute; top:30px; right:30px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.3); color:white; width:45px; height:45px; border-radius:50%; font-size:20px; z-index:1000005; cursor:pointer;">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
+        <div id="qr-reader" style="width:100%; height:100%; object-fit:cover;"></div>
 
-        <div style="position:relative; width:280px; height:280px; border: 2px solid rgba(255,215,0,0.3); box-shadow: 0 0 20px rgba(255,215,0,0.2);">
-            <div id="laser-line" style="position:absolute; width:100%; height:3px; background:#FFD700; box-shadow: 0 0 15px #FFD700; top:0; animation: laserMove 2s infinite linear; z-index:1000003;"></div>
-            
-            <div id="qr-reader" style="width:100%; height:100%; object-fit:cover;"></div>
-        </div>
+        <div id="laser-line" style="position:absolute; width:100%; height:4px; background:linear-gradient(to bottom, transparent, #FFD700); box-shadow: 0 0 15px #FFD700; top:0; animation: laserMove 2s infinite linear; z-index:1000003;"></div>
+        
+        <div style="position:absolute; top:0; left:0; width:20px; height:20px; border-top:4px solid #FFD700; border-left:4px solid #FFD700;"></div>
+        <div style="position:absolute; top:0; right:0; width:20px; height:20px; border-top:4px solid #FFD700; border-right:4px solid #FFD700;"></div>
+        <div style="position:absolute; bottom:0; left:0; width:20px; height:20px; border-bottom:4px solid #FFD700; border-left:4px solid #FFD700;"></div>
+        <div style="position:absolute; bottom:0; right:0; width:20px; height:20px; border-bottom:4px solid #FFD700; border-right:4px solid #FFD700;"></div>
+    </div>
 
-        <style>
-            @keyframes laserMove {
-                0% { top: 0; }
-                50% { top: 100%; }
-                100% { top: 0; }
-            }
-        </style>
-    `;
+    <style>
+        @keyframes laserMove {
+            0% { top: -5%; }
+            100% { top: 105%; }
+        }
+        /* Boye sauran kyamarar da take fita waje */
+        #qr-reader__dashboard, #qr-reader__status_span { display: none !important; }
+        video { width: 100% !important; height: 100% !important; object-fit: cover !important; }
+    </style>
+`;
 
     document.body.appendChild(scannerOverlay);
 
