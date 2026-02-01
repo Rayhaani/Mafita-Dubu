@@ -254,21 +254,27 @@ scannerOverlay.innerHTML = `
         0% { top: -5%; }
         100% { top: 105%; }
     }
-    /* Wannan zai goge duk wani farin box da sauran rubuce-rubucen asali */
-    #qr-reader__dashboard, 
-    #qr-reader__status_span, 
-    #qr-reader__scan_region,
-    #qr-reader__scan_region div { 
-        display: none !important; 
-        border: none !important;
-    }
-    
-    #qr-reader { border: none !important; }
 
+    /* Wannan zai share kowane irin border ko background da library din yake sakawa */
+    #qr-reader, #qr-reader * {
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+
+    /* Boye duk wani rubutu ko button na asali */
+    #qr-reader__dashboard, 
+    #qr-reader__status_span,
+    #qr-reader__scan_region img { 
+        display: none !important; 
+    }
+
+    /* Tabbatar kyamarar ta cika box dinmu kawai */
     video { 
         width: 100% !important; 
         height: 100% !important; 
-        object-fit: cover !important; 
+        object-fit: cover !important;
+        border-radius: 8px;
     }
 </style>
 
