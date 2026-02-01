@@ -1,3 +1,4 @@
+alert("JS dina yana aiki!");
 let typingTimer;
 const doneTypingInterval = 3000; // Sakan uku (3 seconds)
 
