@@ -391,6 +391,16 @@ content: '';
     animation-delay: 1s;
 }
 
+/* Wannan zai tura kalmar Soke Bincike kasa */
+.cancel-breathing {
+    display: block;
+    margin-top: 35px !important; /* Kara wannan lambar idan kana so ya kara tafiya kasa */
+    font-weight: 800;
+    color: #5D4037;
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+}
 /* Wannan zai tilasta masa sauka kasa ko yana cikin wani box ne */
 .cancel-breathing {
     position: relative !important;
