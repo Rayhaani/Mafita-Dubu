@@ -211,13 +211,13 @@ function handleGallery() {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onload = () => {
-            // KIRAN PREVIEW UI NAN
-            showImagePreview(reader.result);
+            // Wannan shi ne zai fito da dogon button din a kasan shafin Gallery
+            showFuturisticActionBar(1, reader.result);
         };
         reader.readAsDataURL(file);
     };
     input.click();
-            }
+}
 
 function handleScan() {
     closeAIVision();
@@ -347,5 +347,52 @@ function showImagePreview(imageSrc) {
     `;
 
     document.body.appendChild(previewOverlay);
+}
+// Wannan function din zai samar da Futuristic Bar din a kasan Gallery
+function showFuturisticActionBar(count, imageSrc) {
+    // Idan bar din yana nan, mu goge shi mu sake sabo
+    const oldBar = document.getElementById('futuristic-action-bar');
+    if (oldBar) oldBar.remove();
+
+    const actionBar = document.createElement('div');
+    actionBar.id = 'futuristic-action-bar';
+    
+    // Style mai kyan gaske (Glassmorphism + Gold Glow)
+    actionBar.style = `
+        position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+        width: 90%; max-width: 500px; height: 70px;
+        background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 35px;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 0 10px; z-index: 2000000;
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+        animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    `;
+
+    actionBar.innerHTML = `
+        <div onclick="this.parentElement.remove()" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; color: #ff4444; cursor: pointer; font-size: 20px;">
+            <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+
+        <div onclick="showImagePreview('${imageSrc}')" style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+            <div style="background: #FFD700; color: #000; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 12px; box-shadow: 0 0 10px #FFD700;">
+                ${count}
+            </div>
+            <span style="color: white; font-weight: 600; letter-spacing: 1px; font-size: 14px;">PREVIEW</span>
+        </div>
+
+        <button onclick="proceedToAISearch('${imageSrc}')" style="background: linear-gradient(135deg, #FFD700, #b8860b); color: #000; border: none; height: 50px; padding: 0 35px; border-radius: 25px; font-weight: 900; font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.4);">
+            SELECT <i class="fa-solid fa-chevron-right"></i>
+        </button>
+
+        <style>
+            @keyframes slideUp {
+                from { bottom: -100px; opacity: 0; }
+                to { bottom: 20px; opacity: 1; }
+            }
+        </style>
+    `;
+
+    document.body.appendChild(actionBar);
 }
 
