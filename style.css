@@ -396,20 +396,13 @@ content: '';
     font-weight: 900;
 }
 
-/* 1. RAGE SAURIN MOTSIN BOXES (SLIDING) */
-.duet-grid {
-    animation-duration: 60s !important; /* Wannan zai tilasta sliding din yin sanyi sosai */
-    transition-duration: 2s !important;
+/* Wannan zai tilasta wa boxes din tafiya a hankali */
+.industry-mini-box, .box-content, .display-area img {
+    transition-duration: 3s !important; /* Kara wannan zuwa 5s idan kana son ya kara jinkiri */
+    transition-timing-function: ease-in-out !important;
 }
 
-/* 2. RAGE SAURIN JUYAWAR HASKE A SILVER BOX */
-.silver-box::before {
-    animation: rotate-inner 15s linear infinite !important; /* Daga 3s zuwa 15s */
+/* Rage saurin juyawar hasken zinarin ma */
+.industry-mini-box::before {
+    animation-duration: 15s !important; /* Daga 4s ya koma 15s */
 }
-
-/* 3. TSAIDA MOTSI IDAN AKA DORA HANU (Optional) */
-.duet-grid:hover {
-    animation-play-state: paused !important;
-}
-
-
