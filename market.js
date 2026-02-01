@@ -195,42 +195,15 @@ function handleGallery() {
     input.onchange = (e) => {
         const files = Array.from(e.target.files);
         if (files.length === 0) return;
-
-        // Karanta hoton farko don Preview
+        
         const reader = new FileReader();
         reader.onload = () => {
-            // Nuna Futuristic Bar ba tare da barin page din ba
             showFuturisticActionBar(files.length, reader.result);
         };
         reader.readAsDataURL(files[0]);
     };
     input.click();
 }
-
-
-// Function na Gallery
-let selectedImages = []; // Wannan zai adana hotunan da aka zaba
-
-function handleGallery() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.multiple = true; // Mun ba shi ikon daukar hoto fiye da daya
-    
-    input.onchange = (e) => {
-        const files = Array.from(e.target.files);
-        selectedImages = files; // Adana hotunan
-        
-        const reader = new FileReader();
-        reader.onload = () => {
-            // Yanzu zai nuna adadin hotunan da aka zaba (files.length)
-            showFuturisticActionBar(files.length, reader.result);
-        };
-        reader.readAsDataURL(files[0]);
-    };
-    input.click();
-        }
-
 
 function handleScan() {
     closeAIVision();
@@ -363,55 +336,45 @@ function showImagePreview(imageSrc) {
 }
 // Wannan function din zai samar da Futuristic Bar din a kasan Gallery
 function showFuturisticActionBar(count, imageSrc) {
+    // Share tsohon bar idan akwai
     const oldBar = document.getElementById('futuristic-action-bar');
     if (oldBar) oldBar.remove();
 
     const actionBar = document.createElement('div');
     actionBar.id = 'futuristic-action-bar';
     
-    // Professional Futuristic Style (Glassmorphism)
+    // Style mai karfi don ya tsaya a inda kake (Fixed Position)
     actionBar.style = `
-        position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-        width: 90%; max-width: 450px; height: 80px;
-        background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(25px);
-        border: 1px solid rgba(255, 215, 0, 0.5); border-radius: 20px;
-        display: flex; align-items: center; justify-content: space-between;
-        padding: 0 20px; z-index: 9999999;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 15px rgba(255, 215, 0, 0.2);
-        animation: slideInUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        position: fixed; 
+        bottom: 20px; 
+        left: 50%; 
+        transform: translateX(-50%);
+        width: 90%; 
+        max-width: 400px; 
+        height: 70px;
+        background: #111; 
+        border: 2px solid #FFD700; 
+        border-radius: 20px;
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between;
+        padding: 0 15px; 
+        z-index: 10000000; /* Layer mafi girma */
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     `;
 
     actionBar.innerHTML = `
-        <div onclick="this.parentElement.remove()" style="color: #ff4d4d; cursor: pointer; font-size: 24px;">
-            <i class="fa-solid fa-circle-xmark"></i>
+        <i class="fa-solid fa-xmark" onclick="this.parentElement.remove()" style="color: white; cursor: pointer;"></i>
+        
+        <div style="display: flex; align-items: center; gap: 10px; color: white;">
+            <span style="background: #FFD700; color: black; padding: 2px 8px; border-radius: 5px; font-weight: bold;">${count}</span>
+            <span style="font-weight: bold; font-size: 14px;">Preview</span>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 15px; cursor: pointer;" onclick="showImagePreview('${imageSrc}')">
-            <div style="background: #FFD700; color: #000; padding: 5px 12px; border-radius: 6px; font-weight: 900; font-size: 16px;">
-                ${count}
-            </div>
-            <span style="color: white; font-weight: bold; text-transform: uppercase; font-size: 13px; letter-spacing: 1px;">Preview</span>
-        </div>
-
-        <button onclick="openGlobalSearchOverlay('${imageSrc}')" style="background: #FFD700; color: black; border: none; height: 50px; padding: 0 30px; border-radius: 12px; font-weight: 900; font-size: 14px; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(255,215,0,0.3);">
+        <button onclick="alert('Select clicked!')" style="background: #FFD700; color: black; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 900; cursor: pointer;">
             SELECT
         </button>
-
-        <style>
-            @keyframes slideInUp {
-                from { bottom: -100px; opacity: 0; }
-                to { bottom: 30px; opacity: 1; }
-            }
-            #futuristic-action-bar button:active { transform: scale(0.95); }
-        </style>
     `;
 
     document.body.appendChild(actionBar);
-}
-
-// Wannan zai bude Search Overlay dinka na Near Me / Global
-function openGlobalSearchOverlay(image) {
-    document.getElementById('futuristic-action-bar').remove();
-    // Kira babban overlay dinka na search anan
-    showSearchOverlay("Visual Search Processing..."); 
 }
