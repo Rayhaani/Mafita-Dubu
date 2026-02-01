@@ -352,38 +352,41 @@ content: '';
     background: #FFD700;
                 }
 
-/* Animation na duhu da walkiyar karfe */
-@keyframes metallicShine {
+/* Animation na duhu da walƙiyar asali */
+@keyframes intenseMetallicGlow {
     0%, 100% { 
         transform: scale(1);
-        color: #2D1B18; /* Brown mai duhu sosai */
+        color: #1A0F0D; /* Duhu matuƙa (kusan baki) */
         text-shadow: none;
-        filter: brightness(1);
     }
     50% { 
-        transform: scale(1.1);
-        color: #5D4037; /* Brown din ya dan bude kadan */
-        /* Wannan inuwar ita ce take bada walkiyar */
+        transform: scale(1.08); /* Girma kaɗan don kar ya taɓa gefe */
+        color: #8B4513; /* Brown mai haske kaɗan */
+        /* Walƙiya mai kalar zinari da fari */
         text-shadow: 
-            0 0 5px #fff, 
-            0 0 10px #FFD700, 
-            0 0 20px #8B4513; 
-        filter: brightness(1.5) contrast(1.2);
+            0 0 8px #ffffff, 
+            0 0 15px #FFD700, 
+            0 0 20px #B8860B;
         font-weight: 900;
     }
 }
 
-/* Saka wa buttons din guda biyu */
+/* Saka wa buttons ɗin */
 #btn-global span.block, 
 #btn-near span.block {
     display: inline-block;
-    font-size: 13.5px !important;
-    color: #2D1B18; /* Duhu matuka */
+    font-size: 13px !important;
+    color: #1A0F0D;
     font-weight: 700;
-    animation: metallicShine 2s infinite ease-in-out;
+    
+    /* Wannan zai hana rubutu karyewa zuwa layi na biyu */
+    white-space: nowrap !important; 
+    width: auto;
+    
+    animation: intenseMetallicGlow 2s infinite ease-in-out;
 }
 
-/* Sequential delay */
+/* Jinkiri ga na biyu */
 #btn-near span.block {
     animation-delay: 1s;
 }
