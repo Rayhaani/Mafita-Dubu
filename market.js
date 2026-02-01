@@ -187,27 +187,68 @@ function manualSearch() {
 }
 
 // Function na Camera
-function handleGallery(event) {
-    if (event) event.preventDefault();
+function handleGallery(e) {
+    if (e) e.preventDefault(); // Kare canja page
 
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
     input.multiple = true; 
     
-    input.onchange = (e) => {
-        const files = Array.from(e.target.files);
+    input.onchange = function(event) {
+        const files = Array.from(event.target.files);
         if (files.length === 0) return;
 
         const reader = new FileReader();
-        reader.onload = () => {
-            // Tilasta kiran Bar din a matsayin "Top Layer"
-            showTemuStyleBar(files.length, reader.result);
+        reader.onload = function() {
+            // Bayan an zabi hoto, mu dakatar da komai na sakonni
+            setTimeout(() => {
+                renderFuturisticBar(files.length, reader.result);
+            }, 500);
         };
         reader.readAsDataURL(files[0]);
     };
     input.click();
 }
+
+function renderFuturisticBar(count, img) {
+    // Cire duk wani tsohon abu
+    const old = document.getElementById('temu-style-bar');
+    if (old) old.remove();
+
+    const bar = document.createElement('div');
+    bar.id = 'temu-style-bar';
+    
+    // Design mai kyan gaske (Temu inspired)
+    bar.style = `
+        position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+        width: 92%; max-width: 450px; height: 80px;
+        background: #111; border: 1.5px solid #FFD700; border-radius: 20px;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 0 15px; z-index: 999999999;
+        box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    `;
+
+    bar.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span onclick="this.parentElement.parentElement.remove()" style="color:red; font-size:25px; cursor:pointer;">&times;</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <b style="background:#FFD700; color:#000; padding:2px 10px; border-radius:5px;">${count}</b>
+                <span style="color:white; font-size:14px; font-family:sans-serif;">PREVIEW</span>
+            </div>
+        </div>
+        <button onclick="finalSelect('${img}')" style="background:#FFD700; color:#000; border:none; padding:12px 30px; border-radius:10px; font-weight:900; cursor:pointer;">SELECT</button>
+    `;
+
+    document.body.appendChild(bar);
+}
+
+function finalSelect(img) {
+    alert("An danna Select!");
+    // Saka sunan function din dake bude maka Global Search a nan
+    if(window.showSearchOverlay) showSearchOverlay(img);
+}
+
 
 function showTemuStyleBar(count, imageSrc) {
     // 1. Cire duk wani tsohon bar idan akwai
