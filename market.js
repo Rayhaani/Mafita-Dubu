@@ -187,11 +187,7 @@ function manualSearch() {
 
 // Function na Camera
 function handleGallery(event) {
-    // Wannan layin zai hana browser din canza page
-    if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
+    if (event) event.preventDefault();
 
     const input = document.createElement('input');
     input.type = 'file';
@@ -201,16 +197,78 @@ function handleGallery(event) {
     input.onchange = (e) => {
         const files = Array.from(e.target.files);
         if (files.length === 0) return;
-        
+
         const reader = new FileReader();
         reader.onload = () => {
-            // Kira Bar din a nan
-            showFuturisticActionBar(files.length, reader.result);
+            // Tilasta kiran Bar din a matsayin "Top Layer"
+            showTemuStyleBar(files.length, reader.result);
         };
         reader.readAsDataURL(files[0]);
     };
     input.click();
 }
+
+function showTemuStyleBar(count, imageSrc) {
+    // 1. Cire duk wani tsohon bar idan akwai
+    const existingBar = document.getElementById('temu-bar');
+    if (existingBar) existingBar.remove();
+
+    // 2. Samar da babban akwati (Container)
+    const temuBar = document.createElement('div');
+    temuBar.id = 'temu-bar';
+    
+    // Professional Style: Baki, Gold, da Shadows masu kyau
+    temuBar.style = `
+        position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
+        width: 90%; max-width: 420px; height: 75px;
+        background: #1a1a1a; border-radius: 40px;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 0 10px 0 20px; z-index: 2147483647; /* Highest possible z-index */
+        box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,215,0,0.3);
+        animation: fadeInUp 0.4s ease-out;
+    `;
+
+    temuBar.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <i class="fa-solid fa-xmark" onclick="this.parentElement.parentElement.remove()" style="color: #888; cursor: pointer; font-size: 20px;"></i>
+            
+            <div onclick="showImagePreview('${imageSrc}')" style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <div style="background: #FFD700; color: #000; width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 15px;">
+                    ${count}
+                </div>
+                <span style="color: white; font-weight: 600; font-size: 14px; letter-spacing: 0.5px;">Preview</span>
+            </div>
+        </div>
+
+        <button onclick="handleSelectClick('${imageSrc}')" style="background: #FFD700; color: #000; border: none; height: 55px; padding: 0 40px; border-radius: 30px; font-weight: 900; font-size: 15px; cursor: pointer; transition: 0.2s active;">
+            SELECT
+        </button>
+
+        <style>
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translate(-50%, 50px); }
+                to { opacity: 1; transform: translate(-50%, 0); }
+            }
+            #temu-bar button:active { transform: scale(0.95); }
+        </style>
+    `;
+
+    document.body.appendChild(temuBar);
+}
+
+// Wannan shine zai gyara matsalar Select dinka
+function handleSelectClick(img) {
+    // Rufe bar din
+    document.getElementById('temu-bar').remove();
+    // Kira Overlay dinka anan (Tabbatar sunan function din ya dace da naka)
+    if (typeof showSearchOverlay === 'function') {
+        showSearchOverlay(img);
+    } else {
+        alert("Overlay function not found! Check your code.");
+    }
+}
+
 
 function handleScan() {
     closeAIVision();
@@ -340,48 +398,4 @@ function showImagePreview(imageSrc) {
     `;
 
     document.body.appendChild(previewOverlay);
-}
-// Wannan function din zai samar da Futuristic Bar din a kasan Gallery
-function showFuturisticActionBar(count, imageSrc) {
-    // Share tsohon bar idan akwai
-    const oldBar = document.getElementById('futuristic-action-bar');
-    if (oldBar) oldBar.remove();
-
-    const actionBar = document.createElement('div');
-    actionBar.id = 'futuristic-action-bar';
-    
-    // Style mai karfi don ya tsaya a inda kake (Fixed Position)
-    actionBar.style = `
-        position: fixed; 
-        bottom: 20px; 
-        left: 50%; 
-        transform: translateX(-50%);
-        width: 90%; 
-        max-width: 400px; 
-        height: 70px;
-        background: #111; 
-        border: 2px solid #FFD700; 
-        border-radius: 20px;
-        display: flex; 
-        align-items: center; 
-        justify-content: space-between;
-        padding: 0 15px; 
-        z-index: 10000000; /* Layer mafi girma */
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    `;
-
-    actionBar.innerHTML = `
-        <i class="fa-solid fa-xmark" onclick="this.parentElement.remove()" style="color: white; cursor: pointer;"></i>
-        
-        <div style="display: flex; align-items: center; gap: 10px; color: white;">
-            <span style="background: #FFD700; color: black; padding: 2px 8px; border-radius: 5px; font-weight: bold;">${count}</span>
-            <span style="font-weight: bold; font-size: 14px;">Preview</span>
-        </div>
-
-        <button onclick="alert('Select clicked!')" style="background: #FFD700; color: black; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 900; cursor: pointer;">
-            SELECT
-        </button>
-    `;
-
-    document.body.appendChild(actionBar);
 }
