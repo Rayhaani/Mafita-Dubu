@@ -351,3 +351,23 @@ content: '';
     transform: scale(0.9);
     background: #FFD700;
                 }
+
+
+/* Futuristic Glowing Text Animation */
+@keyframes futuristicGlow {
+    0% { color: #ffffff; text-shadow: none; opacity: 1; }
+    50% { color: #FFD700; text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700; opacity: 0.8; }
+    100% { color: #ffffff; text-shadow: none; opacity: 1; }
+}
+
+/* Wannan na box din farko ne */
+.search-option:nth-child(1) .opt-label {
+    animation: futuristicGlow 2s infinite ease-in-out;
+}
+
+/* Wannan na box din na biyu ne (Near Me) */
+.search-option:nth-child(2) .opt-label {
+    /* Muna sa shi jinkiri na sakan daya (1s delay) don su biyo juna */
+    animation: futuristicGlow 2s infinite ease-in-out;
+    animation-delay: 1s;
+        }
