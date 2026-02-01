@@ -250,14 +250,28 @@ scannerOverlay.innerHTML = `
     </div>
 
     <style>
-        @keyframes laserMove {
-            0% { top: -5%; }
-            100% { top: 105%; }
-        }
-        /* Boye sauran kyamarar da take fita waje */
-        #qr-reader__dashboard, #qr-reader__status_span { display: none !important; }
-        video { width: 100% !important; height: 100% !important; object-fit: cover !important; }
-    </style>
+    @keyframes laserMove {
+        0% { top: -5%; }
+        100% { top: 105%; }
+    }
+    /* Wannan zai goge duk wani farin box da sauran rubuce-rubucen asali */
+    #qr-reader__dashboard, 
+    #qr-reader__status_span, 
+    #qr-reader__scan_region,
+    #qr-reader__scan_region div { 
+        display: none !important; 
+        border: none !important;
+    }
+    
+    #qr-reader { border: none !important; }
+
+    video { 
+        width: 100% !important; 
+        height: 100% !important; 
+        object-fit: cover !important; 
+    }
+</style>
+
 `;
 
     document.body.appendChild(scannerOverlay);
