@@ -186,36 +186,11 @@ function manualSearch() {
 }
 
 // Function na Camera
-// 1. Function na Gallery (Wanda zai rufe sheet din sannan ya bude overlay)
-function handleGallery(event) {
-    if (event) event.preventDefault();
-    
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    
-    input.onchange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            // Rufe AI Sheet din nan take
-            closeAIVision(); 
-            
-            const reader = new FileReader();
-            reader.onload = () => {
-                if (window.showSearchOverlay) {
-                    showSearchOverlay(reader.result);
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-    input.click();
-}
-
-// 2. Function na Camera (Wanda zai rufe sheet din sannan ya bude overlay)
+// 1. Cikakken Function na Camera
 function handleCamera(event) {
     if (event) event.preventDefault();
-    
+    closeAIVision(); // Rufe menu kafin komai
+
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
@@ -224,26 +199,58 @@ function handleCamera(event) {
     input.onchange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            // Rufe AI Sheet din nan take
-            closeAIVision(); 
-
             const reader = new FileReader();
-                        reader.onload = () => {
+            reader.onload = () => {
                 const img = new Image();
                 img.src = reader.result;
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
-                    canvas.width = 600; 
+                    canvas.width = 600;
                     canvas.height = img.height * (600 / img.width);
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    
                     const compressedImg = canvas.toDataURL('image/jpeg', 0.5);
                     if (window.showSearchOverlay) showSearchOverlay(compressedImg);
                 };
             };
             reader.readAsDataURL(file);
-            
+        }
+    };
+    input.click();
+}
+
+// 2. Cikakken Function na Gallery
+function handleGallery(event) {
+    if (event) event.preventDefault();
+    closeAIVision();
+
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    
+    input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const img = new Image();
+                img.src = reader.result;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = 600;
+                    canvas.height = img.height * (600 / img.width);
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    const compressedImg = canvas.toDataURL('image/jpeg', 0.5);
+                    if (window.showSearchOverlay) showSearchOverlay(compressedImg);
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+    input.click();
+                }
+
             
 function showTemuStyleBar(count, imageSrc) {
     // 1. Cire duk wani tsohon bar idan akwai
