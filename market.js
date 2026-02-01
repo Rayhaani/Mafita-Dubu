@@ -220,40 +220,34 @@ function identifyImage(file) {
 // 2. Wannan zai nuna rubutu guda daya tilo
 function showSearchOverlay(kalma) {
     const overlay = document.getElementById('search-overlay');
-    
     if (overlay) {
-        // Wannan zai share tsohon abin da ke ciki ya sa sabon tsari mai kyau
         overlay.innerHTML = `
-            <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100%; width: 100%; padding: 60px 20px;">
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100vh; width: 100%; padding: 60px 20px;">
                 
-                <div class="text-center">
-                    <div class="world-box" style="margin: 0 auto 20px;">
+                <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                    <div class="world-box" style="margin-bottom: 20px;">
                         <div class="sphere"></div>
                         <div class="ring"></div>
                     </div>
-                    <h3 style="color:#5D4037; font-size:22px; font-weight:900; line-height:1.2;">
-                        Ina kake son bincika <br> <span style="color:#8B6508 text-transform:uppercase;">"${kalma}"</span>?
+                    <h3 style="color:#5D4037; font-size:20px; font-weight:900; margin-bottom: 25px; text-align:center;">
+                        Ina kake son bincika <br>"${kalma}"?
                     </h3>
-                </div>
-
-                <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 15px;">
-                    <button class="pearl-btn" onclick="closeSearch()" style="width: 280px !important; display: block !important;">
-                        <i class="fa-solid fa-earth-africa"></i> GLOBAL SEARCH
-                        <span style="display:block; font-size:10px; opacity:0.6;">Duka Kasuwannin Duniya</span>
-                    </button>
                     
-                    <button class="pearl-btn" onclick="closeSearch()" style="width: 280px !important; display: block !important;">
-                        <i class="fa-solid fa-location-crosshairs"></i> NEAR YOU
-                        <span style="display:block; font-size:10px; opacity:0.6;">Masu kaya na kusa da kai</span>
-                    </button>
+                    <div style="display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center;">
+                        <button class="pearl-btn" onclick="closeSearch()" style="width: 280px !important;">
+                            <i class="fa-solid fa-earth-africa"></i> GLOBAL SEARCH
+                        </button>
+                        <button class="pearl-btn" onclick="closeSearch()" style="width: 280px !important;">
+                            <i class="fa-solid fa-location-crosshairs"></i> NEAR YOU
+                        </button>
+                    </div>
                 </div>
 
-                <p onclick="closeSearch()" style="color: #A68A64; font-weight: bold; font-size: 12px; cursor: pointer; letter-spacing: 2px;">
+                <p onclick="closeSearch()" style="color: #A68A64; font-weight: bold; font-size: 11px; cursor: pointer; letter-spacing: 1px; margin-bottom: 20px;">
                     <i class="fa-solid fa-xmark"></i> SOKE BINCIKE (CANCEL)
                 </p>
             </div>
         `;
-
         overlay.style.display = 'flex';
         setTimeout(() => overlay.classList.add('active'), 50);
     }
