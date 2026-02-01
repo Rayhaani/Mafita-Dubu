@@ -304,4 +304,52 @@ scannerOverlay.innerHTML = `
         scannerOverlay.remove();
     });
 }
+function showImagePreview(imageSrc) {
+    // 1. Rufe tsofaffin menu
+    closeAIVision();
+
+    // 2. Samar da babban Overlay na Preview
+    const previewOverlay = document.createElement('div');
+    previewOverlay.id = 'ai-image-preview';
+    previewOverlay.style = `
+        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+        background: #f4f4f4; z-index: 1000000; display: flex; flex-direction: column;
+    `;
+
+    previewOverlay.innerHTML = `
+        <div style="padding: 20px; display: flex; align-items: center; background: white;">
+            <i class="fa-solid fa-arrow-left" onclick="this.parentElement.parentElement.remove()" style="font-size: 20px; cursor: pointer;"></i>
+            <span style="margin-left: 20px; font-weight: bold; color: #333;">Preview Image</span>
+        </div>
+
+        <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; overflow: hidden;">
+            <img src="${imageSrc}" id="target-image" style="max-width: 100%; max-height: 80%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+        </div>
+
+        <div style="padding: 20px 30px; background: white; border-top: 1px solid #eee; display: flex; align-items: center; gap: 15px;">
+            <div style="width: 50px; height: 50px; border: 1px solid #ddd; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #555; cursor: pointer;">
+                <i class="fa-regular fa-comment-dots" style="font-size: 22px;"></i>
+            </div>
+
+            <button onclick="proceedToAISearch('${imageSrc}')" style="flex: 1; height: 50px; background: #000; color: #FFD700; border: none; border-radius: 25px; font-weight: bold; font-size: 16px; letter-spacing: 1px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                SELECT <i class="fa-solid fa-magnifying-glass-plus"></i>
+            </button>
+        </div>
+    `;
+
+    document.body.appendChild(previewOverlay);
+}
+
+// Wannan shine zai tura mu zuwa Global/Near Me Overlay dinka
+function proceedToAISearch(imageSrc) {
+    // Rufe preview
+    document.getElementById('ai-image-preview').remove();
+    
+    // Nuna wa mutum loading na AI kafin mu kai shi ga Global/Near Me
+    console.log("AI is analyzing image...");
+    
+    // Yanzu za mu bude babban Overlay dinmu na Search
+    // A nan ne zamu tura 'imageSrc' zuwa ga Server-Side AI dinmu
+    showSearchOverlay("Searching for similar items..."); 
+}
 
