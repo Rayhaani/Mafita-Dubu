@@ -65,8 +65,6 @@ function closeSearch() {
     }
     }
 
-
-
 // 2. CAMERA FUNCTION (Kamar yadda yake a tsohon code dinka)
 function openAICamera() {
     const existing = document.getElementById('ai-sheet');
@@ -186,9 +184,10 @@ function manualSearch() {
 }
 
 // 1. Cikakken Function na Camera
+// 1. Cikakken Function na Camera (Gyararre)
 function handleCamera(event) {
     if (event) event.preventDefault();
-    closeAIVision(); // Rufe menu kafin komai
+    closeAIVision();
 
     const input = document.createElement('input');
     input.type = 'file';
@@ -202,30 +201,26 @@ function handleCamera(event) {
             reader.onload = () => {
                 const img = new Image();
                 img.src = reader.result;
-                                img.onload = () => {
+                img.onload = () => {
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
-                    // Mun rage shi zuwa 300 don ya yi sauri sosai
                     canvas.width = 300; 
                     canvas.height = img.height * (300 / img.width);
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                     
-                    // Mun rage quality zuwa 0.3 (30%)
                     const compressedImg = canvas.toDataURL('image/jpeg', 0.3);
-                    
                     if (window.showSearchOverlay) {
-                        // Ba wa browser damar numfashi na 100ms kafin bude overlay
                         setTimeout(() => showSearchOverlay(compressedImg), 100);
                     }
                 };
-        
+            };
             reader.readAsDataURL(file);
         }
     };
     input.click();
 }
 
-// 2. Cikakken Function na Gallery
+// 2. Cikakken Function na Gallery (Gyararre)
 function handleGallery(event) {
     if (event) event.preventDefault();
     closeAIVision();
@@ -244,18 +239,21 @@ function handleGallery(event) {
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
-                    canvas.width = 600;
-                    canvas.height = img.height * (600 / img.width);
+                    canvas.width = 300;
+                    canvas.height = img.height * (300 / img.width);
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    const compressedImg = canvas.toDataURL('image/jpeg', 0.5);
-                    if (window.showSearchOverlay) showSearchOverlay(compressedImg);
+                    
+                    const compressedImg = canvas.toDataURL('image/jpeg', 0.3);
+                    if (window.showSearchOverlay) {
+                        setTimeout(() => showSearchOverlay(compressedImg), 100);
+                    }
                 };
             };
             reader.readAsDataURL(file);
         }
     };
     input.click();
-                }
+}
 
             
 function showTemuStyleBar(count, imageSrc) {
