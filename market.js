@@ -186,9 +186,10 @@ function manualSearch() {
 }
 
 // Function na Camera
-// 1. Function na Gallery (Direct)
+// 1. Function na Gallery (Wanda zai rufe sheet din sannan ya bude overlay)
 function handleGallery(event) {
     if (event) event.preventDefault();
+    
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
@@ -196,9 +197,11 @@ function handleGallery(event) {
     input.onchange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            // Rufe AI Sheet din nan take
+            closeAIVision(); 
+            
             const reader = new FileReader();
             reader.onload = () => {
-                // Kai tsaye muke kiran Search Overlay
                 if (window.showSearchOverlay) {
                     showSearchOverlay(reader.result);
                 }
@@ -209,9 +212,10 @@ function handleGallery(event) {
     input.click();
 }
 
-// 2. Function na Camera (Direct)
+// 2. Function na Camera (Wanda zai rufe sheet din sannan ya bude overlay)
 function handleCamera(event) {
     if (event) event.preventDefault();
+    
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
@@ -220,9 +224,11 @@ function handleCamera(event) {
     input.onchange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            // Rufe AI Sheet din nan take
+            closeAIVision(); 
+
             const reader = new FileReader();
             reader.onload = () => {
-                // Kai tsaye muke kiran Search Overlay
                 if (window.showSearchOverlay) {
                     showSearchOverlay(reader.result);
                 }
