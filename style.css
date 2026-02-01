@@ -429,43 +429,32 @@ content: '';
     transition: transform 3s ease-in-out !important;
 }
 
-/* Wannan zai gyara overlay din ya dawo tsakiya yadda ya kamata */
 #search-overlay {
-    display: none; /* JS ne zai nuna shi */
+    display: none; 
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(245, 241, 233, 0.98);
-    backdrop-filter: blur(10px);
-    z-index: 5000;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(245, 241, 233, 0.98) !important;
+    z-index: 9999;
     
-    /* Gyara layout din */
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
+    /* Wannan zai raba abubuwan yadda ya kamata */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* Zai tura Cancel kasa, Duniya sama */
+    padding: 60px 20px; /* Sarari daga sama da kasa */
 }
 
-/* Tabbatar buttons din suna da girman da ake gani */
+/* Tabbatar buttons din suna tsakiya */
+.search-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
 .pearl-btn {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    width: 280px !important;
-    margin: 10px auto !important;
-    transform: none !important; /* Cire waccan transform din dake boye su */
+    width: 90%;
+    max-width: 320px;
+    margin: 10px 0 !important;
 }
-
-/* Gyara Cancel button ya koma kasa sannan ya tsaya a tsakiya */
-.cancel-text-bottom {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #8b6508;
-    font-weight: bold;
-    font-size: 12px;
-    cursor: pointer;
-}
-
