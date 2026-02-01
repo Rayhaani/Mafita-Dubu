@@ -207,16 +207,17 @@ function handleGallery() {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
-    
     input.onchange = (e) => {
         const file = e.target.files[0];
-        if (file) {
-            closeAIVision();
-            showSearchOverlay("Hoton Gallery");
-        }
+        const reader = new FileReader();
+        reader.onload = () => {
+            // KIRAN PREVIEW UI NAN
+            showImagePreview(reader.result);
+        };
+        reader.readAsDataURL(file);
     };
     input.click();
-}
+            }
 
 function handleScan() {
     closeAIVision();
@@ -304,52 +305,47 @@ scannerOverlay.innerHTML = `
         scannerOverlay.remove();
     });
 }
+
 function showImagePreview(imageSrc) {
-    // 1. Rufe tsofaffin menu
+    // 1. Rufe AI menu na baya
     closeAIVision();
 
-    // 2. Samar da babban Overlay na Preview
     const previewOverlay = document.createElement('div');
     previewOverlay.id = 'ai-image-preview';
     previewOverlay.style = `
         position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-        background: #f4f4f4; z-index: 1000000; display: flex; flex-direction: column;
+        background: #000; z-index: 1000000; display: flex; flex-direction: column;
     `;
 
     previewOverlay.innerHTML = `
-        <div style="padding: 20px; display: flex; align-items: center; background: white;">
-            <i class="fa-solid fa-arrow-left" onclick="this.parentElement.parentElement.remove()" style="font-size: 20px; cursor: pointer;"></i>
-            <span style="margin-left: 20px; font-weight: bold; color: #333;">Preview Image</span>
+        <div style="position: absolute; top: 20px; left: 20px; z-index: 10;">
+            <i class="fa-solid fa-xmark" onclick="this.parentElement.parentElement.remove()" style="color: white; font-size: 24px; cursor: pointer; background: rgba(0,0,0,0.5); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%;"></i>
         </div>
 
-        <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; overflow: hidden;">
-            <img src="${imageSrc}" id="target-image" style="max-width: 100%; max-height: 80%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-        </div>
-
-        <div style="padding: 20px 30px; background: white; border-top: 1px solid #eee; display: flex; align-items: center; gap: 15px;">
-            <div style="width: 50px; height: 50px; border: 1px solid #ddd; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #555; cursor: pointer;">
-                <i class="fa-regular fa-comment-dots" style="font-size: 22px;"></i>
+        <div style="flex: 1; display: flex; align-items: center; justify-content: center; position: relative; padding: 10px;">
+            <img src="${imageSrc}" id="target-image" style="max-width: 100%; max-height: 70vh; object-fit: contain;">
+            
+            <div style="position: absolute; width: 250px; height: 250px; border: 2px solid rgba(255,255,255,0.5); pointer-events: none;">
+                <div style="position: absolute; top: -2px; left: -2px; width: 20px; height: 20px; border-top: 4px solid white; border-left: 4px solid white;"></div>
+                <div style="position: absolute; top: -2px; right: -2px; width: 20px; height: 20px; border-top: 4px solid white; border-right: 4px solid white;"></div>
+                <div style="position: absolute; bottom: -2px; left: -2px; width: 20px; height: 20px; border-bottom: 4px solid white; border-left: 4px solid white;"></div>
+                <div style="position: absolute; bottom: -2px; right: -2px; width: 20px; height: 20px; border-bottom: 4px solid white; border-right: 4px solid white;"></div>
             </div>
+        </div>
 
-            <button onclick="proceedToAISearch('${imageSrc}')" style="flex: 1; height: 50px; background: #000; color: #FFD700; border: none; border-radius: 25px; font-weight: bold; font-size: 16px; letter-spacing: 1px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                SELECT <i class="fa-solid fa-magnifying-glass-plus"></i>
-            </button>
+        <div style="background: #111; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 15px;">
+            <div style="color: white; font-size: 14px;">1/1</div>
+            
+            <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; background: #222; padding: 10px 20px; border-radius: 30px;">
+                <span style="color: white; font-weight: bold; cursor: pointer;">Preview</span>
+                
+                <button onclick="proceedToAISearch('${imageSrc}')" style="background: #FFD700; color: black; border: none; padding: 10px 30px; border-radius: 20px; font-weight: 900; cursor: pointer;">
+                    SELECT
+                </button>
+            </div>
         </div>
     `;
 
     document.body.appendChild(previewOverlay);
-}
-
-// Wannan shine zai tura mu zuwa Global/Near Me Overlay dinka
-function proceedToAISearch(imageSrc) {
-    // Rufe preview
-    document.getElementById('ai-image-preview').remove();
-    
-    // Nuna wa mutum loading na AI kafin mu kai shi ga Global/Near Me
-    console.log("AI is analyzing image...");
-    
-    // Yanzu za mu bude babban Overlay dinmu na Search
-    // A nan ne zamu tura 'imageSrc' zuwa ga Server-Side AI dinmu
-    showSearchOverlay("Searching for similar items..."); 
 }
 
