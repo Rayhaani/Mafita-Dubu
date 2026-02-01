@@ -75,16 +75,14 @@ function openAICamera() {
     const menuHTML = `
         <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/40 z-[4999] opacity-0 transition-opacity duration-300"></div>
         <div id="ai-sheet" class="ai-bottom-sheet">
-            <div style="width:40px; height:4px; background:rgba(0,0,0,0.1); border-radius:10px; margin-top:12px; margin-bottom:15px;"></div>
+            <div style="width:40px; height:4px; background:rgba(0,0,0,0.1); border-radius:10px; margin: 12px auto 15px auto;"></div>
             
-            <div class="flex-row-container">
+            <div class="flex-row-container" style="display:flex; justify-content:space-around; align-items:center; width:100%; padding:10px 0;">
+                
                 <div style="display:flex; flex-direction:column; align-items:center;">
-                        <div class="silver-box" onclick="handleCamera()" style="cursor:pointer;">
-    <div class="icon-inner-bg"></div>
-    <i class="fa-solid fa-camera-retro" style="color:white; font-size:22px; position:relative; z-index:10;"></i>
-</div>
+                    <div class="silver-box" onclick="handleCamera()" style="cursor:pointer;">
                         <div class="icon-inner-bg"></div>
-                        <i class="fa-solid fa-camera-retro" style="color:white; font-size:22px; position:relative; z-index:10;"></i> 
+                        <i class="fa-solid fa-camera-retro" style="color:white; font-size:22px; position:relative; z-index:10;"></i>
                     </div>
                     <span style="color:#333; font-size:10px; font-weight:900; margin-top:10px;">CAMERA</span>
                 </div>
@@ -99,15 +97,12 @@ function openAICamera() {
 
                 <div style="display:flex; flex-direction:column; align-items:center;">
                     <div class="silver-box" onclick="handleGallery()" style="cursor:pointer;">
-    <div class="icon-inner-bg"></div>
-    <i class="fa-solid fa-images" style="color:white; font-size:22px; position:relative; z-index:10;"></i>
-</div>
-
                         <div class="icon-inner-bg"></div>
                         <i class="fa-solid fa-images" style="color:white; font-size:22px; position:relative; z-index:10;"></i>
                     </div>
                     <span style="color:#333; font-size:10px; font-weight:900; margin-top:10px;">GALLERY</span>
                 </div>
+
             </div>
         </div>`;
 
