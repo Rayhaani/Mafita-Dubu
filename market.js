@@ -220,25 +220,45 @@ function identifyImage(file) {
 // 2. Wannan zai nuna rubutu guda daya tilo
 function showSearchOverlay(kalma) {
     const overlay = document.getElementById('search-overlay');
-    const display = document.getElementById('query-val');
     
-    // Wannan zai boye tsohon rubutun dake kai don kada su maimaita
-    const oldTitle = overlay.querySelector('h2');
-    if (oldTitle) oldTitle.style.display = 'none';
+    if (overlay) {
+        // Wannan zai share tsohon abin da ke ciki ya sa sabon tsari mai kyau
+        overlay.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100%; width: 100%; padding: 60px 20px;">
+                
+                <div class="text-center">
+                    <div class="world-box" style="margin: 0 auto 20px;">
+                        <div class="sphere"></div>
+                        <div class="ring"></div>
+                    </div>
+                    <h3 style="color:#5D4037; font-size:22px; font-weight:900; line-height:1.2;">
+                        Ina kake son bincika <br> <span style="color:#8B6508 text-transform:uppercase;">"${kalma}"</span>?
+                    </h3>
+                </div>
 
-    if (overlay && display) {
-        display.innerHTML = `
-            <div style="padding: 10px;">
-                <h3 style="color:#FF4444; font-size:20px; font-weight:bold;">
-                    Ina kake son bincika wannan ${kalma}?
-                </h3>
-            </div>`;
+                <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                    <button class="pearl-btn" onclick="closeSearch()" style="width: 280px !important; display: block !important;">
+                        <i class="fa-solid fa-earth-africa"></i> GLOBAL SEARCH
+                        <span style="display:block; font-size:10px; opacity:0.6;">Duka Kasuwannin Duniya</span>
+                    </button>
+                    
+                    <button class="pearl-btn" onclick="closeSearch()" style="width: 280px !important; display: block !important;">
+                        <i class="fa-solid fa-location-crosshairs"></i> NEAR YOU
+                        <span style="display:block; font-size:10px; opacity:0.6;">Masu kaya na kusa da kai</span>
+                    </button>
+                </div>
+
+                <p onclick="closeSearch()" style="color: #A68A64; font-weight: bold; font-size: 12px; cursor: pointer; letter-spacing: 2px;">
+                    <i class="fa-solid fa-xmark"></i> SOKE BINCIKE (CANCEL)
+                </p>
+            </div>
+        `;
 
         overlay.style.display = 'flex';
         setTimeout(() => overlay.classList.add('active'), 50);
     }
-        }
-         
+}
+
 function showTemuStyleBar(count, imageSrc) {
     // 1. Cire duk wani tsohon bar idan akwai
     const existingBar = document.getElementById('temu-bar');
