@@ -351,48 +351,47 @@ content: '';
     transform: scale(0.9);
     background: #FFD700;
                 }
-
-/* Animation mai daukar ido (Futuristic Glow) */
-@keyframes ultimateCallToAction {
+/* Animation mai kalar Luxury (Golden & Cyan Glow) */
+@keyframes luxuryGlobal {
     0%, 100% { 
         color: #5D4037; 
         transform: scale(1);
         text-shadow: none;
     }
     50% { 
-        color: #007BFF; /* Kalar ruwa mai haske don Global */
-        transform: scale(1.1); /* Kara girma kadan yayin blicking */
-        text-shadow: 0 0 10px rgba(0, 123, 255, 0.6);
-        font-weight: 900;
-    }
-}
-
-@keyframes ultimateCallToActionNear {
-    0%, 100% { 
-        color: #5D4037; 
-        transform: scale(1);
-        text-shadow: none;
-    }
-    50% { 
-        color: #FF1100; /* Kalar ja mai wuta don Near Me */
+        color: #B8860B; /* Dark Goldenrod - Kalar Zinari mai kyau */
         transform: scale(1.1); 
-        text-shadow: 0 0 10px rgba(255, 17, 0, 0.6);
+        text-shadow: 0 0 15px rgba(184, 134, 11, 0.5);
         font-weight: 900;
     }
 }
 
-/* Button na farko - Global */
-#btn-global span.block {
-    display: inline-block; /* Dole ne don scale ya yi aiki */
-    font-size: 12px !important; /* Kara girman rubutun */
-    animation: ultimateCallToAction 2s infinite ease-in-out;
+@keyframes luxuryNear {
+    0%, 100% { 
+        color: #5D4037; 
+        transform: scale(1);
+        text-shadow: none;
+    }
+    50% { 
+        color: #008B8B; /* Dark Cyan - Futuristic & Clean */
+        transform: scale(1.1); 
+        text-shadow: 0 0 15px rgba(0, 139, 139, 0.5);
+        font-weight: 900;
+    }
 }
 
-/* Button na biyu - Near You */
+/* Button na farko - Global (Zinari) */
+#btn-global span.block {
+    display: inline-block;
+    font-size: 12.5px !important; 
+    animation: luxuryGlobal 2.5s infinite ease-in-out;
+}
+
+/* Button na biyu - Near You (Cyan/Emerald) */
 #btn-near span.block {
     display: inline-block;
-    font-size: 12px !important; 
-    animation: ultimateCallToActionNear 2s infinite ease-in-out;
-    animation-delay: 1s; 
+    font-size: 12.5px !important; 
+    animation: luxuryNear 2.5s infinite ease-in-out;
+    animation-delay: 1.2s; /* Jinkiri kadan don su biyo juna cikin sanyi */
 }
 
