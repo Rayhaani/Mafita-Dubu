@@ -1,4 +1,3 @@
-alert("JS dina yana aiki!");
 let typingTimer;
 const doneTypingInterval = 3000; // Sakan uku (3 seconds)
 
@@ -187,80 +186,53 @@ function manualSearch() {
 }
 
 // Function na Camera
-// 1. FUNCTION NA GALLERY
+// 1. Function na Gallery (Direct)
 function handleGallery(event) {
     if (event) event.preventDefault();
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
-    input.multiple = true; 
+    
     input.onchange = (e) => {
-        const files = Array.from(e.target.files);
-        if (files.length > 0) {
+        const file = e.target.files[0];
+        if (file) {
             const reader = new FileReader();
-            reader.onload = () => renderFuturisticBar(files.length, reader.result);
-            reader.readAsDataURL(files[0]);
+            reader.onload = () => {
+                // Kai tsaye muke kiran Search Overlay
+                if (window.showSearchOverlay) {
+                    showSearchOverlay(reader.result);
+                }
+            };
+            reader.readAsDataURL(file);
         }
     };
     input.click();
 }
 
-// 2. FUNCTION NA KYAMARA
+// 2. Function na Camera (Direct)
 function handleCamera(event) {
     if (event) event.preventDefault();
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
-    input.capture = 'environment'; // Wannan zai bude kyamara kai tsaye
+    input.capture = 'environment';
+    
     input.onchange = (e) => {
-        const files = Array.from(e.target.files);
-        if (files.length > 0) {
+        const file = e.target.files[0];
+        if (file) {
             const reader = new FileReader();
-            reader.onload = () => renderFuturisticBar(1, reader.result);
-            reader.readAsDataURL(files[0]);
+            reader.onload = () => {
+                // Kai tsaye muke kiran Search Overlay
+                if (window.showSearchOverlay) {
+                    showSearchOverlay(reader.result);
+                }
+            };
+            reader.readAsDataURL(file);
         }
     };
     input.click();
 }
 
-// 3. DISPLAY BAR (Wanda zai fito a kan kowane page)
-function renderFuturisticBar(count, img) {
-    const existing = document.getElementById('temu-style-bar');
-    if (existing) existing.remove();
-
-    const bar = document.createElement('div');
-    bar.id = 'temu-style-bar';
-    bar.style.cssText = `
-        position: fixed !important; bottom: 25px !important; left: 50% !important;
-        transform: translateX(-50%) !important; width: 92% !important; max-width: 450px !important;
-        height: 75px !important; background: #000 !important; border: 2.5px solid #FFD700 !important;
-        border-radius: 40px !important; display: flex !important; align-items: center !important;
-        justify-content: space-between !important; padding: 0 10px 0 20px !important;
-        z-index: 1000000000 !important; box-shadow: 0 0 30px rgba(255, 215, 0, 0.5) !important;
-    `;
-
-    bar.innerHTML = `
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <span onclick="this.parentElement.parentElement.remove()" style="color: #ff4444; font-size: 30px; cursor: pointer;">&times;</span>
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <div style="background: #FFD700; color: #000; padding: 2px 10px; border-radius: 8px; font-weight: 900;">${count}</div>
-                <span style="color: white; font-weight: bold; font-size: 14px;">PREVIEW</span>
-            </div>
-        </div>
-        <button onclick="executeSelect('${img}')" style="background: #FFD700; color: #000; border: none; height: 55px; padding: 0 35px; border-radius: 30px; font-weight: 900; font-size: 16px; cursor: pointer;">SELECT</button>
-    `;
-    document.body.appendChild(bar);
-}
-
-function executeSelect(img) {
-    document.getElementById('temu-style-bar').remove();
-    // Tabbatar sunan function din nan ya dace da naka
-    if (window.showSearchOverlay) {
-        showSearchOverlay(img);
-    } else {
-        alert("An zaba! Amma Overlay dinka bai fito ba.");
-    }
-        }
             
 function showTemuStyleBar(count, imageSrc) {
     // 1. Cire duk wani tsohon bar idan akwai
