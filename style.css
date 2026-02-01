@@ -248,7 +248,7 @@ content: '';
     position: absolute;
     width: 250%; height: 250%;
     background: conic-gradient(from 0deg, transparent, transparent, #FFD700);
-    animation: rotate-glow 4s linear infinite;
+    animation: rotate-glow 15s linear infinite;
     z-index: 0;
 }
 
