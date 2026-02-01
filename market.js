@@ -219,31 +219,74 @@ function handleGallery() {
 }
 
 function handleScan() {
-    // 1. Rufe AI menu tukunna
     closeAIVision();
     
-    // 2. Samar da wurin nuna kyamara a asirce
-    const scannerDiv = document.createElement('div');
-    scannerDiv.id = 'qr-reader';
-    scannerDiv.style = "position:fixed; top:0; left:0; width:100%; height:100%; z-index:10000; background:black;";
-    document.body.appendChild(scannerDiv);
+    // 1. Samar da babban akwati mai rufe ko'ina (Full Screen)
+    const scannerOverlay = document.createElement('div');
+    scannerOverlay.id = 'scanner-full-container';
+    scannerOverlay.style = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: black;
+        z-index: 999999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    `;
+
+    // 2. Samar da alamar Cancel (X)
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+    closeBtn.style = `
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        background: rgba(255,255,255,0.2);
+        color: white;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 24px;
+        z-index: 1000001;
+        cursor: pointer;
+    `;
+    
+    // 3. Wurin da hoton kyamarar zai fito
+    const qrReaderDiv = document.createElement('div');
+    qrReaderDiv.id = 'qr-reader';
+    qrReaderDiv.style = "width: 100%; max-width: 500px; background: black;";
+
+    // Hada su waje daya
+    scannerOverlay.appendChild(closeBtn);
+    scannerOverlay.appendChild(qrReaderDiv);
+    document.body.appendChild(scannerOverlay);
 
     const html5QrCode = new Html5Qrcode("qr-reader");
-    
-    const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-        // Idan ya gama scanning
+
+    // Function na rufe scanner
+    const stopScanner = () => {
         html5QrCode.stop().then(() => {
-            scannerDiv.remove();
-            showSearchOverlay(decodedText); // Tura sakamakon zuwa Search Overlay
-        });
+            scannerOverlay.remove();
+        }).catch(() => scannerOverlay.remove());
     };
 
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    closeBtn.onclick = stopScanner;
+
+    const qrCodeSuccessCallback = (decodedText) => {
+        stopScanner();
+        showSearchOverlay(decodedText);
+    };
+
+    const config = { fps: 15, qrbox: { width: 250, height: 250 } };
 
     html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback)
     .catch((err) => {
-        alert("Ba a samu damar bude kyamara ba: " + err);
-        scannerDiv.remove();
+        alert("Ba a samu damar bude kyamara ba.");
+        scannerOverlay.remove();
     });
-                              }
-                                      
+}
