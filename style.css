@@ -352,22 +352,20 @@ content: '';
     background: #FFD700;
                 }
 
-
-/* Futuristic Glowing Text Animation */
-@keyframes futuristicGlow {
-    0% { color: #ffffff; text-shadow: none; opacity: 1; }
-    50% { color: #FFD700; text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700; opacity: 0.8; }
-    100% { color: #ffffff; text-shadow: none; opacity: 1; }
+/* Animation na rubutun Hausa */
+@keyframes attractiveBlink {
+    0%, 100% { color: inherit; opacity: 0.6; }
+    50% { color: #D32F2F; opacity: 1; text-shadow: 0 0 5px rgba(211,47,47,0.4); }
 }
 
-/* Wannan na box din farko ne */
-.search-option:nth-child(1) .opt-label {
-    animation: futuristicGlow 2s infinite ease-in-out;
+/* Button na farko (GLOBAL SEARCH) */
+#btn-global span.block {
+    animation: attractiveBlink 2s infinite ease-in-out;
 }
 
-/* Wannan na box din na biyu ne (Near Me) */
-.search-option:nth-child(2) .opt-label {
-    /* Muna sa shi jinkiri na sakan daya (1s delay) don su biyo juna */
-    animation: futuristicGlow 2s infinite ease-in-out;
-    animation-delay: 1s;
-        }
+/* Button na biyu (NEAR YOU) */
+#btn-near span.block {
+    animation: attractiveBlink 2s infinite ease-in-out;
+    animation-delay: 1s; 
+}
+
