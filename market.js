@@ -187,68 +187,65 @@ function manualSearch() {
 }
 
 // Function na Camera
-function handleGallery(e) {
-    if (e) e.preventDefault(); // Kare canja page
-
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.multiple = true; 
-    
-    input.onchange = function(event) {
-        const files = Array.from(event.target.files);
-        if (files.length === 0) return;
-
-        const reader = new FileReader();
-        reader.onload = function() {
-            // Bayan an zabi hoto, mu dakatar da komai na sakonni
-            setTimeout(() => {
-                renderFuturisticBar(files.length, reader.result);
-            }, 500);
-        };
-        reader.readAsDataURL(files[0]);
-    };
-    input.click();
-}
-
 function renderFuturisticBar(count, img) {
-    // Cire duk wani tsohon abu
-    const old = document.getElementById('temu-style-bar');
-    if (old) old.remove();
+    // 1. Cire tsohon bar idan akwai
+    const existing = document.getElementById('temu-style-bar');
+    if (existing) existing.remove();
 
+    // 2. Samar da Bar din
     const bar = document.createElement('div');
     bar.id = 'temu-style-bar';
     
-    // Design mai kyan gaske (Temu inspired)
-    bar.style = `
-        position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-        width: 92%; max-width: 450px; height: 80px;
-        background: #111; border: 1.5px solid #FFD700; border-radius: 20px;
-        display: flex; align-items: center; justify-content: space-between;
-        padding: 0 15px; z-index: 999999999;
-        box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    // Professional Style (Kamar na Temu amma Futuristic)
+    bar.style.cssText = `
+        position: fixed !important;
+        bottom: 30px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 90% !important;
+        max-width: 450px !important;
+        height: 75px !important;
+        background: #000000 !important;
+        border: 2px solid #FFD700 !important;
+        border-radius: 40px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 0 10px 0 20px !important;
+        z-index: 99999999999 !important;
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.4) !important;
     `;
 
     bar.innerHTML = `
         <div style="display: flex; align-items: center; gap: 15px;">
-            <span onclick="this.parentElement.parentElement.remove()" style="color:red; font-size:25px; cursor:pointer;">&times;</span>
+            <span onclick="document.getElementById('temu-style-bar').remove()" style="color: #ff4444; font-size: 28px; cursor: pointer; font-weight: bold;">&times;</span>
             <div style="display: flex; align-items: center; gap: 8px;">
-                <b style="background:#FFD700; color:#000; padding:2px 10px; border-radius:5px;">${count}</b>
-                <span style="color:white; font-size:14px; font-family:sans-serif;">PREVIEW</span>
+                <div style="background: #FFD700; color: #000; width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900;">
+                    ${count}
+                </div>
+                <span style="color: white; font-weight: bold; font-family: sans-serif; font-size: 14px;">PREVIEW</span>
             </div>
         </div>
-        <button onclick="finalSelect('${img}')" style="background:#FFD700; color:#000; border:none; padding:12px 30px; border-radius:10px; font-weight:900; cursor:pointer;">SELECT</button>
+        <button onclick="executeSelect('${img}')" style="background: #FFD700; color: #000; border: none; height: 55px; padding: 0 35px; border-radius: 30px; font-weight: 900; font-size: 15px; cursor: pointer;">
+            SELECT
+        </button>
     `;
 
+    // 3. Saka shi a babban jikin HTML
     document.body.appendChild(bar);
 }
 
-function finalSelect(img) {
-    alert("An danna Select!");
-    // Saka sunan function din dake bude maka Global Search a nan
-    if(window.showSearchOverlay) showSearchOverlay(img);
+function executeSelect(img) {
+    // Cire bar din idan an danna select
+    document.getElementById('temu-style-bar').remove();
+    
+    // Kira overlay dinka na search
+    if (window.showSearchOverlay) {
+        showSearchOverlay(img);
+    } else {
+        alert("Select yayi aiki! Amma 'showSearchOverlay' function bai fito ba.");
+    }
 }
-
 
 function showTemuStyleBar(count, imageSrc) {
     // 1. Cire duk wani tsohon bar idan akwai
