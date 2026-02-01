@@ -173,18 +173,6 @@ function manualSearch() {
     }
 }
 
-// A. Wannan shine "Brain" din da zai gano sunan kayan
-function identifyImage(file) {
-    let name = file.name.toLowerCase();
-    if (name.includes("pant")) return "Panties";
-    if (name.includes("bra")) return "Bra";
-    if (name.includes("shoe")) return "Takalmi (Shoes)";
-    if (name.includes("shirt")) return "Riga (Shirt)";
-    if (name.includes("gown")) return "Gown";
-    if (name.includes("perfume")) return "Turare (Perfume)";
-    return "Kayan"; // Idan bai gane sunan ba
-}
-
 // B. Gyararren Camera Function
 function handleCamera(event) {
     if (event) event.preventDefault();
@@ -219,17 +207,38 @@ function handleGallery(event) {
     };
     input.click();
 }
+// 1. Wannan zai gano sunan kaya
+function identifyImage(file) {
+    let name = file.name.toLowerCase();
+    if (name.includes("pant")) return "Panties";
+    if (name.includes("bra")) return "Bra";
+    if (name.includes("shoe")) return "Takalmi";
+    if (name.includes("shirt")) return "Riga";
+    return "kayan nan"; // Idan bai gane ba, zai ce 'kayan nan'
+}
 
-// D. Gyararren Overlay Function (Simple & Fast)
+// 2. Wannan zai nuna rubutu guda daya tilo
 function showSearchOverlay(kalma) {
     const overlay = document.getElementById('search-overlay');
     const display = document.getElementById('query-val');
+    
+    // Wannan zai boye tsohon rubutun dake kai don kada su maimaita
+    const oldTitle = overlay.querySelector('h2');
+    if (oldTitle) oldTitle.style.display = 'none';
+
     if (overlay && display) {
-        display.innerText = `Ina kake son ka bincika wannan ${kalma}?`;
+        display.innerHTML = `
+            <div style="padding: 10px;">
+                <h3 style="color:#FF4444; font-size:20px; font-weight:bold;">
+                    Ina kake son bincika wannan ${kalma}?
+                </h3>
+            </div>`;
+
         overlay.style.display = 'flex';
         setTimeout(() => overlay.classList.add('active'), 50);
-    }                                   }
-            
+    }
+        }
+         
 function showTemuStyleBar(count, imageSrc) {
     // 1. Cire duk wani tsohon bar idan akwai
     const existingBar = document.getElementById('temu-bar');
