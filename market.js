@@ -228,17 +228,22 @@ function handleCamera(event) {
             closeAIVision(); 
 
             const reader = new FileReader();
-            reader.onload = () => {
-                if (window.showSearchOverlay) {
-                    showSearchOverlay(reader.result);
-                }
+                        reader.onload = () => {
+                const img = new Image();
+                img.src = reader.result;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = 600; 
+                    canvas.height = img.height * (600 / img.width);
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    
+                    const compressedImg = canvas.toDataURL('image/jpeg', 0.5);
+                    if (window.showSearchOverlay) showSearchOverlay(compressedImg);
+                };
             };
             reader.readAsDataURL(file);
-        }
-    };
-    input.click();
-}
-
+            
             
 function showTemuStyleBar(count, imageSrc) {
     // 1. Cire duk wani tsohon bar idan akwai
