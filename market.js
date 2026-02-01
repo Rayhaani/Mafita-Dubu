@@ -218,32 +218,37 @@ function identifyImage(file) {
 }
 
 // 2. Wannan zai nuna rubutu guda daya tilo
-overlay.innerHTML = `
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100vh; width: 100%; padding: 40px 20px;">
-        
-        <div style="display: flex; flex-direction: column; align-items: center; width: 100%; gap: 10px;">
-            <div class="world-box">
-                <div class="sphere"></div>
-                <div class="ring"></div>
+function showSearchOverlay(kalma) {
+    const overlay = document.getElementById('search-overlay');
+    if (overlay) {
+        overlay.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; height: 100vh; padding: 40px 20px;">
+                
+                <div class="world-box" style="margin-bottom: 20px;">
+                    <div class="sphere"></div>
+                    <div class="ring"></div>
+                </div>
+
+                <h3 style="color:#5D4037; font-size:18px; font-weight:900; text-align:center; margin-bottom: 20px;">
+                    Ina kake son bincika "${kalma}"?
+                </h3>
+
+                <button class="pearl-btn" onclick="closeSearch()" style="width: 280px !important; margin-bottom: 12px;">
+                    <i class="fa-solid fa-earth-africa"></i> GLOBAL SEARCH
+                </button>
+                <button class="pearl-btn" onclick="closeSearch()" style="width: 280px !important;">
+                    <i class="fa-solid fa-location-crosshairs"></i> NEAR YOU
+                </button>
+
+                <p onclick="closeSearch()" style="margin-top: auto; color: #A68A64; font-weight: bold; font-size: 11px; cursor: pointer; padding-bottom: 30px;">
+                    <i class="fa-solid fa-xmark"></i> SOKE BINCIKE (CANCEL)
+                </p>
             </div>
-            <h3 style="color:#5D4037; font-size:18px; font-weight:900; text-align:center; margin: 10px 0;">
-                Ina kake son bincika "${kalma}"?
-            </h3>
-            
-            <button class="pearl-btn" onclick="closeSearch()" style="width: 280px !important; margin-bottom: 10px;">
-                <i class="fa-solid fa-earth-africa"></i> GLOBAL SEARCH
-            </button>
-            <button class="pearl-btn" onclick="closeSearch()" style="width: 280px !important;">
-                <i class="fa-solid fa-location-crosshairs"></i> NEAR YOU
-            </button>
-        </div>
-
-        <p onclick="closeSearch()" style="color: #A68A64; font-weight: bold; font-size: 11px; cursor: pointer; padding-bottom: 20px;">
-            <i class="fa-solid fa-xmark"></i> SOKE BINCIKE (CANCEL)
-        </p>
-    </div>
-`;
-
+        `;
+        overlay.style.display = 'flex';
+        setTimeout(() => overlay.classList.add('active'), 50);
+    }
+}
 
 function showTemuStyleBar(count, imageSrc) {
     // 1. Cire duk wani tsohon bar idan akwai
