@@ -352,45 +352,44 @@ content: '';
     background: #FFD700;
                 }
 
-/* Animation na duhu da walƙiyar asali */
-@keyframes intenseMetallicGlow {
+/* Animation na duhu da walƙiyar Luxury */
+@keyframes luxurySparkle {
     0%, 100% { 
         transform: scale(1);
-        color: #1A0F0D; /* Duhu matuƙa (kusan baki) */
+        color: #1A0F0D; /* Duhu sosai */
         text-shadow: none;
     }
     50% { 
-        transform: scale(1.08); /* Girma kaɗan don kar ya taɓa gefe */
-        color: #8B4513; /* Brown mai haske kaɗan */
-        /* Walƙiya mai kalar zinari da fari */
+        transform: scale(1.05);
+        color: #3E2723; /* Brown mai natsuwa */
+        /* Walƙiya mai kaifi (Sparkle Effect) */
         text-shadow: 
-            0 0 8px #ffffff, 
-            0 0 15px #FFD700, 
-            0 0 20px #B8860B;
+            0 0 5px #ffffff, 
+            0 0 12px #FFD700;
         font-weight: 900;
     }
 }
 
-/* Saka wa buttons ɗin */
 #btn-global span.block, 
 #btn-near span.block {
     display: inline-block;
     font-size: 13px !important;
-    color: #1A0F0D;
-    font-weight: 700;
+    color: #1A0F0D !important; /* Tilasta kalar duhu */
     
-    /* Wannan zai hana rubutu karyewa zuwa layi na biyu */
-    white-space: nowrap !important; 
-    width: auto;
+    /* Kashe background-clip gaba daya */
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    -webkit-text-fill-color: initial !important;
     
-    animation: intenseMetallicGlow 2s infinite ease-in-out;
+    /* Hana karyewa */
+    white-space: nowrap !important;
+    
+    animation: luxurySparkle 2s infinite ease-in-out;
 }
 
-/* Jinkiri ga na biyu */
 #btn-near span.block {
     animation-delay: 1s;
 }
-
 
 
 
