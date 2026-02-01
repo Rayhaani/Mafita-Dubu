@@ -42,39 +42,6 @@ function selectItem(word) {
     if(box) box.parentElement.style.display = 'none';
     showSearchOverlay(word);
 }
-function showSearchOverlay(kalma) {
-    const overlay = document.getElementById('search-overlay');
-    const display = document.getElementById('query-val');
-    
-    if (!overlay || !display) return;
-
-    // 1. Nuna abin da aka shigar (Hoto ko Rubutu)
-    if (kalma.startsWith('data:image')) {
-        display.innerHTML = `
-            <div id="ai-status" style="display:flex; flex-direction:column; align-items:center; gap:10px;">
-                <img src="${kalma}" style="width:70px; height:70px; border-radius:12px; border:2px solid #FFD700; object-fit:cover; box-shadow: 0 0 15px rgba(255,215,0,0.5);">
-                <span id="ai-text" style="font-size:13px; color:#FFD700; font-weight:bold; letter-spacing:1px;">AI ANALYZING PIXELS...</span>
-            </div>`;
-        
-        // 2. AI Recognition Logic (Bayan sakan 3)
-        setTimeout(() => {
-            const statusText = document.getElementById('ai-text');
-            if (statusText) {
-                statusText.innerText = "MATCH FOUND: LATEST FASHION";
-                statusText.style.color = "#00FF00"; // Kore don nuna an samu
-            }
-            
-            // Anan ne zaka iya kiran function din da zai nuna kayayyakin
-            // Misali: loadAIResults("Fashion");
-        }, 3000);
-
-    } else {
-        display.innerText = '"' + kalma + '"';
-    }
-
-    overlay.style.display = 'flex';
-    setTimeout(() => overlay.classList.add('active'), 50);
-}
 
 function closeSearch() {
     const overlay = document.getElementById('search-overlay');
@@ -206,78 +173,62 @@ function manualSearch() {
     }
 }
 
-// 1. Cikakken Function na Camera
-// 1. Cikakken Function na Camera (Gyararre)
+// A. Wannan shine "Brain" din da zai gano sunan kayan
+function identifyImage(file) {
+    let name = file.name.toLowerCase();
+    if (name.includes("pant")) return "Panties";
+    if (name.includes("bra")) return "Bra";
+    if (name.includes("shoe")) return "Takalmi (Shoes)";
+    if (name.includes("shirt")) return "Riga (Shirt)";
+    if (name.includes("gown")) return "Gown";
+    if (name.includes("perfume")) return "Turare (Perfume)";
+    return "Kayan"; // Idan bai gane sunan ba
+}
+
+// B. Gyararren Camera Function
 function handleCamera(event) {
     if (event) event.preventDefault();
     closeAIVision();
-
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
     input.capture = 'environment';
-    
     input.onchange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                const img = new Image();
-                img.src = reader.result;
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = 300; 
-                    canvas.height = img.height * (300 / img.width);
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    
-                    const compressedImg = canvas.toDataURL('image/jpeg', 0.3);
-                    if (window.showSearchOverlay) {
-                        setTimeout(() => showSearchOverlay(compressedImg), 100);
-                    }
-                };
-            };
-            reader.readAsDataURL(file);
+            const itemName = identifyImage(file);
+            showSearchOverlay(itemName);
         }
     };
     input.click();
 }
 
-// 2. Cikakken Function na Gallery (Gyararre)
+// C. Gyararren Gallery Function
 function handleGallery(event) {
     if (event) event.preventDefault();
     closeAIVision();
-
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
-    
     input.onchange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                const img = new Image();
-                img.src = reader.result;
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = 300;
-                    canvas.height = img.height * (300 / img.width);
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    
-                    const compressedImg = canvas.toDataURL('image/jpeg', 0.3);
-                    if (window.showSearchOverlay) {
-                        setTimeout(() => showSearchOverlay(compressedImg), 100);
-                    }
-                };
-            };
-            reader.readAsDataURL(file);
+            const itemName = identifyImage(file);
+            showSearchOverlay(itemName);
         }
     };
     input.click();
 }
 
+// D. Gyararren Overlay Function (Simple & Fast)
+function showSearchOverlay(kalma) {
+    const overlay = document.getElementById('search-overlay');
+    const display = document.getElementById('query-val');
+    if (overlay && display) {
+        display.innerText = `Ina kake son ka bincika wannan ${kalma}?`;
+        overlay.style.display = 'flex';
+        setTimeout(() => overlay.classList.add('active'), 50);
+    }                                   }
             
 function showTemuStyleBar(count, imageSrc) {
     // 1. Cire duk wani tsohon bar idan akwai
