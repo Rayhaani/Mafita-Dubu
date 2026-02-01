@@ -352,20 +352,47 @@ content: '';
     background: #FFD700;
                 }
 
-/* Animation na rubutun Hausa */
-@keyframes attractiveBlink {
-    0%, 100% { color: inherit; opacity: 0.6; }
-    50% { color: #D32F2F; opacity: 1; text-shadow: 0 0 5px rgba(211,47,47,0.4); }
+/* Animation mai daukar ido (Futuristic Glow) */
+@keyframes ultimateCallToAction {
+    0%, 100% { 
+        color: #5D4037; 
+        transform: scale(1);
+        text-shadow: none;
+    }
+    50% { 
+        color: #007BFF; /* Kalar ruwa mai haske don Global */
+        transform: scale(1.1); /* Kara girma kadan yayin blicking */
+        text-shadow: 0 0 10px rgba(0, 123, 255, 0.6);
+        font-weight: 900;
+    }
 }
 
-/* Button na farko (GLOBAL SEARCH) */
+@keyframes ultimateCallToActionNear {
+    0%, 100% { 
+        color: #5D4037; 
+        transform: scale(1);
+        text-shadow: none;
+    }
+    50% { 
+        color: #FF1100; /* Kalar ja mai wuta don Near Me */
+        transform: scale(1.1); 
+        text-shadow: 0 0 10px rgba(255, 17, 0, 0.6);
+        font-weight: 900;
+    }
+}
+
+/* Button na farko - Global */
 #btn-global span.block {
-    animation: attractiveBlink 2s infinite ease-in-out;
+    display: inline-block; /* Dole ne don scale ya yi aiki */
+    font-size: 12px !important; /* Kara girman rubutun */
+    animation: ultimateCallToAction 2s infinite ease-in-out;
 }
 
-/* Button na biyu (NEAR YOU) */
+/* Button na biyu - Near You */
 #btn-near span.block {
-    animation: attractiveBlink 2s infinite ease-in-out;
+    display: inline-block;
+    font-size: 12px !important; 
+    animation: ultimateCallToActionNear 2s infinite ease-in-out;
     animation-delay: 1s; 
 }
 
