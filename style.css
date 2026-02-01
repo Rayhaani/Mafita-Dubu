@@ -505,3 +505,12 @@ content: '';
 .world-box {
     margin: 0 auto !important;
 }
+
+#search-overlay {
+    justify-content: space-between !important; /* Raba tsakanin Sama da Kasa */
+}
+
+/* Wannan zai hana buttons din rarraba */
+#search-overlay .flex-col {
+    gap: 10px !important;
+}
