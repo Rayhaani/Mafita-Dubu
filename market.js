@@ -167,11 +167,16 @@ window.addEventListener('DOMContentLoaded', () => {
 // Wannan zai yi aiki idan an danna Icon din Search
 function manualSearch() {
     const input = document.getElementById('market-search');
-    let kalma = input.value.trim();
+    if (!input) return;
     
+    let kalma = input.value.trim();
     if (kalma.length >= 2) {
         clearTimeout(typingTimer); 
-        showSearchOverlay(kalma); // Wannan zai bude Global/Near Me
+        
+        // Wannan zai sa keyboard din wayar ya boyu
+        input.blur(); 
+        
+        showSearchOverlay(kalma);
         
         const box = document.getElementById('suggestionBox');
         if(box) box.style.display = 'none';
