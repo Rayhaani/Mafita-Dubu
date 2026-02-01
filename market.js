@@ -186,7 +186,13 @@ function manualSearch() {
 }
 
 // Function na Camera
-function handleGallery() {
+function handleGallery(event) {
+    // Wannan layin zai hana browser din canza page
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
@@ -198,6 +204,7 @@ function handleGallery() {
         
         const reader = new FileReader();
         reader.onload = () => {
+            // Kira Bar din a nan
             showFuturisticActionBar(files.length, reader.result);
         };
         reader.readAsDataURL(files[0]);
