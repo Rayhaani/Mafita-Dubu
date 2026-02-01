@@ -88,12 +88,12 @@ function openAICamera() {
                 </div>
 
                 <div style="display:flex; flex-direction:column; align-items:center;">
-                    <div class="silver-box active-scan">
-                        <div class="icon-inner-bg"></div>
-                        <i class="fa-solid fa-qrcode" style="color:#FFD700; font-size:22px; position:relative; z-index:10;"></i>
-                    </div>
-                    <span style="color:#8B6508; font-size:10px; font-weight:900; margin-top:10px;">SCAN</span>
-                </div>
+    <div class="silver-box active-scan" onclick="handleScan()" style="cursor:pointer;">
+        <div class="icon-inner-bg"></div>
+        <i class="fa-solid fa-qrcode" style="color:#FFD700; font-size:22px; position:relative; z-index:10;"></i>
+    </div>
+    <span style="color:#8B6508; font-size:10px; font-weight:900; margin-top:10px;">SCAN</span>
+</div>
 
                 <div style="display:flex; flex-direction:column; align-items:center;">
                     <div class="silver-box" onclick="handleGallery()" style="cursor:pointer;">
@@ -218,3 +218,32 @@ function handleGallery() {
     input.click();
 }
 
+function handleScan() {
+    // 1. Rufe AI menu tukunna
+    closeAIVision();
+    
+    // 2. Samar da wurin nuna kyamara a asirce
+    const scannerDiv = document.createElement('div');
+    scannerDiv.id = 'qr-reader';
+    scannerDiv.style = "position:fixed; top:0; left:0; width:100%; height:100%; z-index:10000; background:black;";
+    document.body.appendChild(scannerDiv);
+
+    const html5QrCode = new Html5Qrcode("qr-reader");
+    
+    const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+        // Idan ya gama scanning
+        html5QrCode.stop().then(() => {
+            scannerDiv.remove();
+            showSearchOverlay(decodedText); // Tura sakamakon zuwa Search Overlay
+        });
+    };
+
+    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+
+    html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback)
+    .catch((err) => {
+        alert("Ba a samu damar bude kyamara ba: " + err);
+        scannerDiv.remove();
+    });
+                              }
+                                      
