@@ -458,3 +458,23 @@ content: '';
     max-width: 320px;
     margin: 10px 0 !important;
 }
+
+/* Tabbatar buttons din sun tsaya a tsakiya, basu gudu hagu ko dama */
+.pearl-btn {
+    transform: none !important;
+    opacity: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+/* Wannan zai gyara rubutun cikin buttons din ya fito radau */
+.pearl-btn span {
+    display: block !important;
+}
+
+/* Wannan zai hana Duniyar yin gudu can sama sosai */
+.world-box {
+    margin: 0 auto !important;
+}
