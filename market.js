@@ -42,12 +42,23 @@ function selectItem(word) {
     if(box) box.parentElement.style.display = 'none';
     showSearchOverlay(word);
 }
-
 function showSearchOverlay(kalma) {
     const overlay = document.getElementById('search-overlay');
     const display = document.getElementById('query-val');
-    if (display) display.innerText = '"' + kalma + '"';
-    if (overlay) {
+    
+    if (overlay && display) {
+        // Idan abin da aka turo hoto ne
+        if (kalma.startsWith('data:image')) {
+            display.innerHTML = `
+                <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+                    <img src="${kalma}" style="width:60px; height:60px; border-radius:10px; border:2px solid #FFD700; object-fit:cover;">
+                    <span style="font-size:12px; color:#FFD700; font-weight:bold;">AI Analyzing Image...</span>
+                </div>`;
+        } else {
+            // Idan rubutu ne na bincike (Search text)
+            display.innerText = '"' + kalma + '"';
+        }
+
         overlay.style.display = 'flex';
         setTimeout(() => overlay.classList.add('active'), 50);
     }
