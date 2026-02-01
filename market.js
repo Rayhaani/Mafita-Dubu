@@ -79,9 +79,12 @@ function openAICamera() {
             
             <div class="flex-row-container">
                 <div style="display:flex; flex-direction:column; align-items:center;">
-                    <div class="silver-box">
+                        <div class="silver-box" onclick="handleCamera()" style="cursor:pointer;">
+    <div class="icon-inner-bg"></div>
+    <i class="fa-solid fa-camera-retro" style="color:white; font-size:22px; position:relative; z-index:10;"></i>
+</div>
                         <div class="icon-inner-bg"></div>
-                        <i class="fa-solid fa-camera-retro" style="color:white; font-size:22px; position:relative; z-index:10;"></i>
+                        <i class="fa-solid fa-camera-retro" style="color:white; font-size:22px; position:relative; z-index:10;"></i> 
                     </div>
                     <span style="color:#333; font-size:10px; font-weight:900; margin-top:10px;">CAMERA</span>
                 </div>
@@ -95,7 +98,11 @@ function openAICamera() {
                 </div>
 
                 <div style="display:flex; flex-direction:column; align-items:center;">
-                    <div class="silver-box">
+                    <div class="silver-box" onclick="handleGallery()" style="cursor:pointer;">
+    <div class="icon-inner-bg"></div>
+    <i class="fa-solid fa-images" style="color:white; font-size:22px; position:relative; z-index:10;"></i>
+</div>
+
                         <div class="icon-inner-bg"></div>
                         <i class="fa-solid fa-images" style="color:white; font-size:22px; position:relative; z-index:10;"></i>
                     </div>
@@ -182,3 +189,37 @@ function manualSearch() {
         if(box) box.style.display = 'none';
     }
 }
+
+// Function na Camera
+function handleCamera() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.capture = 'environment'; // Zai buɗe kyamara kai tsaye
+    
+    input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            closeAIVision(); // Rufe menu din kyamara
+            showSearchOverlay("Hoton Kyamara"); // Tura shi shafin zabe
+        }
+    };
+    input.click();
+}
+
+// Function na Gallery
+function handleGallery() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    
+    input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            closeAIVision();
+            showSearchOverlay("Hoton Gallery");
+        }
+    };
+    input.click();
+}
+
