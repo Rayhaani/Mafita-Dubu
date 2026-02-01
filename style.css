@@ -352,61 +352,48 @@ content: '';
     background: #FFD700;
                 }
 
-/* Animation na duhu da walƙiyar Luxury */
-@keyframes luxurySparkle {
+/* Animation na Black Glow & Sparkle */
+@keyframes blackLuxurySparkle {
     0%, 100% { 
         transform: scale(1);
-        color: #1A0F0D; /* Duhu sosai */
+        color: #000000; /* Baki fes */
         text-shadow: none;
     }
     50% { 
-        transform: scale(1.05);
-        color: #3E2723; /* Brown mai natsuwa */
-        /* Walƙiya mai kaifi (Sparkle Effect) */
+        transform: scale(1.08); /* Girma kadan don daukar ido */
+        color: #000000;
+        /* Walkiya mai kaifi a bayan bakin rubutun */
         text-shadow: 
-            0 0 5px #ffffff, 
-            0 0 12px #FFD700;
+            0 0 8px #ffffff, 
+            0 0 15px #FFD700; 
         font-weight: 900;
     }
 }
 
+/* Saka wa rubutun Hausa na cikin boxes */
 #btn-global span.block, 
 #btn-near span.block {
-    display: inline-block;
-    font-size: 13px !important;
-    color: #1A0F0D !important; /* Tilasta kalar duhu */
-    
-    /* Kashe background-clip gaba daya */
-    background: none !important;
-    -webkit-background-clip: initial !important;
-    -webkit-text-fill-color: initial !important;
-    
-    /* Hana karyewa */
+    display: inline-block !important;
+    font-size: 13.5px !important;
+    color: #000000 !important;
+    font-weight: 800;
     white-space: nowrap !important;
-    
-    animation: luxurySparkle 2s infinite ease-in-out;
+    animation: blackLuxurySparkle 2s infinite ease-in-out;
 }
 
 #btn-near span.block {
     animation-delay: 1s;
 }
 
-/* Wannan zai tura kalmar Soke Bincike kasa */
+/* 2. Gyaran Soke Bincike (Tura shi can kasa) */
 .cancel-breathing {
-    display: block;
-    margin-top: 35px !important; /* Kara wannan lambar idan kana so ya kara tafiya kasa */
-    font-weight: 800;
-    color: #5D4037;
-    text-align: center;
-    width: 100%;
-    cursor: pointer;
-}
-/* Wannan zai tilasta masa sauka kasa ko yana cikin wani box ne */
-.cancel-breathing {
-    position: relative !important;
-    top: 30px !important; /* Kara wannan lambar zuwa 40px ko 50px idan kana son ya kara sauka */
+    margin-top: auto !important;
+    margin-bottom: 20px !important; /* Wannan zai tura shi can kasan sheet din */
     display: block !important;
     text-align: center;
     width: 100%;
-    font-weight: 800;
+    color: #5D4037;
+    font-weight: 900;
 }
+
+
