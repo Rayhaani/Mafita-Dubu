@@ -351,35 +351,43 @@ content: '';
     transform: scale(0.9);
     background: #FFD700;
                 }
-/* Animation na Luxury Dark Bronze */
-@keyframes darkBronzeGlow {
+
+/* Animation na duhu da walkiyar karfe */
+@keyframes metallicShine {
     0%, 100% { 
-        color: #5D4037; /* Brown din asali */
         transform: scale(1);
+        color: #2D1B18; /* Brown mai duhu sosai */
         text-shadow: none;
+        filter: brightness(1);
     }
     50% { 
-        color: #3E2723; /* Darker Chocolate Brown */
-        transform: scale(1.1); 
-        /* Walkiya mai launin zinari mai duhu (Bronze Glow) */
-        text-shadow: 0 0 12px rgba(139, 69, 19, 0.4), 0 0 20px rgba(184, 134, 11, 0.2);
+        transform: scale(1.1);
+        color: #5D4037; /* Brown din ya dan bude kadan */
+        /* Wannan inuwar ita ce take bada walkiyar */
+        text-shadow: 
+            0 0 5px #fff, 
+            0 0 10px #FFD700, 
+            0 0 20px #8B4513; 
+        filter: brightness(1.5) contrast(1.2);
         font-weight: 900;
     }
 }
 
-/* Saka wa duka buttons din guda biyu (Global da Near Me) */
+/* Saka wa buttons din guda biyu */
 #btn-global span.block, 
 #btn-near span.block {
     display: inline-block;
-    font-size: 13px !important; /* Na dan kara girman kadan yadda zai fito radau */
-    color: #5D4037;
-    animation: darkBronzeGlow 2.5s infinite ease-in-out;
+    font-size: 13.5px !important;
+    color: #2D1B18; /* Duhu matuka */
+    font-weight: 700;
+    animation: metallicShine 2s infinite ease-in-out;
 }
 
-/* Jinkiri ga na kasa domin su dinga biyo juna (Sequential) */
+/* Sequential delay */
 #btn-near span.block {
-    animation-delay: 1.25s;
+    animation-delay: 1s;
 }
+
 
 
 
