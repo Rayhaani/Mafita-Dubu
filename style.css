@@ -202,7 +202,7 @@ border-bottom: 1px solid rgba(62, 39, 35, 0.1);
     width: 200%; /* Mun kara girman hasken daga 150% zuwa 200% */
     height: 200%;
     background: conic-gradient(from 0deg, transparent, transparent, #FFD700);
-    animation: rotate-glow 3s linear infinite;
+    animation: rotate-glow 30s linear infinite;
 }
 
 .camera-inner {
@@ -248,7 +248,7 @@ content: '';
     position: absolute;
     width: 250%; height: 250%;
     background: conic-gradient(from 0deg, transparent, transparent, #FFD700);
-    animation: rotate-glow 15s linear infinite;
+    animation: rotate-glow 30s linear infinite;
     z-index: 0;
 }
 
