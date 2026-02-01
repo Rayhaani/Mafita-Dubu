@@ -46,22 +46,34 @@ function showSearchOverlay(kalma) {
     const overlay = document.getElementById('search-overlay');
     const display = document.getElementById('query-val');
     
-    if (overlay && display) {
-        // Idan abin da aka turo hoto ne
-        if (kalma.startsWith('data:image')) {
-            display.innerHTML = `
-                <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
-                    <img src="${kalma}" style="width:60px; height:60px; border-radius:10px; border:2px solid #FFD700; object-fit:cover;">
-                    <span style="font-size:12px; color:#FFD700; font-weight:bold;">AI Analyzing Image...</span>
-                </div>`;
-        } else {
-            // Idan rubutu ne na bincike (Search text)
-            display.innerText = '"' + kalma + '"';
-        }
+    if (!overlay || !display) return;
 
-        overlay.style.display = 'flex';
-        setTimeout(() => overlay.classList.add('active'), 50);
+    // 1. Nuna abin da aka shigar (Hoto ko Rubutu)
+    if (kalma.startsWith('data:image')) {
+        display.innerHTML = `
+            <div id="ai-status" style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+                <img src="${kalma}" style="width:70px; height:70px; border-radius:12px; border:2px solid #FFD700; object-fit:cover; box-shadow: 0 0 15px rgba(255,215,0,0.5);">
+                <span id="ai-text" style="font-size:13px; color:#FFD700; font-weight:bold; letter-spacing:1px;">AI ANALYZING PIXELS...</span>
+            </div>`;
+        
+        // 2. AI Recognition Logic (Bayan sakan 3)
+        setTimeout(() => {
+            const statusText = document.getElementById('ai-text');
+            if (statusText) {
+                statusText.innerText = "MATCH FOUND: LATEST FASHION";
+                statusText.style.color = "#00FF00"; // Kore don nuna an samu
+            }
+            
+            // Anan ne zaka iya kiran function din da zai nuna kayayyakin
+            // Misali: loadAIResults("Fashion");
+        }, 3000);
+
+    } else {
+        display.innerText = '"' + kalma + '"';
     }
+
+    overlay.style.display = 'flex';
+    setTimeout(() => overlay.classList.add('active'), 50);
 }
 
 function closeSearch() {
