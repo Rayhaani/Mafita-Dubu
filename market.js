@@ -75,7 +75,7 @@ function startProfessionalScroll() {
 
     if (!isPaused && !isTyping) {
         // Wannan zai sa duka shafin (Page) ya rika scrolling
-        window.scrollBy(0, direction * 0.1); // 0.6 ne gudun, mun maida shi 0.1 don sanyi
+        window.scrollBy(0, direction * 0.2); // 0.6 ne gudun, mun maida shi 0.2 don sanyi
 
         // Idan ya kai karshen kasa, ya dawo sama
         if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
