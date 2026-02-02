@@ -509,3 +509,23 @@ content: '';
     align-items: center !important; 
     padding-top: 15vh !important; 
 }
+/* --- NEW SUPER SLOW SLIDER --- */
+.slider-track {
+    display: flex !important;
+    animation: scroll-slow 80s linear infinite !important; /* Gwada 80s don yayi hankali sosai */
+    width: max-content !important; /* Wannan zai bar shi ya miƙe yadda yake */
+}
+
+@keyframes scroll-slow {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%); /* Zai ja rabin hotunan ya koma */
+    }
+}
+
+/* Idan mutum ya danna ko ya taba, ya tsaya */
+.slider-track:hover, .slider-track:active {
+    animation-play-state: paused !important;
+}
