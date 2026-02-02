@@ -472,7 +472,7 @@ content: '';
 /* Wannan zai gyara rubutun cikin buttons din ya fito radau */
 .pearl-btn span {
     display: block !important;
-    color: #FFD700 !important; /* CANJA WANNAN LAMBAR DON CANJA KALAR RUBUTU */
+    color: #000000 !important; /* CANJA WANNAN LAMBAR DON CANJA KALAR RUBUTU */
     font-size: 14px !important; /* In kana son rubutun ya girma ko ya kankanta */
         }
 
