@@ -513,7 +513,7 @@ content: '';
 .slider-track {
     display: flex;
     width: calc(250px * 10); /* Ka daidaita wannan da yawan hotunanka */
-    animation: scroll 140s linear infinite !important; /* Kara namban nan (misali 60s) don ya kara yin hankali */
+    animation: scroll 400s linear infinite !important; /* Kara namban nan (misali 60s) don ya kara yin hankali */
 }
 
 @keyframes scroll {
