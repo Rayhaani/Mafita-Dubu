@@ -156,34 +156,37 @@ async function startAISimulation(file) {
     showSearchOverlay("AI INITIALIZING...");
     const display = document.getElementById('query-val');
     const overlay = document.getElementById('search-overlay');
-
+    
     const scanLine = document.createElement('div');
     scanLine.className = 'scan-line';
     overlay.appendChild(scanLine);
 
     try {
-        display.innerText = "Loading AI Brain...";
-        const model = await mobilenet.load();
+        display.innerText = "Loading AI Intelligence...";
+        // Loading coco-ssd model
+        const model = await cocoSsd.load();
         
-        display.innerText = "Analyzing Pixels...";
+        display.innerText = "Deep Scanning...";
         const img = document.createElement('img');
         img.src = URL.createObjectURL(file);
         
         img.onload = async () => {
-            const predictions = await model.classify(img);
+            const predictions = await model.detect(img);
             scanLine.remove();
 
             if (predictions.length > 0) {
-                // Dauko sunan abu na farko
-                let result = predictions[0].className.split(',')[0]; 
+                // Dauko sunan da ya fi dacewa
+                let result = predictions[0].class; 
                 display.innerText = '"' + result.toUpperCase() + '"';
             } else {
-                display.innerText = "Could not identify object";
+                // Idan AI ya kasa gane takamaiman sunan, sai mu kira shi da "Fashion Item"
+                display.innerText = '"FASHION ITEM"';
             }
         };
     } catch (error) {
         console.error(error);
-        display.innerText = "AI Error: Check Internet";
-        if(scanLine) scanLine.remove();
+        display.innerText = "Error: Use clear photo";
+        scanLine.remove();
     }
 }
+
