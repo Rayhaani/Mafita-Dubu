@@ -429,40 +429,49 @@ content: '';
 .world-box {
     margin: 0 auto !important;
 }
+
+/* --- CLEAN RESET FOR BUTTONS --- */
 .pearl-btn {
-    width: 280px;
-    height: 60px;
-    margin: 15px auto;
-    background: #ffffff;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    border: 1px solid #D7CCC8;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    cursor: pointer;
+    all: unset; /* Wannan zai goge duk wata kwalliyar baya da ta rage */
+    width: 280px !important;
+    height: 55px !important;
+    background-color: #ffffff !important;
+    border: 1px solid #D7CCC8 !important;
+    border-radius: 15px !important;
+    margin: 10px auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
+    transition: 0.3s !important;
     /* Tabbatar sun tsaya a tsakiya */
-    position: relative;
-    left: 0;
-    transform: none !important;
+    position: relative !important;
+    left: 0 !important;
+    right: 0 !important;
 }
 
-.pearl-btn i {
-    font-size: 20px;
-}
-
+/* Rubutun Ciki */
 .pearl-btn span {
-    font-size: 14px;
-    font-weight: 700;
-    color: #3E2723;
-    text-transform: uppercase;
+    color: #3E2723 !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    font-family: sans-serif !important;
 }
 
-/* Kalar Icons */
-.fa-earth-africa { color: #1A73E8; }
-.fa-location-crosshairs { color: #D4AF37; }
+/* Icon */
+.pearl-btn i {
+    font-size: 20px !important;
+    color: #8B6508 !important;
+}
 
+/* Effect idan an danna */
+.pearl-btn:active {
+    transform: scale(0.95) !important;
+    background-color: #f9f9f9 !important;
+}
 
 #search-overlay {
     display: none; /* JavaScript ne zai nuna shi */
