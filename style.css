@@ -88,9 +88,6 @@
 border: 1px solid #D7CCC8; transition: transform 0.4s;
             text-align: center;
         }
-        #btn-global { transform: translateX(-500px); }
-        #btn-near { transform: translateX(500px); }
-        .active #btn-global, .active #btn-near { transform: translateX(0); }
 
         .search-text { font-size: 1.2rem; font-weight: 800; color: #3E2723; text-align: center; margin: 20px; }
         .query-highlight { color: #D32F2F; font-style: italic; }
@@ -505,4 +502,10 @@ content: '';
     cursor: pointer;
 }
 
-#search-overlay { display: flex !important; flex-direction: column !important; align-items: center !important; padding-top: 15vh !important; }
+#search-overlay { 
+    display: none; 
+    flex-direction: column !important; 
+    align-items: center !important; 
+    padding-top: 15vh !important; 
+}
+
