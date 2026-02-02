@@ -163,7 +163,6 @@ async function startAISimulation(file) {
 
     try {
         display.innerText = "Loading AI Intelligence...";
-        // Loading coco-ssd model
         const model = await cocoSsd.load();
         
         display.innerText = "Deep Scanning...";
@@ -172,21 +171,24 @@ async function startAISimulation(file) {
         
         img.onload = async () => {
             const predictions = await model.detect(img);
-            scanLine.remove();
+            if(scanLine) scanLine.remove();
 
             if (predictions.length > 0) {
-                // Dauko sunan da ya fi dacewa
-                let result = predictions[0].class; 
-                display.innerText = '"' + result.toUpperCase() + '"';
+                // DABARA: Mu nemo abinda ba "person" ba a cikin list din
+                let foundObject = predictions.find(p => p.class !== 'person');
+                
+                // Idan duk kansu "person" ne, to mu dauki na farkon
+                let finalResult = foundObject ? foundObject.class : predictions[0].class;
+
+                // Gyara sunan idan ya fito a matsayin "handbag" ko "tie" da sauransu
+                display.innerText = '"' + finalResult.toUpperCase() + '"';
             } else {
-                // Idan AI ya kasa gane takamaiman sunan, sai mu kira shi da "Fashion Item"
                 display.innerText = '"FASHION ITEM"';
             }
         };
     } catch (error) {
         console.error(error);
-        display.innerText = "Error: Use clear photo";
-        scanLine.remove();
+        display.innerText = "Error: Check Connection";
+        if(scanLine) scanLine.remove();
     }
 }
-
