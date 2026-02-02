@@ -483,27 +483,4 @@ content: '';
     margin: 0 auto !important;
 }
 
-#search-overlay {
-    display: none; /* JavaScript ne zai nuna shi */
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background: #F5F1E9 !important; /* Milk color */
-    backdrop-filter: blur(10px);
-    z-index: 10000 !important;
-    
-    /* Wannan zai tsaita yadda abubuwa suke jeri */
-    flex-direction: column !important;
-    align-items: center !important;
-}
-
-/* Wannan zai tilasta wa Cancel button din komawa kasa can */
-#search-overlay p {
-    margin-top: auto !important;
-    margin-bottom: 40px !important;
-    cursor: pointer;
-}
-
 #search-overlay { display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; gap: 20px !important; }
