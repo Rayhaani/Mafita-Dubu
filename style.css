@@ -509,3 +509,18 @@ content: '';
     align-items: center !important; 
     padding-top: 15vh !important; 
 }
+/* Rage saurin gudu na slider */
+.slider-track {
+    display: flex;
+    width: calc(250px * 10); /* Ka daidaita wannan da yawan hotunanka */
+    animation: scroll 40s linear infinite !important; /* Kara namban nan (misali 60s) don ya kara yin hankali */
+}
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-250px * 5)); }
+}
+
+.slider-track:hover {
+    animation-play-state: paused; /* Mutum na taba shi zai tsaya don ya kalla */
+}
