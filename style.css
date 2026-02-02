@@ -80,15 +80,6 @@
         }
 
         /* 5. PEARL BUTTONS OVERLAY */
-        .pearl-btn {
-            width: 250px; padding: 18px; margin: 10px; border-radius: 20px;
-            background: white; color: #5D4037; font-weight: 800;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05), inset 0 0 10px #F5F1E9;
-
-border: 1px solid #D7CCC8; transition: transform 0.4s;
-            text-align: center;
-        }
-
         .search-text { font-size: 1.2rem; font-weight: 800; color: #3E2723; text-align: center; margin: 20px; }
         .query-highlight { color: #D32F2F; font-style: italic; }
    
@@ -427,25 +418,6 @@ content: '';
     padding: 80px 20px 40px 20px !important;
 }
 
-/* Tabbatar Buttons din ba su yi gudu ba */
-.pearl-btn {
-    width: 280px !important;
-    transform: none !important;
-    opacity: 1 !important;
-    margin: 10px 0 !important;
-}
-
-/* Tabbatar buttons din sun tsaya a tsakiya */
-.pearl-btn {
-    width: 280px !important;
-    margin: 10px auto !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    transform: none !important; /* Hana JS tura su gefe */
-}
-
-
 /* Tabbatar buttons din suna tsakiya */
 .search-content-wrapper {
     display: flex;
@@ -453,32 +425,36 @@ content: '';
     align-items: center;
     width: 100%;
 }
-
-.pearl-btn {
-    width: 90%;
-    max-width: 320px;
-    margin: 10px 0 !important;
-}
-
-/* Tabbatar buttons din sun tsaya a tsakiya, basu gudu hagu ko dama */
-.pearl-btn {
-    transform: none !important;
-    opacity: 1 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
-}
-
-/* Wannan zai gyara rubutun cikin buttons din ya fito radau */
-.pearl-btn span {
-    display: block !important;
-}
-
 /* Wannan zai hana Duniyar yin gudu can sama sosai */
 .world-box {
     margin: 0 auto !important;
 }
+.pearl-btn {
+    width: 290px !important;
+    padding: 20px 25px !important;
+    margin: 15px auto !important;
+    border-radius: 24px !important;
+    background: #ffffff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 15px !important;
+    border: 1px solid #E0D7C6 !important;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.06) !important;
+    color: #3E2723 !important;
+    font-weight: 800 !important;
+    font-size: 13px !important;
+    text-transform: uppercase;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+}
+
+.pearl-btn i { font-size: 22px; width: 30px; }
+.fa-earth-africa { color: #1A73E8; }
+.fa-location-crosshairs { color: #D4AF37; }
+
+.pearl-btn:active { transform: scale(0.95) !important; }
+
 #search-overlay {
     display: none; /* JavaScript ne zai nuna shi */
     position: fixed !important;
