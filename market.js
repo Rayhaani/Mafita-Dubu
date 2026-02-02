@@ -131,13 +131,14 @@ function startProfessionalScroll() {
     const isTyping = searchBar === document.activeElement || (searchBar && searchBar.value.length > 0);
 
     if (!isPaused && !isTyping) {
-        window.scrollBy(0, direction * 0.6);
-        if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
-            direction = -1; isPaused = true; setTimeout(() => isPaused = false, 5000);
-        } else if (direction === -1 && window.pageYOffset <= 0) {
-            direction = 1; isPaused = true; setTimeout(() => isPaused = false, 5000);
+                const track = document.querySelector('.slider-track');
+        if (track) {
+            sliderPos = (window.sliderPos || 0) - 0.5; 
+            if (Math.abs(sliderPos) >= track.scrollWidth / 2) sliderPos = 0;
+            track.style.transform = `translateX(${sliderPos}px)`;
+            window.sliderPos = sliderPos;
         }
-    }
+        
     requestAnimationFrame(startProfessionalScroll);
 }
 window.onload = () => setTimeout(startProfessionalScroll, 3000);
