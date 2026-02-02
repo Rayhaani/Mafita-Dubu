@@ -122,34 +122,27 @@ function closeAIVision() {
     }, 400);
 }
 
-// 3. AUTO SCROLLING
-let isPaused = false;
-let direction = 1;
-function startProfessionalScroll() {
-    const searchBar = document.getElementById('market-search');
-    // Idan mutum yana rubutu, ko ya danna search bar, mu dakatar da komai
-    const isTyping = searchBar === document.activeElement || (searchBar && searchBar.value.length > 0);
+// 3. NEW SLOW SLIDER SCROLL
+let sliderPos = 0;
+let sliderSpeed = 0.5; // Ka rage zuwa 0.2 idan yana sauri da yawa
 
-    if (!isPaused && !isTyping) {
-        window.scrollBy(0, direction * 0.6);
-        if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
-            direction = -1; isPaused = true; setTimeout(() => isPaused = false, 5000);
-        } else if (direction === -1 && window.pageYOffset <= 0) {
-            direction = 1; isPaused = true; setTimeout(() => isPaused = false, 5000);
+function startSliderScroll() {
+    const track = document.querySelector('.slider-track');
+    if (track) {
+        sliderPos -= sliderSpeed;
+        
+        // Loop din hotunan
+        if (Math.abs(sliderPos) >= track.scrollWidth / 2) {
+            sliderPos = 0;
         }
+        track.style.transform = `translateX(${sliderPos}px)`;
     }
-    requestAnimationFrame(startProfessionalScroll);
+    requestAnimationFrame(startSliderScroll);
 }
-window.onload = () => setTimeout(startProfessionalScroll, 3000);
 
-window.addEventListener('DOMContentLoaded', () => {
-    const searchBar = document.getElementById('market-search');
-    
-    if (searchBar) {
-        // Idan aka danna wurin rubutu
-        searchBar.addEventListener('focus', () => {
-            isPaused = true; 
-        });
+// Fara gudu bayan sakan 2
+window.onload = () => setTimeout(startSliderScroll, 2000);
+
 
         // Idan aka daina rubutu (ko aka danna wani wuri daban)
         searchBar.addEventListener('blur', () => {
