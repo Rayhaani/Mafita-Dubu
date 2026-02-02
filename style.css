@@ -483,26 +483,20 @@ content: '';
     margin: 0 auto !important;
 }
 #search-overlay {
-    display: none; /* JavaScript ne zai nuna shi */
+    display: none; 
     position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background: #F5F1E9 !important; /* Milk color */
-    backdrop-filter: blur(10px);
+    inset: 0 !important;
+    background: #F5F1E9 !important;
     z-index: 10000 !important;
-    
-    /* Wannan zai tsaita yadda abubuwa suke jeri */
+    display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    padding-top: 15vh !important; /* Wannan zai sa su manne kusa da Duniya */
 }
 
-/* Wannan zai tilasta wa Cancel button din komawa kasa can */
 #search-overlay p {
-    margin-top: auto !important;
+    margin-top: auto !important; /* Wannan ne yake tura Cancel kasa */
     margin-bottom: 40px !important;
     cursor: pointer;
 }
 
-#search-overlay { display: flex !important; flex-direction: column !important; align-items: center !important; padding-top: 15vh !important; }
