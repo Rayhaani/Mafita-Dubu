@@ -91,6 +91,15 @@ function startProfessionalScroll() {
     requestAnimationFrame(startProfessionalScroll);
 }
 window.onload = () => setTimeout(startProfessionalScroll, 3000);
+// Saka wannan a duk inda kake so a cikin JS din
+document.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        const searchBar = document.getElementById('market-search');
+        if (document.activeElement === searchBar) {
+            manualSearch();
+        }
+    }
+});
 
 function handleCamera() {
     const input = document.createElement('input');
@@ -121,3 +130,17 @@ function handleGallery() {
     };
     input.click();
         }
+function manualSearch() {
+    const input = document.getElementById('market-search');
+    if (!input) return;
+    
+    let kalma = input.value.trim();
+    if (kalma.length >= 2) {
+        clearTimeout(typingTimer); 
+        input.blur(); // Wannan zai sa keyboard din ya boyu
+        showSearchOverlay(kalma);
+        
+        const box = document.getElementById('suggestionList');
+        if(box) box.parentElement.style.display = 'none';
+    }
+}
