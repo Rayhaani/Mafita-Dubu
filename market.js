@@ -64,20 +64,28 @@ function closeAIVision() {
     setTimeout(() => { if(document.getElementById('ai-overlay')) document.getElementById('ai-overlay').remove(); if(sheet) sheet.remove(); }, 400);
 }
 
-// --- GYARAN SLIDER ---
+// --- AUTO PAGE SCROLL ---
 let isPaused = false;
+let direction = 1;
+
 function startProfessionalScroll() {
     const searchBar = document.getElementById('market-search');
+    // Idan mutum yana rubutu, mu dakatar da gudu
     const isTyping = searchBar === document.activeElement || (searchBar && searchBar.value.length > 0);
 
     if (!isPaused && !isTyping) {
-        const track = document.querySelector('.slider-track');
-        if (track) {
-            sliderPos -= 0.6; // Gudun slider din
-            if (Math.abs(sliderPos) >= track.scrollWidth / 2) {
-                sliderPos = 0;
-            }
-            track.style.transform = `translateX(${sliderPos}px)`;
+        // Wannan zai sa duka shafin (Page) ya rika scrolling
+        window.scrollBy(0, direction * 0.6); // 0.6 ne gudun, zaka iya rage shi zuwa 0.3 don sanyi
+
+        // Idan ya kai karshen kasa, ya dawo sama
+        if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
+            direction = -1; 
+            isPaused = true; 
+            setTimeout(() => isPaused = false, 5000); // Tsaya na sakan 5 kafin komawa
+        } else if (direction === -1 && window.pageYOffset <= 0) {
+            direction = 1; 
+            isPaused = true; 
+            setTimeout(() => isPaused = false, 5000);
         }
     }
     requestAnimationFrame(startProfessionalScroll);
