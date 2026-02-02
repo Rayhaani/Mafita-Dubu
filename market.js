@@ -27,23 +27,30 @@ function selectItem(word) {
     if(box) box.parentElement.style.display = 'none';
     showSearchOverlay(word);
 }
-
 function showSearchOverlay(kalma) {
     const overlay = document.getElementById('search-overlay');
     const display = document.getElementById('query-val');
+    
+    // --- WANNAN SHI NE GYARAN ---
+    const listContainer = document.getElementById('suggestionList');
+    if(listContainer) {
+        listContainer.parentElement.style.display = 'none';
+    }
+    // ----------------------------
+
     if (display) display.innerText = '"' + kalma + '"';
     if (overlay) {
         overlay.style.display = 'flex';
         setTimeout(() => overlay.classList.add('active'), 50);
     }
 }
-
 function closeSearch() {
     const overlay = document.getElementById('search-overlay');
     if(overlay) {
         overlay.classList.remove('active');
         setTimeout(() => {
             overlay.style.display = 'none';
+            // Wannan zai goge rubutun search bar din bayan an rufe
             const input = document.getElementById('market-search');
             if(input) input.value = '';
         }, 500);
