@@ -429,55 +429,40 @@ content: '';
 .world-box {
     margin: 0 auto !important;
 }
-/* --- ULTIMATE GLOBAL STANDARD BUTTONS --- */
 .pearl-btn {
-    width: 320px !important; /* Matsakaicin fadin da ya dace da kowace waya */
-    height: 70px !important;
-    margin: 15px auto !important;
-    background: #ffffff !important;
-    border-radius: 20px !important;
-    display: flex !important;
-    align-items: center !important;
-    padding: 0 25px !important;
-    gap: 15px !important;
-    
-    /* Inuwa mai laushi (Premium Shadow) */
-    border: 1px solid #EAE2D5 !important;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.06) !important;
-    
+    width: 280px;
+    height: 60px;
+    margin: 15px auto;
+    background: #ffffff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    border: 1px solid #D7CCC8;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    transform: none !important; /* Hana guduwa gefe */
+    /* Tabbatar sun tsaya a tsakiya */
+    position: relative;
+    left: 0;
+    transform: none !important;
 }
 
-/* Tsarin Icon */
 .pearl-btn i {
-    font-size: 24px !important;
-    min-width: 35px;
+    font-size: 20px;
 }
 
-/* Tsarin Rubutu (Global Standard) */
 .pearl-btn span {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 13px !important;
-    font-weight: 800 !important;
-    color: #3E2723 !important;
+    font-size: 14px;
+    font-weight: 700;
+    color: #3E2723;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    text-align: left !important;
-    line-height: 1.2;
 }
 
-/* Launukan Icons */
+/* Kalar Icons */
 .fa-earth-africa { color: #1A73E8; }
 .fa-location-crosshairs { color: #D4AF37; }
 
-/* Effect idan an taba */
-.pearl-btn:active {
-    transform: scale(0.96) !important;
-    background: #fdfcf9 !important;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.04) !important;
-}
 
 #search-overlay {
     display: none; /* JavaScript ne zai nuna shi */
