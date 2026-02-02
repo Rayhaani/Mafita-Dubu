@@ -117,8 +117,7 @@ function handleCamera() {
         const file = e.target.files[0];
         if (file) {
             closeAIVision();
-            showSearchOverlay("Hoton Kyamara");
-            // Anan ne zamu sa AI ya karanta hoton nan gaba
+            startAISimulation(file); // Wannan zai kira Real AI
         }
     };
     input.click();
@@ -132,11 +131,12 @@ function handleGallery() {
         const file = e.target.files[0];
         if (file) {
             closeAIVision();
-            showSearchOverlay("Hoton Gallery");
+            startAISimulation(file); // Wannan zai kira Real AI
         }
     };
     input.click();
-        }
+}
+
 function manualSearch() {
     const input = document.getElementById('market-search');
     if (!input) return;
@@ -149,5 +149,41 @@ function manualSearch() {
         
         const box = document.getElementById('suggestionList');
         if(box) box.parentElement.style.display = 'none';
+    }
+}
+// --- WANNAN SHI NE REAL AI LOGIC ---
+async function startAISimulation(file) {
+    showSearchOverlay("AI INITIALIZING...");
+    const display = document.getElementById('query-val');
+    const overlay = document.getElementById('search-overlay');
+
+    const scanLine = document.createElement('div');
+    scanLine.className = 'scan-line';
+    overlay.appendChild(scanLine);
+
+    try {
+        display.innerText = "Loading AI Brain...";
+        const model = await mobilenet.load();
+        
+        display.innerText = "Analyzing Pixels...";
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        
+        img.onload = async () => {
+            const predictions = await model.classify(img);
+            scanLine.remove();
+
+            if (predictions.length > 0) {
+                // Dauko sunan abu na farko
+                let result = predictions[0].className.split(',')[0]; 
+                display.innerText = '"' + result.toUpperCase() + '"';
+            } else {
+                display.innerText = "Could not identify object";
+            }
+        };
+    } catch (error) {
+        console.error(error);
+        display.innerText = "AI Error: Check Internet";
+        if(scanLine) scanLine.remove();
     }
 }
