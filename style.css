@@ -505,4 +505,4 @@ content: '';
     cursor: pointer;
 }
 
-#search-overlay { display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; gap: 20px !important; }
+#search-overlay { display: flex !important; flex-direction: column !important; align-items: center !important; padding-top: 15vh !important; }
