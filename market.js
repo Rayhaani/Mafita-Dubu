@@ -122,16 +122,16 @@ function closeAIVision() {
     }, 400);
 }
 
-// 3. NEW SLOW SLIDER SCROLL
+// 3. NEW SLOW SLIDER SCROLL (For Slider Track Only)
 let sliderPos = 0;
-let sliderSpeed = 0.5; // Ka rage zuwa 0.2 idan yana sauri da yawa
+let sliderSpeed = 0.5; // Idan kana so ya kara sanyi, maida shi 0.2
 
 function startSliderScroll() {
     const track = document.querySelector('.slider-track');
     if (track) {
         sliderPos -= sliderSpeed;
         
-        // Loop din hotunan
+        // Seamless loop: Idan ya kai rabi ya sake komawa
         if (Math.abs(sliderPos) >= track.scrollWidth / 2) {
             sliderPos = 0;
         }
@@ -142,7 +142,6 @@ function startSliderScroll() {
 
 // Fara gudu bayan sakan 2
 window.onload = () => setTimeout(startSliderScroll, 2000);
-
 
         // Idan aka daina rubutu (ko aka danna wani wuri daban)
         searchBar.addEventListener('blur', () => {
