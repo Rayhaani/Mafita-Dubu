@@ -80,6 +80,18 @@
         }
 
         /* 5. PEARL BUTTONS OVERLAY */
+        .pearl-btn {
+            width: 250px; padding: 18px; margin: 10px; border-radius: 20px;
+            background: white; color: #5D4037; font-weight: 800;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05), inset 0 0 10px #F5F1E9;
+
+border: 1px solid #D7CCC8; transition: transform 0.4s;
+            text-align: center;
+        }
+        #btn-global { transform: translateX(-500px); }
+        #btn-near { transform: translateX(500px); }
+        .active #btn-global, .active #btn-near { transform: translateX(0); }
+
         .search-text { font-size: 1.2rem; font-weight: 800; color: #3E2723; text-align: center; margin: 20px; }
         .query-highlight { color: #D32F2F; font-style: italic; }
    
@@ -418,6 +430,25 @@ content: '';
     padding: 80px 20px 40px 20px !important;
 }
 
+/* Tabbatar Buttons din ba su yi gudu ba */
+.pearl-btn {
+    width: 280px !important;
+    transform: none !important;
+    opacity: 1 !important;
+    margin: 10px 0 !important;
+}
+
+/* Tabbatar buttons din sun tsaya a tsakiya */
+.pearl-btn {
+    width: 280px !important;
+    margin: 10px auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    transform: none !important; /* Hana JS tura su gefe */
+}
+
+
 /* Tabbatar buttons din suna tsakiya */
 .search-content-wrapper {
     display: flex;
@@ -425,54 +456,32 @@ content: '';
     align-items: center;
     width: 100%;
 }
+
+.pearl-btn {
+    width: 90%;
+    max-width: 320px;
+    margin: 10px 0 !important;
+}
+
+/* Tabbatar buttons din sun tsaya a tsakiya, basu gudu hagu ko dama */
+.pearl-btn {
+    transform: none !important;
+    opacity: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+/* Wannan zai gyara rubutun cikin buttons din ya fito radau */
+.pearl-btn span {
+    display: block !important;
+}
+
 /* Wannan zai hana Duniyar yin gudu can sama sosai */
 .world-box {
     margin: 0 auto !important;
 }
-
-/* --- CLEAN RESET FOR BUTTONS --- */
-.pearl-btn {
-    all: unset; /* Wannan zai goge duk wata kwalliyar baya da ta rage */
-    width: 280px !important;
-    height: 55px !important;
-    background-color: #ffffff !important;
-    border: 1px solid #D7CCC8 !important;
-    border-radius: 15px !important;
-    margin: 10px auto !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 12px !important;
-    cursor: pointer !important;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
-    transition: 0.3s !important;
-    /* Tabbatar sun tsaya a tsakiya */
-    position: relative !important;
-    left: 0 !important;
-    right: 0 !important;
-}
-
-/* Rubutun Ciki */
-.pearl-btn span {
-    color: #3E2723 !important;
-    font-size: 14px !important;
-    font-weight: 800 !important;
-    text-transform: uppercase !important;
-    font-family: sans-serif !important;
-}
-
-/* Icon */
-.pearl-btn i {
-    font-size: 20px !important;
-    color: #8B6508 !important;
-}
-
-/* Effect idan an danna */
-.pearl-btn:active {
-    transform: scale(0.95) !important;
-    background-color: #f9f9f9 !important;
-}
-
 #search-overlay {
     display: none; /* JavaScript ne zai nuna shi */
     position: fixed !important;
@@ -496,10 +505,4 @@ content: '';
     cursor: pointer;
 }
 
-#search-overlay { 
-    display: none; 
-    flex-direction: column !important; 
-    align-items: center !important; 
-    padding-top: 15vh !important; 
-}
-
+#search-overlay { display: flex !important; flex-direction: column !important; align-items: center !important; padding-top: 15vh !important; }
