@@ -380,7 +380,7 @@ content: '';
 #btn-near span.block {
     display: inline-block !important;
     font-size: 13.5px !important;
-    color: #0a0a0a !important;
+    color: #2f3640 !important;
     font-weight: 800;
     white-space: nowrap !important;
     animation: blackLuxurySparkle 2s infinite ease-in-out;
