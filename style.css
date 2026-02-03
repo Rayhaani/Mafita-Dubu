@@ -581,7 +581,14 @@ content: '';
     z-index: 1;
 }
 
-/* 2. Wannan shi ne zai kunna Futuristic Glow idan AI ya gama */
+/* Wannan ne kawai zai kunna walkiyar da motsin ruwan zinariya */
+.action-btn-active {
+    animation: pulse-border 2s infinite !important;
+    border: 1px solid #FFD700 !important;
+    position: relative;
+    overflow: hidden;
+}
+
 .action-btn-active::before {
     content: '';
     position: absolute;
@@ -591,25 +598,12 @@ content: '';
     height: 200%;
     background: conic-gradient(transparent, transparent, transparent, #FFD700);
     animation: rotate-glow 4s linear infinite;
-    z-index: -1;
+    z-index: 0;
 }
 
-/* 3. Zai tabbatar rubutun yana saman glow din */
-.market-btn span {
-    position: relative;
-    z-index: 2;
-}
-
-/* 4. Animation na juyin haske a ciki */
 @keyframes rotate-glow {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-}
-
-/* 5. Animation na bugun zuciya (Pulse) na baki daya box din */
-.action-btn-active {
-    animation: pulse-border 2s infinite !important;
-    border: 1px solid #FFD700 !important;
 }
 
 @keyframes pulse-border {
