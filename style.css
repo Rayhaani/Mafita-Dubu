@@ -564,22 +564,21 @@ content: '';
                                   }
 /* 1. Asalin yanayin button kafin AI ya gama scanning */
 .market-btn {
+    background-color: #800000 !important;
+    background: #800000 !important;
+    color: #ffffff !important;
     position: relative;
     padding: 15px 30px;
     font-weight: bold;
-    color: white;
     border: 2px solid transparent;
     border-radius: 12px;
-    background: #800000 !important; /* Zaka iya canja wannan launi daga list din 10 din nan */
-    overflow: hidden;
-    cursor: pointer;
-    transition: 0.5s;
-    text-transform: uppercase;
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
     z-index: 1;
 }
+
 /* Wannan zai sanya walkiyar zinariya a gefen box din */
 .action-btn-active {
     border: 2px solid #FFD700 !important;
