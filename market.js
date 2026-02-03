@@ -153,32 +153,28 @@ function manualSearch() {
 }
 // --- WANNAN SHI NE REAL AI LOGIC ---
 async function startAISimulation(file) {
-    showSearchOverlay(""); 
+    // 1. Nuna overlay da scanning
+    showSearchOverlay("AI SCANNING..."); 
     const display = document.getElementById('query-val');
-    const overlay = document.getElementById('search-overlay');
     
-    const scanLine = document.createElement('div');
-    scanLine.className = 'scan-line';
-    overlay.appendChild(scanLine);
-
+    // Adana hoton don shafi na gaba
     const imageUrl = URL.createObjectURL(file);
     localStorage.setItem('searchImage', imageUrl);
 
+    // 2. Jira sakan 3 (Scanning time)
     setTimeout(() => {
+        // Cire scan-line idan akwai
+        const scanLine = document.querySelector('.scan-line');
         if(scanLine) scanLine.remove();
-        
-        // --- WANNAN SHI NE GYARAN ---
-        // Nemo buttons din
-        const globalBtn = document.getElementById('global-btn');
-        const nearBtn = document.getElementById('near-btn');
 
-        // Saka musu class din da zai fara walkiyar
-        if(globalBtn) globalBtn.classList.add('action-btn-active');
-        if(nearBtn) nearBtn.classList.add('action-btn-active');
+        // 3. Kunna walkiyar buttons (Amfani da asalin IDs dinka)
+        const gBtn = document.getElementById('global-btn'); // Tabbatar wannan ID din yana HTML dinka
+        const nBtn = document.getElementById('near-btn');   // Tabbatar wannan ID din yana HTML dinka
 
-        if(display) {
-            display.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#FFD700; font-size:24px;"></i><br><span style="font-size:12px; color:#fff;">AI Ready: Select Market</span>';
-        }
-    }, 3000); 
+        if(gBtn) gBtn.classList.add('action-btn-active');
+        if(nBtn) nBtn.classList.add('action-btn-active');
+
+        // Canja rubutun ya daina nuna "AI SCANNING"
+        if(display) display.innerText = "CHOOSE MARKET";
+    }, 3000);
 }
-
