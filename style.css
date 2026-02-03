@@ -562,3 +562,15 @@ content: '';
     animation: cta-glow 4s infinite;
     animation-delay: 2s; /* Zai jira sakan 2 kafin ya fara, don su dinga biyun juna */
                                   }
+/* Animation na walƙiya */
+@keyframes pulse-glow {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+}
+
+.action-btn-active {
+    animation: pulse-glow 2s infinite;
+    border: 2px solid #FFD700 !important; /* Zinariya */
+    cursor: pointer;
+}
