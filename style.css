@@ -580,34 +580,39 @@ content: '';
     justify-content: center;
     z-index: 1;
 }
-
-/* Wannan ne kawai zai kunna walkiyar da motsin ruwan zinariya */
+/* Wannan zai sanya walkiyar zinariya a gefen box din */
 .action-btn-active {
-    animation: pulse-border 2s infinite !important;
-    border: 1px solid #FFD700 !important;
+    border: 2px solid #FFD700 !important;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
     position: relative;
     overflow: hidden;
+    animation: pulse-simple 2s infinite;
 }
 
-.action-btn-active::before {
+/* Wannan shi ne "Glow" din da zai rika yawo a ciki kamar ruwa */
+.action-btn-active::after {
     content: '';
     position: absolute;
     top: -50%;
-    left: -50%;
+    left: -150%;
     width: 200%;
     height: 200%;
-    background: conic-gradient(transparent, transparent, transparent, #FFD700);
-    animation: rotate-glow 4s linear infinite;
-    z-index: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+    transform: rotate(45deg);
+    transition: none;
+    animation: flow-glow 3s infinite;
 }
 
-@keyframes rotate-glow {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+/* Motsin bugun box din */
+@keyframes pulse-simple {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
 }
 
-@keyframes pulse-border {
-    0% { box-shadow: 0 0 5px #FFD700; transform: scale(1); }
-    50% { box-shadow: 0 0 25px #FFD700; transform: scale(1.03); }
-    100% { box-shadow: 0 0 5px #FFD700; transform: scale(1); }
+/* Motsin ruwan zinariya a ciki */
+@keyframes flow-glow {
+    0% { left: -150%; }
+    100% { left: 150%; }
 }
+
