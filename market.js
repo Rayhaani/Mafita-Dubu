@@ -153,7 +153,7 @@ function manualSearch() {
 }
 // --- WANNAN SHI NE REAL AI LOGIC ---
 async function startAISimulation(file) {
-    showSearchOverlay("AI INITIALIZING...");
+    showSearchOverlay("AI SCANNING...");
     const display = document.getElementById('query-val');
     const overlay = document.getElementById('search-overlay');
     
@@ -161,34 +161,16 @@ async function startAISimulation(file) {
     scanLine.className = 'scan-line';
     overlay.appendChild(scanLine);
 
-    try {
-        display.innerText = "Loading AI Intelligence...";
-        const model = await cocoSsd.load();
-        
-        display.innerText = "Deep Scanning...";
-        const img = document.createElement('img');
-        img.src = URL.createObjectURL(file);
-        
-        img.onload = async () => {
-            const predictions = await model.detect(img);
-            if(scanLine) scanLine.remove();
+    // Muna adana hoton a matsayin URL don mu iya amfani da shi a shafi na gaba
+    const imageUrl = URL.createObjectURL(file);
+    localStorage.setItem('searchImage', imageUrl);
 
-            if (predictions.length > 0) {
-                // DABARA: Mu nemo abinda ba "person" ba a cikin list din
-                let foundObject = predictions.find(p => p.class !== 'person');
-                
-                // Idan duk kansu "person" ne, to mu dauki na farkon
-                let finalResult = foundObject ? foundObject.class : predictions[0].class;
-
-                // Gyara sunan idan ya fito a matsayin "handbag" ko "tie" da sauransu
-                display.innerText = '"' + finalResult.toUpperCase() + '"';
-            } else {
-                display.innerText = '"FASHION ITEM"';
-            }
-        };
-    } catch (error) {
-        console.error(error);
-        display.innerText = "Error: Check Connection";
-        if(scanLine) scanLine.remove();
-    }
+    setTimeout(() => {
+        display.innerText = "MATCHING PRODUCTS...";
+        setTimeout(() => {
+            // Anan ne zamu tura mutum zuwa shafin sakamako
+            // Misali: result.html
+            window.location.href = "result.html"; 
+        }, 1500);
+    }, 1500);
 }
