@@ -660,15 +660,3 @@ content: '';
     display: inline-block;
 }
 
-/* Babban Rubutu - GOLD */
-#btn-global span.block, #btn-near span.block {
-    color: #FFD700 !important;
-    text-transform: uppercase;
-}
-
-/* Karamin Rubutun Hausa - WHITE (Don a gani sarai) */
-#btn-global span:not(.block), #btn-near span:not(.block) {
-    color: #ffffff !important;
-    font-size: 0.9rem !important;
-    opacity: 0.9 !important;
-}
