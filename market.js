@@ -153,30 +153,42 @@ function manualSearch() {
 }
 // --- WANNAN SHI NE REAL AI LOGIC ---
 async function startAISimulation(file) {
-    // 1. Fara nuna Overlay da "Scanning"
-    showSearchOverlay("AI SCANNING..."); 
+    showSearchOverlay("AI INITIALIZING...");
     const display = document.getElementById('query-val');
+    const overlay = document.getElementById('search-overlay');
     
-    // 2. Adana hoto a localStorage don shafi na gaba
-    const imageUrl = URL.createObjectURL(file);
-    localStorage.setItem('searchImage', imageUrl);
+    const scanLine = document.createElement('div');
+    scanLine.className = 'scan-line';
+    overlay.appendChild(scanLine);
 
-    // 3. Jira sakan 3 (Wannan shi ne simulation din)
-    setTimeout(() => {
-        // Cire layin scanning idan akwai
-        const scanLine = document.querySelector('.scan-line');
+    try {
+        display.innerText = "Loading AI Intelligence...";
+        const model = await cocoSsd.load();
+        
+        display.innerText = "Deep Scanning...";
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        
+        img.onload = async () => {
+            const predictions = await model.detect(img);
+            if(scanLine) scanLine.remove();
+
+            if (predictions.length > 0) {
+                // DABARA: Mu nemo abinda ba "person" ba a cikin list din
+                let foundObject = predictions.find(p => p.class !== 'person');
+                
+                // Idan duk kansu "person" ne, to mu dauki na farkon
+                let finalResult = foundObject ? foundObject.class : predictions[0].class;
+
+                // Gyara sunan idan ya fito a matsayin "handbag" ko "tie" da sauransu
+                display.innerText = '"' + finalResult.toUpperCase() + '"';
+            } else {
+                display.innerText = '"FASHION ITEM"';
+            }
+        };
+    } catch (error) {
+        console.error(error);
+        display.innerText = "Error: Check Connection";
         if(scanLine) scanLine.remove();
-
-        // 4. Kunna walkiyar "Action Buttons"
-        const gBtn = document.getElementById('global-btn');
-        const nBtn = document.getElementById('near-btn');
-
-        if(gBtn) gBtn.classList.add('action-btn-active');
-        if(nBtn) nBtn.classList.add('action-btn-active');
-
-        // 5. Canja rubutu zuwa Ready
-        if(display) {
-            display.innerHTML = "SEARCH READY <i class='fa-solid fa-check-circle'></i>";
+    }
         }
-    }, 3000); 
-}
