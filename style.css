@@ -564,7 +564,7 @@ content: '';
                                   }
 /* Wannan zai canja kalar buttons din zuwa Maroon */
 .pearl-btn {
-    background-color: #800000 !important; /* Kalar Maroon */
+    background-color: ##0a0a0a !important; /* Kalar Maroon */
     background: #800000 !important;
     color: white !important;
     position: relative;
