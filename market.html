@@ -82,19 +82,15 @@
 
         <h2 class="search-text">Ina Kake Son Bincika <br> <span id="query-val" class="query-highlight">"..."</span>?</h2>
         
-        <div id="search-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; flex-direction: column; align-items: center; justify-content: center;">
-    
-    <div id="ai-content-area" style="text-align: center;">
-        <div id="query-val" style="color: white; font-size: 18px; margin-bottom: 20px;"></div>
-        
-        <div class="button-group" style="display: flex; gap: 20px;">
-            <button id="global-btn" onclick="goToResults('global')" class="market-btn">GLOBAL MARKET</button>
-            <button id="near-btn" onclick="goToResults('near')" class="market-btn">NEAR ME</button>
-        </div>
-    </div>
+        <button id="btn-global" class="pearl-btn cta-global" onclick="closeSearch()">
+            <i class="fa-solid fa-earth-africa mr-2"></i> GLOBAL SEARCH
+            <span class="block text-[10px] opacity-60 font-normal">Bincika duka kasuwannin duniya</span>
+        </button>
 
-        </div>
-        
+        <button id="btn-near" class="pearl-btn cta-near" onclick="closeSearch()">
+            <i class="fa-solid fa-location-crosshairs mr-2"></i> NEAR YOU
+            <span class="block text-[10px] opacity-60 font-normal">Bincika vendors dake kusa da kai</span>
+        </button>
         
 
         <p class="fixed bottom-10 left-0 right-0 text-center text-gray-400 font-bold text-xs cursor-pointer opacity-70" onclick="closeSearch()">
