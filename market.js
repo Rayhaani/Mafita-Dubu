@@ -153,28 +153,30 @@ function manualSearch() {
 }
 // --- WANNAN SHI NE REAL AI LOGIC ---
 async function startAISimulation(file) {
-    // 1. Nuna overlay da scanning
+    // 1. Fara nuna Overlay da "Scanning"
     showSearchOverlay("AI SCANNING..."); 
     const display = document.getElementById('query-val');
     
-    // Adana hoton don shafi na gaba
+    // 2. Adana hoto a localStorage don shafi na gaba
     const imageUrl = URL.createObjectURL(file);
     localStorage.setItem('searchImage', imageUrl);
 
-    // 2. Jira sakan 3 (Scanning time)
+    // 3. Jira sakan 3 (Wannan shi ne simulation din)
     setTimeout(() => {
-        // Cire scan-line idan akwai
+        // Cire layin scanning idan akwai
         const scanLine = document.querySelector('.scan-line');
         if(scanLine) scanLine.remove();
 
-        // 3. Kunna walkiyar buttons (Amfani da asalin IDs dinka)
-        const gBtn = document.getElementById('global-btn'); // Tabbatar wannan ID din yana HTML dinka
-        const nBtn = document.getElementById('near-btn');   // Tabbatar wannan ID din yana HTML dinka
+        // 4. Kunna walkiyar "Action Buttons"
+        const gBtn = document.getElementById('global-btn');
+        const nBtn = document.getElementById('near-btn');
 
         if(gBtn) gBtn.classList.add('action-btn-active');
         if(nBtn) nBtn.classList.add('action-btn-active');
 
-        // Canja rubutun ya daina nuna "AI SCANNING"
-        if(display) display.innerText = "CHOOSE MARKET";
-    }, 3000);
+        // 5. Canja rubutu zuwa Ready
+        if(display) {
+            display.innerHTML = "SEARCH READY <i class='fa-solid fa-check-circle'></i>";
+        }
+    }, 3000); 
 }
