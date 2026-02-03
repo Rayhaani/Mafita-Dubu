@@ -153,7 +153,7 @@ function manualSearch() {
 }
 // --- WANNAN SHI NE REAL AI LOGIC ---
 async function startAISimulation(file) {
-    showSearchOverlay("AI SCANNING...");
+    showSearchOverlay(""); 
     const display = document.getElementById('query-val');
     const overlay = document.getElementById('search-overlay');
     
@@ -161,16 +161,24 @@ async function startAISimulation(file) {
     scanLine.className = 'scan-line';
     overlay.appendChild(scanLine);
 
-    // Muna adana hoton a matsayin URL don mu iya amfani da shi a shafi na gaba
     const imageUrl = URL.createObjectURL(file);
     localStorage.setItem('searchImage', imageUrl);
 
     setTimeout(() => {
-        display.innerText = "MATCHING PRODUCTS...";
-        setTimeout(() => {
-            // Anan ne zamu tura mutum zuwa shafin sakamako
-            // Misali: result.html
-            window.location.href = "result.html"; 
-        }, 1500);
-    }, 1500);
+        if(scanLine) scanLine.remove();
+        
+        // --- WANNAN SHI NE GYARAN ---
+        // Nemo buttons din
+        const globalBtn = document.getElementById('global-btn');
+        const nearBtn = document.getElementById('near-btn');
+
+        // Saka musu class din da zai fara walkiyar
+        if(globalBtn) globalBtn.classList.add('action-btn-active');
+        if(nearBtn) nearBtn.classList.add('action-btn-active');
+
+        if(display) {
+            display.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#FFD700; font-size:24px;"></i><br><span style="font-size:12px; color:#fff;">AI Ready: Select Market</span>';
+        }
+    }, 3000); 
 }
+
