@@ -660,25 +660,15 @@ content: '';
     display: inline-block;
 }
 
-/* Animation na canza kalar Box (Background) */
-@keyframes box-glow-blink {
+@keyframes calling-to-action {
     0%, 100% { 
-        background-color: #2c1810 !important; /* Maroon na asali */
-        border-color: rgba(255, 215, 0, 0.2) !important;
+        opacity: 1; 
+        transform: scale(1);
+        text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
     }
     50% { 
-        background-color: #5d3625 !important; /* Haske a cikin box din */
-        border-color: #FFD700 !important; /* Border din ya fito radau */
+        opacity: 0.5; 
+        transform: scale(1.05); /* Yana dan girma kadan */
+        text-shadow: 0 0 15px rgba(255, 215, 0, 1); /* Yana yin haske (glow) */
     }
-}
-
-/* Button na sama */
-#btn-global {
-    animation: box-glow-blink 3s infinite ease-in-out !important;
-}
-
-/* Button na kasa (zai biyo baya) */
-#btn-near {
-    animation: box-glow-blink 3s infinite ease-in-out !important;
-    animation-delay: 1.5s !important;
 }
