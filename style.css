@@ -660,17 +660,8 @@ content: '';
     display: inline-block;
 }
 
-/* Karamin rubutun Hausa na cikin box */
-#btn-global p, #btn-near p, 
-#btn-global span:last-child, #btn-near span:last-child {
-    color: #FFD700 !important; /* Kalar Gold */
-    font-weight: bold !important;
-    opacity: 1 !important; /* Tabatar bai dishe ba */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important; /* Inuwa don ya fito fili */
-}
-
-/* Babban rubutun (Global Search / Near You) */
-#btn-global span:first-child, #btn-near span:first-child {
-    color: #ffffff !important; /* Fari radau */
-    letter-spacing: 1px;
+#btn-global p, #btn-near p {
+    color: #E5E4E2 !important; /* Platinum/Silver color */
+    font-weight: 500 !important;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.5) !important;
 }
