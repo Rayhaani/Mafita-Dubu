@@ -586,45 +586,39 @@ content: '';
     overflow: hidden;
     border: none;
 }
-
-/* Wannan zai gyara boxes din ya cire malalar */
+/* 1. Wannan zai gyara border kawai, ba malala */
 .action-btn-active {
     border: 1.5px solid #FFD700 !important;
-    box-shadow: none !important; /* Wannan zai kashe malalar */
+    box-shadow: none !important; /* Dole mu cire wannan don malalar ta tsaya */
+    background: linear-gradient(135deg, #000000 0%, #434343 100%) !important;
     position: relative !important;
     overflow: hidden !important;
-    animation: pulse-light 2s infinite !important;
+    animation: none !important; /* Mun kashe pulse din dake fitar da malala */
 }
 
-/* Wannan shi ne Silent Motion din (Layin zinariya mai tafiya a ciki) */
+/* 2. Wannan shi ne Silent Motion (Haske mai yawo a ciki kadai) */
 .action-btn-active::before {
     content: '' !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: -100% !important;
-    width: 100% !important;
-    height: 100% !important;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
     background: linear-gradient(
         90deg, 
         transparent, 
-        rgba(255, 215, 0, 0.6), 
+        rgba(255, 215, 0, 0.3), /* Hasken zinariya mai sanyi */
         transparent
-    ) !important;
-    animation: silent-flow 2.5s infinite linear !important;
-    z-index: 1 !important;
+    );
+    animation: silent-flow 3s infinite linear;
+    z-index: 1;
 }
 
-/* Animation na tafiyar hasken */
 @keyframes silent-flow {
     0% { left: -100%; }
     100% { left: 100%; }
 }
-.action-btn-active {
-    box-shadow: none !important; /* Wannan zai goge malalar */
-    border: 1.5px solid #FFD700 !important;
-    position: relative;
-    overflow: hidden;
-}
+
 
 /* Pulse mai sanyi don button din ya rika motsi kadan */
 @keyframes pulse-light {
