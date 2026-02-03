@@ -570,7 +570,7 @@ content: '';
     color: white;
     border: 2px solid transparent;
     border-radius: 12px;
-    background: #0a0a0a; /* Zaka iya canja wannan launi daga list din 10 din nan */
+    background: #800000; /* Zaka iya canja wannan launi daga list din 10 din nan */
     overflow: hidden;
     cursor: pointer;
     transition: 0.5s;
