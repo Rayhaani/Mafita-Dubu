@@ -1,3 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
+
+.search-text {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+}
+
+.pearl-btn {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-weight: 700;
+}
+
+
 /* DARK MILK BACKGROUND */
         body { 
     background-color: #F5F1E9; 
