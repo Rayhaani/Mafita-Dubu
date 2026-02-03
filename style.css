@@ -638,3 +638,35 @@ content: '';
     0% { left: -100%; }
     100% { left: 100%; }
 }
+/* Animation na hasken border kawai */
+@keyframes box-blink-glow {
+    0%, 100% { 
+        border-color: rgba(255, 215, 0, 0.1); 
+        background-color: #2c1810; /* Kalar Maroon */
+    }
+    50% { 
+        border-color: #FFD700; 
+        background-color: #3d2218; /* Haske kadan a cikin box din */
+    }
+}
+
+/* Button na sama */
+#btn-global {
+    animation: box-blink-glow 4s infinite ease-in-out !important;
+    transform: none !important; /* Hana box din girma */
+}
+
+/* Button na kasa */
+#btn-near {
+    animation: box-blink-glow 4s infinite ease-in-out !important;
+    animation-delay: 2s !important; /* Jira na sama ya gama */
+    transform: none !important;
+}
+
+/* Tabbatar rubutun ciki bai yi komai ba */
+#btn-global span, #btn-near span {
+    animation: none !important; /* Kashe kowane irin blinking na rubutu */
+    color: white !important;
+    transform: none !important;
+    display: inline-block;
+}
