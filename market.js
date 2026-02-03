@@ -29,6 +29,7 @@ function selectItem(word) {
 }
 function showSearchOverlay(kalma) {
     const overlay = document.getElementById('search-overlay');
+    const display = document.getElementById('query-val');
     
     // --- WANNAN SHI NE GYARAN ---
     const listContainer = document.getElementById('suggestionList');
