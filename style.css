@@ -660,33 +660,17 @@ content: '';
     display: inline-block;
 }
 
-/* Wannan zai fito da rubutun radau a cikin Maroon box */
-
-/* 1. Babban Rubutu (Global/Near) - Kalar Zaiba/Silver */
-#btn-global span:first-child, 
-#btn-near span:first-child {
-    color: #E5E4E2 !important; /* Silver */
-    font-size: 16px !important;
-    font-weight: 800 !important;
-    display: block !important;
-    margin-bottom: 5px;
+/* Karamin rubutun Hausa na cikin box */
+#btn-global p, #btn-near p, 
+#btn-global span:last-child, #btn-near span:last-child {
+    color: #FFD700 !important; /* Kalar Gold */
+    font-weight: bold !important;
+    opacity: 1 !important; /* Tabatar bai dishe ba */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important; /* Inuwa don ya fito fili */
 }
 
-/* 2. Karamin Rubutun Hausa - Kalar Gold */
-#btn-global span:last-child, 
-#btn-near span:last-child {
-    color: #FFD700 !important; /* Gold */
-    font-size: 13px !important;
-    font-weight: 700 !important;
-    display: block !important;
-    opacity: 1 !important; /* Don ya daina dishawa */
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
-}
-
-/* 3. Gyaran Box din kansa */
-.pearl-btn {
-    background: #2c1810 !important; /* Maroon */
-    border: 1px solid #FFD700 !important; /* Border din Gold */
-    height: auto !important;
-    padding: 15px !important;
+/* Babban rubutun (Global Search / Near You) */
+#btn-global span:first-child, #btn-near span:first-child {
+    color: #ffffff !important; /* Fari radau */
+    letter-spacing: 1px;
 }
