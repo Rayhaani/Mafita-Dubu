@@ -572,34 +572,44 @@ content: '';
     border: none;
 }
 
-/* Wannan ne zai kunna walkiyar idan bincike ya gama */
+/* Wannan zai cire malalar hasken waje ya bar siririn layi na zinariya */
 .action-btn-active {
-    border: 2px solid #FFD700 !important;
-    animation: pulse-border 2s infinite !important;
+    border: 1.5px solid #FFD700 !important;
+    position: relative;
+    overflow: hidden;
+    /* Mun cire box-shadow na baya domin kar ya dusashe boxes din */
 }
 
-/* Wannan shi ne "Silent Motion" (Hasken da ke yawo a ciki) */
+/* Wannan shi ne Silent Motion din (Glow mai yawo a ciki) */
 .action-btn-active::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(transparent, transparent, transparent, #FFD700);
-    animation: rotate-glow 4s linear infinite;
-    z-index: 0;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    /* Wannan shi ne kalar zinariyar mai tafiya */
+    background: linear-gradient(
+        90deg, 
+        transparent, 
+        rgba(255, 215, 0, 0.4), 
+        transparent
+    );
+    animation: silent-flow 3s infinite;
+    z-index: 1;
 }
 
-@keyframes rotate-glow {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+/* Motsin tafiyar hasken a hankali */
+@keyframes silent-flow {
+    0% { left: -100%; }
+    100% { left: 100%; }
 }
 
-@keyframes pulse-border {
-    0% { box-shadow: 0 0 5px #FFD700; transform: scale(1); }
-    50% { box-shadow: 0 0 25px #FFD700; transform: scale(1.03); }
-    100% { box-shadow: 0 0 5px #FFD700; transform: scale(1); }
+#search-overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; /* Wannan zai bada sarari kadan tsakanin duniya da buttons */
 }
-
 
