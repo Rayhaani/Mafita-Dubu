@@ -73,21 +73,24 @@
     <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box12"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">FASHION</button></div></div>
 </div>
      
-<div id="search-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; gap: 30px;">
-    
-    <div id="query-val" style="color: #FFD700; font-size: 18px; font-weight: bold; text-align: center;"></div>
+<div id="search-overlay">
+        <div class="world-box">
+            <div class="sphere"></div>
+            <div class="ring"></div>
+            <div class="ring" style="animation-delay: 1s;"></div>
+        </div>
 
-    <div style="display: flex; gap: 20px;">
-        <button id="global-btn" onclick="goToResults('global')" class="market-btn">
-            <span>GLOBAL MARKET</span>
+        <h2 class="search-text">Ina Kake Son Bincika <br> <span id="query-val" class="query-highlight">"..."</span>?</h2>
+        
+        <button id="btn-global" class="pearl-btn cta-global" onclick="closeSearch()">
+            <i class="fa-solid fa-earth-africa mr-2"></i> GLOBAL SEARCH
+            <span class="block text-[10px] opacity-60 font-normal">Bincika duka kasuwannin duniya</span>
         </button>
 
-        <button id="near-btn" onclick="goToResults('near')" class="market-btn">
-            <span>NEAR ME</span>
+        <button id="btn-near" class="pearl-btn cta-near" onclick="closeSearch()">
+            <i class="fa-solid fa-location-crosshairs mr-2"></i> NEAR YOU
+            <span class="block text-[10px] opacity-60 font-normal">Bincika vendors dake kusa da kai</span>
         </button>
-    </div>
-
-</div>
     
         
 
