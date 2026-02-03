@@ -659,3 +659,36 @@ content: '';
     transform: none !important;
     display: inline-block;
 }
+
+/* Wannan zai tilasta blinking din farawa ko ana so ko ba a so */
+@keyframes force-box-blink {
+    0%, 100% { 
+        border: 1.5px solid rgba(255, 215, 0, 0.1) !important;
+        background-color: #2c1810 !important; 
+    }
+    50% { 
+        border: 1.5px solid #FFD700 !important; 
+        background-color: #422519 !important; /* Dan haske a box din */
+    }
+}
+
+/* Button na sama */
+#btn-global {
+    animation: force-box-blink 3s infinite ease-in-out !important;
+    display: block !important;
+}
+
+/* Button na kasa */
+#btn-near {
+    animation: force-box-blink 3s infinite ease-in-out !important;
+    animation-delay: 1.5s !important; /* Jinkiri na rabin lokaci */
+    display: block !important;
+}
+
+/* Kashe duk wani animation na rubutun ciki */
+#btn-global span, #btn-near span, 
+#btn-global span.block, #btn-near span.block {
+    animation: none !important;
+    color: white !important;
+    text-shadow: none !important;
+}
