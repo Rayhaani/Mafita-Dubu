@@ -82,8 +82,19 @@
 
         <h2 class="search-text">Ina Kake Son Bincika <br> <span id="query-val" class="query-highlight">"..."</span>?</h2>
         
-        <button id="global-btn" onclick="goToResults('global')" class="button-style">GLOBAL MARKET</button>
-<button id="near-btn" onclick="goToResults('near')" class="button-style">NEAR ME</button>
+        <div id="search-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; flex-direction: column; align-items: center; justify-content: center;">
+    
+    <div id="ai-content-area" style="text-align: center;">
+        <div id="query-val" style="color: white; font-size: 18px; margin-bottom: 20px;"></div>
+        
+        <div class="button-group" style="display: flex; gap: 20px;">
+            <button id="global-btn" onclick="goToResults('global')" class="market-btn">GLOBAL MARKET</button>
+            <button id="near-btn" onclick="goToResults('near')" class="market-btn">NEAR ME</button>
+        </div>
+    </div>
+
+        </div>
+        
         
 
         <p class="fixed bottom-10 left-0 right-0 text-center text-gray-400 font-bold text-xs cursor-pointer opacity-70" onclick="closeSearch()">
