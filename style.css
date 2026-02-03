@@ -572,35 +572,42 @@ content: '';
     border: none;
 }
 
-/* Wannan zai cire malalar hasken waje ya bar siririn layi na zinariya */
+/* Wannan zai gyara boxes din ya cire malalar */
 .action-btn-active {
     border: 1.5px solid #FFD700 !important;
-    position: relative;
-    overflow: hidden;
-    /* Mun cire box-shadow na baya domin kar ya dusashe boxes din */
+    box-shadow: none !important; /* Wannan zai kashe malalar */
+    position: relative !important;
+    overflow: hidden !important;
+    animation: pulse-light 2s infinite !important;
 }
 
-/* Wannan shi ne Silent Motion din (Glow mai yawo a ciki) */
+/* Wannan shi ne Silent Motion din (Layin zinariya mai tafiya a ciki) */
 .action-btn-active::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    /* Wannan shi ne kalar zinariyar mai tafiya */
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
     background: linear-gradient(
         90deg, 
         transparent, 
-        rgba(255, 215, 0, 0.4), 
+        rgba(255, 215, 0, 0.6), 
         transparent
-    );
-    animation: silent-flow 3s infinite;
-    z-index: 1;
+    ) !important;
+    animation: silent-flow 2.5s infinite linear !important;
+    z-index: 1 !important;
 }
 
-/* Motsin tafiyar hasken a hankali */
+/* Animation na tafiyar hasken */
 @keyframes silent-flow {
     0% { left: -100%; }
     100% { left: 100%; }
+}
+
+/* Pulse mai sanyi don button din ya rika motsi kadan */
+@keyframes pulse-light {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
 }
