@@ -612,9 +612,3 @@ content: '';
     100% { transform: scale(1); }
 }
 
-.action-btn-active {
-    box-shadow: none !important; /* Wannan zai goge malalar */
-    border: 1.5px solid #FFD700 !important;
-    position: relative;
-    overflow: hidden;
-}
