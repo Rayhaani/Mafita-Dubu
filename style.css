@@ -562,7 +562,6 @@ content: '';
     animation: cta-glow 4s infinite;
     animation-delay: 2s; /* Zai jira sakan 2 kafin ya fara, don su dinga biyun juna */
                                   }
-/* Animation na walƙiya */
 /* 1. Asalin yanayin button kafin AI ya gama scanning */
 .market-btn {
     position: relative;
@@ -571,7 +570,7 @@ content: '';
     color: white;
     border: 2px solid transparent;
     border-radius: 12px;
-    background: #800000; /* Zaka iya canja wannan launi daga list din 10 din nan */
+    background: #0a0a0a; /* Zaka iya canja wannan launi daga list din 10 din nan */
     overflow: hidden;
     cursor: pointer;
     transition: 0.5s;
@@ -582,22 +581,7 @@ content: '';
     z-index: 1;
 }
 
-/* Wannan shi ne babban tsarin button din */
-.market-btn {
-    position: relative;
-    padding: 15px 30px;
-    font-weight: bold;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    background: #0a0a0a; /* Canja code din launi anan */
-    overflow: hidden;
-    cursor: pointer;
-    transition: 0.5s;
-    text-transform: uppercase;
-}
-
-/* Wannan ne "Silent Motion" din da zai rika yawo a ciki */
+/* 2. Wannan shi ne zai kunna Futuristic Glow idan AI ya gama */
 .action-btn-active::before {
     content: '';
     position: absolute;
@@ -607,28 +591,29 @@ content: '';
     height: 200%;
     background: conic-gradient(transparent, transparent, transparent, #FFD700);
     animation: rotate-glow 4s linear infinite;
-    z-index: 0;
+    z-index: -1;
 }
 
-/* Wannan ne zai sa rubutun ya fito a saman glow din */
-.action-btn-active span {
+/* 3. Zai tabbatar rubutun yana saman glow din */
+.market-btn span {
     position: relative;
-    z-index: 1;
+    z-index: 2;
 }
 
-/* Wannan ne animation din zagayen */
+/* 4. Animation na juyin haske a ciki */
 @keyframes rotate-glow {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
-/* Walkiyar baki daya box din */
+/* 5. Animation na bugun zuciya (Pulse) na baki daya box din */
 .action-btn-active {
-    animation: pulse-border 2s infinite;
+    animation: pulse-border 2s infinite !important;
+    border: 1px solid #FFD700 !important;
 }
 
 @keyframes pulse-border {
-    0% { box-shadow: 0 0 5px #FFD700; }
-    50% { box-shadow: 0 0 20px #FFD700; }
-    100% { box-shadow: 0 0 5px #FFD700; }
+    0% { box-shadow: 0 0 5px #FFD700; transform: scale(1); }
+    50% { box-shadow: 0 0 25px #FFD700; transform: scale(1.03); }
+    100% { box-shadow: 0 0 5px #FFD700; transform: scale(1); }
 }
