@@ -586,17 +586,6 @@ content: '';
     100% { left: 150%; }
 }
 
-/* 4. GYARAN RUBUTUN HAUSA (Sparkle Effect ba tare da haske a waje ba) */
-@keyframes blackLuxurySparkle {
-    0%, 100% { transform: scale(1); color: #ffffff !important; }
-    50% { transform: scale(1.05); color: #FFD700 !important; }
-}
-
-#btn-global span.block, 
-#btn-near span.block {
-    font-family: 'Plus Jakarta Sans', sans-serif !important;
-    animation: blackLuxurySparkle 3s infinite ease-in-out;
-}
 
 /* Wannan zai canja kalar buttons din zuwa Maroon */
 .pearl-btn {
@@ -638,6 +627,33 @@ content: '';
 @keyframes silent-flow {
     0% { left: -100%; }
     100% { left: 100%; }
+}
+/* Wannan zai tilasta musu yin blinking daya-bayan-daya */
+
+/* 1. Animation din */
+@keyframes pearl-blink-new {
+    0%, 100% { border-color: rgba(255, 215, 0, 0.1); transform: scale(1); }
+    50% { border-color: #FFD700; transform: scale(1.02); }
+}
+
+/* 2. Button na SAMA (Global) */
+#btn-global {
+    animation: pearl-blink-new 4s infinite ease-in-out !important;
+    border: 1.5px solid rgba(255, 215, 0, 0.1) !important;
+    box-shadow: none !important; /* Kashe malalar waje */
+}
+
+/* 3. Button na KASA (Near) */
+#btn-near {
+    animation: pearl-blink-new 4s infinite ease-in-out !important;
+    animation-delay: 2s !important; /* Wannan shi ne sirrin jinkirin */
+    border: 1.5px solid rgba(255, 215, 0, 0.1) !important;
+    box-shadow: none !important;
+}
+
+/* 4. Kashe sauran effects da suke damun buttons din */
+#btn-global::before, #btn-near::before {
+    display: none !important; /* Idan hasken ciki yana maka yawa, goge wannan layin */
 }
 
 
