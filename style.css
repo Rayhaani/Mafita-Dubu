@@ -562,56 +562,44 @@ content: '';
     animation: cta-glow 4s infinite;
     animation-delay: 2s; /* Zai jira sakan 2 kafin ya fara, don su dinga biyun juna */
                                   }
-/* 1. Asalin yanayin button kafin AI ya gama scanning */
-.market-btn {
-    background-color: #800000 !important;
+/* Wannan zai canja kalar buttons din zuwa Maroon */
+.pearl-btn {
+    background-color: #800000 !important; /* Kalar Maroon */
     background: #800000 !important;
-    color: #ffffff !important;
+    color: white !important;
     position: relative;
-    padding: 15px 30px;
-    font-weight: bold;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
     overflow: hidden;
-    z-index: 1;
+    border: none;
 }
 
-/* Wannan zai sanya walkiyar zinariya a gefen box din */
+/* Wannan ne zai kunna walkiyar idan bincike ya gama */
 .action-btn-active {
     border: 2px solid #FFD700 !important;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-    position: relative;
-    overflow: hidden;
-    animation: pulse-simple 2s infinite;
+    animation: pulse-border 2s infinite !important;
 }
 
-/* Wannan shi ne "Glow" din da zai rika yawo a ciki kamar ruwa */
-.action-btn-active::after {
+/* Wannan shi ne "Silent Motion" (Hasken da ke yawo a ciki) */
+.action-btn-active::before {
     content: '';
     position: absolute;
     top: -50%;
-    left: -150%;
+    left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
-    transform: rotate(45deg);
-    transition: none;
-    animation: flow-glow 3s infinite;
+    background: conic-gradient(transparent, transparent, transparent, #FFD700);
+    animation: rotate-glow 4s linear infinite;
+    z-index: 0;
 }
 
-/* Motsin bugun box din */
-@keyframes pulse-simple {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-    100% { transform: scale(1); }
+@keyframes rotate-glow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-/* Motsin ruwan zinariya a ciki */
-@keyframes flow-glow {
-    0% { left: -150%; }
-    100% { left: 150%; }
+@keyframes pulse-border {
+    0% { box-shadow: 0 0 5px #FFD700; transform: scale(1); }
+    50% { box-shadow: 0 0 25px #FFD700; transform: scale(1.03); }
+    100% { box-shadow: 0 0 5px #FFD700; transform: scale(1); }
 }
+
 
