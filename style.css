@@ -544,39 +544,60 @@ content: '';
 .slider-track:hover, .slider-track:active {
     animation-play-state: paused !important;
 }
-/* Wannan zai sa buttons din su dinga daukar hankali */
-@keyframes cta-glow {
-    0%, 20% { 
-        box-shadow: 0 0 5px rgba(255, 215, 0, 0.2); 
-        transform: scale(1);
-        border: 1px solid rgba(255, 215, 0, 0.1);
-    }
-    50% { 
-        /* Mun kara karfin hasken (Glow) da kaurin rubutu (Bold) */
-        box-shadow: 0 0 40px rgba(255, 215, 0, 1), inset 0 0 15px rgba(255, 215, 0, 0.5); 
-        transform: scale(1.05); 
-        border: 3px solid #FFD700;
-        background-color: #fff;
-        color: #000;
-        font-weight: 900; 
-    }
-    80%, 100% { 
-        box-shadow: 0 0 5px rgba(255, 215, 0, 0.2); 
-        transform: scale(1);
-        border: 1px solid rgba(255, 215, 0, 0.1);
-    }
+/* 1. GYARAN FONT DA KASHE MALALA */
+.pearl-btn {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    background: linear-gradient(135deg, #000000 0%, #434343 100%) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 215, 0, 0.2) !important;
+    box-shadow: none !important; /* Kashe malalar waje */
+    position: relative !important;
+    overflow: hidden !important;
+    transition: all 0.3s ease;
 }
 
-/* Button na farko (Global Search) */
-.cta-global {
-    animation: cta-glow 4s infinite; /* Gaba daya cycle din sakan 4 ne */
+/* 2. ACTIVE STATE (Lokacin da button yake aiki) */
+.action-btn-active {
+    border: 1.5px solid #FFD700 !important;
+    box-shadow: none !important; /* Tabbatar babu malala a nan ma */
+    transform: scale(1.02);
 }
 
-/* Button na biyu (Near You) */
-.cta-near {
-    animation: cta-glow 4s infinite;
-    animation-delay: 2s; /* Zai jira sakan 2 kafin ya fara, don su dinga biyun juna */
-                                  }
+/* 3. SILENT MOTION (Haske mai yawo a ciki kamar siliki) */
+.action-btn-active::before, .cta-global::before, .cta-near::before {
+    content: '' !important;
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg, 
+        transparent, 
+        rgba(255, 215, 0, 0.2), /* Hasken zinariya mai sanyi */
+        transparent
+    );
+    animation: silent-flow 3s infinite linear;
+    z-index: 1;
+}
+
+@keyframes silent-flow {
+    0% { left: -150%; }
+    100% { left: 150%; }
+}
+
+/* 4. GYARAN RUBUTUN HAUSA (Sparkle Effect ba tare da haske a waje ba) */
+@keyframes blackLuxurySparkle {
+    0%, 100% { transform: scale(1); color: #ffffff !important; }
+    50% { transform: scale(1.05); color: #FFD700 !important; }
+}
+
+#btn-global span.block, 
+#btn-near span.block {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    animation: blackLuxurySparkle 3s infinite ease-in-out;
+}
+
 /* Wannan zai canja kalar buttons din zuwa Maroon */
 .pearl-btn {
     background-color: #0a0a0a !important; /* Kalar Maroon */
