@@ -36,6 +36,15 @@ async function faraScanning() {
     }
 }
 
+ <body>
+    <div id="ai-loading-screen" style="display:none; position:fixed; inset:0; background:#ffffff; z-index:9999; flex-direction:column; align-items:center; justify-content:center;">
+        <img id="scanned-image-preview" style="width:85%; height:65%; object-fit:cover; border-radius:30px; border: 5px solid #F5F1E9;">
+        <p style="margin-top:20px; color:#8B6508;">Scanning...</p>
+    </div>
+
+    <header>...</header>
+   
+   
 async function kiraGemini(base64) {
     const API_KEY = "AIzaSyC9V-J5xw4tFFP45eaj9IpSM8Z1HZ6g0ao";
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
