@@ -100,31 +100,70 @@
         
     </div>
     
-    <script>
-const MY_GEMINI_KEY = "SAKA_LAMBAR_KEY_DINKA_ANAN";
+<input type="file" id="hotoInput" accept="image/*" style="display:none">
 
+<script>
+const MY_GEMINI_KEY = "SAKA_DEFAULT_KEY_DINKA_ANAN";
+let abindaGeminiTaGano = ""; 
+
+// 1. Aikin da zai tura hoto zuwa Gemini
 async function bincikaKaya(base64Image) {
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${MY_GEMINI_KEY}`;
     
     const prompt = {
         contents: [{
             parts: [
-                { text: "Wannan hoto ne daga shafina na kasuwanci. Idan kayan sawa ne, gaya min sunansa da category dinsa (misali: Underwear, Shoes, Electronics). Idan kuma maganar lafiya ce, ka ba da shawara cikin harshen Hausa." },
+                { text: "Wannan hoto ne daga shafina. Gaya min sunan kayan a kalma daya ko biyu (misali: Takalmi, Riga, Agogo). Kar ka yi bayani mai tsawo." },
                 { inline_data: { mime_type: "image/jpeg", data: base64Image } }
             ]
         }]
     };
 
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(prompt)
-    });
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(prompt)
+        });
 
-    const data = await response.json();
-    alert(data.candidates[0].content.parts[0].text); // Zai nuna maka abin da AI ta gani
+        const data = await response.json();
+        abindaGeminiTaGano = data.candidates[0].content.parts[0].text;
+        
+        // Bayan ta gano, sai mu nuna Overlay din nan
+        document.getElementById('search-overlay').style.display = 'flex';
+    } catch (error) {
+        console.error("Akwai matsala:", error);
+    }
 }
-    </script>
+
+// 2. Aikin da zai bude Gallery/Camera idan an danna icons din Sheet
+function budeWurinHoto() {
+    document.getElementById('hotoInput').click();
+}
+
+// 3. Wannan zai saurari lokacin da aka zabo hoto
+document.getElementById('hotoInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const base64String = reader.result.split(',')[1];
+            bincikaKaya(base64String); 
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// 4. Aikin da zai kai mutum shafin sakamako (Results Page)
+function globalSearchMotsi() {
+    if(abindaGeminiTaGano !== "") {
+        window.location.href = `search-results.html?q=${encodeURIComponent(abindaGeminiTaGano)}`;
+    } else {
+        alert("Ina jiran Gemini ta gama duba hoton...");
+    }
+}
+</script>
+    
     
 </body>
 </html>
