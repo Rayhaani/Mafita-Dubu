@@ -37,7 +37,8 @@
             
             <div class="flex items-center space-x-2">
                 
-                <button onclick="openAICamera()" class="ml-2 active:scale-90 transition-transform">
+               <button onclick="budeWurinHoto()" class="ml-2 active:scale-90 transition-transform">
+                   
     <div class="temu-style-camera">
 
 <div class="camera-inner">
@@ -82,12 +83,12 @@
     
 <h2 class="search-text">A Ina ne Kake Son Bincikawa?</h2>
     
-        <button id="btn-global" class="pearl-btn cta-global" onclick="closeSearch()">
+        <button id="btn-global" class="pearl-btn cta-global" onclick="globalSearchMotsi()">
     <i class="fa-solid fa-earth-africa mr-2"></i> GLOBAL SEARCH
     <span class="block text-[13px] font-bold" style="color: #FFFDD0 !important; animation: calling-to-action 2s infinite ease-in-out;">Bincika duka kasuwannin duniya</span>
 </button>
 
-<button id="btn-near" class="pearl-btn cta-near" onclick="closeSearch()">
+<button id="btn-global" class="pearl-btn cta-global" onclick="globalSearchMotsi()">
     <i class="fa-solid fa-location-crosshairs mr-2"></i> NEAR YOU
     <span class="block text-[13px] font-bold" style="color: #FFFDD0 !important; animation: calling-to-action 2s infinite ease-in-out; animation-delay: 1s;">Bincika vendors dake kusa da kai</span>
 </button>
@@ -103,7 +104,8 @@
 <input type="file" id="hotoInput" accept="image/*" style="display:none">
 
 <script>
-const MY_GEMINI_KEY = "SAKA_DEFAULT_KEY_DINKA_ANAN";
+// API Key dinka da na riga na shigar maka
+const MY_GEMINI_KEY = "AIzaSyC9V-J5xw4tFFP45eaj9IpSM8Z1HZ6g0ao";
 let abindaGeminiTaGano = ""; 
 
 // 1. Aikin da zai tura hoto zuwa Gemini
@@ -127,16 +129,22 @@ async function bincikaKaya(base64Image) {
         });
 
         const data = await response.json();
-        abindaGeminiTaGano = data.candidates[0].content.parts[0].text;
         
-        // Bayan ta gano, sai mu nuna Overlay din nan
-        document.getElementById('search-overlay').style.display = 'flex';
+        // Ciro sunan kayan daga amsar Gemini
+        if (data.candidates && data.candidates[0].content.parts[0].text) {
+            abindaGeminiTaGano = data.candidates[0].content.parts[0].text.trim();
+            console.log("Gemini ta gano: " + abindaGeminiTaGano);
+            
+            // Nuna Overlay din nan take
+            document.getElementById('search-overlay').style.display = 'flex';
+        }
     } catch (error) {
         console.error("Akwai matsala:", error);
+        alert("Ba a samu damar duba hoton ba, duba internet dinka.");
     }
 }
 
-// 2. Aikin da zai bude Gallery/Camera idan an danna icons din Sheet
+// 2. Aikin da zai bude Gallery/Camera
 function budeWurinHoto() {
     document.getElementById('hotoInput').click();
 }
@@ -157,13 +165,14 @@ document.getElementById('hotoInput').addEventListener('change', function(e) {
 // 4. Aikin da zai kai mutum shafin sakamako (Results Page)
 function globalSearchMotsi() {
     if(abindaGeminiTaGano !== "") {
+        // Zai tafi shafin search tare da kalmar da Gemini ta gano
         window.location.href = `search-results.html?q=${encodeURIComponent(abindaGeminiTaGano)}`;
     } else {
         alert("Ina jiran Gemini ta gama duba hoton...");
     }
 }
 </script>
-    
+        
     
 </body>
 </html>
