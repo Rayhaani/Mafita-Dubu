@@ -205,14 +205,19 @@ async function kiraGemini(base64) {
         const keyword = data.candidates[0].content.parts[0].text.trim();
         
         setTimeout(() => {
-            // Boye scanning screen din gaba daya don slider ta yi aiki
+            // Boye scanning screen
             document.getElementById('ai-loading-screen').style.display = 'none';
+            
+            // --- GYARAN YANA NAN: Wannan zai goge hoton don bincike na gaba ya zama sabo ---
+            localStorage.removeItem('user_captured_image');
+            
             console.log("Gemini ta gano: " + keyword);
-            // Zaka iya saka filter din kayanka anan
         }, 1500);
         
     } catch (e) {
         document.getElementById('ai-loading-screen').style.display = 'none';
+        // Ko da an samu error, mu goge tsohon hoton
+        localStorage.removeItem('user_captured_image');
     }
 }
-    
+
