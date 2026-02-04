@@ -151,44 +151,68 @@ function manualSearch() {
         if(box) box.parentElement.style.display = 'none';
     }
 }
-// --- WANNAN SHI NE REAL AI LOGIC ---
+
 async function startAISimulation(file) {
-    showSearchOverlay("AI INITIALIZING...");
-    const display = document.getElementById('query-val');
-    const overlay = document.getElementById('search-overlay');
-    
-    const scanLine = document.createElement('div');
-    scanLine.className = 'scan-line';
-    overlay.appendChild(scanLine);
-
-    try {
-        display.innerText = "Loading AI Intelligence...";
-        const model = await cocoSsd.load();
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const base64Image = e.target.result;
+        // Adana hoton a wayar mutum
+        localStorage.setItem('user_captured_image', base64Image);
         
-        display.innerText = "Deep Scanning...";
-        const img = document.createElement('img');
-        img.src = URL.createObjectURL(file);
-        
-        img.onload = async () => {
-            const predictions = await model.detect(img);
-            if(scanLine) scanLine.remove();
-
-            if (predictions.length > 0) {
-                // DABARA: Mu nemo abinda ba "person" ba a cikin list din
-                let foundObject = predictions.find(p => p.class !== 'person');
-                
-                // Idan duk kansu "person" ne, to mu dauki na farkon
-                let finalResult = foundObject ? foundObject.class : predictions[0].class;
-
-                // Gyara sunan idan ya fito a matsayin "handbag" ko "tie" da sauransu
-                display.innerText = '"' + finalResult.toUpperCase() + '"';
-            } else {
-                display.innerText = '"FASHION ITEM"';
-            }
-        };
-    } catch (error) {
-        console.error(error);
-        display.innerText = "Error: Check Connection";
-        if(scanLine) scanLine.remove();
-    }
+        // Nuna overlay din zabi (Global Search / Near You)
+        const overlay = document.getElementById('search-overlay');
+        if (overlay) {
+            overlay.style.display = 'flex';
+            overlay.classList.add('active');
         }
+    };
+    reader.readAsDataURL(file);
+}
+
+// Wannan ita ce za ta kaddamar da scanning din
+async function globalSearchMotsi() {
+    const loadingScreen = document.getElementById('ai-loading-screen');
+    const previewImg = document.getElementById('scanned-image-preview');
+    const savedImage = localStorage.getItem('user_captured_image');
+
+    if (savedImage) {
+        // 1. Boye overlay din zabi
+        document.getElementById('search-overlay').style.display = 'none';
+        
+        // 2. Nuna asalin fuskar scanning (ai-loading-screen)
+        previewImg.src = savedImage;
+        loadingScreen.style.display = 'flex';
+        
+        // 3. Kira Gemini (ko aikin gano hoton)
+        await kiraGemini(savedImage.split(',')[1]);
+    }
+}
+
+async function kiraGemini(base64) {
+    const API_KEY = "AIzaSyC9V-J5xw4tFFP45eaj9IpSM8Z1HZ6g0ao";
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: "Name this object in 1 word." }, { inline_data: { mime_type: "image/jpeg", data: base64 } }] }]
+            })
+        });
+        
+        const data = await response.json();
+        const keyword = data.candidates[0].content.parts[0].text.trim();
+        
+        setTimeout(() => {
+            // Boye scanning screen din gaba daya don slider ta yi aiki
+            document.getElementById('ai-loading-screen').style.display = 'none';
+            console.log("Gemini ta gano: " + keyword);
+            // Zaka iya saka filter din kayanka anan
+        }, 1500);
+        
+    } catch (e) {
+        document.getElementById('ai-loading-screen').style.display = 'none';
+    }
+}
+    
