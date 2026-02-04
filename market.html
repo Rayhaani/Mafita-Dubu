@@ -160,43 +160,71 @@ async function kiraGemini(base64) {
         
     </div>
     <script>
-// Wannan ne yake taba vibration da adana hoto
+
+ <script>
+// 1. Wannan ne yake taba vibration da adana hoto
 async function bincikaKaya(base64Image) {
-    // 1. Vibration: Girgiza waya kadan (50ms)
     if (navigator.vibrate) {
         navigator.vibrate(50);
     }
-
-    // 2. Adana hoto don shafi na gaba
     localStorage.setItem('user_captured_image', 'data:image/jpeg;base64,' + base64Image);
-    
-    // 3. Nuna Overlay nan take
     document.getElementById('search-overlay').style.display = 'flex';
 }
 
-function budeWurinHoto() {
-    document.getElementById('hotoInput').click();
+// 2. Wannan ne yake fara nuna Scanning Screen
+async function faraScanning() {
+    const loadingScreen = document.getElementById('ai-loading-screen');
+    const previewImg = document.getElementById('scanned-image-preview');
+    const savedImage = localStorage.getItem('user_captured_image');
+
+    if (savedImage) {
+        document.getElementById('search-overlay').style.display = 'none';
+        previewImg.src = savedImage;
+        loadingScreen.style.display = 'flex';
+        
+        await kiraGemini(savedImage.split(',')[1]);
+    }
 }
 
-document.getElementById('hotoInput').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function() {
-            const base64String = reader.result.split(',')[1];
-            bincikaKaya(base64String); 
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
+// 3. Wannan ne button din yake kira
 function globalSearchMotsi() {
-    // Maimakon canja shafi (window.location), yanzu kira faraScanning kawai zamuyi
     faraScanning();
-  }
-      
-    </script>
+}
+
+// 4. Wannan ne yake magana da Gemini
+async function kiraGemini(base64) {
+    const API_KEY = "AIzaSyC9V-J5xw4tFFP45eaj9IpSM8Z1HZ6g0ao";
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
     
-    
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: "Name this object in 1 word." }, { inline_data: { mime_type: "image/jpeg", data: base64 } }] }]
+            })
+        });
+        
+        const data = await response.json();
+        const keyword = data.candidates[0].content.parts[0].text.trim();
+        
+        setTimeout(() => {
+            const screen = document.getElementById('ai-loading-screen');
+            screen.style.opacity = '0';
+            screen.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                screen.style.display = 'none';
+                screen.style.opacity = '1';
+                console.log("An gano: " + keyword);
+                // Anan zaka iya saka filter din kayanka
+            }, 500);
+        }, 1500);
+    } catch (e) {
+        document.getElementById('ai-loading-screen').style.display = 'none';
+    }
+}
+</script>
+  
 </body>
 </html>
