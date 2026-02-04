@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ha">
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global Market | Mafita Dubu</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -9,169 +9,85 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="market.js"></script>
-    <script src="https://unpkg.com/html5-qrcode"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
-    
-
 </head>
 <body>
- <script>
-// Wannan script din zai kula da nuna Scanning kawai idan an danna button
-async function faraScanning() {
-    const loadingScreen = document.getElementById('ai-loading-screen');
-    const previewImg = document.getElementById('scanned-image-preview');
-    const savedImage = localStorage.getItem('user_captured_image');
 
-    if (savedImage) {
-        // 1. Rufe Overlay
-        document.getElementById('search-overlay').style.display = 'none';
-        
-        // 2. Nuna Scanning Screen
-        previewImg.src = savedImage;
-        loadingScreen.style.display = 'flex';
-        
-        // 3. Kira Gemini
-        await kiraGemini(savedImage.split(',')[1]);
-    }
+<div id="ai-loading-screen" style="display:none; position:fixed; inset:0; background:#ffffff; z-index:9999; flex-direction:column; align-items:center; justify-content:center;">
+    <img id="scanned-image-preview" style="width:85%; height:65%; object-fit:cover; border-radius:30px; border: 5px solid #F5F1E9; box-shadow:0 20px 40px rgba(0,0,0,0.15);">
+    <div style="margin-top:40px; text-align:center;">
+        <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; color: #8B6508; letter-spacing: 2px; animation: pulseText 1.5s infinite;">
+            Scanning...
+        </p>
+    </div>
+</div>
+
+<style>
+@keyframes pulseText {
+    0% { opacity: 0.3; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 0.3; transform: scale(0.95); }
 }
+</style>
 
-async function kiraGemini(base64) {
-    const API_KEY = "AIzaSyC9V-J5xw4tFFP45eaj9IpSM8Z1HZ6g0ao";
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-    
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: "Name this object in 1 word." }, { inline_data: { mime_type: "image/jpeg", data: base64 } }] }]
-            })
-        });
-        
-        const data = await response.json();
-        const keyword = data.candidates[0].content.parts[0].text.trim();
-        
-        // 4. Bayan sakan 1.5, goge scanning din gaba daya
-        setTimeout(() => {
-            const screen = document.getElementById('ai-loading-screen');
-            screen.style.opacity = '0';
-            screen.style.transition = 'opacity 0.5s ease';
-            
-            setTimeout(() => {
-                screen.style.display = 'none'; // Boyewa don slider ta yi aiki
-                screen.style.opacity = '1';
-                console.log("Gemini ta gano: " + keyword);
-                
-                // ANAN ZAKA SAKA CODE DIN DA ZAI TACE KAYANKA (Filter)
-                // misali: filterProducts(keyword);
-            }, 500);
-        }, 1500);
-        
-    } catch (e) {
-        document.getElementById('ai-loading-screen').style.display = 'none';
-    }
-}
- </script>
-  
-
-    
-    <header class="sticky top-0 z-[100] bg-[#F5F1E9] pt-4 pb-2 px-4 text-center">
+<header class="sticky top-0 z-[100] bg-[#F5F1E9] pt-4 pb-2 px-4 text-center">
     <h1 class="text-[7px] font-black tracking-[0.5em] text-[#5D4037] uppercase opacity-60 mb-1">African Elite Ecosystem</h1>
     <h2 class="market-title !text-xl">GLOBAL MARKET</h2>
-    </header>
+</header>
     
 <div class="px-6 header-spacer relative z-10">
     <div class="relative group max-w-md mx-auto">
-        <div class="absolute -inset-0.5 bg-gradient-to-r from-[#8B6508] to-[#FFD700] rounded-full blur opacity-20 group-hover:opacity-50 transition duration-500"></div>
         <div class="relative bg-white border border-[#E0D7C6] rounded-full flex items-center pr-1.5 pl-5 py-1.5">
-            <input type="text" id="market-search" placeholder="Me kake nema?" 
-       class="bg-transparent border-none outline-none w-full text-xs font-bold text-[#3E2723] placeholder-[#A68A64]/50"
-       oninput="handleSearch(this)" 
-       onkeydown="if(event.key==='Enter') manualSearch()">
-            
-            <div id="suggestionBox" style="display:none; position:absolute; top:100%; left:0; right:0; background:white; z-index:9999; border:1px solid #ddd; border-radius:0 0 10px 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-    <ul id="suggestionList" style="list-style:none; padding:0; margin:0; color: #333;"></ul>
-            </div>
-            
+            <input type="text" id="market-search" placeholder="Me kake nema?" class="bg-transparent border-none outline-none w-full text-xs font-bold text-[#3E2723] placeholder-[#A68A64]/50">
             <div class="flex items-center space-x-2">
-                
-               <button onclick="openAICamera()" class="ml-2 active:scale-90 transition-transform">
-                   
-    <div class="temu-style-camera">
-
-<div class="camera-inner">
-            <i class="fa-solid fa-camera text-white text-[10px]"></i>
-        </div>
-    </div>
+                <button onclick="document.getElementById('hotoInput').click()" class="ml-2 active:scale-90 transition-transform">
+                    <div class="temu-style-camera">
+                        <div class="camera-inner" style="background:#8B6508; padding:5px; border-radius:5px;">
+                            <i class="fa-solid fa-camera text-white text-[12px]"></i>
+                        </div>
+                    </div>
                 </button>
-
-                <button class="bg-gradient-to-r from-[#8B6508] to-[#B8860B] w-8 h-8 rounded-full flex items-center justify-center text-white shadow-lg">
-                    <i class="fa-solid fa-magnifying-glass" onclick="manualSearch()" style="cursor:pointer;"></i>
-                </button>
+                <input type="file" id="hotoInput" accept="image/*" capture="environment" style="display:none">
             </div>
         </div>
     </div>
 </div>
 
-<div class="duet-grid">
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box1"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">TEXTILES</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box2"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">FOOTWEAR</button></div></div>
-
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box3"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">ELECTRONICS</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box4"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">COSMETICS</button></div></div>
-
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box5"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">FURNITURE</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box6"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">GROCERIES</button></div></div>
-
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box7"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">AUTO SPARE</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box8"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">PHARMACY</button></div></div>
-
-<div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box9"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">KITCHEN</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box10"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">SPORTS</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box11"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">HEALTH</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box12"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">FASHION</button></div></div>
+<div class="duet-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 20px;">
+    <div class="industry-mini-box" style="background: #eee; height: 100px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">TEXTILES</div>
+    <div class="industry-mini-box" style="background: #eee; height: 100px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">FOOTWEAR</div>
 </div>
      
-<div id="search-overlay">
-        <div class="world-box">
-            <div class="sphere"></div>
-            <div class="ring"></div>
-            <div class="ring" style="animation-delay: 1s;"></div>
-        </div>
-    
-<h2 class="search-text">A Ina ne Kake Son Bincikawa?</h2>
-    
-        <button id="btn-global" class="pearl-btn cta-global" onclick="globalSearchMotsi()">
-    <i class="fa-solid fa-earth-africa mr-2"></i> GLOBAL SEARCH
-    <span class="block text-[13px] font-bold" style="color: #FFFDD0 !important; animation: calling-to-action 2s infinite ease-in-out;">Bincika duka kasuwannin duniya</span>
-</button>
+<div id="search-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:1000; flex-direction:column; align-items:center; justify-content:center; color:white;">
+    <h2 class="mb-6">A Ina ne Kake Son Bincikawa?</h2>
+    <button class="pearl-btn" onclick="globalSearchMotsi()" style="background:#8B6508; padding:15px 30px; border-radius:50px; margin-bottom:10px;">GLOBAL SEARCH</button>
+    <button class="pearl-btn" onclick="globalSearchMotsi()" style="background:#5D4037; padding:15px 30px; border-radius:50px;">NEAR YOU</button>
+    <p onclick="document.getElementById('search-overlay').style.display='none'" style="margin-top:20px; cursor:pointer;">Cancel</p>
+</div>
 
-<button id="btn-global" class="pearl-btn cta-global" onclick="globalSearchMotsi()">
-    <i class="fa-solid fa-location-crosshairs mr-2"></i> NEAR YOU
-    <span class="block text-[13px] font-bold" style="color: #FFFDD0 !important; animation: calling-to-action 2s infinite ease-in-out; animation-delay: 1s;">Bincika vendors dake kusa da kai</span>
-</button>
-    
-
-    
-        <p class="fixed bottom-10 left-0 right-0 text-center text-gray-400 font-bold text-xs cursor-pointer opacity-70" onclick="closeSearch()">
-    <i class="fa-solid fa-xmark mr-1"></i> Soke Bincike (Cancel)
-        </p>
-        
-    </div>
-    <script>
-
- <script>
-// 1. Wannan ne yake taba vibration da adana hoto
-async function bincikaKaya(base64Image) {
-    if (navigator.vibrate) {
-        navigator.vibrate(50);
+<script>
+// 1. Lokacin da aka zabi hoto
+document.getElementById('hotoInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const base64String = reader.result.split(',')[1];
+            bincikaKaya(base64String); 
+        };
+        reader.readAsDataURL(file);
     }
+});
+
+async function bincikaKaya(base64Image) {
+    if (navigator.vibrate) navigator.vibrate(50);
     localStorage.setItem('user_captured_image', 'data:image/jpeg;base64,' + base64Image);
     document.getElementById('search-overlay').style.display = 'flex';
 }
 
-// 2. Wannan ne yake fara nuna Scanning Screen
+function globalSearchMotsi() {
+    faraScanning();
+}
+
 async function faraScanning() {
     const loadingScreen = document.getElementById('ai-loading-screen');
     const previewImg = document.getElementById('scanned-image-preview');
@@ -181,17 +97,10 @@ async function faraScanning() {
         document.getElementById('search-overlay').style.display = 'none';
         previewImg.src = savedImage;
         loadingScreen.style.display = 'flex';
-        
         await kiraGemini(savedImage.split(',')[1]);
     }
 }
 
-// 3. Wannan ne button din yake kira
-function globalSearchMotsi() {
-    faraScanning();
-}
-
-// 4. Wannan ne yake magana da Gemini
 async function kiraGemini(base64) {
     const API_KEY = "AIzaSyC9V-J5xw4tFFP45eaj9IpSM8Z1HZ6g0ao";
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
@@ -204,27 +113,17 @@ async function kiraGemini(base64) {
                 contents: [{ parts: [{ text: "Name this object in 1 word." }, { inline_data: { mime_type: "image/jpeg", data: base64 } }] }]
             })
         });
-        
         const data = await response.json();
-        const keyword = data.candidates[0].content.parts[0].text.trim();
-        
+        console.log("Gemini Result:", data);
+
         setTimeout(() => {
-            const screen = document.getElementById('ai-loading-screen');
-            screen.style.opacity = '0';
-            screen.style.transition = 'opacity 0.5s ease';
-            
-            setTimeout(() => {
-                screen.style.display = 'none';
-                screen.style.opacity = '1';
-                console.log("An gano: " + keyword);
-                // Anan zaka iya saka filter din kayanka
-            }, 500);
-        }, 1500);
+            document.getElementById('ai-loading-screen').style.display = 'none';
+        }, 2000);
     } catch (e) {
         document.getElementById('ai-loading-screen').style.display = 'none';
     }
 }
 </script>
-  
+
 </body>
 </html>
