@@ -100,56 +100,25 @@
         </p>
         
     </div>
-    
-<input type="file" id="hotoInput" accept="image/*" style="display:none">
-
-<script>
-// API Key dinka da na riga na shigar maka
-const MY_GEMINI_KEY = "AIzaSyC9V-J5xw4tFFP45eaj9IpSM8Z1HZ6g0ao";
-let abindaGeminiTaGano = ""; 
-
-// 1. Aikin da zai tura hoto zuwa Gemini
+    <script>
+// Wannan ne yake taba vibration da adana hoto
 async function bincikaKaya(base64Image) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${MY_GEMINI_KEY}`;
-    
-    const prompt = {
-        contents: [{
-            parts: [
-                { text: "Wannan hoto ne daga shafina. Gaya min sunan kayan a kalma daya ko biyu (misali: Takalmi, Riga, Agogo). Kar ka yi bayani mai tsawo." },
-                { inline_data: { mime_type: "image/jpeg", data: base64Image } }
-            ]
-        }]
-    };
-
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(prompt)
-        });
-
-        const data = await response.json();
-        
-        // Ciro sunan kayan daga amsar Gemini
-        if (data.candidates && data.candidates[0].content.parts[0].text) {
-            abindaGeminiTaGano = data.candidates[0].content.parts[0].text.trim();
-            console.log("Gemini ta gano: " + abindaGeminiTaGano);
-            
-            // Nuna Overlay din nan take
-            document.getElementById('search-overlay').style.display = 'flex';
-        }
-    } catch (error) {
-        console.error("Akwai matsala:", error);
-        alert("Ba a samu damar duba hoton ba, duba internet dinka.");
+    // 1. Vibration: Girgiza waya kadan (50ms)
+    if (navigator.vibrate) {
+        navigator.vibrate(50);
     }
+
+    // 2. Adana hoto don shafi na gaba
+    localStorage.setItem('user_captured_image', 'data:image/jpeg;base64,' + base64Image);
+    
+    // 3. Nuna Overlay nan take
+    document.getElementById('search-overlay').style.display = 'flex';
 }
 
-// 2. Aikin da zai bude Gallery/Camera
 function budeWurinHoto() {
     document.getElementById('hotoInput').click();
 }
 
-// 3. Wannan zai saurari lokacin da aka zabo hoto
 document.getElementById('hotoInput').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (file) {
@@ -162,17 +131,12 @@ document.getElementById('hotoInput').addEventListener('change', function(e) {
     }
 });
 
-// 4. Aikin da zai kai mutum shafin sakamako (Results Page)
 function globalSearchMotsi() {
-    if(abindaGeminiTaGano !== "") {
-        // Zai tafi shafin search tare da kalmar da Gemini ta gano
-        window.location.href = `search-results.html?q=${encodeURIComponent(abindaGeminiTaGano)}`;
-    } else {
-        alert("Ina jiran Gemini ta gama duba hoton...");
-    }
+    // Muna tafiya shafin sakamako tare da yanayin "ai_scan"
+    window.location.href = `search-results.html?mode=ai_scan`;
 }
-</script>
-        
+    </script>
+    
     
 </body>
 </html>
