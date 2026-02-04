@@ -100,6 +100,31 @@
         
     </div>
     
+    <script>
+const MY_GEMINI_KEY = "SAKA_LAMBAR_KEY_DINKA_ANAN";
+
+async function bincikaKaya(base64Image) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${MY_GEMINI_KEY}`;
+    
+    const prompt = {
+        contents: [{
+            parts: [
+                { text: "Wannan hoto ne daga shafina na kasuwanci. Idan kayan sawa ne, gaya min sunansa da category dinsa (misali: Underwear, Shoes, Electronics). Idan kuma maganar lafiya ce, ka ba da shawara cikin harshen Hausa." },
+                { inline_data: { mime_type: "image/jpeg", data: base64Image } }
+            ]
+        }]
+    };
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(prompt)
+    });
+
+    const data = await response.json();
+    alert(data.candidates[0].content.parts[0].text); // Zai nuna maka abin da AI ta gani
+}
+    </script>
     
 </body>
 </html>
