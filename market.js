@@ -169,107 +169,34 @@ async function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-// 1. WANNAN SHINE ZAI KADDAMAR DA SCANNING
-async function globalSearchMotsi() {
+async function globalSearchMotsi(mode) {
     const loadingScreen = document.getElementById('ai-loading-screen');
+    const overlay = document.getElementById('search-overlay');
     const previewImg = document.getElementById('scanned-image-preview');
     const savedImage = localStorage.getItem('user_captured_image');
-    const overlay = document.getElementById('search-overlay');
 
-    // Boye koren overlay din buttons
+    // Ajiye yanayin bincike (Global ko Near Me)
+    bincikeMode = mode;
+
+    // 1. Boye koren overlay din da sauri
     if (overlay) overlay.style.display = 'none';
 
-    // Nuna fuskar scanning
+    // 2. Nuna fuskar scanning (ai-loading-screen)
     if (loadingScreen) loadingScreen.style.display = 'flex';
 
+    // 3. Duba idan hoto ne ko rubutu
     if (savedImage) {
-        // Idan binciken hoto ne
         if (previewImg) previewImg.src = savedImage;
         await kiraGemini(savedImage.split(',')[1]);
     } else {
-        // Idan binciken rubutu ne (Bra/Panties)
-        // Ba bu bukatar hoton preview, kawai bari scanning din ya nuna
-    }
-}
-
-// 2. GYARAN SETSEARCHMODE (Wanda buttons suke kira)
-function setSearchMode(mode) {
-    bincikeMode = mode; 
-    
-    if(mode === 'near_me') {
-        samunLocation(); // Wannan zai nemo GPS
-    } else {
-        // Idan Global ne kuma ba hoto ba, mu rufe scanning bayan sakan 2
-        const isPhotoSearch = localStorage.getItem('user_captured_image');
-        if(!isPhotoSearch) {
+        // Idan rubutu ne, duba idan kusa ake so
+        if (mode === 'near_me') {
+            samunLocation(); // Wannan zai nuna notification din browser
+        } else {
+            // Idan global ne, mu yi scanning na sakan 3 kawai
             setTimeout(() => {
                 kammalaBincike();
-            }, 2000);
+            }, 3000);
         }
     }
-}
-
-// 3. GYARAN GPS (Don nuna Notification din Browser)
-function samunLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const uLat = position.coords.latitude;
-                const uLon = position.coords.longitude;
-                // Anan zaka iya kiran updateVendorDistances(uLat, uLon)
-                kammalaBincike();
-            },
-            (error) => {
-                // Browser zata nuna kuskuren idan GPS a kashe yake
-                console.log("GPS Error: " + error.message);
-                kammalaBincike();
-            },
-            { enableHighAccuracy: true, timeout: 10000 } 
-        );
-    } else {
-        kammalaBincike();
-    }
-}
-
-// 4. RUFE SCANNING
-function kammalaBincike() {
-    const loadingScreen = document.getElementById('ai-loading-screen');
-    const isPhotoSearch = localStorage.getItem('user_captured_image');
-
-    // Idan hoto ne, kiraGemini ne yake da alhakin rufe loadingScreen
-    if(!isPhotoSearch) {
-        if(loadingScreen) loadingScreen.style.display = 'none';
-    }
-}
-
-// 5. GYARAN KIRAGEMINI (Don sakan 4 na Scanning)
-async function kiraGemini(base64) {
-    const API_KEY = "AIzaSyC9V-J5xw4tFFP45eaj9IpSM8Z1HZ6g0ao";
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-    
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: "Name this object in 1 word." }, { inline_data: { mime_type: "image/jpeg", data: base64 } }] }]
-            })
-        });
-        
-        const data = await response.json();
-        const keyword = data.candidates[0].content.parts[0].text.trim();
-        
-        setTimeout(() => {
-            const loadingScreen = document.getElementById('ai-loading-screen');
-            if(loadingScreen) loadingScreen.style.display = 'none';
-            localStorage.removeItem('user_captured_image');
-            console.log("Gemini ta gano: " + keyword);
-            // nunaKayanBincike(keyword);
-        }, 4000); 
-        
-    } catch (e) {
-        document.getElementById('ai-loading-screen').style.display = 'none';
-        localStorage.removeItem('user_captured_image');
-    }
-}
-    
+                }
