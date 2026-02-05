@@ -272,3 +272,14 @@ function kammalaBincike() {
         }
     }, 1500);
 }
+
+function setSearchMode(mode) {
+    bincikeMode = mode; // Wannan yana gaya wa AI irin binciken da ake yi
+    
+    if(mode === 'near_me') {
+        samunLocation(); // Wannan zai nemo GPS kuma ya kashe scanning da kansa
+    } else {
+        kammalaBincike(); // Wannan zai nuna global search results
+    }
+}
+
