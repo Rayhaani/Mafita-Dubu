@@ -169,14 +169,17 @@ async function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
+// 1. Wannan ita ce zuciyar aikin
 async function globalSearchMotsi(mode) {
     const loadingScreen = document.getElementById('ai-loading-screen');
     const overlay = document.getElementById('search-overlay');
     const previewImg = document.getElementById('scanned-image-preview');
     const savedImage = localStorage.getItem('user_captured_image');
 
-    bincikeMode = mode;
+    // Boye overlay din zabi
     if (overlay) overlay.style.display = 'none';
+
+    // Nuna scanning screen
     if (loadingScreen) loadingScreen.style.display = 'flex';
 
     if (savedImage) {
@@ -184,37 +187,80 @@ async function globalSearchMotsi(mode) {
         if (previewImg) previewImg.src = savedImage;
         await kiraGemini(savedImage.split(',')[1]);
     } else {
-        // IDAN RUBUTU NE (Wannan shi ne gyaran):
+        // Idan binciken rubutu ne (Text Search)
         if (previewImg) previewImg.src = ""; // Goge tsohon hoton da kake gani
         
         if (mode === 'near_me') {
-            // Jira sakan 1 kafin tambayar GPS don Browser ta nuna notification
-            setTimeout(() => {
-                samunLocation();
-            }, 1000);
+            // Kira GPS kai tsaye ba tare da bata lokaci ba
+            samunLocation(); 
         } else {
-            setTimeout(() => { kammalaBincike(); }, 3000);
+            // Idan global ne, sakan 3 ya isa
+            setTimeout(() => {
+                kammalaBincike();
+            }, 3000);
         }
     }
 }
 
+// 2. Gyaran samunLocation don tilasta Browser ta yi magana
 function samunLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                console.log("GPS Found");
+                // Idan an samu GPS
+                localStorage.removeItem('user_captured_image'); // Goge hoto
                 kammalaBincike();
             },
             (error) => {
-                // Idan an samu matsala ko a kashe yake
-                if (error.code === 1) { // User denied
-                    alert("Ka kunna Location a settings na wayarka don ganin na kusa da kai.");
-                }
+                // Idan user ya ki bayarwa ko GPS a kashe yake
+                console.log("GPS Error: ", error.message);
+                localStorage.removeItem('user_captured_image'); // Goge hoto
                 kammalaBincike();
             },
-            { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            { 
+                enableHighAccuracy: true, 
+                timeout: 10000, // Jira sakan 10
+                maximumAge: 0 
+            }
         );
     } else {
+        kammalaBincike();
+    }
+}
+
+// 3. Wannan ita ce take kashe Scanning Screen din
+function kammalaBincike() {
+    const loadingScreen = document.getElementById('ai-loading-screen');
+    if (loadingScreen) {
+        loadingScreen.style.display = 'none';
+    }
+    // Tabbatar an goge hoton a karshen komai
+    localStorage.removeItem('user_captured_image');
+}
+
+// 4. Gyaran KiraGemini don ya goge hoto idan ya gama
+async function kiraGemini(base64) {
+    const API_KEY = "AIzaSyC9V-J5xw4tFFP45eaj9IpSM8Z1HZ6g0ao";
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: "Name this object in 1 word." }, { inline_data: { mime_type: "image/jpeg", data: base64 } }] }]
+            })
+        });
+        
+        const data = await response.json();
+        const keyword = data.candidates[0].content.parts[0].text.trim();
+        
+        setTimeout(() => {
+            kammalaBincike();
+            console.log("Gemini ta gano: " + keyword);
+        }, 4000); 
+        
+    } catch (e) {
         kammalaBincike();
     }
 }
