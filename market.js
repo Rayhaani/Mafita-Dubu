@@ -215,3 +215,45 @@ function nearYouSearch() {
         }
     );
 }
+
+function fetchStoreLocation() {
+    const coordsInput = document.getElementById('shop-coords');
+    
+    if (!navigator.geolocation) {
+        alert("Wayarka ba ta tallafawa GPS. Amfani da tsohuwar hanya.");
+        return;
+    }
+
+    // Nuna wa vendor cewa ana kokarin daukar location
+    coordsInput.value = "Ana daukar location...";
+
+    navigator.geolocation.getCurrentPosition(
+        (pos) => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            // Adana shi a cikin input yadda Vendor zai gani
+            coordsInput.value = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+            coordsInput.style.color = "green";
+            coordsInput.style.fontWeight = "bold";
+        },
+        (error) => {
+            coordsInput.value = "";
+            alert("Kuskure: Tabbatar ka kunna GPS kuma ka bada izini (Permission).");
+        },
+        { enableHighAccuracy: true }
+    );
+}
+
+function saveVendor() {
+    const name = document.getElementById('store-name').value;
+    const coords = document.getElementById('shop-coords').value;
+
+    if (!name || !coords) {
+        alert("Don Allah cika duka bayanan.");
+        return;
+    }
+
+    // A matsayin Senior Developer, nan ne zaka tura data zuwa Database dinka
+    console.log("Saving Vendor:", { storeName: name, location: coords });
+    alert("An yi rijistar shagonka cikin nasara tare da authentic GPS location!");
+}
