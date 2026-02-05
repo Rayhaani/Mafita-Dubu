@@ -155,65 +155,37 @@ function globalSearchMotsi(mode) {
 function nearYouSearch() {
     const loading = document.getElementById('ai-loading-screen');
     if (loading) loading.style.display = 'flex';
-    if (!navigator.geolocation) {
-        if (loading) loading.style.display = 'none';
-        return;
-    }
-    navigator.geolocation.getCurrentPosition(
-        (pos) => { setTimeout(kammalaBincike, 3000); },
-        () => { if (loading) loading.style.display = 'none'; },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
-    );
-}
-
-function kammalaBincike() {
-    document.getElementById('ai-loading-screen').style.display = 'none';
-    localStorage.removeItem('user_captured_image');
-            }
-                                 
-// Wannan function din zai zauna a kasa, baya taba kyan buttons dinka
-function lissafaNisa(lat1, lon1, lat2, lon2) {
-    const R = 6371; // Radius na duniya (km)
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-              Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c; // Nisan a Kilomita
-}
-
-function nearYouSearch() {
-    const loading = document.getElementById('ai-loading-screen');
-    if (loading) loading.style.display = 'flex';
 
     if (!navigator.geolocation) {
-        alert("GPS dinka a kashe yake.");
+        alert("Wayarka ba ta da GPS.");
         if (loading) loading.style.display = 'none';
         return;
     }
 
-    navigator.geolocation.getCurrentPosition(
-        (pos) => {
-            const userLat = pos.coords.latitude;
-            const userLon = pos.coords.longitude;
+    navigator.geolocation.getCurrentPosition((pos) => {
+        const userLat = pos.coords.latitude;
+        const userLon = pos.coords.longitude;
 
-            // NAN NE ZAKA SAKA DATA NA VENDORS DIN KA NAN GABA
-            // Misali:
-            console.log("Inda kake: " + userLat + ", " + userLon);
-            
-            // Bayan sakan 3 na "Scanning", sai mu nuna sakamako
-            setTimeout(() => {
-                if (loading) loading.style.display = 'none';
-                alert("An gano inda kake! Yanzu AI zai jero maka shagunan da ke kusa da kai.");
-                kammalaBincike();
-            }, 3000);
-        },
-        (error) => {
+        // 1. Tace shagunan da ke kusa tare da lissafa nisa
+        let nearbyVendors = vendorsDatabase.map(vendor => {
+            const distance = lissafaNisa(userLat, userLon, vendor.lat, vendor.lon);
+            return { ...vendor, distance: distance };
+        }).sort((a, b) => a.distance - b.distance); 
+
+        // 2. Nuna kyakkyawan sakamako a sabon shafi bayan sakan 3
+        setTimeout(() => {
             if (loading) loading.style.display = 'none';
-            alert("Tabbatar ka kunna GPS na wayarka.");
-        }
-    );
+            
+            // Wannan shine gyaran: Mun daina amfani da alert
+            displayNearbyVendors(nearbyVendors);
+            
+            kammalaBincike();
+        }, 3000);
+
+    }, (err) => {
+        if (loading) loading.style.display = 'none';
+        alert("An kasa samun GPS. Tabbatar yana kunne.");
+    }, { enableHighAccuracy: true });
 }
 
 function fetchStoreLocation() {
@@ -256,4 +228,53 @@ function saveVendor() {
     // A matsayin Senior Developer, nan ne zaka tura data zuwa Database dinka
     console.log("Saving Vendor:", { storeName: name, location: coords });
     alert("An yi rijistar shagonka cikin nasara tare da authentic GPS location!");
+}
+
+// Wannan jerin (List) ne na Vendors da suka riga sun yi registration
+let vendorsDatabase = [
+    { name: "Al-Amin Pharmacy", lat: 10.5105, lon: 7.4165, items: ["medicine", "paracetamol"] },
+    { name: "Musa Bread & Butter", lat: 10.5200, lon: 7.4200, items: ["bread", "butter", "milk"] },
+    { name: "Fatima Fashion Home", lat: 10.4900, lon: 7.4000, items: ["gown", "bra", "shoes"] }
+];
+
+
+function displayNearbyVendors(nearbyVendors) {
+    const resultsPage = document.getElementById('near-me-results');
+    const listContainer = document.getElementById('vendors-list');
+    
+    // Share tsohon sakamako
+    listContainer.innerHTML = '';
+
+    if (nearbyVendors.length === 0) {
+        listContainer.innerHTML = `<div style="text-align:center; margin-top:50px;">
+            <i class="fa-solid fa-store-slash" style="font-size:50px; color:#ccc;"></i>
+            <p style="color:#666; margin-top:10px;">Ba mu sami wani shago kusa da kai ba a yanzu.</p>
+        </div>`;
+    } else {
+        nearbyVendors.forEach(v => {
+            const card = `
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #eee; background: white; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                    <div style="display:flex; align-items:center; gap: 15px;">
+                        <div style="width:50px; height:50px; background:#e9ecef; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                            <i class="fa-solid fa-shop" style="color:#007bff;"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin:0; font-size:16px; font-weight:bold; color:#222;">${v.name}</h4>
+                            <p style="margin:0; font-size:12px; color:#28a745; font-weight:600;">${v.distance.toFixed(2)} km away</p>
+                        </div>
+                    </div>
+                    <button style="padding:8px 15px; background:#007bff; color:white; border:none; border-radius:20px; font-size:12px; font-weight:bold;">Visit</button>
+                </div>
+            `;
+            listContainer.innerHTML += card;
+        });
+    }
+
+    // Nuna shafin sakamakon
+    resultsPage.classList.remove('hidden');
+    resultsPage.style.display = 'flex';
+}
+
+function closeResults() {
+    document.getElementById('near-me-results').style.display = 'none';
 }
