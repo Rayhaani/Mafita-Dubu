@@ -254,3 +254,16 @@ function updateMarketDistances(uLat, uLon) {
     }
 }
 
+function bincikaKasuwa(tsari) {
+    // 1. Dauko duka kayanmu (Misali: Panties 1000)
+    let container = document.getElementById('vendors-container');
+    container.innerHTML = "Loading..."; 
+
+    if (tsari === 'near_me') {
+        // Idan NEAR ME ne, kira kyamarar GPS
+        samunLocation(); 
+    } else {
+        // Idan GLOBAL ne, nuna Premium a sama
+        displayPremiumFirst();
+    }
+}
