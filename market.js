@@ -100,14 +100,13 @@ function closeSearch() {
 }
 
 // 4. AI CAMERA & LOCATION (Sheet Fixed)
-// --- FARKON SHEET CODE ---
 function openAICamera() {
     const existing = document.getElementById('ai-sheet');
     if(existing) existing.remove();
 
     const menuHTML = `
     <div id="ai-overlay" onclick="closeAIVision()" style="position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:4999; opacity:0; transition:opacity 0.3s;"></div>
-    <div id="ai-sheet" style="position:fixed; bottom:-100%; left:0; right:0; background:white; border-radius:20px 20px 0 0; z-index:5000; transition:bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding-bottom:30px; box-shadow: 0 -5px 20px rgba(0,0,0,0.15);">
+    <div id="ai-sheet" class="ai-bottom-sheet" style="position:fixed; bottom:-100%; left:0; right:0; background:white; border-radius:20px 20px 0 0; z-index:5000; transition:bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding-bottom:30px;">
         
         <div style="width:40px; height:4px; background:rgba(0,0,0,0.1); border-radius:10px; margin: 12px auto 25px auto;"></div>
         
@@ -117,21 +116,21 @@ function openAICamera() {
                 <div style="width:55px; height:55px; background:#e0e0e0; border-radius:15px; display:flex; align-items:center; justify-content:center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                     <i class="fa-solid fa-camera-retro" style="color:#444; font-size:24px;"></i>
                 </div>
-                <span style="color:#333; font-size:10px; font-weight:900; margin-top:12px;">CAMERA</span>
+                <span style="color:#333; font-size:10px; font-weight:900; margin-top:12px; letter-spacing:0.5px;">CAMERA</span>
             </div>
 
             <div onclick="handleCamera()" style="display:flex; flex-direction:column; align-items:center; cursor:pointer; flex:1;">
                 <div style="width:65px; height:65px; background:linear-gradient(145deg, #1a1a1a, #333); border-radius:18px; display:flex; align-items:center; justify-content:center; border:2.5px solid #FFD700; box-shadow: 0 6px 12px rgba(0,0,0,0.2); margin-top:-10px;">
                     <i class="fa-solid fa-qrcode" style="color:#FFD700; font-size:28px;"></i>
                 </div>
-                <span style="color:#8B6508; font-size:10px; font-weight:900; margin-top:12px;">SCAN</span>
+                <span style="color:#8B6508; font-size:10px; font-weight:900; margin-top:12px; letter-spacing:0.5px;">SCAN</span>
             </div>
 
             <div onclick="handleGallery()" style="display:flex; flex-direction:column; align-items:center; cursor:pointer; flex:1;">
                 <div style="width:55px; height:55px; background:#e0e0e0; border-radius:15px; display:flex; align-items:center; justify-content:center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                     <i class="fa-solid fa-images" style="color:#444; font-size:24px;"></i>
                 </div>
-                <span style="color:#333; font-size:10px; font-weight:900; margin-top:12px;">GALLERY</span>
+                <span style="color:#333; font-size:10px; font-weight:900; margin-top:12px; letter-spacing:0.5px;">GALLERY</span>
             </div>
 
         </div>
@@ -139,6 +138,7 @@ function openAICamera() {
 
     document.body.insertAdjacentHTML('beforeend', menuHTML);
     
+    // Nuna su
     setTimeout(() => { 
         const overlay = document.getElementById('ai-overlay');
         const sheet = document.getElementById('ai-sheet');
@@ -146,15 +146,3 @@ function openAICamera() {
         if(sheet) sheet.style.bottom = "0"; 
     }, 10);
 }
-
-function closeAIVision() {
-    const overlay = document.getElementById('ai-overlay');
-    const sheet = document.getElementById('ai-sheet');
-    if(sheet) sheet.style.bottom = "-100%";
-    if(overlay) overlay.style.opacity = "0";
-    setTimeout(() => {
-        overlay?.remove();
-        sheet?.remove();
-    }, 400);
-}
-// --- KARSHE ---
