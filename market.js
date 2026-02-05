@@ -140,31 +140,24 @@ function nearYouSearch() {
     if (loading) loading.style.display = 'flex';
 
     if (!navigator.geolocation) {
-        alert("Wayarka ba ta goyon bayan GPS.");
-        loading.style.display = 'none';
+        if (loading) loading.style.display = 'none';
         return;
     }
 
     navigator.geolocation.getCurrentPosition(
-        pos => {
+        (pos) => {
             console.log("📍 Location:", pos.coords.latitude, pos.coords.longitude);
             setTimeout(kammalaBincike, 3000);
         },
-        err => {
-            loading.style.display = 'none';
-            if (err.code === 1) {
-                alert("Don amfani da Near You, danna ALLOW.");
-            } else {
-                alert("Kunna Location na wayarka.");
-            }
+        () => {
+            // ❗ KAR KA SAKA ALERT NAN
+            if (loading) loading.style.display = 'none';
+            // browser permission zai riga ya fito
         },
-        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        }
     );
-}
-
-// ================= FINISH =================
-function kammalaBincike() {
-    const loading = document.getElementById('ai-loading-screen');
-    if (loading) loading.style.display = 'none';
-    localStorage.removeItem('user_captured_image');
 }
