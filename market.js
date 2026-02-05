@@ -221,67 +221,36 @@ async function kiraGemini(base64) {
     }
 }
 
+// Function na lissafin nisa ya zauna (Karka taba shi)
+function lissafaNisa(lat1, lon1, lat2, lon2) { ... } 
 
-// 1. Wannan function din tana lissafa nisan kilomita (KM) tsakanin mutum biyu
-function lissafaNisa(lat1, lon1, lat2, lon2) {
-    const R = 6371; // Radius din duniya a cikin KM
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-              Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return (R * c).toFixed(1); // Zai dawo da nisan misali: 1.2
-}
+// Function na samun location ya zauna (Karka taba shi)
+function samunLocation() { ... }
 
-// 2. Wannan tana dauko inda customer yake a boye
-function samunLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const userLat = position.coords.latitude;
-                const userLon = position.coords.longitude;
-                console.log("Customer yana nan:", userLat, userLon);
-                
-                // Idan an nemo location, sai a tace kasuwar
-                updateMarketDistances(userLat, userLon);
-            },
-            (error) => {
-                console.log("Ba a bada damar location ba.");
-                // Anan zaka iya nuna sakon "Enable Location" kamar na Nuzo
-            },
-            { enableHighAccuracy: true }
-        );
-    }
-}
-
-// 3. Wannan tana saka kilomita a jikin kowane shago kuma ta jera su
+// Wannan ne kadai za mu dan gyara:
 function updateMarketDistances(uLat, uLon) {
-    const shops = document.querySelectorAll('.industry-mini-box');
+    // Maimakon 'industry-mini-box', yanzu za mu nemi 'vendor-card'
+    const vendors = document.querySelectorAll('.vendor-card');
     
-    shops.forEach(shop => {
-        // Misali kowane shago yana da latitude da longitude a matsayin 'data attributes'
-        const sLat = parseFloat(shop.getAttribute('data-lat'));
-        const sLon = parseFloat(shop.getAttribute('data-lon'));
+    vendors.forEach(vendor => {
+        const vLat = parseFloat(vendor.getAttribute('data-lat'));
+        const vLon = parseFloat(vendor.getAttribute('data-lon'));
         
-        if (sLat && sLon) {
-            const nisa = lissafaNisa(uLat, uLon, sLat, sLon);
-            const kmDisplay = shop.querySelector('.distance-tag');
-            if (kmDisplay) kmDisplay.innerText = nisa + " km away";
-            
-            // Adana nisan don jera su (sorting)
-            shop.setAttribute('data-distance', nisa);
+        if (vLat && vLon) {
+            const nisa = lissafaNisa(uLat, uLon, vLat, vLon);
+            const kmDisplay = vendor.querySelector('.km-badge');
+            if (kmDisplay) kmDisplay.innerText = nisa + " km";
+            vendor.setAttribute('data-distance', nisa);
         }
     });
 
-    // Jera shagunnan: Wanda ya fi kusa ya koma sama
-    const container = document.getElementById('market-grid');
-    const sortedShops = Array.from(shops).sort((a, b) => {
-        return parseFloat(a.getAttribute('data-distance')) - parseFloat(b.getAttribute('data-distance'));
-    });
-    
-    sortedShops.forEach(s => container.appendChild(s));
+    // Jera su: Wanda ya fi kusa ya dawo sama
+    const container = document.getElementById('vendors-container');
+    if(container) {
+        const sorted = Array.from(vendors).sort((a, b) => 
+            parseFloat(a.getAttribute('data-distance')) - parseFloat(b.getAttribute('data-distance'))
+        );
+        sorted.forEach(v => container.appendChild(v));
+    }
 }
 
-// Kira wannan function din da zaran page ya gama budewa
-window.addEventListener('load', samunLocation);
