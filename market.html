@@ -83,5 +83,30 @@
         </p>
     </div>
 
+
+    <div id="vendor-reg-page" style="padding: 20px; font-family: sans-serif; max-width: 400px; margin: auto;">
+    <h2 style="text-align: center; color: #333;">Vendor Registration</h2>
+    <p style="font-size: 12px; color: #666; text-align: center;">Tabbatar kana cikin shagonka yayin yin wannan rijistar.</p>
+
+    <div style="margin-bottom: 15px;">
+        <label style="display: block; font-weight: bold; font-size: 14px;">Store Name</label>
+        <input type="text" id="store-name" placeholder="Misali: Al-Amin Global" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label style="display: block; font-weight: bold; font-size: 14px;">Shop Location (GPS)</label>
+        <div style="display: flex; gap: 10px;">
+            <input type="text" id="shop-coords" readonly placeholder="Ba a dauki location ba" style="flex: 1; padding: 10px; background: #f9f9f9; border: 1px solid #ccc; border-radius: 8px; font-size: 12px;">
+            <button onclick="fetchStoreLocation()" style="padding: 10px; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                <i class="fa-solid fa-location-dot"></i> Get
+            </button>
+        </div>
+    </div>
+
+    <button onclick="saveVendor()" style="width: 100%; padding: 15px; background: #007bff; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 16px;">Complete Registration</button>
+    </div>
+    
     </body>
 </html>
+
+
