@@ -169,98 +169,54 @@ async function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-// 1. Wannan ita ce zuciyar aikin
 async function globalSearchMotsi(mode) {
     const loadingScreen = document.getElementById('ai-loading-screen');
     const overlay = document.getElementById('search-overlay');
     const previewImg = document.getElementById('scanned-image-preview');
     const savedImage = localStorage.getItem('user_captured_image');
 
-    // Boye overlay din zabi
     if (overlay) overlay.style.display = 'none';
-
-    // Nuna scanning screen
     if (loadingScreen) loadingScreen.style.display = 'flex';
 
     if (savedImage) {
-        // Idan binciken hoto ne
         if (previewImg) previewImg.src = savedImage;
         await kiraGemini(savedImage.split(',')[1]);
     } else {
-        // Idan binciken rubutu ne (Text Search)
-        if (previewImg) previewImg.src = ""; // Goge tsohon hoton da kake gani
+        // Idan rubutu ne, goge tsohon hoton screen din
+        if (previewImg) previewImg.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"; 
         
         if (mode === 'near_me') {
-            // Kira GPS kai tsaye ba tare da bata lokaci ba
             samunLocation(); 
         } else {
-            // Idan global ne, sakan 3 ya isa
-            setTimeout(() => {
-                kammalaBincike();
-            }, 3000);
+            setTimeout(() => { kammalaBincike(); }, 3000);
         }
     }
 }
 
-// 2. Gyaran samunLocation don tilasta Browser ta yi magana
+
 function samunLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                // Idan an samu GPS
-                localStorage.removeItem('user_captured_image'); // Goge hoto
-                kammalaBincike();
-            },
-            (error) => {
-                // Idan user ya ki bayarwa ko GPS a kashe yake
-                console.log("GPS Error: ", error.message);
-                localStorage.removeItem('user_captured_image'); // Goge hoto
-                kammalaBincike();
-            },
-            { 
-                enableHighAccuracy: true, 
-                timeout: 10000, // Jira sakan 10
-                maximumAge: 0 
-            }
-        );
-    } else {
+    if (!navigator.geolocation) {
+        alert("Wannan Browser din ba ta goyon bayan GPS.");
         kammalaBincike();
+        return;
     }
-}
 
-// 3. Wannan ita ce take kashe Scanning Screen din
-function kammalaBincike() {
-    const loadingScreen = document.getElementById('ai-loading-screen');
-    if (loadingScreen) {
-        loadingScreen.style.display = 'none';
-    }
-    // Tabbatar an goge hoton a karshen komai
-    localStorage.removeItem('user_captured_image');
-}
-
-// 4. Gyaran KiraGemini don ya goge hoto idan ya gama
-async function kiraGemini(base64) {
-    const API_KEY = "AIzaSyC9V-J5xw4tFFP45eaj9IpSM8Z1HZ6g0ao";
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-    
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: "Name this object in 1 word." }, { inline_data: { mime_type: "image/jpeg", data: base64 } }] }]
-            })
-        });
-        
-        const data = await response.json();
-        const keyword = data.candidates[0].content.parts[0].text.trim();
-        
-        setTimeout(() => {
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            console.log("An samu location!");
             kammalaBincike();
-            console.log("Gemini ta gano: " + keyword);
-        }, 4000); 
-        
-    } catch (e) {
-        kammalaBincike();
-    }
+        },
+        (error) => {
+            // WANNAN SHINE MUHIMMI: Zai gaya mana dalilin da yasa baya nuna
+            if (error.code === error.PERMISSION_DENIED) {
+                alert("Browser ta hana nuna Location. Duba Settings na wayarka ka bawa shafin nan izini.");
+            } else if (error.code === error.POSITION_UNAVAILABLE) {
+                alert("Ba a samu siginar GPS ba. Kunna Location na wayar gaba daya.");
+            } else if (error.code === error.TIMEOUT) {
+                alert("Lokaci ya cika ba a samu GPS ba.");
+            }
+            kammalaBincike();
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
 }
