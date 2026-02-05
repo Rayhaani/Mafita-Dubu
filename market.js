@@ -1,54 +1,7 @@
-   let typingTimer;
+let typingTimer;
 const doneTypingInterval = 3000;
-let sliderPos = 0; 
-let isPaused = false;
-let direction = 1;
+let sliderPos = 0; // Mun saka wannan a nan don kada komai ya tsaya
 
-// 1. GYARAN SLIDER (Auto Scroll)
-function startProfessionalScroll() {
-    const searchBar = document.getElementById('market-search');
-    const isTyping = searchBar === document.activeElement || (searchBar && searchBar.value.length > 0);
-
-    if (!isPaused && !isTyping) {
-        window.scrollBy(0, direction * 0.2); 
-        if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
-            direction = -1; 
-            isPaused = true; 
-            setTimeout(() => isPaused = false, 5000); 
-        } else if (direction === -1 && window.pageYOffset <= 0) {
-            direction = 1; 
-            isPaused = true; 
-            setTimeout(() => isPaused = false, 5000);
-        }
-    }
-    requestAnimationFrame(startProfessionalScroll);
-}
-window.onload = () => setTimeout(startProfessionalScroll, 3000);
-
-// 2. GYARAN ENTER KEY & SEARCH ICON
-function manualSearch() {
-    const input = document.getElementById('market-search');
-    if (!input) return;
-    let kalma = input.value.trim();
-    if (kalma.length >= 2) {
-        clearTimeout(typingTimer); 
-        input.blur(); 
-        showSearchOverlay(kalma);
-        const box = document.getElementById('suggestionList');
-        if(box) box.parentElement.style.display = 'none';
-    }
-}
-
-document.addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-        const searchBar = document.getElementById('market-search');
-        if (document.activeElement === searchBar) {
-            manualSearch();
-        }
-    }
-});
-
-// 3. SEARCH HANDLING
 function handleSearch(textbox) {
     let kalma = textbox.value.trim();
     const listContainer = document.getElementById('suggestionList'); 
@@ -59,7 +12,7 @@ function handleSearch(textbox) {
         const filtered = samples.filter(i => i.toLowerCase().includes(kalma.toLowerCase()));
         if(listContainer) {
             listContainer.parentElement.style.display = 'block';
-            listContainer.innerHTML = filtered.map(item => `<li onclick="selectItem('${item}')" style="padding:12px;border-bottom:1px solid #eee;cursor:pointer;color:#333;font-weight:bold;">${item}</li>`).join('');
+            listContainer.innerHTML = filtered.map(item => `<li onclick="selectItem('${item}')" style="padding:12px; border-bottom:1px solid #eee; cursor:pointer; color:#333; font-weight:bold;">${item}</li>`).join('');
         }
         typingTimer = setTimeout(() => { showSearchOverlay(kalma); }, doneTypingInterval);
     } else {
@@ -74,72 +27,99 @@ function selectItem(word) {
     if(box) box.parentElement.style.display = 'none';
     showSearchOverlay(word);
 }
-
 function showSearchOverlay(kalma) {
     const overlay = document.getElementById('search-overlay');
     const display = document.getElementById('query-val');
+    
+    // --- WANNAN SHI NE GYARAN ---
     const listContainer = document.getElementById('suggestionList');
-    if(listContainer) listContainer.parentElement.style.display = 'none';
-    if (display) display.innerText = `"${kalma}"`;
+    if(listContainer) {
+        listContainer.parentElement.style.display = 'none';
+    }
+    // ----------------------------
+
+    if (display) display.innerText = '"' + kalma + '"';
     if (overlay) {
         overlay.style.display = 'flex';
         setTimeout(() => overlay.classList.add('active'), 50);
     }
 }
-
 function closeSearch() {
     const overlay = document.getElementById('search-overlay');
     if(overlay) {
         overlay.classList.remove('active');
         setTimeout(() => {
             overlay.style.display = 'none';
+            // Wannan zai goge rubutun search bar din bayan an rufe
             const input = document.getElementById('market-search');
             if(input) input.value = '';
         }, 500);
     }
 }
 
-// 4. AI CAMERA & LOCATION (ASALIN TSARI DA GYARAN ALIGNMENT)
 function openAICamera() {
     const existing = document.getElementById('ai-sheet');
     if(existing) existing.remove();
-    const menuHTML = `<div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/40 z-[4999] opacity-0 transition-opacity duration-300"></div>
-    <div id="ai-sheet" class="ai-bottom-sheet active">
-        <div style="width:40px;height:4px;background:rgba(0,0,0,0.1);border-radius:10px;margin:12px auto 15px;"></div>
-        <div style="text-align:center; padding:10px 0; white-space:nowrap;">
-            
-            <div onclick="handleCamera()" style="cursor:pointer; display:inline-block; margin:0 15px; vertical-align:bottom;">
-                <div class="silver-box" style="display:flex;align-items:center;justify-content:center;background:#ccc;width:50px;height:50px;border-radius:12px;margin:0 auto;"><i class="fa-solid fa-camera-retro" style="color:white"></i></div>
-                <small style="font-size:10px;font-weight:bold;display:block;margin-top:5px;">CAMERA</small>
-            </div>
-
-            <div onclick="handleCamera()" style="cursor:pointer; display:inline-block; margin:0 15px; vertical-align:bottom;">
-                <div class="silver-box active-scan" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg, #222, #444);width:50px;height:50px;border-radius:12px;border:2px solid #FFD700;margin:0 auto;"><i class="fa-solid fa-qrcode" style="color:#FFD700"></i></div>
-                <small style="color:#8B6508;font-size:10px;font-weight:bold;display:block;margin-top:5px;">SCAN</small>
-            </div>
-
-            <div onclick="handleGallery()" style="cursor:pointer; display:inline-block; margin:0 15px; vertical-align:bottom;">
-                <div class="silver-box" style="display:flex;align-items:center;justify-content:center;background:#ccc;width:50px;height:50px;border-radius:12px;margin:0 auto;"><i class="fa-solid fa-images" style="color:white"></i></div>
-                <small style="font-size:10px;font-weight:bold;display:block;margin-top:5px;">GALLERY</small>
-            </div>
-
-        </div>
-    </div>`;
+    const menuHTML = `<div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/40 z-[4999] opacity-0 transition-opacity duration-300"></div><div id="ai-sheet" class="ai-bottom-sheet"><div style="width:40px; height:4px; background:rgba(0,0,0,0.1); border-radius:10px; margin: 12px auto 15px auto;"></div><div class="flex-row-container" style="display:flex; justify-content:space-around; align-items:center; width:100%; padding:10px 0;"><div style="display:flex; flex-direction:column; align-items:center;"><div class="silver-box" onclick="handleCamera()" style="cursor:pointer;"><i class="fa-solid fa-camera-retro" style="color:white; font-size:22px;"></i></div><span style="color:#333; font-size:10px; font-weight:900; margin-top:10px;">CAMERA</span></div><div style="display:flex; flex-direction:column; align-items:center;"><div class="silver-box active-scan" onclick="handleCamera()" style="cursor:pointer;"><i class="fa-solid fa-qrcode" style="color:#FFD700; font-size:22px;"></i></div><span style="color:#8B6508; font-size:10px; font-weight:900; margin-top:10px;">SCAN</span></div><div style="display:flex; flex-direction:column; align-items:center;"><div class="silver-box" onclick="handleGallery()" style="cursor:pointer;"><i class="fa-solid fa-images" style="color:white; font-size:22px;"></i></div><span style="color:#333; font-size:10px; font-weight:900; margin-top:10px;">GALLERY</span></div></div></div>`;
     document.body.insertAdjacentHTML('beforeend', menuHTML);
-    setTimeout(() => document.getElementById('ai-overlay')?.classList.add('opacity-100'), 10);
+    setTimeout(() => { document.getElementById('ai-overlay')?.classList.add('opacity-100'); document.getElementById('ai-sheet')?.classList.add('active'); }, 10);
 }
 
 function closeAIVision() {
-    document.getElementById('ai-sheet')?.remove();
-    document.getElementById('ai-overlay')?.remove();
+    const sheet = document.getElementById('ai-sheet');
+    if(sheet) sheet.classList.remove('active');
+    setTimeout(() => { if(document.getElementById('ai-overlay')) document.getElementById('ai-overlay').remove(); if(sheet) sheet.remove(); }, 400);
 }
+
+// --- AUTO PAGE SCROLL ---
+let isPaused = false;
+let direction = 1;
+
+function startProfessionalScroll() {
+    const searchBar = document.getElementById('market-search');
+    // Idan mutum yana rubutu, mu dakatar da gudu
+    const isTyping = searchBar === document.activeElement || (searchBar && searchBar.value.length > 0);
+
+    if (!isPaused && !isTyping) {
+        // Wannan zai sa duka shafin (Page) ya rika scrolling
+        window.scrollBy(0, direction * 0.2); // 0.6 ne gudun, mun maida shi 0.2 don sanyi
+
+        // Idan ya kai karshen kasa, ya dawo sama
+        if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
+            direction = -1; 
+            isPaused = true; 
+            setTimeout(() => isPaused = false, 5000); // Tsaya na sakan 5 kafin komawa
+        } else if (direction === -1 && window.pageYOffset <= 0) {
+            direction = 1; 
+            isPaused = true; 
+            setTimeout(() => isPaused = false, 5000);
+        }
+    }
+    requestAnimationFrame(startProfessionalScroll);
+}
+window.onload = () => setTimeout(startProfessionalScroll, 3000);
+// Saka wannan a duk inda kake so a cikin JS din
+document.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        const searchBar = document.getElementById('market-search');
+        if (document.activeElement === searchBar) {
+            manualSearch();
+        }
+    }
+});
 
 function handleCamera() {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
     input.capture = 'environment';
-    input.onchange = e => startAISimulation(e.target.files[0]);
+    input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            closeAIVision();
+            startAISimulation(file); // Wannan zai kira Real AI
+        }
+    };
     input.click();
 }
 
@@ -147,48 +127,131 @@ function handleGallery() {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
-    input.onchange = e => startAISimulation(e.target.files[0]);
+    input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            closeAIVision();
+            startAISimulation(file); // Wannan zai kira Real AI
+        }
+    };
     input.click();
 }
 
-function startAISimulation(file) {
-    if (!file) return;
+function manualSearch() {
+    const input = document.getElementById('market-search');
+    if (!input) return;
+    
+    let kalma = input.value.trim();
+    if (kalma.length >= 2) {
+        clearTimeout(typingTimer); 
+        input.blur(); // Wannan zai sa keyboard din ya boyu
+        showSearchOverlay(kalma);
+        
+        const box = document.getElementById('suggestionList');
+        if(box) box.parentElement.style.display = 'none';
+    }
+}
+
+async function startAISimulation(file) {
     const reader = new FileReader();
-    reader.onload = e => {
-        localStorage.setItem('user_captured_image', e.target.result);
-        closeAIVision();
-        showSearchOverlay('Scanned Item');
+    reader.onload = function(e) {
+        const base64Image = e.target.result;
+        // Adana hoton a wayar mutum
+        localStorage.setItem('user_captured_image', base64Image);
+        
+        // Nuna overlay din zabi (Global Search / Near You)
+        const overlay = document.getElementById('search-overlay');
+        if (overlay) {
+            overlay.style.display = 'flex';
+            overlay.classList.add('active');
+        }
     };
     reader.readAsDataURL(file);
 }
 
-function globalSearchMotsi(mode) {
+// Wannan ita ce za ta kaddamar da scanning din
+async function globalSearchMotsi() {
+    const loadingScreen = document.getElementById('ai-loading-screen');
+    const previewImg = document.getElementById('scanned-image-preview');
     const savedImage = localStorage.getItem('user_captured_image');
-    document.getElementById('search-overlay').style.display = 'none';
 
-    if (mode === 'near_me') {
-        nearYouSearch();
-    } else {
-        document.getElementById('ai-loading-screen').style.display = 'flex';
-        setTimeout(kammalaBincike, 3000);
+    if (savedImage) {
+        // 1. Boye overlay din zabi
+        document.getElementById('search-overlay').style.display = 'none';
+        
+        // 2. Nuna asalin fuskar scanning (ai-loading-screen)
+        previewImg.src = savedImage;
+        loadingScreen.style.display = 'flex';
+        
+        // 3. Kira Gemini (ko aikin gano hoton)
+        await kiraGemini(savedImage.split(',')[1]);
     }
 }
 
-function nearYouSearch() {
-    const loading = document.getElementById('ai-loading-screen');
-    if (loading) loading.style.display = 'flex';
-    if (!navigator.geolocation) {
-        if (loading) loading.style.display = 'none';
-        return;
+async function kiraGemini(base64) {
+    const API_KEY = "AIzaSyC9V-J5xw4tFFP45eaj9IpSM8Z1HZ6g0ao";
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: "Name this object in 1 word." }, { inline_data: { mime_type: "image/jpeg", data: base64 } }] }]
+            })
+        });
+        
+        const data = await response.json();
+        const keyword = data.candidates[0].content.parts[0].text.trim();
+        
+        setTimeout(() => {
+            // Boye scanning screen
+            document.getElementById('ai-loading-screen').style.display = 'none';
+            
+            // --- GYARAN YANA NAN: Wannan zai goge hoton don bincike na gaba ya zama sabo ---
+            localStorage.removeItem('user_captured_image');
+            
+            console.log("Gemini ta gano: " + keyword);
+        }, 1500);
+        
+    } catch (e) {
+        document.getElementById('ai-loading-screen').style.display = 'none';
+        // Ko da an samu error, mu goge tsohon hoton
+        localStorage.removeItem('user_captured_image');
     }
-    navigator.geolocation.getCurrentPosition(
-        (pos) => { setTimeout(kammalaBincike, 3000); },
-        () => { if (loading) loading.style.display = 'none'; },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
-    );
 }
 
+let bincikeMode = 'global'; // Dama can kan global yake
+
+// 1. Wannan zai nemo GPS kuma ya kashe scanning screen idan ya gama
+function samunLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const uLat = position.coords.latitude;
+                const uLon = position.coords.longitude;
+                // Idan kana da function din updateVendorDistances, zai yi aiki anan
+                if(typeof updateVendorDistances === "function") updateVendorDistances(uLat, uLon);
+                
+                kammalaBincike(); // Rufe scanning screen automatically
+            },
+            (error) => {
+                alert("GPS dinka a kashe yake.");
+                kammalaBincike();
+            }
+        );
+    }
+}
+
+// 2. Wannan shi ne zai kashe duka overlays din bayan bincike
 function kammalaBincike() {
-    document.getElementById('ai-loading-screen').style.display = 'none';
-    localStorage.removeItem('user_captured_image');
-}
+    const overlay = document.getElementById('search-overlay');
+    const loadingScreen = document.getElementById('ai-loading-screen');
+
+    if(overlay) overlay.style.display = 'none';
+    
+    setTimeout(() => {
+        if(loadingScreen) loadingScreen.style.display = 'none';
+        console.log("Bincike ya kammala!");
+    }, 1500); // Sakan daya da rabi na scanning ya isa
+       }
