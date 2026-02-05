@@ -210,31 +210,35 @@ async function globalSearchMotsi(mode) {
 }
 
 function samunLocation() {
-    // Tabbatar an cire hoto don kada a samu rikici
+    // 1. Tabbatar an cire hoton tsohon bincike
     localStorage.removeItem('user_captured_image');
 
+    const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0 // Wannan yana gaya wa Browser kada ta yi amfani da tsohon cache
+    };
+
     if (navigator.geolocation) {
+        // Muna amfani da watchPosition na dan lokaci don ta fi karfin jan notification
         navigator.geolocation.getCurrentPosition(
             (position) => {
+                console.log("An samu location");
                 kammalaBincike();
             },
             (error) => {
-                // Wannan shi ne zai nuna notification din Browser (Allow/Block)
-                // Idan user ya riga ya yi block, ba za ka sake gani ba sai an gyara a settings
+                // Idan user ya kashe GPS ko ya ki bayarwa
+                console.log("GPS error code: " + error.code);
+                
+                // Idan har yanzu ba a ga notification ba, mu taimaka mata da alert
+                if (error.code === error.PERMISSION_DENIED) {
+                    // Wannan zai nuna idan an taba yin 'Deny'
+                }
                 kammalaBincike();
-            },
-            { enableHighAccuracy: true, timeout: 5000 }
+            }, 
+            options
         );
     } else {
         kammalaBincike();
     }
 }
-
-function kammalaBincike() {
-    const loadingScreen = document.getElementById('ai-loading-screen');
-    if (loadingScreen) loadingScreen.style.display = 'none';
-    
-    // MUHIMMI: Goge hoton baki daya bayan an gama scanning
-    localStorage.removeItem('user_captured_image');
-        }
-        
