@@ -99,11 +99,24 @@ function closeSearch() {
     }
 }
 
-// 4. AI CAMERA & LOCATION (Sheet Fixed)
+// 4. AI CAMERA & LOCATION (GYARAN ALIGNMENT)
 function openAICamera() {
     const existing = document.getElementById('ai-sheet');
     if(existing) existing.remove();
-    const menuHTML = `<div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/40 z-[4999] opacity-0 transition-opacity duration-300"></div><div id="ai-sheet" class="ai-bottom-sheet active"><div style="width:40px;height:4px;background:rgba(0,0,0,0.1);border-radius:10px;margin:12px auto 15px;"></div><div style="display:flex; justify-content:space-around; align-items:flex-end; padding:10px 0;"><div onclick="handleCamera()" style="cursor:pointer;text-align:center"><div class="silver-box" style="display:flex;align-items:center;justify-content:center;background:#ccc;width:50px;height:50px;border-radius:12px;"><i class="fa-solid fa-camera-retro" style="color:white"></i></div><small style="font-size:10px;font-weight:bold;">CAMERA</small></div><div onclick="handleCamera()" style="cursor:pointer;text-align:center"><div class="silver-box active-scan" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg, #222, #444);width:50px;height:50px;border-radius:12px;border:2px solid #FFD700;"><i class="fa-solid fa-qrcode" style="color:#FFD700"></i></div><small style="color:#8B6508;font-size:10px;font-weight:bold;">SCAN</small></div><div onclick="handleGallery()" style="cursor:pointer;text-align:center"><div class="silver-box" style="display:flex;align-items:center;justify-content:center;background:#ccc;width:50px;height:50px;border-radius:12px;"><i class="fa-solid fa-images" style="color:white"></i></div><small style="font-size:10px;font-weight:bold;">GALLERY</small></div></div></div>`;
+    const menuHTML = `<div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/40 z-[4999] opacity-0 transition-opacity duration-300"></div><div id="ai-sheet" class="ai-bottom-sheet active"><div style="width:40px;height:4px;background:rgba(0,0,0,0.1);border-radius:10px;margin:12px auto 15px;"></div><div style="display:flex; justify-content:space-around; align-items:flex-end; padding:10px 0; width:100%;">
+        <div onclick="handleCamera()" style="cursor:pointer; display:flex; flex-direction:column; align-items:center;">
+            <div class="silver-box" style="display:flex;align-items:center;justify-content:center;background:#ccc;width:50px;height:50px;border-radius:12px;"><i class="fa-solid fa-camera-retro" style="color:white"></i></div>
+            <small style="font-size:10px;font-weight:bold;margin-top:8px;">CAMERA</small>
+        </div>
+        <div onclick="handleCamera()" style="cursor:pointer; display:flex; flex-direction:column; align-items:center;">
+            <div class="silver-box active-scan" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg, #222, #444);width:55px;height:55px;border-radius:12px;border:2px solid #FFD700;"><i class="fa-solid fa-qrcode" style="color:#FFD700; font-size:20px;"></i></div>
+            <small style="color:#8B6508;font-size:10px;font-weight:bold;margin-top:8px;">SCAN</small>
+        </div>
+        <div onclick="handleGallery()" style="cursor:pointer; display:flex; flex-direction:column; align-items:center;">
+            <div class="silver-box" style="display:flex;align-items:center;justify-content:center;background:#ccc;width:50px;height:50px;border-radius:12px;"><i class="fa-solid fa-images" style="color:white"></i></div>
+            <small style="font-size:10px;font-weight:bold;margin-top:8px;">GALLERY</small>
+        </div>
+    </div></div>`;
     document.body.insertAdjacentHTML('beforeend', menuHTML);
     setTimeout(() => document.getElementById('ai-overlay')?.classList.add('opacity-100'), 10);
 }
@@ -170,5 +183,4 @@ function nearYouSearch() {
 function kammalaBincike() {
     document.getElementById('ai-loading-screen').style.display = 'none';
     localStorage.removeItem('user_captured_image');
-            }
-                   
+}
