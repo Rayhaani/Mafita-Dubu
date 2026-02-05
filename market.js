@@ -1,101 +1,222 @@
-// ==========================================
-// 1. AI CAMERA & SEARCH FUNCTIONS
-// ==========================================
-function openAICamera() {
-    console.log("Kamara tana budewa...");
-    const loadingScreen = document.getElementById('ai-loading-screen');
-    if(loadingScreen) loadingScreen.style.display = 'flex';
-    // Nan zaka iya sauran code din bude kamara
+let typingTimer;
+const doneTypingInterval = 3000;
+let sliderPos = 0; // Mun saka wannan a nan don kada komai ya tsaya
+
+function handleSearch(textbox) {
+    let kalma = textbox.value.trim();
+    const listContainer = document.getElementById('suggestionList'); 
+    clearTimeout(typingTimer);
+
+    if (kalma.length >= 2) {
+        const samples = ["Woman Panties", "Woman Bra", "Woman Gown", "Woman Shoes", "Men Boxer", "Men Singlet", "Men Shirt", "Men Trousers", "Children Wears", "Baby Toys", "Diapers", "Baby Food", "Cosmetics", "Perfumes", "Body Cream", "Makeup Kit", "Electronics", "Smartphones", "Laptops", "Power Banks", "Kitchen Utensils", "Blenders", "Plates", "Spoons"];
+        const filtered = samples.filter(i => i.toLowerCase().includes(kalma.toLowerCase()));
+        if(listContainer) {
+            listContainer.parentElement.style.display = 'block';
+            listContainer.innerHTML = filtered.map(item => `<li onclick="selectItem('${item}')" style="padding:12px; border-bottom:1px solid #eee; cursor:pointer; color:#333; font-weight:bold;">${item}</li>`).join('');
+        }
+        typingTimer = setTimeout(() => { showSearchOverlay(kalma); }, doneTypingInterval);
+    } else {
+        if(listContainer) listContainer.parentElement.style.display = 'none';
+    }
 }
 
-function handleSearch(input) {
-    const query = input.value.toLowerCase();
-    console.log("Searching for: " + query);
-    // Nan zaka saka code din tace kayayyaki (Filtering)
+function selectItem(word) {
+    const input = document.getElementById('market-search');
+    if(input) input.value = word;
+    const box = document.getElementById('suggestionList');
+    if(box) box.parentElement.style.display = 'none';
+    showSearchOverlay(word);
+}
+function showSearchOverlay(kalma) {
+    const overlay = document.getElementById('search-overlay');
+    const display = document.getElementById('query-val');
+    
+    // --- WANNAN SHI NE GYARAN ---
+    const listContainer = document.getElementById('suggestionList');
+    if(listContainer) {
+        listContainer.parentElement.style.display = 'none';
+    }
+    // ----------------------------
+
+    if (display) display.innerText = '"' + kalma + '"';
+    if (overlay) {
+        overlay.style.display = 'flex';
+        setTimeout(() => overlay.classList.add('active'), 50);
+    }
+}
+function closeSearch() {
+    const overlay = document.getElementById('search-overlay');
+    if(overlay) {
+        overlay.classList.remove('active');
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            // Wannan zai goge rubutun search bar din bayan an rufe
+            const input = document.getElementById('market-search');
+            if(input) input.value = '';
+        }, 500);
+    }
+}
+
+function openAICamera() {
+    const existing = document.getElementById('ai-sheet');
+    if(existing) existing.remove();
+    const menuHTML = `<div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/40 z-[4999] opacity-0 transition-opacity duration-300"></div><div id="ai-sheet" class="ai-bottom-sheet"><div style="width:40px; height:4px; background:rgba(0,0,0,0.1); border-radius:10px; margin: 12px auto 15px auto;"></div><div class="flex-row-container" style="display:flex; justify-content:space-around; align-items:center; width:100%; padding:10px 0;"><div style="display:flex; flex-direction:column; align-items:center;"><div class="silver-box" onclick="handleCamera()" style="cursor:pointer;"><i class="fa-solid fa-camera-retro" style="color:white; font-size:22px;"></i></div><span style="color:#333; font-size:10px; font-weight:900; margin-top:10px;">CAMERA</span></div><div style="display:flex; flex-direction:column; align-items:center;"><div class="silver-box active-scan" onclick="handleCamera()" style="cursor:pointer;"><i class="fa-solid fa-qrcode" style="color:#FFD700; font-size:22px;"></i></div><span style="color:#8B6508; font-size:10px; font-weight:900; margin-top:10px;">SCAN</span></div><div style="display:flex; flex-direction:column; align-items:center;"><div class="silver-box" onclick="handleGallery()" style="cursor:pointer;"><i class="fa-solid fa-images" style="color:white; font-size:22px;"></i></div><span style="color:#333; font-size:10px; font-weight:900; margin-top:10px;">GALLERY</span></div></div></div>`;
+    document.body.insertAdjacentHTML('beforeend', menuHTML);
+    setTimeout(() => { document.getElementById('ai-overlay')?.classList.add('opacity-100'); document.getElementById('ai-sheet')?.classList.add('active'); }, 10);
+}
+
+function closeAIVision() {
+    const sheet = document.getElementById('ai-sheet');
+    if(sheet) sheet.classList.remove('active');
+    setTimeout(() => { if(document.getElementById('ai-overlay')) document.getElementById('ai-overlay').remove(); if(sheet) sheet.remove(); }, 400);
+}
+
+// --- AUTO PAGE SCROLL ---
+let isPaused = false;
+let direction = 1;
+
+function startProfessionalScroll() {
+    const searchBar = document.getElementById('market-search');
+    // Idan mutum yana rubutu, mu dakatar da gudu
+    const isTyping = searchBar === document.activeElement || (searchBar && searchBar.value.length > 0);
+
+    if (!isPaused && !isTyping) {
+        // Wannan zai sa duka shafin (Page) ya rika scrolling
+        window.scrollBy(0, direction * 0.2); // 0.6 ne gudun, mun maida shi 0.2 don sanyi
+
+        // Idan ya kai karshen kasa, ya dawo sama
+        if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
+            direction = -1; 
+            isPaused = true; 
+            setTimeout(() => isPaused = false, 5000); // Tsaya na sakan 5 kafin komawa
+        } else if (direction === -1 && window.pageYOffset <= 0) {
+            direction = 1; 
+            isPaused = true; 
+            setTimeout(() => isPaused = false, 5000);
+        }
+    }
+    requestAnimationFrame(startProfessionalScroll);
+}
+window.onload = () => setTimeout(startProfessionalScroll, 3000);
+// Saka wannan a duk inda kake so a cikin JS din
+document.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        const searchBar = document.getElementById('market-search');
+        if (document.activeElement === searchBar) {
+            manualSearch();
+        }
+    }
+});
+
+function handleCamera() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.capture = 'environment';
+    input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            closeAIVision();
+            startAISimulation(file); // Wannan zai kira Real AI
+        }
+    };
+    input.click();
+}
+
+function handleGallery() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            closeAIVision();
+            startAISimulation(file); // Wannan zai kira Real AI
+        }
+    };
+    input.click();
 }
 
 function manualSearch() {
-    alert("Ana binciken abinda ka rubuta...");
-}
-
-// ==========================================
-// 2. LOCATION & DISTANCE LOGIC (The Engine)
-// ==========================================
-function lissafaNisa(lat1, lon1, lat2, lon2) {
-    const R = 6371; 
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-              Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return (R * c).toFixed(1);
-}
-
-function samunLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const uLat = position.coords.latitude;
-                const uLon = position.coords.longitude;
-                updateVendorDistances(uLat, uLon);
-            },
-            (error) => {
-                alert("Don Allah ka kunna GPS dinka don ganin na kusa.");
-            }
-        );
-    }
-}
-
-// ==========================================
-// 3. GLOBAL VS NEAR ME (The Brain)
-// ==========================================
-function bincikaKasuwa(tsari) {
-    console.log("Tsarin da aka zaba: " + tsari);
+    const input = document.getElementById('market-search');
+    if (!input) return;
     
-    // Rufe Overlay idan an danna kowane button
-    const overlay = document.getElementById('search-overlay');
-    if(overlay) overlay.style.display = 'none';
-
-    if (tsari === 'near_me') {
-        samunLocation();
-    } else {
-        // Global Search: Jera Premium a sama
-        displayGlobalMarket();
+    let kalma = input.value.trim();
+    if (kalma.length >= 2) {
+        clearTimeout(typingTimer); 
+        input.blur(); // Wannan zai sa keyboard din ya boyu
+        showSearchOverlay(kalma);
+        
+        const box = document.getElementById('suggestionList');
+        if(box) box.parentElement.style.display = 'none';
     }
 }
 
-function displayGlobalMarket() {
-    console.log("Ana nuna Global Market (Premium First)");
-    // Code din jera sponsored items zai shigo nan
-}
-
-function updateVendorDistances(uLat, uLon) {
-    // Wannan zai duba duka akwatunan vendors ya saka musu KM
-    const vendors = document.querySelectorAll('.vendor-card');
-    vendors.forEach(v => {
-        const vLat = v.getAttribute('data-lat');
-        const vLon = v.getAttribute('data-lon');
-        if(vLat && vLon) {
-            const nisa = lissafaNisa(uLat, uLon, vLat, vLon);
-            const badge = v.querySelector('.km-badge');
-            if(badge) badge.innerText = nisa + " km";
+async function startAISimulation(file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const base64Image = e.target.result;
+        // Adana hoton a wayar mutum
+        localStorage.setItem('user_captured_image', base64Image);
+        
+        // Nuna overlay din zabi (Global Search / Near You)
+        const overlay = document.getElementById('search-overlay');
+        if (overlay) {
+            overlay.style.display = 'flex';
+            overlay.classList.add('active');
         }
-    });
+    };
+    reader.readAsDataURL(file);
 }
 
-function closeSearch() {
-    document.getElementById('search-overlay').style.display = 'none';
+// Wannan ita ce za ta kaddamar da scanning din
+async function globalSearchMotsi() {
+    const loadingScreen = document.getElementById('ai-loading-screen');
+    const previewImg = document.getElementById('scanned-image-preview');
+    const savedImage = localStorage.getItem('user_captured_image');
+
+    if (savedImage) {
+        // 1. Boye overlay din zabi
+        document.getElementById('search-overlay').style.display = 'none';
+        
+        // 2. Nuna asalin fuskar scanning (ai-loading-screen)
+        previewImg.src = savedImage;
+        loadingScreen.style.display = 'flex';
+        
+        // 3. Kira Gemini (ko aikin gano hoton)
+        await kiraGemini(savedImage.split(',')[1]);
+    }
 }
 
-// ==========================================
-// 4. ANIMATIONS & UI EFFECTS
-// ==========================================
-function globalSearchMotsi() {
-    // Wannan zai iya zama animation din da kake dashi na baya
-    console.log("Motsi yana farawa...");
+async function kiraGemini(base64) {
+    const API_KEY = "AIzaSyC9V-J5xw4tFFP45eaj9IpSM8Z1HZ6g0ao";
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: "Name this object in 1 word." }, { inline_data: { mime_type: "image/jpeg", data: base64 } }] }]
+            })
+        });
+        
+        const data = await response.json();
+        const keyword = data.candidates[0].content.parts[0].text.trim();
+        
+        setTimeout(() => {
+            // Boye scanning screen
+            document.getElementById('ai-loading-screen').style.display = 'none';
+            
+            // --- GYARAN YANA NAN: Wannan zai goge hoton don bincike na gaba ya zama sabo ---
+            localStorage.removeItem('user_captured_image');
+            
+            console.log("Gemini ta gano: " + keyword);
+        }, 1500);
+        
+    } catch (e) {
+        document.getElementById('ai-loading-screen').style.display = 'none';
+        // Ko da an samu error, mu goge tsohon hoton
+        localStorage.removeItem('user_captured_image');
+    }
 }
-
-window.onload = () => {
-    console.log("Global Market Engine is Ready!");
-};
