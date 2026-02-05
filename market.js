@@ -220,3 +220,15 @@ async function kiraGemini(base64) {
         localStorage.removeItem('user_captured_image');
     }
 }
+
+let bincikeMode = 'global'; // Dama can kan global yake
+
+function setSearchMode(mode) {
+    bincikeMode = mode;
+    console.log("Yanayin bincike ya koma: " + mode);
+    
+    // Idan aka danna 'near_me', mu fara neman GPS a boye
+    if(mode === 'near_me') {
+        samunLocation(); 
+    }
+}
