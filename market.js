@@ -173,72 +173,66 @@ async function globalSearchMotsi(mode) {
     const loadingScreen = document.getElementById('ai-loading-screen');
     const overlay = document.getElementById('search-overlay');
     const previewImg = document.getElementById('scanned-image-preview');
-    
-    // Wannan layin zai duba idan akwai hoto a ajiye
     const savedImage = localStorage.getItem('user_captured_image');
 
-    // 1. Boye koren overlay
     if (overlay) overlay.style.display = 'none';
-
-    // 2. Nuna fuskar scanning
     if (loadingScreen) loadingScreen.style.display = 'flex';
 
-    // 3. IDAN BINCIKEN HOTO NE (AI Vision)
-    if (savedImage) {
+    // IDAN BINCIKEN RUBUTU NE (Near Me ko Global)
+    if (!savedImage) {
+        if (previewImg) {
+            previewImg.src = ""; // Goge tsohon hoton
+            previewImg.style.display = 'none'; // Boye wajen hoton baki daya
+        }
+
+        if (mode === 'near_me') {
+            samunLocation(); // Wannan ne zai kawo tambayar
+        } else {
+            setTimeout(() => { kammalaBincike(); }, 3000);
+        }
+    } 
+    // IDAN BINCIKEN HOTO NE (AI Vision)
+    else {
         if (previewImg) {
             previewImg.style.display = 'block';
             previewImg.src = savedImage;
         }
         await kiraGemini(savedImage.split(',')[1]);
-    } 
-    // 4. IDAN BINCIKEN RUBUTU NE (Text Search)
-    else {
-        // Boye hoton da ke jiki don kada a ga tsohon abu
-        if (previewImg) {
-            previewImg.style.display = 'none';
-            previewImg.src = "";
-        }
-        
-        if (mode === 'near_me') {
-            // Wannan zai tilasta Browser ta nuna screenshot din da ka turo
-            samunLocation(); 
-        } else {
-            // Global search na rubutu
-            setTimeout(() => { kammalaBincike(); }, 3000);
-        }
     }
 }
 
 function samunLocation() {
-    // 1. Tabbatar an cire hoton tsohon bincike
+    // Tabbatar an goge hoton da ya gabata
     localStorage.removeItem('user_captured_image');
-
-    const options = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0 // Wannan yana gaya wa Browser kada ta yi amfani da tsohon cache
-    };
+    const loadingScreen = document.getElementById('ai-loading-screen');
 
     if (navigator.geolocation) {
-        // Muna amfani da watchPosition na dan lokaci don ta fi karfin jan notification
-        navigator.geolocation.getCurrentPosition(
+        // Muna amfani da 'watchPosition' na dan sakan don tilasta Browser ta yi magana
+        const watchId = navigator.geolocation.watchPosition(
             (position) => {
-                console.log("An samu location");
-                kammalaBincike();
+                // Idan an samu Location
+                navigator.geolocation.clearWatch(watchId); // Tsayar da neman
+                kammalaBincike(); // Bude sakamako
             },
             (error) => {
-                // Idan user ya kashe GPS ko ya ki bayarwa
-                console.log("GPS error code: " + error.code);
+                // Idan mutum ya ki bayarwa ko GPS a kashe yake
+                navigator.geolocation.clearWatch(watchId);
                 
-                // Idan har yanzu ba a ga notification ba, mu taimaka mata da alert
-                if (error.code === error.PERMISSION_DENIED) {
-                    // Wannan zai nuna idan an taba yin 'Deny'
-                }
-                kammalaBincike();
-            }, 
-            options
+                // 1. Sanar da mutum
+                alert("Don ganin abubuwan dake kusa da kai, dole ka bada izinin GPS.");
+                
+                // 2. Maida shi Global Market (Rufe scanning screen din)
+                if (loadingScreen) loadingScreen.style.display = 'none';
+                console.log("An maida mutum baya domin bai bada GPS ba.");
+            },
+            { 
+                enableHighAccuracy: true, 
+                timeout: 8000, 
+                maximumAge: 0 
+            }
         );
     } else {
-        kammalaBincike();
+        alert("Wayarka ba ta goyon bayan GPS.");
+        if (loadingScreen) loadingScreen.style.display = 'none';
     }
 }
