@@ -173,50 +173,68 @@ async function globalSearchMotsi(mode) {
     const loadingScreen = document.getElementById('ai-loading-screen');
     const overlay = document.getElementById('search-overlay');
     const previewImg = document.getElementById('scanned-image-preview');
+    
+    // Wannan layin zai duba idan akwai hoto a ajiye
     const savedImage = localStorage.getItem('user_captured_image');
 
+    // 1. Boye koren overlay
     if (overlay) overlay.style.display = 'none';
+
+    // 2. Nuna fuskar scanning
     if (loadingScreen) loadingScreen.style.display = 'flex';
 
+    // 3. IDAN BINCIKEN HOTO NE (AI Vision)
     if (savedImage) {
-        if (previewImg) previewImg.src = savedImage;
+        if (previewImg) {
+            previewImg.style.display = 'block';
+            previewImg.src = savedImage;
+        }
         await kiraGemini(savedImage.split(',')[1]);
-    } else {
-        // Idan rubutu ne, goge tsohon hoton screen din
-        if (previewImg) previewImg.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"; 
+    } 
+    // 4. IDAN BINCIKEN RUBUTU NE (Text Search)
+    else {
+        // Boye hoton da ke jiki don kada a ga tsohon abu
+        if (previewImg) {
+            previewImg.style.display = 'none';
+            previewImg.src = "";
+        }
         
         if (mode === 'near_me') {
+            // Wannan zai tilasta Browser ta nuna screenshot din da ka turo
             samunLocation(); 
         } else {
+            // Global search na rubutu
             setTimeout(() => { kammalaBincike(); }, 3000);
         }
     }
 }
 
-
 function samunLocation() {
-    if (!navigator.geolocation) {
-        alert("Wannan Browser din ba ta goyon bayan GPS.");
-        kammalaBincike();
-        return;
-    }
+    // Tabbatar an cire hoto don kada a samu rikici
+    localStorage.removeItem('user_captured_image');
 
-    navigator.geolocation.getCurrentPosition(
-        (position) => {
-            console.log("An samu location!");
-            kammalaBincike();
-        },
-        (error) => {
-            // WANNAN SHINE MUHIMMI: Zai gaya mana dalilin da yasa baya nuna
-            if (error.code === error.PERMISSION_DENIED) {
-                alert("Browser ta hana nuna Location. Duba Settings na wayarka ka bawa shafin nan izini.");
-            } else if (error.code === error.POSITION_UNAVAILABLE) {
-                alert("Ba a samu siginar GPS ba. Kunna Location na wayar gaba daya.");
-            } else if (error.code === error.TIMEOUT) {
-                alert("Lokaci ya cika ba a samu GPS ba.");
-            }
-            kammalaBincike();
-        },
-        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-    );
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                kammalaBincike();
+            },
+            (error) => {
+                // Wannan shi ne zai nuna notification din Browser (Allow/Block)
+                // Idan user ya riga ya yi block, ba za ka sake gani ba sai an gyara a settings
+                kammalaBincike();
+            },
+            { enableHighAccuracy: true, timeout: 5000 }
+        );
+    } else {
+        kammalaBincike();
+    }
 }
+
+function kammalaBincike() {
+    const loadingScreen = document.getElementById('ai-loading-screen');
+    if (loadingScreen) loadingScreen.style.display = 'none';
+    
+    // MUHIMMI: Goge hoton baki daya bayan an gama scanning
+    localStorage.removeItem('user_captured_image');
+        }
+        
