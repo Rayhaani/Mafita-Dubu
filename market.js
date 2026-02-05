@@ -223,12 +223,35 @@ async function kiraGemini(base64) {
 
 let bincikeMode = 'global'; // Dama can kan global yake
 
-function setSearchMode(mode) {
-    bincikeMode = mode;
-    console.log("Yanayin bincike ya koma: " + mode);
-    
-    // Idan aka danna 'near_me', mu fara neman GPS a boye
-    if(mode === 'near_me') {
-        samunLocation(); 
+// 1. Wannan zai nemo GPS kuma ya kashe scanning screen idan ya gama
+function samunLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const uLat = position.coords.latitude;
+                const uLon = position.coords.longitude;
+                // Idan kana da function din updateVendorDistances, zai yi aiki anan
+                if(typeof updateVendorDistances === "function") updateVendorDistances(uLat, uLon);
+                
+                kammalaBincike(); // Rufe scanning screen automatically
+            },
+            (error) => {
+                alert("GPS dinka a kashe yake.");
+                kammalaBincike();
+            }
+        );
     }
+}
+
+// 2. Wannan shi ne zai kashe duka overlays din bayan bincike
+function kammalaBincike() {
+    const overlay = document.getElementById('search-overlay');
+    const loadingScreen = document.getElementById('ai-loading-screen');
+
+    if(overlay) overlay.style.display = 'none';
+    
+    setTimeout(() => {
+        if(loadingScreen) loadingScreen.style.display = 'none';
+        console.log("Bincike ya kammala!");
+    }, 1500); // Sakan daya da rabi na scanning ya isa
 }
