@@ -175,28 +175,46 @@ async function globalSearchMotsi(mode) {
     const previewImg = document.getElementById('scanned-image-preview');
     const savedImage = localStorage.getItem('user_captured_image');
 
-    // Ajiye yanayin bincike (Global ko Near Me)
     bincikeMode = mode;
-
-    // 1. Boye koren overlay din da sauri
     if (overlay) overlay.style.display = 'none';
-
-    // 2. Nuna fuskar scanning (ai-loading-screen)
     if (loadingScreen) loadingScreen.style.display = 'flex';
 
-    // 3. Duba idan hoto ne ko rubutu
     if (savedImage) {
+        // Idan binciken hoto ne
         if (previewImg) previewImg.src = savedImage;
         await kiraGemini(savedImage.split(',')[1]);
     } else {
-        // Idan rubutu ne, duba idan kusa ake so
+        // IDAN RUBUTU NE (Wannan shi ne gyaran):
+        if (previewImg) previewImg.src = ""; // Goge tsohon hoton da kake gani
+        
         if (mode === 'near_me') {
-            samunLocation(); // Wannan zai nuna notification din browser
-        } else {
-            // Idan global ne, mu yi scanning na sakan 3 kawai
+            // Jira sakan 1 kafin tambayar GPS don Browser ta nuna notification
             setTimeout(() => {
-                kammalaBincike();
-            }, 3000);
+                samunLocation();
+            }, 1000);
+        } else {
+            setTimeout(() => { kammalaBincike(); }, 3000);
         }
     }
+}
+
+function samunLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                console.log("GPS Found");
+                kammalaBincike();
+            },
+            (error) => {
+                // Idan an samu matsala ko a kashe yake
+                if (error.code === 1) { // User denied
+                    alert("Ka kunna Location a settings na wayarka don ganin na kusa da kai.");
                 }
+                kammalaBincike();
+            },
+            { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        );
+    } else {
+        kammalaBincike();
+    }
+}
