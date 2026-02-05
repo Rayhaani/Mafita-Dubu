@@ -267,3 +267,30 @@ function bincikaKasuwa(tsari) {
         displayPremiumFirst();
     }
 }
+
+// Wannan function din zai kula da buttons din ba tare da sun tsayar da sauran code ba
+function bincikaKasuwa(tsari) {
+    console.log("An danna: " + tsari);
+    
+    // 1. Kira animation din dake boye overlay (idan akwai shi)
+    if (typeof globalSearchMotsi === "function") {
+        globalSearchMotsi();
+    }
+
+    // 2. Duba wanne button aka danna
+    if (tsari === 'near_me') {
+        // Idan samunLocation() yana nan, a kira shi
+        if (typeof samunLocation === "function") {
+            samunLocation();
+        } else {
+            alert("Ana kokarin hada tsarin Location...");
+        }
+    } else {
+        // Idan Global ne
+        alert("Kana bincika duka kasuwannin duniya (Global)...");
+        // Anan zaka saka code din nuna Premium Vendors
+    }
+}
+
+// Tabbatar sauran functions dinka (kamar openAICamera) suna nan a kasa
+
