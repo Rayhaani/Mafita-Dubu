@@ -171,3 +171,47 @@ function kammalaBincike() {
     localStorage.removeItem('user_captured_image');
             }
                                  
+// Wannan function din zai zauna a kasa, baya taba kyan buttons dinka
+function lissafaNisa(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radius na duniya (km)
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // Nisan a Kilomita
+}
+
+function nearYouSearch() {
+    const loading = document.getElementById('ai-loading-screen');
+    if (loading) loading.style.display = 'flex';
+
+    if (!navigator.geolocation) {
+        alert("GPS dinka a kashe yake.");
+        if (loading) loading.style.display = 'none';
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        (pos) => {
+            const userLat = pos.coords.latitude;
+            const userLon = pos.coords.longitude;
+
+            // NAN NE ZAKA SAKA DATA NA VENDORS DIN KA NAN GABA
+            // Misali:
+            console.log("Inda kake: " + userLat + ", " + userLon);
+            
+            // Bayan sakan 3 na "Scanning", sai mu nuna sakamako
+            setTimeout(() => {
+                if (loading) loading.style.display = 'none';
+                alert("An gano inda kake! Yanzu AI zai jero maka shagunan da ke kusa da kai.");
+                kammalaBincike();
+            }, 3000);
+        },
+        (error) => {
+            if (loading) loading.style.display = 'none';
+            alert("Tabbatar ka kunna GPS na wayarka.");
+        }
+    );
+}
