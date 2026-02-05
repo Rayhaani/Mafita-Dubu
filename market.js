@@ -169,25 +169,80 @@ async function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-// Wannan ita ce za ta kaddamar da scanning din
+// 1. WANNAN SHINE ZAI KADDAMAR DA SCANNING
 async function globalSearchMotsi() {
     const loadingScreen = document.getElementById('ai-loading-screen');
     const previewImg = document.getElementById('scanned-image-preview');
     const savedImage = localStorage.getItem('user_captured_image');
+    const overlay = document.getElementById('search-overlay');
+
+    // Boye koren overlay din buttons
+    if (overlay) overlay.style.display = 'none';
+
+    // Nuna fuskar scanning
+    if (loadingScreen) loadingScreen.style.display = 'flex';
 
     if (savedImage) {
-        // 1. Boye overlay din zabi
-        document.getElementById('search-overlay').style.display = 'none';
-        
-        // 2. Nuna asalin fuskar scanning (ai-loading-screen)
-        previewImg.src = savedImage;
-        loadingScreen.style.display = 'flex';
-        
-        // 3. Kira Gemini (ko aikin gano hoton)
+        // Idan binciken hoto ne
+        if (previewImg) previewImg.src = savedImage;
         await kiraGemini(savedImage.split(',')[1]);
+    } else {
+        // Idan binciken rubutu ne (Bra/Panties)
+        // Ba bu bukatar hoton preview, kawai bari scanning din ya nuna
     }
 }
 
+// 2. GYARAN SETSEARCHMODE (Wanda buttons suke kira)
+function setSearchMode(mode) {
+    bincikeMode = mode; 
+    
+    if(mode === 'near_me') {
+        samunLocation(); // Wannan zai nemo GPS
+    } else {
+        // Idan Global ne kuma ba hoto ba, mu rufe scanning bayan sakan 2
+        const isPhotoSearch = localStorage.getItem('user_captured_image');
+        if(!isPhotoSearch) {
+            setTimeout(() => {
+                kammalaBincike();
+            }, 2000);
+        }
+    }
+}
+
+// 3. GYARAN GPS (Don nuna Notification din Browser)
+function samunLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const uLat = position.coords.latitude;
+                const uLon = position.coords.longitude;
+                // Anan zaka iya kiran updateVendorDistances(uLat, uLon)
+                kammalaBincike();
+            },
+            (error) => {
+                // Browser zata nuna kuskuren idan GPS a kashe yake
+                console.log("GPS Error: " + error.message);
+                kammalaBincike();
+            },
+            { enableHighAccuracy: true, timeout: 10000 } 
+        );
+    } else {
+        kammalaBincike();
+    }
+}
+
+// 4. RUFE SCANNING
+function kammalaBincike() {
+    const loadingScreen = document.getElementById('ai-loading-screen');
+    const isPhotoSearch = localStorage.getItem('user_captured_image');
+
+    // Idan hoto ne, kiraGemini ne yake da alhakin rufe loadingScreen
+    if(!isPhotoSearch) {
+        if(loadingScreen) loadingScreen.style.display = 'none';
+    }
+}
+
+// 5. GYARAN KIRAGEMINI (Don sakan 4 na Scanning)
 async function kiraGemini(base64) {
     const API_KEY = "AIzaSyC9V-J5xw4tFFP45eaj9IpSM8Z1HZ6g0ao";
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
@@ -204,71 +259,17 @@ async function kiraGemini(base64) {
         const data = await response.json();
         const keyword = data.candidates[0].content.parts[0].text.trim();
         
-                        // Goge tsohon setTimeout din, ka saka wannan kwaya daya kacal:
         setTimeout(() => {
-            // 1. Kashe scanning screen bayan Gemini ta gama aiki
             const loadingScreen = document.getElementById('ai-loading-screen');
             if(loadingScreen) loadingScreen.style.display = 'none';
-            
-            // 2. Goge hoton don bincike na gaba ya zama sabo
             localStorage.removeItem('user_captured_image');
-            
-            // 3. Nuna abin da Gemini ta gano a console
             console.log("Gemini ta gano: " + keyword);
-            
-            // 4. Anan ne zaka kira sakamakon binciken (Results)
-            // Misali: nunaKayanBincike(keyword);
-
-        }, 4000); // Sakan hudu (4) ya fi kyau don AI scanning
-        
-        
+            // nunaKayanBincike(keyword);
+        }, 4000); 
         
     } catch (e) {
         document.getElementById('ai-loading-screen').style.display = 'none';
-        // Ko da an samu error, mu goge tsohon hoton
         localStorage.removeItem('user_captured_image');
     }
 }
-
-let bincikeMode = 'global'; // Dama can kan global yake
-
-function samunLocation() {
-    if (navigator.geolocation) {
-        // Browser za ta nuna "Allow/Never" dinta anan
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                // Idan ya yarda, muna samun location
-                const uLat = position.coords.latitude;
-                const uLon = position.coords.longitude;
-                if(typeof updateVendorDistances === "function") updateVendorDistances(uLat, uLon);
-                
-                // Rufe scanning bayan komai ya kammala
-                kammalaBincike();
-            },
-            (error) => {
-                // Ko da ya ki yarda, ba za mu nuna wancan rubutun ba
-                console.log("GPS denied or off");
-                kammalaBincike();
-            },
-            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
-        );
-    } else {
-        kammalaBincike();
-    }
-}
-function kammalaBincike() {
-    const overlay = document.getElementById('search-overlay');
-    const loadingScreen = document.getElementById('ai-loading-screen');
-
-    // Wannan zai tabbatar overlay (inda buttons suke) ya bace
-    if(overlay) overlay.style.display = 'none';
     
-    // Amma loadingScreen (Scanning) zai bace ne kawai idan ba binciken hoto ake ba
-    const isPhotoSearch = localStorage.getItem('user_captured_image');
-    if(!isPhotoSearch) {
-        setTimeout(() => {
-            if(loadingScreen) loadingScreen.style.display = 'none';
-        }, 1000);
-    }
-}
-
