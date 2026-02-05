@@ -168,7 +168,7 @@ async function startAISimulation(file) {
     };
     reader.readAsDataURL(file);
 }
-
+// 1. Wannan shine zai fara karbar umarni
 async function globalSearchMotsi(mode) {
     const loadingScreen = document.getElementById('ai-loading-screen');
     const overlay = document.getElementById('search-overlay');
@@ -178,61 +178,77 @@ async function globalSearchMotsi(mode) {
     if (overlay) overlay.style.display = 'none';
     if (loadingScreen) loadingScreen.style.display = 'flex';
 
-    // IDAN BINCIKEN RUBUTU NE (Near Me ko Global)
-    if (!savedImage) {
-        if (previewImg) {
-            previewImg.src = ""; // Goge tsohon hoton
-            previewImg.style.display = 'none'; // Boye wajen hoton baki daya
-        }
-
-        if (mode === 'near_me') {
-            samunLocation(); // Wannan ne zai kawo tambayar
-        } else {
-            setTimeout(() => { kammalaBincike(); }, 3000);
-        }
-    } 
-    // IDAN BINCIKEN HOTO NE (AI Vision)
-    else {
+    // Idan akwai hoto (AI Search)
+    if (savedImage) {
         if (previewImg) {
             previewImg.style.display = 'block';
             previewImg.src = savedImage;
         }
         await kiraGemini(savedImage.split(',')[1]);
+    } 
+    // Idan rubutu ne (Near Me ko Global)
+    else {
+        if (previewImg) {
+            previewImg.src = ""; 
+            previewImg.style.display = 'none';
+        }
+
+        if (mode === 'near_me') {
+            // KADA KA MANTA: Wannan shine zai kawo "Notification" din
+            samunLocation(); 
+        } else {
+            // Global Search na rubutu
+            setTimeout(() => { kammalaBincike(); }, 3000);
+        }
     }
 }
 
+// 2. Wannan shine zuciyar GPS dinka
 function samunLocation() {
-    // Tabbatar an goge hoton da ya gabata
     localStorage.removeItem('user_captured_image');
     const loadingScreen = document.getElementById('ai-loading-screen');
 
-    if (navigator.geolocation) {
-        // Muna amfani da 'watchPosition' na dan sakan don tilasta Browser ta yi magana
-        const watchId = navigator.geolocation.watchPosition(
-            (position) => {
-                // Idan an samu Location
-                navigator.geolocation.clearWatch(watchId); // Tsayar da neman
-                kammalaBincike(); // Bude sakamako
-            },
-            (error) => {
-                // Idan mutum ya ki bayarwa ko GPS a kashe yake
-                navigator.geolocation.clearWatch(watchId);
-                
-                // 1. Sanar da mutum
-                alert("Don ganin abubuwan dake kusa da kai, dole ka bada izinin GPS.");
-                
-                // 2. Maida shi Global Market (Rufe scanning screen din)
-                if (loadingScreen) loadingScreen.style.display = 'none';
-                console.log("An maida mutum baya domin bai bada GPS ba.");
-            },
-            { 
-                enableHighAccuracy: true, 
-                timeout: 8000, 
-                maximumAge: 0 
-            }
-        );
-    } else {
+    if (!navigator.geolocation) {
         alert("Wayarka ba ta goyon bayan GPS.");
         if (loadingScreen) loadingScreen.style.display = 'none';
+        return;
     }
+
+    // Wannan options din suna tilasta Browser ta nuna notification
+    const options = { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 };
+
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            // NASARA: An samu Location!
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            
+            console.log("An samu inda kake: ", lat, lon);
+            
+            // ANAN NE ZAKA SA AIKIN FETCHING VENDORS (Next Step)
+            setTimeout(() => {
+                kammalaBincike();
+                // alert("An nemo vendors dake kusa da kai!"); 
+            }, 3000);
+        },
+        (error) => {
+            // MATSALA: User ya ki bayarwa ko GPS a kashe yake
+            if (loadingScreen) loadingScreen.style.display = 'none';
+            
+            if (error.code === 1) {
+                alert("Don ganin vendors na kusa da kai, danna 'Allow' idan an tambaye ka izini.");
+            } else {
+                alert("Ba a samu siginar GPS ba. Kunna Location na wayarka.");
+            }
+        },
+        options
+    );
 }
+
+// 3. Wannan shine yake rufe scanning screen
+function kammalaBincike() {
+    const loadingScreen = document.getElementById('ai-loading-screen');
+    if (loadingScreen) loadingScreen.style.display = 'none';
+    localStorage.removeItem('user_captured_image');
+}
+
