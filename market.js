@@ -204,15 +204,19 @@ async function kiraGemini(base64) {
         const data = await response.json();
         const keyword = data.candidates[0].content.parts[0].text.trim();
         
-        setTimeout(() => {
-            // Boye scanning screen
-            document.getElementById('ai-loading-screen').style.display = 'none';
+                setTimeout(() => {
+            // 1. Kashe scanning screen bayan AI ya gama
+            const loadingScreen = document.getElementById('ai-loading-screen');
+            if(loadingScreen) loadingScreen.style.display = 'none';
             
-            // --- GYARAN YANA NAN: Wannan zai goge hoton don bincike na gaba ya zama sabo ---
+            // 2. Goge hoton don bincike na gaba
             localStorage.removeItem('user_captured_image');
             
+            // 3. Nuna abin da Gemini ta gano
             console.log("Gemini ta gano: " + keyword);
-        }, 1500);
+            
+            // Anan ne za ka saka function din da zai nuna results din bra/panties
+        }, 2500); // Na bar shi sakan biyu da rabi don scanning din ya yi kyau
         
     } catch (e) {
         document.getElementById('ai-loading-screen').style.display = 'none';
@@ -223,35 +227,41 @@ async function kiraGemini(base64) {
 
 let bincikeMode = 'global'; // Dama can kan global yake
 
-// 1. Wannan zai nemo GPS kuma ya kashe scanning screen idan ya gama
 function samunLocation() {
     if (navigator.geolocation) {
+        // Browser zata nuna options 3 dinnan da kanta anan
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const uLat = position.coords.latitude;
                 const uLon = position.coords.longitude;
-                // Idan kana da function din updateVendorDistances, zai yi aiki anan
                 if(typeof updateVendorDistances === "function") updateVendorDistances(uLat, uLon);
                 
-                kammalaBincike(); // Rufe scanning screen automatically
+                // Idan an gama gano waje, mu rufe komai
+                kammalaBincike();
             },
             (error) => {
-                alert("GPS dinka a kashe yake.");
+                // Maimakon Alert, zamu rufe binciken ne kawai idan mutum ya ki yarda
+                console.log("GPS access denied or error.");
                 kammalaBincike();
-            }
+            },
+            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
         );
     }
 }
 
-// 2. Wannan shi ne zai kashe duka overlays din bayan bincike
 function kammalaBincike() {
     const overlay = document.getElementById('search-overlay');
     const loadingScreen = document.getElementById('ai-loading-screen');
 
+    // Idan akwai hoto a LocalStorage, muna jiran Gemini ne, kar mu rufe loadingScreen tukuna
+    const hasImage = localStorage.getItem('user_captured_image');
+
     if(overlay) overlay.style.display = 'none';
     
-    setTimeout(() => {
-        if(loadingScreen) loadingScreen.style.display = 'none';
-        console.log("Bincike ya kammala!");
-    }, 1500); // Sakan daya da rabi na scanning ya isa
+    // Idan ba binciken hoto ake yi ba, to mu rufe loading screen din
+    if(!hasImage) {
+        setTimeout(() => {
+            if(loadingScreen) loadingScreen.style.display = 'none';
+        }, 1200);
+    }
 }
