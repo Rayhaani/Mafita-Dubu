@@ -234,21 +234,27 @@ let bincikeMode = 'global'; // Dama can kan global yake
 
 function samunLocation() {
     if (navigator.geolocation) {
-        // Wannan zai tilasta browser ta nemi izini (Prompt)
+        // Wannan shi zai sa browser ta nuna notification dinta na asali
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                // Idan an samu: Rufe scan, nuna results
+                // Idan mutum ya yarda (Allow), komai zai riga ya wuce
                 kammalaBincike();
             },
             (error) => {
-                // Idan a kashe yake: Gaya masa ya kunna
-                if (error.code === error.PERMISSION_DENIED || error.code === error.POSITION_UNAVAILABLE) {
-                    alert("⚠️ GPS dinka a kashe yake! Don Allah ka kunna shi domin ganin shagunan da ke kusa da kai.");
-                }
-                kammalaBincike(); // Duk da haka mu dawo da shi market din
+                // Ko da an samu matsala, ba zamu nuna wancan rubutun Hausa ba
+                // Browser ce zata nuna nata sako idan har akwai bukatar hakan
+                console.log("GPS Error: " + error.message);
+                kammalaBincike();
             },
-            { enableHighAccuracy: true, timeout: 10000 } 
+            { 
+                enableHighAccuracy: true, 
+                timeout: 8000, // Mun kara lokaci don browser ta nuna options dinta
+                maximumAge: 0 
+            }
         );
+    } else {
+        // Idan browser bata goyon bayan GPS
+        kammalaBincike();
     }
 }
 
