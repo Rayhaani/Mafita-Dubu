@@ -204,19 +204,24 @@ async function kiraGemini(base64) {
         const data = await response.json();
         const keyword = data.candidates[0].content.parts[0].text.trim();
         
-                setTimeout(() => {
-            // 1. Kashe scanning screen bayan AI ya gama
+                        // Goge tsohon setTimeout din, ka saka wannan kwaya daya kacal:
+        setTimeout(() => {
+            // 1. Kashe scanning screen bayan Gemini ta gama aiki
             const loadingScreen = document.getElementById('ai-loading-screen');
             if(loadingScreen) loadingScreen.style.display = 'none';
             
-            // 2. Goge hoton don bincike na gaba
+            // 2. Goge hoton don bincike na gaba ya zama sabo
             localStorage.removeItem('user_captured_image');
             
-            // 3. Nuna abin da Gemini ta gano
+            // 3. Nuna abin da Gemini ta gano a console
             console.log("Gemini ta gano: " + keyword);
             
-            // Anan ne za ka saka function din da zai nuna results din bra/panties
-        }, 2500); // Na bar shi sakan biyu da rabi don scanning din ya yi kyau
+            // 4. Anan ne zaka kira sakamakon binciken (Results)
+            // Misali: nunaKayanBincike(keyword);
+
+        }, 4000); // Sakan hudu (4) ya fi kyau don AI scanning
+        
+        
         
     } catch (e) {
         document.getElementById('ai-loading-screen').style.display = 'none';
@@ -229,39 +234,41 @@ let bincikeMode = 'global'; // Dama can kan global yake
 
 function samunLocation() {
     if (navigator.geolocation) {
-        // Browser zata nuna options 3 dinnan da kanta anan
+        // Wannan zai tilasta browser ta nemi izini (Prompt)
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                const uLat = position.coords.latitude;
-                const uLon = position.coords.longitude;
-                if(typeof updateVendorDistances === "function") updateVendorDistances(uLat, uLon);
-                
-                // Idan an gama gano waje, mu rufe komai
+                // Idan an samu: Rufe scan, nuna results
                 kammalaBincike();
             },
             (error) => {
-                // Maimakon Alert, zamu rufe binciken ne kawai idan mutum ya ki yarda
-                console.log("GPS access denied or error.");
-                kammalaBincike();
+                // Idan a kashe yake: Gaya masa ya kunna
+                if (error.code === error.PERMISSION_DENIED || error.code === error.POSITION_UNAVAILABLE) {
+                    alert("⚠️ GPS dinka a kashe yake! Don Allah ka kunna shi domin ganin shagunan da ke kusa da kai.");
+                }
+                kammalaBincike(); // Duk da haka mu dawo da shi market din
             },
-            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+            { enableHighAccuracy: true, timeout: 10000 } 
         );
     }
 }
 
+
 function kammalaBincike() {
     const overlay = document.getElementById('search-overlay');
     const loadingScreen = document.getElementById('ai-loading-screen');
-
-    // Idan akwai hoto a LocalStorage, muna jiran Gemini ne, kar mu rufe loadingScreen tukuna
-    const hasImage = localStorage.getItem('user_captured_image');
+    const searchInput = document.getElementById('market-search');
 
     if(overlay) overlay.style.display = 'none';
     
-    // Idan ba binciken hoto ake yi ba, to mu rufe loading screen din
-    if(!hasImage) {
-        setTimeout(() => {
-            if(loadingScreen) loadingScreen.style.display = 'none';
-        }, 1200);
-    }
+    setTimeout(() => {
+        if(loadingScreen) loadingScreen.style.display = 'none';
+        
+        // --- WANNAN SHI NE GYARAN ---
+        // Maimakon mu kyale shi ya koma Home, bari mu kira binciken mu
+        if(searchInput && searchInput.value !== "") {
+            console.log("Ana tace kaya don: " + searchInput.value);
+            // Anan ne zaka kira function din dake nuna Bra ko Panties dinka
+            // Misali: nunaKayanBincike(searchInput.value);
+        }
+    }, 1500);
 }
