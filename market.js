@@ -1,8 +1,54 @@
 let typingTimer;
 const doneTypingInterval = 3000;
-let sliderPos = 0;
+let sliderPos = 0; 
+let isPaused = false;
+let direction = 1;
 
-// ================= SEARCH HANDLING =================
+// 1. GYARAN SLIDER (Auto Scroll)
+function startProfessionalScroll() {
+    const searchBar = document.getElementById('market-search');
+    const isTyping = searchBar === document.activeElement || (searchBar && searchBar.value.length > 0);
+
+    if (!isPaused && !isTyping) {
+        window.scrollBy(0, direction * 0.2); 
+        if (direction === 1 && (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
+            direction = -1; 
+            isPaused = true; 
+            setTimeout(() => isPaused = false, 5000); 
+        } else if (direction === -1 && window.pageYOffset <= 0) {
+            direction = 1; 
+            isPaused = true; 
+            setTimeout(() => isPaused = false, 5000);
+        }
+    }
+    requestAnimationFrame(startProfessionalScroll);
+}
+window.onload = () => setTimeout(startProfessionalScroll, 3000);
+
+// 2. GYARAN ENTER KEY & SEARCH ICON
+function manualSearch() {
+    const input = document.getElementById('market-search');
+    if (!input) return;
+    let kalma = input.value.trim();
+    if (kalma.length >= 2) {
+        clearTimeout(typingTimer); 
+        input.blur(); 
+        showSearchOverlay(kalma);
+        const box = document.getElementById('suggestionList');
+        if(box) box.parentElement.style.display = 'none';
+    }
+}
+
+document.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        const searchBar = document.getElementById('market-search');
+        if (document.activeElement === searchBar) {
+            manualSearch();
+        }
+    }
+});
+
+// 3. SEARCH HANDLING
 function handleSearch(textbox) {
     let kalma = textbox.value.trim();
     const listContainer = document.getElementById('suggestionList'); 
@@ -33,7 +79,6 @@ function showSearchOverlay(kalma) {
     const overlay = document.getElementById('search-overlay');
     const display = document.getElementById('query-val');
     const listContainer = document.getElementById('suggestionList');
-
     if(listContainer) listContainer.parentElement.style.display = 'none';
     if (display) display.innerText = `"${kalma}"`;
     if (overlay) {
@@ -54,43 +99,18 @@ function closeSearch() {
     }
 }
 
-// ================= AI CAMERA =================
+// 4. AI CAMERA & LOCATION (Sheet Fixed)
 function openAICamera() {
     const existing = document.getElementById('ai-sheet');
     if(existing) existing.remove();
-
-    const menuHTML = `
-    <div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/40 z-[4999] opacity-0 transition-opacity duration-300"></div>
-    <div id="ai-sheet" class="ai-bottom-sheet">
-        <div style="width:40px;height:4px;background:rgba(0,0,0,0.1);border-radius:10px;margin:12px auto 15px;"></div>
-        <div style="display:flex;justify-content:space-around;padding:10px 0;">
-            <div onclick="handleCamera()" style="cursor:pointer;text-align:center">
-                <div class="silver-box"><i class="fa-solid fa-camera-retro" style="color:white"></i></div>
-                <small>CAMERA</small>
-            </div>
-            <div onclick="handleCamera()" style="cursor:pointer;text-align:center">
-                <div class="silver-box active-scan"><i class="fa-solid fa-qrcode" style="color:#FFD700"></i></div>
-                <small>SCAN</small>
-            </div>
-            <div onclick="handleGallery()" style="cursor:pointer;text-align:center">
-                <div class="silver-box"><i class="fa-solid fa-images" style="color:white"></i></div>
-                <small>GALLERY</small>
-            </div>
-        </div>
-    </div>`;
+    const menuHTML = `<div id="ai-overlay" onclick="closeAIVision()" class="fixed inset-0 bg-black/40 z-[4999] opacity-0 transition-opacity duration-300"></div><div id="ai-sheet" class="ai-bottom-sheet active"><div style="width:40px;height:4px;background:rgba(0,0,0,0.1);border-radius:10px;margin:12px auto 15px;"></div><div style="display:flex;justify-content:space-around;padding:10px 0;"><div onclick="handleCamera()" style="cursor:pointer;text-align:center"><div class="silver-box" style="display:flex;align-items:center;justify-content:center;background:#ccc;width:50px;height:50px;border-radius:12px;"><i class="fa-solid fa-camera-retro" style="color:white"></i></div><small style="font-size:10px;font-weight:bold;">CAMERA</small></div><div onclick="handleCamera()" style="cursor:pointer;text-align:center"><div class="silver-box active-scan" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg, #222, #444);width:50px;height:50px;border-radius:12px;border:2px solid #FFD700;"><i class="fa-solid fa-qrcode" style="color:#FFD700"></i></div><small style="color:#8B6508;font-size:10px;font-weight:bold;">SCAN</small></div><div onclick="handleGallery()" style="cursor:pointer;text-align:center"><div class="silver-box" style="display:flex;align-items:center;justify-content:center;background:#ccc;width:50px;height:50px;border-radius:12px;"><i class="fa-solid fa-images" style="color:white"></i></div><small style="font-size:10px;font-weight:bold;">GALLERY</small></div></div></div>`;
     document.body.insertAdjacentHTML('beforeend', menuHTML);
-    setTimeout(() => {
-        document.getElementById('ai-overlay')?.classList.add('opacity-100');
-        document.getElementById('ai-sheet')?.classList.add('active');
-    }, 10);
+    setTimeout(() => document.getElementById('ai-overlay')?.classList.add('opacity-100'), 10);
 }
 
 function closeAIVision() {
-    document.getElementById('ai-sheet')?.classList.remove('active');
-    setTimeout(() => {
-        document.getElementById('ai-overlay')?.remove();
-        document.getElementById('ai-sheet')?.remove();
-    }, 400);
+    document.getElementById('ai-sheet')?.remove();
+    document.getElementById('ai-overlay')?.remove();
 }
 
 function handleCamera() {
@@ -115,49 +135,39 @@ function startAISimulation(file) {
     const reader = new FileReader();
     reader.onload = e => {
         localStorage.setItem('user_captured_image', e.target.result);
-        document.getElementById('search-overlay')?.classList.add('active');
-        document.getElementById('search-overlay').style.display = 'flex';
+        closeAIVision();
+        showSearchOverlay('Scanned Item');
     };
     reader.readAsDataURL(file);
 }
 
-// ================= GLOBAL / NEAR YOU SEARCH =================
 function globalSearchMotsi(mode) {
-    localStorage.removeItem('user_captured_image');
+    const savedImage = localStorage.getItem('user_captured_image');
+    document.getElementById('search-overlay').style.display = 'none';
 
     if (mode === 'near_me') {
-        nearYouSearch(); // ⚠️ DIRECT USER GESTURE
-        return;
+        nearYouSearch();
+    } else {
+        document.getElementById('ai-loading-screen').style.display = 'flex';
+        setTimeout(kammalaBincike, 3000);
     }
-
-    document.getElementById('ai-loading-screen').style.display = 'flex';
-    setTimeout(kammalaBincike, 3000);
 }
 
-// ================= LOCATION (FIXED) =================
 function nearYouSearch() {
     const loading = document.getElementById('ai-loading-screen');
     if (loading) loading.style.display = 'flex';
-
     if (!navigator.geolocation) {
         if (loading) loading.style.display = 'none';
         return;
     }
-
     navigator.geolocation.getCurrentPosition(
-        (pos) => {
-            console.log("📍 Location:", pos.coords.latitude, pos.coords.longitude);
-            setTimeout(kammalaBincike, 3000);
-        },
-        () => {
-            // ❗ KAR KA SAKA ALERT NAN
-            if (loading) loading.style.display = 'none';
-            // browser permission zai riga ya fito
-        },
-        {
-            enableHighAccuracy: true,
-            timeout: 15000,
-            maximumAge: 0
-        }
+        (pos) => { setTimeout(kammalaBincike, 3000); },
+        () => { if (loading) loading.style.display = 'none'; },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
     );
 }
+
+function kammalaBincike() {
+    document.getElementById('ai-loading-screen').style.display = 'none';
+    localStorage.removeItem('user_captured_image');
+        }
