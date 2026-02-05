@@ -234,58 +234,40 @@ let bincikeMode = 'global'; // Dama can kan global yake
 
 function samunLocation() {
     if (navigator.geolocation) {
-        // Wannan shi zai sa browser ta nuna notification dinta na asali
+        // Browser za ta nuna "Allow/Never" dinta anan
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                // Idan mutum ya yarda (Allow), komai zai riga ya wuce
+                // Idan ya yarda, muna samun location
+                const uLat = position.coords.latitude;
+                const uLon = position.coords.longitude;
+                if(typeof updateVendorDistances === "function") updateVendorDistances(uLat, uLon);
+                
+                // Rufe scanning bayan komai ya kammala
                 kammalaBincike();
             },
             (error) => {
-                // Ko da an samu matsala, ba zamu nuna wancan rubutun Hausa ba
-                // Browser ce zata nuna nata sako idan har akwai bukatar hakan
-                console.log("GPS Error: " + error.message);
+                // Ko da ya ki yarda, ba za mu nuna wancan rubutun ba
+                console.log("GPS denied or off");
                 kammalaBincike();
             },
-            { 
-                enableHighAccuracy: true, 
-                timeout: 8000, // Mun kara lokaci don browser ta nuna options dinta
-                maximumAge: 0 
-            }
+            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
         );
     } else {
-        // Idan browser bata goyon bayan GPS
         kammalaBincike();
     }
 }
-
-
 function kammalaBincike() {
     const overlay = document.getElementById('search-overlay');
     const loadingScreen = document.getElementById('ai-loading-screen');
-    const searchInput = document.getElementById('market-search');
 
+    // Wannan zai tabbatar overlay (inda buttons suke) ya bace
     if(overlay) overlay.style.display = 'none';
     
-    setTimeout(() => {
-        if(loadingScreen) loadingScreen.style.display = 'none';
-        
-        // --- WANNAN SHI NE GYARAN ---
-        // Maimakon mu kyale shi ya koma Home, bari mu kira binciken mu
-        if(searchInput && searchInput.value !== "") {
-            console.log("Ana tace kaya don: " + searchInput.value);
-            // Anan ne zaka kira function din dake nuna Bra ko Panties dinka
-            // Misali: nunaKayanBincike(searchInput.value);
-        }
-    }, 1500);
-}
-
-function setSearchMode(mode) {
-    bincikeMode = mode; // Wannan yana gaya wa AI irin binciken da ake yi
-    
-    if(mode === 'near_me') {
-        samunLocation(); // Wannan zai nemo GPS kuma ya kashe scanning da kansa
-    } else {
-        kammalaBincike(); // Wannan zai nuna global search results
+    // Amma loadingScreen (Scanning) zai bace ne kawai idan ba binciken hoto ake ba
+    const isPhotoSearch = localStorage.getItem('user_captured_image');
+    if(!isPhotoSearch) {
+        setTimeout(() => {
+            if(loadingScreen) loadingScreen.style.display = 'none';
+        }, 1000);
     }
 }
-
