@@ -328,3 +328,16 @@ function startRegistration(type) {
     }
 }
 
+function openPortal() {
+    const portal = document.getElementById('portal-sheet');
+    const content = document.getElementById('portal-content');
+    portal.classList.remove('hidden');
+    setTimeout(() => content.style.transform = "translateY(0)", 10);
+}
+
+function closePortal() {
+    const portal = document.getElementById('portal-sheet');
+    const content = document.getElementById('portal-content');
+    content.style.transform = "translateY(100%)";
+    setTimeout(() => portal.classList.add('hidden'), 300);
+}
