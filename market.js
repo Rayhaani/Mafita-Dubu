@@ -157,7 +157,7 @@ function globalSearchMotsi(mode) {
     }
 }
 
-    let watchID = null; // Wannan zai rike tracking din
+ let watchID = null; // Wannan zai rike tracking din
 
 function nearYouSearch() {
     const loading = document.getElementById('ai-loading-screen');
