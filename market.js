@@ -339,3 +339,22 @@ function kammalaBincike() {
     // Zaka iya kiran nearYouSearch() anan don nuna shagunan da suke da kayan
     nearYouSearch();
 }
+
+function openVendorForm() {
+    closePortal(); // Rufe menu na farko
+    const form = document.getElementById('vendor-form-overlay');
+    if(form) form.classList.remove('hidden');
+}
+
+function closeVendorForm() {
+    const form = document.getElementById('vendor-form-overlay');
+    if(form) form.classList.add('hidden');
+}
+
+// Gyaran startRegistration domin ya kira Form din
+function startRegistration(type) {
+    if(type === 'vendor') {
+        openVendorForm();
+    }
+}
+
