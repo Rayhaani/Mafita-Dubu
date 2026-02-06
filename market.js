@@ -358,21 +358,5 @@ function startRegistration(type) {
     }
 }
 
-function openVendorForm() {
-    closePortal(); // Rufe menu na farko
-    const form = document.getElementById('vendor-form-overlay');
-    if(form) form.classList.remove('hidden');
-}
 
-function closeVendorForm() {
-    const form = document.getElementById('vendor-form-overlay');
-    if(form) form.classList.add('hidden');
-}
-
-// Gyaran startRegistration domin ya kira Form din
-function startRegistration(type) {
-    if(type === 'vendor') {
-        openVendorForm();
-    }
-}
 
