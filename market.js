@@ -248,87 +248,36 @@ let vendorsDatabase = [
     { name: "Fatima Fashion Home", lat: 10.4900, lon: 7.4000, items: ["gown", "bra", "shoes"] }
 ];
 
-
 function displayNearbyVendors(nearbyVendors) {
     const resultsPage = document.getElementById('near-me-results');
     const listContainer = document.getElementById('vendors-list');
-    
-    // Share tsohon sakamako
     listContainer.innerHTML = '';
 
-    if (nearbyVendors.length === 0) {
-        listContainer.innerHTML = `<div style="text-align:center; margin-top:50px;">
-            <i class="fa-solid fa-store-slash" style="font-size:50px; color:#ccc;"></i>
-            <p style="color:#666; margin-top:10px;">Ba mu sami wani shago kusa da kai ba a yanzu.</p>
-        </div>`;
-    } else {
-        nearbyVendors.forEach(v => {
-            const card = `
-                <div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #eee; background: white; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                    <div style="display:flex; align-items:center; gap: 15px;">
-                        <div style="width:50px; height:50px; background:#e9ecef; border-radius:50%; display:flex; align-items:center; justify-content:center;">
-                            <i class="fa-solid fa-shop" style="color:#007bff;"></i>
-                        </div>
-                        <div>
-                            <h4 style="margin:0; font-size:16px; font-weight:bold; color:#222;">${v.name}</h4>
-                            <p style="margin:0; font-size:12px; color:#28a745; font-weight:600;">${v.distance.toFixed(2)} km away</p>
-                        </div>
+    nearbyVendors.forEach(v => {
+        // --- JINIYA DA SAUTI ---
+        if (v.distance <= 0.02) {
+            if ("vibrate" in navigator) navigator.vibrate([200, 100, 200]);
+            const sound = document.getElementById('arrival-sound'); // Layin sauti
+            if (sound) sound.play().catch(() => {}); 
+        }
+
+        const card = `
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #eee; background: white; border-radius: 12px; margin-bottom: 10px; border-left: ${v.distance <= 0.02 ? '5px solid #28a745' : 'none'};">
+                <div style="display:flex; align-items:center; gap: 15px;">
+                    <div style="width:50px; height:50px; background:#e9ecef; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                        <i class="fa-solid fa-shop" style="color:${v.distance <= 0.02 ? '#28a745' : '#007bff'};"></i>
                     </div>
-                    <button style="padding:8px 15px; background:#007bff; color:white; border:none; border-radius:20px; font-size:12px; font-weight:bold;">Visit</button>
-                </div>
-            `;
-            listContainer.innerHTML += card;
-        });
-    }
-
-    // Nuna shafin sakamakon
-    resultsPage.classList.remove('hidden');
-    resultsPage.style.display = 'flex';
-}
-
-function displayNearbyVendors(nearbyVendors) {
-    const resultsPage = document.getElementById('near-me-results');
-    const listContainer = document.getElementById('vendors-list');
-    
-    listContainer.innerHTML = '';
-
-    if (nearbyVendors.length === 0) {
-        listContainer.innerHTML = `<div style="text-align:center; margin-top:50px;">
-            <i class="fa-solid fa-store-slash" style="font-size:50px; color:#ccc;"></i>
-            <p style="color:#666; margin-top:10px;">Ba mu sami wani shago kusa da kai ba.</p>
-        </div>`;
-    } else {
-        nearbyVendors.forEach(v => {
-            // --- SABON GYARA NA JINIYA (VIBRATION) ---
-            // Idan tazarar mutum da shago ta kasa 0.02 km (wato mita 20)
-            if (v.distance <= 0.02) {
-                if ("vibrate" in navigator) {
-                    navigator.vibrate([200, 100, 200]); // Wayar za ta yi rawa sau biyu
-                }
-            }
-            // ---------------------------------------
-
-            const card = `
-                <div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #eee; background: white; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: ${v.distance <= 0.02 ? '5px solid #28a745' : 'none'};">
-                    <div style="display:flex; align-items:center; gap: 15px;">
-                        <div style="width:50px; height:50px; background:#e9ecef; border-radius:50%; display:flex; align-items:center; justify-content:center;">
-                            <i class="fa-solid fa-shop" style="color:${v.distance <= 0.02 ? '#28a745' : '#007bff'};"></i>
-                        </div>
-                        <div>
-                            <h4 style="margin:0; font-size:16px; font-weight:bold; color:#222;">${v.name}</h4>
-                            <p style="margin:0; font-size:12px; color:${v.distance <= 0.02 ? '#28a745' : '#666'}; font-weight:600;">
-                                ${v.distance <= 0.02 ? 'Ka Iso! (Arrived)' : v.distance.toFixed(2) + ' km away'}
-                            </p>
-                        </div>
+                    <div>
+                        <h4 style="margin:0; font-size:16px; font-weight:bold;">${v.name}</h4>
+                        <p style="margin:0; font-size:12px; color:${v.distance <= 0.02 ? '#28a745' : '#666'}; font-weight:600;">
+                            ${v.distance <= 0.02 ? 'Ka Iso! (Arrived)' : v.distance.toFixed(2) + ' km away'}
+                        </p>
                     </div>
-                    <button style="padding:8px 15px; background:${v.distance <= 0.02 ? '#28a745' : '#007bff'}; color:white; border:none; border-radius:20px; font-size:12px; font-weight:bold;">Visit</button>
                 </div>
-            `;
-            listContainer.innerHTML += card;
-        });
-    }
-
-    resultsPage.classList.remove('hidden');
+                <button style="padding:8px 15px; background:${v.distance <= 0.02 ? '#28a745' : '#007bff'}; color:white; border:none; border-radius:20px; font-size:12px; font-weight:bold;">Visit</button>
+            </div>`;
+        listContainer.innerHTML += card;
+    });
     resultsPage.style.display = 'flex';
 }
 
