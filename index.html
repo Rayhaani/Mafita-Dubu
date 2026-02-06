@@ -465,3 +465,45 @@
     </div>
     </div>
     
+<div id="portal-sheet" class="fixed inset-0 bg-black/60 z-[9999] hidden">
+    <div id="portal-content" class="absolute bottom-0 left-0 right-0 bg-white rounded-t-[30px] p-6 transform translate-y-full transition-transform duration-300">
+        <div class="w-12 h-1.5 bg-gray-200 mx-auto mb-6 rounded-full"></div>
+        <h2 class="text-center font-bold text-lg mb-6">JOIN ECOSYSTEM</h2>
+        
+        <div onclick="openVendorForm()" class="flex items-center p-4 bg-blue-50 rounded-2xl mb-4 cursor-pointer">
+            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white mr-4">
+                <i class="fa-solid fa-shop"></i>
+            </div>
+            <div>
+                <h4 class="font-bold">Vendor Registration</h4>
+                <p class="text-xs text-gray-500">Buɗe shagonka a kan map</p>
+            </div>
+        </div>
+        
+        <button onclick="closePortal()" class="w-full py-4 text-sm font-bold text-gray-400">CLOSE</button>
+    </div>
+</div>
+
+<div id="vendor-form-overlay" class="fixed inset-0 bg-white z-[10000] hidden overflow-y-auto p-6">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="font-black text-xl text-blue-600">NEW VENDOR</h2>
+        <button onclick="closeVendorForm()" class="text-2xl">&times;</button>
+    </div>
+    
+    <div class="space-y-4">
+        <input type="text" id="store-name" placeholder="Store Name" class="w-full p-4 bg-gray-100 rounded-xl border-none">
+        
+        <div class="p-4 border-2 border-dashed rounded-2xl text-center">
+            <i class="fa-solid fa-camera text-gray-300 text-3xl mb-2"></i>
+            <p class="text-[10px] font-bold text-gray-400 uppercase">Store Front Photo</p>
+            <button onclick="handleCamera()" class="mt-2 text-blue-600 font-bold text-xs underline">Capture Now</button>
+        </div>
+
+        <div class="flex gap-2">
+            <input type="text" id="shop-coords" readonly placeholder="GPS Coordinates" class="flex-1 p-4 bg-gray-100 rounded-xl text-xs">
+            <button onclick="fetchStoreLocation()" class="px-4 bg-black text-white rounded-xl"><i class="fa-solid fa-location-dot"></i></button>
+        </div>
+
+        <button onclick="saveVendor()" class="w-full py-4 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-200">LAUNCH STORE</button>
+    </div>
+</div>
