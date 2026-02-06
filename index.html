@@ -491,3 +491,47 @@
         <button onclick="saveVendor()" class="w-full py-4 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-200">LAUNCH STORE</button>
     </div>
 </div>
+
+    </section>
+
+<div id="portal-sheet" class="fixed inset-0 bg-black/60 z-[9999] hidden" onclick="closePortal()">
+    <div id="portal-content" class="absolute bottom-0 left-0 right-0 bg-white rounded-t-[30px] p-6 transform translate-y-full transition-transform duration-300" onclick="event.stopPropagation()">
+        <div class="w-12 h-1.5 bg-gray-200 mx-auto mb-6 rounded-full"></div>
+        <h2 class="text-center font-bold text-lg mb-6">JOIN ECOSYSTEM</h2>
+        
+        <div onclick="alert('Registration Coming Soon!')" class="flex items-center p-4 bg-blue-50 rounded-2xl mb-4 cursor-pointer">
+            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white mr-4">
+                <i class="fa-solid fa-shop"></i>
+            </div>
+            <div>
+                <h4 class="font-bold">Vendor Registration</h4>
+                <p class="text-xs text-gray-500">Buɗe shagonka a kan map</p>
+            </div>
+        </div>
+        
+        <button onclick="closePortal()" class="w-full py-4 text-sm font-bold text-gray-400">CLOSE</button>
+    </div>
+</div>
+
+<script>
+function openPortal() {
+    const sheet = document.getElementById('portal-sheet');
+    const content = document.getElementById('portal-content');
+    sheet.classList.remove('hidden');
+    setTimeout(() => {
+        content.classList.remove('translate-y-full');
+    }, 10);
+}
+
+function closePortal() {
+    const sheet = document.getElementById('portal-sheet');
+    const content = document.getElementById('portal-content');
+    content.classList.add('translate-y-full');
+    setTimeout(() => {
+        sheet.classList.add('hidden');
+    }, 300);
+}
+</script>
+
+</body>
+</html>
