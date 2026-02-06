@@ -130,11 +130,16 @@ function handleGallery() {
     input.onchange = e => startAISimulation(e.target.files[0]);
     input.click();
 }
-
 function startAISimulation(file) {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = e => {
+        // Wannan layin shi ne zai saka hoton a loading screen din
+        const preview = document.getElementById('scanned-image-preview');
+        if (preview) {
+            preview.src = e.target.result;
+        }
+        
         localStorage.setItem('user_captured_image', e.target.result);
         closeAIVision();
         showSearchOverlay('Scanned Item');
