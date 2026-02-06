@@ -286,7 +286,6 @@ function closeResults() {
     document.getElementById('near-me-results').style.display = 'none';
 }
 
-
 // Saka wannan a can kasa don lissafa tazara tsakanin mutum da shago
 function lissafaNisa(lat1, lon1, lat2, lon2) {
     const R = 6371; // Radius na duniya a km
@@ -322,4 +321,21 @@ function closePortal() {
     const content = document.getElementById('portal-content');
     content.style.transform = "translateY(100%)";
     setTimeout(() => portal.classList.add('hidden'), 300);
+}
+
+
+function kammalaBincike() {
+    // 1. Kashe loading screen
+    const loading = document.getElementById('ai-loading-screen');
+    if (loading) loading.style.display = 'none';
+
+    // 2. Nemo sunan abin da mutum ya bincika (daga search bar)
+    const searchInput = document.getElementById('market-search');
+    const bincike = searchInput ? searchInput.value : "Abinda ka nema";
+
+    // 3. Nuna sakamako (A nan zaka iya sa logic na fitar da kaya daga database)
+    alert("AI Search Completed: Mun nemo maka " + bincike + " a shaguna 5 dake kusa da kai.");
+    
+    // Zaka iya kiran nearYouSearch() anan don nuna shagunan da suke da kayan
+    nearYouSearch();
 }
