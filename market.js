@@ -157,40 +157,46 @@ function globalSearchMotsi(mode) {
     }
 }
 
+    let watchID = null; // Wannan zai rike tracking din
+
 function nearYouSearch() {
     const loading = document.getElementById('ai-loading-screen');
+    const errorState = document.getElementById('gps-error-state');
+    const listContainer = document.getElementById('vendors-list');
+    const resultsPage = document.getElementById('near-me-results');
+
     if (loading) loading.style.display = 'flex';
+    
+    // Idan an riga an fara tracking, a tsayar da shi a sake sabo
+    if (watchID) navigator.geolocation.clearWatch(watchID);
 
-    if (!navigator.geolocation) {
-        alert("Wayarka ba ta da GPS.");
-        if (loading) loading.style.display = 'none';
-        return;
-    }
-
-    navigator.geolocation.getCurrentPosition((pos) => {
+    watchID = navigator.geolocation.watchPosition((pos) => {
         const userLat = pos.coords.latitude;
         const userLon = pos.coords.longitude;
 
-        // 1. Tace shagunan da ke kusa tare da lissafa nisa
         let nearbyVendors = vendorsDatabase.map(vendor => {
             const distance = lissafaNisa(userLat, userLon, vendor.lat, vendor.lon);
             return { ...vendor, distance: distance };
-        }).sort((a, b) => a.distance - b.distance); 
+        }).sort((a, b) => a.distance - b.distance);
 
-        // 2. Nuna kyakkyawan sakamako a sabon shafi bayan sakan 3
-        setTimeout(() => {
-            if (loading) loading.style.display = 'none';
-            
-            // Wannan shine gyaran: Mun daina amfani da alert
-            displayNearbyVendors(nearbyVendors);
-            
-            kammalaBincike();
-        }, 3000);
+        // Nuna sakamako
+        if (loading) loading.style.display = 'none';
+        resultsPage.style.display = 'flex';
+        listContainer.style.display = 'block';
+        errorState.style.display = 'none';
 
+        displayNearbyVendors(nearbyVendors);
+        
     }, (err) => {
         if (loading) loading.style.display = 'none';
-        alert("An kasa samun GPS. Tabbatar yana kunne.");
-    }, { enableHighAccuracy: true });
+        resultsPage.style.display = 'flex';
+        listContainer.style.display = 'none';
+        errorState.style.display = 'flex';
+    }, { 
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: 5000 
+    });
 }
 
 function fetchStoreLocation() {
