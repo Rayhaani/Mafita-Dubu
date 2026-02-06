@@ -299,24 +299,6 @@ function lissafaNisa(lat1, lon1, lat2, lon2) {
     return R * c; 
         }
 
-function openPortal() {
-    const portal = document.getElementById('portal-sheet');
-    const content = document.getElementById('portal-content');
-    portal.classList.remove('hidden');
-    setTimeout(() => {
-        content.style.transform = "translateY(0)";
-    }, 10);
-}
-
-function closePortal() {
-    const content = document.getElementById('portal-content');
-    const portal = document.getElementById('portal-sheet');
-    content.style.transform = "translateY(100%)";
-    setTimeout(() => {
-        portal.classList.add('hidden');
-    }, 300);
-}
-
 function startRegistration(type) {
     closePortal();
     // Nan gaba zamu sa code din da zai bude babban registration form din da AI scanner
