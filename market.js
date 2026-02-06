@@ -340,8 +340,30 @@ function kammalaBincike() {
     nearYouSearch();
 }
 
+function openPortal() {
+    const portal = document.getElementById('portal-sheet');
+    const content = document.getElementById('portal-content');
+    if(portal && content) {
+        portal.classList.remove('hidden');
+        setTimeout(() => {
+            content.style.transform = "translateY(0)";
+        }, 10);
+    }
+}
+
+function closePortal() {
+    const portal = document.getElementById('portal-sheet');
+    const content = document.getElementById('portal-content');
+    if(portal && content) {
+        content.style.transform = "translateY(100%)";
+        setTimeout(() => {
+            portal.classList.add('hidden');
+        }, 300);
+    }
+}
+
 function openVendorForm() {
-    closePortal(); // Rufe menu na farko
+    closePortal();
     const form = document.getElementById('vendor-form-overlay');
     if(form) form.classList.remove('hidden');
 }
@@ -351,12 +373,8 @@ function closeVendorForm() {
     if(form) form.classList.add('hidden');
 }
 
-// Gyaran startRegistration domin ya kira Form din
 function startRegistration(type) {
-    if(type === 'vendor') {
-        openVendorForm();
-    }
+    alert("Kayi nasarar fara registration a matsayin: " + type);
+    closePortal();
 }
-
-
 
