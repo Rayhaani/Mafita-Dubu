@@ -450,19 +450,36 @@
 </section>
     
 <div id="portal-sheet" class="fixed inset-0 bg-black/60 z-[9999] hidden">
-    <div id="portal-content" class="absolute bottom-0 left-0 right-0 bg-white rounded-t-[30px] p-6 transform translate-y-full transition-transform duration-300">
-        <div class="w-12 h-1.5 bg-gray-200 mx-auto mb-6 rounded-full"></div>
-        <h2 class="text-center font-bold text-lg mb-6">JOIN ECOSYSTEM</h2>
-        
-        <div onclick="openVendorForm()" class="flex items-center p-4 bg-blue-50 rounded-2xl mb-4 cursor-pointer">
-            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white mr-4">
-                <i class="fa-solid fa-shop"></i>
-            </div>
-            <div>
-                <h4 class="font-bold">Vendor Registration</h4>
-                <p class="text-xs text-gray-500">Buɗe shagonka a kan map</p>
-            </div>
+    <div id="portal-content" class="absolute bottom-0 left-0 right-0 bg-white rounded-t-[2.5rem] p-8 transform translate-y-full transition-all duration-300 shadow-2xl">
+    <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-8"></div>
+    
+    <h3 class="text-2xl font-extrabold text-blue-900 mb-6 text-center">Main Menu</h3>
+    
+    <div class="grid grid-cols-1 gap-4">
+        <div class="flex items-center p-4 bg-blue-600 text-white rounded-2xl cursor-pointer" onclick="location.href='login.html'">
+            <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mr-4"><i class="fa-solid fa-right-to-bracket"></i></div>
+            <div class="flex-1"><h4 class="font-bold">Login / Sign Up</h4><p class="text-[10px] opacity-80">Shiga asusunka na Mafita</p></div>
         </div>
+
+        <div class="flex items-center p-4 bg-gray-50 border border-gray-100 rounded-2xl cursor-pointer" onclick="openVendorForm()">
+            <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mr-4"><i class="fa-solid fa-store"></i></div>
+            <div class="flex-1"><h4 class="font-bold text-gray-800">Join Ecosystem</h4><p class="text-[10px] text-gray-400">Register as a Vendor</p></div>
+        </div>
+
+        <div class="flex items-center p-4 bg-gray-50 border border-gray-100 rounded-2xl cursor-pointer">
+            <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mr-4"><i class="fa-solid fa-circle-info"></i></div>
+            <div class="flex-1"><h4 class="font-bold text-gray-800">About Us</h4><p class="text-[10px] text-gray-400">Sanin asalin Mafita Dubu</p></div>
+        </div>
+
+        <div class="flex items-center p-4 bg-gray-50 border border-gray-100 rounded-2xl cursor-pointer">
+            <div class="w-10 h-10 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mr-4"><i class="fa-solid fa-headset"></i></div>
+            <div class="flex-1"><h4 class="font-bold text-gray-800">Contact Support</h4><p class="text-[10px] text-gray-400">Yi magana da kwararru</p></div>
+        </div>
+    </div>
+
+    <button onclick="closePortal()" class="w-full mt-6 py-4 text-gray-400 font-bold uppercase text-xs tracking-widest">Close Menu</button>
+    </div>
+    
         
         <button onclick="closePortal()" class="w-full py-4 text-sm font-bold text-gray-400">CLOSE</button>
     </div>
