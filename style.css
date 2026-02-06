@@ -672,3 +672,24 @@ content: '';
         text-shadow: 0 0 15px rgba(255, 215, 0, 1); /* Yana yin haske (glow) */
     }
 }
+
+
+@keyframes mapPulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.8; }
+}
+
+.map-animation {
+    animation: mapPulse 2s infinite ease-in-out;
+}
+
+/* Wannan kuma na shafin baki daya ne don ya fito da kyau */
+#gps-error-state {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
