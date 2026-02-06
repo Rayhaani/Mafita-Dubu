@@ -298,3 +298,33 @@ function lissafaNisa(lat1, lon1, lat2, lon2) {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c; 
         }
+
+function openPortal() {
+    const portal = document.getElementById('portal-sheet');
+    const content = document.getElementById('portal-content');
+    portal.classList.remove('hidden');
+    setTimeout(() => {
+        content.style.transform = "translateY(0)";
+    }, 10);
+}
+
+function closePortal() {
+    const content = document.getElementById('portal-content');
+    const portal = document.getElementById('portal-sheet');
+    content.style.transform = "translateY(100%)";
+    setTimeout(() => {
+        portal.classList.add('hidden');
+    }, 300);
+}
+
+function startRegistration(type) {
+    closePortal();
+    // Nan gaba zamu sa code din da zai bude babban registration form din da AI scanner
+    console.log("Starting registration for:", type);
+    
+    if(type === 'vendor') {
+        alert("Preparing AI-Integrated Vendor Registration...");
+        // openVendorRegistrationForm(); // Zamu hada wannan a mataki na gaba
+    }
+}
+
