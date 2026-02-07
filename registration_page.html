@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Premium Portal</title>
+    <title>Mafita Dubu | Official Registration</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --milk-bg: #FFF5E1; /* Wannan itace kalar Milk din */
+            --milk-bg: #FFF5E1; 
             --dark-gold: #8b6b1b;
             --light-gold: #f3cf7a;
             --royal-black: #1a1405;
@@ -16,7 +16,7 @@
         
         body { 
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--milk-bg); /* Na canza background zuwa Milk */
+            background-color: var(--milk-bg); 
             display: flex; align-items: center; justify-content: center; 
             min-height: 100vh; margin: 0; padding: 20px;
         }
@@ -31,14 +31,21 @@
             position: relative;
         }
 
-        .logo-placeholder {
-            width: 80px; height: 80px;
-            margin: -85px auto 15px;
-            background: var(--light-gold);
-            border: 4px solid var(--royal-black);
+        /* Wannan shine gidan Logo din da aka gyara */
+        .logo-container {
+            width: 90px; height: 90px;
+            margin: -90px auto 20px;
+            background: #fff; /* Farin bango don logo ya fito radau */
+            border: 4px solid var(--dark-gold);
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .logo-container img {
+            width: 100%; height: 100%;
+            object-fit: cover; /* Don hoton ya cika gidan daidai */
         }
 
         .header-title { 
@@ -48,7 +55,6 @@
         }
 
         .input-group { margin-bottom: 15px; }
-        
         label { 
             font-size: 0.65rem; font-weight: 600; color: var(--light-gold); 
             margin-bottom: 5px; display: block; text-transform: uppercase;
@@ -74,15 +80,15 @@
             background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728);
             color: #1a1405; font-family: 'Cinzel', serif; font-weight: 800;
             width: 100%; padding: 14px; border-radius: 10px;
-            margin-top: 20px; font-size: 1rem; cursor: pointer;
+            margin-top: 20px; font-size: 1rem; cursor: pointer; border:none;
         }
     </style>
 </head>
 <body>
 
     <div class="luxury-card">
-        <div class="logo-placeholder">
-            <img src="https://via.placeholder.com/80" alt="Logo">
+        <div class="logo-container">
+            <img src="https://i.ibb.co/Xkh8m2Vv/Screenshot-20250212-192534.jpg" alt="Mafita Dubu Logo">
         </div>
         <h1 class="header-title">Mafita Dubu</h1>
 
