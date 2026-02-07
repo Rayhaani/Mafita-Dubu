@@ -449,59 +449,50 @@
     </div>
 </section>
     
-<div id="portal-content" class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] z-[100] bg-white/95 backdrop-blur-xl rounded-[32px] p-5 shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-gray-100 transition-all duration-500 opacity-0 pointer-events-none translate-y-10">
+<div id="portal-content" 
+     class="fixed bottom-10 left-1/2 -translate-x-1/2 w-[92%] z-[100] bg-white/95 backdrop-blur-md rounded-[35px] p-8 shadow-[0_30px_100px_rgba(0,0,0,0.5)] border border-gray-100 transition-all duration-500 opacity-0 pointer-events-none translate-y-10">
     
-    <div class="flex justify-between items-center mb-4 px-2">
-        <h3 class="text-[12px] font-black text-gray-900 uppercase tracking-tighter">Elite Portal</h3>
-        <button onclick="toggleMenu()" class="text-gray-400 hover:text-red-500 transition-colors">
-            <i class="fa-solid fa-xmark text-sm"></i>
-        </button>
+    <div class="flex justify-around items-center">
+        <div class="text-center group cursor-pointer">
+            <div class="w-16 h-16 bg-gray-50 rounded-2xl mb-2 flex items-center justify-center text-3xl shadow-sm">📦</div>
+            <span class="text-[11px] font-black text-gray-800 tracking-tighter">MARKET</span>
+        </div>
+        <div class="text-center group cursor-pointer">
+            <div class="w-16 h-16 bg-gray-50 rounded-2xl mb-2 flex items-center justify-center text-3xl shadow-sm">🎓</div>
+            <span class="text-[11px] font-black text-gray-800 tracking-tighter">ACADEMY</span>
+        </div>
+        <div class="text-center group cursor-pointer">
+            <div class="w-16 h-16 bg-gray-50 rounded-2xl mb-2 flex items-center justify-center text-3xl shadow-sm">🔐</div>
+            <span class="text-[11px] font-black text-gray-800 tracking-tighter">ESCROW</span>
+        </div>
     </div>
-
-    <div class="space-y-2">
-        <a href="#" class="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100 active:scale-95 transition-all">
-            <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-xl">📦</div>
-            <div>
-                <h4 class="font-black text-gray-900 text-[13px] leading-none">Fara Kasuwanci</h4>
-                <p class="text-[10px] text-gray-400 mt-1">Buɗe shagonka a yau.</p>
-            </div>
-        </a>
-
-        <a href="#" class="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100 active:scale-95 transition-all">
-            <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-xl">🎓</div>
-            <div>
-                <h4 class="font-black text-gray-900 text-[13px] leading-none">Koyon AI</h4>
-                <p class="text-[10px] text-gray-400 mt-1">Zama gwani a dabarun zamani.</p>
-            </div>
-        </a>
-
-        <a href="#" class="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100 active:scale-95 transition-all">
-            <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-xl">🔐</div>
-            <div>
-                <h4 class="font-black text-gray-900 text-[13px] leading-none">Secure Escrow</h4>
-                <p class="text-[10px] text-gray-400 mt-1">Kariyar kudadenku 100%.</p>
-            </div>
-        </a>
-    </div>
-
-    <div onclick="toggleMenu()" class="mt-4 text-center cursor-pointer">
-        <span class="text-[10px] font-bold text-gray-300 uppercase tracking-[3px]">Dismiss</span>
-    </div>
+    
+    <button onclick="toggleMenu()" class="mt-8 w-full py-2 text-center text-red-500 font-bold text-xs uppercase tracking-[3px]">
+        [ Close Portal ]
+    </button>
 </div>
     
    <script>
     function openPortal() {
         const portal = document.getElementById('portal-content');
-        portal.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
-        portal.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        if (portal) {
+            // Cire tsoffin classes
+            portal.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
+            // Saka sabbin classes
+            portal.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        }
     }
 
     function toggleMenu() {
         const portal = document.getElementById('portal-content');
-        portal.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
-        portal.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        if (portal) {
+            // Mayar da su yadda suke
+            portal.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+            portal.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
+        }
     }
    </script>
+    
     
 
 </body>
