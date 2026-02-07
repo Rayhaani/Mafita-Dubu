@@ -1,37 +1,453 @@
-<div id="portal-content" class="absolute bottom-0 left-0 right-0 bg-[#0c0c0c]/95 backdrop-blur-xl rounded-t-[40px] p-10 transform translate-y-full transition-all duration-500 shadow-[0_-25px_80px_rgba(0,0,0,0.5)] border-t border-white/10 max-h-[70vh] overflow-y-auto">
-    <div class="w-10 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent rounded-full mx-auto mb-12 opacity-50"></div>
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mafita Dubu | Global Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
     
-    <div class="flex flex-col space-y-8">
-        <div onclick="location.href='index.html'" class="flex items-center justify-between group cursor-pointer">
-            <span class="text-2xl font-bold text-white/40 group-hover:text-white group-hover:pl-4 transition-all duration-300 tracking-tighter">01. HOME</span>
-            <i class="fa-solid fa-arrow-right-long text-blue-500 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all"></i>
-        </div>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F5F1E9; margin: 0; overflow-x: hidden; }
 
-        <div onclick="location.href='login.html'" class="flex items-center justify-between group cursor-pointer">
-            <span class="text-2xl font-bold text-white/40 group-hover:text-white group-hover:pl-4 transition-all duration-300 tracking-tighter">02. LOGIN</span>
-            <i class="fa-solid fa-arrow-right-long text-blue-500 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all"></i>
-        </div>
+    /* 1. Tambarin Gold Seal (Modern Certificate Style) */
+    .royal-seal {
+        margin-top: 10px;
+        background: radial-gradient(circle, #ffd700 0%, #b8860b 100%);
+        border: 1.5px solid #ffffff;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(184, 134, 11, 0.4);
+        animation: seal-pulse 2s infinite alternate ease-in-out;
+    }
 
-        <div class="flex items-center justify-between group cursor-pointer">
-            <span class="text-2xl font-bold text-white/40 group-hover:text-white group-hover:pl-4 transition-all duration-300 tracking-tighter">03. ABOUT US</span>
-            <i class="fa-solid fa-arrow-right-long text-blue-500 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all"></i>
-        </div>
+    @keyframes seal-pulse {
+        0% { transform: scale(1); filter: brightness(1); }
+        100% { transform: scale(1.1); filter: brightness(1.2); }
+    }
 
-        <div class="flex items-center justify-between group cursor-pointer">
-            <span class="text-2xl font-bold text-white/40 group-hover:text-white group-hover:pl-4 transition-all duration-300 tracking-tighter">04. CONTACT</span>
-            <i class="fa-solid fa-arrow-right-long text-blue-500 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all"></i>
-        </div>
+    /* 2. Animation na Hotuna (16s cycle for 4 photos) */
+    @keyframes photo-reveal {
+        0%, 18% { opacity: 1; z-index: 30; visibility: visible; } 
+        23%, 25% { opacity: 0; z-index: 5; visibility: hidden; }  /* Bacewa domin rubutu ya leko */
+        26%, 100% { opacity: 0; z-index: 5; visibility: hidden; } 
+    }
 
-        <div onclick="openVendorForm()" class="flex items-center justify-between group cursor-pointer">
-            <span class="text-2xl font-bold text-white/40 group-hover:text-white group-hover:pl-4 transition-all duration-300 tracking-tighter text-blue-400">05. ECOSYSTEM</span>
-            <i class="fa-solid fa-bolt text-yellow-400 opacity-0 group-hover:opacity-100 transition-all"></i>
-        </div>
-    </div>
+    .img-container {
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100%; height: 100%;
+        opacity: 0;
+        animation: photo-reveal 16s infinite linear;
+    }
 
-    <div class="mt-16 text-center">
-        <button onclick="closePortal()" class="text-[10px] font-black text-white/20 uppercase tracking-[0.5em] hover:text-white transition-all">
-            [ CLOSE PORTAL ]
-        </button>
+    .img-1 { animation-delay: 0s !important; }
+    .img-2 { animation-delay: 4s !important; }
+    .img-3 { animation-delay: 8s !important; }
+    .img-4 { animation-delay: 12s !important; }
+
+    /* 3. Rubutun Box (Font na Mafita Dubu) */
+    .box-title {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background: linear-gradient(90deg, #d400ff, #00d2ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 800;
+        font-size: 15px;
+        text-transform: capitalize; /* Small letters with Capital start */
+    }
+
+    .box-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 35;
+        background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+        pointer-events: none;
+    }
+    /* 1. Wannan shine zai sa su fara lilo */
+.floating-box {
+    animation: float-cycle 3s ease-in-out infinite;
+    will-change: transform; /* Domin ya yi sulu-sulu a waya */
+}
+
+@keyframes float-cycle {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); } /* Tsayin lilon */
+}
+
+/* 2. Raba lokacin lilon (Delay) domin su yi kyau */
+.delay-1 { animation-delay: 0s; }
+.delay-2 { animation-delay: 0.5s; }
+.delay-3 { animation-delay: 1s; }
+.delay-4 { animation-delay: 1.5s; }
+    .why-mafita-section {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 40px 24px;
+    border-radius: 2.5rem 2.5rem 0 0;
+    margin-top: 20px;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.benefit-icon {
+    color: #ff0000; /* Jajayen kibiyoyin nan */
+    font-weight: 900;
+    font-size: 1.2rem;
+    margin-top: 4px;
+}
+
+.benefit-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.benefit-text {
+    font-size: 0.9rem;
+    color: #cccccc;
+    line-height: 1.6;
+        }
+     /* REFINED GLOBAL LOGO - SABON GYARA */
+.premium-global-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.portal-icon {
+    position: relative;
+    width: 45px;
+    height: 45px;
+    background: #000; /* Baki domin ya fito a fili */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(184, 134, 11, 0.6);
+    overflow: hidden;
+}
+
+.portal-icon::before {
+    content: '';
+    position: absolute;
+    width: 160%;
+    height: 160%;
+    background: conic-gradient(transparent, #ffd700, transparent 30%);
+    animation: rotate-portal 3s linear infinite;
+}
+
+.portal-icon::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: #000; /* Mun cire fari, mun dawo da baki anan */
+    border-radius: 50%;
+    z-index: 1;
+}
+
+@keyframes rotate-portal {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.portal-center {
+    position: relative;
+    z-index: 2;
+    color: #ffd700;
+    font-size: 20px;
+    filter: drop-shadow(0 0 8px rgba(184, 134, 11, 1));
+}
+
+.brand-d { 
+    background: linear-gradient(135deg, #ffd700, #b8860b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.brand-tagline {
+    font-size: 8.5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #64748b;
+    font-weight: 700;
+}
+    /* MODERN HAMBURGER MENU */
+.modern-menu-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    padding: 10px;
+    background: #f1f5f9;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.modern-menu-btn:hover { background: #e2e8f0; }
+
+.line-1 { width: 24px; height: 2.5px; background: #1a365d; border-radius: 10px; }
+.line-2 { width: 16px; height: 2.5px; background: #1a365d; border-radius: 10px; align-self: flex-end; }
+         
+/* ELITE DIAGONAL REPEATING CARPET - FIXED VERSION */
+.carpet-wrapper {
+    perspective: 2000px;
+    height: 160px; /* Mun kara tsayi kadan */
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.magic-carpet {
+    background: #000;
+    color: #ffd700;
+    padding: 25px 45px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem; /* Mun rage girman font kadan don ya zauna da kyau */
+    text-align: center;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.7);
+    
+    /* SHAPE: Bottom-Left & Top-Right Curves */
+    border-radius: 0px 80px 0px 80px; 
+    border: 2px solid #b8860b;
+    border-left: 10px solid #b8860b;
+    border-right: 10px solid #b8860b;
+    
+    position: absolute;
+    width: 85%;
+    opacity: 0;
+    visibility: hidden; /* Kar ya rinka leko wa a baya */
+    
+    /* ANIMATION: 25 seconds total cycle (5 msgs * 5s) */
+    transform-origin: top right; 
+    transform: scale(0) rotate(-15deg);
+    animation: diagonal-fold-loop 25s infinite ease-in-out;
+}
+
+@keyframes diagonal-fold-loop {
+    /* 0% to 4%: Budewa (Entrance) */
+    0%, 20% { transform: scale(0) rotate(-15deg); opacity: 0; visibility: hidden; }
+    2%, 18% { transform: scale(1) rotate(0deg); opacity: 1; visibility: visible; }
+    
+    /* 4% to 16%: Blinking a tsakiya */
+    5%, 9%, 13%, 17% { opacity: 1; }
+    7%, 11%, 15% { opacity: 0.3; }
+    
+    /* 18% to 20%: Rufe wa (Exit) */
+    19% { transform: scale(0) rotate(-15deg); opacity: 0; visibility: hidden; }
+    100% { opacity: 0; visibility: hidden; }
+}
+
+/* RARRABA LOKACI (Timing is Key) */
+/* Kowanne yana da 5 seconds a jere */
+.msg-1 { animation-delay: 0s; }
+.msg-2 { animation-delay: 5s; }
+.msg-3 { animation-delay: 10s; }
+.msg-4 { animation-delay: 15s; }
+.msg-5 { animation-delay: 20s; }
+    
+</style>
+    
+</head>
+<body class="min-h-screen pb-20">
+
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            
+            <div class="premium-global-logo">
+                <div class="portal-icon">
+                    <div class="portal-center">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <div style="font-family: 'Plus Jakarta Sans'; font-weight: 800; font-size: 22px; line-height: 1;">
+                        <span style="color: #1a365d;">Mafita</span><span class="brand-d">Dubu</span>
+                    </div>
+                    <div style="font-size: 8px; text-transform: uppercase; letter-spacing: 2px; color: #64748b; font-weight: 700;">
+                        African Elite Ecosystem
+                    </div>
+                </div>
+            </div>
+
+            <div class="modern-menu-btn" onclick="openPortal()">
+    <div class="line-1"></div>
+    <div class="line-2"></div>
+</div>
+            
+
+        </div>
+    </nav>
+
+    <div class="pt-6 pb-4 text-center"> 
+    <div class="carpet-wrapper">
+        <div class="magic-carpet msg-1">Barka Da Zuwa Shafin Mafita Dubu</div>
+        <div class="magic-carpet msg-2">Gidan Samun Biyan Bukatu</div>
+        <div class="magic-carpet msg-3">Kasuwanci & Koyon Sana'o'i</div>
+        <div class="magic-carpet msg-4">Neman Ilmi Da Bincike</div>
+        <div class="magic-carpet msg-5">Da Warware Dukan Matsalolin Rayuwa</div>
     </div>
 </div>
 
+<div class="relative w-full px-4 mb-10"> 
+    <div class="relative w-full h-[480px] overflow-hidden rounded-[2.5rem] shadow-2xl border-4 border-white">
+        <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg" 
+             alt="Mafita" 
+             class="w-full h-full object-cover object-top">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+    </div>
+</div>
+    
+
+    <section class="px-6 py-4 -mt-10 mb-6 floating-box delay-1">
+        <div class="glass-card p-6 rounded-[2rem] border border-white/20 shadow-2xl">
+            <h3 class="text-blue-900 font-extrabold text-xl mb-2">Mafita Dubu Ecosystem</h3>
+            <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                Mafita Dubu is a high-tech digital sanctuary designed to empower the African spirit. 
+                Muna hada amintaccen tsarin <b>Amana (Escrow)</b>, <b>Kwararru</b>, da <b>Kasuwanci</b> 
+                domin samar da gada tsakanin hazaka da damammaki ta hanyar AI.
+            </p>
+            <div class="flex space-x-2">
+                <button onclick="openPortal()" class="bg-blue-600 text-white text-[10px] px-4 py-1.5 rounded-full font-bold uppercase tracking-tighter hover:bg-blue-700 transition-colors">
+    JOIN ECOSYSTEM
+                </button>
+                
+                <span class="bg-green-100 text-green-700 text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-tighter">Security</span>
+            </div>
+        </div>
+    </section>
+
+<div class="px-5 grid grid-cols-2 gap-4 pb-10">
+
+    <div class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0c0c0c] shadow-xl floating-box delay-1">
+        <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
+            <h4 class="box-title">Koyon Sana'a</h4>
+            <div class="royal-seal"><i class="fa-solid fa-bolt text-white text-xs"></i></div>
+        </div>
+        <div class="img-container img-1"><img src="https://i.postimg.cc/j2V5zhch/IMG-20260122-WA0044(1).jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+        <div class="img-container img-2"><img src="https://i.postimg.cc/0jgQpCnG/IMG-20260124-WA0008.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+        <div class="img-container img-3"><img src="https://i.postimg.cc/J0wnbQx5/IMG-20260124-WA0009.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+        <div class="img-container img-4"><img src="https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?q=80&w=500" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+    </div>
+
+    <div class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0c0c0c] shadow-xl floating-box delay-2">
+        <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
+            <h4 class="box-title">Neman Mafita</h4>
+            <div class="royal-seal"><i class="fa-solid fa-bolt text-white text-xs"></i></div>
+        </div>
+        <div class="img-container img-1"><img src="https://i.postimg.cc/GtRJvx6H/IMG-20260123-WA0031(1).jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+        <div class="img-container img-2"><img src="https://i.postimg.cc/kXKG0d6r/Chat-GPT-Image-Jan-24-2026-05-17-58-PM-png.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+        <div class="img-container img-3"><img src="https://i.postimg.cc/GmbL6Tn9/Chat-GPT-Image-Jan-24-2026-05-18-59-PM-png.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+        <div class="img-container img-4"><img src="https://i.postimg.cc/SNhkzYs8/Chat-GPT-Image-Jan-24-2026-05-16-08-PM-png.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+    </div>
+
+    <div class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0c0c0c] shadow-xl floating-box delay-3">
+        <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
+            <h4 class="box-title">Sashen Kwararru</h4>
+            <div class="royal-seal"><i class="fa-solid fa-bolt text-white text-xs"></i></div>
+        </div>
+        <div class="img-container img-1"><img src="https://i.postimg.cc/JzcXcxTS/IMG-20260124-WA0029.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+        <div class="img-container img-2"><img src="https://i.postimg.cc/Qdm7f7KH/images-20.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+        <div class="img-container img-3"><img src="https://i.postimg.cc/dDc7GZGY/IMG-20260122-WA0039-1.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+        <div class="img-container img-4"><img src="https://i.postimg.cc/bvKFw4yK/IMG-20260124-WA0028(1).jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+    </div>
+
+    <div class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0c0c0c] shadow-xl floating-box delay-4">
+        <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
+            <h4 class="box-title">Sashen Kiwon Lafiya</h4>
+            <div class="royal-seal"><i class="fa-solid fa-bolt text-white text-xs"></i></div>
+        </div>
+        <div class="img-container img-1"><img src="https://i.postimg.cc/Y0P2spNJ/image-1.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+        <div class="img-container img-2"><img src="https://i.postimg.cc/7YCZT2wP/image-3.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+        <div class="img-container img-3"><img src="https://i.postimg.cc/hPHP8ttC/image-2.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+        <div class="img-container img-4"><img src="https://i.postimg.cc/6QhWNVfx/image-4.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+    </div>
+<a href="market.html" class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0c0c0c] shadow-xl floating-box delay-5 block">
+    <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
+        <h4 class="box-title text-white">Sashen'Yan Kasuwa</h4> <div class="royal-seal"><i class="fa-solid fa-bolt text-white text-xs"></i></div>
+    </div>
+    <div class="img-container img-1"><img src="https://i.postimg.cc/02LNsdFH/istockphoto-2196140224-612x612.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+    <div class="img-container img-2"><img src="https://i.postimg.cc/fRnMFW0w/kano-market.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+    <div class="img-container img-3"><img src="https://i.postimg.cc/8s8gqwsT/348s.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+    <div class="img-container img-4"><img src="https://images.unsplash.com/photo-1578916171728-46686eac8d58?q=80&w=500" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+</a>    
+
+    <div class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0c0c0c] shadow-xl floating-box delay-6">
+    <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
+        <h4 class="box-title text-pink-500">Dandalin Hadin Aure</h4> <div class="royal-seal" style="background: radial-gradient(circle, #ff69b4 0%, #c71585 100%);">
+            <i class="fa-solid fa-heart text-white text-xs"></i>
+        </div>
+    </div>
+    <div class="img-container img-1"><img src="https://i.postimg.cc/pT5n7Xh8/wedding-1.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+    <div class="img-container img-2"><img src="https://i.postimg.cc/mD8N1V7k/wedding-2.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+    <div class="img-container img-3"><img src="https://i.postimg.cc/vH8zY8R1/wedding-3.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+    <div class="img-container img-4"><img src="https://i.postimg.cc/9M4S0V8q/wedding-4.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+    </div>
+    
+</div>
+    
+<section class="why-mafita-section">
+    <h2 class="text-3xl font-extrabold mb-10 text-center" style="font-family: 'Plus Jakarta Sans';">
+        Why Mafita Dubu?
+    </h2>
+
+    <div class="benefit-item">
+        <div class="benefit-icon">»</div>
+        <div>
+            <span class="benefit-title">The First Hybrid AI Sanctuary:</span>
+            <p class="benefit-text">We aren't just an app; we are a digital revolution. Mafita Dubu bridges the gap between raw African talent and global opportunities using a fusion of AI and human trust.</p>
+        </div>
+    </div>
+
+    <div class="benefit-item">
+        <div class="benefit-icon">»</div>
+        <div>
+            <span class="benefit-title">The Amana (Escrow) Protocol:</span>
+            <p class="benefit-text">In a world of digital scams, we built the ultimate fortress. Every transaction and skill exchange is guarded by our bulletproof Escrow system. Trust is no longer a risk; it's a guarantee.</p>
+        </div>
+    </div>
+
+    <div class="benefit-item">
+        <div class="benefit-icon">»</div>
+        <div>
+            <span class="benefit-title">Skill Monitization at Speed:</span>
+            <p class="benefit-text">Stop being an "intern" forever. Our ecosystem is designed to turn your craft into a revenue-ready monster in weeks, not years. We provide the tools, the market, and the safety.</p>
+        </div>
+    </div>
+
+    <div class="benefit-item">
+        <div class="benefit-icon">»</div>
+        <div>
+            <span class="benefit-title">No Walls. No Limits. No Bullsh*t:</span>
+            <p class="benefit-text">This is YOUR gateway. We’ve removed the gatekeepers. Whether you are a tech pro or a local craftsman, the world is now your marketplace. Scale anything, anywhere.</p>
+        </div>
+    </div>
+
+    <div class="benefit-item">
+        <div class="benefit-icon">»</div>
+        <div>
+            <span class="benefit-title">The Future of African Wealth:</span>
+            <p class="benefit-text">Others plan for the future; we code it. Mafita Dubu is the architect of a new digital economy where every African can thrive, secure, and dominate the global stage.</p>
+        </div>
+    </div>
+</section>
+    
+<div id="portal-content" class="absolute bottom-0 left-0 right-0 bg-[#0c0c0c]/95 backdrop-blur-xl rounded-t-[40px] p-10 transform translate-y-full transition-all duration-500 shadow-[0_-25px_80px_rgba(0,0,0,0.5)] border-t border-white/10 max-h-[70vh] overflow-y-auto">
+    <div class="w-10
