@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Role | Mafita Dubu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #05070a; color: white; overflow: hidden; }
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); transition: all 0.4s ease; }
+        .glass-card:hover { transform: translateY(-10px); border-color: rgba(255,255,255,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .glow { position: fixed; width: 400px; height: 400px; border-radius: 50%; filter: blur(120px); z-index: -1; }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-6">
+    
+    <div class="glow bg-blue-600/20 top-[-10%] left-[-10%]"></div>
+    <div class="glow bg-purple-600/20 bottom-[-10%] right-[-10%]"></div>
+
+    <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-6xl font-black tracking-tighter mb-4">Register As</h1>
+        <div class="h-1 w-20 bg-blue-600 mx-auto rounded-full"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 w-full max-w-6xl">
+        
+        <a href="registration_page.html?role=customer" class="glass-card p-10 rounded-[2.5rem] text-center no-underline block group">
+            <div class="text-5xl mb-4 group-hover:scale-110 transition">🛍️</div>
+            <h3 class="font-bold text-blue-400">Customer</h3>
+            <p class="text-[10px] text-gray-500 mt-2 uppercase">Buyer</p>
+        </a>
+
+        <a href="registration_page.html?role=client" class="glass-card p-10 rounded-[2.5rem] text-center no-underline block group">
+            <div class="text-5xl mb-4 group-hover:scale-110 transition">🤝</div>
+            <h3 class="font-bold text-purple-400">Client</h3>
+            <p class="text-[10px] text-gray-500 mt-2 uppercase">Seeker</p>
+        </a>
+
+        <a href="registration_page.html?role=vendor" class="glass-card p-10 rounded-[2.5rem] text-center no-underline block group">
+            <div class="text-5xl mb-4 group-hover:scale-110 transition">🏪</div>
+            <h3 class="font-bold text-green-400">Vendor</h3>
+            <p class="text-[10px] text-gray-500 mt-2 uppercase">Seller</p>
+        </a>
+
+        <a href="registration_page.html?role=expert" class="glass-card p-10 rounded-[2.5rem] text-center no-underline block group">
+            <div class="text-5xl mb-4 group-hover:scale-110 transition">🛠️</div>
+            <h3 class="font-bold text-red-400">Expert</h3>
+            <p class="text-[10px] text-gray-500 mt-2 uppercase">Service</p>
+        </a>
+
+        <a href="registration_page.html?role=lab" class="glass-card p-10 rounded-[2.5rem] text-center no-underline block group">
+            <div class="text-5xl mb-4 group-hover:scale-110 transition">🔬</div>
+            <h3 class="font-bold text-yellow-400">Lab</h3>
+            <p class="text-[10px] text-gray-500 mt-2 uppercase">Medical</p>
+        </a>
+
+    </div>
+
+    <a href="index.html" class="mt-12 text-gray-500 hover:text-white transition text-xs font-bold uppercase tracking-widest">← Back to Home</a>
+</body>
+  </html>
+  
