@@ -3,120 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Sky Blue Edition</title>
+    <title>Mafita Dubu | Royal Sky</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --sky-main: #e0f2fe; /* Background kalar sararin samaniya mai haske */
-            --sky-dark: #0284c7; /* Kalar shudi mai daukar ido */
-            --glass-white: rgba(255, 255, 255, 0.9);
+            --sky-bg: #f0f9ff;
+            --dark-gold: #b8860b; /* Asalin Dark Gold */
+            --soft-gold: #daa520;
+            --input-border: #cbd5e1;
         }
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: linear-gradient(135deg, #f0f9ff 0%, #bae6fd 100%);
+            background: linear-gradient(135deg, #e0f2fe 0%, #7dd3fc 100%);
             display: flex; align-items: center; justify-content: center; 
-            min-height: 100vh; margin: 0; padding: 15px;
+            min-height: 100vh; margin: 0; padding: 20px;
         }
-        .clean-card {
-            background: var(--glass-white);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 24px;
-            padding: 35px;
-            width: 100%; max-width: 420px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        .royal-card {
+            /* Kalar katin: Dark Gold mai dan gaskiya (Transparent) */
+            background: rgba(184, 134, 11, 0.08); 
+            backdrop-filter: blur(15px);
+            border: 2px solid var(--dark-gold);
+            border-radius: 30px; /* Shape mai lankwasa mai kyau */
+            padding: 35px 30px;
+            width: 100%; max-width: 380px; /* An rage fadin katin */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
         }
         .header-title { 
-            font-size: 1.5rem; font-weight: 700; color: #0c4a6e; 
-            text-align: center; margin-bottom: 8px; 
-        }
-        .header-sub { 
-            font-size: 0.85rem; color: #64748b; 
+            font-size: 1.4rem; font-weight: 800; color: #0c4a6e; 
             text-align: center; margin-bottom: 25px; 
+            text-transform: uppercase; letter-spacing: 1px;
         }
 
         .input-group { margin-bottom: 15px; }
         label { 
-            font-size: 0.75rem; font-weight: 600; color: #334155; 
-            margin-bottom: 6px; display: block; 
+            font-size: 0.65rem; font-weight: 700; color: #0c4a6e; 
+            margin-bottom: 5px; display: block; letter-spacing: 0.5px;
         }
         
-        .sky-input {
-            width: 100%; background: #ffffff;
-            border: 1.5px solid #e2e8f0;
-            padding: 12px 16px; border-radius: 12px;
-            color: #1e293b; font-size: 0.95rem; transition: 0.3s;
+        /* Sleek Inputs */
+        .sleek-input {
+            width: 100%; background: white;
+            border: 1px solid var(--input-border);
+            padding: 10px 15px; border-radius: 12px; /* Lankwasa mai kyau */
+            color: #1e293b; font-size: 0.85rem; transition: 0.3s;
             outline: none;
         }
-        .sky-input:focus { 
-            border-color: var(--sky-dark);
-            box-shadow: 0 0 10px rgba(2, 132, 199, 0.1);
+        .sleek-input:focus { 
+            border-color: var(--dark-gold);
+            box-shadow: 0 0 8px rgba(184, 134, 11, 0.2);
         }
 
-        /* Email bar with Send button */
-        .email-bar { position: relative; display: flex; align-items: center; }
-        .send-otp-btn {
-            position: absolute; right: 8px; 
-            background: var(--sky-dark);
-            color: #ffffff; font-size: 0.7rem; font-weight: 700;
-            padding: 7px 14px; border-radius: 8px; cursor: pointer;
-            border: none; transition: 0.2s;
+        /* Inline Send Button */
+        .email-box { position: relative; display: flex; align-items: center; }
+        .btn-send {
+            position: absolute; right: 5px; 
+            background: var(--dark-gold);
+            color: white; font-size: 0.65rem; font-weight: 700;
+            padding: 6px 10px; border-radius: 8px; cursor: pointer;
+            border: none;
         }
-        .send-otp-btn:hover { background: #0369a1; }
 
-        .submit-btn {
-            background: var(--sky-dark); color: #ffffff; font-weight: 700;
-            width: 100%; padding: 15px; border-radius: 12px;
-            margin-top: 20px; font-size: 1rem; border: none;
-            cursor: pointer; transition: 0.3s;
-            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+        .btn-register {
+            background: linear-gradient(135deg, var(--dark-gold) 0%, var(--soft-gold) 100%);
+            color: white; font-weight: 700;
+            width: 100%; padding: 14px; border-radius: 12px;
+            margin-top: 15px; font-size: 0.9rem; border: none;
+            cursor: pointer; box-shadow: 0 10px 15px -3px rgba(184, 134, 11, 0.3);
+            transition: 0.3s;
         }
-        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4); }
+        .btn-register:hover { transform: scale(1.02); filter: brightness(1.1); }
     </style>
 </head>
 <body>
 
-    <div class="clean-card">
-        <h1 class="header-title">Create Account</h1>
-        <p class="header-sub">Join Mafita Dubu - Sky High Success</p>
+    <div class="royal-card">
+        <h1 class="header-title">Register</h1>
 
         <form id="regForm">
             <div class="input-group">
                 <label>FULL NAME</label>
-                <input type="text" id="fullName" class="sky-input" placeholder="e.g. Al-Amin Ibrahim" required>
+                <input type="text" id="fullName" class="sleek-input" placeholder="Enter name" required>
             </div>
 
             <div class="input-group">
                 <label>EMAIL ADDRESS</label>
-                <div class="email-bar">
-                    <input type="email" id="email" class="sky-input" placeholder="name@email.com" required>
-                    <button type="button" class="send-otp-btn" id="sendOtp">SEND</button>
+                <div class="email-box">
+                    <input type="email" id="email" class="sleek-input" placeholder="mail@example.com" required>
+                    <button type="button" class="btn-send" id="sendOtp">SEND</button>
                 </div>
             </div>
 
             <div class="input-group">
-                <label>OTP VERIFICATION</label>
-                <input type="text" id="otpCode" class="sky-input" placeholder="Enter 6-digit code" required>
+                <label>OTP CODE</label>
+                <input type="text" id="otpCode" class="sleek-input" placeholder="6-digit code" required>
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-2 gap-3">
                 <div class="input-group">
                     <label>PHONE</label>
-                    <input type="tel" id="phone" class="sky-input" placeholder="080..." required>
+                    <input type="tel" id="phone" class="sleek-input" placeholder="080..." required>
                 </div>
                 <div class="input-group">
-                    <label>LOCATION</label>
-                    <input type="text" id="location" class="sky-input" placeholder="State" required>
+                    <label>STATE</label>
+                    <input type="text" id="location" class="sleek-input" placeholder="Location" required>
                 </div>
             </div>
 
             <div class="input-group">
                 <label>PASSWORD</label>
-                <input type="password" id="pass" class="sky-input" placeholder="••••••••" required>
+                <input type="password" id="pass" class="sleek-input" placeholder="••••••••" required>
             </div>
 
-            <button type="submit" class="submit-btn">GET STARTED</button>
+            <button type="submit" class="btn-register">CREATE ACCOUNT</button>
         </form>
     </div>
 
@@ -137,32 +136,25 @@
         const db = getFirestore(app);
 
         document.getElementById('sendOtp').addEventListener('click', function() {
-            const email = document.getElementById('email').value;
-            if(!email) { alert("Saka email tukunna!"); return; }
-            this.innerText = "SENT!";
-            this.style.background = "#059669"; // Green on success
-            this.disabled = true;
-            alert("An tura OTP zuwa " + email);
+            if(!document.getElementById('email').value) return alert("Saka email!");
+            this.innerText = "SENT";
+            this.style.background = "#15803d";
         });
 
         document.getElementById('regForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = e.target.querySelector('.submit-btn');
-            btn.innerText = "CREATING ACCOUNT...";
+            const btn = e.target.querySelector('.btn-register');
+            btn.innerText = "PROCESSING...";
             try {
                 await addDoc(collection(db, "users"), {
                     fullName: document.getElementById('fullName').value,
                     email: document.getElementById('email').value,
                     phone: document.getElementById('phone').value,
                     location: document.getElementById('location').value,
-                    role: "User",
                     timestamp: new Date()
                 });
                 window.location.href = "index.html";
-            } catch (err) { 
-                alert("Kuskure ya faru: " + err.message); 
-                btn.innerText = "GET STARTED";
-            }
+            } catch (err) { alert(err.message); btn.innerText = "CREATE ACCOUNT"; }
         });
     </script>
 </body>
