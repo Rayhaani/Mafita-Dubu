@@ -473,22 +473,28 @@
 </div>
     
     
-
-    <script>
+<script>
     function openPortal() {
         const portal = document.getElementById('portal-content');
         if (portal) {
-            portal.classList.remove('translate-y-full');
+            // Cire tsoffin classes
+            portal.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
+            // Saka sabbin classes
+            portal.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
         }
     }
 
     function toggleMenu() {
         const portal = document.getElementById('portal-content');
         if (portal) {
-            portal.classList.add('translate-y-full');
+            // Mayar da su yadda suke
+            portal.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+            portal.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
         }
     }
-    </script>
+</script>
+    
+    
     
     
 </body>
