@@ -21,35 +21,37 @@
             min-height: 100vh; margin: 0; padding: 20px;
         }
 
-        /* 1. WANNAN SHINE ASALIN ROYAL SEAL DIN DA KA TURO */
+        /* NAN NE ASALIN LOGON DA KA TURO (ROYAL SEAL) */
         @keyframes seal-pulse {
             0% { transform: scale(1); box-shadow: 0 4px 10px rgba(184, 134, 11, 0.4); }
             100% { transform: scale(1.1); box-shadow: 0 8px 20px rgba(184, 134, 11, 0.7); }
         }
 
         .royal-seal {
-            margin: -90px auto 15px; /* Ya zauna a saman katin */
+            /* Na daidaita matsayinsa a saman Card din */
+            margin: -95px auto 10px; 
             background: radial-gradient(circle, #ffd700 0%, #b8860b 100%);
-            border: 2px solid #ffffff;
+            border: 1.5px solid #ffffff;
             border-radius: 50%;
-            width: 80px;
+            width: 80px; /* Na barshi a girman da zai zauna daidai */
             height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 10px rgba(184, 134, 11, 0.4);
             animation: seal-pulse 2s infinite alternate ease-in-out;
-            position: relative;
             z-index: 100;
+            position: relative;
         }
 
-        /* Harafin "M" a tsakiyar Seal din */
-        .royal-seal::after {
+        /* Tambarin harafin "M" a tsakiya don ya fito a matsayin Logo */
+        .royal-seal::before {
             content: 'M';
-            color: white;
+            color: #fff;
             font-family: 'Cinzel', serif;
             font-weight: 800;
-            font-size: 2rem;
+            font-size: 2.2rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .luxury-card {
@@ -60,7 +62,7 @@
             width: 100%; max-width: 400px;
             box-shadow: 0 30px 60px rgba(0,0,0,0.5);
             position: relative;
-            margin-top: 50px;
+            margin-top: 50px; /* Don logon ya samu guri */
         }
 
         .header-title { 
@@ -102,12 +104,12 @@
         <form>
             <div class="input-group">
                 <label>Full Name</label>
-                <input type="text" class="gold-input" placeholder="Sunan Ka" required>
+                <input type="text" class="gold-input" placeholder="Sunanka" required>
             </div>
 
             <div class="input-group">
                 <label>Username</label>
-                <input type="text" class="gold-input" placeholder="Username" required>
+                <input type="text" class="gold-input" placeholder="Zabi Username" required>
             </div>
 
             <div class="input-group">
@@ -120,7 +122,7 @@
 
             <div class="grid grid-cols-2 gap-4">
                 <div class="input-group">
-                    <label>Phone Number</label>
+                    <label>Phone</label>
                     <input type="tel" class="gold-input" placeholder="080..." required>
                 </div>
                 <div class="input-group">
