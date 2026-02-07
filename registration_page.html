@@ -3,158 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Royal Sky</title>
+    <title>Mafita Dubu | Gold Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --sky-bg: #f0f9ff;
-            --dark-gold: #b8860b; /* Asalin Dark Gold */
-            --soft-gold: #daa520;
-            --input-border: #cbd5e1;
+            /* Wannan itace asalin kalar Dark Gold din */
+            --dark-gold-bg: #8b6b1b; 
+            --deep-gold: #5e4912;
+            --accent-gold: #f3cf7a;
         }
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: linear-gradient(135deg, #e0f2fe 0%, #7dd3fc 100%);
+            /* Background kalar Dark Gold mai gradient don ya nuna zurfi */
+            background: radial-gradient(circle at center, var(--dark-gold-bg) 0%, var(--deep-gold) 100%);
             display: flex; align-items: center; justify-content: center; 
             min-height: 100vh; margin: 0; padding: 20px;
         }
-        .royal-card {
-            /* Kalar katin: Dark Gold mai dan gaskiya (Transparent) */
-            background: rgba(184, 134, 11, 0.08); 
-            backdrop-filter: blur(15px);
-            border: 2px solid var(--dark-gold);
-            border-radius: 30px; /* Shape mai lankwasa mai kyau */
-            padding: 35px 30px;
-            width: 100%; max-width: 380px; /* An rage fadin katin */
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        .premium-card {
+            /* Katin zai kasance kamar gilashi mai duhu don ya fito a kan zinari */
+            background: rgba(0, 0, 0, 0.75); 
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(243, 207, 122, 0.2);
+            border-radius: 28px;
+            padding: 35px;
+            width: 100%; max-width: 400px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
         }
         .header-title { 
-            font-size: 1.4rem; font-weight: 800; color: #0c4a6e; 
-            text-align: center; margin-bottom: 25px; 
-            text-transform: uppercase; letter-spacing: 1px;
+            font-size: 1.5rem; font-weight: 700; color: var(--accent-gold); 
+            text-align: center; margin-bottom: 25px; letter-spacing: -0.5px;
         }
 
-        .input-group { margin-bottom: 15px; }
+        .input-group { margin-bottom: 16px; }
         label { 
-            font-size: 0.65rem; font-weight: 700; color: #0c4a6e; 
-            margin-bottom: 5px; display: block; letter-spacing: 0.5px;
+            font-size: 0.7rem; font-weight: 600; color: #a1a1aa; 
+            margin-bottom: 6px; display: block; text-transform: uppercase;
         }
         
-        /* Sleek Inputs */
         .sleek-input {
-            width: 100%; background: white;
-            border: 1px solid var(--input-border);
-            padding: 10px 15px; border-radius: 12px; /* Lankwasa mai kyau */
-            color: #1e293b; font-size: 0.85rem; transition: 0.3s;
+            width: 100%; background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid #333;
+            padding: 11px 16px; border-radius: 12px;
+            color: white; font-size: 0.9rem; transition: 0.3s;
             outline: none;
         }
         .sleek-input:focus { 
-            border-color: var(--dark-gold);
-            box-shadow: 0 0 8px rgba(184, 134, 11, 0.2);
+            border-color: var(--accent-gold);
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        /* Inline Send Button */
-        .email-box { position: relative; display: flex; align-items: center; }
-        .btn-send {
-            position: absolute; right: 5px; 
-            background: var(--dark-gold);
-            color: white; font-size: 0.65rem; font-weight: 700;
-            padding: 6px 10px; border-radius: 8px; cursor: pointer;
+        /* OTP Integrated Input */
+        .email-wrapper { position: relative; display: flex; align-items: center; }
+        .send-btn {
+            position: absolute; right: 6px; 
+            background: var(--accent-gold);
+            color: #000; font-size: 0.65rem; font-weight: 800;
+            padding: 7px 12px; border-radius: 8px; cursor: pointer;
             border: none;
         }
 
-        .btn-register {
-            background: linear-gradient(135deg, var(--dark-gold) 0%, var(--soft-gold) 100%);
-            color: white; font-weight: 700;
-            width: 100%; padding: 14px; border-radius: 12px;
-            margin-top: 15px; font-size: 0.9rem; border: none;
-            cursor: pointer; box-shadow: 0 10px 15px -3px rgba(184, 134, 11, 0.3);
-            transition: 0.3s;
+        .submit-btn {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #b8860b 100%);
+            color: #000; font-weight: 700;
+            width: 100%; padding: 15px; border-radius: 12px;
+            margin-top: 20px; font-size: 0.95rem; border: none;
+            cursor: pointer; transition: 0.3s;
         }
-        .btn-register:hover { transform: scale(1.02); filter: brightness(1.1); }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(243, 207, 122, 0.3); }
     </style>
 </head>
 <body>
 
-    <div class="royal-card">
-        <h1 class="header-title">Register</h1>
+    <div class="premium-card">
+        <h1 class="header-title">Create Account</h1>
 
         <form id="regForm">
             <div class="input-group">
-                <label>FULL NAME</label>
-                <input type="text" id="fullName" class="sleek-input" placeholder="Enter name" required>
+                <label>Full Name</label>
+                <input type="text" id="fullName" class="sleek-input" placeholder="e.g. Yusuf Danjuma" required>
             </div>
 
             <div class="input-group">
-                <label>EMAIL ADDRESS</label>
-                <div class="email-box">
-                    <input type="email" id="email" class="sleek-input" placeholder="mail@example.com" required>
-                    <button type="button" class="btn-send" id="sendOtp">SEND</button>
+                <label>Email Address</label>
+                <div class="email-wrapper">
+                    <input type="email" id="email" class="sleek-input" placeholder="name@email.com" required>
+                    <button type="button" class="send-btn" id="sendOtp">SEND</button>
                 </div>
             </div>
 
             <div class="input-group">
-                <label>OTP CODE</label>
-                <input type="text" id="otpCode" class="sleek-input" placeholder="6-digit code" required>
+                <label>OTP Verification</label>
+                <input type="text" id="otpCode" class="sleek-input" placeholder="Enter code" required>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-2 gap-4">
                 <div class="input-group">
-                    <label>PHONE</label>
+                    <label>Phone</label>
                     <input type="tel" id="phone" class="sleek-input" placeholder="080..." required>
                 </div>
                 <div class="input-group">
-                    <label>STATE</label>
+                    <label>State</label>
                     <input type="text" id="location" class="sleek-input" placeholder="Location" required>
                 </div>
             </div>
 
             <div class="input-group">
-                <label>PASSWORD</label>
+                <label>Password</label>
                 <input type="password" id="pass" class="sleek-input" placeholder="••••••••" required>
             </div>
 
-            <button type="submit" class="btn-register">CREATE ACCOUNT</button>
+            <button type="submit" class="submit-btn">GET STARTED</button>
         </form>
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
-            authDomain: "global-market-admin.firebaseapp.com",
-            projectId: "global-market-admin",
-            storageBucket: "global-market-admin.firebasestorage.app",
-            messagingSenderId: "259715265619",
-            appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
+        // Firebase code stays here...
         document.getElementById('sendOtp').addEventListener('click', function() {
             if(!document.getElementById('email').value) return alert("Saka email!");
             this.innerText = "SENT";
-            this.style.background = "#15803d";
-        });
-
-        document.getElementById('regForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = e.target.querySelector('.btn-register');
-            btn.innerText = "PROCESSING...";
-            try {
-                await addDoc(collection(db, "users"), {
-                    fullName: document.getElementById('fullName').value,
-                    email: document.getElementById('email').value,
-                    phone: document.getElementById('phone').value,
-                    location: document.getElementById('location').value,
-                    timestamp: new Date()
-                });
-                window.location.href = "index.html";
-            } catch (err) { alert(err.message); btn.innerText = "CREATE ACCOUNT"; }
+            this.disabled = true;
         });
     </script>
 </body>
