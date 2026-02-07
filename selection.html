@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selection Portal | Gold Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@900&family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <title>Selection Portal | Deep Gold Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,900&family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { 
@@ -20,52 +20,57 @@
             100% { transform: translateY(0px); }
         }
 
-        /* 1. KATI MAI KALAR ZINARI (GOLDEN CARD) */
+        /* 1. KATIN ZINARI MAI DUHU (DEEP GOLDEN CARD) */
         .main-portal { 
             animation: float 4s ease-in-out infinite;
-            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
-            border: 2px solid #8b6b1b;
+            /* Na rage hasken launukan don su kara duhu da kauri */
+            background: linear-gradient(135deg, #a67c25 0%, #d4af37 50%, #8b6b1b 100%);
+            border: 2px solid #5c4b1a;
             width: 90%; 
             max-width: 400px; 
             border-radius: 2.5rem; 
             padding: 2.5rem;
-            box-shadow: 0 20px 40px rgba(139, 107, 27, 0.4);
+            box-shadow: 0 25px 50px rgba(92, 75, 26, 0.5);
             text-align: center;
         }
 
-        /* 2. RUBUTUN HEADING (CINZEL FONT) */
+        /* 2. RUBUTUN HEADING (PREMIUM ITALICS) */
         .header-title {
-            font-family: 'Cinzel', serif;
-            color: #1a1405; /* Duhun zinari */
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #1a1405; /* Blackish-gold */
             font-weight: 900;
-            letter-spacing: -1px;
+            font-size: 2.2rem;
+            letter-spacing: -0.5px;
+            margin-bottom: 5px;
         }
 
         .role-btn {
             display: flex; align-items: center;
-            padding: 1rem; margin-bottom: 0.8rem;
+            padding: 1.1rem; margin-bottom: 0.8rem;
             border-radius: 1.2rem; 
-            background: rgba(255, 255, 255, 0.4);
+            /* Button background dinsa ya dan kara duhu kadan don su dace */
+            background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(139, 107, 27, 0.3);
+            border: 1px solid rgba(26, 20, 5, 0.1);
             transition: 0.4s; text-decoration: none;
         }
 
         .role-btn:hover { 
             transform: translateX(10px); 
-            background: #ffffff; 
-            border-color: #8b6b1b;
+            background: rgba(255, 255, 255, 0.5);
+            border-color: #1a1405;
         }
         
         .role-text-main { color: #1a1405; font-weight: 800; font-size: 0.95rem; }
-        .role-text-sub { color: #5c4b1a; font-weight: 600; font-size: 10px; }
+        .role-text-sub { color: #3d3111; font-weight: 700; font-size: 10px; opacity: 0.8; }
     </style>
 </head>
 <body>
 
     <div class="main-portal">
-        <h2 class="header-title text-3xl mb-1">REGISTER AS</h2>
-        <p class="text-[#5c4b1a] text-[10px] font-bold uppercase tracking-[0.2em] mb-8">Select Your Identity</p>
+        <h2 class="header-title">Register As</h2>
+        <p class="text-[#1a1405] text-[10px] font-black uppercase tracking-[0.3em] mb-8 opacity-60">Select Your Identity</p>
 
         <div class="space-y-3">
             <a href="registration_page.html?role=customer" class="role-btn">
@@ -109,7 +114,7 @@
             </a>
         </div>
         
-        <a href="index.html" class="inline-block mt-6 text-[#1a1405] text-[11px] font-black hover:opacity-70 transition uppercase no-underline tracking-widest">← Back to Home</a>
+        <a href="index.html" class="inline-block mt-6 text-[#1a1405] text-[11px] font-black hover:opacity-50 transition uppercase no-underline tracking-widest">← Return Home</a>
     </div>
 
 </body>
