@@ -516,7 +516,7 @@
 </div>
 
     </section>
-<div id="portal-sheet" class="fixed inset-0 bg-black/90 z-[9999] hidden backdrop-blur-md" onclick="closePortal()">
+<div id="portal-sheet" class="fixed inset-0 bg-black/95 z-[9999] hidden backdrop-blur-lg" onclick="closePortal()">
     <div id="portal-content" class="absolute bottom-0 left-0 right-0 bg-[#0a0a0a] rounded-t-[40px] p-10 transform translate-y-full transition-all duration-500 border-t border-white/10" onclick="event.stopPropagation()">
         
         <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mb-10"></div>
@@ -529,10 +529,27 @@
         </div>
 
         <button onclick="closePortal()" class="mt-12 w-full py-4 text-[10px] text-white/20 tracking-[0.5em] font-black uppercase border border-white/5 rounded-2xl">
-            [ CLOSE PORTAL ]
+            [ DISMISS PORTAL ]
         </button>
     </div>
 </div>
+
+<script>
+function openPortal() {
+    const sheet = document.getElementById('portal-sheet');
+    const content = document.getElementById('portal-content');
+    sheet.classList.remove('hidden');
+    setTimeout(() => { content.classList.remove('translate-y-full'); }, 10);
+}
+
+function closePortal() {
+    const sheet = document.getElementById('portal-sheet');
+    const content = document.getElementById('portal-content');
+    content.classList.add('translate-y-full');
+    setTimeout(() => { sheet.classList.add('hidden'); }, 400);
+}
+</script>
+    
 
 <script>
 function openPortal() {
