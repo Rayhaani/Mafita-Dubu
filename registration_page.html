@@ -3,102 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Ultra-Premium</title>
+    <title>Registration | Mafita Dubu</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #D4AF37; --dark: #080808; }
         body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: var(--dark);
-            overflow-x: hidden;
-            display: flex; align-items: center; justify-content: center; min-height: 100vh;
+            font-family: 'Inter', sans-serif; 
+            background-color: #0f1115; /* Kalar dake hoton ka */
+            background-image: radial-gradient(circle at 50% -20%, #1e222b, #0f1115);
+            display: flex; align-items: center; justify-content: center; 
+            min-height: 100vh; margin: 0; color: #ffffff;
         }
-        /* Animated Background */
-        .bg-glow {
-            position: fixed; width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
-            z-index: -1; filter: blur(80px); animation: move 20s infinite alternate;
-        }
-        @keyframes move { from { transform: translate(-20%, -20%); } to { transform: translate(20%, 20%); } }
-
         .luxury-card {
-            background: rgba(255, 255, 255, 0.01);
-            backdrop-filter: blur(25px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-top: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 2.5rem;
-            padding: 3.5rem; width: 100%; max-width: 500px;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
-            animation: fadeIn 1s ease-out;
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .input-box {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(23, 26, 33, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 1.1rem 1.4rem; border-radius: 1.2rem;
-            color: white; width: 100%; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 1.2rem;
+            padding: 2rem; 
+            width: 100%; max-width: 380px; /* Rage girman katin */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
-        .input-box:focus {
-            background: rgba(212, 175, 55, 0.03);
-            border-color: var(--gold);
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.1);
-            outline: none; transform: scale(1.01);
+        .header-text { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; color: #f8f9fa; }
+        .sub-text { font-size: 0.8rem; color: #94a3b8; margin-top: 0.25rem; }
+        
+        label { 
+            display: block; font-size: 0.75rem; font-weight: 500; 
+            color: #94a3b8; margin-bottom: 0.4rem; margin-top: 1rem;
         }
-        .luxury-btn {
-            background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
-            color: #000; font-weight: 800; width: 100%;
-            padding: 1.2rem; border-radius: 1.2rem;
-            text-transform: uppercase; letter-spacing: 2px;
-            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.2);
-            transition: 0.4s ease;
+        .input-box {
+            width: 100%; background: #1a1d24;
+            border: 1px solid #2d333f;
+            padding: 0.75rem 1rem; border-radius: 0.6rem;
+            color: white; font-size: 0.85rem; transition: 0.2s;
+            outline: none;
         }
-        .luxury-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 45px rgba(212, 175, 55, 0.4);
-            filter: brightness(1.1);
+        .input-box:focus { border-color: #D4AF37; background: #1e222b; }
+        
+        .gold-btn {
+            background: #D4AF37; color: #000; font-weight: 600; 
+            width: 100%; padding: 0.75rem; border-radius: 0.6rem;
+            margin-top: 1.5rem; font-size: 0.85rem; transition: 0.3s;
         }
-        label { color: var(--gold); font-size: 0.65rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-left: 10px; margin-bottom: 5px; display: block; }
+        .gold-btn:hover { background: #e5c04a; transform: translateY(-1px); }
     </style>
 </head>
 <body>
-    <div class="bg-glow"></div>
 
     <div class="luxury-card">
-        <div class="text-center mb-10">
-            <h1 id="displayRole" class="text-4xl font-black text-white tracking-tighter mb-1">REGISTER</h1>
-            <p class="text-gray-500 text-[9px] tracking-[0.3em] font-bold uppercase">Experience Global Excellence</p>
+        <div class="text-left mb-2">
+            <h1 id="displayRole" class="header-text">Create Account</h1>
+            <p class="sub-text">Enter your details to get started.</p>
         </div>
 
-        <form id="regForm" class="space-y-6">
-            <div>
-                <label>Identify Name</label>
-                <input type="text" id="fullName" class="input-box" placeholder="Full Name / Business Title" required>
-            </div>
+        <form id="regForm">
+            <label>FULL NAME</label>
+            <input type="text" id="fullName" class="input-box" placeholder="John Doe" required>
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-2 gap-3">
                 <div>
-                    <label>Digital Mail</label>
-                    <input type="email" id="email" class="input-box" placeholder="Email" required>
+                    <label>EMAIL</label>
+                    <input type="email" id="email" class="input-box" placeholder="name@mail.com" required>
                 </div>
                 <div>
-                    <label>Direct Line</label>
-                    <input type="tel" id="phone" class="input-box" placeholder="Phone" required>
+                    <label>PHONE</label>
+                    <input type="tel" id="phone" class="input-box" placeholder="080..." required>
                 </div>
             </div>
 
-            <div>
-                <label>Geographic Hub</label>
-                <input type="text" id="location" class="input-box" placeholder="City, State, Country" required>
-            </div>
+            <label>LOCATION</label>
+            <input type="text" id="location" class="input-box" placeholder="Kaduna, Nigeria" required>
 
-            <div>
-                <label>Security Key</label>
-                <input type="password" id="pass" class="input-box" placeholder="••••••••" required>
-            </div>
+            <label>PASSWORD</label>
+            <input type="password" id="pass" class="input-box" placeholder="••••••••" required>
 
-            <button type="submit" class="luxury-btn">Authorize & Join</button>
+            <button type="submit" class="gold-btn">Continue</button>
         </form>
     </div>
 
@@ -119,13 +96,13 @@
         const db = getFirestore(app);
 
         const params = new URLSearchParams(window.location.search);
-        const userRole = params.get('role') || 'Partner';
-        document.getElementById('displayRole').innerText = userRole.toUpperCase();
+        const userRole = params.get('role') || 'User';
+        document.getElementById('displayRole').innerText = userRole + " Account";
 
         document.getElementById('regForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
-            btn.innerHTML = `<span class="animate-pulse">Authenticating...</span>`;
+            btn.innerText = "Creating...";
             
             try {
                 await addDoc(collection(db, "users"), {
@@ -137,11 +114,11 @@
                     status: (userRole.toLowerCase() === 'customer') ? 'approved' : 'pending',
                     timestamp: new Date()
                 });
-                alert("Masha Allah! You are now part of the Ecosystem.");
+                alert("Success!");
                 window.location.href = "index.html";
             } catch (err) { 
                 alert("Error: " + err.message); 
-                btn.innerText = "Authorize & Join";
+                btn.innerText = "Continue";
             }
         });
     </script>
