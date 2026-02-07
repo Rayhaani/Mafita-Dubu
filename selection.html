@@ -8,7 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { 
-            background: #000000; /* Black Background */
+            /* 1. ANAN NE NA CANJA BACKGROUND DIN ZUWA OFF-WHITE */
+            background-color: #FFF5E1; 
             font-family: 'Plus Jakarta Sans', sans-serif;
             display: flex; align-items: center; justify-content: center; min-height: 100vh;
             margin: 0; overflow: hidden;
@@ -20,17 +21,17 @@
             100% { transform: translateY(0px); }
         }
 
-        /* WANNAN SHINE MAIN PORTAL DIN */
+        /* 2. MUN GYARA KALA DOMIN YA FITO A KAN FARI */
         .main-portal { 
             animation: float 4s ease-in-out infinite;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(184, 134, 11, 0.2) 100%);
+            background: #ffffff; /* Fari don portal din ya fito a kan off-white */
             backdrop-filter: blur(25px);
-            border: 1px solid rgba(212, 175, 55, 0.3); /* Gold Border */
+            border: 1.5px solid rgba(184, 134, 11, 0.4); /* Gold Border */
             width: 90%; 
             max-width: 420px; 
             border-radius: 3rem; 
             padding: 2.5rem;
-            box-shadow: 0 25px 50px -12px rgba(184, 134, 11, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(184, 134, 11, 0.2);
             text-align: center;
         }
 
@@ -38,32 +39,34 @@
             display: flex; align-items: center;
             padding: 1.2rem; margin-bottom: 0.8rem;
             border-radius: 1.5rem; 
-            background: rgba(212, 175, 55, 0.05);
-            border: 1px solid rgba(212, 175, 55, 0.1);
+            background: #fafafa;
+            border: 1px solid rgba(212, 175, 55, 0.2);
             transition: 0.4s; text-decoration: none;
         }
 
         .role-btn:hover { 
             transform: scale(1.05); 
-            background: rgba(212, 175, 55, 0.15); 
-            border-color: rgba(212, 175, 55, 0.5);
+            background: #fff; 
+            border-color: rgba(212, 175, 55, 0.8);
+            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.1);
         }
         
-        .gold-text { color: #D4AF37; }
+        .gold-text { color: #8b6b1b; } /* Na dan rage kalar gold din don ta fito a kan fari */
+        .text-muted { color: #666; } /* Kalar description text */
     </style>
 </head>
 <body>
 
     <div class="main-portal">
         <h2 class="gold-text text-2xl font-black tracking-tighter mb-1 uppercase">Register As</h2>
-        <p class="text-gray-500 text-[9px] uppercase tracking-[0.3em] mb-8">Select Your Identity</p>
+        <p class="text-muted text-[9px] uppercase tracking-[0.3em] mb-8">Select Your Identity</p>
 
         <div class="space-y-3">
             <a href="registration_page.html?role=customer" class="role-btn">
                 <span class="text-2xl mr-4">🛍️</span>
                 <div class="text-left">
                     <p class="gold-text font-bold text-sm">Customer</p>
-                    <p class="text-[9px] text-gray-500 uppercase">Personal Account</p>
+                    <p class="text-[9px] text-muted uppercase">Personal Account</p>
                 </div>
             </a>
             
@@ -71,7 +74,7 @@
                 <span class="text-2xl mr-4">🤝</span>
                 <div class="text-left">
                     <p class="gold-text font-bold text-sm">Client</p>
-                    <p class="text-[9px] text-gray-500 uppercase">Hiring Services</p>
+                    <p class="text-[9px] text-muted uppercase">Hiring Services</p>
                 </div>
             </a>
 
@@ -79,7 +82,7 @@
                 <span class="text-2xl mr-4">🏪</span>
                 <div class="text-left">
                     <p class="gold-text font-bold text-sm">Vendor</p>
-                    <p class="text-[9px] text-gray-500 uppercase">Store Owner</p>
+                    <p class="text-[9px] text-muted uppercase">Store Owner</p>
                 </div>
             </a>
 
@@ -87,7 +90,7 @@
                 <span class="text-2xl mr-4">🛠️</span>
                 <div class="text-left">
                     <p class="gold-text font-bold text-sm">Expert</p>
-                    <p class="text-[9px] text-gray-500 uppercase">Service Provider</p>
+                    <p class="text-[9px] text-muted uppercase">Service Provider</p>
                 </div>
             </a>
 
@@ -95,24 +98,13 @@
                 <span class="text-2xl mr-4">🔬</span>
                 <div class="text-left">
                     <p class="gold-text font-bold text-sm">Lab</p>
-                    <p class="text-[9px] text-gray-500 uppercase">Medical Center</p>
+                    <p class="text-[9px] text-muted uppercase">Medical Center</p>
                 </div>
             </a>
         </div>
         
-        <a href="index.html" class="inline-block mt-6 text-gray-600 text-[10px] font-bold hover:text-white transition uppercase no-underline tracking-widest">← Back</a>
+        <a href="index.html" class="inline-block mt-6 text-gray-400 text-[10px] font-bold hover:text-black transition uppercase no-underline tracking-widest">← Back</a>
     </div>
-    
-    body {
-    background-color: #FFF5E1; /* Wannan ne asalin kalar Off-White din */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
-    
+
 </body>
 </html>
