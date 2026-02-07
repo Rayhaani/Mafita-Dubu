@@ -2,54 +2,56 @@
 <html lang="ha">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Control | Mafita Dubu</title>
+    <title>Admin Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        #map { height: 400px; border-radius: 2rem; border: 2px solid rgba(212, 175, 55, 0.3); }
-        .admin-card { background: #0a0c10; border: 1px solid #1a1d23; }
+        body { background: #05070a; color: white; padding: 20px; font-family: sans-serif; }
+        .user-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
-<body class="bg-[#05070a] text-white p-8">
+<body>
+    <h1 class="text-2xl font-bold text-[#D4AF37] mb-6">ADMIN DASHBOARD - USERS</h1>
+    <div id="userList">Loading registrations...</div>
 
-    <div class="max-w-6xl mx-auto">
-        <h1 class="text-3xl font-black mb-8 text-yellow-500">SYSTEM COMMAND CENTER</h1>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        <div id="map" class="mb-10"></div>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
+            authDomain: "global-market-admin.firebaseapp.com",
+            projectId: "global-market-admin",
+            storageBucket: "global-market-admin.firebasestorage.app",
+            messagingSenderId: "259715265619",
+            appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
+        };
 
-        <div class="admin-card rounded-3xl overflow-hidden">
-            <table class="w-full text-left text-sm">
-                <thead class="bg-yellow-500/10 text-yellow-500 uppercase text-[10px] tracking-widest">
-                    <tr>
-                        <th class="p-4">Suna</th>
-                        <th class="p-4">Role</th>
-                        <th class="p-4">Location</th>
-                        <th class="p-4">Status</th>
-                        <th class="p-4">Action</th>
-                    </tr>
-                </thead>
-                <tbody id="userList">
-                    <tr class="border-t border-white/5">
-                        <td class="p-4">Garba Yusuf</td>
-                        <td class="p-4"><span class="text-green-400">Vendor</span></td>
-                        <td class="p-4 text-xs">10.450, 7.430 (Kaduna)</td>
-                        <td class="p-4"><span class="bg-yellow-500/20 text-yellow-500 px-2 py-1 rounded">Pending</span></td>
-                        <td class="p-4">
-                            <button class="bg-blue-600 px-4 py-2 rounded-lg font-bold text-[10px]">APPROVE</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        // Initialize Map
-        var map = L.map('map').setView([10.5105, 7.4165], 6); // Default to Nigeria
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        onSnapshot(collection(db, "users"), (snapshot) => {
+            const list = document.getElementById('userList');
+            list.innerHTML = "";
+            snapshot.forEach((docSnap) => {
+                const user = docSnap.data();
+                const id = docSnap.id;
+                list.innerHTML += `
+                    <div class="user-card">
+                        <div>
+                            <p class="font-bold">${user.fullName} (${user.role})</p>
+                            <p class="text-xs text-gray-400">${user.email} | ${user.location}</p>
+                            <p class="text-xs ${user.status === 'pending' ? 'text-yellow-500' : 'text-green-500'} uppercase">${user.status}</p>
+                        </div>
+                        ${user.status === 'pending' ? `<button onclick="approve('${id}')" class="bg-green-600 px-3 py-1 rounded text-xs">APPROVE</button>` : ''}
+                    </div>
+                `;
+            });
+        });
 
-        // Zamu hada wannan da Database dinmu anjima don fito da real markers
+        window.approve = async (id) => {
+            await updateDoc(doc(db, "users", id), { status: 'approved' });
+            alert("Approved!");
+        };
     </script>
 </body>
 </html>
