@@ -448,7 +448,8 @@
         </div>
     </div>
 </section>
-<div id="portal-content" 
+
+   <div id="portal-content" 
      class="fixed bottom-10 left-1/2 -translate-x-1/2 w-[92%] z-[100] bg-white/95 backdrop-blur-md rounded-[35px] p-8 shadow-[0_30px_100px_rgba(0,0,0,0.5)] border border-gray-100 transition-all duration-500 opacity-0 pointer-events-none translate-y-10">
     
     <div class="flex justify-around items-center">
@@ -469,9 +470,9 @@
     <button onclick="toggleMenu()" class="mt-8 w-full py-2 text-center text-red-500 font-bold text-xs uppercase tracking-[3px]">
         [ Close Portal ]
     </button>
-</div>
+   </div>
     
-   <script>
+    <script>
     function openPortal() {
         const portal = document.getElementById('portal-content');
         if (portal) {
@@ -490,7 +491,8 @@
             portal.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
         }
     }
-            </script>
+    </script>
+    
 
 </body>
 </html>
