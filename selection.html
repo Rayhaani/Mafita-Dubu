@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selection Portal | Deep Gold Edition</title>
+    <title>Selection Portal | Deep Gold & Google Menu</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,900&family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -11,87 +11,106 @@
             background-color: #FFF5E1 !important; 
             font-family: 'Plus Jakarta Sans', sans-serif;
             display: flex; align-items: center; justify-content: center; min-height: 100vh;
-            margin: 0;
+            margin: 0; overflow-x: hidden;
         }
 
-        /* 1. KATIN ZINARI MAI DUHU (ANTIQUE GOLD) */
+        /* 1. KATIN ZINARI (DEEP GOLD) */
         .main-portal { 
-            /* Na rage hasken gaba daya domin ya yi duhu (Darker Gold) */
             background: linear-gradient(145deg, #8b6b1b 0%, #b8860b 50%, #5c4b1a 100%) !important;
             border: 3px solid #4a3c14 !important;
-            width: 90%; 
-            max-width: 400px; 
-            border-radius: 2.5rem; 
-            padding: 2.5rem;
+            width: 90%; max-width: 400px; 
+            border-radius: 2.5rem; padding: 2.5rem;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4) !important;
-            text-align: center;
+            text-align: center; position: relative;
         }
 
-        /* 2. HEADING: ITALICS MAI KAURI IRIN NA PERKINS */
         .header-title {
             font-family: 'Playfair Display', serif !important;
-            font-style: italic !important;
-            font-weight: 900 !important;
-            font-size: 2.5rem !important;
-            color: #1a1405 !important;
-            line-height: 1;
-            margin-bottom: 5px;
-            text-transform: capitalize; /* Domin ya fi kyau a lankwasa */
+            font-style: italic !important; font-weight: 900 !important;
+            font-size: 2.5rem !important; color: #1a1405 !important;
+            line-height: 1; margin-bottom: 5px;
         }
 
         .role-btn {
-            display: flex; align-items: center;
-            padding: 1.1rem; margin-bottom: 0.8rem;
-            border-radius: 1.2rem; 
-            /* Button background dinsa na maida shi Glass mai duhu */
-            background: rgba(0, 0, 0, 0.1) !important;
-            border: 1px solid rgba(0, 0, 0, 0.2) !important;
-            transition: 0.4s; text-decoration: none;
+            display: flex; align-items: center; padding: 1.1rem; margin-bottom: 0.8rem;
+            border-radius: 1.2rem; background: rgba(255, 255, 255, 0.15) !important;
+            border: 1px solid rgba(0, 0, 0, 0.1); transition: 0.4s; text-decoration: none;
         }
-
-        .role-btn:hover { 
-            background: rgba(255, 255, 255, 0.3) !important;
-            transform: scale(1.02);
-        }
-        
+        .role-btn:hover { background: rgba(255, 255, 255, 0.3) !important; transform: scale(1.02); }
         .role-text-main { color: #1a1405 !important; font-weight: 800; }
-        .role-text-sub { color: #1a1405 !important; font-weight: 600; opacity: 0.7; }
+
+        /* 2. GOOGLE MENU STYLE */
+        .menu-icon {
+            position: fixed; top: 20px; right: 20px; cursor: pointer; z-index: 1001;
+        }
+        .google-menu-card {
+            position: fixed; top: 75px; right: 20px; width: 300px;
+            background: #1a1405 !important; border-radius: 1.5rem;
+            padding: 20px; display: none; z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .show-menu { display: block !important; }
+        .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .menu-item { text-align: center; padding: 10px; text-decoration: none; }
+        .menu-item:hover { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .menu-item p { color: #d4af37; font-size: 10px; font-weight: bold; margin-top: 5px; }
     </style>
 </head>
 <body>
+
+    <div class="menu-icon" onclick="toggleMenu()">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="#8b6b1b">
+            <path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/>
+        </svg>
+    </div>
+
+    <div class="google-menu-card" id="myMenu">
+        <div class="menu-grid">
+            <a href="#" class="menu-item"><span>🏠</span><p>Home</p></a>
+            <a href="#" class="menu-item"><span>👤</span><p>Profile</p></a>
+            <a href="#" class="menu-item"><span>⚙️</span><p>Settings</p></a>
+            <a href="#" class="menu-item"><span>🛍️</span><p>Shop</p></a>
+            <a href="#" class="menu-item"><span>📞</span><p>Contact</p></a>
+            <a href="#" class="menu-item"><span>🛡️</span><p>Privacy</p></a>
+        </div>
+    </div>
 
     <div class="main-portal">
         <h2 class="header-title">Register As</h2>
         <p class="text-[#1a1405] text-[10px] font-black uppercase tracking-[0.3em] mb-8 opacity-50">Select Your Identity</p>
 
         <div class="space-y-3">
-            <a href="#" class="role-btn">
+            <a href="registration_page.html?role=customer" class="role-btn">
                 <span class="text-2xl mr-4">🛍️</span>
                 <div class="text-left">
                     <p class="role-text-main">Customer</p>
-                    <p class="role-text-sub text-[10px] uppercase">Personal Account</p>
                 </div>
             </a>
-            
-            <a href="#" class="role-btn">
-                <span class="text-2xl mr-4">🤝</span>
-                <div class="text-left">
-                    <p class="role-text-main">Client</p>
-                    <p class="role-text-sub text-[10px] uppercase">Hiring Services</p>
-                </div>
-            </a>
-
-            <a href="#" class="role-btn">
+            <a href="registration_page.html?role=vendor" class="role-btn">
                 <span class="text-2xl mr-4">🏪</span>
                 <div class="text-left">
                     <p class="role-text-main">Vendor</p>
-                    <p class="role-text-sub text-[10px] uppercase">Store Owner</p>
+                </div>
+            </a>
+            <a href="registration_page.html?role=expert" class="role-btn">
+                <span class="text-2xl mr-4">🛠️</span>
+                <div class="text-left">
+                    <p class="role-text-main">Expert</p>
                 </div>
             </a>
         </div>
-        
-        <a href="#" class="inline-block mt-6 text-[#1a1405] text-[11px] font-black uppercase no-underline tracking-widest">← Back</a>
     </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("myMenu").classList.toggle("show-menu");
+        }
+        window.onclick = function(e) {
+            if (!e.target.closest('.menu-icon') && !e.target.closest('.google-menu-card')) {
+                document.getElementById("myMenu").classList.remove('show-menu');
+            }
+        }
+    </script>
 
 </body>
 </html>
