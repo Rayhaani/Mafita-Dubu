@@ -6,6 +6,7 @@
     <title>Mafita Dubu | Register</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --milk-bg: #FFF5E1; 
@@ -13,45 +14,46 @@
             --light-gold: #f3cf7a;
             --royal-black: #1a1405;
         }
-        
+
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--milk-bg); 
-            display: flex; align-items: center; justify-content: center; 
-            min-height: 100vh; margin: 0; padding: 20px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 20px;
         }
 
-        /* NAN NE ASALIN LOGON DA KA TURO (ROYAL SEAL) */
+        /* ANIMATION DIN TSOHON LOGO (AN BARSHI) */
         @keyframes seal-pulse {
             0% { transform: scale(1); box-shadow: 0 4px 10px rgba(184, 134, 11, 0.4); }
-            100% { transform: scale(1.1); box-shadow: 0 8px 20px rgba(184, 134, 11, 0.7); }
+            100% { transform: scale(1.08); box-shadow: 0 8px 20px rgba(184, 134, 11, 0.7); }
         }
 
+        /* GURBIN LOGO */
         .royal-seal {
-            /* Na daidaita matsayinsa a saman Card din */
             margin: -95px auto 10px; 
-            background: radial-gradient(circle, #ffd700 0%, #b8860b 100%);
-            border: 1.5px solid #ffffff;
+            background: radial-gradient(circle, #0f0f0f 0%, #000000 100%);
+            border: 2px solid #f3cf7a;
             border-radius: 50%;
-            width: 80px; /* Na barshi a girman da zai zauna daidai */
-            height: 80px;
+            width: 90px;
+            height: 90px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(184, 134, 11, 0.4);
             animation: seal-pulse 2s infinite alternate ease-in-out;
-            z-index: 100;
             position: relative;
+            z-index: 100;
         }
 
-        /* Tambarin harafin "M" a tsakiya don ya fito a matsayin Logo */
-        .royal-seal::before {
-            content: 'M';
-            color: #fff;
-            font-family: 'Cinzel', serif;
-            font-weight: 800;
-            font-size: 2.2rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        /* SABON LOGO */
+        .royal-seal img {
+            width: 60%;
+            height: 60%;
+            object-fit: contain;
+            filter: drop-shadow(0 3px 8px rgba(0,0,0,0.6));
         }
 
         .luxury-card {
@@ -59,46 +61,73 @@
             border: 2px solid var(--dark-gold);
             border-radius: 40px 10px 40px 10px;
             padding: 40px 30px;
-            width: 100%; max-width: 400px;
+            width: 100%; 
+            max-width: 400px;
             box-shadow: 0 30px 60px rgba(0,0,0,0.5);
             position: relative;
-            margin-top: 50px; /* Don logon ya samu guri */
+            margin-top: 50px;
         }
 
         .header-title { 
             font-family: 'Cinzel', serif;
-            font-size: 1.7rem; color: var(--light-gold); 
-            text-align: center; margin-bottom: 25px;
+            font-size: 1.7rem; 
+            color: var(--light-gold); 
+            text-align: center; 
+            margin-bottom: 25px;
         }
 
         .input-group { margin-bottom: 15px; }
+
         label { 
-            font-size: 0.65rem; font-weight: 700; color: var(--light-gold); 
-            margin-bottom: 5px; display: block; text-transform: uppercase;
-        }
-        
-        .gold-input {
-            width: 100%; background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(243, 207, 122, 0.3);
-            padding: 12px 15px; border-radius: 12px;
-            color: #fff; font-size: 0.9rem; outline: none; transition: 0.3s;
+            font-size: 0.65rem; 
+            font-weight: 700; 
+            color: var(--light-gold); 
+            margin-bottom: 5px; 
+            display: block; 
+            text-transform: uppercase;
         }
 
-        .gold-input:focus { border-color: var(--light-gold); background: rgba(255, 255, 255, 0.1); }
+        .gold-input {
+            width: 100%; 
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(243, 207, 122, 0.3);
+            padding: 12px 15px; 
+            border-radius: 12px;
+            color: #fff; 
+            font-size: 0.9rem; 
+            outline: none; 
+            transition: 0.3s;
+        }
+
+        .gold-input:focus { 
+            border-color: var(--light-gold); 
+            background: rgba(255, 255, 255, 0.1); 
+        }
 
         .submit-btn {
             background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
-            color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900;
-            width: 100%; padding: 15px; border-radius: 12px;
-            margin-top: 15px; font-size: 1.1rem; border: none; cursor: pointer;
+            color: #1a1405; 
+            font-family: 'Cinzel', serif; 
+            font-weight: 900;
+            width: 100%; 
+            padding: 15px; 
+            border-radius: 12px;
+            margin-top: 15px; 
+            font-size: 1.1rem; 
+            border: none; 
+            cursor: pointer;
         }
     </style>
 </head>
+
 <body>
 
     <div class="luxury-card">
-        <div class="royal-seal"></div>
-        
+        <!-- SABON LOGO ANAN -->
+        <div class="royal-seal">
+            <img src="logo.png" alt="Mafita Dubu Logo">
+        </div>
+
         <h1 class="header-title">Mafita Dubu</h1>
 
         <form>
