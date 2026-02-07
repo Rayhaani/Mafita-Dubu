@@ -3,89 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Portal</title>
+    <title>Mafita Dubu | Professional</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #0d0f14; /* Kalar dake hoton ka */
-            --card-bg: #15181f;
-            --border-color: rgba(255, 255, 255, 0.06);
-            --gold: #d4af37;
-            --text-main: #f3f4f6;
-            --text-dim: #9ca3af;
-        }
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 50% 0%, #1c212b 0%, var(--bg-color) 70%);
+            background-color: #0c0e12; /* Background mai duhu */
+            background-image: radial-gradient(at 50% 0%, #1a1e26 0%, #0c0e12 100%);
             display: flex; align-items: center; justify-content: center; 
-            min-height: 100vh; margin: 0; color: var(--text-main);
+            min-height: 100vh; margin: 0;
         }
         .pro-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            background-color: #161a21; /* Card kalar daban */
+            border: 1px solid rgba(255, 255, 255, 0.08); /* Border domin ya fito fili */
             border-radius: 1rem;
-            padding: 2.5rem 2rem;
-            width: 100%; max-width: 360px; /* Matsattse kamar nasu */
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 2.5rem;
+            width: 100%; max-width: 400px;
+            /* Wannan shadow din zai raba card din da background */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 1px rgba(255,255,255,0.1);
         }
-        .title { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.025em; color: white; }
-        .subtitle { font-size: 0.75rem; color: var(--text-dim); margin-top: 0.1rem; }
+        .title { font-size: 1.4rem; font-weight: 600; color: #ffffff; letter-spacing: -0.025em; }
+        .subtitle { font-size: 0.85rem; color: #94a3b8; margin-top: 0.2rem; margin-bottom: 2rem; }
         
+        .input-wrapper { margin-bottom: 1.2rem; }
         label { 
-            display: block; font-size: 0.65rem; font-weight: 600; 
-            color: var(--text-dim); margin-bottom: 0.5rem; margin-top: 1.25rem;
-            text-transform: uppercase; letter-spacing: 0.05em;
+            display: block; font-size: 0.7rem; font-weight: 600; 
+            color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
         }
         .input-field {
-            width: 100%; background: #1b1e26;
-            border: 1px solid #282d38;
-            padding: 0.65rem 0.9rem; border-radius: 0.5rem;
-            color: white; font-size: 0.8rem; transition: all 0.2s ease;
+            width: 100%; background: #1f242d;
+            border: 1px solid #2d3544;
+            padding: 0.8rem 1rem; border-radius: 0.6rem;
+            color: white; font-size: 0.9rem; transition: 0.2s;
             outline: none;
         }
-        .input-field:focus { border-color: var(--gold); background: #1e222b; }
-        .input-field::placeholder { color: #4b5563; font-size: 0.75rem; }
-        
-        .action-btn {
-            background: var(--gold); color: #000; font-weight: 600; 
-            width: 100%; padding: 0.65rem; border-radius: 0.5rem;
-            margin-top: 1.8rem; font-size: 0.8rem; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .input-field:focus { 
+            border-color: #d4af37; 
+            background: #242b37;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
         }
-        .action-btn:hover { background: #e5c04a; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2); }
+        .input-field::placeholder { color: #475569; }
+
+        .action-btn {
+            background: #d4af37; color: #000; font-weight: 700; 
+            width: 100%; padding: 0.9rem; border-radius: 0.6rem;
+            margin-top: 1rem; font-size: 0.9rem; transition: 0.3s;
+        }
+        .action-btn:hover { background: #f1c40f; transform: translateY(-1px); }
     </style>
 </head>
 <body>
 
     <div class="pro-card">
-        <div class="mb-2">
+        <div>
             <h1 id="displayRole" class="title">Create Account</h1>
-            <p class="subtitle">Join the global market network.</p>
+            <p class="subtitle">Complete your profile to continue.</p>
         </div>
 
         <form id="regForm">
-            <label>Name</label>
-            <input type="text" id="fullName" class="input-field" placeholder="Full name or Business" required>
+            <div class="input-wrapper">
+                <label>Full Name</label>
+                <input type="text" id="fullName" class="input-field" placeholder="E.g. Al-Amin" required>
+            </div>
 
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-2 gap-4 mb-4">
                 <div>
                     <label>Email</label>
-                    <input type="email" id="email" class="input-field" placeholder="Email" required>
+                    <input type="email" id="email" class="input-field" placeholder="mail@example.com" required>
                 </div>
                 <div>
                     <label>Phone</label>
-                    <input type="tel" id="phone" class="input-field" placeholder="Phone" required>
+                    <input type="tel" id="phone" class="input-field" placeholder="080..." required>
                 </div>
             </div>
 
-            <label>Address</label>
-            <input type="text" id="location" class="input-field" placeholder="City, State" required>
+            <div class="input-wrapper">
+                <label>Office Address</label>
+                <input type="text" id="location" class="input-field" placeholder="Kaduna, Nigeria" required>
+            </div>
 
-            <label>Password</label>
-            <input type="password" id="pass" class="input-field" placeholder="••••••••" required>
+            <div class="input-wrapper">
+                <label>Secure Password</label>
+                <input type="password" id="pass" class="input-field" placeholder="••••••••" required>
+            </div>
 
-            <button type="submit" class="action-btn">Continue</button>
+            <button type="submit" class="action-btn">Finish & Launch</button>
         </form>
     </div>
 
@@ -93,6 +97,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // Firebase dinka
         const firebaseConfig = {
             apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
             authDomain: "global-market-admin.firebaseapp.com",
@@ -106,13 +111,13 @@
         const db = getFirestore(app);
 
         const params = new URLSearchParams(window.location.search);
-        const userRole = params.get('role') || 'Partner';
+        const userRole = params.get('role') || 'User';
         document.getElementById('displayRole').innerText = userRole + " Account";
 
         document.getElementById('regForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
-            btn.innerText = "Processing...";
+            btn.innerText = "Connecting...";
             
             try {
                 await addDoc(collection(db, "users"), {
@@ -127,7 +132,7 @@
                 window.location.href = "index.html";
             } catch (err) { 
                 alert("Error: " + err.message); 
-                btn.innerText = "Continue";
+                btn.innerText = "Finish & Launch";
             }
         });
     </script>
