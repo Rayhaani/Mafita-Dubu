@@ -449,9 +449,9 @@
     </div>
 </section>
 
-<div id="portal-overlay" onclick="toggleMenu()" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] opacity-0 pointer-events-none transition-all duration-500"></div>
+<div id="portal-overlay" onclick="toggleMenu()" style="position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 99; opacity: 0; pointer-events: none; transition: all 0.4s ease;"></div>
 
-<div id="portal-content" class="fixed bottom-10 left-1/2 -translate-x-1/2 w-[92%] z-[100] bg-white/95 backdrop-blur-md rounded-[35px] p-6 shadow-[0_30px_100px_rgba(0,0,0,0.4)] border border-gray-100 transition-all duration-500 opacity-0 pointer-events-none translate-y-10">
+<div id="portal-content" class="fixed bottom-10 left-1/2 -translate-x-1/2 w-[92%] z-[100] bg-white rounded-[35px] p-6 shadow-[0_30px_100px_rgba(0,0,0,0.4)] border border-gray-100 transition-all duration-500 opacity-0 pointer-events-none translate-y-10 scale-90">
     
     <div class="grid grid-cols-4 gap-2 items-center justify-items-center">
         <a href="/" class="text-center group active:scale-90 transition-transform">
@@ -474,25 +474,23 @@
             <span class="text-[9px] font-black text-gray-800 uppercase tracking-tighter">Contact</span>
         </a>
     </div>
-    
-    <div class="mt-4 w-12 h-1 bg-gray-200 rounded-full mx-auto opacity-50"></div>
+
+    <div class="mt-4 w-10 h-1 bg-gray-200 rounded-full mx-auto opacity-50"></div>
 </div>
-    
 
-
- <script>
+<script>
     function openPortal() {
         const portal = document.getElementById('portal-content');
         const overlay = document.getElementById('portal-overlay');
         
         if (portal && overlay) {
-            // Bude Portal
-            portal.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
-            portal.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+            // Kunna Duhun Baya
+            overlay.style.opacity = "1";
+            overlay.style.pointerEvents = "auto";
             
-            // Bude Duhun Baya (Overlay)
-            overlay.classList.remove('opacity-0', 'pointer-events-none');
-            overlay.classList.add('opacity-100', 'pointer-events-auto');
+            // Kunna Portal tare da Animation
+            portal.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10', 'scale-90');
+            portal.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0', 'scale-100');
         }
     }
 
@@ -501,16 +499,16 @@
         const overlay = document.getElementById('portal-overlay');
         
         if (portal && overlay) {
-            // Rufe Portal
-            portal.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
-            portal.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+            // Kashe Duhun Baya
+            overlay.style.opacity = "0";
+            overlay.style.pointerEvents = "none";
             
-            // Rufe Duhun Baya
-            overlay.classList.add('opacity-0', 'pointer-events-none');
-            overlay.classList.remove('opacity-100', 'pointer-events-auto');
+            // Mayar da Portal yadda yake
+            portal.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10', 'scale-90');
+            portal.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0', 'scale-100');
         }
     }
- </script>
+</script>
     
  
 
