@@ -449,20 +449,16 @@
     </div>
 </section>
     
-    <div id="portal-content" class="fixed inset-x-0 bottom-0 z-[100] bg-[#050505] p-10 transform translate-y-full transition-all duration-500 border-t-2 border-[#ffd700]">
-    <h2 class="text-[#ffd700] text-4xl font-black italic mb-6">ELITE ACCESS</h2>
-    <div class="space-y-4">
-        <div class="flex justify-between items-center p-4 border-b border-white/10">
-            <span class="text-white text-xl font-light">01. DASHBOARD</span>
-            <i class="fa-solid fa-arrow-right text-[#ffd700]"></i>
-        </div>
-        <div class="flex justify-between items-center p-4 border-b border-white/10">
-            <span class="text-white text-xl font-light">02. INNOVATION</span>
-            <i class="fa-solid fa-lightbulb text-[#ffd700]"></i>
-        </div>
+    <div id="portal-content" class="fixed inset-x-4 bottom-6 z-[100] bg-black rounded-[40px] p-6 transform translate-y-[120%] transition-all duration-500 shadow-2xl border border-white/10">
+    <div class="grid grid-cols-4 gap-2 mb-6">
+        <div class="w-full aspect-square rounded-full bg-blue-600 flex items-center justify-center text-white"><i class="fa-solid fa-house"></i></div>
+        <div class="w-full aspect-square rounded-full bg-green-600 flex items-center justify-center text-white"><i class="fa-solid fa-shop"></i></div>
+        <div class="w-full aspect-square rounded-full bg-purple-600 flex items-center justify-center text-white"><i class="fa-solid fa-user-tie"></i></div>
+        <div class="w-full aspect-square rounded-full bg-red-600 flex items-center justify-center text-white"><i class="fa-solid fa-heart"></i></div>
     </div>
-    <div onclick="toggleMenu()" class="mt-10 text-center text-gray-500 text-xs tracking-[10px] cursor-pointer">DISMISS SYSTEM</div>
+    <button onclick="toggleMenu()" class="w-full py-3 bg-white/10 text-white rounded-full">Back to Home</button>
     </div>
+    
     
 
     <script>
