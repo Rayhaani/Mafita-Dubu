@@ -3,138 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | The Future</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Registration | Mafita Dubu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #05070a; color: white; overflow-x: hidden; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .role-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; position: relative; overflow: hidden; }
-        .role-card:hover { transform: translateY(-10px) scale(1.02); border-color: rgba(255, 255, 255, 0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .gradient-text { background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .input-field { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; transition: 0.3s; }
-        .input-field:focus { background: rgba(255,255,255,0.1); border-color: #4facfe; outline: none; box-shadow: 0 0 15px rgba(79, 172, 254, 0.3); }
-        .step-hidden { display: none; opacity: 0; transform: scale(0.9); }
-        .step-visible { display: block; animation: fadeIn 0.5s forwards; }
-        @keyframes fadeIn { to { opacity: 1; transform: scale(1); } }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #05070a; display: flex; align-items: center; justify-content: center; min-height: screen; }
+        .form-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(25px); width: 100%; max-width: 400px; padding: 2.5rem; border-radius: 2.5rem; }
+        .input-box { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 1rem; border-radius: 1.2rem; margin-bottom: 1rem; outline: none; transition: 0.3s; font-size: 14px; }
+        .input-box:focus { border-color: #3b82f6; background: rgba(255,255,255,0.08); }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
-
-    <div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full"></div>
-    <div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full"></div>
-
-    <div class="w-full max-w-5xl">
-        
-        <div id="roleSelection" class="step-visible text-center">
-            <h1 class="text-5xl md:text-7xl font-[800] tracking-tighter mb-4 gradient-text">Fara Tafiyar Ka.</h1>
-            <p class="text-gray-400 mb-12 text-lg">Zabi bangaren da kake so ka kasance a cikin Ecosystem dinmu.</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                <div onclick="openForm('Customer', '#4facfe')" class="role-card glass p-8 rounded-[2rem] border-t-4 border-blue-400">
-                    <div class="text-4xl mb-4">🛍️</div>
-                    <h3 class="font-bold text-xl">Customer</h3>
-                    <p class="text-[10px] text-gray-400 mt-2 uppercase tracking-widest">Saye & Bincike</p>
-                </div>
-
-                <div onclick="openForm('Client', '#f093fb')" class="role-card glass p-8 rounded-[2rem] border-t-4 border-purple-400">
-                    <div class="text-4xl mb-4">🤝</div>
-                    <h3 class="font-bold text-xl">Client</h3>
-                    <p class="text-[10px] text-gray-400 mt-2 uppercase tracking-widest">Neman Kwararru</p>
-                </div>
-
-                <div onclick="openForm('Vendor', '#43e97b')" class="role-card glass p-8 rounded-[2rem] border-t-4 border-green-400">
-                    <div class="text-4xl mb-4">🏪</div>
-                    <h3 class="font-bold text-xl">Vendor</h3>
-                    <p class="text-[10px] text-gray-400 mt-2 uppercase tracking-widest">Mai Shago</p>
-                </div>
-
-                <div onclick="openForm('Service Provider', '#fa709a')" class="role-card glass p-8 rounded-[2rem] border-t-4 border-red-400">
-                    <div class="text-4xl mb-4">🛠️</div>
-                    <h3 class="font-bold text-xl">Service</h3>
-                    <p class="text-[10px] text-gray-400 mt-2 uppercase tracking-widest">Kwararre</p>
-                </div>
-
-                <div onclick="openForm('Lab/Medical', '#f6d365')" class="role-card glass p-8 rounded-[2rem] border-t-4 border-yellow-400">
-                    <div class="text-4xl mb-4">🔬</div>
-                    <h3 class="font-bold text-xl">Lab</h3>
-                    <p class="text-[10px] text-gray-400 mt-2 uppercase tracking-widest">Lafiya</p>
-                </div>
+<body class="min-h-screen bg-[#05070a]">
+    <div class="form-card shadow-2xl">
+        <div class="text-center mb-6">
+            <span id="roleLabel" class="text-[10px] font-black uppercase tracking-widest bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full">Register</span>
+            <h2 class="text-2xl font-extrabold text-white mt-4">Create Account</h2>
+        </div>
+        <form>
+            <input type="text" placeholder="Full Name" class="input-box">
+            <input type="text" placeholder="Username" class="input-box">
+            <input type="email" placeholder="Email Address" class="input-box">
+            <input type="tel" placeholder="Phone Number" class="input-box">
+            <div class="grid grid-cols-2 gap-2">
+                <input type="text" placeholder="State" class="input-box">
+                <input type="text" placeholder="LGA" class="input-box">
             </div>
-        </div>
-
-        <div id="formSection" class="step-hidden glass p-10 rounded-[3rem] max-w-2xl mx-auto relative">
-            <button onclick="backToMenu()" class="absolute top-8 right-8 text-gray-500 hover:text-white transition">Back ✕</button>
-            
-            <header class="mb-8">
-                <span id="roleBadge" class="px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-blue-500/20 text-blue-400">Customer</span>
-                <h2 class="text-3xl font-black mt-2">Personal Information</h2>
-                <p class="text-gray-400 text-sm">Cika wadannan bayanan domin kulla akanta.</p>
-            </header>
-
-            <form class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="text" placeholder="Full Name" class="input-field p-4 rounded-2xl w-full">
-                    <input type="text" placeholder="Username" class="input-field p-4 rounded-2xl w-full">
-                </div>
-                <input type="email" placeholder="Email Address" class="input-field p-4 rounded-2xl w-full">
-                <input type="tel" placeholder="Phone Number (WhatsApp preferred)" class="input-field p-4 rounded-2xl w-full">
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="text" placeholder="State" class="input-field p-4 rounded-2xl w-full">
-                    <input type="text" placeholder="Local Government" class="input-field p-4 rounded-2xl w-full">
-                </div>
-
-                <div id="specialField" class="hidden animate-pulse">
-                    <div class="p-4 bg-white/5 rounded-2xl border border-dashed border-white/20 text-center">
-                        <p class="text-xs text-blue-400 mb-2">📍 GPS Verification Required</p>
-                        <button type="button" class="text-[10px] font-bold bg-white text-black px-4 py-2 rounded-full uppercase">Capture Location</button>
-                    </div>
-                </div>
-
-                <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-5 rounded-2xl shadow-[0_0_30px_rgba(37,99,235,0.3)] transition-all">
-                    COMPLETE REGISTRATION
-                </button>
-            </form>
-        </div>
-
+            <div id="bizFields" class="hidden border-t border-white/10 pt-4 mt-2">
+                <button type="button" class="w-full bg-white/5 text-blue-400 text-xs font-bold py-3 rounded-xl border border-blue-500/20">📍 Verify GPS Location</button>
+            </div>
+            <button class="w-full bg-blue-600 text-white font-black py-4 rounded-2xl mt-4 hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20">FINISH</button>
+        </form>
     </div>
-
     <script>
-        function openForm(role, color) {
-            document.getElementById('roleSelection').classList.remove('step-visible');
-            document.getElementById('roleSelection').classList.add('step-hidden');
-            
-            setTimeout(() => {
-                document.getElementById('formSection').classList.remove('step-hidden');
-                document.getElementById('formSection').classList.add('step-visible');
-                
-                // Update Badge & Styles
-                const badge = document.getElementById('roleBadge');
-                badge.innerText = role;
-                badge.style.color = color;
-                badge.style.backgroundColor = color + "20";
-                document.getElementById('submitBtn').style.backgroundColor = color;
-
-                // Toggle special fields for Business/Experts
-                if(role === 'Vendor' || role === 'Service Provider' || role === 'Lab/Medical') {
-                    document.getElementById('specialField').classList.remove('hidden');
-                } else {
-                    document.getElementById('specialField').classList.add('hidden');
-                }
-            }, 500);
-        }
-
-        function backToMenu() {
-            document.getElementById('formSection').classList.remove('step-visible');
-            document.getElementById('formSection').classList.add('step-hidden');
-            
-            setTimeout(() => {
-                document.getElementById('roleSelection').classList.remove('step-hidden');
-                document.getElementById('roleSelection').classList.add('step-visible');
-            }, 500);
+        const params = new URLSearchParams(window.location.search);
+        const role = params.get('role');
+        if(role) {
+            document.getElementById('roleLabel').innerText = role.toUpperCase();
+            if(['vendor', 'expert', 'lab'].includes(role)) {
+                document.getElementById('bizFields').classList.remove('hidden');
+            }
         }
     </script>
 </body>
-                    </html>
-                    
+</html>
