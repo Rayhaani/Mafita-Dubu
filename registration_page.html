@@ -3,122 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Smart Registration</title>
+    <title>Registration | Mafita Dubu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .step-hidden { display: none; }
-        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); }
-        .progress-bar { transition: width 0.4s ease-in-out; }
+        .form-input { 
+            width: 100%; padding: 1rem; border-radius: 1rem; background: #f9fafb;
+            border: 1px solid #e5e7eb; outline: none; transition: all 0.3s;
+        }
+        .form-input:focus { border-color: #2563eb; background: white; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
+        .glass-card { background: white; border: 1px solid rgba(229, 231, 235, 0.5); }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-gray-200 min-h-screen flex items-center justify-center p-4">
+<body class="bg-[#f3f4f6] min-h-screen flex items-center justify-center p-6">
 
-    <div class="glass-card w-full max-w-2xl rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-8 md:p-12 border border-white">
-        <div class="w-full bg-gray-200 h-1.5 rounded-full mb-8 overflow-hidden">
-            <div id="progress" class="progress-bar bg-blue-600 h-full w-1/3"></div>
+    <div class="glass-card w-full max-w-[500px] rounded-[2.5rem] shadow-2xl p-10">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-[800] text-slate-900 tracking-tighter">Mafita Dubu</h2>
+            <div class="h-1 w-12 bg-blue-600 mx-auto mt-2 rounded-full"></div>
+            <p class="text-slate-500 text-sm mt-3 font-medium">Barka da zuwa babban Ecosystem dinmu</p>
         </div>
 
-        <form id="mafitaForm">
-            <div id="step1" class="space-y-6">
-                <header class="text-center">
-                    <h2 class="text-4xl font-black text-blue-900 tracking-tighter">Barka da Zuwa</h2>
-                    <p class="text-gray-500 font-medium">Fara tafiyar ka a cikin Ecosystem din Mafita Dubu</p>
-                </header>
+        <form id="regForm">
+            <div id="step1" class="space-y-5">
+                <div>
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">Cikakken Suna</label>
+                    <input type="text" placeholder="Misali: Ahmad Bello" class="form-input mt-1">
+                </div>
                 
-                <div class="space-y-4">
-                    <input type="text" placeholder="Cikakken Suna" class="w-full p-5 rounded-2xl bg-white border-2 border-transparent focus:border-blue-500 outline-none shadow-sm transition-all" required>
-                    <select id="userRole" onchange="updateUI()" class="w-full p-5 rounded-2xl bg-white border-2 border-transparent focus:border-blue-500 outline-none shadow-sm font-bold text-gray-700">
-                        <option value="">-- Zabi Matsayinka --</option>
-                        <option value="vendor">Vendor (Mai Shago/Sana'a)</option>
-                        <option value="expert">Kwararre (Service Provider)</option>
-                        <option value="medical">Lafiya (Doctor/Clinic/Lab)</option>
+                <div>
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">Matsayinka (Role)</label>
+                    <select id="userRole" class="form-input mt-1 font-semibold text-slate-700">
+                        <option value="client">Customer / Client (Ina son Saye)</option>
+                        <option value="vendor">Vendor (Mai Shago)</option>
+                        <option value="expert">Expert (Kwararre / Service)</option>
                     </select>
                 </div>
-                <button type="button" onclick="goToStep(2)" class="w-full bg-blue-600 text-white font-black py-5 rounded-[2rem] text-lg shadow-xl hover:bg-blue-700 active:scale-95 transition-all">CI GABA</button>
+                
+                <button type="button" onclick="handleNextStep()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg hover:bg-blue-700 transition-all active:scale-95">
+                    CI GABA
+                </button>
             </div>
 
             <div id="step2" class="step-hidden space-y-6">
-                <header>
-                    <h3 class="text-2xl font-black text-gray-800">Tantance Gaskiya</h3>
-                    <p class="text-sm text-gray-500">Muna amfani da GPS da AI don kare amana.</p>
-                </header>
+                <div class="bg-blue-50 p-6 rounded-3xl border border-blue-100">
+                    <h4 class="font-bold text-blue-900 text-sm">📍 GPS Verification</h4>
+                    <p class="text-[11px] text-blue-600 mt-1 leading-relaxed">Dole ne mu dauki inda kake (GPS) domin tabbatar da shagonka ko wurin aikinka ga mutane.</p>
+                    <button type="button" onclick="getGPS()" class="mt-4 bg-white text-blue-600 border border-blue-200 px-5 py-2 rounded-full text-xs font-bold shadow-sm">
+                        Verify Location
+                    </button>
+                    <p id="gps-status" class="text-[10px] mt-2 text-slate-400 italic">GPS ba a dauka ba</p>
+                </div>
 
-                <div class="space-y-4">
-                    <div class="p-6 bg-blue-50 rounded-[2rem] border-2 border-blue-100 flex items-center justify-between">
-                        <div>
-                            <p class="font-black text-blue-900">GPS Location</p>
-                            <p id="gps-text" class="text-[10px] text-blue-600 uppercase font-bold tracking-widest">Ba a tantance ba</p>
-                        </div>
-                        <button type="button" onclick="fetchGPS()" class="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700">
-                            📍 Dauka
-                        </button>
-                    </div>
-
-                    <div class="relative group cursor-pointer border-2 border-dashed border-gray-300 p-10 rounded-[2rem] text-center hover:border-blue-500 transition-all bg-white/50">
-                        <div class="text-4xl mb-2">📸</div>
-                        <p class="font-bold text-gray-700">AI LIVE SCANNER</p>
-                        <p class="text-[10px] text-gray-400">Bude kyamara don nuna wurin aiki ko shago</p>
+                <div id="inventory-section" class="hidden">
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Kayan Siyarwa (Akalla 3)</label>
+                    <div class="grid grid-cols-3 gap-2 mt-2">
+                        <div class="h-20 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-[10px] text-gray-400">+ Hoto</div>
+                        <div class="h-20 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-[10px] text-gray-400">+ Hoto</div>
+                        <div class="h-20 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-[10px] text-gray-400">+ Hoto</div>
                     </div>
                 </div>
 
-                <div class="flex gap-4">
-                    <button type="button" onclick="goToStep(1)" class="flex-1 bg-gray-100 text-gray-600 font-bold py-5 rounded-[2rem]">BAYA</button>
-                    <button type="button" onclick="goToStep(3)" class="flex-1 bg-blue-600 text-white font-bold py-5 rounded-[2rem] shadow-lg">CI GABA</button>
+                <div class="flex gap-3">
+                    <button type="button" onclick="goToStep(1)" class="flex-1 text-slate-500 font-bold py-4 rounded-2xl border border-slate-200">Baya</button>
+                    <button type="submit" class="flex-2 bg-blue-600 text-white font-bold py-4 px-8 rounded-2xl shadow-lg">Kammala Rajista</button>
                 </div>
             </div>
 
-            <div id="step3" class="step-hidden space-y-6">
-                <header>
-                    <h3 class="text-2xl font-black text-gray-800" id="step3-title">Shaidar Aiki</h3>
-                    <p class="text-sm text-gray-500" id="step3-desc">Loda abubuwan da zasu tabbatar da sana'ar ka.</p>
-                </header>
-
-                <div id="dynamic-content" class="grid grid-cols-2 gap-3">
-                    </div>
-
-                <div class="flex gap-4 pt-4">
-                    <button type="button" onclick="goToStep(2)" class="flex-1 bg-gray-100 text-gray-600 font-bold py-5 rounded-[2rem]">BAYA</button>
-                    <button type="submit" class="flex-1 bg-green-600 text-white font-bold py-5 rounded-[2rem] shadow-xl hover:bg-green-700 transition-all">KAMMALA RAJISTA</button>
-                </div>
+            <div id="step3" class="step-hidden text-center space-y-6">
+                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto text-3xl">✓</div>
+                <h3 class="text-xl font-bold">An Kusa Gamawa!</h3>
+                <p class="text-sm text-slate-500">Tunda kai Customer ne, kawai danna button na kasa domin budewa kanka kofa a cikin Ecosystem dinmu.</p>
+                <button type="submit" class="w-full bg-green-600 text-white font-bold py-4 rounded-2xl shadow-lg">BUDE PORTAL DINA</button>
             </div>
         </form>
     </div>
 
     <script>
         function goToStep(s) {
-            for(let i=1; i<=3; i++) document.getElementById('step'+i).classList.add('step-hidden');
-            document.getElementById('step'+s).classList.remove('step-hidden');
-            document.getElementById('progress').style.width = (s === 1 ? '33%' : s === 2 ? '66%' : '100%');
-            if(s === 3) loadDynamicFields();
+            document.getElementById('step1').classList.add('step-hidden');
+            document.getElementById('step2').classList.add('step-hidden');
+            document.getElementById('step3').classList.add('step-hidden');
+            document.getElementById('step' + s).classList.remove('step-hidden');
         }
 
-        function loadDynamicFields() {
+        function handleNextStep() {
             const role = document.getElementById('userRole').value;
-            const container = document.getElementById('dynamic-content');
-            const title = document.getElementById('step3-title');
-            container.innerHTML = "";
-
-            if(role === 'vendor') {
-                title.innerText = "Inventory Shago";
-                for(let i=1; i<=4; i++) container.innerHTML += `<div class='p-6 border-2 border-gray-100 rounded-3xl text-center text-[10px] font-bold bg-white'>+ HOTO ${i}</div>`;
+            if (role === 'client') {
+                goToStep(3);
             } else {
-                title.innerText = "Kwarewa & Shaidu";
-                container.innerHTML = `<div class='col-span-2 p-6 border-2 border-gray-100 rounded-3xl bg-white'>
-                    <input type='text' placeholder='Wane Service kake bayarwa?' class='w-full mb-3 p-3 border rounded-xl'>
-                    <p class='text-[10px] font-bold mb-2'>LODA CERTIFICATE / LICENSE</p>
-                    <input type='file' class='text-[10px]'>
-                </div>`;
+                if (role === 'vendor') {
+                    document.getElementById('inventory-section').classList.remove('hidden');
+                } else {
+                    document.getElementById('inventory-section').classList.add('hidden');
+                }
+                goToStep(2);
             }
         }
 
-        function fetchGPS() {
-            const status = document.getElementById('gps-text');
-            status.innerText = "TANTANCEWA: 55%...";
-            setTimeout(() => { 
-                status.innerText = "TANTANCE: SUCCESS 📍 (Lat: 12.002, Long: 8.591)";
-                status.classList.replace('text-blue-600', 'text-green-600');
-            }, 2000);
+        function getGPS() {
+            const status = document.getElementById('gps-status');
+            status.innerText = "Daukan coordinates...";
+            setTimeout(() => {
+                status.innerText = "📍 GPS Captured: 12.002, 8.591 (Kano, Nigeria)";
+                status.className = "text-[10px] mt-2 text-green-600 font-bold";
+            }, 1500);
         }
     </script>
 </body>
-</html>
+    </html>
+    
