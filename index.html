@@ -451,3 +451,80 @@
     
 <div id="portal-content" class="absolute bottom-0 left-0 right-0 bg-[#0c0c0c]/95 backdrop-blur-xl rounded-t-[40px] p-10 transform translate-y-full transition-all duration-500 shadow-[0_-25px_80px_rgba(0,0,0,0.5)] border-t border-white/10 max-h-[70vh] overflow-y-auto">
     <div class="w-10
+
+
+        <div id="nav-portal" class="fixed inset-0 z-[9999] hidden">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="toggleMenu()"></div>
+    
+    <div id="nav-content" class="absolute bottom-0 w-full bg-[#0c0c0c]/90 backdrop-blur-2xl rounded-t-[40px] p-10 border-t border-white/10 transform translate-y-full transition-transform duration-500 ease-out shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
+        
+        <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-10"></div>
+        
+        <div class="flex flex-col space-y-7">
+            <a href="index.html" class="group flex items-center justify-between">
+                <div class="flex items-center gap-5">
+                    <span class="text-yellow-600 font-mono text-xs">01</span>
+                    <span class="text-2xl font-bold text-white group-hover:text-yellow-500 transition-colors">HOME</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-white/20 text-sm"></i>
+            </a>
+
+            <a href="login.html" class="group flex items-center justify-between">
+                <div class="flex items-center gap-5">
+                    <span class="text-white/30 font-mono text-xs">02</span>
+                    <span class="text-2xl font-bold text-white/70 group-hover:text-white transition-colors">LOGIN</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-white/20 text-sm"></i>
+            </a>
+
+            <a href="about.html" class="group flex items-center justify-between">
+                <div class="flex items-center gap-5">
+                    <span class="text-white/30 font-mono text-xs">03</span>
+                    <span class="text-2xl font-bold text-white/70 group-hover:text-white transition-colors">ABOUT US</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-white/20 text-sm"></i>
+            </a>
+
+            <hr class="border-white/5 my-2">
+
+            <button class="w-full bg-gradient-to-r from-yellow-500 to-yellow-700 py-4 rounded-2xl font-black text-black uppercase tracking-widest shadow-lg active:scale-95 transition-transform">
+                GET STARTED
+            </button>
+        </div>
+
+        <button onclick="toggleMenu()" class="mt-8 w-full text-white/40 text-xs font-bold uppercase tracking-[4px]">
+            Close Menu
+        </button>
+    </div>
+</div>
+
+<script>
+    // Wannan function din zai rinka budewa da rufewa
+    function toggleMenu() {
+        const portal = document.getElementById('nav-portal');
+        const content = document.getElementById('nav-content');
+        
+        if (portal.classList.contains('hidden')) {
+            portal.classList.remove('hidden');
+            // Dan jinkiri kadan kafin slide-up din ya fara
+            setTimeout(() => {
+                content.classList.remove('translate-y-full');
+            }, 10);
+        } else {
+            content.classList.add('translate-y-full');
+            // Jira animation din ya kare kafin a boye baki daya
+            setTimeout(() => {
+                portal.classList.add('hidden');
+            }, 500);
+        }
+    }
+
+    // Gyara sunan function dinka na baya domin ya dace da button din sama
+    function openPortal() {
+        toggleMenu();
+    }
+</script>
+
+</body>
+</html>
+
