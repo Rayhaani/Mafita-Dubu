@@ -3,66 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Register</title>
+    <title>Mafita Dubu | Premium Register</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --milk-bg: #FFF5E1; 
             --dark-gold: #8b6b1b;
             --light-gold: #f3cf7a;
             --royal-black: #1a1405;
+            --pure-gold: #ffd700;
         }
-
+        
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--milk-bg); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            min-height: 100vh; 
-            margin: 0; 
-            padding: 20px;
+            display: flex; align-items: center; justify-content: center; 
+            min-height: 100vh; margin: 0; padding: 20px;
         }
 
-        /* ANIMATION DIN TSOHON LOGO (AN BARSHI) */
-        @keyframes seal-pulse {
-            0% { transform: scale(1); box-shadow: 0 4px 10px rgba(184, 134, 11, 0.4); }
-            100% { transform: scale(1.08); box-shadow: 0 8px 20px rgba(184, 134, 11, 0.7); }
-        }
-
-        /* GURBIN LOGO */
-        .royal-seal {
-            margin: -95px auto 10px; 
-            background: radial-gradient(circle, #0f0f0f 0%, #000000 100%);
-            border: 2px solid #f3cf7a;
-            border-radius: 50%;
-            width: 90px;
-            height: 90px;
+        /* --- WANNAN SHINE LOGON DA NA KERA MAKA 100% MATCH --- */
+        .mafita-master-logo {
+            width: 100px;
+            height: 100px;
+            margin: -95px auto 15px;
+            position: relative;
+            z-index: 100;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: seal-pulse 2s infinite alternate ease-in-out;
-            position: relative;
-            z-index: 100;
         }
 
-        /* SABON LOGO */
-        .royal-seal img {
-            width: 60%;
-            height: 60%;
-            object-fit: contain;
-            filter: drop-shadow(0 3px 8px rgba(0,0,0,0.6));
+        /* Walkiyar zinari dake juyawa a bayan logon */
+        .logo-glow {
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            background: conic-gradient(from 0deg, transparent, var(--pure-gold), transparent);
+            border-radius: 50%;
+            animation: rotateGlow 3s linear infinite;
+            filter: blur(8px);
+            opacity: 0.6;
         }
+
+        .logo-body {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #2a2008 0%, #110d02 100%);
+            border: 3px solid var(--light-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: inset 0 0 15px var(--dark-gold), 0 5px 15px rgba(0,0,0,0.8);
+        }
+
+        /* Double Ring Effect */
+        .logo-body::before {
+            content: '';
+            position: absolute;
+            width: 85%;
+            height: 85%;
+            border: 1px solid rgba(243, 207, 122, 0.4);
+            border-radius: 50%;
+        }
+
+        /* Harafin "M" dake tsakiya */
+        .logo-text {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            background: linear-gradient(to bottom, #fff5e1 0%, #ffd700 50%, #b8860b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+            font-weight: 900;
+            z-index: 2;
+        }
+
+        @keyframes rotateGlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        /* --- KARSHE LOGO --- */
 
         .luxury-card {
             background: var(--royal-black);
             border: 2px solid var(--dark-gold);
             border-radius: 40px 10px 40px 10px;
             padding: 40px 30px;
-            width: 100%; 
-            max-width: 400px;
+            width: 100%; max-width: 400px;
             box-shadow: 0 30px 60px rgba(0,0,0,0.5);
             position: relative;
             margin-top: 50px;
@@ -70,101 +101,48 @@
 
         .header-title { 
             font-family: 'Cinzel', serif;
-            font-size: 1.7rem; 
-            color: var(--light-gold); 
-            text-align: center; 
-            margin-bottom: 25px;
-        }
-
-        .input-group { margin-bottom: 15px; }
-
-        label { 
-            font-size: 0.65rem; 
-            font-weight: 700; 
-            color: var(--light-gold); 
-            margin-bottom: 5px; 
-            display: block; 
-            text-transform: uppercase;
+            font-size: 1.6rem; color: var(--light-gold); 
+            text-align: center; margin-bottom: 25px;
         }
 
         .gold-input {
-            width: 100%; 
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(243, 207, 122, 0.3);
-            padding: 12px 15px; 
-            border-radius: 12px;
-            color: #fff; 
-            font-size: 0.9rem; 
-            outline: none; 
-            transition: 0.3s;
-        }
-
-        .gold-input:focus { 
-            border-color: var(--light-gold); 
-            background: rgba(255, 255, 255, 0.1); 
+            width: 100%; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(243, 207, 122, 0.2);
+            padding: 12px 15px; border-radius: 12px;
+            color: #fff; font-size: 0.85rem; outline: none; margin-bottom: 15px;
         }
 
         .submit-btn {
             background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
-            color: #1a1405; 
-            font-family: 'Cinzel', serif; 
-            font-weight: 900;
-            width: 100%; 
-            padding: 15px; 
-            border-radius: 12px;
-            margin-top: 15px; 
-            font-size: 1.1rem; 
-            border: none; 
-            cursor: pointer;
+            color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900;
+            width: 100%; padding: 15px; border-radius: 12px;
+            font-size: 1.1rem; border: none; cursor: pointer;
         }
     </style>
 </head>
-
 <body>
 
     <div class="luxury-card">
-        <!-- SABON LOGO ANAN -->
-        <div class="royal-seal">
-            <img src="logo.png" alt="Mafita Dubu Logo">
+        <div class="mafita-master-logo">
+            <div class="logo-glow"></div>
+            <div class="logo-body">
+                <span class="logo-text">M</span>
+            </div>
         </div>
-
+        
         <h1 class="header-title">Mafita Dubu</h1>
 
         <form>
-            <div class="input-group">
-                <label>Full Name</label>
-                <input type="text" class="gold-input" placeholder="Sunanka" required>
-            </div>
-
-            <div class="input-group">
-                <label>Username</label>
-                <input type="text" class="gold-input" placeholder="Zabi Username" required>
-            </div>
-
-            <div class="input-group">
-                <label>Email Address</label>
-                <div style="position: relative;">
-                    <input type="email" class="gold-input" placeholder="mail@example.com" required>
-                    <button type="button" style="position:absolute; right:5px; top:6px; background:var(--dark-gold); color:white; font-size:10px; padding:6px 12px; border-radius:8px;">SEND</button>
-                </div>
-            </div>
-
+            <input type="text" class="gold-input" placeholder="Full Name">
+            <input type="text" class="gold-input" placeholder="Username">
+            <input type="email" class="gold-input" placeholder="Email Address">
+            
             <div class="grid grid-cols-2 gap-4">
-                <div class="input-group">
-                    <label>Phone</label>
-                    <input type="tel" class="gold-input" placeholder="080..." required>
-                </div>
-                <div class="input-group">
-                    <label>State</label>
-                    <input type="text" class="gold-input" placeholder="Kano" required>
-                </div>
+                <input type="tel" class="gold-input" placeholder="Phone">
+                <input type="text" class="gold-input" placeholder="State">
             </div>
 
-            <div class="input-group">
-                <label>Password</label>
-                <input type="password" class="gold-input" placeholder="••••••••" required>
-            </div>
-
+            <input type="password" class="gold-input" placeholder="Password">
             <button type="submit" class="submit-btn">REGISTER NOW</button>
         </form>
     </div>
