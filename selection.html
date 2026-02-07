@@ -3,61 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Role | Mafita Dubu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Selection Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #05070a; color: white; overflow: hidden; }
-        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); transition: all 0.4s ease; }
-        .glass-card:hover { transform: translateY(-10px); border-color: rgba(255,255,255,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .glow { position: fixed; width: 400px; height: 400px; border-radius: 50%; filter: blur(120px); z-index: -1; }
+        body { 
+            background: #05070a; 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            display: flex; align-items: center; justify-content: center; min-height: 100vh;
+            margin: 0; overflow: hidden;
+        }
+        /* Wannan shine zai sa katin ya ringa shawagi (Floating Animation) */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .main-portal { 
+            animation: float 4s ease-in-out infinite;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 90%; max-width: 450px; /* Karami ne, bai kai rabin page ba */
+            border-radius: 3rem; padding: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .role-btn {
+            display: flex; align-items: center;
+            padding: 1rem; margin-bottom: 0.75rem;
+            border-radius: 1.2rem; border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s; text-decoration: none;
+        }
+        .role-btn:hover { transform: scale(1.03); background: rgba(255,255,255,0.08); }
     </style>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen p-6">
-    
-    <div class="glow bg-blue-600/20 top-[-10%] left-[-10%]"></div>
-    <div class="glow bg-purple-600/20 bottom-[-10%] right-[-10%]"></div>
+<body>
 
-    <div class="text-center mb-12">
-        <h1 class="text-4xl md:text-6xl font-black tracking-tighter mb-4">Register As</h1>
-        <div class="h-1 w-20 bg-blue-600 mx-auto rounded-full"></div>
+    <div class="main-portal text-center">
+        <h2 class="text-white text-2xl font-black tracking-tighter mb-1">REGISTER AS</h2>
+        <p class="text-gray-500 text-[10px] uppercase tracking-[0.3em] mb-8">Zabi Bangaren Ka</p>
+
+        <div class="space-y-3">
+            <a href="registration_page.html?role=customer" class="role-btn bg-blue-500/10 border-blue-500/20">
+                <span class="text-2xl mr-4">🛍️</span>
+                <div class="text-left">
+                    <p class="text-blue-400 font-bold text-sm">Customer</p>
+                    <p class="text-[9px] text-gray-500 uppercase">Saye da Bincike</p>
+                </div>
+            </a>
+
+            <a href="registration_page.html?role=client" class="role-btn bg-purple-500/10 border-purple-500/20">
+                <span class="text-2xl mr-4">🤝</span>
+                <div class="text-left">
+                    <p class="text-purple-400 font-bold text-sm">Client</p>
+                    <p class="text-[9px] text-gray-500 uppercase">Neman Aiki</p>
+                </div>
+            </a>
+
+            <a href="registration_page.html?role=vendor" class="role-btn bg-green-500/10 border-green-500/20">
+                <span class="text-2xl mr-4">🏪</span>
+                <div class="text-left">
+                    <p class="text-green-400 font-bold text-sm">Vendor</p>
+                    <p class="text-[9px] text-gray-500 uppercase">Mai Shago</p>
+                </div>
+            </a>
+
+            <a href="registration_page.html?role=expert" class="role-btn bg-red-500/10 border-red-500/20">
+                <span class="text-2xl mr-4">🛠️</span>
+                <div class="text-left">
+                    <p class="text-red-400 font-bold text-sm">Service Provider</p>
+                    <p class="text-[9px] text-gray-500 uppercase">Kwararre</p>
+                </div>
+            </a>
+
+            <a href="registration_page.html?role=lab" class="role-btn bg-yellow-500/10 border-yellow-500/20">
+                <span class="text-2xl mr-4">🔬</span>
+                <div class="text-left">
+                    <p class="text-yellow-400 font-bold text-sm">Lab / Medical</p>
+                    <p class="text-[9px] text-gray-500 uppercase">Bangaren Lafiya</p>
+                </div>
+            </a>
+        </div>
+
+        <a href="index.html" class="inline-block mt-6 text-gray-600 text-[10px] font-bold hover:text-white transition uppercase tracking-widest">← Back to home</a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 w-full max-w-6xl">
-        
-        <a href="registration_page.html?role=customer" class="glass-card p-10 rounded-[2.5rem] text-center no-underline block group">
-            <div class="text-5xl mb-4 group-hover:scale-110 transition">🛍️</div>
-            <h3 class="font-bold text-blue-400">Customer</h3>
-            <p class="text-[10px] text-gray-500 mt-2 uppercase">Buyer</p>
-        </a>
-
-        <a href="registration_page.html?role=client" class="glass-card p-10 rounded-[2.5rem] text-center no-underline block group">
-            <div class="text-5xl mb-4 group-hover:scale-110 transition">🤝</div>
-            <h3 class="font-bold text-purple-400">Client</h3>
-            <p class="text-[10px] text-gray-500 mt-2 uppercase">Seeker</p>
-        </a>
-
-        <a href="registration_page.html?role=vendor" class="glass-card p-10 rounded-[2.5rem] text-center no-underline block group">
-            <div class="text-5xl mb-4 group-hover:scale-110 transition">🏪</div>
-            <h3 class="font-bold text-green-400">Vendor</h3>
-            <p class="text-[10px] text-gray-500 mt-2 uppercase">Seller</p>
-        </a>
-
-        <a href="registration_page.html?role=expert" class="glass-card p-10 rounded-[2.5rem] text-center no-underline block group">
-            <div class="text-5xl mb-4 group-hover:scale-110 transition">🛠️</div>
-            <h3 class="font-bold text-red-400">Expert</h3>
-            <p class="text-[10px] text-gray-500 mt-2 uppercase">Service</p>
-        </a>
-
-        <a href="registration_page.html?role=lab" class="glass-card p-10 rounded-[2.5rem] text-center no-underline block group">
-            <div class="text-5xl mb-4 group-hover:scale-110 transition">🔬</div>
-            <h3 class="font-bold text-yellow-400">Lab</h3>
-            <p class="text-[10px] text-gray-500 mt-2 uppercase">Medical</p>
-        </a>
-
-    </div>
-
-    <a href="index.html" class="mt-12 text-gray-500 hover:text-white transition text-xs font-bold uppercase tracking-widest">← Back to Home</a>
 </body>
-  </html>
-  
+</html>
