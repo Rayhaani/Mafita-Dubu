@@ -3,99 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration | Mafita Dubu</title>
+    <title>Mafita Dubu | Professional Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Kalar background din nasu (Exact match) */
-            --bg-page: #0f172a; 
-            /* Kalar katin (Lightly lighter than background) */
-            --bg-card: #1e293b;
-            --input-bg: #0f172a;
-            --text-main: #f8fafc;
-            --text-dim: #94a3b8;
-            --accent: #d4af37;
+            --body-bg: #0B0E14; /* Kalar bango (Darker) */
+            --card-bg: #151921; /* Kalar katin (Lighter) */
+            --border: #232935;  /* Layin katin */
+            --gold: #D4AF37;
         }
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: var(--bg-page);
-            background-image: radial-gradient(at 50% 0%, #1e293b 0%, #0f172a 100%);
+            background-color: var(--body-bg);
             display: flex; align-items: center; justify-content: center; 
             min-height: 100vh; margin: 0; padding: 20px;
         }
-        .luxury-card {
-            background-color: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 48px 40px;
-            width: 100%; max-width: 420px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            position: relative;
+        .pro-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 45px;
+            width: 100%; max-width: 420px; /* Matsakaicin girma don ya fita shape */
+            /* Wannan shadow din zai nuna cewa katin yana sama da bango */
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8);
         }
-        /* Wannan hasken (glow) din shine sirrin kyan nasu */
-        .luxury-card::before {
-            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
-            background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
-            z-index: -1; border-radius: 18px;
-        }
-        .title { font-size: 1.5rem; font-weight: 600; color: var(--text-main); letter-spacing: -0.025em; }
-        .subtitle { font-size: 0.875rem; color: var(--text-dim); margin-top: 4px; margin-bottom: 32px; }
+        .header-title { font-size: 1.6rem; font-weight: 600; color: #ffffff; letter-spacing: -0.03em; }
+        .header-sub { font-size: 0.85rem; color: #71767B; margin-top: 6px; margin-bottom: 35px; }
         
         label { 
-            display: block; font-size: 0.75rem; font-weight: 500; 
-            color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em;
-            margin-bottom: 8px; margin-top: 20px;
+            display: block; font-size: 0.72rem; font-weight: 500; 
+            color: #94a3b8; margin-bottom: 8px; margin-top: 18px;
+            letter-spacing: 0.02em;
         }
         .input-box {
-            width: 100%; background-color: var(--input-bg);
-            border: 1px solid #334155;
-            padding: 12px 16px; border-radius: 8px;
-            color: white; font-size: 0.9rem; transition: 0.2s;
+            width: 100%; background-color: #0F1218;
+            border: 1px solid #232935;
+            padding: 13px 18px; border-radius: 10px;
+            color: #ffffff; font-size: 0.92rem; transition: 0.25s ease;
             outline: none;
         }
-        .input-box:focus { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
-        .input-box::placeholder { color: #475569; }
+        .input-box:focus { border-color: var(--gold); background-color: #12161f; }
+        .input-box::placeholder { color: #3d4452; }
 
         .btn-gold {
-            background-color: var(--accent); color: #000; font-weight: 600; 
-            width: 100%; padding: 14px; border-radius: 8px;
-            margin-top: 32px; font-size: 0.95rem; transition: 0.3s;
-            border: none; cursor: pointer;
+            background: var(--gold); color: #000; font-weight: 700; 
+            width: 100%; padding: 15px; border-radius: 10px;
+            margin-top: 35px; font-size: 0.95rem; 
+            transition: all 0.3s; border: none; cursor: pointer;
         }
-        .btn-gold:hover { background-color: #f1c40f; transform: translateY(-1px); }
+        .btn-gold:hover { background: #eac045; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.25); }
     </style>
 </head>
 <body>
 
-    <div class="luxury-card">
+    <div class="pro-card">
         <div class="text-left">
-            <h1 id="displayRole" class="title">Create Account</h1>
-            <p class="subtitle">Join our exclusive business community.</p>
+            <h1 id="displayRole" class="header-title">Create Account</h1>
+            <p class="header-sub">Enter your details to register as a partner.</p>
         </div>
 
         <form id="regForm">
-            <label>Legal Name</label>
-            <input type="text" id="fullName" class="input-box" placeholder="e.g. Al-Amin Ibrahim" required>
+            <label>FULL NAME</label>
+            <input type="text" id="fullName" class="input-box" placeholder="e.g. Bello Ahmed" required>
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-2 gap-5">
                 <div>
-                    <label>Email</label>
-                    <input type="email" id="email" class="input-box" placeholder="name@company.com" required>
+                    <label>EMAIL</label>
+                    <input type="email" id="email" class="input-box" placeholder="mail@example.com" required>
                 </div>
                 <div>
-                    <label>Phone</label>
+                    <label>PHONE</label>
                     <input type="tel" id="phone" class="input-box" placeholder="080..." required>
                 </div>
             </div>
 
-            <label>Location</label>
-            <input type="text" id="location" class="input-box" placeholder="State, Country" required>
+            <label>OFFICE ADDRESS</label>
+            <input type="text" id="location" class="input-box" placeholder="Kaduna, Nigeria" required>
 
-            <label>Password</label>
+            <label>SECURE PASSWORD</label>
             <input type="password" id="pass" class="input-box" placeholder="••••••••" required>
 
-            <button type="submit" class="btn-gold">Get Started</button>
+            <button type="submit" class="btn-gold">Continue Registration</button>
         </form>
     </div>
 
@@ -122,7 +111,7 @@
         document.getElementById('regForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
-            btn.innerText = "Authenticating...";
+            btn.innerText = "Processing...";
             
             try {
                 await addDoc(collection(db, "users"), {
@@ -135,8 +124,8 @@
                 });
                 window.location.href = "index.html";
             } catch (err) { 
-                alert("Error: " + err.message); 
-                btn.innerText = "Get Started";
+                alert("Database Error: " + err.message); 
+                btn.innerText = "Continue Registration";
             }
         });
     </script>
