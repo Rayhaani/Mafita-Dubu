@@ -3,115 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration | Mafita Dubu</title>
+    <title>Mafita Dubu | The Future</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .step-hidden { display: none; }
-        .form-input { 
-            width: 100%; padding: 1rem; border-radius: 1rem; background: #f9fafb;
-            border: 1px solid #e5e7eb; outline: none; transition: all 0.3s;
-        }
-        .form-input:focus { border-color: #2563eb; background: white; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
-        .glass-card { background: white; border: 1px solid rgba(229, 231, 235, 0.5); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #05070a; color: white; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .role-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; position: relative; overflow: hidden; }
+        .role-card:hover { transform: translateY(-10px) scale(1.02); border-color: rgba(255, 255, 255, 0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .gradient-text { background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .input-field { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; transition: 0.3s; }
+        .input-field:focus { background: rgba(255,255,255,0.1); border-color: #4facfe; outline: none; box-shadow: 0 0 15px rgba(79, 172, 254, 0.3); }
+        .step-hidden { display: none; opacity: 0; transform: scale(0.9); }
+        .step-visible { display: block; animation: fadeIn 0.5s forwards; }
+        @keyframes fadeIn { to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
-<body class="bg-[#f3f4f6] min-h-screen flex items-center justify-center p-6">
+<body class="flex items-center justify-center min-h-screen p-4">
 
-    <div class="glass-card w-full max-w-[500px] rounded-[2.5rem] shadow-2xl p-10">
-        <div class="text-center mb-10">
-            <h2 class="text-3xl font-[800] text-slate-900 tracking-tighter">Mafita Dubu</h2>
-            <div class="h-1 w-12 bg-blue-600 mx-auto mt-2 rounded-full"></div>
-            <p class="text-slate-500 text-sm mt-3 font-medium">Barka da zuwa babban Ecosystem dinmu</p>
+    <div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full"></div>
+
+    <div class="w-full max-w-5xl">
+        
+        <div id="roleSelection" class="step-visible text-center">
+            <h1 class="text-5xl md:text-7xl font-[800] tracking-tighter mb-4 gradient-text">Fara Tafiyar Ka.</h1>
+            <p class="text-gray-400 mb-12 text-lg">Zabi bangaren da kake so ka kasance a cikin Ecosystem dinmu.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <div onclick="openForm('Customer', '#4facfe')" class="role-card glass p-8 rounded-[2rem] border-t-4 border-blue-400">
+                    <div class="text-4xl mb-4">🛍️</div>
+                    <h3 class="font-bold text-xl">Customer</h3>
+                    <p class="text-[10px] text-gray-400 mt-2 uppercase tracking-widest">Saye & Bincike</p>
+                </div>
+
+                <div onclick="openForm('Client', '#f093fb')" class="role-card glass p-8 rounded-[2rem] border-t-4 border-purple-400">
+                    <div class="text-4xl mb-4">🤝</div>
+                    <h3 class="font-bold text-xl">Client</h3>
+                    <p class="text-[10px] text-gray-400 mt-2 uppercase tracking-widest">Neman Kwararru</p>
+                </div>
+
+                <div onclick="openForm('Vendor', '#43e97b')" class="role-card glass p-8 rounded-[2rem] border-t-4 border-green-400">
+                    <div class="text-4xl mb-4">🏪</div>
+                    <h3 class="font-bold text-xl">Vendor</h3>
+                    <p class="text-[10px] text-gray-400 mt-2 uppercase tracking-widest">Mai Shago</p>
+                </div>
+
+                <div onclick="openForm('Service Provider', '#fa709a')" class="role-card glass p-8 rounded-[2rem] border-t-4 border-red-400">
+                    <div class="text-4xl mb-4">🛠️</div>
+                    <h3 class="font-bold text-xl">Service</h3>
+                    <p class="text-[10px] text-gray-400 mt-2 uppercase tracking-widest">Kwararre</p>
+                </div>
+
+                <div onclick="openForm('Lab/Medical', '#f6d365')" class="role-card glass p-8 rounded-[2rem] border-t-4 border-yellow-400">
+                    <div class="text-4xl mb-4">🔬</div>
+                    <h3 class="font-bold text-xl">Lab</h3>
+                    <p class="text-[10px] text-gray-400 mt-2 uppercase tracking-widest">Lafiya</p>
+                </div>
+            </div>
         </div>
 
-        <form id="regForm">
-            <div id="step1" class="space-y-5">
-                <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">Cikakken Suna</label>
-                    <input type="text" placeholder="Misali: Ahmad Bello" class="form-input mt-1">
-                </div>
-                
-                <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">Matsayinka (Role)</label>
-                    <select id="userRole" class="form-input mt-1 font-semibold text-slate-700">
-                        <option value="client">Customer / Client (Ina son Saye)</option>
-                        <option value="vendor">Vendor (Mai Shago)</option>
-                        <option value="expert">Expert (Kwararre / Service)</option>
-                    </select>
-                </div>
-                
-                <button type="button" onclick="handleNextStep()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg hover:bg-blue-700 transition-all active:scale-95">
-                    CI GABA
-                </button>
-            </div>
+        <div id="formSection" class="step-hidden glass p-10 rounded-[3rem] max-w-2xl mx-auto relative">
+            <button onclick="backToMenu()" class="absolute top-8 right-8 text-gray-500 hover:text-white transition">Back ✕</button>
+            
+            <header class="mb-8">
+                <span id="roleBadge" class="px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-blue-500/20 text-blue-400">Customer</span>
+                <h2 class="text-3xl font-black mt-2">Personal Information</h2>
+                <p class="text-gray-400 text-sm">Cika wadannan bayanan domin kulla akanta.</p>
+            </header>
 
-            <div id="step2" class="step-hidden space-y-6">
-                <div class="bg-blue-50 p-6 rounded-3xl border border-blue-100">
-                    <h4 class="font-bold text-blue-900 text-sm">📍 GPS Verification</h4>
-                    <p class="text-[11px] text-blue-600 mt-1 leading-relaxed">Dole ne mu dauki inda kake (GPS) domin tabbatar da shagonka ko wurin aikinka ga mutane.</p>
-                    <button type="button" onclick="getGPS()" class="mt-4 bg-white text-blue-600 border border-blue-200 px-5 py-2 rounded-full text-xs font-bold shadow-sm">
-                        Verify Location
-                    </button>
-                    <p id="gps-status" class="text-[10px] mt-2 text-slate-400 italic">GPS ba a dauka ba</p>
+            <form class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" placeholder="Full Name" class="input-field p-4 rounded-2xl w-full">
+                    <input type="text" placeholder="Username" class="input-field p-4 rounded-2xl w-full">
+                </div>
+                <input type="email" placeholder="Email Address" class="input-field p-4 rounded-2xl w-full">
+                <input type="tel" placeholder="Phone Number (WhatsApp preferred)" class="input-field p-4 rounded-2xl w-full">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" placeholder="State" class="input-field p-4 rounded-2xl w-full">
+                    <input type="text" placeholder="Local Government" class="input-field p-4 rounded-2xl w-full">
                 </div>
 
-                <div id="inventory-section" class="hidden">
-                    <label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Kayan Siyarwa (Akalla 3)</label>
-                    <div class="grid grid-cols-3 gap-2 mt-2">
-                        <div class="h-20 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-[10px] text-gray-400">+ Hoto</div>
-                        <div class="h-20 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-[10px] text-gray-400">+ Hoto</div>
-                        <div class="h-20 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-[10px] text-gray-400">+ Hoto</div>
+                <div id="specialField" class="hidden animate-pulse">
+                    <div class="p-4 bg-white/5 rounded-2xl border border-dashed border-white/20 text-center">
+                        <p class="text-xs text-blue-400 mb-2">📍 GPS Verification Required</p>
+                        <button type="button" class="text-[10px] font-bold bg-white text-black px-4 py-2 rounded-full uppercase">Capture Location</button>
                     </div>
                 </div>
 
-                <div class="flex gap-3">
-                    <button type="button" onclick="goToStep(1)" class="flex-1 text-slate-500 font-bold py-4 rounded-2xl border border-slate-200">Baya</button>
-                    <button type="submit" class="flex-2 bg-blue-600 text-white font-bold py-4 px-8 rounded-2xl shadow-lg">Kammala Rajista</button>
-                </div>
-            </div>
+                <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-5 rounded-2xl shadow-[0_0_30px_rgba(37,99,235,0.3)] transition-all">
+                    COMPLETE REGISTRATION
+                </button>
+            </form>
+        </div>
 
-            <div id="step3" class="step-hidden text-center space-y-6">
-                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto text-3xl">✓</div>
-                <h3 class="text-xl font-bold">An Kusa Gamawa!</h3>
-                <p class="text-sm text-slate-500">Tunda kai Customer ne, kawai danna button na kasa domin budewa kanka kofa a cikin Ecosystem dinmu.</p>
-                <button type="submit" class="w-full bg-green-600 text-white font-bold py-4 rounded-2xl shadow-lg">BUDE PORTAL DINA</button>
-            </div>
-        </form>
     </div>
 
     <script>
-        function goToStep(s) {
-            document.getElementById('step1').classList.add('step-hidden');
-            document.getElementById('step2').classList.add('step-hidden');
-            document.getElementById('step3').classList.add('step-hidden');
-            document.getElementById('step' + s).classList.remove('step-hidden');
-        }
-
-        function handleNextStep() {
-            const role = document.getElementById('userRole').value;
-            if (role === 'client') {
-                goToStep(3);
-            } else {
-                if (role === 'vendor') {
-                    document.getElementById('inventory-section').classList.remove('hidden');
-                } else {
-                    document.getElementById('inventory-section').classList.add('hidden');
-                }
-                goToStep(2);
-            }
-        }
-
-        function getGPS() {
-            const status = document.getElementById('gps-status');
-            status.innerText = "Daukan coordinates...";
+        function openForm(role, color) {
+            document.getElementById('roleSelection').classList.remove('step-visible');
+            document.getElementById('roleSelection').classList.add('step-hidden');
+            
             setTimeout(() => {
-                status.innerText = "📍 GPS Captured: 12.002, 8.591 (Kano, Nigeria)";
-                status.className = "text-[10px] mt-2 text-green-600 font-bold";
-            }, 1500);
+                document.getElementById('formSection').classList.remove('step-hidden');
+                document.getElementById('formSection').classList.add('step-visible');
+                
+                // Update Badge & Styles
+                const badge = document.getElementById('roleBadge');
+                badge.innerText = role;
+                badge.style.color = color;
+                badge.style.backgroundColor = color + "20";
+                document.getElementById('submitBtn').style.backgroundColor = color;
+
+                // Toggle special fields for Business/Experts
+                if(role === 'Vendor' || role === 'Service Provider' || role === 'Lab/Medical') {
+                    document.getElementById('specialField').classList.remove('hidden');
+                } else {
+                    document.getElementById('specialField').classList.add('hidden');
+                }
+            }, 500);
+        }
+
+        function backToMenu() {
+            document.getElementById('formSection').classList.remove('step-visible');
+            document.getElementById('formSection').classList.add('step-hidden');
+            
+            setTimeout(() => {
+                document.getElementById('roleSelection').classList.remove('step-hidden');
+                document.getElementById('roleSelection').classList.add('step-visible');
+            }, 500);
         }
     </script>
 </body>
-    </html>
-    
+                    </html>
+                    
