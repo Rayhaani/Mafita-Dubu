@@ -3,111 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Gold Premium</title>
+    <title>Mafita Dubu | Sky Blue Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --pure-black: #000000;
-            --card-dark: #0a0a0a;
-            /* Wannan itace kalar zinarin mai haske (Metallic Gold) */
-            --gold-bright: #e9c46a; 
-            --gold-border: #d4af37;
+            --sky-main: #e0f2fe; /* Background kalar sararin samaniya mai haske */
+            --sky-dark: #0284c7; /* Kalar shudi mai daukar ido */
+            --glass-white: rgba(255, 255, 255, 0.9);
         }
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: var(--pure-black);
+            background: linear-gradient(135deg, #f0f9ff 0%, #bae6fd 100%);
             display: flex; align-items: center; justify-content: center; 
             min-height: 100vh; margin: 0; padding: 15px;
         }
-        .compact-card {
-            background-color: var(--card-dark);
-            border: 1px solid #1a1a1a;
-            border-radius: 20px;
-            padding: 30px; /* An rage padding don rage tsayin katin */
-            width: 100%; max-width: 400px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+        .clean-card {
+            background: var(--glass-white);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 24px;
+            padding: 35px;
+            width: 100%; max-width: 420px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
         }
-        .header-title { font-size: 1.4rem; font-weight: 700; color: white; text-align: center; margin-bottom: 25px; }
+        .header-title { 
+            font-size: 1.5rem; font-weight: 700; color: #0c4a6e; 
+            text-align: center; margin-bottom: 8px; 
+        }
+        .header-sub { 
+            font-size: 0.85rem; color: #64748b; 
+            text-align: center; margin-bottom: 25px; 
+        }
 
-        .input-group { margin-bottom: 14px; }
-        label { font-size: 0.75rem; font-weight: 600; color: #888; margin-bottom: 6px; display: block; }
+        .input-group { margin-bottom: 15px; }
+        label { 
+            font-size: 0.75rem; font-weight: 600; color: #334155; 
+            margin-bottom: 6px; display: block; 
+        }
         
-        /* Gidajen rubutu (Golden Style) */
-        .gold-input {
-            width: 100%; 
-            background: rgba(233, 196, 106, 0.05); /* Dan hasken zinari a ciki */
-            border: 1.5px solid var(--gold-border);
-            padding: 12px 15px; border-radius: 10px;
-            color: white; font-size: 0.9rem; transition: 0.3s;
+        .sky-input {
+            width: 100%; background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            padding: 12px 16px; border-radius: 12px;
+            color: #1e293b; font-size: 0.95rem; transition: 0.3s;
             outline: none;
         }
-        .gold-input:focus { 
-            background: rgba(233, 196, 106, 0.1);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        .sky-input:focus { 
+            border-color: var(--sky-dark);
+            box-shadow: 0 0 10px rgba(2, 132, 199, 0.1);
         }
-        .gold-input::placeholder { color: #555; }
 
-        /* Email bar with integrated Send button */
+        /* Email bar with Send button */
         .email-bar { position: relative; display: flex; align-items: center; }
-        .inline-send {
-            position: absolute; right: 6px; 
-            background: var(--gold-bright);
-            color: #000; font-size: 0.65rem; font-weight: 800;
-            padding: 6px 12px; border-radius: 7px; cursor: pointer;
-            border: none;
+        .send-otp-btn {
+            position: absolute; right: 8px; 
+            background: var(--sky-dark);
+            color: #ffffff; font-size: 0.7rem; font-weight: 700;
+            padding: 7px 14px; border-radius: 8px; cursor: pointer;
+            border: none; transition: 0.2s;
         }
+        .send-otp-btn:hover { background: #0369a1; }
 
         .submit-btn {
-            background: var(--gold-bright); color: #000; font-weight: 800;
-            width: 100%; padding: 14px; border-radius: 10px;
-            margin-top: 20px; font-size: 0.9rem; border: none;
+            background: var(--sky-dark); color: #ffffff; font-weight: 700;
+            width: 100%; padding: 15px; border-radius: 12px;
+            margin-top: 20px; font-size: 1rem; border: none;
             cursor: pointer; transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
         }
-        .submit-btn:hover { filter: brightness(1.2); transform: translateY(-2px); }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4); }
     </style>
 </head>
 <body>
 
-    <div class="compact-card">
+    <div class="clean-card">
         <h1 class="header-title">Create Account</h1>
+        <p class="header-sub">Join Mafita Dubu - Sky High Success</p>
 
         <form id="regForm">
             <div class="input-group">
                 <label>FULL NAME</label>
-                <input type="text" id="fullName" class="gold-input" placeholder="Enter name" required>
+                <input type="text" id="fullName" class="sky-input" placeholder="e.g. Al-Amin Ibrahim" required>
             </div>
 
             <div class="input-group">
                 <label>EMAIL ADDRESS</label>
                 <div class="email-bar">
-                    <input type="email" id="email" class="gold-input" placeholder="mail@example.com" required>
-                    <button type="button" class="inline-send" id="sendOtp">SEND</button>
+                    <input type="email" id="email" class="sky-input" placeholder="name@email.com" required>
+                    <button type="button" class="send-otp-btn" id="sendOtp">SEND</button>
                 </div>
             </div>
 
             <div class="input-group">
-                <label>OTP CODE</label>
-                <input type="text" id="otpCode" class="gold-input" placeholder="Enter OTP" required>
+                <label>OTP VERIFICATION</label>
+                <input type="text" id="otpCode" class="sky-input" placeholder="Enter 6-digit code" required>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-2 gap-4">
                 <div class="input-group">
                     <label>PHONE</label>
-                    <input type="tel" id="phone" class="gold-input" placeholder="Phone" required>
+                    <input type="tel" id="phone" class="sky-input" placeholder="080..." required>
                 </div>
                 <div class="input-group">
                     <label>LOCATION</label>
-                    <input type="text" id="location" class="gold-input" placeholder="State" required>
+                    <input type="text" id="location" class="sky-input" placeholder="State" required>
                 </div>
             </div>
 
             <div class="input-group">
                 <label>PASSWORD</label>
-                <input type="password" id="pass" class="gold-input" placeholder="••••••••" required>
+                <input type="password" id="pass" class="sky-input" placeholder="••••••••" required>
             </div>
 
-            <button type="submit" class="submit-btn">REGISTER NOW</button>
+            <button type="submit" class="submit-btn">GET STARTED</button>
         </form>
     </div>
 
@@ -130,28 +139,29 @@
         document.getElementById('sendOtp').addEventListener('click', function() {
             const email = document.getElementById('email').value;
             if(!email) { alert("Saka email tukunna!"); return; }
-            this.innerText = "SENT";
+            this.innerText = "SENT!";
+            this.style.background = "#059669"; // Green on success
             this.disabled = true;
-            alert("OTP has been sent to " + email);
+            alert("An tura OTP zuwa " + email);
         });
 
         document.getElementById('regForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('.submit-btn');
-            btn.innerText = "SAVING...";
+            btn.innerText = "CREATING ACCOUNT...";
             try {
                 await addDoc(collection(db, "users"), {
                     fullName: document.getElementById('fullName').value,
                     email: document.getElementById('email').value,
                     phone: document.getElementById('phone').value,
                     location: document.getElementById('location').value,
-                    otp: document.getElementById('otpCode').value,
+                    role: "User",
                     timestamp: new Date()
                 });
                 window.location.href = "index.html";
             } catch (err) { 
-                alert("Error: " + err.message); 
-                btn.innerText = "REGISTER NOW";
+                alert("Kuskure ya faru: " + err.message); 
+                btn.innerText = "GET STARTED";
             }
         });
     </script>
