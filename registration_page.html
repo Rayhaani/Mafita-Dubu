@@ -3,109 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Professional Secure Portal</title>
+    <title>Mafita Dubu | Gold Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-body: #080a0f;
-            --bg-card: #11151c;
-            --border-color: #222933;
-            --gold-glow: rgba(212, 175, 55, 0.4);
-            --gold-solid: #d4af37;
+            --pure-black: #000000;
+            --card-dark: #0a0a0a;
+            /* Wannan itace kalar zinarin mai haske (Metallic Gold) */
+            --gold-bright: #e9c46a; 
+            --gold-border: #d4af37;
         }
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: var(--bg-body);
-            background-image: radial-gradient(circle at top, #161d29 0%, var(--bg-body) 100%);
+            background-color: var(--pure-black);
             display: flex; align-items: center; justify-content: center; 
-            min-height: 100vh; margin: 0; padding: 20px; color: white;
+            min-height: 100vh; margin: 0; padding: 15px;
         }
-        .luxury-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 40px;
-            width: 100%; max-width: 440px;
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.7);
+        .compact-card {
+            background-color: var(--card-dark);
+            border: 1px solid #1a1a1a;
+            border-radius: 20px;
+            padding: 30px; /* An rage padding don rage tsayin katin */
+            width: 100%; max-width: 400px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
         }
-        .header-section { margin-bottom: 30px; }
-        .header-title { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.04em; }
-        .header-sub { font-size: 0.85rem; color: #8a93a6; margin-top: 4px; }
+        .header-title { font-size: 1.4rem; font-weight: 700; color: white; text-align: center; margin-bottom: 25px; }
 
-        .input-group { margin-bottom: 18px; position: relative; }
-        label { font-size: 0.7rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; display: block; }
+        .input-group { margin-bottom: 14px; }
+        label { font-size: 0.75rem; font-weight: 600; color: #888; margin-bottom: 6px; display: block; }
         
-        .input-field {
-            width: 100%; background: #0c1016; border: 1px solid var(--border-color);
-            padding: 14px 18px; border-radius: 12px;
+        /* Gidajen rubutu (Golden Style) */
+        .gold-input {
+            width: 100%; 
+            background: rgba(233, 196, 106, 0.05); /* Dan hasken zinari a ciki */
+            border: 1.5px solid var(--gold-border);
+            padding: 12px 15px; border-radius: 10px;
             color: white; font-size: 0.9rem; transition: 0.3s;
+            outline: none;
         }
-        .input-field:focus { border-color: var(--gold-solid); outline: none; background: #0e131b; box-shadow: 0 0 15px var(--gold-glow); }
+        .gold-input:focus { 
+            background: rgba(233, 196, 106, 0.1);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+        .gold-input::placeholder { color: #555; }
 
-        /* Email bar with Send button inside */
-        .email-container { position: relative; display: flex; align-items: center; }
-        .send-otp-btn {
-            position: absolute; right: 8px; background: var(--gold-solid);
-            color: #000; font-size: 0.7rem; font-weight: 700;
-            padding: 6px 12px; border-radius: 8px; cursor: pointer;
-            transition: 0.2s; border: none;
+        /* Email bar with integrated Send button */
+        .email-bar { position: relative; display: flex; align-items: center; }
+        .inline-send {
+            position: absolute; right: 6px; 
+            background: var(--gold-bright);
+            color: #000; font-size: 0.65rem; font-weight: 800;
+            padding: 6px 12px; border-radius: 7px; cursor: pointer;
+            border: none;
         }
-        .send-otp-btn:hover { background: #f1c40f; transform: scale(1.05); }
 
         .submit-btn {
-            background: var(--gold-solid); color: #000; font-weight: 700;
-            width: 100%; padding: 16px; border-radius: 14px;
-            margin-top: 25px; font-size: 0.95rem; cursor: pointer;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: none;
+            background: var(--gold-bright); color: #000; font-weight: 800;
+            width: 100%; padding: 14px; border-radius: 10px;
+            margin-top: 20px; font-size: 0.9rem; border: none;
+            cursor: pointer; transition: 0.3s;
         }
-        .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px var(--gold-glow); }
+        .submit-btn:hover { filter: brightness(1.2); transform: translateY(-2px); }
     </style>
 </head>
 <body>
 
-    <div class="luxury-card">
-        <div class="header-section">
-            <h1 class="header-title">Create Account</h1>
-            <p class="header-sub">Secure registration for Mafita Dubu partners.</p>
-        </div>
+    <div class="compact-card">
+        <h1 class="header-title">Create Account</h1>
 
         <form id="regForm">
             <div class="input-group">
-                <label>Full Name</label>
-                <input type="text" id="fullName" class="input-field" placeholder="Full name" required>
+                <label>FULL NAME</label>
+                <input type="text" id="fullName" class="gold-input" placeholder="Enter name" required>
             </div>
 
             <div class="input-group">
-                <label>Email Address</label>
-                <div class="email-container">
-                    <input type="email" id="email" class="input-field" placeholder="mail@example.com" required>
-                    <button type="button" class="send-otp-btn" id="sendOtp">SEND</button>
+                <label>EMAIL ADDRESS</label>
+                <div class="email-bar">
+                    <input type="email" id="email" class="gold-input" placeholder="mail@example.com" required>
+                    <button type="button" class="inline-send" id="sendOtp">SEND</button>
                 </div>
             </div>
 
             <div class="input-group">
-                <label>OTP Code</label>
-                <input type="text" id="otpCode" class="input-field" placeholder="Enter 6-digit code" maxlength="6" required>
+                <label>OTP CODE</label>
+                <input type="text" id="otpCode" class="gold-input" placeholder="Enter OTP" required>
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-2 gap-3">
                 <div class="input-group">
-                    <label>Phone</label>
-                    <input type="tel" id="phone" class="input-field" placeholder="080..." required>
+                    <label>PHONE</label>
+                    <input type="tel" id="phone" class="gold-input" placeholder="Phone" required>
                 </div>
                 <div class="input-group">
-                    <label>Location</label>
-                    <input type="text" id="location" class="input-field" placeholder="State" required>
+                    <label>LOCATION</label>
+                    <input type="text" id="location" class="gold-input" placeholder="State" required>
                 </div>
             </div>
 
             <div class="input-group">
-                <label>Create Password</label>
-                <input type="password" id="pass" class="input-field" placeholder="••••••••" required>
+                <label>PASSWORD</label>
+                <input type="password" id="pass" class="gold-input" placeholder="••••••••" required>
             </div>
 
-            <button type="submit" class="submit-btn">Complete Registration</button>
+            <button type="submit" class="submit-btn">REGISTER NOW</button>
         </form>
     </div>
 
@@ -125,36 +127,31 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // OTP Functionality Simulation
         document.getElementById('sendOtp').addEventListener('click', function() {
             const email = document.getElementById('email').value;
             if(!email) { alert("Saka email tukunna!"); return; }
-            
-            this.innerText = "Sent!";
-            this.style.background = "#22c55e"; // Green for success
+            this.innerText = "SENT";
             this.disabled = true;
-            
-            alert("An tura OTP zuwa " + email + ". Duba Inbox ko Spam dinka.");
+            alert("OTP has been sent to " + email);
         });
 
         document.getElementById('regForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('.submit-btn');
-            btn.innerText = "Verifying & Saving...";
-            
+            btn.innerText = "SAVING...";
             try {
                 await addDoc(collection(db, "users"), {
                     fullName: document.getElementById('fullName').value,
                     email: document.getElementById('email').value,
                     phone: document.getElementById('phone').value,
                     location: document.getElementById('location').value,
-                    otpUsed: document.getElementById('otpCode').value,
+                    otp: document.getElementById('otpCode').value,
                     timestamp: new Date()
                 });
                 window.location.href = "index.html";
             } catch (err) { 
                 alert("Error: " + err.message); 
-                btn.innerText = "Complete Registration";
+                btn.innerText = "REGISTER NOW";
             }
         });
     </script>
