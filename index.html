@@ -1,268 +1,37 @@
-<!DOCTYPE html>
-<html lang="ha">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Global Edition</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+<div id="portal-content" class="absolute bottom-0 left-0 right-0 bg-[#0c0c0c]/95 backdrop-blur-xl rounded-t-[40px] p-10 transform translate-y-full transition-all duration-500 shadow-[0_-25px_80px_rgba(0,0,0,0.5)] border-t border-white/10 max-h-[70vh] overflow-y-auto">
+    <div class="w-10 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent rounded-full mx-auto mb-12 opacity-50"></div>
     
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F5F1E9; margin: 0; overflow-x: hidden; }
-
-    .royal-seal {
-        margin-top: 10px;
-        background: radial-gradient(circle, #ffd700 0%, #b8860b 100%);
-        border: 1.5px solid #ffffff;
-        border-radius: 50%;
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 10px rgba(184, 134, 11, 0.4);
-        animation: seal-pulse 2s infinite alternate ease-in-out;
-    }
-
-    @keyframes seal-pulse {
-        0% { transform: scale(1); filter: brightness(1); }
-        100% { transform: scale(1.1); filter: brightness(1.2); }
-    }
-
-    @keyframes photo-reveal {
-        0%, 18% { opacity: 1; z-index: 30; visibility: visible; } 
-        23%, 25% { opacity: 0; z-index: 5; visibility: hidden; }
-        26%, 100% { opacity: 0; z-index: 5; visibility: hidden; } 
-    }
-
-    .img-container {
-        position: absolute !important;
-        inset: 0 !important;
-        width: 100%; height: 100%;
-        opacity: 0;
-        animation: photo-reveal 16s infinite linear;
-    }
-
-    .img-1 { animation-delay: 0s !important; }
-    .img-2 { animation-delay: 4s !important; }
-    .img-3 { animation-delay: 8s !important; }
-    .img-4 { animation-delay: 12s !important; }
-
-    .box-title {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        background: linear-gradient(90deg, #d400ff, #00d2ff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-weight: 800;
-        font-size: 15px;
-        text-transform: capitalize;
-    }
-
-    .box-overlay {
-        position: absolute;
-        inset: 0;
-        z-index: 35;
-        background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
-        pointer-events: none;
-    }
-
-    .floating-box {
-        animation: float-cycle 3s ease-in-out infinite;
-        will-change: transform;
-    }
-
-    @keyframes float-cycle {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-    }
-
-    .delay-1 { animation-delay: 0s; }
-    .delay-2 { animation-delay: 0.5s; }
-    .delay-3 { animation-delay: 1s; }
-    .delay-4 { animation-delay: 1.5s; }
-
-    .why-mafita-section {
-        background-color: #000000;
-        color: #ffffff;
-        padding: 40px 24px;
-        border-radius: 2.5rem 2.5rem 0 0;
-        margin-top: 20px;
-    }
-
-    .benefit-item {
-        display: flex;
-        align-items: flex-start;
-        gap: 15px;
-        margin-bottom: 25px;
-    }
-
-    .benefit-icon { color: #ff0000; font-weight: 900; font-size: 1.2rem; margin-top: 4px; }
-    .benefit-title { font-weight: 800; font-size: 1.1rem; display: block; margin-bottom: 4px; }
-    .benefit-text { font-size: 0.9rem; color: #cccccc; line-height: 1.6; }
-
-    .portal-icon {
-        position: relative;
-        width: 45px;
-        height: 45px;
-        background: #000;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 0 15px rgba(184, 134, 11, 0.6);
-        overflow: hidden;
-    }
-
-    .portal-icon::before {
-        content: '';
-        position: absolute;
-        width: 160%;
-        height: 160%;
-        background: conic-gradient(transparent, #ffd700, transparent 30%);
-        animation: rotate-portal 3s linear infinite;
-    }
-
-    .portal-icon::after {
-        content: '';
-        position: absolute;
-        inset: 3px;
-        background: #000;
-        border-radius: 50%;
-        z-index: 1;
-    }
-
-    @keyframes rotate-portal {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-
-    .portal-center { position: relative; z-index: 2; color: #ffd700; font-size: 20px; }
-    .brand-d { background: linear-gradient(135deg, #ffd700, #b8860b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-    .modern-menu-btn {
-        display: flex; flex-direction: column; gap: 6px; cursor: pointer; padding: 10px; background: #f1f5f9; border-radius: 12px;
-    }
-    .line-1 { width: 24px; height: 2.5px; background: #1a365d; border-radius: 10px; }
-    .line-2 { width: 16px; height: 2.5px; background: #1a365d; border-radius: 10px; align-self: flex-end; }
-
-    .carpet-wrapper { perspective: 2000px; height: 160px; width: 100%; position: relative; display: flex; justify-content: center; align-items: center; margin-bottom: 25px; }
-    .magic-carpet {
-        background: #000; color: #ffd700; padding: 25px 45px; font-weight: 800; font-size: 1.15rem; text-align: center;
-        box-shadow: 0 15px 45px rgba(0,0,0,0.7); border-radius: 0px 80px 0px 80px; border: 2px solid #b8860b;
-        position: absolute; width: 85%; opacity: 0; visibility: hidden; animation: diagonal-fold-loop 25s infinite ease-in-out;
-    }
-
-    @keyframes diagonal-fold-loop {
-        0%, 20% { transform: scale(0) rotate(-15deg); opacity: 0; visibility: hidden; }
-        2%, 18% { transform: scale(1) rotate(0deg); opacity: 1; visibility: visible; }
-        19% { transform: scale(0) rotate(-15deg); opacity: 0; visibility: hidden; }
-        100% { opacity: 0; visibility: hidden; }
-    }
-    .msg-1 { animation-delay: 0s; } .msg-2 { animation-delay: 5s; } .msg-3 { animation-delay: 10s; } .msg-4 { animation-delay: 15s; } .msg-5 { animation-delay: 20s; }
-</style>
-</head>
-<body class="min-h-screen pb-20">
-
-    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="portal-icon"><div class="portal-center"><i class="fa-solid fa-bolt"></i></div></div>
-                <div class="flex flex-col">
-                    <div class="text-[22px] font-extrabold leading-none"><span class="text-[#1a365d]">Mafita</span><span class="brand-d">Dubu</span></div>
-                    <div class="text-[8px] uppercase tracking-[2px] text-gray-500 font-bold">African Elite Ecosystem</div>
-                </div>
-            </div>
-            <div class="modern-menu-btn" onclick="openPortal()">
-                <div class="line-1"></div><div class="line-2"></div>
-            </div>
+    <div class="flex flex-col space-y-8">
+        <div onclick="location.href='index.html'" class="flex items-center justify-between group cursor-pointer">
+            <span class="text-2xl font-bold text-white/40 group-hover:text-white group-hover:pl-4 transition-all duration-300 tracking-tighter">01. HOME</span>
+            <i class="fa-solid fa-arrow-right-long text-blue-500 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all"></i>
         </div>
-    </nav>
 
-    <div class="pt-6 pb-4 text-center"> 
-        <div class="carpet-wrapper">
-            <div class="magic-carpet msg-1">Barka Da Zuwa Shafin Mafita Dubu</div>
-            <div class="magic-carpet msg-2">Gidan Samun Biyan Bukatu</div>
-            <div class="magic-carpet msg-3">Kasuwanci & Koyon Sana'o'i</div>
-            <div class="magic-carpet msg-4">Neman Ilmi Da Bincike</div>
-            <div class="magic-carpet msg-5">Da Warware Dukan Matsalolin Rayuwa</div>
+        <div onclick="location.href='login.html'" class="flex items-center justify-between group cursor-pointer">
+            <span class="text-2xl font-bold text-white/40 group-hover:text-white group-hover:pl-4 transition-all duration-300 tracking-tighter">02. LOGIN</span>
+            <i class="fa-solid fa-arrow-right-long text-blue-500 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all"></i>
+        </div>
+
+        <div class="flex items-center justify-between group cursor-pointer">
+            <span class="text-2xl font-bold text-white/40 group-hover:text-white group-hover:pl-4 transition-all duration-300 tracking-tighter">03. ABOUT US</span>
+            <i class="fa-solid fa-arrow-right-long text-blue-500 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all"></i>
+        </div>
+
+        <div class="flex items-center justify-between group cursor-pointer">
+            <span class="text-2xl font-bold text-white/40 group-hover:text-white group-hover:pl-4 transition-all duration-300 tracking-tighter">04. CONTACT</span>
+            <i class="fa-solid fa-arrow-right-long text-blue-500 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all"></i>
+        </div>
+
+        <div onclick="openVendorForm()" class="flex items-center justify-between group cursor-pointer">
+            <span class="text-2xl font-bold text-white/40 group-hover:text-white group-hover:pl-4 transition-all duration-300 tracking-tighter text-blue-400">05. ECOSYSTEM</span>
+            <i class="fa-solid fa-bolt text-yellow-400 opacity-0 group-hover:opacity-100 transition-all"></i>
         </div>
     </div>
 
-    <div class="relative w-full px-4 mb-10"> 
-        <div class="relative w-full h-[480px] overflow-hidden rounded-[2.5rem] shadow-2xl border-4 border-white">
-            <img src="https://i.postimg.cc/bwXn2LbL/IMG-20260122-WA0042.jpg" class="w-full h-full object-cover object-top">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-        </div>
+    <div class="mt-16 text-center">
+        <button onclick="closePortal()" class="text-[10px] font-black text-white/20 uppercase tracking-[0.5em] hover:text-white transition-all">
+            [ CLOSE PORTAL ]
+        </button>
     </div>
+</div>
 
-    <section class="px-6 py-4 -mt-10 mb-6 floating-box">
-        <div class="bg-white/40 backdrop-blur-md p-6 rounded-[2rem] border border-white/20 shadow-2xl">
-            <h3 class="text-blue-900 font-extrabold text-xl mb-2">Mafita Dubu Ecosystem</h3>
-            <p class="text-gray-700 text-sm leading-relaxed mb-4">
-                Mafita Dubu is a high-tech digital sanctuary designed to empower the African spirit.
-            </p>
-            <div class="flex space-x-2">
-                <button onclick="openPortal()" class="bg-blue-600 text-white text-[10px] px-4 py-1.5 rounded-full font-bold uppercase hover:bg-blue-700">JOIN ECOSYSTEM</button>
-                <span class="bg-green-100 text-green-700 text-[10px] px-3 py-1 rounded-full font-bold uppercase">Security</span>
-            </div>
-        </div>
-    </section>
-
-    <div class="px-5 grid grid-cols-2 gap-4 pb-10">
-        <div class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0c0c0c] shadow-xl floating-box delay-1">
-            <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-                <h4 class="box-title">Koyon Sana'a</h4>
-                <div class="royal-seal"><i class="fa-solid fa-bolt text-white text-xs"></i></div>
-            </div>
-            <div class="img-container img-1"><img src="https://i.postimg.cc/j2V5zhch/IMG-20260122-WA0044(1).jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-            <div class="img-container img-2"><img src="https://i.postimg.cc/0jgQpCnG/IMG-20260124-WA0008.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        </div>
-        <div class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0c0c0c] shadow-xl floating-box delay-2">
-            <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-                <h4 class="box-title">Neman Mafita</h4>
-                <div class="royal-seal"><i class="fa-solid fa-bolt text-white text-xs"></i></div>
-            </div>
-            <div class="img-container img-1"><img src="https://i.postimg.cc/GtRJvx6H/IMG-20260123-WA0031(1).jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-            <div class="img-container img-2"><img src="https://i.postimg.cc/kXKG0d6r/Chat-GPT-Image-Jan-24-2026-05-17-58-PM-png.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        </div>
-    </div>
-
-    <section class="why-mafita-section">
-        <h2 class="text-3xl font-extrabold mb-10 text-center">Why Mafita Dubu?</h2>
-        <div class="benefit-item">
-            <div class="benefit-icon">»</div>
-            <div><span class="benefit-title">The First Hybrid AI Sanctuary:</span><p class="benefit-text">We aren't just an app; we are a digital revolution.</p></div>
-        </div>
-    </section>
-
-    <div id="portal-sheet" class="fixed inset-0 bg-black/90 z-[9999] hidden backdrop-blur-xl" onclick="closePortal()">
-        <div id="portal-content" class="absolute bottom-0 left-0 right-0 bg-[#0c0c0c] rounded-t-[40px] p-10 transform translate-y-full transition-all duration-500 border-t border-white/10" onclick="event.stopPropagation()">
-            <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mb-10"></div>
-            <div class="flex flex-col space-y-6">
-                <a href="index.html" class="text-xl font-bold text-gray-400 hover:text-white border-b border-white/5 pb-4">01. HOME</a>
-                <a href="login.html" class="text-xl font-bold text-gray-400 hover:text-white border-b border-white/5 pb-4">02. LOGIN</a>
-                <a href="about.html" class="text-xl font-bold text-gray-400 hover:text-white border-b border-white/5 pb-4">03. ABOUT US</a>
-                <a href="contact.html" class="text-xl font-bold text-gray-400 hover:text-white">04. CONTACT</a>
-            </div>
-            <button onclick="closePortal()" class="mt-12 w-full py-4 text-[10px] text-white/20 tracking-[0.5em] font-black uppercase border border-white/5 rounded-2xl">[ CLOSE PORTAL ]</button>
-        </div>
-    </div>
-
-    <script>
-        function openPortal() {
-            const sheet = document.getElementById('portal-sheet');
-            const content = document.getElementById('portal-content');
-            sheet.classList.remove('hidden');
-            setTimeout(() => { content.classList.remove('translate-y-full'); }, 10);
-        }
-        function closePortal() {
-            const sheet = document.getElementById('portal-sheet');
-            const content = document.getElementById('portal-content');
-            content.classList.add('translate-y-full');
-            setTimeout(() => { sheet.classList.add('hidden'); }, 400);
-        }
-    </script>
-</body>
-</html>
