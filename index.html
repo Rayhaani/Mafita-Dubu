@@ -449,61 +449,68 @@
     </div>
 </section>
 
-<div id="portal-overlay" onclick="rufePortalNow()" style="position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 99; opacity: 0; pointer-events: none; transition: all 0.4s ease;"></div>
+<div id="portal-overlay" onclick="toggleMenu()" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] opacity-0 pointer-events-none transition-all duration-500"></div>
 
-<div id="portal-content" class="fixed bottom-10 left-1/2 -translate-x-1/2 w-[92%] z-[100] bg-white rounded-[35px] p-6 shadow-[0_30px_100px_rgba(0,0,0,0.5)] border border-gray-100 transition-all duration-500 opacity-0 pointer-events-none translate-y-10 scale-90">
+<div id="portal-content" class="fixed bottom-10 left-1/2 -translate-x-1/2 w-[92%] z-[100] bg-white/95 backdrop-blur-md rounded-[35px] p-6 shadow-[0_30px_100px_rgba(0,0,0,0.4)] border border-gray-100 transition-all duration-500 opacity-0 pointer-events-none translate-y-10">
     
     <div class="grid grid-cols-4 gap-2 items-center justify-items-center">
-        <a href="/" class="text-center active:scale-90 transition-transform">
-            <div class="w-14 h-14 bg-gradient-to-br from-amber-50 to-orange-100 rounded-2xl mb-1 flex items-center justify-center text-2xl border border-amber-200/50">🏠</div>
-            <span class="text-[10px] font-black text-gray-800 uppercase">Home</span>
+        <a href="/" class="text-center group active:scale-90 transition-transform">
+            <div class="w-14 h-14 bg-gradient-to-br from-amber-50 to-orange-100 rounded-2xl mb-1 flex items-center justify-center text-2xl shadow-sm border border-amber-200/50">🏠</div>
+            <span class="text-[9px] font-black text-gray-800 uppercase tracking-tighter">Home</span>
         </a>
 
-        <a href="/login" class="text-center active:scale-90 transition-transform">
-            <div class="w-14 h-14 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl mb-1 flex items-center justify-center text-2xl border border-blue-200/50">🔑</div>
-            <span class="text-[10px] font-black text-gray-800 uppercase">Login</span>
+        <a href="/login" class="text-center group active:scale-90 transition-transform">
+            <div class="w-14 h-14 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl mb-1 flex items-center justify-center text-2xl shadow-sm border border-blue-200/50">🔑</div>
+            <span class="text-[9px] font-black text-gray-800 uppercase tracking-tighter">Login</span>
         </a>
 
-        <a href="/signup" class="text-center active:scale-90 transition-transform">
-            <div class="w-14 h-14 bg-gradient-to-br from-emerald-50 to-teal-100 rounded-2xl mb-1 flex items-center justify-center text-2xl border border-emerald-200/50">📝</div>
-            <span class="text-[10px] font-black text-gray-800 uppercase">Sign Up</span>
+        <a href="/signup" class="text-center group active:scale-90 transition-transform">
+            <div class="w-14 h-14 bg-gradient-to-br from-emerald-50 to-teal-100 rounded-2xl mb-1 flex items-center justify-center text-2xl shadow-sm border border-emerald-200/50">📝</div>
+            <span class="text-[9px] font-black text-gray-800 uppercase tracking-tighter">Sign Up</span>
         </a>
 
-        <a href="/contact" class="text-center active:scale-90 transition-transform">
-            <div class="w-14 h-14 bg-gradient-to-br from-rose-50 to-orange-50 rounded-2xl mb-1 flex items-center justify-center text-2xl border border-rose-200/50">📞</div>
-            <span class="text-[10px] font-black text-gray-800 uppercase">Contact</span>
+        <a href="/contact" class="text-center group active:scale-90 transition-transform">
+            <div class="w-14 h-14 bg-gradient-to-br from-rose-50 to-orange-50 rounded-2xl mb-1 flex items-center justify-center text-2xl shadow-sm border border-rose-200/50">📞</div>
+            <span class="text-[9px] font-black text-gray-800 uppercase tracking-tighter">Contact</span>
         </a>
     </div>
-
-    <div class="mt-4 w-10 h-1 bg-gray-200 rounded-full mx-auto opacity-50"></div>
+    
+    <div class="mt-4 w-12 h-1 bg-gray-200 rounded-full mx-auto opacity-50"></div>
 </div>
+    
 
-<script>
+
+ <script>
     function openPortal() {
         const portal = document.getElementById('portal-content');
         const overlay = document.getElementById('portal-overlay');
         
-        // Saka Style ta karfin tsi (In-line Style)
-        portal.style.opacity = "1";
-        portal.style.pointerEvents = "auto";
-        portal.style.transform = "translateX(-50%) translateY(0) scale(1)";
-        
-        overlay.style.opacity = "1";
-        overlay.style.pointerEvents = "auto";
+        if (portal && overlay) {
+            // Bude Portal
+            portal.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
+            portal.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+            
+            // Bude Duhun Baya (Overlay)
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            overlay.classList.add('opacity-100', 'pointer-events-auto');
+        }
     }
 
-    function rufePortalNow() {
+    function toggleMenu() {
         const portal = document.getElementById('portal-content');
         const overlay = document.getElementById('portal-overlay');
         
-        portal.style.opacity = "0";
-        portal.style.pointerEvents = "none";
-        portal.style.transform = "translateX(-50%) translateY(40px) scale(0.9)";
-        
-        overlay.style.opacity = "0";
-        overlay.style.pointerEvents = "none";
+        if (portal && overlay) {
+            // Rufe Portal
+            portal.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
+            portal.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+            
+            // Rufe Duhun Baya
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            overlay.classList.remove('opacity-100', 'pointer-events-auto');
+        }
     }
-</script>
+ </script>
     
  
 
