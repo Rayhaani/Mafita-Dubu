@@ -449,73 +449,56 @@
     </div>
 </section>
     
-<div id="portal-content" class="absolute bottom-0 left-0 right-0 bg-[#0c0c0c]/95 backdrop-blur-xl rounded-t-[40px] p-10 transform translate-y-full transition-all duration-500 shadow-[0_-25px_80px_rgba(0,0,0,0.5)] border-t border-white/10 max-h-[70vh] overflow-y-auto">
-    <div class="w-10
 
 
-        <div id="nav-portal" class="fixed inset-0 z-[9999] hidden">
-    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="toggleMenu()"></div>
-    
-    <div id="nav-content" class="absolute bottom-0 w-full bg-[#0c0c0c]/90 backdrop-blur-2xl rounded-t-[40px] p-10 border-t border-white/10 transform translate-y-full transition-transform duration-500 ease-out shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
-        
-        <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-10"></div>
-        
-        <div class="flex flex-col space-y-7">
-            <a href="index.html" class="group flex items-center justify-between">
-                <div class="flex items-center gap-5">
-                    <span class="text-yellow-600 font-mono text-xs">01</span>
-                    <span class="text-2xl font-bold text-white group-hover:text-yellow-500 transition-colors">HOME</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-white/20 text-sm"></i>
-            </a>
-
-            <a href="login.html" class="group flex items-center justify-between">
-                <div class="flex items-center gap-5">
-                    <span class="text-white/30 font-mono text-xs">02</span>
-                    <span class="text-2xl font-bold text-white/70 group-hover:text-white transition-colors">LOGIN</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-white/20 text-sm"></i>
-            </a>
-
-            <a href="about.html" class="group flex items-center justify-between">
-                <div class="flex items-center gap-5">
-                    <span class="text-white/30 font-mono text-xs">03</span>
-                    <span class="text-2xl font-bold text-white/70 group-hover:text-white transition-colors">ABOUT US</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-white/20 text-sm"></i>
-            </a>
-
-            <hr class="border-white/5 my-2">
-
-            <button class="w-full bg-gradient-to-r from-yellow-500 to-yellow-700 py-4 rounded-2xl font-black text-black uppercase tracking-widest shadow-lg active:scale-95 transition-transform">
-                GET STARTED
+    <div class="flex justify-between items-center mb-8">
+            <h3 class="text-2xl font-black text-white">Elite Portal</h3>
+            <button onclick="toggleMenu()" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-red-500 transition-all">
+                <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
 
-        <button onclick="toggleMenu()" class="mt-8 w-full text-white/40 text-xs font-bold uppercase tracking-[4px]">
-            Close Menu
-        </button>
+        <div class="grid grid-cols-1 gap-4">
+            <a href="#" class="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center text-xl text-white">
+                    <i class="fa-solid fa-rocket"></i>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold">Fara Kasuwanci</h4>
+                    <p class="text-gray-400 text-xs">Buɗe shagonka na kanka a yau.</p>
+                </div>
+            </a>
+            
+            <a href="#" class="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-purple-600 flex items-center justify-center text-xl text-white">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold">Koyon AI</h4>
+                    <p class="text-gray-400 text-xs">Zama gwani a dabarun zamani.</p>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
 
-    <script>
+<script>
     function openPortal() {
-        const portal = document.getElementById('nav-portal');
-        const content = document.getElementById('nav-content');
-        portal.classList.remove('hidden');
-        setTimeout(() => {
-            if(content) content.classList.remove('translate-y-full');
-        }, 20);
+        const portal = document.getElementById('portal-content');
+        if (portal) {
+            portal.classList.remove('translate-y-full');
+        }
     }
 
     function toggleMenu() {
-        const portal = document.getElementById('nav-portal');
-        const content = document.getElementById('nav-content');
-        if(content) content.classList.add('translate-y-full');
-        setTimeout(() => { portal.classList.add('hidden'); }, 500);
+        const portal = document.getElementById('portal-content');
+        if (portal) {
+            portal.classList.add('translate-y-full');
+        }
     }
 </script>
-
+    
+    
 </body>
 </html>
 
