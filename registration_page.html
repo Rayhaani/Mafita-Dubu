@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Rotating Colors</title>
+    <title>Mafita Dubu | Liquid Colors</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
@@ -22,53 +22,38 @@
             min-height: 100vh; margin: 0; padding: 20px;
         }
 
-        /* WANNAN SHINE GURBIN MAI LAUNUKA MASU ZAGAYAWA */
-        .rotating-border-container {
-            width: 80px;
-            height: 80px;
-            margin: -90px auto 15px;
+        /* WANNAN SHINE GURBIN MAI CUDANYAR LAUNUKA */
+        .liquid-color-circle {
+            width: 85px;
+            height: 85px;
+            margin: -95px auto 15px;
             position: relative;
             z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #222; /* Kalar tsakiyar gurbin */
             border-radius: 50%;
-            overflow: hidden; /* Domin hasken ya zauna a gefe kawai */
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            border: 2.5px solid rgba(255, 255, 255, 0.8);
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            
+            /* Background mai launuka da zasu rinka yawo */
+            background: linear-gradient(45deg, #ff4d4d, #ffd700, #4facfe, #7028e4);
+            background-size: 400% 400%;
+            animation: liquidFlow 6s ease infinite;
         }
 
-        /* Wannan shine asalin hasken dake juyawa */
-        .rotating-border-container::before {
-            content: "";
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            background: conic-gradient(
-                #ff4d4d, /* Ja */
-                #ffd700, /* Gold */
-                #4facfe, /* Blue */
-                #00f2fe, /* Cyan */
-                #7028e4, /* Purple */
-                #ff4d4d  /* Dawowa Ja */
-            );
-            animation: rotateColors 3s linear infinite;
+        /* Animation din da yake motsa launukan a ciki */
+        @keyframes liquidFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        /* Wannan Layer din ne yake rufe tsakiyar don ya bar "Border" kadai */
-        .rotating-border-container::after {
-            content: "";
+        /* Kara wani haske (overlay) don su kara cudanya */
+        .liquid-color-circle::after {
+            content: '';
             position: absolute;
-            width: 70px;
-            height: 70px;
-            background: var(--royal-black);
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), transparent);
             border-radius: 50%;
-            z-index: 1;
-        }
-
-        @keyframes rotateColors {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
         }
 
         .luxury-card {
@@ -106,7 +91,7 @@
 <body>
 
     <div class="luxury-card">
-        <div class="rotating-border-container"></div>
+        <div class="liquid-color-circle"></div>
         
         <h1 class="header-title">Mafita Dubu</h1>
 
