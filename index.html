@@ -449,7 +449,7 @@
     </div>
 </section>
 
-   <div id="portal-content" 
+   <div id="portal-new-v3" 
      class="fixed bottom-10 left-1/2 -translate-x-1/2 w-[92%] z-[100] bg-white/95 backdrop-blur-md rounded-[35px] p-8 shadow-[0_30px_100px_rgba(0,0,0,0.5)] border border-gray-100 transition-all duration-500 opacity-0 pointer-events-none translate-y-10">
     
     <div class="flex justify-around items-center">
@@ -470,28 +470,27 @@
     <button onclick="toggleMenu()" class="mt-8 w-full py-2 text-center text-red-500 font-bold text-xs uppercase tracking-[3px]">
         [ Close Portal ]
     </button>
-   </div>
-    
-    <script>
-    function openPortal() {
-        const portal = document.getElementById('portal-content');
-        if (portal) {
-            // Cire tsoffin classes
-            portal.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
-            // Saka sabbin classes
-            portal.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
-        }
-    }
+</div>
 
-    function toggleMenu() {
-        const portal = document.getElementById('portal-content');
-        if (portal) {
-            // Mayar da su yadda suke
-            portal.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
-            portal.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
-        }
+<script>
+function openPortal() {
+    // Tabbatar ka canja sunan ID din anan ma zuwa portal-new-v3
+    const portal = document.getElementById('portal-new-v3');
+    if (portal) {
+        portal.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
+        portal.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
     }
-    </script>
+}
+
+function toggleMenu() {
+    // Tabbatar ka canja sunan ID din anan ma
+    const portal = document.getElementById('portal-new-v3');
+    if (portal) {
+        portal.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        portal.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
+    }
+}
+</script>
     
 
 </body>
