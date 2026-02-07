@@ -498,30 +498,21 @@
     </div>
 </div>
 
-<script>
-    // Wannan function din zai rinka budewa da rufewa
+    <script>
+    function openPortal() {
+        const portal = document.getElementById('nav-portal');
+        const content = document.getElementById('nav-content');
+        portal.classList.remove('hidden');
+        setTimeout(() => {
+            if(content) content.classList.remove('translate-y-full');
+        }, 20);
+    }
+
     function toggleMenu() {
         const portal = document.getElementById('nav-portal');
         const content = document.getElementById('nav-content');
-        
-        if (portal.classList.contains('hidden')) {
-            portal.classList.remove('hidden');
-            // Dan jinkiri kadan kafin slide-up din ya fara
-            setTimeout(() => {
-                content.classList.remove('translate-y-full');
-            }, 10);
-        } else {
-            content.classList.add('translate-y-full');
-            // Jira animation din ya kare kafin a boye baki daya
-            setTimeout(() => {
-                portal.classList.add('hidden');
-            }, 500);
-        }
-    }
-
-    // Gyara sunan function dinka na baya domin ya dace da button din sama
-    function openPortal() {
-        toggleMenu();
+        if(content) content.classList.add('translate-y-full');
+        setTimeout(() => { portal.classList.add('hidden'); }, 500);
     }
 </script>
 
