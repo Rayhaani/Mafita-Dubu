@@ -3,140 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Beyond Perkins</title>
+    <title>Mafita Dubu | Premium Gold</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --perkins-gold: #8b6b1b; /* Kalar da ka turo */
-            --bright-gold: #f3cf7a;
-            --deep-inner: #1a1405;
+            --dark-gold: #8b6b1b;
+            --light-gold: #f3cf7a;
+            --royal-black: #1a1405;
         }
+        
         body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: var(--perkins-gold);
+            font-family: 'Montserrat', sans-serif;
+            /* Mixed Gold Background (Metallic Look) */
+            background: linear-gradient(135deg, #5e4912 0%, #8b6b1b 50%, #b8860b 100%);
             display: flex; align-items: center; justify-content: center; 
             min-height: 100vh; margin: 0; padding: 20px;
         }
 
-        .ultra-card {
-            background-color: #2d2209; 
-            border: 1.5px solid rgba(243, 207, 122, 0.4);
-            border-radius: 28px;
-            padding: 30px 25px;
-            width: 100%; max-width: 380px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        .luxury-card {
+            background: rgba(26, 20, 5, 0.95);
+            border: 2px solid var(--light-gold);
+            border-radius: 40px 10px 40px 10px; /* Custom Shape */
+            padding: 40px 30px;
+            width: 100%; max-width: 400px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6), inset 0 0 15px rgba(243, 207, 122, 0.1);
             text-align: center;
         }
 
-        /* Logo Area */
-        .logo-box {
-            width: 70px; height: 70px;
-            background: var(--bright-gold);
-            border-radius: 18px;
-            margin: 0 auto 15px;
+        .logo-placeholder {
+            width: 85px; height: 85px;
+            margin: -80px auto 20px; /* Ya dan fito sama kadan */
+            background: var(--light-gold);
+            border: 4px solid var(--royal-black);
+            border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-weight: 800; font-size: 1.5rem; color: #2d2209;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
         .header-title { 
-            font-size: 1.4rem; font-weight: 800; color: var(--bright-gold); 
-            margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem; color: var(--light-gold); 
+            margin-bottom: 5px; letter-spacing: 2px;
         }
 
-        .input-group { margin-bottom: 15px; text-align: left; }
+        .input-group { margin-bottom: 18px; text-align: left; }
+        
         label { 
-            font-size: 0.65rem; font-weight: 700; color: rgba(243, 207, 122, 0.7); 
-            margin-bottom: 6px; display: block; padding-left: 5px;
+            font-size: 0.7rem; font-weight: 600; color: var(--light-gold); 
+            margin-bottom: 6px; display: block; text-transform: uppercase;
         }
         
-        /* Kwaskwarimar Boxes: Soft Inner Shadow & Golden Border */
-        .premium-box {
-            width: 100%; background: var(--deep-inner);
-            border: 1px solid rgba(139, 107, 27, 0.5);
-            padding: 11px 16px; border-radius: 12px;
-            color: #fff; font-size: 0.9rem; transition: 0.3s;
+        .gold-input {
+            width: 100%; background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(243, 207, 122, 0.3);
+            padding: 12px 16px; border-radius: 8px;
+            color: #fff; font-size: 0.9rem; transition: 0.4s;
             outline: none;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-        }
-        .premium-box:focus { 
-            border-color: var(--bright-gold);
-            box-shadow: 0 0 10px rgba(243, 207, 122, 0.2);
         }
 
-        .email-flex { position: relative; display: flex; align-items: center; }
-        .inline-btn {
-            position: absolute; right: 6px; 
-            background: var(--perkins-gold); color: white;
-            font-size: 0.65rem; font-weight: 800;
-            padding: 6px 12px; border-radius: 8px; cursor: pointer;
-            border: none; transition: 0.2s;
+        .gold-input:focus { 
+            border-color: var(--light-gold);
+            background: rgba(243, 207, 122, 0.05);
+            box-shadow: 0 0 12px rgba(243, 207, 122, 0.2);
         }
-        .inline-btn:hover { background: var(--bright-gold); color: #000; }
+
+        .send-btn {
+            position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+            background: var(--light-gold); color: var(--royal-black);
+            font-size: 0.65rem; font-weight: 800;
+            padding: 6px 12px; border-radius: 5px; cursor: pointer;
+        }
 
         .submit-btn {
-            background: linear-gradient(135deg, var(--bright-gold) 0%, #b8860b 100%);
-            color: #2d2209; font-weight: 800;
-            width: 100%; padding: 15px; border-radius: 12px;
-            margin-top: 20px; font-size: 1rem; border: none;
-            cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            color: #1a1405; font-family: 'Cinzel', serif; font-weight: 800;
+            width: 100%; padding: 16px; border-radius: 8px;
+            margin-top: 20px; font-size: 1.1rem; border: none;
+            cursor: pointer; transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
-        .submit-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+        .submit-btn:hover { 
+            filter: brightness(1.2); transform: scale(1.02);
+        }
     </style>
 </head>
 <body>
 
-    <div class="ultra-card">
-        <div class="logo-box">MD</div>
+    <div class="luxury-card">
+        <div class="logo-placeholder">
+            <img src="https://via.placeholder.com/85" alt="Mafita Dubu Logo">
+        </div>
         <h1 class="header-title">Mafita Dubu</h1>
+        <p style="color: #999; font-size: 0.75rem; margin-bottom: 25px;">Premium Financial Solutions</p>
 
-        <form id="regForm">
+        <form>
             <div class="input-group">
-                <label>FULL NAME</label>
-                <input type="text" id="fullName" class="premium-box" placeholder="Your name" required>
+                <label>Full Name</label>
+                <input type="text" class="gold-input" placeholder="Aminu Ibrahim" required>
             </div>
 
             <div class="input-group">
-                <label>EMAIL ADDRESS</label>
-                <div class="email-flex">
-                    <input type="email" id="email" class="premium-box" placeholder="mail@example.com" required>
-                    <button type="button" class="inline-btn" id="sendOtp">SEND</button>
+                <label>Email</label>
+                <div style="position: relative;">
+                    <input type="email" class="gold-input" placeholder="example@mail.com" required>
+                    <button type="button" class="send-btn">SEND OTP</button>
                 </div>
             </div>
 
-            <div class="input-group">
-                <label>VERIFICATION CODE (OTP)</label>
-                <input type="text" id="otpCode" class="premium-box" placeholder="Enter code" required>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-2 gap-4">
                 <div class="input-group">
-                    <label>PHONE</label>
-                    <input type="tel" id="phone" class="premium-box" placeholder="080..." required>
+                    <label>Phone</label>
+                    <input type="tel" class="gold-input" placeholder="080..." required>
                 </div>
                 <div class="input-group">
-                    <label>STATE</label>
-                    <input type="text" id="location" class="premium-box" placeholder="State" required>
+                    <label>State</label>
+                    <input type="text" class="gold-input" placeholder="Kano" required>
                 </div>
             </div>
 
             <div class="input-group">
-                <label>SECURE PASSWORD</label>
-                <input type="password" id="pass" class="premium-box" placeholder="••••••••" required>
+                <label>Password</label>
+                <input type="password" class="gold-input" placeholder="••••••••" required>
             </div>
 
-            <button type="submit" class="submit-btn">GET STARTED</button>
+            <button type="submit" class="submit-btn">Register</button>
         </form>
     </div>
 
-    <script type="module">
-        // Logics don ajiye data...
-        document.getElementById('sendOtp').addEventListener('click', function() {
-            if(!document.getElementById('email').value) return alert("Saka email!");
-            this.innerText = "SENT";
-            this.disabled = true;
-        });
-    </script>
 </body>
 </html>
