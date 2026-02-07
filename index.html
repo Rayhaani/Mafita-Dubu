@@ -449,60 +449,60 @@
     </div>
 </section>
     
-<div id="portal-content" class="fixed bottom-8 left-1/2 -translate-x-1/2 w-[94%] z-[100] bg-white/95 backdrop-blur-2xl rounded-[40px] p-8 shadow-[0_40px_100px_rgba(0,0,0,0.3)] border border-white transition-all duration-500 opacity-0 pointer-events-none translate-y-20">
+<div id="portal-content" class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] z-[100] bg-white/95 backdrop-blur-xl rounded-[32px] p-5 shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-gray-100 transition-all duration-500 opacity-0 pointer-events-none translate-y-10">
     
-    <div class="flex justify-between items-center mb-6 px-2">
-        <h3 class="text-sm font-black text-gray-400 uppercase tracking-widest">Select Department</h3>
-        <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+    <div class="flex justify-between items-center mb-4 px-2">
+        <h3 class="text-[12px] font-black text-gray-900 uppercase tracking-tighter">Elite Portal</h3>
+        <button onclick="toggleMenu()" class="text-gray-400 hover:text-red-500 transition-colors">
+            <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
     </div>
 
-    <div class="space-y-3">
-        <a href="#" class="flex items-center gap-4 p-4 rounded-[25px] bg-gray-50 hover:bg-blue-50 border border-gray-100 transition-all group">
-            <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">📦</div>
+    <div class="space-y-2">
+        <a href="#" class="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100 active:scale-95 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-xl">📦</div>
             <div>
-                <h4 class="font-black text-gray-900 text-sm">ELITE MARKET</h4>
-                <p class="text-[10px] text-gray-500 font-medium">Siyan kayayyaki da sauki</p>
+                <h4 class="font-black text-gray-900 text-[13px] leading-none">Fara Kasuwanci</h4>
+                <p class="text-[10px] text-gray-400 mt-1">Buɗe shagonka a yau.</p>
             </div>
         </a>
 
-        <a href="#" class="flex items-center gap-4 p-4 rounded-[25px] bg-gray-50 hover:bg-purple-50 border border-gray-100 transition-all group">
-            <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">🎓</div>
+        <a href="#" class="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100 active:scale-95 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-xl">🎓</div>
             <div>
-                <h4 class="font-black text-gray-900 text-sm">ACADEMY</h4>
-                <p class="text-[10px] text-gray-500 font-medium">Koyi dabarun neman kudi</p>
+                <h4 class="font-black text-gray-900 text-[13px] leading-none">Koyon AI</h4>
+                <p class="text-[10px] text-gray-400 mt-1">Zama gwani a dabarun zamani.</p>
             </div>
         </a>
 
-        <a href="#" class="flex items-center gap-4 p-4 rounded-[25px] bg-gray-50 hover:bg-green-50 border border-gray-100 transition-all group">
-            <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">🔐</div>
+        <a href="#" class="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100 active:scale-95 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-xl">🔐</div>
             <div>
-                <h4 class="font-black text-gray-900 text-sm">SECURE ESCROW</h4>
-                <p class="text-[10px] text-gray-500 font-medium">Kariyar kudadenku 100%</p>
+                <h4 class="font-black text-gray-900 text-[13px] leading-none">Secure Escrow</h4>
+                <p class="text-[10px] text-gray-400 mt-1">Kariyar kudadenku 100%.</p>
             </div>
         </a>
     </div>
 
-    <button onclick="toggleMenu()" class="mt-6 w-full py-4 text-center text-red-500 font-black text-[10px] uppercase tracking-[4px] border-t border-gray-50">
-        Close System
-    </button>
+    <div onclick="toggleMenu()" class="mt-4 text-center cursor-pointer">
+        <span class="text-[10px] font-bold text-gray-300 uppercase tracking-[3px]">Dismiss</span>
+    </div>
 </div>
     
-    
- <script>
+   <script>
     function openPortal() {
         const portal = document.getElementById('portal-content');
-        portal.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-20');
+        portal.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
         portal.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
     }
 
     function toggleMenu() {
         const portal = document.getElementById('portal-content');
-        portal.classList.add('opacity-0', 'pointer-events-none', 'translate-y-20');
+        portal.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
         portal.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
     }
- </script>
+   </script>
     
-
 
 </body>
 </html>
