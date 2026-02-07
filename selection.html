@@ -3,107 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selection Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;800&display=swap" rel="stylesheet">
+    <title>Selection Portal | Gold Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@900&family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { 
-            /* 1. ANAN NE NA CANJA BACKGROUND DIN ZUWA OFF-WHITE */
             background-color: #FFF5E1; 
             font-family: 'Plus Jakarta Sans', sans-serif;
             display: flex; align-items: center; justify-content: center; min-height: 100vh;
-            margin: 0; overflow: hidden;
+            margin: 0; overflow-x: hidden;
         }
 
         @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
 
-        /* 2. MUN GYARA KALA DOMIN YA FITO A KAN FARI */
+        /* 1. KATI MAI KALAR ZINARI (GOLDEN CARD) */
         .main-portal { 
             animation: float 4s ease-in-out infinite;
-            background: #ffffff; /* Fari don portal din ya fito a kan off-white */
-            backdrop-filter: blur(25px);
-            border: 1.5px solid rgba(184, 134, 11, 0.4); /* Gold Border */
+            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
+            border: 2px solid #8b6b1b;
             width: 90%; 
-            max-width: 420px; 
-            border-radius: 3rem; 
+            max-width: 400px; 
+            border-radius: 2.5rem; 
             padding: 2.5rem;
-            box-shadow: 0 25px 50px -12px rgba(184, 134, 11, 0.2);
+            box-shadow: 0 20px 40px rgba(139, 107, 27, 0.4);
             text-align: center;
+        }
+
+        /* 2. RUBUTUN HEADING (CINZEL FONT) */
+        .header-title {
+            font-family: 'Cinzel', serif;
+            color: #1a1405; /* Duhun zinari */
+            font-weight: 900;
+            letter-spacing: -1px;
         }
 
         .role-btn {
             display: flex; align-items: center;
-            padding: 1.2rem; margin-bottom: 0.8rem;
-            border-radius: 1.5rem; 
-            background: #fafafa;
-            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 1rem; margin-bottom: 0.8rem;
+            border-radius: 1.2rem; 
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 107, 27, 0.3);
             transition: 0.4s; text-decoration: none;
         }
 
         .role-btn:hover { 
-            transform: scale(1.05); 
-            background: #fff; 
-            border-color: rgba(212, 175, 55, 0.8);
-            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.1);
+            transform: translateX(10px); 
+            background: #ffffff; 
+            border-color: #8b6b1b;
         }
         
-        .gold-text { color: #8b6b1b; } /* Na dan rage kalar gold din don ta fito a kan fari */
-        .text-muted { color: #666; } /* Kalar description text */
+        .role-text-main { color: #1a1405; font-weight: 800; font-size: 0.95rem; }
+        .role-text-sub { color: #5c4b1a; font-weight: 600; font-size: 10px; }
     </style>
 </head>
 <body>
 
     <div class="main-portal">
-        <h2 class="gold-text text-2xl font-black tracking-tighter mb-1 uppercase">Register As</h2>
-        <p class="text-muted text-[9px] uppercase tracking-[0.3em] mb-8">Select Your Identity</p>
+        <h2 class="header-title text-3xl mb-1">REGISTER AS</h2>
+        <p class="text-[#5c4b1a] text-[10px] font-bold uppercase tracking-[0.2em] mb-8">Select Your Identity</p>
 
         <div class="space-y-3">
             <a href="registration_page.html?role=customer" class="role-btn">
                 <span class="text-2xl mr-4">🛍️</span>
                 <div class="text-left">
-                    <p class="gold-text font-bold text-sm">Customer</p>
-                    <p class="text-[9px] text-muted uppercase">Personal Account</p>
+                    <p class="role-text-main">Customer</p>
+                    <p class="role-text-sub uppercase">Personal Account</p>
                 </div>
             </a>
             
             <a href="registration_page.html?role=client" class="role-btn">
                 <span class="text-2xl mr-4">🤝</span>
                 <div class="text-left">
-                    <p class="gold-text font-bold text-sm">Client</p>
-                    <p class="text-[9px] text-muted uppercase">Hiring Services</p>
+                    <p class="role-text-main">Client</p>
+                    <p class="role-text-sub uppercase">Hiring Services</p>
                 </div>
             </a>
 
             <a href="registration_page.html?role=vendor" class="role-btn">
                 <span class="text-2xl mr-4">🏪</span>
                 <div class="text-left">
-                    <p class="gold-text font-bold text-sm">Vendor</p>
-                    <p class="text-[9px] text-muted uppercase">Store Owner</p>
+                    <p class="role-text-main">Vendor</p>
+                    <p class="role-text-sub uppercase">Store Owner</p>
                 </div>
             </a>
 
             <a href="registration_page.html?role=expert" class="role-btn">
                 <span class="text-2xl mr-4">🛠️</span>
                 <div class="text-left">
-                    <p class="gold-text font-bold text-sm">Expert</p>
-                    <p class="text-[9px] text-muted uppercase">Service Provider</p>
+                    <p class="role-text-main">Expert</p>
+                    <p class="role-text-sub uppercase">Service Provider</p>
                 </div>
             </a>
 
             <a href="registration_page.html?role=lab" class="role-btn">
                 <span class="text-2xl mr-4">🔬</span>
                 <div class="text-left">
-                    <p class="gold-text font-bold text-sm">Lab</p>
-                    <p class="text-[9px] text-muted uppercase">Medical Center</p>
+                    <p class="role-text-main">Lab</p>
+                    <p class="role-text-sub uppercase">Medical Center</p>
                 </div>
             </a>
         </div>
         
-        <a href="index.html" class="inline-block mt-6 text-gray-400 text-[10px] font-bold hover:text-black transition uppercase no-underline tracking-widest">← Back</a>
+        <a href="index.html" class="inline-block mt-6 text-[#1a1405] text-[11px] font-black hover:opacity-70 transition uppercase no-underline tracking-widest">← Back to Home</a>
     </div>
 
 </body>
