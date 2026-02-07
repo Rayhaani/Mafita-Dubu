@@ -3,93 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Professional</title>
+    <title>Mafita Dubu | Professional Registration</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-body: #0B0E14;      /* Kalar background din bango */
+            --bg-card: #161B22;      /* Kalar background din katin (daban) */
+            --border-line: #30363D;  /* Kalar layin katin */
+            --input-bg: #0D1117;     /* Kalar cikin input boxes */
+            --gold: #D4AF37;
+        }
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: #0c0e12; /* Background mai duhu */
-            background-image: radial-gradient(at 50% 0%, #1a1e26 0%, #0c0e12 100%);
+            background-color: var(--bg-body);
             display: flex; align-items: center; justify-content: center; 
-            min-height: 100vh; margin: 0;
+            min-height: 100vh; margin: 0; padding: 20px;
         }
-        .pro-card {
-            background-color: #161a21; /* Card kalar daban */
-            border: 1px solid rgba(255, 255, 255, 0.08); /* Border domin ya fito fili */
-            border-radius: 1rem;
-            padding: 2.5rem;
-            width: 100%; max-width: 400px;
-            /* Wannan shadow din zai raba card din da background */
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 1px rgba(255,255,255,0.1);
+        .main-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-line);
+            border-radius: 12px;
+            padding: 40px; /* Isasshen fili a ciki */
+            width: 100%; 
+            max-width: 440px; /* Matsakaicin girma don ya fito fili */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); /* Shadow don ya tashi daga bango */
         }
-        .title { font-size: 1.4rem; font-weight: 600; color: #ffffff; letter-spacing: -0.025em; }
-        .subtitle { font-size: 0.85rem; color: #94a3b8; margin-top: 0.2rem; margin-bottom: 2rem; }
+        .header-title { font-size: 1.5rem; font-weight: 600; color: #ffffff; margin-bottom: 8px; }
+        .header-sub { font-size: 0.85rem; color: #8B949E; margin-bottom: 30px; }
         
-        .input-wrapper { margin-bottom: 1.2rem; }
         label { 
-            display: block; font-size: 0.7rem; font-weight: 600; 
-            color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
+            display: block; font-size: 0.8rem; font-weight: 500; 
+            color: #C9D1D9; margin-bottom: 8px; margin-top: 15px;
         }
-        .input-field {
-            width: 100%; background: #1f242d;
-            border: 1px solid #2d3544;
-            padding: 0.8rem 1rem; border-radius: 0.6rem;
-            color: white; font-size: 0.9rem; transition: 0.2s;
+        .input-box {
+            width: 100%; background-color: var(--input-bg);
+            border: 1px solid var(--border-line);
+            padding: 12px 16px; border-radius: 8px;
+            color: #ffffff; font-size: 0.9rem; transition: 0.3s;
             outline: none;
         }
-        .input-field:focus { 
-            border-color: #d4af37; 
-            background: #242b37;
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
-        }
-        .input-field::placeholder { color: #475569; }
+        .input-box:focus { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
+        .input-box::placeholder { color: #484F58; }
 
-        .action-btn {
-            background: #d4af37; color: #000; font-weight: 700; 
-            width: 100%; padding: 0.9rem; border-radius: 0.6rem;
-            margin-top: 1rem; font-size: 0.9rem; transition: 0.3s;
+        .submit-btn {
+            background-color: var(--gold); color: #000; font-weight: 600; 
+            width: 100%; padding: 14px; border-radius: 8px;
+            margin-top: 30px; font-size: 0.95rem; cursor: pointer;
+            transition: 0.2s; border: none;
         }
-        .action-btn:hover { background: #f1c40f; transform: translateY(-1px); }
+        .submit-btn:hover { background-color: #E5C04A; transform: translateY(-1px); }
     </style>
 </head>
 <body>
 
-    <div class="pro-card">
-        <div>
-            <h1 id="displayRole" class="title">Create Account</h1>
-            <p class="subtitle">Complete your profile to continue.</p>
+    <div class="main-card">
+        <div class="text-left">
+            <h1 id="displayRole" class="header-title">Create Account</h1>
+            <p class="header-sub">Join our global professional network today.</p>
         </div>
 
         <form id="regForm">
-            <div class="input-wrapper">
-                <label>Full Name</label>
-                <input type="text" id="fullName" class="input-field" placeholder="E.g. Al-Amin" required>
-            </div>
+            <label>Name</label>
+            <input type="text" id="fullName" class="input-box" placeholder="Full name or Business" required>
 
-            <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label>Email</label>
-                    <input type="email" id="email" class="input-field" placeholder="mail@example.com" required>
+                    <label>Email Address</label>
+                    <input type="email" id="email" class="input-box" placeholder="name@email.com" required>
                 </div>
                 <div>
                     <label>Phone</label>
-                    <input type="tel" id="phone" class="input-field" placeholder="080..." required>
+                    <input type="tel" id="phone" class="input-box" placeholder="080..." required>
                 </div>
             </div>
 
-            <div class="input-wrapper">
-                <label>Office Address</label>
-                <input type="text" id="location" class="input-field" placeholder="Kaduna, Nigeria" required>
-            </div>
+            <label>Location</label>
+            <input type="text" id="location" class="input-box" placeholder="LGA, State, Country" required>
 
-            <div class="input-wrapper">
-                <label>Secure Password</label>
-                <input type="password" id="pass" class="input-field" placeholder="••••••••" required>
-            </div>
+            <label>Password</label>
+            <input type="password" id="pass" class="input-box" placeholder="Min. 8 characters" required>
 
-            <button type="submit" class="action-btn">Finish & Launch</button>
+            <button type="submit" class="submit-btn">Create Account</button>
         </form>
     </div>
 
@@ -97,7 +92,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Firebase dinka
         const firebaseConfig = {
             apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
             authDomain: "global-market-admin.firebaseapp.com",
@@ -112,12 +106,12 @@
 
         const params = new URLSearchParams(window.location.search);
         const userRole = params.get('role') || 'User';
-        document.getElementById('displayRole').innerText = userRole + " Account";
+        document.getElementById('displayRole').innerText = userRole + " Registration";
 
         document.getElementById('regForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
-            btn.innerText = "Connecting...";
+            btn.innerText = "Setting up account...";
             
             try {
                 await addDoc(collection(db, "users"), {
@@ -132,7 +126,7 @@
                 window.location.href = "index.html";
             } catch (err) { 
                 alert("Error: " + err.message); 
-                btn.innerText = "Finish & Launch";
+                btn.innerText = "Create Account";
             }
         });
     </script>
