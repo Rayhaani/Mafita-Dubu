@@ -3,125 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Gold Premium</title>
+    <title>Mafita Dubu | Luxury Gold Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Wannan itace asalin kalar Dark Gold din */
-            --dark-gold-bg: #8b6b1b; 
-            --deep-gold: #5e4912;
-            --accent-gold: #f3cf7a;
+            --main-gold: #8b6b1b; /* Kalar daka turo */
+            --light-gold: #f3cf7a;
+            --darker-gold: #5e4912;
         }
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            /* Background kalar Dark Gold mai gradient don ya nuna zurfi */
-            background: radial-gradient(circle at center, var(--dark-gold-bg) 0%, var(--deep-gold) 100%);
+            background-color: var(--main-gold);
+            /* Ado na background don kar ya gaza */
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(243, 207, 122, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(94, 73, 18, 0.3) 0%, transparent 20%);
             display: flex; align-items: center; justify-content: center; 
-            min-height: 100vh; margin: 0; padding: 20px;
-        }
-        .premium-card {
-            /* Katin zai kasance kamar gilashi mai duhu don ya fito a kan zinari */
-            background: rgba(0, 0, 0, 0.75); 
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(243, 207, 122, 0.2);
-            border-radius: 28px;
-            padding: 35px;
-            width: 100%; max-width: 400px;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
-        }
-        .header-title { 
-            font-size: 1.5rem; font-weight: 700; color: var(--accent-gold); 
-            text-align: center; margin-bottom: 25px; letter-spacing: -0.5px;
+            min-height: 100vh; margin: 0; padding: 20px; overflow-x: hidden;
         }
 
-        .input-group { margin-bottom: 16px; }
+        /* Decoration Ornaments */
+        .ornament {
+            position: absolute; width: 300px; height: 300px;
+            background: rgba(243, 207, 122, 0.1);
+            filter: blur(80px); border-radius: 50%; z-index: -1;
+        }
+
+        .luxury-card {
+            background: rgba(45, 34, 9, 0.85); /* Blackish gold tint */
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(243, 207, 122, 0.3);
+            border-radius: 32px;
+            padding: 40px 30px;
+            width: 100%; max-width: 400px;
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+
+        .header-title { 
+            font-size: 1.7rem; font-weight: 800; color: var(--light-gold); 
+            text-align: center; margin-bottom: 5px; letter-spacing: -1px;
+        }
+        .header-sub { 
+            font-size: 0.8rem; color: rgba(243, 207, 122, 0.6); 
+            text-align: center; margin-bottom: 30px; 
+        }
+
+        .input-group { margin-bottom: 18px; }
         label { 
-            font-size: 0.7rem; font-weight: 600; color: #a1a1aa; 
-            margin-bottom: 6px; display: block; text-transform: uppercase;
+            font-size: 0.65rem; font-weight: 700; color: var(--light-gold); 
+            margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 1px;
         }
         
-        .sleek-input {
-            width: 100%; background: rgba(255, 255, 255, 0.05);
-            border: 1.5px solid #333;
-            padding: 11px 16px; border-radius: 12px;
-            color: white; font-size: 0.9rem; transition: 0.3s;
+        .premium-input {
+            width: 100%; background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(243, 207, 122, 0.2);
+            padding: 12px 16px; border-radius: 14px;
+            color: #fff; font-size: 0.9rem; transition: 0.4s;
             outline: none;
         }
-        .sleek-input:focus { 
-            border-color: var(--accent-gold);
-            background: rgba(255, 255, 255, 0.1);
+        .premium-input:focus { 
+            border-color: var(--light-gold);
+            background: rgba(243, 207, 122, 0.05);
+            box-shadow: 0 0 15px rgba(243, 207, 122, 0.1);
         }
 
-        /* OTP Integrated Input */
-        .email-wrapper { position: relative; display: flex; align-items: center; }
-        .send-btn {
+        /* Email & OTP Integration */
+        .email-container { position: relative; display: flex; align-items: center; }
+        .send-otp-btn {
             position: absolute; right: 6px; 
-            background: var(--accent-gold);
-            color: #000; font-size: 0.65rem; font-weight: 800;
-            padding: 7px 12px; border-radius: 8px; cursor: pointer;
-            border: none;
+            background: var(--light-gold);
+            color: #2d2209; font-size: 0.7rem; font-weight: 800;
+            padding: 7px 14px; border-radius: 10px; cursor: pointer;
+            border: none; transition: 0.3s;
         }
+        .send-otp-btn:hover { transform: scale(1.05); background: #fff; }
 
         .submit-btn {
-            background: linear-gradient(135deg, var(--accent-gold) 0%, #b8860b 100%);
-            color: #000; font-weight: 700;
-            width: 100%; padding: 15px; border-radius: 12px;
-            margin-top: 20px; font-size: 0.95rem; border: none;
-            cursor: pointer; transition: 0.3s;
+            background: linear-gradient(135deg, #f3cf7a 0%, #b8860b 100%);
+            color: #2d2209; font-weight: 800;
+            width: 100%; padding: 16px; border-radius: 14px;
+            margin-top: 25px; font-size: 1rem; border: none;
+            cursor: pointer; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transition: 0.4s;
         }
-        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(243, 207, 122, 0.3); }
+        .submit-btn:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 20px 40px rgba(184, 134, 11, 0.4); 
+        }
     </style>
 </head>
 <body>
+    <div class="ornament" style="top: 10%; left: 10%;"></div>
+    <div class="ornament" style="bottom: 10%; right: 10%;"></div>
 
-    <div class="premium-card">
-        <h1 class="header-title">Create Account</h1>
+    <div class="luxury-card">
+        <h1 class="header-title">Registration</h1>
+        <p class="header-sub">Become a part of Mafita Dubu excellence.</p>
 
         <form id="regForm">
             <div class="input-group">
                 <label>Full Name</label>
-                <input type="text" id="fullName" class="sleek-input" placeholder="e.g. Yusuf Danjuma" required>
+                <input type="text" id="fullName" class="premium-input" placeholder="e.g. Aminu Kano" required>
             </div>
 
             <div class="input-group">
                 <label>Email Address</label>
-                <div class="email-wrapper">
-                    <input type="email" id="email" class="sleek-input" placeholder="name@email.com" required>
-                    <button type="button" class="send-btn" id="sendOtp">SEND</button>
+                <div class="email-container">
+                    <input type="email" id="email" class="premium-input" placeholder="name@email.com" required>
+                    <button type="button" class="send-otp-btn" id="sendOtp">SEND</button>
                 </div>
             </div>
 
             <div class="input-group">
                 <label>OTP Verification</label>
-                <input type="text" id="otpCode" class="sleek-input" placeholder="Enter code" required>
+                <input type="text" id="otpCode" class="premium-input" placeholder="Enter 6-digit code" maxlength="6" required>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
                 <div class="input-group">
-                    <label>Phone</label>
-                    <input type="tel" id="phone" class="sleek-input" placeholder="080..." required>
+                    <label>Phone Number</label>
+                    <input type="tel" id="phone" class="premium-input" placeholder="080..." required>
                 </div>
                 <div class="input-group">
                     <label>State</label>
-                    <input type="text" id="location" class="sleek-input" placeholder="Location" required>
+                    <input type="text" id="location" class="premium-input" placeholder="State" required>
                 </div>
             </div>
 
             <div class="input-group">
-                <label>Password</label>
-                <input type="password" id="pass" class="sleek-input" placeholder="••••••••" required>
+                <label>Create Password</label>
+                <input type="password" id="pass" class="premium-input" placeholder="••••••••" required>
             </div>
 
-            <button type="submit" class="submit-btn">GET STARTED</button>
+            <button type="submit" class="submit-btn">CONTINUE</button>
         </form>
     </div>
 
     <script type="module">
-        // Firebase code stays here...
+        // JavaScript logic for OTP and Firebase...
         document.getElementById('sendOtp').addEventListener('click', function() {
             if(!document.getElementById('email').value) return alert("Saka email!");
             this.innerText = "SENT";
+            this.style.background = "#fff";
             this.disabled = true;
         });
     </script>
