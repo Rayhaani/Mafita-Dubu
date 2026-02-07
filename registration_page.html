@@ -6,6 +6,8 @@
     <title>Mafita Dubu | Premium Registration</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    
     <style>
         :root {
             --milk-bg: #FFF5E1; 
@@ -21,29 +23,13 @@
             min-height: 100vh; margin: 0; padding: 20px;
         }
 
-        /* 1. Asalin Logo (Royal Seal) daga Index Page dinka */
-        @keyframes seal-pulse {
-            0% { transform: scale(1); box-shadow: 0 4px 10px rgba(184, 134, 11, 0.4); }
-            100% { transform: scale(1.1); box-shadow: 0 8px 20px rgba(184, 134, 11, 0.7); }
-        }
-
-        .royal-seal-logo {
-            margin: -85px auto 15px;
-            background: radial-gradient(circle, #ffd700 0%, #b8860b 100%);
-            border: 2px solid #ffffff;
-            border-radius: 50%;
-            width: 80px; /* Na kara girman sa don Registration Card */
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(184, 134, 11, 0.4);
-            animation: seal-pulse 2s infinite alternate ease-in-out;
-            color: white;
-            font-weight: 800;
-            font-size: 1.8rem;
-            font-family: 'Cinzel', serif;
-            z-index: 10;
+        /* Gidan Logon da zai rike Lottie Player */
+        .logo-frame {
+            width: 120px; height: 120px;
+            margin: -95px auto 10px;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 20;
+            position: relative;
         }
 
         .luxury-card {
@@ -54,11 +40,12 @@
             width: 100%; max-width: 400px;
             box-shadow: 0 30px 60px rgba(0,0,0,0.3);
             position: relative;
+            margin-top: 50px;
         }
 
         .header-title { 
             font-family: 'Cinzel', serif;
-            font-size: 1.7rem; color: var(--light-gold); 
+            font-size: 1.6rem; color: var(--light-gold); 
             text-align: center; margin-bottom: 25px;
             letter-spacing: 1px;
         }
@@ -79,7 +66,6 @@
         .gold-input:focus { 
             border-color: var(--light-gold); 
             background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 10px rgba(243, 207, 122, 0.2);
         }
 
         .send-btn {
@@ -87,6 +73,7 @@
             background: var(--dark-gold); color: white;
             font-size: 0.6rem; font-weight: 800;
             padding: 5px 10px; border-radius: 6px;
+            cursor: pointer;
         }
 
         .submit-btn {
@@ -94,16 +81,21 @@
             color: #1a1405; font-family: 'Cinzel', serif; font-weight: 800;
             width: 100%; padding: 14px; border-radius: 10px;
             margin-top: 20px; font-size: 1rem; cursor: pointer; border: none;
-            transition: 0.3s;
         }
-        .submit-btn:hover { transform: scale(1.02); filter: brightness(1.1); }
     </style>
 </head>
 <body>
 
     <div class="luxury-card">
-        <div class="royal-seal-logo">
-            M
+        <div class="logo-frame">
+            <lottie-player 
+                src="https://lottie.host/8099616d-3e5e-4c74-8d48-356d01d67060/H02Fq09p4K.json" 
+                background="transparent" 
+                speed="1" 
+                style="width: 150px; height: 150px;" 
+                loop 
+                autoplay>
+            </lottie-player>
         </div>
         
         <h1 class="header-title">Mafita Dubu</h1>
@@ -111,12 +103,12 @@
         <form>
             <div class="input-group">
                 <label>Full Name</label>
-                <input type="text" class="gold-input" placeholder="Sunanka na asali" required>
+                <input type="text" class="gold-input" placeholder="Enter name" required>
             </div>
 
             <div class="input-group">
                 <label>Username</label>
-                <input type="text" class="gold-input" placeholder="Zabi sunan yanka" required>
+                <input type="text" class="gold-input" placeholder="Choose username" required>
             </div>
 
             <div class="input-group">
@@ -134,7 +126,7 @@
                 </div>
                 <div class="input-group">
                     <label>State</label>
-                    <input type="text" class="gold-input" placeholder="Kano" required>
+                    <input type="text" class="gold-input" placeholder="State" required>
                 </div>
             </div>
 
