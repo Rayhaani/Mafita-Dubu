@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Control | Mafita Dubu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map { height: 400px; border-radius: 2rem; border: 2px solid rgba(212, 175, 55, 0.3); }
+        .admin-card { background: #0a0c10; border: 1px solid #1a1d23; }
+    </style>
+</head>
+<body class="bg-[#05070a] text-white p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-3xl font-black mb-8 text-yellow-500">SYSTEM COMMAND CENTER</h1>
+
+        <div id="map" class="mb-10"></div>
+
+        <div class="admin-card rounded-3xl overflow-hidden">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-yellow-500/10 text-yellow-500 uppercase text-[10px] tracking-widest">
+                    <tr>
+                        <th class="p-4">Suna</th>
+                        <th class="p-4">Role</th>
+                        <th class="p-4">Location</th>
+                        <th class="p-4">Status</th>
+                        <th class="p-4">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="userList">
+                    <tr class="border-t border-white/5">
+                        <td class="p-4">Garba Yusuf</td>
+                        <td class="p-4"><span class="text-green-400">Vendor</span></td>
+                        <td class="p-4 text-xs">10.450, 7.430 (Kaduna)</td>
+                        <td class="p-4"><span class="bg-yellow-500/20 text-yellow-500 px-2 py-1 rounded">Pending</span></td>
+                        <td class="p-4">
+                            <button class="bg-blue-600 px-4 py-2 rounded-lg font-bold text-[10px]">APPROVE</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Initialize Map
+        var map = L.map('map').setView([10.5105, 7.4165], 6); // Default to Nigeria
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        // Zamu hada wannan da Database dinmu anjima don fito da real markers
+    </script>
+</body>
+</html>
