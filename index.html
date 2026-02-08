@@ -465,100 +465,99 @@ function toggleMenu() {
 }
             </script>
 
-<div id="final-masterpiece-header">
+<div id="refined-header-2026">
     <style>
-        .header-controls {
+        .header-container {
             position: fixed; top: 25px; right: 25px;
-            display: flex; align-items: center; gap: 25px;
+            display: flex; align-items: center; gap: 20px;
             z-index: 10001;
         }
 
-        .icon-btn {
+        .action-icon {
             cursor: pointer; display: flex; align-items: center; justify-content: center;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.3s ease;
         }
-        .icon-btn:hover { transform: scale(1.2); }
+        .action-icon:hover { transform: scale(1.1); opacity: 0.8; }
 
-        /* FUTURISTIC GLOBE: Zinari mai haske da annuri */
-        .futuristic-globe {
-            stroke: #ffcc33; /* Hasken Zinari */
+        /* CHOCOLATE GLOBE: Futuristic & Earthy */
+        .chocolate-globe {
+            stroke: #5D4037; /* Rich Chocolate Color */
             stroke-width: 1.8;
             fill: none;
-            filter: drop-shadow(0 0 5px rgba(255, 204, 51, 0.6)); /* Neon glow effect */
         }
 
-        /* EXACT 2-LINE MENU: Single Solid Lines (Dark) */
-        .menu-line {
-            stroke: #1a1a1a; /* Dark Color */
-            stroke-width: 3; /* Kaurin layin */
-            stroke-linecap: round; /* Zagayen karshen layin */
+        /* SINGLE DARK LINES: Exactly as requested */
+        .single-line {
+            fill: #1a1a1a; /* Pure Dark/Black */
         }
 
-        /* Dropdown Menu Card */
-        .luxury-card {
-            position: fixed; top: 85px; right: 20px;
+        /* Slim Dropdown Card */
+        .slim-menu-box {
+            position: fixed; top: 80px; right: 20px;
             width: 230px; background: #1a1a1a !important;
-            border-radius: 1.5rem; overflow: hidden;
+            border-radius: 1.2rem; overflow: hidden;
             display: none; z-index: 10000;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
             font-family: 'Plus Jakarta Sans', sans-serif;
             border: 1px solid #333;
         }
-        .luxury-card.active { display: block !important; animation: slideIn 0.3s ease-out; }
+        .slim-menu-box.active { display: block !important; animation: fadeIn 0.2s ease-out; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .m-list { padding: 10px 0; }
-        .m-item {
+        .m-list { padding: 8px 0; }
+        .m-link {
             display: flex; align-items: center; padding: 12px 20px;
-            text-decoration: none; color: #ffffff; font-size: 13.5px; font-weight: 600;
-            transition: 0.2s;
+            text-decoration: none; color: #ffffff; font-size: 13px; font-weight: 600;
         }
-        .m-item:hover { background: rgba(255, 204, 51, 0.1); color: #ffcc33; }
-        .m-item span { margin-right: 15px; font-size: 16px; }
-        .m-divider { height: 1px; background: #333; margin: 8px 15px; }
+        .m-link:hover { background: rgba(93, 64, 55, 0.2); color: #d7ccc8; }
+        .m-link span { margin-right: 12px; font-size: 16px; }
+        .m-sep { height: 1px; background: #333; margin: 6px 15px; }
     </style>
 
-    <div class="header-controls">
-        <div class="icon-btn" onclick="alert('Language Selection')">
-            <svg width="28" height="28" viewBox="0 0 24 24" class="futuristic-globe">
+    <div class="header-container">
+        <div class="action-icon" onclick="alert('Language Settings')">
+            <svg width="26" height="26" viewBox="0 0 24 24" class="chocolate-globe" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
             </svg>
         </div>
 
-        <div class="icon-btn" onclick="toggleMenu()">
+        <div class="action-icon" onclick="toggleSlimMenu()">
             <svg width="28" height="28" viewBox="0 0 24 24">
-                <line x1="4" y1="8" x2="20" y2="8" class="menu-line" /> <line x1="4" y1="16" x2="13" y2="16" class="menu-line" /> </svg>
+                <rect x="3" y="8" width="18" height="2" rx="1" class="single-line"/>
+                <rect x="3" y="15" width="11" height="2" rx="1" class="single-line"/>
+            </svg>
         </div>
     </div>
 
-    <div class="luxury-card" id="mainDropdown">
-        <div style="padding:15px; text-align:center; color:#ffcc33; font-size:11px; font-weight:800; letter-spacing:2px; border-bottom:1px solid #333;">EXPLORE</div>
+    <div class="slim-menu-box" id="slimMenu">
+        <div style="padding:15px; text-align:center; color:#d7ccc8; font-size:10px; font-weight:800; letter-spacing:2px; border-bottom:1px solid #333;">EXPLORE</div>
         <div class="m-list">
-            <a href="index.html" class="m-item"><span>🏠</span> Home</a>
-            <a href="login.html" class="m-item"><span>🔑</span> Login</a>
-            <a href="selection.html" class="m-item"><span>📝</span> Sign Up</a>
-            <div class="m-divider"></div>
-            <a href="about.html" class="m-item"><span>✨</span> About Us</a>
-            <a href="contact.html" class="m-item"><span>📞</span> Contact Us</a>
-            <div class="m-divider"></div>
-            <a href="privacy.html" class="m-item"><span>🛡️</span> Privacy</a>
+            <a href="index.html" class="m-link"><span>🏠</span> Home</a>
+            <a href="login.html" class="m-link"><span>🔑</span> Login</a>
+            <a href="selection.html" class="m-link"><span>📝</span> Sign Up</a>
+            <div class="m-sep"></div>
+            <a href="about.html" class="m-link"><span>✨</span> About Us</a>
+            <a href="contact.html" class="m-link"><span>📞</span> Contact Us</a>
+            <div class="m-sep"></div>
+            <a href="privacy.html" class="m-link"><span>🛡️</span> Privacy</a>
         </div>
-        <div style="padding:12px; text-align:center; font-size:9px; color:#666; background:#111;">&copy; 2026 MAFITA DUBU</div>
+        <div style="padding:10px; text-align:center; font-size:9px; color:#555; background:#111;">&copy; 2026 MAFITA DUBU</div>
     </div>
 
     <script>
-        function toggleMenu() {
-            document.getElementById("mainDropdown").classList.toggle("active");
+        function toggleSlimMenu() {
+            document.getElementById("slimMenu").classList.toggle("active");
         }
         window.onclick = function(e) {
-            if (!e.target.closest('.icon-btn') && !e.target.closest('.luxury-card')) {
-                document.getElementById("mainDropdown").classList.remove('active');
+            if (!e.target.closest('.action-icon') && !e.target.closest('.slim-menu-box')) {
+                document.getElementById("slimMenu").classList.remove('active');
             }
         }
     </script>
 </div>
+    
     
 
      
