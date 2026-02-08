@@ -466,92 +466,98 @@ function toggleMenu() {
             </script>
 
 
-   <div id="perfect-header-wrapper">
+<div id="standard-header-wrapper">
     <style>
-        .header-actions {
+        .header-ui-container {
             position: fixed; top: 25px; right: 25px;
-            display: flex; align-items: center; gap: 22px;
+            display: flex; align-items: center; gap: 20px;
             z-index: 10001;
         }
 
-        .icon-box {
+        .ui-icon {
             cursor: pointer; display: flex; align-items: center; justify-content: center;
             transition: 0.3s ease;
         }
-        .icon-box:hover { transform: scale(1.1); filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
+        .ui-icon:hover { transform: scale(1.1); opacity: 0.8; }
 
-        /* Kalar Zinari (Gold) na Icons */
-        .gold-path {
-            fill: #d4af37; /* Wannan ita ce kalar zinarin */
+        /* Dark Menu Icon (Black/Charcoal) */
+        .dark-menu-path {
+            fill: #1a1a1a; /* Dark color for visibility */
+        }
+
+        /* Gold Globe Icon */
+        .gold-globe-path {
+            stroke: #8b6b1b; /* Gold color */
+            stroke-width: 1.5;
+            fill: none;
         }
 
         /* Slim Menu Card */
-        .premium-card {
+        .premium-dropdown {
             position: fixed; top: 80px; right: 20px;
             width: 230px; background: #1a1a1a !important;
             border-radius: 1.2rem; overflow: hidden;
             display: none; z-index: 10000;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             font-family: 'Plus Jakarta Sans', sans-serif;
             border: 1px solid #4a3c14;
         }
-        .premium-card.active { display: block !important; animation: fadeInCustom 0.3s ease; }
+        .premium-dropdown.active { display: block !important; animation: slideUp 0.3s ease-out; }
         
-        @keyframes fadeInCustom { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .m-list { padding: 10px 0; }
-        .m-item {
+        .m-link {
             display: flex; align-items: center; padding: 12px 20px;
             text-decoration: none; color: #f2f2f2; font-size: 13.5px; font-weight: 600;
         }
-        .m-item:hover { background: rgba(212, 175, 55, 0.1); color: #d4af37; }
-        .m-item span { margin-right: 12px; font-size: 16px; }
-        .m-divider { height: 1px; background: #333; margin: 8px 15px; }
+        .m-link:hover { background: rgba(212, 175, 55, 0.1); color: #d4af37; }
+        .m-link span { margin-right: 12px; font-size: 16px; }
+        .m-sep { height: 1px; background: #333; margin: 8px 15px; }
     </style>
 
-    <div class="header-actions">
-        <div class="icon-box" onclick="alert('Translate')">
-            <svg width="28" height="28" viewBox="0 0 24 24" class="gold-path">
-                <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+    <div class="header-ui-container">
+        <div class="ui-icon" onclick="alert('Select Language')">
+            <svg width="26" height="26" viewBox="0 0 24 24" class="gold-globe-path" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
             </svg>
         </div>
 
-        <div class="icon-box" onclick="toggleMenu()">
+        <div class="ui-icon" onclick="toggleMenu()">
             <svg width="28" height="28" viewBox="0 0 24 24">
-                <rect x="3" y="7" width="18" height="2.5" rx="1" class="gold-path"/> <rect x="3" y="15" width="11" height="2.5" rx="1" class="gold-path"/> </svg>
+                <rect x="3" y="7" width="18" height="2.5" rx="1.25" class="dark-menu-path"/> <rect x="3" y="15" width="11" height="2.5" rx="1.25" class="dark-menu-path"/> </svg>
         </div>
     </div>
 
-    <div class="premium-card" id="mainMenu">
+    <div class="premium-dropdown" id="navMenu">
         <div style="padding:15px; text-align:center; color:#d4af37; font-size:11px; font-weight:800; letter-spacing:2px; border-bottom:1px solid #333;">EXPLORE</div>
         <div class="m-list">
-            <a href="index.html" class="m-item"><span>🏠</span> Home</a>
-            <a href="login.html" class="m-item"><span>🔑</span> Login</a>
-            <a href="selection.html" class="m-item"><span>📝</span> Sign Up</a>
-            <div class="m-divider"></div>
-            <a href="about.html" class="m-item"><span>✨</span> About Us</a>
-            <a href="contact.html" class="m-item"><span>📞</span> Contact Us</a>
-            <div class="m-divider"></div>
-            <a href="privacy.html" class="m-item"><span>🛡️</span> Privacy</a>
+            <a href="index.html" class="m-link"><span>🏠</span> Home</a>
+            <a href="login.html" class="m-link"><span>🔑</span> Login</a>
+            <a href="selection.html" class="m-link"><span>📝</span> Sign Up</a>
+            <div class="m-sep"></div>
+            <a href="about.html" class="m-link"><span>✨</span> About Us</a>
+            <a href="contact.html" class="m-link"><span>📞</span> Contact Us</a>
+            <div class="m-sep"></div>
+            <a href="privacy.html" class="m-link"><span>🛡️</span> Privacy</a>
         </div>
         <div style="padding:12px; text-align:center; font-size:9px; color:#555; background:#111;">&copy; 2026 MAFITA DUBU</div>
     </div>
 
     <script>
         function toggleMenu() {
-            document.getElementById("mainMenu").classList.toggle("active");
+            document.getElementById("navMenu").classList.toggle("active");
         }
-        // Rufe menu idan aka danna waje
-        window.onclick = function(event) {
-            if (!event.target.closest('.icon-box') && !event.target.closest('.premium-card')) {
-                document.getElementById("mainMenu").classList.remove('active');
+        window.onclick = function(e) {
+            if (!e.target.closest('.ui-icon') && !e.target.closest('.premium-dropdown')) {
+                document.getElementById("navMenu").classList.remove('active');
             }
         }
     </script>
-   </div>
+</div>
     
-    
-    
+     
 </body>
 </html>
 
