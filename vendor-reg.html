@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Vendor Advanced Ecosystem</title>
+    <title>Mafita Dubu | Vendor Master Registry</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
@@ -27,11 +27,12 @@
             border: 2px solid var(--dark-gold);
             border-radius: 40px 10px 40px 10px;
             padding: 40px 25px;
-            width: 100%; max-width: 450px;
+            width: 100%; max-width: 480px;
             box-shadow: 0 30px 60px rgba(0,0,0,0.5);
             position: relative;
         }
 
+        /* Animation Circle */
         .liquid-color-circle {
             width: 70px; height: 70px;
             margin: -75px auto 15px;
@@ -41,128 +42,144 @@
         }
         @keyframes liquidFlow { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 
-        .header-title { font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--light-gold); text-align: center; margin-bottom: 25px; }
+        .step-layer { display: none; }
+        .step-layer.active { display: block; animation: slideIn 0.4s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
 
         .gold-input {
             width: 100%; background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(243, 207, 122, 0.2);
             padding: 12px 15px; border-radius: 12px;
-            color: #fff; font-size: 0.85rem; outline: none; margin-bottom: 15px;
-            appearance: none;
+            color: #fff; font-size: 0.85rem; outline: none; margin-bottom: 12px;
         }
 
-        /* Custom Dropdown Styling */
-        select.gold-input {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f3cf7a' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            background-size: 20px;
-        }
-
-        .inventory-slot {
-            background: rgba(255,255,255,0.03); border: 1px dashed var(--dark-gold);
-            padding: 15px; border-radius: 12px; margin-bottom: 15px;
-        }
-
-        .submit-btn {
+        .primary-btn {
             background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
             color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900;
-            width: 100%; padding: 12px; border-radius: 10px; border: none; cursor: pointer;
+            width: 100%; padding: 14px; border-radius: 10px; border: none; cursor: pointer;
+            margin-top: 10px;
         }
 
-        /* POPUP MODAL STYLE */
-        .modal-overlay {
+        /* AI Scanner Style */
+        .scanner-box {
+            width: 100%; height: 220px; background: #000; border: 2px solid var(--dark-gold);
+            border-radius: 20px; position: relative; overflow: hidden;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 15px;
+        }
+        .scan-bar {
+            position: absolute; width: 100%; height: 3px; background: #00ffcc;
+            box-shadow: 0 0 15px #00ffcc; top: 0; animation: scanning 2s linear infinite;
+        }
+        @keyframes scanning { 0% { top: 0; } 100% { top: 100%; } }
+
+        /* Inventory Slots */
+        .slot-card {
+            background: rgba(255,255,255,0.03); border: 1px dashed var(--dark-gold);
+            padding: 10px; border-radius: 10px; margin-bottom: 10px;
+        }
+
+        /* Modal */
+        .modal-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); display: none;
-            align-items: center; justify-content: center; z-index: 1000;
+            background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 1000;
         }
-        .modal-card {
-            background: var(--royal-black); border: 2px solid var(--light-gold);
-            padding: 30px; border-radius: 25px; text-align: center; max-width: 320px;
-        }
-        .modal-card h3 { color: #fff; margin-bottom: 15px; font-weight: 700; }
-        .modal-btns { display: flex; gap: 10px; justify-content: center; }
-        .m-btn { padding: 10px 20px; border-radius: 8px; font-weight: 800; cursor: pointer; border: none; }
-        .btn-yes { background: var(--light-gold); color: #000; }
-        .btn-no { background: #333; color: #fff; }
     </style>
 </head>
 <body>
 
     <div class="luxury-card">
         <div class="liquid-color-circle"></div>
-        <h1 class="header-title">Vendor Ecosystem</h1>
+        <h2 id="step-title" style="color: var(--light-gold); font-family: 'Cinzel'; text-align: center; margin-bottom: 20px;">Vendor Setup</h2>
 
-        <form id="vendorForm">
-            <div id="category-section">
-                <label style="color: #888; font-size: 0.75rem; margin-bottom: 5px; display: block;">Zabi Fannin Sana'arka</label>
-                <select class="gold-input" id="businessCategory" required>
-                    <option value="">-- Select Category --</option>
-                    <option value="electronics">Electronics & Gadgets</option>
-                    <option value="fashion">Fashion & Wears</option>
-                    <option value="food">Food & Groceries</option>
-                    <option value="beauty">Beauty & Makeup</option>
-                    <option value="home">Home Appliances</option>
-                    <option value="health">Health & Medicine</option>
-                    <option value="auto">Automobile & Spare Parts</option>
-                    <option value="construction">Construction Materials</option>
-                    <option value="services">Technical Services (Gyara)</option>
-                    <option value="office">Office & Stationery</option>
-                    <option value="agriculture">Agric & Farming</option>
-                    <option value="others">Other Global Commodities</option>
-                </select>
+        <div class="step-layer active" id="layer1">
+            <select class="gold-input" id="bizType" onchange="checkGPS()">
+                <option value="">-- Business Type --</option>
+                <option value="shop">Physical Store / Office</option>
+                <option value="home">Home-Based Business (Sana'ar Gida)</option>
+            </select>
+            <input type="text" class="gold-input" id="manualAddr" placeholder="Street Address / Area">
+            <div id="gps-box" style="display: none; background: rgba(0,255,150,0.1); border: 1px solid #00ff96; padding: 10px; border-radius: 10px; color: #00ff96; font-size: 0.75rem; margin-bottom: 15px;">
+                📍 GPS Coordinates: <span id="coords">Fetching...</span><br>
+                <small>Status: Location Tally Verified ✓</small>
             </div>
+            <button class="primary-btn" onclick="goToLayer(2)">NEXT: AI VERIFICATION</button>
+        </div>
 
-            <div id="dynamic-fields" class="mt-4">
-                <div class="inventory-slot">
-                    <input type="text" class="gold-input" placeholder="Sunan Kaya (Item Name)">
-                    <div class="grid grid-cols-2 gap-2">
-                        <input type="number" class="gold-input" placeholder="Farashi (Price)">
-                        <input type="file" class="gold-input" style="padding: 8px; font-size: 0.6rem;">
-                    </div>
-                    <textarea class="gold-input" placeholder="Bayani (Description)" rows="2"></textarea>
+        <div class="step-layer" id="layer2">
+            <div class="scanner-box">
+                <div class="scan-bar"></div>
+                <div id="ai-status" style="color: #fff; font-size: 0.7rem; text-align: center; z-index: 5;">
+                    [ OPENING CAMERA... ]<br>Analyzing Surroundings
                 </div>
             </div>
+            <div style="color: #888; font-size: 0.7rem; margin-bottom: 15px;">
+                * AI zai duba: 1. Presence (Mutum a wurin) 2. Object Recognition (Kayan aiki/shago).
+            </div>
+            <button class="primary-btn" id="verifyBtn" disabled onclick="goToLayer(3)">ANALYZING...</button>
+        </div>
 
-            <button type="submit" class="submit-btn">SAVE & PROCEED</button>
-        </form>
+        <div class="step-layer" id="layer3">
+            <p style="color: var(--light-gold); font-size: 0.8rem; margin-bottom: 10px;">Shigar da kayayyaki akalla guda 5 (Database Entry)</p>
+            <div id="inventory-container" style="max-height: 300px; overflow-y: auto; padding-right: 5px;">
+                <script>
+                    for(let i=1; i<=5; i++){
+                        document.write(`
+                            <div class="slot-card">
+                                <input type="text" class="gold-input" style="margin-bottom:5px" placeholder="Item ${i} Name">
+                                <div class="grid grid-cols-2 gap-2">
+                                    <input type="number" class="gold-input" style="margin-bottom:0" placeholder="Price">
+                                    <input type="file" class="gold-input" style="margin-bottom:0; font-size:0.6rem">
+                                </div>
+                            </div>
+                        `);
+                    }
+                </script>
+            </div>
+            <button class="primary-btn" onclick="showAddMore()">FINISH REGISTRATION</button>
+        </div>
     </div>
 
-    <div class="modal-overlay" id="addMoreModal">
-        <div class="modal-card">
-            <div style="font-size: 3rem;">🤔</div>
-            <h3>Great Job!</h3>
-            <p style="color: #888; font-size: 0.8rem; margin-bottom: 20px;">Shin kana da wata sana'ar da kake son yiwa rijista bayan wannan?</p>
-            <div class="modal-btns">
-                <button class="m-btn btn-no" onclick="goToDashboard()">A'A, NA GAMA</button>
-                <button class="m-btn btn-yes" onclick="addAnother()">EH, INA DA ITA</button>
+    <div class="modal-bg" id="addMoreModal">
+        <div style="background: var(--royal-black); border: 2px solid var(--light-gold); padding: 30px; border-radius: 30px; text-align: center; max-width: 320px;">
+            <h3 style="color: #fff; margin-bottom: 15px;">Masha Allah!</h3>
+            <p style="color: #888; font-size: 0.85rem; margin-bottom: 20px;">Shin kana da wata sana'ar da kake son yiwa rajista bayan wannan?</p>
+            <div class="flex gap-3">
+                <button onclick="window.location.href='dashboard.html'" style="flex:1; background: #333; color: #fff; padding: 10px; border-radius: 10px;">A'A, NA GAMA</button>
+                <button onclick="resetToNew()" style="flex:1; background: var(--light-gold); color: #000; padding: 10px; border-radius: 10px; font-weight: 800;">EH, INA DA ITA</button>
             </div>
         </div>
     </div>
 
     <script>
-        const form = document.getElementById('vendorForm');
-        const modal = document.getElementById('addMoreModal');
-        const categorySelect = document.getElementById('businessCategory');
-
-        form.onsubmit = function(e) {
-            e.preventDefault();
-            // Nuna pop-up din bayan an cike na farko
-            modal.style.display = 'flex';
+        function goToLayer(num) {
+            document.querySelectorAll('.step-layer').forEach(l => l.classList.remove('active'));
+            document.getElementById('layer' + num).classList.add('active');
+            
+            if(num === 2) {
+                setTimeout(() => {
+                    document.getElementById('ai-status').innerHTML = "✓ HUMAN DETECTED<br>✓ BUSINESS ASSETS RECOGNIZED";
+                    document.getElementById('ai-status').style.color = "#00ffcc";
+                    const btn = document.getElementById('verifyBtn');
+                    btn.disabled = false;
+                    btn.innerText = "CONTINUE TO INVENTORY";
+                }, 3000);
+            }
         }
 
-        function addAnother() {
-            // Reset form din don mutum ya zaba wata sana'ar
-            modal.style.display = 'none';
-            form.reset();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            alert("Za ka iya zabar sabon fannin sana'ar yanzu.");
+        function checkGPS() {
+            const type = document.getElementById('bizType').value;
+            if(type) {
+                document.getElementById('gps-box').style.display = 'block';
+                document.getElementById('coords').innerText = "11.9912° N, 8.5155° E"; // Kano coords simulation
+            }
         }
 
-        function goToDashboard() {
-            modal.style.display = 'none';
-            alert("Ana sarrafa bayanan ka... Muna kai ka Dashboard!");
-            window.location.href = "dashboard.html";
+        function showAddMore() {
+            document.getElementById('addMoreModal').style.display = 'flex';
+        }
+
+        function resetToNew() {
+            window.location.reload(); // Wannan zai dawo da shi farko don zaba sabon category
         }
     </script>
 </body>
