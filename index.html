@@ -467,28 +467,34 @@ function toggleMenu() {
 
 <div id="final-perfect-header">
     <style>
-        /* Container na Icons */
         .header-ui {
             position: fixed; top: 25px; right: 25px;
-            display: flex; align-items: center; gap: 25px;
+            display: flex; align-items: center; gap: 20px;
             z-index: 10001;
         }
 
-        /* Icon Wrapper */
         .ui-btn {
             cursor: pointer; display: flex; align-items: center; justify-content: center;
             transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .ui-btn:hover { transform: scale(1.1); }
 
-        /* Custom Gold Gradient for Icons */
+        /* Dark Chocolate & Gold Portal Style */
+        .language-portal {
+            width: 40px; height: 40px;
+            background: #2b170e; 
+            border-radius: 50%;
+            border: 1.5px solid #d4af37;
+            box-shadow: 0 0 10px rgba(43, 23, 14, 0.5);
+        }
+
         .gold-svg {
             fill: none; stroke: url(#premiumGold);
             stroke-width: 2.5; stroke-linecap: round;
         }
 
-        /* Slim Google Card */
-        .google-card-slim {
+        /* Slim Premium Menus */
+        .premium-card {
             position: fixed; top: 80px; right: 20px;
             width: 230px; background: #1a1a1a !important;
             border-radius: 1.2rem; overflow: hidden;
@@ -497,14 +503,14 @@ function toggleMenu() {
             font-family: 'Plus Jakarta Sans', sans-serif;
             border: 1px solid #4a3c14;
         }
-        .google-card-slim.active { display: block !important; animation: popIn 0.25s ease-out; }
+        .premium-card.active { display: block !important; animation: popIn 0.25s ease-out; }
 
         @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
         .menu-list { padding: 10px 0; }
         .menu-item {
             display: flex; align-items: center; padding: 12px 20px;
-            text-decoration: none; color: #f0f0f0; font-size: 13px; font-weight: 600;
+            text-decoration: none; color: #f0f0f0; font-size: 13px; font-weight: 600; cursor: pointer;
         }
         .menu-item:hover { background: rgba(212, 175, 55, 0.1); color: #d4af37; }
         .menu-item span { margin-right: 12px; font-size: 16px; }
@@ -521,8 +527,8 @@ function toggleMenu() {
     </svg>
 
     <div class="header-ui">
-        <div class="ui-btn" onclick="alert('Language')">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="url(#premiumGold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="ui-btn language-portal" onclick="toggleLanguage()">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="2" y1="12" x2="22" y2="12"></line>
                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
@@ -531,32 +537,71 @@ function toggleMenu() {
 
         <div class="ui-btn" onclick="toggleMenu()">
             <svg width="28" height="28" viewBox="0 0 24 24">
-                <line x1="3" y1="8" x2="21" y2="8" class="gold-svg" /> <line x1="3" y1="16" x2="14" y2="16" class="gold-svg" /> </svg>
+                <line x1="3" y1="8" x2="21" y2="8" class="gold-svg" /> 
+                <line x1="3" y1="16" x2="14" y2="16" class="gold-svg" /> 
+            </svg>
         </div>
     </div>
 
-    <div class="google-card-slim" id="myMenu">
-        <div style="padding:15px; text-align:center; color:#d4af37; font-size:11px; font-weight:800; letter-spacing:1px; border-bottom:1px solid #333;">EXPLORE</div>
+    <div class="premium-card" id="langMenu">
+        <div style="padding:15px; text-align:center; color:#d4af37; font-size:11px; font-weight:800; letter-spacing:1px; border-bottom:1px solid #333;">SELECT LANGUAGE</div>
         <div class="menu-list">
-            <a href="index.html" class="menu-item"><span>🏠</span> Home</a>
-            <a href="login.html" class="menu-item"><span>🔑</span> Login</a>
-            <a href="selection.html" class="menu-item"><span>📝</span> Sign Up</a>
-            <div class="divider"></div>
-            <a href="about.html" class="menu-item"><span>✨</span> About Us</a>
-            <a href="contact.html" class="menu-item"><span>📞</span> Contact Us</a>
-            <div class="divider"></div>
-            <a href="#" class="menu-item"><span>🛡️</span> Privacy</a>
+            <div class="menu-item" onclick="translatePage('ha')"><span>🇳🇬</span> Hausa</div>
+            <div class="menu-item" onclick="translatePage('en')"><span>🇺🇸</span> English</div>
         </div>
-        <div style="padding:10px; text-align:center; font-size:9px; color:#555; background:#111;">&copy; 2026 MAFITA DUBU</div>
+    </div>
+
+    <div class="premium-card" id="myMenu">
+        <div style="padding:15px; text-align:center; color:#d4af37; font-size:11px; font-weight:800; letter-spacing:1px; border-bottom:1px solid #333;" id="menu-title">EXPLORE</div>
+        <div class="menu-list" id="nav-links">
+            <a href="index.html" class="menu-item"><span>🏠</span> <b data-en="Home">Gida</b></a>
+            <a href="login.html" class="menu-item"><span>🔑</span> <b data-en="Login">Shiga</b></a>
+            <a href="selection.html" class="menu-item"><span>📝</span> <b data-en="Sign Up">Yi Rajista</b></a>
+            <div class="divider"></div>
+            <a href="about.html" class="menu-item"><span>✨</span> <b data-en="About Us">Game Da Mu</b></a>
+            <a href="contact.html" class="menu-item"><span>📞</span> <b data-en="Contact Us">Tuntube Mu</b></a>
+        </div>
     </div>
 
     <script>
         function toggleMenu() {
+            document.getElementById("langMenu").classList.remove("active");
             document.getElementById("myMenu").classList.toggle("active");
         }
+
+        function toggleLanguage() {
+            document.getElementById("myMenu").classList.remove("active");
+            document.getElementById("langMenu").classList.toggle("active");
+        }
+
+        // --- PERFECT TRANSLATION LOGIC ---
+        function translatePage(lang) {
+            const elements = document.querySelectorAll('[data-en]');
+            
+            if (lang === 'en') {
+                // Canja rubutun Menu zuwa Turanci
+                document.getElementById('menu-title').innerText = "EXPLORE";
+                elements.forEach(el => {
+                    if (!el.dataset.ha) el.dataset.ha = el.innerText; // Adana Hausar tukunna
+                    el.innerText = el.dataset.en;
+                });
+                console.log("Language switched to English");
+            } else {
+                // Komawa Hausa
+                document.getElementById('menu-title').innerText = "BINCIKE";
+                elements.forEach(el => {
+                    if (el.dataset.ha) el.innerText = el.dataset.ha;
+                });
+                console.log("An koma Hausa");
+            }
+            // Rufe akwatin bayan an zaba
+            document.getElementById("langMenu").classList.remove("active");
+        }
+
         window.onclick = function(e) {
-            if (!e.target.closest('.ui-btn') && !e.target.closest('.google-card-slim')) {
+            if (!e.target.closest('.ui-btn') && !e.target.closest('.premium-card')) {
                 document.getElementById("myMenu").classList.remove('active');
+                document.getElementById("langMenu").classList.remove('active');
             }
         }
     </script>
