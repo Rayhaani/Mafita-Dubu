@@ -479,9 +479,9 @@ function toggleMenu() {
         }
         .ui-btn:hover { transform: scale(1.1); }
 
-        /* Dark Chocolate & Gold Portal Style */
+        /* Gyaran Girman Duniya (Language Portal) */
         .language-portal {
-            width: 40px; height: 40px;
+            width: 34px; height: 34px; /* Na rage girman daga 40px zuwa 34px */
             background: #2b170e; 
             border-radius: 50%;
             border: 1.5px solid #d4af37;
@@ -493,7 +493,7 @@ function toggleMenu() {
             stroke-width: 2.5; stroke-linecap: round;
         }
 
-        /* Slim Premium Menus */
+        /* Premium Menus */
         .premium-card {
             position: fixed; top: 80px; right: 20px;
             width: 230px; background: #1a1a1a !important;
@@ -528,7 +528,7 @@ function toggleMenu() {
 
     <div class="header-ui">
         <div class="ui-btn language-portal" onclick="toggleLanguage()">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="2" y1="12" x2="22" y2="12"></line>
                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
@@ -574,27 +574,20 @@ function toggleMenu() {
             document.getElementById("langMenu").classList.toggle("active");
         }
 
-        // --- PERFECT TRANSLATION LOGIC ---
         function translatePage(lang) {
             const elements = document.querySelectorAll('[data-en]');
-            
             if (lang === 'en') {
-                // Canja rubutun Menu zuwa Turanci
                 document.getElementById('menu-title').innerText = "EXPLORE";
                 elements.forEach(el => {
-                    if (!el.dataset.ha) el.dataset.ha = el.innerText; // Adana Hausar tukunna
+                    if (!el.dataset.ha) el.dataset.ha = el.innerText;
                     el.innerText = el.dataset.en;
                 });
-                console.log("Language switched to English");
             } else {
-                // Komawa Hausa
                 document.getElementById('menu-title').innerText = "BINCIKE";
                 elements.forEach(el => {
                     if (el.dataset.ha) el.innerText = el.dataset.ha;
                 });
-                console.log("An koma Hausa");
             }
-            // Rufe akwatin bayan an zaba
             document.getElementById("langMenu").classList.remove("active");
         }
 
@@ -605,9 +598,8 @@ function toggleMenu() {
             }
         }
     </script>
-</div>
-    
-    
+            </div>
+                
 
      
 </body>
