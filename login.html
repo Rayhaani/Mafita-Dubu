@@ -3,153 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Mafita Dubu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>Mafita Dubu | Premium Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --gold-gradient: linear-gradient(180deg, #d4af37 0%, #8b6b1b 100%);
-            --dark-bg: #1a150a;
-            --input-bg: rgba(255, 255, 255, 0.05);
-            --border-gold: #4a3c14;
+            --milk-bg: #FFF5E1; 
+            --royal-black: #1a1405;
+            --dark-gold: #8b6b1b;
+            --light-gold: #f3cf7a;
         }
-
-        body {
-            margin: 0; padding: 0;
-            background-color: #f5f1e6; /* Kalar bayan registration dinka */
+        
+        body { 
             font-family: 'Plus Jakarta Sans', sans-serif;
-            display: flex; align-items: center; justify-content: center;
-            min-height: 100vh;
+            background-color: var(--milk-bg); 
+            display: flex; align-items: center; justify-content: center; 
+            min-height: 100vh; margin: 0; padding: 20px;
         }
 
-        .login-card {
-            width: 88%; /* Domin kar ya kure gefe da gefe */
-            max-width: 380px;
-            background: var(--dark-bg);
-            /* Shape din gefen sama da kasa kamar na Reg page */
-            border-radius: 40px 40px 40px 40px; 
-            padding: 50px 30px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
-            text-align: center;
-            border: 1px solid var(--border-gold);
-            position: relative;
-        }
-
-        /* Wannan shafaffen shape din na gefen registration dinka */
-        .login-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0; right: 0;
-            width: 60px; height: 60px;
-            background: var(--dark-bg);
-            border-radius: 0 0 40px 0;
-            z-index: -1;
-        }
-
-        .profile-icon {
-            width: 85px; height: 85px;
-            background: linear-gradient(135deg, #00ff88, #00bdff);
+        /* 1. GURBIN CUDANYAR LAUNUKA (EXACTLY LIKE REGISTRATION) */
+        .liquid-color-circle {
+            width: 80px; height: 80px;
+            margin: -90px auto 15px;
+            position: relative; z-index: 100;
             border-radius: 50%;
-            margin: -95px auto 25px;
-            border: 6px solid #f5f1e6;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 2px solid #ffffff;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            background: linear-gradient(-45deg, #ffd700, #ff00ea, #00d4ff, #3dff00, #ff9100, #7028e4);
+            background-size: 400% 400%;
+            animation: liquidFlow 8s ease infinite;
         }
 
-        .brand-name {
-            color: #d4af37; font-weight: 800; font-size: 26px;
-            margin-bottom: 2px; text-transform: uppercase; letter-spacing: 1.5px;
+        @keyframes liquidFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .welcome-text { color: #fff; font-size: 19px; margin-bottom: 8px; font-weight: 700; }
-        .sub-text { color: #888; font-size: 13px; margin-bottom: 35px; line-height: 1.4; }
-
-        .input-group { margin-bottom: 18px; }
-
-        input {
-            width: 100%; padding: 16px 20px;
-            background: var(--input-bg);
-            border: 1px solid #333; border-radius: 15px;
-            color: #fff; font-size: 15px; box-sizing: border-box;
-            transition: 0.3s ease;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+        /* 2. LUXURY CARD (EXACT SHAPE: 40px 10px 40px 10px) */
+        .luxury-card {
+            background: var(--royal-black);
+            border: 2px solid var(--dark-gold);
+            border-radius: 40px 10px 40px 10px;
+            padding: 40px 30px 25px;
+            width: 100%; max-width: 400px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            position: relative; margin-top: 50px;
         }
-        input:focus { border-color: #d4af37; outline: none; background: rgba(212, 175, 55, 0.08); }
 
-        .login-btn {
-            width: 100%; padding: 16px;
-            background: var(--gold-gradient);
-            border: none; border-radius: 15px;
-            color: #1a150a; font-weight: 800; font-size: 16px;
-            cursor: pointer; margin-top: 10px; text-transform: uppercase;
-            letter-spacing: 1px; transition: 0.3s;
+        .header-title { 
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem; color: var(--light-gold); 
+            text-align: center; margin-bottom: 5px;
+        }
+
+        .welcome-back {
+            color: #ffffff; text-align: center; font-size: 1.1rem; 
+            font-weight: 600; margin-bottom: 5px;
+        }
+
+        .sub-text {
+            color: #888; text-align: center; font-size: 0.8rem; 
+            margin-bottom: 25px;
+        }
+
+        .gold-input {
+            width: 100%; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(243, 207, 122, 0.2);
+            padding: 12px 15px; border-radius: 12px;
+            color: #fff; font-size: 0.85rem; outline: none;
+            margin-bottom: 15px;
+        }
+
+        /* 3. LOGIN BUTTON (REDUCED SIZE LIKE REG) */
+        .submit-btn {
+            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
+            color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900;
+            width: 100%; padding: 12px;
+            border-radius: 10px; margin-top: 10px;
+            font-size: 1rem; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+
+        /* 4. GOOGLE BUTTON (PERKINS STYLE) */
+        .google-btn {
+            width: 100%; padding: 10px;
+            background: #222; border: 1px solid #333;
+            border-radius: 10px; color: #fff;
             display: flex; align-items: center; justify-content: center;
+            gap: 10px; cursor: pointer; font-size: 0.85rem; margin-top: 15px;
+            transition: 0.3s;
         }
-        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
-
-        .spinner {
-            width: 18px; height: 18px;
-            border: 3px solid rgba(0,0,0,0.1);
-            border-top: 3px solid #1a150a;
-            border-radius: 50%; display: none;
-            animation: spin 0.8s linear infinite; margin-right: 10px;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        .forgot-link { color: #888; font-size: 13px; display: block; margin-top: 20px; text-decoration: none; transition: 0.3s; }
-        .forgot-link:hover { color: #d4af37; }
+        .google-btn:hover { background: #333; }
 
         .divider {
-            display: flex; align-items: center; margin: 30px 0;
-            color: #444; font-size: 12px; font-weight: 600;
+            display: flex; align-items: center; margin: 20px 0;
+            color: #555; font-size: 0.75rem; font-weight: 700;
         }
         .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: #333; }
-        .divider span { padding: 0 12px; }
+        .divider span { padding: 0 10px; }
 
-        .google-btn {
-            width: 100%; padding: 14px;
-            background: #222; border: 1px solid #383838;
-            border-radius: 15px; color: #fff;
-            display: flex; align-items: center; justify-content: center;
-            gap: 12px; cursor: pointer; font-size: 14px; font-weight: 600;
+        .footer-link {
+            text-align: center; margin-top: 20px;
+            color: #ffffff; font-size: 0.85rem;
+        }
+        .footer-link a {
+            color: var(--light-gold); font-weight: 700;
+            text-decoration: none; margin-left: 5px;
         }
 
-        .footer-text { margin-top: 30px; color: #fff; font-size: 14px; }
-        .footer-text a { color: #d4af37; text-decoration: none; font-weight: 700; margin-left: 5px; }
+        /* Loading Spinner */
+        .loader {
+            width: 18px; height: 18px; border: 2px solid #1a1405;
+            border-top: 2px solid transparent; border-radius: 50%;
+            display: none; animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <div class="login-card">
-        <div class="profile-icon"></div>
-        <div class="brand-name">Mafita Dubu</div>
-        <div class="welcome-text">Welcome Back</div>
+    <div class="luxury-card">
+        <div class="liquid-color-circle"></div>
+        
+        <h1 class="header-title">Mafita Dubu</h1>
+        <div class="welcome-back">Welcome Back</div>
         <div class="sub-text">Log in to manage your portfolio</div>
 
         <form id="loginForm">
-            <div class="input-group">
-                <input type="email" placeholder="Email Address" required>
-            </div>
-            <div class="input-group">
-                <input type="password" placeholder="Password" required>
+            <input type="email" class="gold-input" placeholder="Email Address" required>
+            <input type="password" class="gold-input" placeholder="Password" required>
+            
+            <div style="text-align: right; margin-top: -10px; margin-bottom: 15px;">
+                <a href="#" style="color: #888; font-size: 0.75rem; text-decoration: none;">Forgot password?</a>
             </div>
 
-            <button type="submit" class="login-btn" id="loginBtn">
-                <div class="spinner" id="loader"></div>
+            <button type="submit" class="submit-btn" id="loginBtn">
+                <div class="loader" id="loader"></div>
                 <span id="btnText">LOG IN</span>
             </button>
+            
+            <div class="divider"><span>OR</span></div>
+
+            <button type="button" class="google-btn">
+                <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png" width="16" alt="G">
+                Continue with Google
+            </button>
+
+            <div class="footer-link">
+                Don't have an account? <a href="selection.html">Sign Up</a>
+            </div>
         </form>
-        
-        <a href="#" class="forgot-link">Forgot password?</a>
-
-        <div class="divider"><span>OR</span></div>
-
-        <button class="google-btn">
-            <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png" width="18" alt="G">
-            Continue with Google
-        </button>
-
-        <div class="footer-text">
-            Don't have an account? <a href="selection.html">Sign Up</a>
-        </div>
     </div>
 
     <script>
@@ -157,13 +163,14 @@
             e.preventDefault();
             const btn = document.getElementById('loginBtn');
             const loader = document.getElementById('loader');
-            const btnText = document.getElementById('btnText');
+            const text = document.getElementById('btnText');
 
-            btn.style.pointerEvents = 'none';
+            btn.disabled = true;
             loader.style.display = 'block';
-            btnText.innerText = 'Verifying...';
+            text.innerText = 'Verifying...';
 
             setTimeout(() => {
+                alert("An yi Login nasara!");
                 window.location.href = "dashboard.html"; 
             }, 2000);
         };
