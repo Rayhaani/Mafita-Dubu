@@ -465,23 +465,30 @@ function toggleMenu() {
 }
             </script>
 
-    <div id="refined-menu-wrapper">
+    <div id="header-controls-wrapper">
     <style>
-        .menu-trigger {
+        /* Container na Buttons din saman */
+        .top-controls {
             position: fixed; top: 20px; right: 20px;
-            cursor: pointer; z-index: 10001;
-            background: #ffffff; border: 1.5px solid #d4af37;
+            display: flex; align-items: center; gap: 12px;
+            z-index: 10001;
+        }
+
+        /* Style na Buttons din (Duniya da Menu) */
+        .control-btn {
+            cursor: pointer; background: #ffffff;
+            border: 1.5px solid #d4af37;
             padding: 10px; border-radius: 50%;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             transition: 0.3s ease;
+            display: flex; align-items: center; justify-content: center;
         }
-        .menu-trigger:hover { transform: rotate(90deg); background: #fffdf5; }
+        .control-btn:hover { transform: translateY(-2px); background: #fffdf5; box-shadow: 0 6px 15px rgba(212, 175, 55, 0.2); }
 
-        /* KATIN MENU - AN RAGE FADI (Slim Version) */
+        /* Katin Menu (Slim Version) */
         .google-account-card {
             position: fixed; top: 75px; right: 20px;
-            width: 240px; /* An rage fadin daga 300 zuwa 240 */
-            background: #1a1a1a !important; /* Charcoal Black */
+            width: 240px; background: #1a1a1a !important;
             border-radius: 1.2rem; overflow: hidden;
             display: none; z-index: 10000;
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
@@ -490,23 +497,17 @@ function toggleMenu() {
         }
         .google-account-card.active { display: block !important; animation: slideDown 0.25s ease-out; }
         
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }
 
         .menu-header {
-            padding: 15px; text-align: center;
-            border-bottom: 1px solid #333;
-            font-weight: 800; color: #d4af37; /* Gold Header */
-            font-size: 13px; text-transform: uppercase; letter-spacing: 2px;
+            padding: 15px; text-align: center; border-bottom: 1px solid #333;
+            font-weight: 800; color: #d4af37; font-size: 13px; text-transform: uppercase; letter-spacing: 2px;
         }
 
         .menu-list-container { padding: 5px 0; }
         .menu-list-item {
-            display: flex; align-items: center;
-            padding: 10px 18px; text-decoration: none;
-            color: #e0e0e0; font-size: 13.5px; font-weight: 600;
+            display: flex; align-items: center; padding: 10px 18px;
+            text-decoration: none; color: #e0e0e0; font-size: 13.5px; font-weight: 600;
             transition: 0.2s;
         }
         .menu-list-item:hover { background-color: rgba(212, 175, 55, 0.15); color: #d4af37; }
@@ -515,38 +516,41 @@ function toggleMenu() {
         .menu-divider { height: 1px; background: #333; margin: 5px 0; }
         
         .footer-note {
-            padding: 12px; text-align: center;
-            font-size: 10px; color: #777; background: #111;
-            border-top: 1px solid #333;
+            padding: 12px; text-align: center; font-size: 10px; color: #777;
+            background: #111; border-top: 1px solid #333;
         }
     </style>
 
-    <div class="menu-trigger" onclick="toggleGoogleMenu()">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8b6b1b" stroke-width="2.5" stroke-linecap="round">
-            <line x1="4" y1="8" x2="20" y2="8"></line>
-            <line x1="4" y1="16" x2="20" y2="16"></line>
-        </svg>
+    <div class="top-controls">
+        <div class="control-btn" title="Change Language" onclick="alert('Language settings coming soon!')">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8b6b1b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+        </div>
+
+        <div class="control-btn" onclick="toggleGoogleMenu()">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8b6b1b" stroke-width="2.5" stroke-linecap="round">
+                <line x1="4" y1="8" x2="20" y2="8"></line>
+                <line x1="4" y1="16" x2="20" y2="16"></line>
+            </svg>
+        </div>
     </div>
 
     <div class="google-account-card" id="googleListMenu">
         <div class="menu-header">Explore</div>
-        
         <div class="menu-list-container">
             <a href="index.html" class="menu-list-item"><span>🏠</span> Home</a>
             <a href="login.html" class="menu-list-item"><span>🔑</span> Login</a>
             <a href="selection.html" class="menu-list-item"><span>📝</span> Sign Up</a>
-            
             <div class="menu-divider"></div>
-            
             <a href="about.html" class="menu-list-item"><span>✨</span> About Us</a>
             <a href="contact.html" class="menu-list-item"><span>📞</span> Contact Us</a>
-            
             <div class="menu-divider"></div>
-            
             <a href="privacy.html" class="menu-list-item"><span>🛡️</span> Privacy</a>
             <a href="terms.html" class="menu-list-item"><span>📄</span> Terms</a>
         </div>
-
         <div class="footer-note">
             &copy; 2026 Mafita Dubu • Premium Identity
         </div>
@@ -558,13 +562,14 @@ function toggleMenu() {
         }
         document.addEventListener('click', function(e) {
             const menu = document.getElementById("googleListMenu");
-            const btn = document.querySelector('.menu-trigger');
-            if (menu.classList.contains('active') && !menu.contains(e.target) && !btn.contains(e.target)) {
+            const controls = document.querySelector('.top-controls');
+            if (menu.classList.contains('active') && !menu.contains(e.target) && !controls.contains(e.target)) {
                 menu.classList.remove("active");
             }
         });
     </script>
-</div>
+    </div>
+    
     
     
 </body>
