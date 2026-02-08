@@ -465,102 +465,90 @@ function toggleMenu() {
 }
             </script>
 
-<div id="final-perfect-header">
+
+   <div id="perfect-header-wrapper">
     <style>
-        /* Container na Icons */
-        .header-ui {
+        .header-actions {
             position: fixed; top: 25px; right: 25px;
-            display: flex; align-items: center; gap: 25px;
+            display: flex; align-items: center; gap: 22px;
             z-index: 10001;
         }
 
-        /* Icon Wrapper */
-        .ui-btn {
+        .icon-box {
             cursor: pointer; display: flex; align-items: center; justify-content: center;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.3s ease;
         }
-        .ui-btn:hover { transform: scale(1.1); }
+        .icon-box:hover { transform: scale(1.1); filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
 
-        /* Custom Gold Gradient for Icons */
-        .gold-svg {
-            fill: none; stroke: url(#premiumGold);
-            stroke-width: 2.5; stroke-linecap: round;
+        /* Kalar Zinari (Gold) na Icons */
+        .gold-path {
+            fill: #d4af37; /* Wannan ita ce kalar zinarin */
         }
 
-        /* Slim Google Card */
-        .google-card-slim {
+        /* Slim Menu Card */
+        .premium-card {
             position: fixed; top: 80px; right: 20px;
             width: 230px; background: #1a1a1a !important;
             border-radius: 1.2rem; overflow: hidden;
             display: none; z-index: 10000;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
             font-family: 'Plus Jakarta Sans', sans-serif;
             border: 1px solid #4a3c14;
         }
-        .google-card-slim.active { display: block !important; animation: popIn 0.25s ease-out; }
+        .premium-card.active { display: block !important; animation: fadeInCustom 0.3s ease; }
+        
+        @keyframes fadeInCustom { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-
-        .menu-list { padding: 10px 0; }
-        .menu-item {
+        .m-list { padding: 10px 0; }
+        .m-item {
             display: flex; align-items: center; padding: 12px 20px;
-            text-decoration: none; color: #f0f0f0; font-size: 13px; font-weight: 600;
+            text-decoration: none; color: #f2f2f2; font-size: 13.5px; font-weight: 600;
         }
-        .menu-item:hover { background: rgba(212, 175, 55, 0.1); color: #d4af37; }
-        .menu-item span { margin-right: 12px; font-size: 16px; }
-        .divider { height: 1px; background: #333; margin: 8px 15px; }
+        .m-item:hover { background: rgba(212, 175, 55, 0.1); color: #d4af37; }
+        .m-item span { margin-right: 12px; font-size: 16px; }
+        .m-divider { height: 1px; background: #333; margin: 8px 15px; }
     </style>
 
-    <svg width="0" height="0" style="position:absolute;">
-        <defs>
-            <linearGradient id="premiumGold" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#d4af37" />
-                <stop offset="100%" style="stop-color:#8b6b1b" />
-            </linearGradient>
-        </defs>
-    </svg>
-
-    <div class="header-ui">
-        <div class="ui-btn" onclick="alert('Language')">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="url(#premiumGold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="2" y1="12" x2="22" y2="12"></line>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+    <div class="header-actions">
+        <div class="icon-box" onclick="alert('Translate')">
+            <svg width="28" height="28" viewBox="0 0 24 24" class="gold-path">
+                <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
             </svg>
         </div>
 
-        <div class="ui-btn" onclick="toggleMenu()">
+        <div class="icon-box" onclick="toggleMenu()">
             <svg width="28" height="28" viewBox="0 0 24 24">
-                <line x1="3" y1="8" x2="21" y2="8" class="gold-svg" /> <line x1="3" y1="16" x2="14" y2="16" class="gold-svg" /> </svg>
+                <rect x="3" y="7" width="18" height="2.5" rx="1" class="gold-path"/> <rect x="3" y="15" width="11" height="2.5" rx="1" class="gold-path"/> </svg>
         </div>
     </div>
 
-    <div class="google-card-slim" id="myMenu">
-        <div style="padding:15px; text-align:center; color:#d4af37; font-size:11px; font-weight:800; letter-spacing:1px; border-bottom:1px solid #333;">EXPLORE</div>
-        <div class="menu-list">
-            <a href="index.html" class="menu-item"><span>🏠</span> Home</a>
-            <a href="login.html" class="menu-item"><span>🔑</span> Login</a>
-            <a href="selection.html" class="menu-item"><span>📝</span> Sign Up</a>
-            <div class="divider"></div>
-            <a href="about.html" class="menu-item"><span>✨</span> About Us</a>
-            <a href="contact.html" class="menu-item"><span>📞</span> Contact Us</a>
-            <div class="divider"></div>
-            <a href="#" class="menu-item"><span>🛡️</span> Privacy</a>
+    <div class="premium-card" id="mainMenu">
+        <div style="padding:15px; text-align:center; color:#d4af37; font-size:11px; font-weight:800; letter-spacing:2px; border-bottom:1px solid #333;">EXPLORE</div>
+        <div class="m-list">
+            <a href="index.html" class="m-item"><span>🏠</span> Home</a>
+            <a href="login.html" class="m-item"><span>🔑</span> Login</a>
+            <a href="selection.html" class="m-item"><span>📝</span> Sign Up</a>
+            <div class="m-divider"></div>
+            <a href="about.html" class="m-item"><span>✨</span> About Us</a>
+            <a href="contact.html" class="m-item"><span>📞</span> Contact Us</a>
+            <div class="m-divider"></div>
+            <a href="privacy.html" class="m-item"><span>🛡️</span> Privacy</a>
         </div>
-        <div style="padding:10px; text-align:center; font-size:9px; color:#555; background:#111;">&copy; 2026 MAFITA DUBU</div>
+        <div style="padding:12px; text-align:center; font-size:9px; color:#555; background:#111;">&copy; 2026 MAFITA DUBU</div>
     </div>
 
     <script>
         function toggleMenu() {
-            document.getElementById("myMenu").classList.toggle("active");
+            document.getElementById("mainMenu").classList.toggle("active");
         }
-        window.onclick = function(e) {
-            if (!e.target.closest('.ui-btn') && !e.target.closest('.google-card-slim')) {
-                document.getElementById("myMenu").classList.remove('active');
+        // Rufe menu idan aka danna waje
+        window.onclick = function(event) {
+            if (!event.target.closest('.icon-box') && !event.target.closest('.premium-card')) {
+                document.getElementById("mainMenu").classList.remove('active');
             }
         }
     </script>
-</div>
+   </div>
     
     
     
