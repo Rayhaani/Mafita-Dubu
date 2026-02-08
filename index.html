@@ -465,102 +465,106 @@ function toggleMenu() {
 }
             </script>
 
-<div id="master-header-fixed">
+<div id="refined-menu-wrapper">
     <style>
-        .header-wrap {
-            position: fixed; top: 25px; right: 25px;
-            display: flex; align-items: center; gap: 20px;
-            z-index: 10001;
+        .menu-trigger {
+            position: fixed; top: 20px; right: 20px;
+            cursor: pointer; z-index: 10001;
+            background: #ffffff; border: 1.5px solid #d4af37;
+            padding: 10px; border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: 0.3s ease;
         }
+        .menu-trigger:hover { transform: rotate(90deg); background: #fffdf5; }
 
-        .icon-trigger {
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-            transition: 0.2s; background: none; border: none; padding: 0;
+        /* KATIN MENU - AN RAGE FADI (Slim Version) */
+        .google-account-card {
+            position: fixed; top: 75px; right: 20px;
+            width: 240px; /* An rage fadin daga 300 zuwa 240 */
+            background: #1a1a1a !important; /* Charcoal Black */
+            border-radius: 1.2rem; overflow: hidden;
+            display: none; z-index: 10000;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            border: 1px solid #333;
         }
-
-        /* CHOCOLATE GLOBE */
-        .globe-icon {
-            stroke: #5D4037; /* Chocolate */
-            stroke-width: 1.5;
-            fill: none;
-        }
-
-        /* THE PERFECT 2-LINE MENU (Exactly as requested) */
-        .menu-box {
-            display: flex; flex-direction: column;
-            align-items: flex-start; gap: 6px; /* Tazara tsakanin layukan */
-        }
-        .line {
-            background-color: #1a1a1a; /* Dark Color */
-            height: 2px; /* Kaurin layin (Single) */
-            border-radius: 10px;
-            display: block;
-        }
-        .line-top { width: 22px; } /* Dogo */
-        .line-bottom { width: 12px; } /* Gajere */
-
-        /* Dropdown Card */
-        .luxury-dropdown {
-            position: fixed; top: 80px; right: 20px;
-            width: 230px; background: #1a1a1a !important;
-            border-radius: 1.2rem; display: none; z-index: 10000;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-            font-family: sans-serif; border: 1px solid #333;
-        }
-        .luxury-dropdown.active { display: block !important; }
+        .google-account-card.active { display: block !important; animation: slideDown 0.25s ease-out; }
         
-        .m-link {
-            display: flex; align-items: center; padding: 12px 20px;
-            text-decoration: none; color: #ffffff; font-size: 13px; font-weight: 600;
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .m-link:hover { background: rgba(93, 64, 55, 0.2); }
-        .m-link span { margin-right: 12px; }
-        .m-sep { height: 1px; background: #333; margin: 6px 15px; }
+
+        .menu-header {
+            padding: 15px; text-align: center;
+            border-bottom: 1px solid #333;
+            font-weight: 800; color: #d4af37; /* Gold Header */
+            font-size: 13px; text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        .menu-list-container { padding: 5px 0; }
+        .menu-list-item {
+            display: flex; align-items: center;
+            padding: 10px 18px; text-decoration: none;
+            color: #e0e0e0; font-size: 13.5px; font-weight: 600;
+            transition: 0.2s;
+        }
+        .menu-list-item:hover { background-color: rgba(212, 175, 55, 0.15); color: #d4af37; }
+        .menu-list-item span { margin-right: 12px; font-size: 18px; }
+
+        .menu-divider { height: 1px; background: #333; margin: 5px 0; }
+        
+        .footer-note {
+            padding: 12px; text-align: center;
+            font-size: 10px; color: #777; background: #111;
+            border-top: 1px solid #333;
+        }
     </style>
 
-    <div class="header-wrap">
-        <div class="icon-trigger" onclick="alert('Language')">
-            <svg width="24" height="24" viewBox="0 0 24 24" class="globe-icon" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-            </svg>
-        </div>
-
-        <div class="icon-trigger" onclick="togglePerfectMenu()">
-            <div class="menu-box">
-                <span class="line line-top"></span>
-                <span class="line line-bottom"></span>
-            </div>
-        </div>
+    <div class="menu-trigger" onclick="toggleGoogleMenu()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8b6b1b" stroke-width="2.5" stroke-linecap="round">
+            <line x1="4" y1="8" x2="20" y2="8"></line>
+            <line x1="4" y1="16" x2="20" y2="16"></line>
+        </svg>
     </div>
 
-    <div class="luxury-dropdown" id="perfMenu">
-        <div style="padding:15px; text-align:center; color:#d7ccc8; font-size:10px; font-weight:800; border-bottom:1px solid #333;">EXPLORE</div>
-        <div style="padding: 10px 0;">
-            <a href="index.html" class="m-link"><span>🏠</span> Home</a>
-            <a href="login.html" class="m-link"><span>🔑</span> Login</a>
-            <a href="selection.html" class="m-link"><span>📝</span> Sign Up</a>
-            <div class="m-sep"></div>
-            <a href="about.html" class="m-link"><span>✨</span> About Us</a>
-            <a href="contact.html" class="m-link"><span>📞</span> Contact Us</a>
-            <div class="m-sep"></div>
-            <a href="privacy.html" class="m-link"><span>🛡️</span> Privacy</a>
+    <div class="google-account-card" id="googleListMenu">
+        <div class="menu-header">Explore</div>
+        
+        <div class="menu-list-container">
+            <a href="index.html" class="menu-list-item"><span>🏠</span> Home</a>
+            <a href="login.html" class="menu-list-item"><span>🔑</span> Login</a>
+            <a href="selection.html" class="menu-list-item"><span>📝</span> Sign Up</a>
+            
+            <div class="menu-divider"></div>
+            
+            <a href="about.html" class="menu-list-item"><span>✨</span> About Us</a>
+            <a href="contact.html" class="menu-list-item"><span>📞</span> Contact Us</a>
+            
+            <div class="menu-divider"></div>
+            
+            <a href="privacy.html" class="menu-list-item"><span>🛡️</span> Privacy</a>
+            <a href="terms.html" class="menu-list-item"><span>📄</span> Terms</a>
         </div>
-        <div style="padding:10px; text-align:center; font-size:9px; color:#555; background:#111;">&copy; 2026 MAFITA DUBU</div>
+
+        <div class="footer-note">
+            &copy; 2026 Mafita Dubu • Premium Identity
+        </div>
     </div>
 
     <script>
-        function togglePerfectMenu() {
-            document.getElementById("perfMenu").classList.toggle("active");
+        function toggleGoogleMenu() {
+            document.getElementById("googleListMenu").classList.toggle("active");
         }
-        window.onclick = function(e) {
-            if (!e.target.closest('.icon-trigger') && !e.target.closest('.luxury-dropdown')) {
-                document.getElementById("perfMenu").classList.remove('active');
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById("googleListMenu");
+            const btn = document.querySelector('.menu-trigger');
+            if (menu.classList.contains('active') && !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove("active");
             }
-        }
+        });
     </script>
 </div>
-    
     
 
      
