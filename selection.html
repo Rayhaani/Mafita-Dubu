@@ -3,114 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selection Portal | Deep Gold & Google Menu</title>
+    <title>Selection Portal | Deep Gold Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,900&family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { 
-            background-color: #FFF5E1 !important; 
+            background-color: #FFF5E1; 
             font-family: 'Plus Jakarta Sans', sans-serif;
             display: flex; align-items: center; justify-content: center; min-height: 100vh;
             margin: 0; overflow-x: hidden;
         }
 
-        /* 1. KATIN ZINARI (DEEP GOLD) */
-        .main-portal { 
-            background: linear-gradient(145deg, #8b6b1b 0%, #b8860b 50%, #5c4b1a 100%) !important;
-            border: 3px solid #4a3c14 !important;
-            width: 90%; max-width: 400px; 
-            border-radius: 2.5rem; padding: 2.5rem;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4) !important;
-            text-align: center; position: relative;
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
 
+        /* 1. KATIN ZINARI MAI DUHU (DEEP GOLDEN CARD) */
+        .main-portal { 
+            animation: float 4s ease-in-out infinite;
+            /* Na rage hasken launukan don su kara duhu da kauri */
+            background: linear-gradient(135deg, #a67c25 0%, #d4af37 50%, #8b6b1b 100%);
+            border: 2px solid #5c4b1a;
+            width: 90%; 
+            max-width: 400px; 
+            border-radius: 2.5rem; 
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px rgba(92, 75, 26, 0.5);
+            text-align: center;
+        }
+
+        /* 2. RUBUTUN HEADING (PREMIUM ITALICS) */
         .header-title {
-            font-family: 'Playfair Display', serif !important;
-            font-style: italic !important; font-weight: 900 !important;
-            font-size: 2.5rem !important; color: #1a1405 !important;
-            line-height: 1; margin-bottom: 5px;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #1a1405; /* Blackish-gold */
+            font-weight: 900;
+            font-size: 2.2rem;
+            letter-spacing: -0.5px;
+            margin-bottom: 5px;
         }
 
         .role-btn {
-            display: flex; align-items: center; padding: 1.1rem; margin-bottom: 0.8rem;
-            border-radius: 1.2rem; background: rgba(255, 255, 255, 0.15) !important;
-            border: 1px solid rgba(0, 0, 0, 0.1); transition: 0.4s; text-decoration: none;
+            display: flex; align-items: center;
+            padding: 1.1rem; margin-bottom: 0.8rem;
+            border-radius: 1.2rem; 
+            /* Button background dinsa ya dan kara duhu kadan don su dace */
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(26, 20, 5, 0.1);
+            transition: 0.4s; text-decoration: none;
         }
-        .role-btn:hover { background: rgba(255, 255, 255, 0.3) !important; transform: scale(1.02); }
-        .role-text-main { color: #1a1405 !important; font-weight: 800; }
 
-        /* 2. GOOGLE MENU STYLE */
-        .menu-icon {
-            position: fixed; top: 20px; right: 20px; cursor: pointer; z-index: 1001;
+        .role-btn:hover { 
+            transform: translateX(10px); 
+            background: rgba(255, 255, 255, 0.5);
+            border-color: #1a1405;
         }
-        .google-menu-card {
-            position: fixed; top: 75px; right: 20px; width: 300px;
-            background: #1a1405 !important; border-radius: 1.5rem;
-            padding: 20px; display: none; z-index: 1000;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-        .show-menu { display: block !important; }
-        .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .menu-item { text-align: center; padding: 10px; text-decoration: none; }
-        .menu-item:hover { background: rgba(255,255,255,0.1); border-radius: 10px; }
-        .menu-item p { color: #d4af37; font-size: 10px; font-weight: bold; margin-top: 5px; }
+        
+        .role-text-main { color: #1a1405; font-weight: 800; font-size: 0.95rem; }
+        .role-text-sub { color: #3d3111; font-weight: 700; font-size: 10px; opacity: 0.8; }
     </style>
 </head>
 <body>
 
-    <div class="menu-icon" onclick="toggleMenu()">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="#8b6b1b">
-            <path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/>
-        </svg>
-    </div>
-
-    <div class="google-menu-card" id="myMenu">
-        <div class="menu-grid">
-            <a href="#" class="menu-item"><span>🏠</span><p>Home</p></a>
-            <a href="#" class="menu-item"><span>👤</span><p>Profile</p></a>
-            <a href="#" class="menu-item"><span>⚙️</span><p>Settings</p></a>
-            <a href="#" class="menu-item"><span>🛍️</span><p>Shop</p></a>
-            <a href="#" class="menu-item"><span>📞</span><p>Contact</p></a>
-            <a href="#" class="menu-item"><span>🛡️</span><p>Privacy</p></a>
-        </div>
-    </div>
-
     <div class="main-portal">
         <h2 class="header-title">Register As</h2>
-        <p class="text-[#1a1405] text-[10px] font-black uppercase tracking-[0.3em] mb-8 opacity-50">Select Your Identity</p>
+        <p class="text-[#1a1405] text-[10px] font-black uppercase tracking-[0.3em] mb-8 opacity-60">Select Your Identity</p>
 
         <div class="space-y-3">
             <a href="registration_page.html?role=customer" class="role-btn">
                 <span class="text-2xl mr-4">🛍️</span>
                 <div class="text-left">
                     <p class="role-text-main">Customer</p>
+                    <p class="role-text-sub uppercase">Personal Account</p>
                 </div>
             </a>
+            
+            <a href="registration_page.html?role=client" class="role-btn">
+                <span class="text-2xl mr-4">🤝</span>
+                <div class="text-left">
+                    <p class="role-text-main">Client</p>
+                    <p class="role-text-sub uppercase">Hiring Services</p>
+                </div>
+            </a>
+
             <a href="registration_page.html?role=vendor" class="role-btn">
                 <span class="text-2xl mr-4">🏪</span>
                 <div class="text-left">
                     <p class="role-text-main">Vendor</p>
+                    <p class="role-text-sub uppercase">Store Owner</p>
                 </div>
             </a>
+
             <a href="registration_page.html?role=expert" class="role-btn">
                 <span class="text-2xl mr-4">🛠️</span>
                 <div class="text-left">
                     <p class="role-text-main">Expert</p>
+                    <p class="role-text-sub uppercase">Service Provider</p>
+                </div>
+            </a>
+
+            <a href="registration_page.html?role=lab" class="role-btn">
+                <span class="text-2xl mr-4">🔬</span>
+                <div class="text-left">
+                    <p class="role-text-main">Lab</p>
+                    <p class="role-text-sub uppercase">Medical Center</p>
                 </div>
             </a>
         </div>
+        
+        <a href="index.html" class="inline-block mt-6 text-[#1a1405] text-[11px] font-black hover:opacity-50 transition uppercase no-underline tracking-widest">← Return Home</a>
     </div>
-
-    <script>
-        function toggleMenu() {
-            document.getElementById("myMenu").classList.toggle("show-menu");
-        }
-        window.onclick = function(e) {
-            if (!e.target.closest('.menu-icon') && !e.target.closest('.google-menu-card')) {
-                document.getElementById("myMenu").classList.remove('show-menu');
-            }
-        }
-    </script>
 
 </body>
 </html>
