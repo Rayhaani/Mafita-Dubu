@@ -1,34 +1,52 @@
-<select class="gold-input" id="expertCategory" required onchange="updateToolInstruction()">
-    <option value="">-- Zabi Fannin Kwarewarka --</option>
-    
-    <optgroup label="Technical & Repairs">
-        <option value="phone-repairs">Gyaran Wayoyi & Laptops</option>
-        <option value="mechanic">Mechanic (Mota ko Mashin)</option>
-        <option value="electrical">Wutar Lantarki (Electrician)</option>
-        <option value="solar">Solar & Inverter Installation</option>
-    </optgroup>
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --royal-black: #1a1405; --dark-gold: #8b6b1b; --light-gold: #f3cf7a; --milk-bg: #FFF5E1; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--milk-bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .luxury-card { background: var(--royal-black); border: 2px solid var(--dark-gold); border-radius: 40px 10px 40px 10px; padding: 35px 25px; width: 100%; max-width: 480px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
+        .gold-input { width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(243, 207, 122, 0.2); padding: 12px; border-radius: 12px; color: #fff; font-size: 0.85rem; margin-bottom: 15px; outline: none; }
+        .submit-btn { background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728); color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900; width: 100%; padding: 14px; border-radius: 12px; cursor: pointer; border: none; margin-top: 10px; }
+        .camera-btn { width: 100%; background: #222; border: 1px solid var(--dark-gold); color: var(--light-gold); padding: 15px; border-radius: 12px; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="luxury-card">
+        <h2 style="color: var(--light-gold); font-family: 'Cinzel'; text-align: center; font-size: 1.5rem; margin-bottom: 5px;">Expert Hub</h2>
+        <p style="color: #888; text-align: center; font-size: 0.7rem; margin-bottom: 20px;">Tantance Kwararru ta GPS & AI</p>
 
-    <optgroup label="Building & Construction">
-        <option value="mason">Magini (Masonry/Bricklayer)</option>
-        <option value="pop-painter">POP & Painting (Fenti)</option>
-        <option value="carpenter">Kamfata (Carpentry)</option>
-        <option value="plumber">Gyaran Famfo (Plumbing)</option>
-    </optgroup>
+        <form>
+            <select class="gold-input" required>
+                <option value="">-- Zabi Fannin Kwarewarka --</option>
+                <optgroup label="Technical">
+                    <option value="phone">Gyaran Wayoyi</option>
+                    <option value="solar">Solar Installation</option>
+                </optgroup>
+                <optgroup label="Building">
+                    <option value="mason">Magini</option>
+                    <option value="pop">POP & Painting</option>
+                </optgroup>
+            </select>
 
-    <optgroup label="Creative Arts & Skills">
-        <option value="tailor">Dinki (Fashion Design)</option>
-        <option value="barber-makeup">Barber ko Makeup Artist</option>
-        <option value="welder">Welder (Aikin Karfe)</option>
-        <option value="interior">Interior Decoration</option>
-    </optgroup>
+            <div class="grid grid-cols-2 gap-2 mb-4">
+                <button type="button" style="border:1px solid var(--dark-gold); color:#fff; padding:10px; border-radius:10px; font-size:0.7rem;">🏢 OFFICE BASED</button>
+                <button type="button" style="background:var(--light-gold); color:#000; padding:10px; border-radius:10px; font-size:0.7rem;">🏠 HOME BASED</button>
+            </div>
 
-    <optgroup label="Professional Services">
-        <option value="tutor">Malami (Private Tutor)</option>
-        <option value="legal">Lauya (Legal Advice)</option>
-        <option value="health">Kwararren Lafiya (Health Care)</option>
-    </optgroup>
-</select>
+            <input type="text" class="gold-input" placeholder="Cikakken Address na Base/Gida" required>
 
-<p id="toolInstruction" style="color: #888; font-size: 0.7rem; margin-bottom: 10px;">
-    AI Scan: Dauki hoton kayan aikinka (Tools).
-</p>
+            <div style="border: 1px dashed var(--light-gold); padding: 15px; border-radius: 15px;">
+                <p style="color: var(--light-gold); font-size: 0.7rem; font-weight: bold;">SAFETY VERIFICATION:</p>
+                <div class="camera-btn">📷 Dauki hoton kofar gida</div>
+                <div class="camera-btn">🛠️ Dauki hoton Tools (Kayan Aiki)</div>
+            </div>
+
+            <button type="submit" class="submit-btn">REGISTER AS EXPERT</button>
+        </form>
+    </div>
+</body>
+</html>
