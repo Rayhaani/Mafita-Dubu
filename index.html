@@ -465,75 +465,78 @@ function toggleMenu() {
 }
             </script>
 
-<div id="refined-header-2026">
+<div id="master-header-fixed">
     <style>
-        .header-container {
+        .header-wrap {
             position: fixed; top: 25px; right: 25px;
             display: flex; align-items: center; gap: 20px;
             z-index: 10001;
         }
 
-        .action-icon {
+        .icon-trigger {
             cursor: pointer; display: flex; align-items: center; justify-content: center;
-            transition: 0.3s ease;
+            transition: 0.2s; background: none; border: none; padding: 0;
         }
-        .action-icon:hover { transform: scale(1.1); opacity: 0.8; }
 
-        /* CHOCOLATE GLOBE: Futuristic & Earthy */
-        .chocolate-globe {
-            stroke: #5D4037; /* Rich Chocolate Color */
-            stroke-width: 1.8;
+        /* CHOCOLATE GLOBE */
+        .globe-icon {
+            stroke: #5D4037; /* Chocolate */
+            stroke-width: 1.5;
             fill: none;
         }
 
-        /* SINGLE DARK LINES: Exactly as requested */
-        .single-line {
-            fill: #1a1a1a; /* Pure Dark/Black */
+        /* THE PERFECT 2-LINE MENU (Exactly as requested) */
+        .menu-box {
+            display: flex; flex-direction: column;
+            align-items: flex-start; gap: 6px; /* Tazara tsakanin layukan */
         }
+        .line {
+            background-color: #1a1a1a; /* Dark Color */
+            height: 2px; /* Kaurin layin (Single) */
+            border-radius: 10px;
+            display: block;
+        }
+        .line-top { width: 22px; } /* Dogo */
+        .line-bottom { width: 12px; } /* Gajere */
 
-        /* Slim Dropdown Card */
-        .slim-menu-box {
+        /* Dropdown Card */
+        .luxury-dropdown {
             position: fixed; top: 80px; right: 20px;
             width: 230px; background: #1a1a1a !important;
-            border-radius: 1.2rem; overflow: hidden;
-            display: none; z-index: 10000;
+            border-radius: 1.2rem; display: none; z-index: 10000;
             box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            border: 1px solid #333;
+            font-family: sans-serif; border: 1px solid #333;
         }
-        .slim-menu-box.active { display: block !important; animation: fadeIn 0.2s ease-out; }
+        .luxury-dropdown.active { display: block !important; }
         
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
-
-        .m-list { padding: 8px 0; }
         .m-link {
             display: flex; align-items: center; padding: 12px 20px;
             text-decoration: none; color: #ffffff; font-size: 13px; font-weight: 600;
         }
-        .m-link:hover { background: rgba(93, 64, 55, 0.2); color: #d7ccc8; }
-        .m-link span { margin-right: 12px; font-size: 16px; }
+        .m-link:hover { background: rgba(93, 64, 55, 0.2); }
+        .m-link span { margin-right: 12px; }
         .m-sep { height: 1px; background: #333; margin: 6px 15px; }
     </style>
 
-    <div class="header-container">
-        <div class="action-icon" onclick="alert('Language Settings')">
-            <svg width="26" height="26" viewBox="0 0 24 24" class="chocolate-globe" stroke-linecap="round" stroke-linejoin="round">
+    <div class="header-wrap">
+        <div class="icon-trigger" onclick="alert('Language')">
+            <svg width="24" height="24" viewBox="0 0 24 24" class="globe-icon" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
             </svg>
         </div>
 
-        <div class="action-icon" onclick="toggleSlimMenu()">
-            <svg width="28" height="28" viewBox="0 0 24 24">
-                <rect x="3" y="8" width="18" height="2" rx="1" class="single-line"/>
-                <rect x="3" y="15" width="11" height="2" rx="1" class="single-line"/>
-            </svg>
+        <div class="icon-trigger" onclick="togglePerfectMenu()">
+            <div class="menu-box">
+                <span class="line line-top"></span>
+                <span class="line line-bottom"></span>
+            </div>
         </div>
     </div>
 
-    <div class="slim-menu-box" id="slimMenu">
-        <div style="padding:15px; text-align:center; color:#d7ccc8; font-size:10px; font-weight:800; letter-spacing:2px; border-bottom:1px solid #333;">EXPLORE</div>
-        <div class="m-list">
+    <div class="luxury-dropdown" id="perfMenu">
+        <div style="padding:15px; text-align:center; color:#d7ccc8; font-size:10px; font-weight:800; border-bottom:1px solid #333;">EXPLORE</div>
+        <div style="padding: 10px 0;">
             <a href="index.html" class="m-link"><span>🏠</span> Home</a>
             <a href="login.html" class="m-link"><span>🔑</span> Login</a>
             <a href="selection.html" class="m-link"><span>📝</span> Sign Up</a>
@@ -547,12 +550,12 @@ function toggleMenu() {
     </div>
 
     <script>
-        function toggleSlimMenu() {
-            document.getElementById("slimMenu").classList.toggle("active");
+        function togglePerfectMenu() {
+            document.getElementById("perfMenu").classList.toggle("active");
         }
         window.onclick = function(e) {
-            if (!e.target.closest('.action-icon') && !e.target.closest('.slim-menu-box')) {
-                document.getElementById("slimMenu").classList.remove('active');
+            if (!e.target.closest('.icon-trigger') && !e.target.closest('.luxury-dropdown')) {
+                document.getElementById("perfMenu").classList.remove('active');
             }
         }
     </script>
