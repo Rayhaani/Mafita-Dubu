@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Vendor Advanced Ecosystem</title>
+    <title>Mafita Dubu | Premium Register</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
@@ -22,149 +22,122 @@
             min-height: 100vh; margin: 0; padding: 20px;
         }
 
+        /* 1. GURBIN CUDANYAR LAUNUKA (MULTIPLE LIGHT COLORS) */
+        .liquid-color-circle {
+            width: 80px; height: 80px;
+            margin: -90px auto 15px;
+            position: relative; z-index: 100;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            /* Dukkan launuka masu haske */
+            background: linear-gradient(-45deg, #ffd700, #ff00ea, #00d4ff, #3dff00, #ff9100, #7028e4);
+            background-size: 400% 400%;
+            animation: liquidFlow 8s ease infinite;
+        }
+
+        @keyframes liquidFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .luxury-card {
             background: var(--royal-black);
             border: 2px solid var(--dark-gold);
             border-radius: 40px 10px 40px 10px;
-            padding: 40px 25px;
-            width: 100%; max-width: 450px;
+            padding: 40px 30px 25px; /* Na rage padding na kasa kadan */
+            width: 100%; max-width: 400px;
             box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-            position: relative;
+            position: relative; margin-top: 50px;
         }
 
-        .liquid-color-circle {
-            width: 70px; height: 70px;
-            margin: -75px auto 15px;
-            border-radius: 50%; border: 2px solid #fff;
-            background: linear-gradient(-45deg, #ffd700, #ff00ea, #00d4ff, #3dff00);
-            background-size: 400% 400%; animation: liquidFlow 8s ease infinite;
+        .header-title { 
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem; color: var(--light-gold); 
+            text-align: center; margin-bottom: 25px;
         }
-        @keyframes liquidFlow { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-
-        .header-title { font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--light-gold); text-align: center; margin-bottom: 25px; }
 
         .gold-input {
             width: 100%; background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(243, 207, 122, 0.2);
             padding: 12px 15px; border-radius: 12px;
-            color: #fff; font-size: 0.85rem; outline: none; margin-bottom: 15px;
-            appearance: none;
+            color: #fff; font-size: 0.85rem; outline: none;
         }
 
-        /* Custom Dropdown Styling */
-        select.gold-input {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f3cf7a' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            background-size: 20px;
+        /* 2. EMAIL BAR MAI BUTTON NA SEND OTP */
+        .email-container {
+            position: relative; margin-bottom: 15px;
         }
-
-        .inventory-slot {
-            background: rgba(255,255,255,0.03); border: 1px dashed var(--dark-gold);
-            padding: 15px; border-radius: 12px; margin-bottom: 15px;
+        .send-otp-btn {
+            position: absolute; right: 8px; top: 50%;
+            transform: translateY(-50%);
+            background: var(--dark-gold); color: white;
+            font-size: 10px; font-weight: 700;
+            padding: 6px 12px; border-radius: 8px;
+            cursor: pointer; transition: 0.3s;
         }
+        .send-otp-btn:hover { background: #a67c25; }
 
+        /* 3. REGISTER BUTTON (REDUCED SIZE) */
         .submit-btn {
             background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
             color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900;
-            width: 100%; padding: 12px; border-radius: 10px; border: none; cursor: pointer;
+            width: 100%; padding: 12px; /* Na rage shi daga 15px */
+            border-radius: 10px; margin-top: 15px;
+            font-size: 1rem; border: none; cursor: pointer;
         }
 
-        /* POPUP MODAL STYLE */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); display: none;
-            align-items: center; justify-content: center; z-index: 1000;
+        /* 4. LOGIN LINK AT THE BOTTOM */
+        .login-footer {
+            text-align: center; margin-top: 20px;
+            color: #ffffff; font-size: 0.85rem;
         }
-        .modal-card {
-            background: var(--royal-black); border: 2px solid var(--light-gold);
-            padding: 30px; border-radius: 25px; text-align: center; max-width: 320px;
+        .login-footer a {
+            color: var(--light-gold); font-weight: 700;
+            text-decoration: none; margin-left: 5px;
         }
-        .modal-card h3 { color: #fff; margin-bottom: 15px; font-weight: 700; }
-        .modal-btns { display: flex; gap: 10px; justify-content: center; }
-        .m-btn { padding: 10px 20px; border-radius: 8px; font-weight: 800; cursor: pointer; border: none; }
-        .btn-yes { background: var(--light-gold); color: #000; }
-        .btn-no { background: #333; color: #fff; }
     </style>
 </head>
 <body>
 
     <div class="luxury-card">
         <div class="liquid-color-circle"></div>
-        <h1 class="header-title">Vendor Ecosystem</h1>
+        
+        <h1 class="header-title">Mafita Dubu</h1>
 
-        <form id="vendorForm">
-            <div id="category-section">
-                <label style="color: #888; font-size: 0.75rem; margin-bottom: 5px; display: block;">Zabi Fannin Sana'arka</label>
-                <select class="gold-input" id="businessCategory" required>
-                    <option value="">-- Select Category --</option>
-                    <option value="electronics">Electronics & Gadgets</option>
-                    <option value="fashion">Fashion & Wears</option>
-                    <option value="food">Food & Groceries</option>
-                    <option value="beauty">Beauty & Makeup</option>
-                    <option value="home">Home Appliances</option>
-                    <option value="health">Health & Medicine</option>
-                    <option value="auto">Automobile & Spare Parts</option>
-                    <option value="construction">Construction Materials</option>
-                    <option value="services">Technical Services (Gyara)</option>
-                    <option value="office">Office & Stationery</option>
-                    <option value="agriculture">Agric & Farming</option>
-                    <option value="others">Other Global Commodities</option>
-                </select>
+        <form>
+            <div class="mb-4">
+                <input type="text" class="gold-input" placeholder="Full Name">
             </div>
 
-            <div id="dynamic-fields" class="mt-4">
-                <div class="inventory-slot">
-                    <input type="text" class="gold-input" placeholder="Sunan Kaya (Item Name)">
-                    <div class="grid grid-cols-2 gap-2">
-                        <input type="number" class="gold-input" placeholder="Farashi (Price)">
-                        <input type="file" class="gold-input" style="padding: 8px; font-size: 0.6rem;">
-                    </div>
-                    <textarea class="gold-input" placeholder="Bayani (Description)" rows="2"></textarea>
-                </div>
+            <div class="mb-4">
+                <input type="text" class="gold-input" placeholder="Username">
             </div>
 
-            <button type="submit" class="submit-btn">SAVE & PROCEED</button>
+            <div class="email-container">
+                <input type="email" class="gold-input" placeholder="Email Address">
+                <button type="button" class="send-otp-btn">SEND OTP</button>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <input type="tel" class="gold-input" placeholder="Phone">
+                <input type="text" class="gold-input" placeholder="State">
+            </div>
+
+            <div class="mb-4">
+                <input type="password" class="gold-input" placeholder="Password">
+            </div>
+
+            <button type="submit" class="submit-btn">REGISTER NOW</button>
+            
+                <div class="login-footer">
+    Already have an account? <a href="login.html">Login</a>
+</div>
+
         </form>
     </div>
 
-    <div class="modal-overlay" id="addMoreModal">
-        <div class="modal-card">
-            <div style="font-size: 3rem;">🤔</div>
-            <h3>Great Job!</h3>
-            <p style="color: #888; font-size: 0.8rem; margin-bottom: 20px;">Shin kana da wata sana'ar da kake son yiwa rijista bayan wannan?</p>
-            <div class="modal-btns">
-                <button class="m-btn btn-no" onclick="goToDashboard()">A'A, NA GAMA</button>
-                <button class="m-btn btn-yes" onclick="addAnother()">EH, INA DA ITA</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const form = document.getElementById('vendorForm');
-        const modal = document.getElementById('addMoreModal');
-        const categorySelect = document.getElementById('businessCategory');
-
-        form.onsubmit = function(e) {
-            e.preventDefault();
-            // Nuna pop-up din bayan an cike na farko
-            modal.style.display = 'flex';
-        }
-
-        function addAnother() {
-            // Reset form din don mutum ya zaba wata sana'ar
-            modal.style.display = 'none';
-            form.reset();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            alert("Za ka iya zabar sabon fannin sana'ar yanzu.");
-        }
-
-        function goToDashboard() {
-            modal.style.display = 'none';
-            alert("Ana sarrafa bayanan ka... Muna kai ka Dashboard!");
-            window.location.href = "dashboard.html";
-        }
-    </script>
 </body>
-    </html>
-    
+</html>
