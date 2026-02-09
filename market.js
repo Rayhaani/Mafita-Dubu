@@ -149,41 +149,34 @@ function startAISimulation(file) {
 
 function globalSearchMotsi(mode) {
     if (mode === 'near_me') {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                // A. IDAN YA KUNNA (SUCCESS)
-                (position) => {
-                    document.getElementById('search-overlay').style.display = 'none';
-                    document.getElementById('ai-loading-screen').style.display = 'flex';
-                    setTimeout(() => { 
-                        window.location.href = "results.html?view=nearme"; 
-                    }, 3000);
-                },
-                // B. IDAN BAI KUNNA BA KO YA KI (ERROR)
-                (error) => {
-                    showGpsToast(); // Maimakon alert, sai mu kira professional toast dinmu
-                },
-                { timeout: 5000 } // Jira sakan 5 Browser ta bincika
-            );
-        }
+        // 1. Tambayi Browser izinin Location
+        navigator.geolocation.getCurrentPosition(
+            // IDAN YA YARDA (Success)
+            (position) => {
+                document.getElementById('search-overlay').style.display = 'none';
+                document.getElementById('ai-loading-screen').style.display = 'flex';
+                setTimeout(() => { 
+                    window.location.href = "results.html?view=nearme"; 
+                }, 3000);
+            },
+            // IDAN BAI YARDA BA KO GPS A KASHE YAKE (Error)
+            (error) => {
+                const toast = document.getElementById('gps-toast');
+                if (toast) {
+                    toast.style.display = 'block';
+                    setTimeout(() => { toast.style.display = 'none'; }, 6000);
+                }
+            },
+            { timeout: 5000 }
+        );
     } else {
-        // Global Search
+        // GLOBAL SEARCH
         document.getElementById('search-overlay').style.display = 'none';
         document.getElementById('ai-loading-screen').style.display = 'flex';
         setTimeout(kammalaBincike, 3000);
     }
 }
 
-// Function din da zai nuna Photo 3 Style Notification
-function showGpsToast() {
-    const toast = document.getElementById('gps-toast');
-    toast.style.display = 'flex';
-    
-    // Ya bace bayan sakan 4
-    setTimeout(() => {
-        toast.style.display = 'none';
-    }, 4000);
-}
 
  let watchID = null; // Wannan zai rike tracking din
 
