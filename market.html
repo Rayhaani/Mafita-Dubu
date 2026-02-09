@@ -133,23 +133,26 @@
     </div>
 
 
-    <script>
-    // WANNAN SHINE CODE DIN DA ZAI HADA MARKET.HTML DA RESULTS.HTML
-    function globalSearchMotsi(mode) {
-        // 1. Nuna hoton scanning
+  <script>
+    // Mun sake rubuta function din yadda zai sha gaban na cikin market.js
+    window.globalSearchMotsi = function(mode) {
+        console.log("An fara scanning na " + mode);
+        
+        // 1. Nuna hoton scanning (AI Loading Screen)
         const loadingScreen = document.getElementById('ai-loading-screen');
         if(loadingScreen) {
             loadingScreen.style.display = 'flex';
         }
         
-        // 2. Wannan umarnin zai tura ka zuwa results.html bayan sakan 3
-        setTimeout(() => {
+        // 2. Jira sakan 3 (Scanning time) sannan a wuce
+        setTimeout(function() {
             const targetView = (mode === 'near_me') ? 'nearme' : 'global';
-            // Tabbatar results.html yana nan tare da wannan file din
-            window.location.href = "results.html?view=" + targetView;
+            
+            // Wannan layin zai raba mu da Market.html ya kai mu Results.html
+            window.location.replace("results.html?view=" + targetView);
         }, 3000); 
-    }
-    </script>
+    };
+</script>
     
 
     
