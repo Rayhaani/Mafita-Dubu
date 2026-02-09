@@ -150,7 +150,9 @@ function startAISimulation(file) {
 function globalSearchMotsi(mode) {
     document.getElementById('search-overlay').style.display = 'none';
     if (mode === 'near_me') {
-        nearYouSearch();
+        // Wannan bangaren ne zai kai ka results.html bayan scanning
+        document.getElementById('ai-loading-screen').style.display = 'flex';
+        setTimeout(() => { window.location.href = "results.html?view=nearme"; }, 3000);
     } else {
         document.getElementById('ai-loading-screen').style.display = 'flex';
         setTimeout(kammalaBincike, 3000);
