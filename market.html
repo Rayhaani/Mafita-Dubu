@@ -154,18 +154,10 @@
     };
 </script>
     
-<div id="location-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:20000; align-items:center; justify-content:center; padding:20px; backdrop-filter: blur(5px);">
-    <div style="background:white; width:100%; max-width:320px; border-radius:25px; padding:30px; text-align:center; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
-        <div style="width:70px; height:70px; background:#F5F1E9; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">
-            <i class="fa-solid fa-location-dot" style="font-size:30px; color:#8B6508;"></i>
-        </div>
-        <h3 style="font-family:'Playfair Display'; font-size:20px; font-weight:900; color:#5D4037; margin-bottom:10px;">Enable Location</h3>
-        <p style="font-size:13px; color:#777; line-height:1.6; margin-bottom:25px;">Muna bukatar location dinka domin nuna maka shagunan da suke kusa da kai a halin yanzu.</p>
-        
-        <button onclick="requestGpsPermission()" style="width:100%; padding:14px; background:linear-gradient(to r, #8B6508, #B8860B); color:white; border:none; border-radius:15px; font-weight:bold; cursor:pointer; margin-bottom:10px; font-size:14px;">ALLOW ACCESS</button>
-        <button onclick="document.getElementById('location-modal').style.display='none'" style="width:100%; padding:10px; background:transparent; color:#999; border:none; font-weight:600; font-size:12px;">NOT NOW</button>
-    </div>
+<div id="gps-toast" style="display:none; position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#333; color:white; padding:12px 25px; border-radius:50px; font-size:13px; font-weight:600; z-index:25000; box-shadow:0 10px 30px rgba(0,0,0,0.2); align-items:center; gap:10px; border:1px solid rgba(255,255,255,0.1);">
+    <i class="fa-solid fa-circle-exclamation" style="color:#FFD700;"></i>
+    <span>Don Allah kunna Location (GPS) a setting na wayarka</span>
 </div>
-
+    
     </body>
 </html>
