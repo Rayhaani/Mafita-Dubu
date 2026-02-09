@@ -132,22 +132,28 @@
         </div>
     </div>
 
-// WANNAN SHINE CODE DIN DA ZAI HADA MARKET.HTML DA RESULTS.HTML
-function globalSearchMotsi(mode) {
-    // 1. Fara nuna Loading Screen (Scan Page)
-    document.getElementById('ai-loading-screen').style.display = 'flex';
-    
-    // 2. Jira seconds 3 (lokacin da scanning yake gudana)
-    setTimeout(() => {
-        if (mode === 'near_me') {
-            // Idan Near You aka danna
-            window.location.href = "results.html?view=nearme";
-        } else if (mode === 'global') {
-            // Idan Global Search aka danna
-            window.location.href = "results.html?view=global";
+<script>
+    // WANNAN SHINE CODE DIN DA ZAI HADA MARKET.HTML DA RESULTS.HTML
+    function globalSearchMotsi(mode) {
+        // 1. Fara nuna Loading Screen dinka na Scanning
+        const loadingScreen = document.getElementById('ai-loading-screen');
+        if(loadingScreen) {
+            loadingScreen.style.display = 'flex';
         }
-    }, 3000); // 3000 yana nufin seconds 3 na scanning
-}
+        
+        // 2. Jira sakan 3 (Scanning time) kafin ya tafi Results Page
+        setTimeout(() => {
+            if (mode === 'near_me') {
+                // Idan Near You aka danna
+                window.location.href = "results.html?view=nearme";
+            } else if (mode === 'global') {
+                // Idan Global Search aka danna
+                window.location.href = "results.html?view=global";
+            }
+        }, 3000); 
+    }
+</script>
+    
 
     
     </body>
