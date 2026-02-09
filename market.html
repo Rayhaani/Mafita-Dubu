@@ -19,116 +19,81 @@
     <p style="margin-top:20px; color:#8B6508; font-weight: bold; letter-spacing: 2px;">SCANNING...</p>
 </div>
 
-<header class="sticky top-0 z-[100] bg-[#F5F1E9] pt-4 pb-2 px-4 text-center">
-    <h1 class="text-[7px] font-black tracking-[0.5em] text-[#5D4037] uppercase opacity-60 mb-1">African Elite Ecosystem</h1>
-    <h2 class="market-title !text-xl">GLOBAL MARKET</h2>
-</header>
+    <header class="sticky top-0 z-[100] bg-[#F5F1E9] pt-4 pb-2 px-4 text-center">
+        <h1 class="text-[7px] font-black tracking-[0.5em] text-[#5D4037] uppercase opacity-60 mb-1">African Elite Ecosystem</h1>
+        <h2 class="market-title !text-xl">GLOBAL MARKET</h2>
+    </header>
 
-<div class="px-6 header-spacer relative z-10">
-    <div class="relative group max-w-md mx-auto">
-        <div class="relative bg-white border border-[#E0D7C6] rounded-full flex items-center pr-1.5 pl-5 py-1.5">
-            <input type="text" id="market-search" placeholder="Me kake nema?" class="bg-transparent border-none outline-none w-full text-xs font-bold text-[#3E2723]">
-            <div class="flex items-center space-x-2">
-                <button onclick="openAICamera()" class="ml-2 active:scale-90 transition-transform">
-                    <div class="temu-style-camera"><div class="camera-inner"><i class="fa-solid fa-camera text-white text-[10px]"></i></div></div>
-                </button>
-                <button class="bg-gradient-to-r from-[#8B6508] to-[#B8860B] w-8 h-8 rounded-full flex items-center justify-center text-white shadow-lg">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
+    <div class="px-6 header-spacer relative z-10">
+        <div class="relative group max-w-md mx-auto">
+            <div class="relative bg-white border border-[#E0D7C6] rounded-full flex items-center pr-1.5 pl-5 py-1.5">
+                <input type="text" id="market-search" placeholder="Me kake nema?" class="bg-transparent border-none outline-none w-full text-xs font-bold text-[#3E2723]">
+                <div class="flex items-center space-x-2">
+                    <button class="ml-2 active:scale-90 transition-transform">
+                        <div class="temu-style-camera"><div class="camera-inner"><i class="fa-solid fa-camera text-white text-[10px]"></i></div></div>
+                    </button>
+                    <button class="bg-gradient-to-r from-[#8B6508] to-[#B8860B] w-8 h-8 rounded-full flex items-center justify-center text-white shadow-lg">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
+
+<div class="duet-grid">
+    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box1"></div><button class="category-btn">TEXTILES</button></div></div>
+    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box2"></div><button class="category-btn">FOOTWEAR</button></div></div>
+    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box3"></div><button class="category-btn">ELECTRONICS</button></div></div>
+    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box4"></div><button class="category-btn">COSMETICS</button></div></div>
+    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box5"></div><button class="category-btn">FURNITURE</button></div></div>
+    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box6"></div><button class="category-btn">GROCERIES</button></div></div>
 </div>
-
-<div id="search-overlay" style="display:none;">
-    <div class="world-box"><div class="sphere"></div><div class="ring"></div></div>
-    <h2 class="search-text">A Ina ne Kake Son Bincikawa?</h2>
     
-    <button id="btn-global" class="pearl-btn cta-global" onclick="handleFinalSearch('global')">
-        <i class="fa-solid fa-earth-africa mr-2"></i> GLOBAL SEARCH
-        <span class="block text-[13px] font-bold" style="color: #FFFDD0 !important;">Bincika duka kasuwannin duniya</span>
-    </button>
+    <div id="search-overlay" style="display:none;">
+        <div class="world-box"><div class="sphere"></div><div class="ring"></div></div>
+        <h2 class="search-text">A Ina ne Kake Son Bincikawa?</h2>
+        
+        <button id="btn-global-trigger" class="pearl-btn cta-global">
+            <i class="fa-solid fa-earth-africa mr-2"></i> GLOBAL SEARCH
+            <span class="block text-[13px] font-bold" style="color: #FFFDD0 !important;">Bincika duka kasuwannin duniya</span>
+        </button>
 
-    <button id="btn-near" class="pearl-btn cta-global" onclick="handleFinalSearch('near_me')">
-        <i class="fa-solid fa-location-crosshairs mr-2"></i> NEAR YOU
-        <span class="block text-[13px] font-bold" style="color: #FFFDD0 !important;">Bincika vendors dake kusa da kai</span>
-    </button>
-    
-    <p class="fixed bottom-10 left-0 right-0 text-center text-gray-400 font-bold text-xs" style="cursor:pointer;" onclick="document.getElementById('search-overlay').style.display='none'">
-        <i class="fa-solid fa-xmark mr-1"></i> Soke Bincike (Cancel)
-    </p>
-</div>
+        <button id="btn-near-trigger" class="pearl-btn cta-global">
+            <i class="fa-solid fa-location-crosshairs mr-2"></i> NEAR YOU
+            <span class="block text-[13px] font-bold" style="color: #FFFDD0 !important;">Bincika vendors dake kusa da kai</span>
+        </button>
+        
+        <p class="fixed bottom-10 left-0 right-0 text-center text-gray-400 font-bold text-xs" style="cursor:pointer;" onclick="document.getElementById('search-overlay').style.display='none'">
+            <i class="fa-solid fa-xmark mr-1"></i> Soke Bincike (Cancel)
+        </p>
+    </div>
 
-<script>
-function handleFinalSearch(mode) {
-    // A. Idan NEAR YOU ne, tambayi Location tukuna
-    if (mode === 'near_me') {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    // Idan ya yarda, fara scanning
-                    executeTransition(mode);
-                },
-                (error) => {
-                    alert("Dole ne ka bada damar location don bincika na kusa da kai.");
-                }
-            );
-        } else {
-            alert("Browser dinka ba ta goyon bayan Location.");
-        }
-    } else {
-        // Idan Global ne, fara scanning kai tsaye
-        executeTransition(mode);
-    }
-}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnGlobal = document.getElementById('btn-global-trigger');
+            const btnNear = document.getElementById('btn-near-trigger');
 
-function executeTransition(mode) {
-    // 1. Nuna AI Loading Screen
-    const loadingScreen = document.getElementById('ai-loading-screen');
-    if (loadingScreen) {
-        loadingScreen.style.display = 'flex';
-    }
+            function startScanning(mode) {
+                // 1. Nuna AI Loading Screen
+                const loader = document.getElementById('ai-loading-screen');
+                if(loader) loader.style.display = 'flex';
 
-    // 2. Bayan sakan 3, tafi Results.html
-    setTimeout(() => {
-        const targetView = (mode === 'near_me') ? 'nearme' : 'global';
-        window.location.href = "results.html?view=" + targetView;
-    }, 3000);
-}
-</script>
-<script>
-    // Wannan shine function din da buttons dinka suke kira: onclick="globalSearchMotsi(...)"
-    function globalSearchMotsi(mode) {
-        if (mode === 'near_me') {
-            // 1. Tambayi Location Permission (GPS) tukuna
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        // Idan ya yarda, yanzu ne za a nuna Scanning
-                        const loader = document.getElementById('ai-loading-screen');
-                        if (loader) loader.style.display = 'flex';
-
-                        // 2. Jira sakan 3 na scanning, sannan a tafi Results Page
-                        setTimeout(() => {
-                            window.location.href = "results.html?view=nearme";
-                        }, 3000);
-                    },
-                    (error) => {
-                        // Idan ya ki bada dama, ba za a nuna scanning ba, kuma ba za a tafi ko'ina ba
-                        alert("Dole ka kunna Location (GPS) domin mu gano shagunan da ke kusa da kai.");
-                    }
-                );
-            } else {
-                alert("Browser dinka ba ta goyon bayan GPS.");
+                // 2. Jira sakan 3 sannan a tafi
+                setTimeout(() => {
+                    const view = (mode === 'near_me') ? 'nearme' : 'global';
+                    window.location.href = "results.html?view=" + view;
+                }, 3000);
             }
-        } else {
-            // GLOBAL SEARCH - Wannan ka bar shi a haka ko ka sa masa nasa umarnin
-            alert("An fara binciken dukkan kasuwannin duniya...");
-            // Idan kana da wani shafin na global, zaka iya tura shi nan ma
-        }
-    }
-                    </script>
+
+            // Muna tilasta wa buttons din su yi amfani da namu sabon umarnin
+            if(btnGlobal) {
+                btnGlobal.onclick = function(e) { e.preventDefault(); startScanning('global'); };
+            }
+            if(btnNear) {
+                btnNear.onclick = function(e) { e.preventDefault(); startScanning('near_me'); };
+            }
+        });
+    </script>
     
 </body>
 </html>
-
