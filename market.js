@@ -406,3 +406,16 @@ function startRegistration(type) {
     closePortal();
 }
 
+function showGpsToast() {
+    const toast = document.getElementById('gps-toast');
+    toast.style.display = 'block';
+    
+    // Zai bace bayan sakan 6 domin mutum ya samu lokacin karantawa da aiwatarwa
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => { 
+            toast.style.display = 'none'; 
+            toast.style.opacity = '1'; 
+        }, 500);
+    }, 6000);
+}
