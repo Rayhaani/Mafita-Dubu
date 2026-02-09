@@ -60,6 +60,43 @@
 </div>
 
 <script>
+function handleFinalSearch(mode) {
+    // A. Idan NEAR YOU ne, tambayi Location tukuna
+    if (mode === 'near_me') {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    // Idan ya yarda, fara scanning
+                    executeTransition(mode);
+                },
+                (error) => {
+                    alert("Dole ne ka bada damar location don bincika na kusa da kai.");
+                }
+            );
+        } else {
+            alert("Browser dinka ba ta goyon bayan Location.");
+        }
+    } else {
+        // Idan Global ne, fara scanning kai tsaye
+        executeTransition(mode);
+    }
+}
+
+function executeTransition(mode) {
+    // 1. Nuna AI Loading Screen
+    const loadingScreen = document.getElementById('ai-loading-screen');
+    if (loadingScreen) {
+        loadingScreen.style.display = 'flex';
+    }
+
+    // 2. Bayan sakan 3, tafi Results.html
+    setTimeout(() => {
+        const targetView = (mode === 'near_me') ? 'nearme' : 'global';
+        window.location.href = "results.html?view=" + targetView;
+    }, 3000);
+}
+</script>
+<script>
     // Wannan shine function din da buttons dinka suke kira: onclick="globalSearchMotsi(...)"
     function globalSearchMotsi(mode) {
         if (mode === 'near_me') {
@@ -90,8 +127,8 @@
             // Idan kana da wani shafin na global, zaka iya tura shi nan ma
         }
     }
-</script>
+                    </script>
     
-
 </body>
 </html>
+
