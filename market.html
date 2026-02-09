@@ -131,6 +131,24 @@
     <div id="vendors-list" style="flex: 1; overflow-y: auto; padding: 15px;">
         </div>
     </div>
+
+// WANNAN SHINE CODE DIN DA ZAI HADA MARKET.HTML DA RESULTS.HTML
+function globalSearchMotsi(mode) {
+    // 1. Fara nuna Loading Screen (Scan Page)
+    document.getElementById('ai-loading-screen').style.display = 'flex';
+    
+    // 2. Jira seconds 3 (lokacin da scanning yake gudana)
+    setTimeout(() => {
+        if (mode === 'near_me') {
+            // Idan Near You aka danna
+            window.location.href = "results.html?view=nearme";
+        } else if (mode === 'global') {
+            // Idan Global Search aka danna
+            window.location.href = "results.html?view=global";
+        }
+    }, 3000); // 3000 yana nufin seconds 3 na scanning
+}
+
     
     </body>
 </html>
