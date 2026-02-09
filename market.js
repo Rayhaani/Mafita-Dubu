@@ -149,36 +149,41 @@ function startAISimulation(file) {
 
 function globalSearchMotsi(mode) {
     if (mode === 'near_me') {
-        // Nuna kyakykyawan notification dinmu na gida
-        document.getElementById('location-modal').style.display = 'flex';
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                // A. IDAN YA KUNNA (SUCCESS)
+                (position) => {
+                    document.getElementById('search-overlay').style.display = 'none';
+                    document.getElementById('ai-loading-screen').style.display = 'flex';
+                    setTimeout(() => { 
+                        window.location.href = "results.html?view=nearme"; 
+                    }, 3000);
+                },
+                // B. IDAN BAI KUNNA BA KO YA KI (ERROR)
+                (error) => {
+                    showGpsToast(); // Maimakon alert, sai mu kira professional toast dinmu
+                },
+                { timeout: 5000 } // Jira sakan 5 Browser ta bincika
+            );
+        }
     } else {
+        // Global Search
         document.getElementById('search-overlay').style.display = 'none';
         document.getElementById('ai-loading-screen').style.display = 'flex';
         setTimeout(kammalaBincike, 3000);
     }
 }
 
-// Wannan shine zai yi aikin da gaske idan an danna "ALLOW ACCESS"
-function requestGpsPermission() {
-    document.getElementById('location-modal').style.display = 'none';
+// Function din da zai nuna Photo 3 Style Notification
+function showGpsToast() {
+    const toast = document.getElementById('gps-toast');
+    toast.style.display = 'flex';
     
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                document.getElementById('search-overlay').style.display = 'none';
-                document.getElementById('ai-loading-screen').style.display = 'flex';
-                setTimeout(() => { 
-                    window.location.href = "results.html?view=nearme"; 
-                }, 3000);
-            },
-            (error) => {
-                alert("Don Allah kunna GPS dinka a setting na waya.");
-            }
-        );
-    }
+    // Ya bace bayan sakan 4
+    setTimeout(() => {
+        toast.style.display = 'none';
+    }, 4000);
 }
-
-
 
  let watchID = null; // Wannan zai rike tracking din
 
