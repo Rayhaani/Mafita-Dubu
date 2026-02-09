@@ -149,33 +149,35 @@ function startAISimulation(file) {
 
 function globalSearchMotsi(mode) {
     if (mode === 'near_me') {
-        // 1. Tambayi Location tukuna kafin komai
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    // Idan ya yarda (Success), sannan scanning ya fara
-                    document.getElementById('search-overlay').style.display = 'none';
-                    document.getElementById('ai-loading-screen').style.display = 'flex';
-                    
-                    setTimeout(() => { 
-                        window.location.href = "results.html?view=nearme"; 
-                    }, 3000);
-                },
-                (error) => {
-                    // Idan ya ƙi (Denied), tsaya a nan, kada a nuna scanning
-                    alert("Kuskure: Dole ka kunna Location don ganin shagunan kusa da kai.");
-                }
-            );
-        } else {
-            alert("Wayarka ba ta goyon bayan Location.");
-        }
+        // Nuna kyakykyawan notification dinmu na gida
+        document.getElementById('location-modal').style.display = 'flex';
     } else {
-        // Global Search yana nan yadda yake
         document.getElementById('search-overlay').style.display = 'none';
         document.getElementById('ai-loading-screen').style.display = 'flex';
         setTimeout(kammalaBincike, 3000);
     }
 }
+
+// Wannan shine zai yi aikin da gaske idan an danna "ALLOW ACCESS"
+function requestGpsPermission() {
+    document.getElementById('location-modal').style.display = 'none';
+    
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                document.getElementById('search-overlay').style.display = 'none';
+                document.getElementById('ai-loading-screen').style.display = 'flex';
+                setTimeout(() => { 
+                    window.location.href = "results.html?view=nearme"; 
+                }, 3000);
+            },
+            (error) => {
+                alert("Don Allah kunna GPS dinka a setting na waya.");
+            }
+        );
+    }
+}
+
 
 
  let watchID = null; // Wannan zai rike tracking din
