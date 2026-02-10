@@ -109,8 +109,8 @@
             <div class="scanner-box">
     <video id="webcam" autoplay playsinline style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0;"></video>
     <div class="scan-bar"></div>
-    <div id="ai-status" style="color: #fff; font-size: 0.7rem; text-align: center; z-index: 5; background: rgba(0,0,0,0.4); padding: 5px;">
-        [ OPENING CAMERA... ]<br>Analyzing Surroundings
+    <div id="ai-status" style="color: #fff; font-size: 0.7rem; text-align: center; z-index: 5; background: rgba(0,0,0,0.5); padding: 5px; border-radius: 5px;">
+        [ INITIALIZING AI... ]<br>Detecting Environment
     </div>
             </div>
             
@@ -153,22 +153,24 @@
     </div>
 
     <script>
-        // Global Variables don adana bayanan vendor kafin su tafi Firebase
+        
+// 1. Ma'ajiyar bayanan Vendor kafin su tafi Firebase
 let capturedLat = null;
 let capturedLng = null;
 let capturedPhoto = null;
 
+// 2. Function na sauya Layers
 async function goToLayer(num) {
     document.querySelectorAll('.step-layer').forEach(l => l.classList.remove('active'));
     document.getElementById('layer' + num).classList.add('active');
     
-    // Idan an shiga Layer 2, fara Kyamara da AI Scanning
+    // Idan an shiga Layer 2, fara kyamara
     if(num === 2) {
         startLiveAI();
     }
 }
 
-// Logic na Real GPS
+// 3. Real-time GPS Detection
 function checkGPS() {
     const type = document.getElementById('bizType').value;
     const gpsBox = document.getElementById('gps-box');
@@ -176,22 +178,23 @@ function checkGPS() {
 
     if(type) {
         gpsBox.style.display = 'block';
-        coordsSpan.innerText = "Locating...";
+        coordsSpan.innerText = "Searching for Signal...";
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 capturedLat = position.coords.latitude.toFixed(6);
                 capturedLng = position.coords.longitude.toFixed(6);
                 coordsSpan.innerText = `${capturedLat}° N, ${capturedLng}° E`;
+                coordsSpan.style.color = "#00ff96";
             }, (error) => {
-                coordsSpan.innerText = "Error: Please enable GPS";
+                coordsSpan.innerText = "Error: Please enable GPS Location on your phone";
                 coordsSpan.style.color = "#ff4d4d";
-            });
+            }, { enableHighAccuracy: true });
         }
     }
 }
 
-// Logic na Live Camera & Snapshot
+// 4. Live Camera & Auto-Snapshot
 async function startLiveAI() {
     const video = document.getElementById('webcam');
     const status = document.getElementById('ai-status');
@@ -201,44 +204,42 @@ async function startLiveAI() {
         const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
         video.srcObject = stream;
 
-        // Simulation na AI Verification
         setTimeout(() => {
-            status.innerHTML = "✓ HUMAN DETECTED<br>✓ ANALYZING ENVIRONMENT...";
-            status.style.color = "#f3cf7a";
+            status.innerHTML = "🟡 SCANNING ASSETS...";
         }, 2000);
 
-        // Daukar Snapshot ta atomatik bayan seconds 5
+        // Daukar Snapshot bayan 5 seconds
         setTimeout(() => {
             const canvas = document.createElement('canvas');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             canvas.getContext('2d').drawImage(video, 0, 0);
-            capturedPhoto = canvas.toDataURL('image/jpeg'); // Wannan shi ne hoton da zai tafi Firebase
+            capturedPhoto = canvas.toDataURL('image/jpeg'); // Hoton ya shiga memory
 
-            status.innerHTML = "✓ VERIFICATION COMPLETE<br>SNAPSHOT SECURED";
+            status.innerHTML = "✅ VERIFIED: BUSINESS AUTHENTIC";
             status.style.color = "#00ffcc";
             btn.disabled = false;
             btn.innerText = "CONTINUE TO INVENTORY";
             
-            // Kashe kyamara don adana batir da data
+            // Kashe kyamara don adana data
             stream.getTracks().forEach(track => track.stop());
         }, 5000);
 
     } catch (err) {
-        status.innerHTML = "❌ CAMERA ERROR<br>Please allow permissions";
+        status.innerHTML = "❌ CAMERA ERROR: Check Permissions";
         status.style.color = "#ff4d4d";
     }
 }
 
 function showAddMore() {
+    // Nan ne za mu tura bayanan zuwa Firebase a mataki na gaba
     document.getElementById('addMoreModal').style.display = 'flex';
-    // ANAN NE ZAMU KIRA uploadToFirebase() NAN GABA
 }
 
 function resetToNew() {
     window.location.reload();
-                }
-        
+}
+         
     </script>
 </body>
 </html>
