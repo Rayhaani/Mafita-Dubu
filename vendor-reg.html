@@ -3,125 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Vendor Master Registry</title>
+    <title>Mafita Dubu | Vendor Registration</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --milk-bg: #FFF5E1; --royal-black: #1a1405; --dark-gold: #8b6b1b; --light-gold: #f3cf7a; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--milk-bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
-        .luxury-card { background: var(--royal-black); border: 2px solid var(--dark-gold); border-radius: 40px 10px 40px 10px; padding: 40px 25px; width: 100%; max-width: 480px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); position: relative; }
-        .liquid-color-circle { width: 70px; height: 70px; margin: -75px auto 15px; border-radius: 50%; border: 2px solid #fff; background: linear-gradient(-45deg, #ffd700, #ff00ea, #00d4ff, #3dff00); background-size: 400% 400%; animation: liquidFlow 8s ease infinite; }
-        @keyframes liquidFlow { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        :root { --milk-bg: #FFF5E1; --royal-black: #1a1405; --gold: #bf953f; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--milk-bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .luxury-card { background: var(--royal-black); border: 2px solid var(--gold); border-radius: 40px 10px; padding: 30px; width: 100%; max-width: 450px; color: white; }
         .step-layer { display: none; }
-        .step-layer.active { display: block; animation: slideIn 0.4s ease-out; }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-        .gold-input { width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(243, 207, 122, 0.2); padding: 12px 15px; border-radius: 12px; color: #fff; font-size: 0.85rem; outline: none; margin-bottom: 12px; }
-        .primary-btn { background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900; width: 100%; padding: 14px; border-radius: 10px; border: none; cursor: pointer; margin-top: 10px; opacity: 1; }
-        .primary-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .scanner-box { width: 100%; height: 220px; background: #000; border: 2px solid var(--dark-gold); border-radius: 20px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
-        video { width: 100%; height: 100%; object-fit: cover; position: absolute; }
-        .scan-bar { position: absolute; width: 100%; height: 3px; background: #00ffcc; box-shadow: 0 0 15px #00ffcc; top: 0; animation: scanning 2s linear infinite; z-index: 2; }
-        @keyframes scanning { 0% { top: 0; } 100% { top: 100%; } }
-        .slot-card { background: rgba(255,255,255,0.03); border: 1px dashed var(--dark-gold); padding: 10px; border-radius: 10px; margin-bottom: 10px; }
-        .modal-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .gold-input { width: 100%; background: #2a2210; border: 1px solid var(--gold); padding: 12px; border-radius: 10px; color: white; margin-bottom: 10px; }
+        .primary-btn { background: linear-gradient(135deg, #bf953f, #fcf6ba); color: #000; font-weight: 800; width: 100%; padding: 14px; border-radius: 10px; cursor: pointer; border: none; }
+        .scanner-box { width: 100%; height: 200px; background: #000; border-radius: 15px; position: relative; overflow: hidden; }
+        video { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
 <body>
 
-    <div class="luxury-card">
-        <div class="liquid-color-circle"></div>
-        <h2 id="step-title" style="color: var(--light-gold); font-family: 'Cinzel'; text-align: center; margin-bottom: 20px;">Vendor Setup</h2>
+<div class="luxury-card">
+    <h2 style="font-family: 'Cinzel'; color: #fcf6ba; text-align: center; margin-bottom: 20px;">Vendor Setup</h2>
 
-        <div class="step-layer active" id="layer1">
-            <input type="text" class="gold-input" id="bizName" placeholder="Business Name">
-            <select class="gold-input" id="bizType" onchange="startRealGPS()">
-                <option value="">-- Business Type --</option>
-                <option value="shop">Physical Store / Office</option>
-                <option value="home">Home-Based Business</option>
-            </select>
-            <input type="text" class="gold-input" id="manualAddr" placeholder="Street Address / Area">
-            <div id="gps-box" style="display: none; background: rgba(0,255,150,0.1); border: 1px solid #00ff96; padding: 10px; border-radius: 10px; color: #00ff96; font-size: 0.75rem; margin-bottom: 15px;">
-                📍 GPS: <span id="coords">Detecting...</span>
-            </div>
-            <button class="primary-btn" id="nextToAI" onclick="validateAndGo(2)">NEXT: AI VERIFICATION</button>
-        </div>
-
-        <div class="step-layer" id="layer2">
-            <div class="scanner-box">
-                <video id="webcam" autoplay playsinline></video>
-                <div class="scan-bar"></div>
-                <div id="ai-status" style="color: #fff; font-size: 0.7rem; text-align: center; z-index: 5; background:rgba(0,0,0,0.5); padding:5px; border-radius:5px">
-                    [ INITIALIZING AI... ]
-                </div>
-            </div>
-            <button class="primary-btn" id="verifyBtn" disabled onclick="goToLayer(3)">ANALYZING...</button>
-        </div>
-
-        <div class="step-layer" id="layer3">
-            <p style="color: var(--light-gold); font-size: 0.8rem; margin-bottom: 10px;">Register Inventory (Min 5 items)</p>
-            <div id="inventory-container" style="max-height: 250px; overflow-y: auto;">
-                <script>
-                    for(let i=1; i<=5; i++){
-                        document.write(`<div class="slot-card"><input type="text" class="gold-input" placeholder="Item ${i} Name"><input type="number" class="gold-input" placeholder="Price"></div>`);
-                    }
-                </script>
-            </div>
-            <button class="primary-btn" onclick="showAddMore()">FINISH REGISTRATION</button>
-        </div>
+    <div class="step-layer active" id="layer1">
+        <input type="text" id="bizName" class="gold-input" placeholder="Business Name (Suna)">
+        <select id="bizType" class="gold-input" onchange="startGPS()">
+            <option value="">-- Select Category --</option>
+            <option value="Store">Physical Store</option>
+            <option value="Home">Home-Based</option>
+        </select>
+        <div id="gps-status" style="font-size: 0.75rem; color: #ff4d4d; margin-bottom: 10px;">📍 GPS: Not Fixed</div>
+        <button class="primary-btn" onclick="validateLayer1()">NEXT: AI SCAN</button>
     </div>
 
-    <div class="modal-bg" id="addMoreModal">
-        <div style="background: var(--royal-black); border: 2px solid var(--light-gold); padding: 30px; border-radius: 30px; text-align: center; max-width: 320px;">
-            <h3 style="color: #fff; margin-bottom: 15px;">Masha Allah!</h3>
-            <p style="color: #888; font-size: 0.85rem; margin-bottom: 20px;">An kammala rajista lafiya.</p>
-            <button onclick="location.reload()" style="background: var(--light-gold); color: #000; padding: 10px 20px; border-radius: 10px; font-weight: 800;">DONE</button>
+    <div class="step-layer" id="layer2">
+        <div class="scanner-box">
+            <video id="webcam" autoplay playsinline></video>
         </div>
+        <p id="ai-msg" style="text-align:center; font-size: 0.8rem; margin: 10px 0;">[ INITIALIZING SCAN... ]</p>
+        <button class="primary-btn" id="camBtn" disabled onclick="goToLayer(3)">CONTINUE</button>
     </div>
 
-    <script>
-        let vendorData = { lat: null, lng: null, photo: null };
+    <div class="step-layer" id="layer3">
+        <div id="items-list">
+            <input type="text" class="gold-input item-name" placeholder="Item Name">
+            <input type="number" class="gold-input item-price" placeholder="Price">
+        </div>
+        <button class="primary-btn" onclick="saveToFirebase()">FINISH & UPLOAD</button>
+    </div>
+</div>
 
-        function startRealGPS() {
-            const gpsBox = document.getElementById('gps-box');
-            const coords = document.getElementById('coords');
-            gpsBox.style.display = 'block';
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(pos => {
-                    vendorData.lat = pos.coords.latitude.toFixed(6);
-                    vendorData.lng = pos.coords.longitude.toFixed(6);
-                    coords.innerText = `${vendorData.lat}, ${vendorData.lng} Verified ✓`;
-                }, err => { coords.innerText = "Error: Turn on Location/HTTPS"; });
-            }
+<script>
+    // 1. Firebase Initialize
+    const firebaseConfig = {
+        apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
+        authDomain: "global-market-admin.firebaseapp.com",
+        projectId: "global-market-admin",
+        storageBucket: "global-market-admin.firebasestorage.app",
+        messagingSenderId: "259715265619",
+        appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    let vendorLocation = null;
+
+    // 2. GPS Logic
+    function startGPS() {
+        const status = document.getElementById('gps-status');
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(pos => {
+                vendorLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+                status.innerText = `📍 GPS Fixed: ${vendorLocation.lat.toFixed(4)}, ${vendorLocation.lng.toFixed(4)}`;
+                status.style.color = "#00ffcc";
+            }, () => { alert("Please enable Location!"); });
         }
+    }
 
-        function validateAndGo(layer) {
-            const name = document.getElementById('bizName').value;
-            const type = document.getElementById('bizType').value;
-            if(!name || !type || !vendorData.lat) {
-                alert("Don Allah cike duka bayanan kuma ka tabbatar GPS ya nuna lambobi!");
-                return;
-            }
-            goToLayer(layer);
+    // 3. Navigation & Validation
+    function validateLayer1() {
+        if(!document.getElementById('bizName').value || !vendorLocation) {
+            alert("Saka Suna sannan ka tabbatar GPS ya nuna!");
+            return;
         }
+        goToLayer(2);
+        startCamera();
+    }
 
-        async function goToLayer(num) {
-            document.querySelectorAll('.step-layer').forEach(l => l.classList.remove('active'));
-            document.getElementById('layer' + num).classList.add('active');
-            if(num === 2) startCamera();
+    function goToLayer(n) {
+        document.querySelectorAll('.step-layer').forEach(l => l.classList.remove('active'));
+        document.getElementById('layer' + n).classList.add('active');
+    }
+
+    // 4. Camera
+    async function startCamera() {
+        const video = document.getElementById('webcam');
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+        video.srcObject = stream;
+        setTimeout(() => {
+            document.getElementById('ai-msg').innerText = "✅ SCAN SUCCESSFUL";
+            document.getElementById('camBtn').disabled = false;
+        }, 3000);
+    }
+
+    // 5. UPLOAD TO FIREBASE
+    async function saveToFirebase() {
+        const btn = event.target;
+        btn.innerText = "UPLOADING...";
+        btn.disabled = true;
+
+        const data = {
+            name: document.getElementById('bizName').value,
+            type: document.getElementById('bizType').value,
+            location: vendorLocation,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        try {
+            await db.collection("vendors").add(data);
+            alert("Masha Allah! An tura bayanan zuwa Database.");
+            location.reload();
+        } catch (e) {
+            alert("Error: " + e.message);
+            btn.disabled = false;
         }
-
-        async function startCamera() {
-            const video = document.getElementById('webcam');
-            const status = document.getElementById('ai-status');
-            const btn = document.getElementById('verifyBtn');
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-                video.srcObject = stream;
-                setTimeout(() => { status.innerHTML = "✅ LIVE SCAN COMPLETE"; btn.disabled = false; btn.innerText = "CONTINUE"; }, 4000);
-            } catch (e) { status.innerText = "Camera Access Denied"; }
-        }
-
-        function showAddMore() { document.getElementById('addMoreModal').style.display = 'flex'; }
-    </script>
+    }
+</script>
 </body>
 </html>
