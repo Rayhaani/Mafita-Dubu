@@ -177,12 +177,36 @@ function globalSearchMotsi(mode) {
 // Function din da zai nuna Photo 3 Style Notification
 function showGpsToast() {
     const toast = document.getElementById('gps-toast');
-    toast.style.display = 'flex';
+    const sound = document.getElementById('toast-sound');
     
-    // Ya bace bayan sakan 4
+    if (!toast) return;
+
+    // 1. Kunna Sauti
+    if (sound) {
+        sound.currentTime = 0; // Fara daga farko
+        sound.play().catch(e => console.log("Audio play blocked: Needs user interaction first"));
+    }
+
+    // 2. Girgiza Waya (Vibrate)
+    if ("vibrate" in navigator) {
+        navigator.vibrate(100); 
+    }
+
+    // 3. Nuna Notification
+    toast.style.display = 'block';
+    toast.style.opacity = '1';
+    
+    // 4. Sanya shi ya bace bayan sakan 6
     setTimeout(() => {
-        toast.style.display = 'none';
-    }, 4000);
+        toast.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(-20px)'; // Zai tafi sama kadan
+        
+        setTimeout(() => {
+            toast.style.display = 'none';
+            toast.style.transform = 'translateX(-50%)'; // Reset position
+        }, 800);
+    }, 6000);
 }
 
  let watchID = null; // Wannan zai rike tracking din
