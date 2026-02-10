@@ -147,47 +147,56 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
+<script>
 window.globalSearchMotsi = function(mode) {
-    const overlay = document.getElementById('search-overlay');
-    if(overlay) overlay.style.display = 'none';
-
+    // KADA ka rufe overlay din tukuna (Keep it visible)
+    
     if (mode === 'near_me') {
-        // Idan aka danna Near Me, muna ba Browser sakan 2 ta nuna nata notification din
-        // Idan bayan sakan 2 mutum bai yarda ba, sai namu ya fito da karfi
-        const forceShow = setTimeout(() => {
-            nunaEliteAlert();
-        }, 2500);
-
+        // Nuna wa Browser cewa muna neman location
         navigator.geolocation.getCurrentPosition(
-            (position) => {
-                clearTimeout(forceShow);
+            function(position) {
+                // SUCCESS: Nan take a rufe overlay a fara scanning
+                document.getElementById('search-overlay').style.display = 'none';
                 document.getElementById('ai-loading-screen').style.display = 'flex';
-                setTimeout(() => { window.location.href = "results.html?view=nearme"; }, 3000);
+                
+                setTimeout(() => {
+                    window.location.href = "results.html?view=nearme";
+                }, 3000);
             },
-            (error) => {
-                clearTimeout(forceShow);
+            function(error) {
+                // FAILURE: KADA a rufe komai, nuna Elite Notification namu kawai
                 nunaEliteAlert();
             },
-            { timeout: 5000 }
+            { timeout: 5000, enableHighAccuracy: true }
         );
     } else {
+        // GLOBAL SEARCH: Wannan bashi da matsala
+        document.getElementById('search-overlay').style.display = 'none';
         document.getElementById('ai-loading-screen').style.display = 'flex';
-        setTimeout(() => { window.location.href = "results.html?view=global"; }, 3000);
+        setTimeout(() => {
+            window.location.href = "results.html?view=global";
+        }, 3000);
     }
 };
 
 function nunaEliteAlert() {
     const alertBox = document.getElementById('elite-gps-notification');
     if(alertBox) {
-        // Wannan layin shine babban oga da zai tilasta nuna shi
+        // Tilasta bayyanarsa a saman kowane abu
         alertBox.style.setProperty('display', 'block', 'important');
         
-        // Bace bayan sakan 8 domin ya ba mutum lokacin kunnawa
+        // Girgiza wayar idan akwai wannan damar (Vibration)
+        if (navigator.vibrate) navigator.vibrate(200);
+
         setTimeout(() => {
             alertBox.style.setProperty('display', 'none', 'important');
-        }, 8000);
+        }, 7000);
+    } else {
+        // Idan ma alertBox din babu shi a HTML, nuna wannan a matsayin backup
+        alert("Don Allah kunna GPS dinka don ganin shagunan kusa da kai.");
     }
 }
+</script>
 
 
  let watchID = null; // Wannan zai rike tracking din
