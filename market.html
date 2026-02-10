@@ -109,81 +109,69 @@
     </div>
 
 
-    <div id="near-me-results" class="fixed inset-0 bg-white z-[6000] hidden flex-col">
-    <div style="padding: 20px; background: #f8f9fa; display: flex; align-items: center; border-bottom: 1px solid #ddd;">
-        <button onclick="closeResults()" style="background: none; border: none; font-size: 20px; cursor: pointer;">
-            <i class="fa-solid fa-arrow-left"></i>
-        </button>
-        <h3 style="margin-left: 15px; font-size: 18px; font-weight: 800; color: #333;">Vendors Near You</h3>
+        <div id="near-me-results" class="fixed inset-0 bg-white z-[6000] hidden flex-col">
+        <div style="padding: 20px; background: #f8f9fa; display: flex; align-items: center; border-bottom: 1px solid #ddd;">
+            <button onclick="closeResults()" style="background: none; border: none; font-size: 20px; cursor: pointer;">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h3 style="margin-left: 15px; font-size: 18px; font-weight: 800; color: #333;">Vendors Near You</h3>
+        </div>
+        <div id="results-list" style="overflow-y: auto; flex: 1;"></div>
+    </div> <div id="elite-gps-notification" style="display:none !important; position:fixed; top:25px; left:50%; transform:translateX(-50%); z-index:9999999; width:94%; max-width:420px;">
+        <div style="background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(25px); border: 2px solid #FFD700; border-radius: 25px; padding: 20px; box-shadow: 0 0 40px rgba(255, 215, 0, 0.3); display: flex; align-items: center; gap: 18px; border-bottom: 5px solid #FFD700;">
+            <div style="background: #FFD700; width: 50px; height: 50px; border-radius: 15px; display: flex; align-items: center; justify-content: center; animation: pulseElite 1.2s infinite;">
+                <i class="fa-solid fa-location-crosshairs" style="color: #000; font-size: 20px;"></i>
+            </div>
+            <div style="flex: 1;">
+                <h4 style="color: #FFD700; margin: 0; font-size: 11px; letter-spacing: 2px; font-weight: 900; text-transform: uppercase;">Action Required</h4>
+                <p style="color: #ffffff; margin: 4px 0 0 0; font-size: 14px; line-height: 1.4;">Don Allah kunna <span style="color: #FFD700; font-weight: 800;">Location</span> domin ganin wannan shafi.</p>
+            </div>
+        </div>
     </div>
 
-<div id="elite-gps-notification" style="display:none !important; position:fixed; top:25px; left:50%; transform:translateX(-50%); z-index:9999999; width:94%; max-width:420px;">
-    <div style="background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(25px); border: 2px solid #FFD700; border-radius: 25px; padding: 20px; box-shadow: 0 0 40px rgba(255, 215, 0, 0.3); display: flex; align-items: center; gap: 18px; border-bottom: 5px solid #FFD700;">
-        <div style="background: #FFD700; width: 50px; height: 50px; border-radius: 15px; display: flex; align-items: center; justify-content: center; animation: pulseElite 1.2s infinite;">
-            <i class="fa-solid fa-location-crosshairs" style="color: #000; font-size: 20px;"></i>
-        </div>
-        <div style="flex: 1;">
-            <h4 style="color: #FFD700; margin: 0; font-size: 11px; letter-spacing: 2px; font-weight: 900; text-transform: uppercase;">Action Required</h4>
-            <p style="color: #ffffff; margin: 4px 0 0 0; font-size: 14px; line-height: 1.4;">Don Allah kunna <span style="color: #FFD700; font-weight: 800;">Location</span> domin ganin wannan shafi.</p>
-        </div>
-    </div>
-</div>
-
-<style>
-@keyframes pulseElite {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); box-shadow: 0 0 20px #FFD700; }
-    100% { transform: scale(1); }
-}
-</style>
-
-<script>
-// Tabbatar muna kiran globalSearchMotsi ba tare da ya taba wasu functions ba
-window.globalSearchMotsi = function(mode) {
-    console.log("Mode selected:", mode);
-    
-    if (mode === 'near_me') {
-        if (!navigator.geolocation) {
-            nunaEliteAlert();
-            return;
+    <style>
+        @keyframes pulseElite {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); box-shadow: 0 0 20px #FFD700; }
+            100% { transform: scale(1); }
         }
+    </style>
 
-        navigator.geolocation.getCurrentPosition(
-            function(position) {
-                // Idan an samu Location
-                document.getElementById('search-overlay').style.display = 'none';
-                document.getElementById('ai-loading-screen').style.display = 'flex';
-                setTimeout(function() {
-                    window.location.href = "results.html?view=nearme";
-                }, 3000);
-            },
-            function(error) {
-                // Idan an samu matsala
-                nunaEliteAlert();
-            },
-            { timeout: 5000 }
-        );
-    } else {
-        // Global Search
-        document.getElementById('search-overlay').style.display = 'none';
-        document.getElementById('ai-loading-screen').style.display = 'flex';
-        setTimeout(function() {
-            window.location.href = "results.html?view=global";
-        }, 3000);
+    <script>
+    // WANNAN SHINE ZUCIYAR MOTSI
+    window.globalSearchMotsi = function(mode) {
+        if (mode === 'near_me') {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    document.getElementById('search-overlay').style.display = 'none';
+                    document.getElementById('ai-loading-screen').style.display = 'flex';
+                    setTimeout(() => { window.location.href = "results.html?view=nearme"; }, 3000);
+                },
+                function(error) {
+                    nunaEliteAlert();
+                },
+                { timeout: 5000 }
+            );
+        } else {
+            document.getElementById('search-overlay').style.display = 'none';
+            document.getElementById('ai-loading-screen').style.display = 'flex';
+            setTimeout(() => { window.location.href = "results.html?view=global"; }, 3000);
+        }
+    };
+
+    function nunaEliteAlert() {
+        const alertBox = document.getElementById('elite-gps-notification');
+        if(alertBox) {
+            alertBox.style.setProperty('display', 'block', 'important');
+            setTimeout(() => { alertBox.style.setProperty('display', 'none', 'important'); }, 6000);
+        }
     }
-};
-
-function nunaEliteAlert() {
-    const alertBox = document.getElementById('elite-gps-notification');
-    if(alertBox) {
-        alertBox.style.setProperty('display', 'block', 'important');
-        setTimeout(function() {
-            alertBox.style.setProperty('display', 'none', 'important');
-        }, 6000);
-    }
-}
-</script>
-
+    
+    // Kara wadannan idan babu su a market.js don slider ya dawo
+    function handleSearch(input) { /* search logic */ }
+    function closeSearch() { document.getElementById('search-overlay').style.display = 'none'; }
+        </script>
+    
         
     </body>
 </html>
