@@ -147,44 +147,47 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-function globalSearchMotsi(mode) {
+window.globalSearchMotsi = function(mode) {
+    const overlay = document.getElementById('search-overlay');
+    if(overlay) overlay.style.display = 'none';
+
     if (mode === 'near_me') {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                // A. IDAN YA KUNNA (SUCCESS)
-                (position) => {
-                    document.getElementById('search-overlay').style.display = 'none';
-                    document.getElementById('ai-loading-screen').style.display = 'flex';
-                    setTimeout(() => { 
-                        window.location.href = "results.html?view=nearme"; 
-                    }, 3000);
-                },
-                // B. IDAN BAI KUNNA BA KO YA KI (ERROR)
-                (error) => {
-                    showGpsToast(); // Maimakon alert, sai mu kira professional toast dinmu
-                },
-                { timeout: 5000 } // Jira sakan 5 Browser ta bincika
-            );
-        }
+        // Kunna agogon gaggawa (Idan browser ta yi shiru bayan sakan 2)
+        let hasResponded = false;
+        const fallbackTimer = setTimeout(() => {
+            if (!hasResponded) nunaEliteAlert();
+        }, 2000);
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                hasResponded = true;
+                clearTimeout(fallbackTimer);
+                document.getElementById('ai-loading-screen').style.display = 'flex';
+                setTimeout(() => { window.location.href = "results.html?view=nearme"; }, 3000);
+            },
+            (error) => {
+                hasResponded = true;
+                clearTimeout(fallbackTimer);
+                nunaEliteAlert();
+            },
+            { timeout: 5000 }
+        );
     } else {
-        // Global Search
-        document.getElementById('search-overlay').style.display = 'none';
         document.getElementById('ai-loading-screen').style.display = 'flex';
-        setTimeout(kammalaBincike, 3000);
+        setTimeout(() => { window.location.href = "results.html?view=global"; }, 3000);
+    }
+};
+
+function nunaEliteAlert() {
+    const alertBox = document.getElementById('elite-gps-notification');
+    if(alertBox) {
+        alertBox.style.display = 'block';
+        // Sautin sanarwa (Optional: idan kana so)
+        // document.getElementById('arrival-sound').play(); 
+        
+        setTimeout(() => { alertBox.style.display = 'none'; }, 6000);
     }
 }
-
-// Function din da zai nuna Photo 3 Style Notification
-function showGpsToast() {
-    const toast = document.getElementById('gps-toast');
-    toast.style.display = 'flex';
-    
-    // Ya bace bayan sakan 4
-    setTimeout(() => {
-        toast.style.display = 'none';
-    }, 4000);
-}
-
 
  let watchID = null; // Wannan zai rike tracking din
 
