@@ -107,11 +107,13 @@
 
         <div class="step-layer" id="layer2">
             <div class="scanner-box">
-                <div class="scan-bar"></div>
-                <div id="ai-status" style="color: #fff; font-size: 0.7rem; text-align: center; z-index: 5;">
-                    [ OPENING CAMERA... ]<br>Analyzing Surroundings
-                </div>
+    <video id="webcam" autoplay playsinline style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0;"></video>
+    <div class="scan-bar"></div>
+    <div id="ai-status" style="color: #fff; font-size: 0.7rem; text-align: center; z-index: 5; background: rgba(0,0,0,0.4); padding: 5px;">
+        [ OPENING CAMERA... ]<br>Analyzing Surroundings
+    </div>
             </div>
+            
             <div style="color: #888; font-size: 0.7rem; margin-bottom: 15px;">
                 * AI zai duba: 1. Presence (Mutum a wurin) 2. Object Recognition (Kayan aiki/shago).
             </div>
@@ -151,36 +153,92 @@
     </div>
 
     <script>
-        function goToLayer(num) {
-            document.querySelectorAll('.step-layer').forEach(l => l.classList.remove('active'));
-            document.getElementById('layer' + num).classList.add('active');
+        // Global Variables don adana bayanan vendor kafin su tafi Firebase
+let capturedLat = null;
+let capturedLng = null;
+let capturedPhoto = null;
+
+async function goToLayer(num) {
+    document.querySelectorAll('.step-layer').forEach(l => l.classList.remove('active'));
+    document.getElementById('layer' + num).classList.add('active');
+    
+    // Idan an shiga Layer 2, fara Kyamara da AI Scanning
+    if(num === 2) {
+        startLiveAI();
+    }
+}
+
+// Logic na Real GPS
+function checkGPS() {
+    const type = document.getElementById('bizType').value;
+    const gpsBox = document.getElementById('gps-box');
+    const coordsSpan = document.getElementById('coords');
+
+    if(type) {
+        gpsBox.style.display = 'block';
+        coordsSpan.innerText = "Locating...";
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                capturedLat = position.coords.latitude.toFixed(6);
+                capturedLng = position.coords.longitude.toFixed(6);
+                coordsSpan.innerText = `${capturedLat}° N, ${capturedLng}° E`;
+            }, (error) => {
+                coordsSpan.innerText = "Error: Please enable GPS";
+                coordsSpan.style.color = "#ff4d4d";
+            });
+        }
+    }
+}
+
+// Logic na Live Camera & Snapshot
+async function startLiveAI() {
+    const video = document.getElementById('webcam');
+    const status = document.getElementById('ai-status');
+    const btn = document.getElementById('verifyBtn');
+
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+        video.srcObject = stream;
+
+        // Simulation na AI Verification
+        setTimeout(() => {
+            status.innerHTML = "✓ HUMAN DETECTED<br>✓ ANALYZING ENVIRONMENT...";
+            status.style.color = "#f3cf7a";
+        }, 2000);
+
+        // Daukar Snapshot ta atomatik bayan seconds 5
+        setTimeout(() => {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            capturedPhoto = canvas.toDataURL('image/jpeg'); // Wannan shi ne hoton da zai tafi Firebase
+
+            status.innerHTML = "✓ VERIFICATION COMPLETE<br>SNAPSHOT SECURED";
+            status.style.color = "#00ffcc";
+            btn.disabled = false;
+            btn.innerText = "CONTINUE TO INVENTORY";
             
-            if(num === 2) {
-                setTimeout(() => {
-                    document.getElementById('ai-status').innerHTML = "✓ HUMAN DETECTED<br>✓ BUSINESS ASSETS RECOGNIZED";
-                    document.getElementById('ai-status').style.color = "#00ffcc";
-                    const btn = document.getElementById('verifyBtn');
-                    btn.disabled = false;
-                    btn.innerText = "CONTINUE TO INVENTORY";
-                }, 3000);
-            }
-        }
+            // Kashe kyamara don adana batir da data
+            stream.getTracks().forEach(track => track.stop());
+        }, 5000);
 
-        function checkGPS() {
-            const type = document.getElementById('bizType').value;
-            if(type) {
-                document.getElementById('gps-box').style.display = 'block';
-                document.getElementById('coords').innerText = "11.9912° N, 8.5155° E"; // Kano coords simulation
-            }
-        }
+    } catch (err) {
+        status.innerHTML = "❌ CAMERA ERROR<br>Please allow permissions";
+        status.style.color = "#ff4d4d";
+    }
+}
 
-        function showAddMore() {
-            document.getElementById('addMoreModal').style.display = 'flex';
-        }
+function showAddMore() {
+    document.getElementById('addMoreModal').style.display = 'flex';
+    // ANAN NE ZAMU KIRA uploadToFirebase() NAN GABA
+}
 
-        function resetToNew() {
-            window.location.reload(); // Wannan zai dawo da shi farko don zaba sabon category
-        }
+function resetToNew() {
+    window.location.reload();
+                }
+        
     </script>
 </body>
 </html>
