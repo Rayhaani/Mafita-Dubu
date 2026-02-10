@@ -147,35 +147,61 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-function globalSearchMotsi(mode) {
+window.globalSearchMotsi = function(mode) {
+    // 1. Rufe overlay din
+    const overlay = document.getElementById('search-overlay');
+    if(overlay) overlay.style.display = 'none';
+
     if (mode === 'near_me') {
-        // 1. Tambayi Browser izinin Location
+        // Idan browser ta toshe GPS ko babu HTTPS
+        if (!navigator.geolocation) {
+            nunaGlobalAlert();
+            return;
+        }
+
+        // Gwada samun location
         navigator.geolocation.getCurrentPosition(
-            // IDAN YA YARDA (Success)
-            (position) => {
-                document.getElementById('search-overlay').style.display = 'none';
-                document.getElementById('ai-loading-screen').style.display = 'flex';
-                setTimeout(() => { 
-                    window.location.href = "results.html?view=nearme"; 
-                }, 3000);
+            function(position) {
+                // SUCCESS
+                const loader = document.getElementById('ai-loading-screen');
+                if(loader) loader.style.display = 'flex';
+                setTimeout(() => { window.location.href = "results.html?view=nearme"; }, 3000);
             },
-            // IDAN BAI YARDA BA KO GPS A KASHE YAKE (Error)
-            (error) => {
-                const toast = document.getElementById('gps-toast');
-                if (toast) {
-                    toast.style.display = 'block';
-                    setTimeout(() => { toast.style.display = 'none'; }, 6000);
-                }
+            function(error) {
+                // FAILURE (Ko mutum ya danna 'Block' ko GPS a kashe)
+                nunaGlobalAlert();
             },
-            { timeout: 5000 }
+            { timeout: 3000 } // Idan ya dauki sakan 3 bai ba da amsa ba
         );
+
+        // Dabara ta karshe: Idan komai ya ki nuna wa bayan sakan 4, nuna Alert dinmu
+        setTimeout(() => {
+            const loader = document.getElementById('ai-loading-screen');
+            if (loader && loader.style.display !== 'flex') {
+                 nunaGlobalAlert();
+            }
+        }, 4000);
+
     } else {
         // GLOBAL SEARCH
-        document.getElementById('search-overlay').style.display = 'none';
-        document.getElementById('ai-loading-screen').style.display = 'flex';
-        setTimeout(kammalaBincike, 3000);
+        const loader = document.getElementById('ai-loading-screen');
+        if(loader) loader.style.display = 'flex';
+        setTimeout(() => { window.location.href = "results.html?view=global"; }, 3000);
+    }
+};
+
+// Function din nuna kyakkyawan notification dinmu
+function nunaGlobalAlert() {
+    const alertBox = document.getElementById('global-gps-alert');
+    if(alertBox) {
+        alertBox.style.setProperty('display', 'block', 'important');
+        // Bace bayan sakan 7
+        setTimeout(() => {
+            alertBox.style.setProperty('display', 'none', 'important');
+        }, 7000);
     }
 }
+
 
 
  let watchID = null; // Wannan zai rike tracking din
