@@ -133,28 +133,7 @@
     </div>
 
 
-  <script>
-<div id="global-gps-alert" style="display:none !important; position:fixed; top:30px; left:50%; transform:translateX(-50%); z-index:999999; width:92%; max-width:400px; background:rgba(15,15,15,0.98); backdrop-filter:blur(20px); border:2px solid #B8860B; border-radius:22px; padding:18px; box-shadow:0 0 30px rgba(184,134,11,0.5);">
-    <div style="display:flex; align-items:center; gap:15px;">
-        <div id="pulse-box" style="background:#B8860B; min-width:45px; height:45px; border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 15px #B8860B; animation: pulseAnim 1.5s infinite;">
-            <i class="fa-solid fa-location-dot" style="color:white; font-size:20px;"></i>
-        </div>
-        <p style="color:#F5F1E9; font-size:14px; margin:0; font-weight:600; font-family:sans-serif; line-height:1.4;">
-            Don Allah kunna <b>Location</b> a settings na wayarka domin ganin wannan shafi na gaba
-        </p>
-    </div>
-</div>
-
-<style>
-@keyframes pulseAnim {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.7); }
-    70% { transform: scale(1.1); box-shadow: 0 0 0 12px rgba(184, 134, 11, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(184, 134, 11, 0); }
-}
-</style>
-
-
-<div id="elite-gps-notification" style="display:none; position:fixed; top:25px; left:50%; transform:translateX(-50%); z-index:999999; width:92%; max-width:420px;">
+ <div id="gps-toast" style="display:none; position:fixed; top:25px; left:50%; transform:translateX(-50%); z-index:999999; width:92%; max-width:420px;">
     <div class="glass-container">
         <div class="content-wrapper">
             <div class="icon-sector">
@@ -163,15 +142,47 @@
                 </div>
                 <div class="echo-pulse"></div>
             </div>
-            
             <div class="text-sector">
                 <h3>ACTION REQUIRED</h3>
-                <p>Don Allah kunna <span>Location</span> a settings na wayarka domin ganin wannan shafi na gaba</p>
+                <p>Don Allah kunna <span>Location</span> a settings na wayarka domin ci gaba.</p>
             </div>
         </div>
         <div class="timer-bar"></div>
     </div>
 </div>
+
+<audio id="toast-sound" src="https://assets.mixkit.co/active_storage/sfx/2358/2358-preview.mp3" preload="auto"></audio>
+
+<style>
+.glass-container {
+    background: rgba(15, 15, 15, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1.5px solid rgba(184, 134, 11, 0.6);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    overflow: hidden;
+    position: relative;
+}
+.content-wrapper { display: flex; align-items: center; gap: 20px; }
+.main-pulse {
+    background: linear-gradient(135deg, #8B6508, #FFD700);
+    width: 55px; height: 55px; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 24px;
+}
+.text-sector h3 { color: #FFD700; font-size: 11px; font-weight: 800; letter-spacing: 2px; margin-bottom: 4px; }
+.text-sector p { color: #F5F1E9; font-size: 14px; margin: 0; }
+.text-sector span { color: #FFD700; font-weight: 800; text-decoration: underline; }
+.timer-bar {
+    position: absolute; bottom: 0; left: 0; height: 3px;
+    background: linear-gradient(to right, transparent, #FFD700);
+    width: 100%; animation: shrink 6s linear forwards;
+}
+@keyframes shrink { from { width: 100%; } to { width: 0%; } }
+</style>
+    
 
 <style>
 .glass-container {
