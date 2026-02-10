@@ -155,45 +155,47 @@
 
 <script>
 window.globalSearchMotsi = function(mode) {
-    // Rufe overlay din farko
     const overlay = document.getElementById('search-overlay');
     if(overlay) overlay.style.display = 'none';
 
     if (mode === 'near_me') {
-        // Kokarin samun GPS kafin scanning
+        // Kunna agogon gaggawa (Idan browser ta yi shiru bayan sakan 2)
+        let hasResponded = false;
+        const fallbackTimer = setTimeout(() => {
+            if (!hasResponded) nunaEliteAlert();
+        }, 2000);
+
         navigator.geolocation.getCurrentPosition(
-            function(position) {
-                // SUCCESS: Fara Scanning
-                const loader = document.getElementById('ai-loading-screen');
-                if(loader) loader.style.display = 'flex';
-                
-                setTimeout(function() {
-                    window.location.href = "results.html?view=nearme";
-                }, 3000);
+            (position) => {
+                hasResponded = true;
+                clearTimeout(fallbackTimer);
+                document.getElementById('ai-loading-screen').style.display = 'flex';
+                setTimeout(() => { window.location.href = "results.html?view=nearme"; }, 3000);
             },
-            function(error) {
-                // FAILURE: Nuna Futuristic Notification
-                const alertBox = document.getElementById('global-gps-alert');
-                if(alertBox) {
-                    alertBox.style.setProperty('display', 'block', 'important');
-                    setTimeout(function() {
-                        alertBox.style.setProperty('display', 'none', 'important');
-                    }, 6000);
-                }
+            (error) => {
+                hasResponded = true;
+                clearTimeout(fallbackTimer);
+                nunaEliteAlert();
             },
-            { timeout: 5000, enableHighAccuracy: true }
+            { timeout: 5000 }
         );
     } else {
-        // GLOBAL SEARCH: Kawai nuna scanning
-        const loader = document.getElementById('ai-loading-screen');
-        if(loader) loader.style.display = 'flex';
-        setTimeout(function() {
-            window.location.href = "results.html?view=global";
-        }, 3000);
+        document.getElementById('ai-loading-screen').style.display = 'flex';
+        setTimeout(() => { window.location.href = "results.html?view=global"; }, 3000);
     }
 };
-</script>
 
+function nunaEliteAlert() {
+    const alertBox = document.getElementById('elite-gps-notification');
+    if(alertBox) {
+        alertBox.style.display = 'block';
+        // Sautin sanarwa (Optional: idan kana so)
+        // document.getElementById('arrival-sound').play(); 
+        
+        setTimeout(() => { alertBox.style.display = 'none'; }, 6000);
+    }
+      }
+      
 
     
     </body>
