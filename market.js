@@ -147,57 +147,43 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-<script>
-window.globalSearchMotsi = function(mode) {
-    // KADA ka rufe overlay din tukuna (Keep it visible)
-    
+function globalSearchMotsi(mode) {
     if (mode === 'near_me') {
-        // Nuna wa Browser cewa muna neman location
-        navigator.geolocation.getCurrentPosition(
-            function(position) {
-                // SUCCESS: Nan take a rufe overlay a fara scanning
-                document.getElementById('search-overlay').style.display = 'none';
-                document.getElementById('ai-loading-screen').style.display = 'flex';
-                
-                setTimeout(() => {
-                    window.location.href = "results.html?view=nearme";
-                }, 3000);
-            },
-            function(error) {
-                // FAILURE: KADA a rufe komai, nuna Elite Notification namu kawai
-                nunaEliteAlert();
-            },
-            { timeout: 5000, enableHighAccuracy: true }
-        );
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                // A. IDAN YA KUNNA (SUCCESS)
+                (position) => {
+                    document.getElementById('search-overlay').style.display = 'none';
+                    document.getElementById('ai-loading-screen').style.display = 'flex';
+                    setTimeout(() => { 
+                        window.location.href = "results.html?view=nearme"; 
+                    }, 3000);
+                },
+                // B. IDAN BAI KUNNA BA KO YA KI (ERROR)
+                (error) => {
+                    showGpsToast(); // Maimakon alert, sai mu kira professional toast dinmu
+                },
+                { timeout: 5000 } // Jira sakan 5 Browser ta bincika
+            );
+        }
     } else {
-        // GLOBAL SEARCH: Wannan bashi da matsala
+        // Global Search
         document.getElementById('search-overlay').style.display = 'none';
         document.getElementById('ai-loading-screen').style.display = 'flex';
-        setTimeout(() => {
-            window.location.href = "results.html?view=global";
-        }, 3000);
-    }
-};
-
-function nunaEliteAlert() {
-    const alertBox = document.getElementById('elite-gps-notification');
-    if(alertBox) {
-        // Tilasta bayyanarsa a saman kowane abu
-        alertBox.style.setProperty('display', 'block', 'important');
-        
-        // Girgiza wayar idan akwai wannan damar (Vibration)
-        if (navigator.vibrate) navigator.vibrate(200);
-
-        setTimeout(() => {
-            alertBox.style.setProperty('display', 'none', 'important');
-        }, 7000);
-    } else {
-        // Idan ma alertBox din babu shi a HTML, nuna wannan a matsayin backup
-        alert("Don Allah kunna GPS dinka don ganin shagunan kusa da kai.");
+        setTimeout(kammalaBincike, 3000);
     }
 }
-</script>
 
+// Function din da zai nuna Photo 3 Style Notification
+function showGpsToast() {
+    const toast = document.getElementById('gps-toast');
+    toast.style.display = 'flex';
+    
+    // Ya bace bayan sakan 4
+    setTimeout(() => {
+        toast.style.display = 'none';
+    }, 4000);
+}
 
  let watchID = null; // Wannan zai rike tracking din
 
@@ -432,4 +418,4 @@ function showGpsToast() {
             toast.style.opacity = '1'; 
         }, 500);
     }, 6000);
-}
+            }
