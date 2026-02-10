@@ -117,41 +117,73 @@
         <h3 style="margin-left: 15px; font-size: 18px; font-weight: 800; color: #333;">Vendors Near You</h3>
     </div>
 
-<div id="elite-gps-notification" style="display:none !important; position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:9999999; width:94%; max-width:420px; font-family: 'Inter', sans-serif;">
-    <div style="background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(25px); border: 2px solid #FFD700; border-radius: 25px; padding: 20px; box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), inset 0 0 15px rgba(255, 215, 0, 0.1); display: flex; align-items: center; gap: 18px; border-bottom: 5px solid #FFD700;">
-        
-        <div class="elite-pulse-box">
-            <i class="fa-solid fa-location-crosshairs" style="color: #000; font-size: 22px;"></i>
+<div id="elite-gps-notification" style="display:none !important; position:fixed; top:25px; left:50%; transform:translateX(-50%); z-index:9999999; width:94%; max-width:420px;">
+    <div style="background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(25px); border: 2px solid #FFD700; border-radius: 25px; padding: 20px; box-shadow: 0 0 40px rgba(255, 215, 0, 0.3); display: flex; align-items: center; gap: 18px; border-bottom: 5px solid #FFD700;">
+        <div style="background: #FFD700; width: 50px; height: 50px; border-radius: 15px; display: flex; align-items: center; justify-content: center; animation: pulseElite 1.2s infinite;">
+            <i class="fa-solid fa-location-crosshairs" style="color: #000; font-size: 20px;"></i>
         </div>
-
         <div style="flex: 1;">
             <h4 style="color: #FFD700; margin: 0; font-size: 11px; letter-spacing: 2px; font-weight: 900; text-transform: uppercase;">Action Required</h4>
-            <p style="color: #ffffff; margin: 4px 0 0 0; font-size: 14px; line-height: 1.4; font-weight: 500;">
-                Don Allah kunna <span style="color: #FFD700; font-weight: 800; text-decoration: underline;">Location</span> a settings na wayarka domin ganin wannan shafi na gaba
-            </p>
+            <p style="color: #ffffff; margin: 4px 0 0 0; font-size: 14px; line-height: 1.4;">Don Allah kunna <span style="color: #FFD700; font-weight: 800;">Location</span> domin ganin wannan shafi.</p>
         </div>
     </div>
 </div>
 
 <style>
-.elite-pulse-box {
-    background: #FFD700;
-    width: 55px;
-    height: 55px;
-    border-radius: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 20px #FFD700;
-    animation: elite-blink 1.2s infinite;
+@keyframes pulseElite {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); box-shadow: 0 0 20px #FFD700; }
+    100% { transform: scale(1); }
 }
+</style>
 
-@keyframes elite-blink {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
-    50% { transform: scale(1.08); box-shadow: 0 0 25px rgba(255, 215, 0, 0.4); opacity: 0.9; }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+<script>
+// Tabbatar muna kiran globalSearchMotsi ba tare da ya taba wasu functions ba
+window.globalSearchMotsi = function(mode) {
+    console.log("Mode selected:", mode);
+    
+    if (mode === 'near_me') {
+        if (!navigator.geolocation) {
+            nunaEliteAlert();
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                // Idan an samu Location
+                document.getElementById('search-overlay').style.display = 'none';
+                document.getElementById('ai-loading-screen').style.display = 'flex';
+                setTimeout(function() {
+                    window.location.href = "results.html?view=nearme";
+                }, 3000);
+            },
+            function(error) {
+                // Idan an samu matsala
+                nunaEliteAlert();
+            },
+            { timeout: 5000 }
+        );
+    } else {
+        // Global Search
+        document.getElementById('search-overlay').style.display = 'none';
+        document.getElementById('ai-loading-screen').style.display = 'flex';
+        setTimeout(function() {
+            window.location.href = "results.html?view=global";
+        }, 3000);
+    }
+};
+
+function nunaEliteAlert() {
+    const alertBox = document.getElementById('elite-gps-notification');
+    if(alertBox) {
+        alertBox.style.setProperty('display', 'block', 'important');
+        setTimeout(function() {
+            alertBox.style.setProperty('display', 'none', 'important');
+        }, 6000);
+    }
 }
-</style> 
+</script>
+
         
     </body>
 </html>
