@@ -117,125 +117,41 @@
         <h3 style="margin-left: 15px; font-size: 18px; font-weight: 800; color: #333;">Vendors Near You</h3>
     </div>
 
-    <div id="gps-error-state" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:40px; text-align:center; flex: 1;">
-        <div class="map-animation" style="width:120px; height:120px; background:#f0f4ff; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
-            <i class="fa-solid fa-map-location-dot" style="font-size:50px; color:#007bff;"></i>
+<div id="elite-gps-notification" style="display:none !important; position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:9999999; width:94%; max-width:420px; font-family: 'Inter', sans-serif;">
+    <div style="background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(25px); border: 2px solid #FFD700; border-radius: 25px; padding: 20px; box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), inset 0 0 15px rgba(255, 215, 0, 0.1); display: flex; align-items: center; gap: 18px; border-bottom: 5px solid #FFD700;">
+        
+        <div class="elite-pulse-box">
+            <i class="fa-solid fa-location-crosshairs" style="color: #000; font-size: 22px;"></i>
         </div>
-        <h3 style="font-weight:bold; font-size:18px; color:#222;">Enable Location Services</h3>
-        <p style="color:#666; font-size:13px; margin:10px 0 20px 0;">Muna bukatar location dinka don nuna maka shagunan da ke kusa da kai.</p>
-        <button onclick="nearYouSearch()" style="width:100%; padding:15px; background:#007bff; color:white; border:none; border-radius:12px; font-weight:bold;">
-            Share Location
-        </button>
-    </div>
 
-    <div id="vendors-list" style="flex: 1; overflow-y: auto; padding: 15px;">
+        <div style="flex: 1;">
+            <h4 style="color: #FFD700; margin: 0; font-size: 11px; letter-spacing: 2px; font-weight: 900; text-transform: uppercase;">Action Required</h4>
+            <p style="color: #ffffff; margin: 4px 0 0 0; font-size: 14px; line-height: 1.4; font-weight: 500;">
+                Don Allah kunna <span style="color: #FFD700; font-weight: 800; text-decoration: underline;">Location</span> a settings na wayarka domin ganin wannan shafi na gaba
+            </p>
         </div>
-    </div>
-
-
-  <script>
-<div id="global-gps-alert" style="display:none !important; position:fixed; top:30px; left:50%; transform:translateX(-50%); z-index:999999; width:92%; max-width:400px; background:rgba(15,15,15,0.98); backdrop-filter:blur(20px); border:2px solid #B8860B; border-radius:22px; padding:18px; box-shadow:0 0 30px rgba(184,134,11,0.5);">
-    <div style="display:flex; align-items:center; gap:15px;">
-        <div id="pulse-box" style="background:#B8860B; min-width:45px; height:45px; border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 15px #B8860B; animation: pulseAnim 1.5s infinite;">
-            <i class="fa-solid fa-location-dot" style="color:white; font-size:20px;"></i>
-        </div>
-        <p style="color:#F5F1E9; font-size:14px; margin:0; font-weight:600; font-family:sans-serif; line-height:1.4;">
-            Don Allah kunna <b>Location</b> a settings na wayarka domin ganin wannan shafi na gaba
-        </p>
     </div>
 </div>
 
 <style>
-@keyframes pulseAnim {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.7); }
-    70% { transform: scale(1.1); box-shadow: 0 0 0 12px rgba(184, 134, 11, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(184, 134, 11, 0); }
-}
-</style>
-
-
-<div id="elite-gps-notification" style="display:none; position:fixed; top:25px; left:50%; transform:translateX(-50%); z-index:999999; width:92%; max-width:420px;">
-    <div class="glass-container">
-        <div class="content-wrapper">
-            <div class="icon-sector">
-                <div class="main-pulse">
-                    <i class="fa-solid fa-location-dot"></i>
-                </div>
-                <div class="echo-pulse"></div>
-            </div>
-            
-            <div class="text-sector">
-                <h3>ACTION REQUIRED</h3>
-                <p>Don Allah kunna <span>Location</span> a settings na wayarka domin ganin wannan shafi na gaba</p>
-            </div>
-        </div>
-        <div class="timer-bar"></div>
-    </div>
-</div>
-
-<style>
-.glass-container {
-    background: rgba(15, 15, 15, 0.9);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1.5px solid rgba(184, 134, 11, 0.6);
-    border-radius: 24px;
-    padding: 20px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 20px rgba(184, 134, 11, 0.2);
-    overflow: hidden;
-    position: relative;
+.elite-pulse-box {
+    background: #FFD700;
+    width: 55px;
+    height: 55px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px #FFD700;
+    animation: elite-blink 1.2s infinite;
 }
 
-.content-wrapper { display: flex; align-items: center; gap: 20px; }
-
-.icon-sector { position: relative; width: 55px; height: 55px; }
-
-.main-pulse {
-    background: linear-gradient(135deg, #8B6508, #FFD700);
-    width: 100%; height: 100%; border-radius: 16px;
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-size: 24px; position: relative; z-index: 2;
-    box-shadow: 0 0 20px rgba(184, 134, 11, 0.8);
-    animation: iconBounce 2s infinite;
+@keyframes elite-blink {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+    50% { transform: scale(1.08); box-shadow: 0 0 25px rgba(255, 215, 0, 0.4); opacity: 0.9; }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
 }
-
-.echo-pulse {
-    position: absolute; top:0; left:0; width:100%; height:100%;
-    background: rgba(184, 134, 11, 0.4); border-radius: 16px;
-    z-index: 1; animation: echo 2s infinite;
-}
-
-.text-sector h3 {
-    color: #FFD700; font-family: 'Inter', sans-serif;
-    font-size: 11px; font-weight: 800; letter-spacing: 2px; margin-bottom: 4px;
-}
-
-.text-sector p {
-    color: #F5F1E9; font-size: 14px; font-weight: 500; line-height: 1.4; margin: 0;
-}
-
-.text-sector span { color: #FFD700; font-weight: 800; text-decoration: underline; }
-
-.timer-bar {
-    position: absolute; bottom: 0; left: 0; height: 3px;
-    background: linear-gradient(to right, transparent, #FFD700);
-    width: 100%; animation: shrink 6s linear forwards;
-}
-
-@keyframes iconBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-}
-
-@keyframes echo {
-    0% { transform: scale(1); opacity: 1; }
-    100% { transform: scale(1.8); opacity: 0; }
-}
-
-@keyframes shrink { from { width: 100%; } to { width: 0%; } }
-</style>
-      
-    
-    
+</style> 
+        
     </body>
 </html>
