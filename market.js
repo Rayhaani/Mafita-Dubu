@@ -148,66 +148,39 @@ function startAISimulation(file) {
 }
 
 function globalSearchMotsi(mode) {
+    const overlay = document.getElementById('search-overlay');
+    const loading = document.getElementById('ai-loading-screen');
+
     if (mode === 'near_me') {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-                // A. IDAN YA KUNNA (SUCCESS)
                 (position) => {
-                    document.getElementById('search-overlay').style.display = 'none';
-                    document.getElementById('ai-loading-screen').style.display = 'flex';
+                    if(overlay) overlay.style.display = 'none';
+                    if(loading) loading.style.display = 'flex';
+                    
+                    // Bayan sakan 3 zai wuce, amma idan an dawo browser za ta ga sabon shafi
                     setTimeout(() => { 
-                        window.location.href = "results.html?view=nearme"; 
+                        window.location.href = "results.html?view=nearme";
+                        // Wannan layin yana kashe loading din a "background" 
+                        // yadda idan an dawo ba za a same shi yana loading ba
+                        setTimeout(() => { if(loading) loading.style.display = 'none'; }, 500);
                     }, 3000);
                 },
-                // B. IDAN BAI KUNNA BA KO YA KI (ERROR)
-                (error) => {
-                    showGpsToast(); // Maimakon alert, sai mu kira professional toast dinmu
-                },
-                { timeout: 5000 } // Jira sakan 5 Browser ta bincika
+                (error) => { showGpsToast(); },
+                { timeout: 5000 }
             );
         }
     } else {
-        // Global Search
-        document.getElementById('search-overlay').style.display = 'none';
-        document.getElementById('ai-loading-screen').style.display = 'flex';
-        setTimeout(kammalaBincike, 3000);
-    }
-}
-
-// Function din da zai nuna Photo 3 Style Notification
-function showGpsToast() {
-    const toast = document.getElementById('gps-toast');
-    const sound = document.getElementById('toast-sound');
-    
-    if (!toast) return;
-
-    // 1. Kunna Sauti
-    if (sound) {
-        sound.currentTime = 0; // Fara daga farko
-        sound.play().catch(e => console.log("Audio play blocked: Needs user interaction first"));
-    }
-
-    // 2. Girgiza Waya (Vibrate)
-    if ("vibrate" in navigator) {
-        navigator.vibrate(100); 
-    }
-
-    // 3. Nuna Notification
-    toast.style.display = 'block';
-    toast.style.opacity = '1';
-    
-    // 4. Sanya shi ya bace bayan sakan 6
-    setTimeout(() => {
-        toast.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(-50%) translateY(-20px)'; // Zai tafi sama kadan
-        
+        if(overlay) overlay.style.display = 'none';
+        if(loading) loading.style.display = 'flex';
+        // Maimakon loading ya dawama, muna so ya tsaya idan an dade
         setTimeout(() => {
-            toast.style.display = 'none';
-            toast.style.transform = 'translateX(-50%)'; // Reset position
-        }, 800);
-    }, 6000);
+            if(loading) loading.style.display = 'none';
+            kammalaBincike();
+        }, 3000);
+    }
 }
+
 
  let watchID = null; // Wannan zai rike tracking din
 
@@ -432,14 +405,29 @@ function startRegistration(type) {
 
 function showGpsToast() {
     const toast = document.getElementById('gps-toast');
-    toast.style.display = 'block';
+    const sound = document.getElementById('toast-sound');
     
-    // Zai bace bayan sakan 6 domin mutum ya samu lokacin karantawa da aiwatarwa
+    if (!toast) return;
+
+    // Kunna Sauti
+    if (sound) {
+        sound.currentTime = 0;
+        sound.play().catch(() => {});
+    }
+
+    // Nuna shi da kyau (Slide down)
+    toast.style.display = 'block';
+    setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(10px)'; 
+    }, 10);
+    
+    // Bace bayan sakan 6
     setTimeout(() => {
         toast.style.opacity = '0';
-        setTimeout(() => { 
-            toast.style.display = 'none'; 
-            toast.style.opacity = '1'; 
+        toast.style.transform = 'translateX(-50%) translateY(-20px)';
+        setTimeout(() => {
+            toast.style.display = 'none';
         }, 500);
     }, 6000);
-            }
+}
