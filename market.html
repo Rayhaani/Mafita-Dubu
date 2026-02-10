@@ -154,47 +154,86 @@
 </style>
 
 <script>
-window.globalSearchMotsi = function(mode) {
-    const overlay = document.getElementById('search-overlay');
-    if(overlay) overlay.style.display = 'none';
+<div id="elite-gps-notification" style="display:none; position:fixed; top:25px; left:50%; transform:translateX(-50%); z-index:999999; width:92%; max-width:420px;">
+    <div class="glass-container">
+        <div class="content-wrapper">
+            <div class="icon-sector">
+                <div class="main-pulse">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div class="echo-pulse"></div>
+            </div>
+            
+            <div class="text-sector">
+                <h3>ACTION REQUIRED</h3>
+                <p>Don Allah kunna <span>Location</span> a settings na wayarka domin ganin wannan shafi na gaba</p>
+            </div>
+        </div>
+        <div class="timer-bar"></div>
+    </div>
+</div>
 
-    if (mode === 'near_me') {
-        // Kunna agogon gaggawa (Idan browser ta yi shiru bayan sakan 2)
-        let hasResponded = false;
-        const fallbackTimer = setTimeout(() => {
-            if (!hasResponded) nunaEliteAlert();
-        }, 2000);
+<style>
+.glass-container {
+    background: rgba(15, 15, 15, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1.5px solid rgba(184, 134, 11, 0.6);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 20px rgba(184, 134, 11, 0.2);
+    overflow: hidden;
+    position: relative;
+}
 
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                hasResponded = true;
-                clearTimeout(fallbackTimer);
-                document.getElementById('ai-loading-screen').style.display = 'flex';
-                setTimeout(() => { window.location.href = "results.html?view=nearme"; }, 3000);
-            },
-            (error) => {
-                hasResponded = true;
-                clearTimeout(fallbackTimer);
-                nunaEliteAlert();
-            },
-            { timeout: 5000 }
-        );
-    } else {
-        document.getElementById('ai-loading-screen').style.display = 'flex';
-        setTimeout(() => { window.location.href = "results.html?view=global"; }, 3000);
-    }
-};
+.content-wrapper { display: flex; align-items: center; gap: 20px; }
 
-function nunaEliteAlert() {
-    const alertBox = document.getElementById('elite-gps-notification');
-    if(alertBox) {
-        alertBox.style.display = 'block';
-        // Sautin sanarwa (Optional: idan kana so)
-        // document.getElementById('arrival-sound').play(); 
-        
-        setTimeout(() => { alertBox.style.display = 'none'; }, 6000);
-    }
-      }
+.icon-sector { position: relative; width: 55px; height: 55px; }
+
+.main-pulse {
+    background: linear-gradient(135deg, #8B6508, #FFD700);
+    width: 100%; height: 100%; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 24px; position: relative; z-index: 2;
+    box-shadow: 0 0 20px rgba(184, 134, 11, 0.8);
+    animation: iconBounce 2s infinite;
+}
+
+.echo-pulse {
+    position: absolute; top:0; left:0; width:100%; height:100%;
+    background: rgba(184, 134, 11, 0.4); border-radius: 16px;
+    z-index: 1; animation: echo 2s infinite;
+}
+
+.text-sector h3 {
+    color: #FFD700; font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 800; letter-spacing: 2px; margin-bottom: 4px;
+}
+
+.text-sector p {
+    color: #F5F1E9; font-size: 14px; font-weight: 500; line-height: 1.4; margin: 0;
+}
+
+.text-sector span { color: #FFD700; font-weight: 800; text-decoration: underline; }
+
+.timer-bar {
+    position: absolute; bottom: 0; left: 0; height: 3px;
+    background: linear-gradient(to right, transparent, #FFD700);
+    width: 100%; animation: shrink 6s linear forwards;
+}
+
+@keyframes iconBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes echo {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.8); opacity: 0; }
+}
+
+@keyframes shrink { from { width: 100%; } to { width: 0%; } }
+</style>
       
 
     
