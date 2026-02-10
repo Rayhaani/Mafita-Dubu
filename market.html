@@ -134,46 +134,66 @@
 
 
   <script>
-    // Mun sake rubuta function din yadda zai sha gaban na cikin market.js
-    window.globalSearchMotsi = function(mode) {
-        console.log("An fara scanning na " + mode);
-        
-        // 1. Nuna hoton scanning (AI Loading Screen)
-        const loadingScreen = document.getElementById('ai-loading-screen');
-        if(loadingScreen) {
-            loadingScreen.style.display = 'flex';
-        }
-        
-        // 2. Jira sakan 3 (Scanning time) sannan a wuce
-        setTimeout(function() {
-            const targetView = (mode === 'near_me') ? 'nearme' : 'global';
-            
-            // Wannan layin zai raba mu da Market.html ya kai mu Results.html
-            window.location.replace("results.html?view=" + targetView);
-        }, 3000); 
-    };
-</script>
-  <div id="gps-toast" style="display:none; position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#333; color:white; padding:12px 25px; border-radius:50px; font-size:13px; font-weight:600; z-index:25000; box-shadow:0 10px 30px rgba(0,0,0,0.2); align-items:center; gap:10px; border:1px solid rgba(255,255,255,0.1);">
-    <i class="fa-solid fa-circle-exclamation" style="color:#FFD700;"></i>
-    <span>Don Allah kunna Location (GPS) a setting na wayarka</span>
-  </div>
-
-    <div id="global-gps-alert" style="display:none; position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:99999; width:90%; max-width:380px; background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(15px); border: 2px solid #B8860B; border-radius: 20px; padding: 15px; box-shadow: 0 0 25px rgba(184, 134, 11, 0.6);">
-    <div style="display: flex; align-items: center; gap: 12px; color: #F5F1E9;">
-        <div style="background: #B8860B; min-width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; animation: pulse 1.5s infinite;">
-            <i class="fa-solid fa-location-dot" style="color: white;"></i>
+<div id="global-gps-alert" style="display:none !important; position:fixed; top:30px; left:50%; transform:translateX(-50%); z-index:999999; width:92%; max-width:400px; background:rgba(15,15,15,0.98); backdrop-filter:blur(20px); border:2px solid #B8860B; border-radius:22px; padding:18px; box-shadow:0 0 30px rgba(184,134,11,0.5);">
+    <div style="display:flex; align-items:center; gap:15px;">
+        <div id="pulse-box" style="background:#B8860B; min-width:45px; height:45px; border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 15px #B8860B; animation: pulseAnim 1.5s infinite;">
+            <i class="fa-solid fa-location-dot" style="color:white; font-size:20px;"></i>
         </div>
-        <p style="font-size: 13px; margin: 0; font-weight: 600;">Don Allah kunna Location a settings na wayarka domin ganin wannan shafi na gaba</p>
+        <p style="color:#F5F1E9; font-size:14px; margin:0; font-weight:600; font-family:sans-serif; line-height:1.4;">
+            Don Allah kunna <b>Location</b> a settings na wayarka domin ganin wannan shafi na gaba
+        </p>
     </div>
 </div>
 
 <style>
-@keyframes pulse {
+@keyframes pulseAnim {
     0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.7); }
-    70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(184, 134, 11, 0); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 12px rgba(184, 134, 11, 0); }
     100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(184, 134, 11, 0); }
 }
 </style>
+
+<script>
+window.globalSearchMotsi = function(mode) {
+    // Rufe overlay din farko
+    const overlay = document.getElementById('search-overlay');
+    if(overlay) overlay.style.display = 'none';
+
+    if (mode === 'near_me') {
+        // Kokarin samun GPS kafin scanning
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                // SUCCESS: Fara Scanning
+                const loader = document.getElementById('ai-loading-screen');
+                if(loader) loader.style.display = 'flex';
+                
+                setTimeout(function() {
+                    window.location.href = "results.html?view=nearme";
+                }, 3000);
+            },
+            function(error) {
+                // FAILURE: Nuna Futuristic Notification
+                const alertBox = document.getElementById('global-gps-alert');
+                if(alertBox) {
+                    alertBox.style.setProperty('display', 'block', 'important');
+                    setTimeout(function() {
+                        alertBox.style.setProperty('display', 'none', 'important');
+                    }, 6000);
+                }
+            },
+            { timeout: 5000, enableHighAccuracy: true }
+        );
+    } else {
+        // GLOBAL SEARCH: Kawai nuna scanning
+        const loader = document.getElementById('ai-loading-screen');
+        if(loader) loader.style.display = 'flex';
+        setTimeout(function() {
+            window.location.href = "results.html?view=global";
+        }, 3000);
+    }
+};
+</script>
+    
     
     </body>
 </html>
