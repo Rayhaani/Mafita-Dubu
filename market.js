@@ -147,43 +147,48 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-function globalSearchMotsi(mode) {
+window.globalSearchMotsi = function(mode) {
+    const overlay = document.getElementById('search-overlay');
+    if(overlay) overlay.style.display = 'none';
+
     if (mode === 'near_me') {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                // A. IDAN YA KUNNA (SUCCESS)
-                (position) => {
-                    document.getElementById('search-overlay').style.display = 'none';
-                    document.getElementById('ai-loading-screen').style.display = 'flex';
-                    setTimeout(() => { 
-                        window.location.href = "results.html?view=nearme"; 
-                    }, 3000);
-                },
-                // B. IDAN BAI KUNNA BA KO YA KI (ERROR)
-                (error) => {
-                    showGpsToast(); // Maimakon alert, sai mu kira professional toast dinmu
-                },
-                { timeout: 5000 } // Jira sakan 5 Browser ta bincika
-            );
-        }
+        // Idan aka danna Near Me, muna ba Browser sakan 2 ta nuna nata notification din
+        // Idan bayan sakan 2 mutum bai yarda ba, sai namu ya fito da karfi
+        const forceShow = setTimeout(() => {
+            nunaEliteAlert();
+        }, 2500);
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                clearTimeout(forceShow);
+                document.getElementById('ai-loading-screen').style.display = 'flex';
+                setTimeout(() => { window.location.href = "results.html?view=nearme"; }, 3000);
+            },
+            (error) => {
+                clearTimeout(forceShow);
+                nunaEliteAlert();
+            },
+            { timeout: 5000 }
+        );
     } else {
-        // Global Search
-        document.getElementById('search-overlay').style.display = 'none';
         document.getElementById('ai-loading-screen').style.display = 'flex';
-        setTimeout(kammalaBincike, 3000);
+        setTimeout(() => { window.location.href = "results.html?view=global"; }, 3000);
+    }
+};
+
+function nunaEliteAlert() {
+    const alertBox = document.getElementById('elite-gps-notification');
+    if(alertBox) {
+        // Wannan layin shine babban oga da zai tilasta nuna shi
+        alertBox.style.setProperty('display', 'block', 'important');
+        
+        // Bace bayan sakan 8 domin ya ba mutum lokacin kunnawa
+        setTimeout(() => {
+            alertBox.style.setProperty('display', 'none', 'important');
+        }, 8000);
     }
 }
 
-// Function din da zai nuna Photo 3 Style Notification
-function showGpsToast() {
-    const toast = document.getElementById('gps-toast');
-    toast.style.display = 'flex';
-    
-    // Ya bace bayan sakan 4
-    setTimeout(() => {
-        toast.style.display = 'none';
-    }, 4000);
-}
 
  let watchID = null; // Wannan zai rike tracking din
 
