@@ -145,6 +145,11 @@
     }
 };
 
+        const namePlaceholder = document.getElementById('userName'); // Tabbatar akwai span mai wannan ID din
+if(namePlaceholder) {
+    namePlaceholder.innerText = localStorage.getItem('currentUserName') || "User";
+}
+        
     </script>
 </body>
 </html>
