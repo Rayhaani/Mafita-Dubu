@@ -135,6 +135,16 @@
                 await deleteDoc(doc(db, "vendors", id));
             }
         };
+        window.updateStatus = async (id, s) => {
+    if(confirm(`Confirm ${s} status?`)) {
+        await updateDoc(doc(db, "vendors", id), { 
+            status: s,
+            welcomeMsg: s === 'approved' ? "Barka da zuwa! An tantance ka cikin nasara. Yanzu zaka iya baje kolin ayyukanka ga duniya." : ""
+        });
+        alert("Status Updated!");
+    }
+};
+
     </script>
 </body>
 </html>
