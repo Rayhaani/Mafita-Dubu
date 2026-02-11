@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { --milk-bg: #FFF5E1; --royal-black: #1a1405; --gold: #bf953f; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--milk-bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
@@ -19,6 +19,12 @@
         .primary-btn { background: linear-gradient(135deg, #bf953f, #fcf6ba); color: #000; font-weight: 800; width: 100%; padding: 14px; border-radius: 10px; cursor: pointer; border: none; }
         .scanner-box { width: 100%; height: 200px; background: #000; border-radius: 15px; position: relative; overflow: hidden; }
         video { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* Font din da kake so ba tare da karkata ba */
+        .alphabet-font { 
+            font-family: 'Dancing Script', cursive; 
+            font-style: normal !important; 
+        }
     </style>
 </head>
 <body>
@@ -47,10 +53,31 @@
 
     <div class="step-layer" id="layer3">
         <div id="items-list">
-            <input type="text" class="gold-input item-name" placeholder="Item Name">
-            <input type="number" class="gold-input item-price" placeholder="Price">
+            <input type="text" class="gold-input item-name" placeholder="Business Description">
+            <p class="text-[10px] text-gray-400 mb-4">Danna Finish don tura aikinka ga Admin don dubawa.</p>
         </div>
         <button class="primary-btn" onclick="saveToFirebase()">FINISH & UPLOAD</button>
+    </div>
+</div>
+
+<div id="statusModal" class="fixed inset-0 bg-black/95 hidden items-center justify-center z-[9999] p-6 backdrop-blur-sm">
+    <div class="bg-[#0a0a0a] border-2 border-[#D4AF37] w-full max-w-sm rounded-[45px] p-10 text-center shadow-[0_0_50px_rgba(212,175,55,0.2)]">
+        <div id="modalIcon" class="w-20 h-20 bg-gradient-to-tr from-[#D4AF37] to-[#fcf6ba] rounded-full mx-auto mb-6 flex items-center justify-center text-black text-3xl font-bold shadow-lg">!</div>
+        
+        <h2 id="modalTitle" class="alphabet-font text-5xl mb-4 text-[#D4AF37]">Under Review</h2>
+        
+        <p id="modalMsg" class="text-gray-300 text-sm leading-relaxed mb-10">
+            Masha Allah! Application dinka yana karkashin tantancewa. Ba za'a dauki lokaci ba zaka sami sakamako mai dadi.
+        </p>
+        
+        <div class="space-y-4">
+            <button onclick="window.location.href='member-dashboard.html'" class="w-full bg-white text-black font-black py-4 rounded-2xl hover:bg-gray-200 transition shadow-xl">
+                SWITCH TO MEMBER DASHBOARD
+            </button>
+            <button id="reapplyBtn" onclick="location.reload()" class="hidden w-full border border-[#D4AF37] text-[#D4AF37] font-bold py-3 rounded-2xl text-xs uppercase tracking-widest">
+                Re-Apply & Fix Errors
+            </button>
+        </div>
     </div>
 </div>
 
@@ -69,7 +96,6 @@
 
     let vendorLocation = null;
 
-    // 2. GPS Logic
     function startGPS() {
         const status = document.getElementById('gps-status');
         if (navigator.geolocation) {
@@ -81,7 +107,6 @@
         }
     }
 
-    // 3. Navigation & Validation
     function validateLayer1() {
         if(!document.getElementById('bizName').value || !vendorLocation) {
             alert("Saka Suna sannan ka tabbatar GPS ya nuna!");
@@ -96,7 +121,6 @@
         document.getElementById('layer' + n).classList.add('active');
     }
 
-    // 4. Camera
     async function startCamera() {
         const video = document.getElementById('webcam');
         const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
@@ -107,9 +131,33 @@
         }, 3000);
     }
 
-    // 5. UPLOAD TO FIREBASE
+    // 2. HANDLE MODAL STATUS
+    function handleStatus(statusType) {
+        const modal = document.getElementById('statusModal');
+        const title = document.getElementById('modalTitle');
+        const msg = document.getElementById('modalMsg');
+        const icon = document.getElementById('modalIcon');
+        const reapply = document.getElementById('reapplyBtn');
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        if(statusType === 'pending') {
+            title.innerText = "Under Review";
+            msg.innerText = "Muna duba bayananka. Zaka iya cigaba da amfani da sauran sassan site din as a member kafin mu baka dama.";
+        } else if(statusType === 'rejected') {
+            title.innerText = "Yi Hakuri";
+            title.style.color = "#ef4444";
+            msg.innerText = "An samu kuskure a application dinka. Daure ka gyara domin ka shiga sahun kwararrunmu.";
+            reapply.classList.remove('hidden');
+            icon.innerText = "✕";
+            icon.style.background = "#ef4444";
+        }
+    }
+
+    // 3. UPLOAD TO FIREBASE
     async function saveToFirebase() {
-        const btn = event.target;
+        const btn = document.querySelector('#layer3 .primary-btn');
         btn.innerText = "UPLOADING...";
         btn.disabled = true;
 
@@ -117,16 +165,17 @@
             name: document.getElementById('bizName').value,
             type: document.getElementById('bizType').value,
             location: vendorLocation,
+            status: "pending", // Sabon mamba zai zama pending
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         };
 
         try {
             await db.collection("vendors").add(data);
-            alert("Masha Allah! An tura bayanan zuwa Database.");
-            location.reload();
+            handleStatus('pending'); // Nuna Modal din "Under Review" nan take
         } catch (e) {
             alert("Error: " + e.message);
             btn.disabled = false;
+            btn.innerText = "RETRY UPLOAD";
         }
     }
 </script>
