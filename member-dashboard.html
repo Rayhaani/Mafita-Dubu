@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <title>Global Market | Member Galaxy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Plus+Jakarta+Sans:wght@400;800&display=swap" rel="stylesheet">
+    <style>
+        body { background: #020617; color: white; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .neon-text { color: #D4AF37; font-family: 'Satisfy', cursive; }
+    </style>
+</head>
+<body class="p-6">
+    <nav class="flex justify-between items-center mb-10">
+        <h1 class="text-4xl neon-text">Welcome, <span id="userName">Member</span></h1>
+        <div class="w-12 h-12 bg-gradient-to-tr from-yellow-400 to-yellow-700 rounded-full"></div>
+    </nav>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="vendorGrid">
+        </div>
+
+    <script type="module">
+        // Firebase setup dinka anan... (Tabbatar ka saka config dinka)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Nuna sunan user (zaka iya dauko shi daga localStorage ko Auth)
+        document.getElementById('userName').innerText = localStorage.getItem('currentUserName') || "Guest";
+
+        const q = query(collection(db, "vendors"), where("status", "==", "approved"));
+        onSnapshot(q, (snapshot) => {
+            const grid = document.getElementById('vendorGrid');
+            grid.innerHTML = '';
+            snapshot.forEach(doc => {
+                const v = doc.data();
+                grid.innerHTML += `
+                    <div class="glass p-6 rounded-[30px] hover:border-yellow-500 transition">
+                        <h3 class="text-2xl font-bold mb-2">${v.name}</h3>
+                        <p class="text-xs text-gray-400 uppercase tracking-widest">${v.type}</p>
+                        <button class="mt-4 w-full py-2 bg-white text-black font-bold rounded-xl text-sm">VIEW PRODUCTS</button>
+                    </div>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>
