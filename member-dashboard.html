@@ -93,6 +93,13 @@
     </footer>
 
     <script>
+        
+        // Gatekeeper: Idan ba a yi login ba, ba za a iya zama a wannan shafin ba
+if (!localStorage.getItem('currentUserName')) {
+    alert("Kayi hakuri! Wannan shafin na mambobi ne kawai. Da fatan zaka yi rajista ko shiga (Login).");
+    window.location.href = 'index.html'; // Zai mayar da shi homepage
+}
+        
         // Dauko sunan mamba
         window.onload = function() {
             const name = localStorage.getItem('currentUserName') || "Elite Member";
