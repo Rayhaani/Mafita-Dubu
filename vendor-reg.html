@@ -167,6 +167,7 @@
             location: vendorLocation,
             status: "pending",
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            localStorage.setItem('currentUserName', document.getElementById('bizName').value);
         };
 
         try {
