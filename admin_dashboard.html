@@ -16,8 +16,7 @@
             background: var(--deep-bg); 
             color: white; 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            margin: 0; 
-            padding: 0;
+            margin: 0; padding: 0;
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -26,86 +25,72 @@
             font-family: 'Orbitron', sans-serif;
             color: var(--neon-gold);
             font-size: 0.9rem;
-            white-space: nowrap;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
 
-        /* TOP BAR */
+        /* TOP NAV */
         .top-nav {
             position: fixed;
             top: 0; left: 0; right: 0;
             height: 65px;
             background: #0a0f1a;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            display: flex; align-items: center; justify-content: space-between;
             padding: 0 15px;
             z-index: 1001;
             border-bottom: 1px solid rgba(212, 175, 55, 0.1);
         }
 
-        /* SIDEBAR */
+        /* PROFESSIONAL SIDEBAR */
         .futuristic-sidebar {
-            width: 240px;
-            background: #0f172a;
-            border-right: 1px solid rgba(212, 175, 55, 0.2);
+            width: 260px;
+            background: rgba(10, 15, 26, 0.98);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid rgba(212, 175, 55, 0.15);
             height: 100vh;
             position: fixed;
-            left: -240px;
-            top: 0;
+            left: -260px; top: 0;
             z-index: 9999;
-            transition: 0.4s ease-in-out;
-            padding: 20px;
-            padding-top: 80px;
-            display: flex;
-            flex-direction: column;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column;
         }
 
         .sidebar-active { left: 0 !important; }
 
+        .sidebar-user-box {
+            padding: 30px 20px;
+            background: linear-gradient(to bottom, rgba(212, 175, 55, 0.05), transparent);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            margin-bottom: 15px;
+            margin-top: 65px;
+        }
+
         .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            color: #94a3b8;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            margin-bottom: 5px;
+            display: flex; align-items: center; gap: 15px;
+            padding: 14px 25px;
+            color: #8a99af;
+            font-size: 0.85rem;
+            transition: 0.3s;
             text-decoration: none;
         }
 
-        .nav-item:hover, .nav-item.active { background: rgba(212, 175, 55, 0.1); color: var(--neon-gold); }
-
-        .logout-btn {
-            margin-top: auto;
-            color: #ef4444;
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            font-size: 0.8rem;
-            font-weight: bold;
-            text-align: center;
-            cursor: pointer;
+        .nav-item:hover, .nav-item.active {
+            color: var(--neon-gold);
+            background: rgba(212, 175, 55, 0.08);
+            border-left: 3px solid var(--neon-gold);
         }
 
         .menu-trigger {
-            background: #1e293b;
-            color: var(--neon-gold);
+            background: #1e293b; color: var(--neon-gold);
             border: 1px solid var(--neon-gold);
-            width: 38px; height: 38px;
-            border-radius: 8px;
+            width: 38px; height: 38px; border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
         }
 
-        .main-content {
-            padding: 15px;
-            padding-top: 80px;
-            width: 100%;
-        }
+        .main-content { padding: 15px; padding-top: 85px; width: 100%; }
 
+        /* 4-GRID STATS */
         .stat-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -121,20 +106,32 @@
             border-top: 2px solid var(--neon-gold);
         }
 
-        #map { 
-            height: 380px; 
-            border-radius: 15px; 
-            border: 2px solid var(--neon-gold); 
-            margin-bottom: 20px;
-            background: white;
+        /* TABLE */
+        .table-container {
+            background: #0a0f1a;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+            margin-bottom: 25px;
         }
 
+        .table-header-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .pending-title { font-weight: 800; font-size: 0.8rem; color: white; }
+        .view-all { color: var(--neon-gold); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; }
+
+        #map { height: 350px; border-radius: 15px; border: 2px solid var(--neon-gold); margin-top: 20px; background: white; }
+
         .overlay {
-            display: none;
-            position: fixed;
+            display: none; position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 9998;
+            background: rgba(0,0,0,0.7); z-index: 9998;
         }
     </style>
 </head>
@@ -154,16 +151,24 @@
     <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
 
     <aside id="sidebar" class="futuristic-sidebar">
-        <div class="mb-6 px-2">
-            <h2 class="cyber-heading" style="color: white;">MD OS</h2>
+        <div class="sidebar-user-box">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-yellow-600 flex items-center justify-center text-white font-bold border border-yellow-400/30 shadow-lg">M</div>
+                <div>
+                    <h2 class="text-xs font-bold text-white uppercase tracking-wider">MD OS v3.0</h2>
+                    <p class="text-[9px] text-yellow-500 font-bold uppercase">Root Access</p>
+                </div>
+            </div>
         </div>
         <nav style="flex: 1">
-            <a href="#" class="nav-item active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-            <a href="#" class="nav-item"><i class="fa-solid fa-users"></i> Members</a>
-            <a href="#" class="nav-item"><i class="fa-solid fa-shop"></i> Vendors</a>
-            <a href="#" class="nav-item"><i class="fa-solid fa-shield"></i> Security</a>
+            <a href="#" class="nav-item active"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-users-gear"></i> Members</a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-cart-flatbed-suitcases"></i> Vendors</a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-fingerprint"></i> Security</a>
         </nav>
-        <div class="logout-btn" onclick="alert('Logging out...')">LOGOUT</div>
+        <div class="p-4 border-t border-white/5">
+            <button onclick="alert('Logging out...')" class="w-full py-2 bg-red-500/10 text-red-500 rounded-lg text-xs font-bold border border-red-500/20 transition hover:bg-red-500 hover:text-white">LOGOUT</button>
+        </div>
     </aside>
 
     <main class="main-content">
@@ -174,7 +179,7 @@
             </div>
             <div class="stat-card">
                 <p class="text-[8px] text-gray-500 font-bold uppercase">Vendors</p>
-                <h3 id="totalVendors" class="text-base font-bold text-[#D4AF37]">4,820</h3>
+                <h3 class="text-base font-bold text-[#D4AF37]">4,820</h3>
             </div>
             <div class="stat-card">
                 <p class="text-[8px] text-gray-500 font-bold uppercase">Experts</p>
@@ -186,15 +191,19 @@
             </div>
         </div>
 
-        <div class="bg-[#0a0f1a] rounded-xl border border-white/5 overflow-hidden mb-5">
+        <div class="table-container">
+            <div class="table-header-box">
+                <span class="pending-title">Pending Approvals</span>
+                <span class="view-all">View All Portals</span>
+            </div>
             <div class="overflow-x-auto">
-                <table class="w-full text-left text-[10px]">
+                <table class="w-full text-left text-[9px]">
                     <thead class="bg-white/5 text-gray-500 uppercase">
                         <tr>
-                            <th class="p-3">Applicant</th>
-                            <th class="p-3">Portal</th>
-                            <th class="p-3">Status</th>
-                            <th class="p-3 text-right">Action</th>
+                            <th class="px-4 py-3">Applicant</th>
+                            <th class="px-4 py-3">Portal</th>
+                            <th class="px-4 py-3">Status</th>
+                            <th class="px-4 py-3 text-right">Actions</th>
                         </tr>
                     </thead>
                     <tbody id="adminVendorList"></tbody>
@@ -203,17 +212,16 @@
         </div>
 
         <div id="map"></div>
-        <div id="providerDetail" class="bg-white/5 p-4 rounded-xl border border-white/10 text-center text-[10px] italic text-gray-500">
-            Scanning for signals...
-        </div>
     </main>
 
     <script>
         function toggleSidebar() {
             const s = document.getElementById('sidebar');
             const o = document.getElementById('overlay');
-            s.classList.toggle('sidebar-active');
-            o.style.display = s.classList.contains('sidebar-active') ? 'block' : 'none';
+            if(s && o) {
+                s.classList.toggle('sidebar-active');
+                o.style.display = s.classList.contains('sidebar-active') ? 'block' : 'none';
+            }
         }
     </script>
 
@@ -239,8 +247,24 @@
 
         onSnapshot(collection(db, "vendors"), (snapshot) => {
             let pending = 0;
+            const list = document.getElementById('adminVendorList');
+            list.innerHTML = ""; 
             snapshot.forEach((docSnap) => {
-                if(docSnap.data().status === 'pending') pending++;
+                const data = docSnap.data();
+                if(data.status === 'pending') {
+                    pending++;
+                    list.innerHTML += `
+                        <tr class="border-b border-white/5">
+                            <td class="px-4 py-4 text-white font-bold">${data.name || 'Aliyu Tech'}</td>
+                            <td class="px-4 py-4 text-gray-400">${data.portal || 'Market'}</td>
+                            <td class="px-4 py-4"><span class="bg-yellow-500/10 text-yellow-500 px-2 py-0.5 rounded border border-yellow-500/20 text-[7px] font-bold">PENDING</span></td>
+                            <td class="px-4 py-4 text-right flex gap-2 justify-end">
+                                <button class="bg-green-600 text-white px-2 py-1 rounded text-[7px] font-bold">OK</button>
+                                <button class="bg-red-600/20 text-red-500 px-2 py-1 rounded text-[7px] font-bold">X</button>
+                            </td>
+                        </tr>
+                    `;
+                }
             });
             document.getElementById('pCount').innerText = pending;
         });
