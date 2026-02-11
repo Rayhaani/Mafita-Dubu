@@ -2,105 +2,315 @@
 <html lang="ha">
 <head>
     <meta charset="UTF-8">
-    <title>Global Market | Admin Radar Center</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD Admin Radar</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Plus+Jakarta+Sans:wght@400;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        body { background: #05070a; color: white; font-family: 'Plus Jakarta Sans', sans-serif; }
- 
-        .alphabet-font { 
-            font-family: 'Satisfy', cursive; 
-            color: #D4AF37; 
-            font-style: normal !important; 
-            font-weight: 400;
-            /* Wannan zai hana rubutu ya tafi layi na biyu */
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        :root { --neon-gold: #D4AF37; --deep-bg: #05070a; }
+
+        body { 
+            background: var(--deep-bg); 
+            color: white; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            margin: 0; 
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .glass-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; }
-        #map { height: 500px; width: 100%; border-radius: 15px; border: 2px solid #D4AF37; }
-        .status-badge { padding: 2px 8px; border-radius: 5px; font-size: 10px; font-weight: bold; text-transform: uppercase; }
+        .cyber-heading {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-gold);
+            font-size: 0.9rem;
+            white-space: nowrap;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* TOP BAR */
+        .top-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 65px;
+            background: #0a0f1a;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            z-index: 1001;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        /* PROFESSIONAL SIDEBAR CSS */
+.futuristic-sidebar {
+    width: 260px;
+    background: rgba(10, 15, 26, 0.95);
+    backdrop-filter: blur(15px);
+    border-right: 1px solid rgba(212, 175, 55, 0.15);
+    height: 100vh;
+    position: fixed;
+    left: -260px;
+    top: 0;
+    z-index: 9999;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-active { left: 0 !important; box-shadow: 25px 0 50px rgba(0,0,0,0.6); }
+
+/* Profile Section in Sidebar */
+.sidebar-user-box {
+    padding: 30px 20px;
+    background: linear-gradient(to bottom, rgba(212, 175, 55, 0.05), transparent);
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    margin-bottom: 15px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 25px;
+    color: #8a99af;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    margin: 2px 0;
+}
+
+.nav-item i {
+    font-size: 1.1rem;
+    width: 25px;
+}
+
+.nav-item:hover {
+    color: #fff;
+    background: linear-gradient(to right, rgba(212, 175, 55, 0.1), transparent);
+    border-left: 3px solid var(--neon-gold);
+}
+
+.nav-item.active {
+    color: var(--neon-gold);
+    background: rgba(212, 175, 55, 0.08);
+    border-left: 3px solid var(--neon-gold);
+}
+
+.nav-label {
+    font-size: 10px;
+    color: #4b5563;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 20px 25px 10px;
+    font-weight: 800;
+}
+
+.logout-container {
+    padding: 20px;
+    border-top: 1px solid rgba(255,255,255,0.03);
+    margin-top: auto;
+}
+
+.pro-logout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px;
+    background: rgba(239, 68, 68, 0.05);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.1);
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.pro-logout:hover {
+    background: #ef4444;
+    color: white;
+}
         
-        /* Gyaran Scrollbar */
-        .custom-scroll::-webkit-scrollbar { width: 5px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 10px; }
+
+        .menu-trigger {
+            background: #1e293b;
+            color: var(--neon-gold);
+            border: 1px solid var(--neon-gold);
+            width: 38px; height: 38px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+        }
+
+        .main-content {
+            padding: 15px;
+            padding-top: 80px;
+            width: 100%;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 12px;
+            border-radius: 12px;
+            border-top: 2px solid var(--neon-gold);
+        }
+
+        #map { 
+            height: 380px; 
+            border-radius: 15px; 
+            border: 2px solid var(--neon-gold); 
+            margin-bottom: 20px;
+            background: white;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 9998;
+        }
     </style>
 </head>
-<body class="p-6">
+<body>
 
-    <div class="max-w-7xl mx-auto">
-        <header class="flex justify-between items-center mb-8 border-b border-gray-800 pb-4">
-            <div class="overflow-hidden">
-                <h1 class="text-5xl alphabet-font">Admin Radar</h1>
-                <p class="text-[10px] text-gray-500 tracking-[0.3em] mt-1">MANAGEMENT SYSTEM</p>
-            </div>
-            <div class="text-right flex-shrink-0">
-                <span id="pCount" class="text-3xl font-black text-orange-500">0</span>
-                <p class="text-[9px] uppercase text-gray-400">Pending Review</p>
-            </div>
-        </header>
+    <header class="top-nav">
+        <div class="flex items-center gap-3">
+            <div class="menu-trigger" onclick="toggleSidebar()"><i class="fa-solid fa-bars-staggered"></i></div>
+            <h1 class="cyber-heading">Admin Radar</h1>
+        </div>
+        <div class="bg-orange-600/20 px-3 py-1 rounded-lg border border-orange-600/30 text-right">
+            <span id="pCount" class="text-orange-500 font-bold text-sm leading-none">0</span>
+            <span class="text-[7px] text-gray-400 block uppercase font-black">Pending</span>
+        </div>
+    </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-2">
-                <div id="map" class="shadow-2xl shadow-yellow-900/10"></div>
-            </div>
+    <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
 
-            <div class="glass-card flex flex-col h-[500px]">
-                <h2 class="text-3xl alphabet-font border-b border-gray-800 pb-3 mb-5">Profile Details</h2>
-                <div id="providerDetail" class="flex-grow overflow-y-auto custom-scroll">
-                    <p class="text-center text-gray-500 mt-20 text-sm">Click a pin on the map to manage.</p>
-                </div>
+    <aside id="sidebar" class="futuristic-sidebar">
+    <div class="sidebar-user-box">
+        <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-yellow-800 flex items-center justify-center text-white font-bold text-xl shadow-lg border border-yellow-400/30">
+                A
+            </div>
+            <div>
+                <h2 class="text-sm font-bold text-white tracking-wide">MD ADMIN</h2>
+                <p class="text-[10px] text-yellow-500 font-bold uppercase tracking-tighter">System Commander</p>
             </div>
         </div>
-    </div> 
-
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div class="stat-card border-l-4 border-blue-500">
-                <p class="text-[9px] text-gray-500 font-bold uppercase">Total Members</p>
-                <h3 class="text-2xl font-black">12,450</h3>
-            </div>
-            <div class="stat-card border-l-4 border-yellow-500">
-                <p class="text-[9px] text-gray-500 font-bold uppercase">Approved Vendors</p>
-                <h3 id="totalVendors" class="text-2xl font-black text-yellow-500">4,820</h3>
-            </div>
-            <div class="stat-card border-l-4 border-green-500">
-                <p class="text-[9px] text-gray-500 font-bold uppercase">Experts</p>
-                <h3 class="text-2xl font-black text-green-500">158</h3>
-            </div>
-            <div class="stat-card border-l-4 border-blue-400">
-                <p class="text-[9px] text-gray-500 font-bold uppercase">Escrow</p>
-                <h3 class="text-2xl font-black text-blue-400">₦2.4M</h3>
-            </div>
     </div>
 
-    <div class="mb-2 overflow-hidden">
-            <div class="flex justify-between items-end mb-2">
-                <h1 class="text-5xl alphabet-font">Admin Radar</h1>
-                <div class="text-right">
-                    <span id="pCount" class="text-4xl font-black text-orange-500">0</span>
-                    <p class="text-[9px] uppercase text-gray-400 font-bold">Pending Review</p>
-                </div>
+    <div class="nav-label">Main Menu</div>
+    <nav class="flex-1 overflow-y-auto">
+        <a href="#" class="nav-item active">
+            <i class="fa-solid fa-house-chimney-window"></i>
+            <span>Control Center</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-user-shield"></i>
+            <span>Member Matrix</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-handshake-angle"></i>
+            <span>Vendor Nodes</span>
+        </a>
+
+        <div class="nav-label">Security & Logs</div>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-server"></i>
+            <span>System Status</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-file-shield"></i>
+            <span>Audit Logs</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-gear"></i>
+            <span>Advanced Config</span>
+        </a>
+    </nav>
+
+    <div class="logout-container">
+        <button class="pro-logout" onclick="alert('Securing System... Goodbye!')">
+            <i class="fa-solid fa-power-off"></i>
+            <span>TERMINATE SESSION</span>
+        </button>
+    </div>
+    </aside>
+    
+
+    <main class="main-content">
+        <div class="stat-grid">
+            <div class="stat-card">
+                <p class="text-[8px] text-gray-500 font-bold uppercase">Members</p>
+                <h3 class="text-base font-bold">12,450</h3>
             </div>
-            <p class="text-[10px] text-gray-500 tracking-[0.3em] mb-4">MANAGEMENT SYSTEM</p>
-            <div id="map"></div>
+            <div class="stat-card">
+                <p class="text-[8px] text-gray-500 font-bold uppercase">Vendors</p>
+                <h3 id="totalVendors" class="text-base font-bold text-[#D4AF37]">4,820</h3>
+            </div>
+            <div class="stat-card">
+                <p class="text-[8px] text-gray-500 font-bold uppercase">Experts</p>
+                <h3 class="text-base font-bold text-green-500">158</h3>
+            </div>
+            <div class="stat-card">
+                <p class="text-[8px] text-gray-500 font-bold uppercase">Vault</p>
+                <h3 class="text-base font-bold text-blue-400">₦2.4M</h3>
+            </div>
         </div>
 
-        <div id="providerDetail" class="mt-6 bg-white/5 p-6 rounded-[2rem] border border-white/10 hidden">
+        <div class="bg-[#0a0f1a] rounded-xl border border-white/5 overflow-hidden mb-5">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-[10px]">
+                    <thead class="bg-white/5 text-gray-500 uppercase">
+                        <tr>
+                            <th class="p-3">Applicant</th>
+                            <th class="p-3">Portal</th>
+                            <th class="p-3">Status</th>
+                            <th class="p-3 text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminVendorList"></tbody>
+                </table>
+            </div>
         </div>
-    
-    
+
+        <div id="map"></div>
+        <div id="providerDetail" class="bg-white/5 p-4 rounded-xl border border-white/10 text-center text-[10px] italic text-gray-500">
+            Scanning for signals...
+        </div>
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            const s = document.getElementById('sidebar');
+            const o = document.getElementById('overlay');
+            s.classList.toggle('sidebar-active');
+            o.style.display = s.classList.contains('sidebar-active') ? 'block' : 'none';
+        }
+    </script>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Tabbatar wannan configuration din naka ne
         const firebaseConfig = {
             apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
             authDomain: "global-market-admin.firebaseapp.com",
@@ -112,81 +322,17 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const map = L.map('map').setView([12.0022, 8.5920], 12);
+        
+        const map = L.map('map', { zoomControl: false }).setView([12.0022, 8.5920], 12);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-        let markers = {};
 
         onSnapshot(collection(db, "vendors"), (snapshot) => {
             let pending = 0;
             snapshot.forEach((docSnap) => {
-                const data = docSnap.data();
-                const id = docSnap.id;
-                if(data.status === 'pending') pending++;
-
-                if(data.location) {
-                    if(markers[id]) map.removeLayer(markers[id]);
-                    const color = data.status === 'approved' ? '#10b981' : (data.status === 'rejected' ? '#ef4444' : '#f59e0b');
-                    const marker = L.circleMarker([data.location.lat, data.location.lng], { 
-                        color: color, radius: 9, fillOpacity: 0.8 
-                    }).addTo(map);
-                    marker.on('click', () => showDetails(data, id));
-                    markers[id] = marker;
-                }
+                if(docSnap.data().status === 'pending') pending++;
             });
             document.getElementById('pCount').innerText = pending;
         });
-
-        window.showDetails = (data, id) => {
-            const container = document.getElementById('providerDetail');
-            container.innerHTML = `
-                <div class="space-y-5">
-                    <img src="${data.photo || 'https://via.placeholder.com/200'}" class="w-full h-44 object-cover rounded-2xl border border-gray-800 shadow-xl">
-                    <div class="overflow-hidden">
-                        <h3 class="text-4xl alphabet-font mb-1">${data.name}</h3>
-                        <div class="flex items-center gap-2">
-                            <span class="status-badge ${data.status === 'approved' ? 'bg-green-900 text-green-300' : (data.status === 'rejected' ? 'bg-red-900 text-red-300' : 'bg-orange-900 text-orange-300')}">
-                                ${data.status}
-                            </span>
-                            <span class="text-[10px] text-gray-400 font-bold">${data.type}</span>
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 gap-3">
-                        <button onclick="updateStatus('${id}', 'approved')" class="bg-green-600 py-3 rounded-xl font-bold text-xs">APPROVE</button>
-                        <button onclick="updateStatus('${id}', 'rejected')" class="bg-orange-600 py-3 rounded-xl font-bold text-xs">REJECT</button>
-                        <button onclick="deleteRecord('${id}')" class="bg-red-800 py-3 rounded-xl font-bold text-xs">DELETE</button>
-                    </div>
-                </div>
-            `;
-        };
-
-        window.updateStatus = async (id, s) => {
-            if(confirm(`Confirm ${s}?`)) {
-                await updateDoc(doc(db, "vendors", id), { status: s });
-            }
-        };
-
-        window.deleteRecord = async (id) => {
-            if(confirm("Are you sure?")) {
-                await deleteDoc(doc(db, "vendors", id));
-            }
-        };
-        window.updateStatus = async (id, s) => {
-    if(confirm(`Confirm ${s} status?`)) {
-        await updateDoc(doc(db, "vendors", id), { 
-            status: s,
-            welcomeMsg: s === 'approved' ? "Barka da zuwa! An tantance ka cikin nasara. Yanzu zaka iya baje kolin ayyukanka ga duniya." : ""
-        });
-        alert("Status Updated!");
-    }
-};
-
-        const namePlaceholder = document.getElementById('userName'); // Tabbatar akwai span mai wannan ID din
-if(namePlaceholder) {
-    namePlaceholder.innerText = localStorage.getItem('currentUserName') || "User";
-}
-        
     </script>
 </body>
 </html>
