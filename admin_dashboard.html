@@ -2,20 +2,54 @@
 <html lang="ha">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Panel</title>
+    <title>Global Market | Admin Radar Center</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
-        body { background: #05070a; color: white; padding: 20px; font-family: sans-serif; }
-        .user-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        body { background: #05070a; color: white; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .alphabet-font { 
+    font-family: 'Dancing Script', cursive; 
+    color: #D4AF37; 
+    font-style: normal !important; 
+        }
+        .glass-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; }
+        #map { height: 500px; width: 100%; border-radius: 15px; border: 2px solid #D4AF37; }
+        .status-badge { padding: 2px 8px; border-radius: 5px; font-size: 10px; font-weight: bold; text-transform: uppercase; }
     </style>
 </head>
-<body>
-    <h1 class="text-2xl font-bold text-[#D4AF37] mb-6">ADMIN DASHBOARD - USERS</h1>
-    <div id="userList">Loading registrations...</div>
+<body class="p-6">
 
+    <div class="max-w-7xl mx-auto">
+        <header class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
+            <div>
+                <h1 class="text-6xl alphabet-font">Admin Radar</h1>
+                <p class="text-[10px] text-gray-500 tracking-[0.3em] mt-2">VERIFICATION & MANAGEMENT SYSTEM</p>
+            </div>
+            <div class="text-right">
+                <span id="pCount" class="text-3xl font-black text-orange-500">0</span>
+                <p class="text-[9px] uppercase text-gray-400">Waiting for Review</p>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2">
+                <div id="map" class="shadow-2xl shadow-yellow-900/10"></div>
+            </div>
+
+            <div class="glass-card flex flex-col h-[500px]">
+                <h2 class="text-3xl alphabet-font border-b border-gray-800 pb-3 mb-5">Profile Details</h2>
+                <div id="providerDetail" class="flex-grow overflow-y-auto custom-scroll">
+                    <p class="text-center text-gray-500 mt-20 text-sm italic">Click a pin on the map to manage provider.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
@@ -28,29 +62,73 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const map = L.map('map').setView([12.0022, 8.5920], 12);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-        onSnapshot(collection(db, "users"), (snapshot) => {
-            const list = document.getElementById('userList');
-            list.innerHTML = "";
+        let markers = {};
+
+        onSnapshot(collection(db, "vendors"), (snapshot) => {
+            let pending = 0;
             snapshot.forEach((docSnap) => {
-                const user = docSnap.data();
+                const data = docSnap.data();
                 const id = docSnap.id;
-                list.innerHTML += `
-                    <div class="user-card">
-                        <div>
-                            <p class="font-bold">${user.fullName} (${user.role})</p>
-                            <p class="text-xs text-gray-400">${user.email} | ${user.location}</p>
-                            <p class="text-xs ${user.status === 'pending' ? 'text-yellow-500' : 'text-green-500'} uppercase">${user.status}</p>
-                        </div>
-                        ${user.status === 'pending' ? `<button onclick="approve('${id}')" class="bg-green-600 px-3 py-1 rounded text-xs">APPROVE</button>` : ''}
-                    </div>
-                `;
+                if(data.status === 'pending') pending++;
+
+                if(data.location) {
+                    if(markers[id]) map.removeLayer(markers[id]);
+                    const color = data.status === 'approved' ? '#10b981' : (data.status === 'rejected' ? '#ef4444' : '#f59e0b');
+                    const marker = L.circleMarker([data.location.lat, data.location.lng], { 
+                        color: color, radius: 9, fillOpacity: 0.8 
+                    }).addTo(map);
+                    marker.on('click', () => showDetails(data, id));
+                    markers[id] = marker;
+                }
             });
+            document.getElementById('pCount').innerText = pending;
         });
 
-        window.approve = async (id) => {
-            await updateDoc(doc(db, "users", id), { status: 'approved' });
-            alert("Approved!");
+        window.showDetails = (data, id) => {
+            const container = document.getElementById('providerDetail');
+            container.innerHTML = `
+                <div class="space-y-5 animate-in fade-in duration-500">
+                    <img src="${data.photo || 'https://via.placeholder.com/200'}" class="w-full h-44 object-cover rounded-2xl border border-gray-800">
+                    <div>
+                        <h3 class="text-4xl alphabet-font mb-1">${data.name}</h3>
+                        <div class="flex items-center gap-2">
+                            <span class="status-badge ${data.status === 'approved' ? 'bg-green-900 text-green-300' : (data.status === 'rejected' ? 'bg-red-900 text-red-300' : 'bg-orange-900 text-orange-300')}">
+                                ${data.status}
+                            </span>
+                            <span class="text-[10px] text-gray-500 font-bold uppercase">${data.type}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white/5 p-4 rounded-xl text-[11px] space-y-2 border border-white/5">
+                        <p>🕒 Registered: ${data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : 'Just now'}</p>
+                        <p>📍 GPS: ${data.location.lat.toFixed(4)}, ${data.location.lng.toFixed(4)}</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-3">
+                        <button onclick="updateStatus('${id}', 'approved')" class="bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-bold text-xs transition">APPROVE SERVICE</button>
+                        <button onclick="updateStatus('${id}', 'rejected')" class="bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-xl font-bold text-xs transition">REJECT (SEND BACK)</button>
+                        <button onclick="deleteRecord('${id}')" class="bg-red-800 hover:bg-red-900 text-white py-3 rounded-xl font-bold text-xs transition">DELETE FROM SYSTEM</button>
+                    </div>
+                </div>
+            `;
+        };
+
+        window.updateStatus = async (id, s) => {
+            if(confirm(`Confirm ${s} status?`)) {
+                await updateDoc(doc(db, "vendors", id), { status: s });
+                alert("Status Updated!");
+            }
+        };
+
+        window.deleteRecord = async (id) => {
+            if(confirm("Are you sure? This cannot be undone!")) {
+                await deleteDoc(doc(db, "vendors", id));
+                alert("Record Deleted.");
+                location.reload();
+            }
         };
     </script>
 </body>
