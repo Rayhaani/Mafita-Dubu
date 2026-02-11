@@ -2,63 +2,110 @@
 <html lang="ha">
 <head>
     <meta charset="UTF-8">
-    <title>Global Market | Member Galaxy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mafita Dubu | Master Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Plus+Jakarta+Sans:wght@400;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Satisfy&display=swap" rel="stylesheet">
+    
     <style>
-        body { background: #020617; color: white; font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
-        .neon-text { color: #D4AF37; font-family: 'Satisfy', cursive; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #05070a; color: white; overflow-x: hidden; }
+        .glass-portal { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 35px; transition: all 0.4s ease; }
+        .glass-portal:hover { border-color: #d4af37; transform: translateY(-10px); background: rgba(212, 175, 55, 0.05); }
+        .neon-glow { text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
+        .portal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; }
+        
+        /* Animation na musamman don portals */
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-in { animation: slideUp 0.6s ease-out forwards; }
     </style>
 </head>
 <body class="p-6">
-    <nav class="flex justify-between items-center mb-10">
-        <h1 class="text-4xl neon-text">Welcome, <span id="userName">Member</span></h1>
-        <div class="w-12 h-12 bg-gradient-to-tr from-yellow-400 to-yellow-700 rounded-full"></div>
-    </nav>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="vendorGrid">
+    <header class="flex justify-between items-center mb-10">
+        <div>
+            <p class="text-[10px] uppercase tracking-[0.5em] text-gray-500 mb-1">Elite Ecosystem Access</p>
+            <h1 class="text-3xl font-extrabold">Welcome, <span id="userName" class="text-[#d4af37] font-['Satisfy'] text-4xl neon-glow">Member</span></h1>
         </div>
+        <div class="relative group">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#d4af37] to-[#fcf6ba] p-[2px] cursor-pointer">
+                <div class="w-full h-full bg-[#05070a] rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-user-gear text-[#d4af37]"></i>
+                </div>
+            </div>
+        </div>
+    </header>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        
-        // 2. CONFIG DINKA (Kar ka taba wannan bangaren)
-        const firebaseConfig = {
-            apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
-            authDomain: "global-market-admin.firebaseapp.com",
-            projectId: "global-market-admin",
-            storageBucket: "global-market-admin.firebasestorage.app",
-            messagingSenderId: "259715265619",
-            appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
-        };
-        
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+    <div class="mb-10 p-4 bg-blue-600/10 border border-blue-500/20 rounded-2xl flex items-center gap-4 animate-in">
+        <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center animate-pulse">
+            <i class="fa-solid fa-bell text-white text-xs"></i>
+        </div>
+        <div class="text-xs">
+            <p class="font-bold text-blue-400">Sabon Labari:</p>
+            <p class="text-gray-400">An bude sashin koyon girki na zamani yanzu. Duba shi!</p>
+        </div>
+    </div>
 
-        // 3. JAVASCRIPT DA ZAI DAUKO SUNA
-        const savedName = localStorage.getItem('currentUserName');
-        if (savedName) {
-            document.getElementById('userName').innerText = savedName;
+    <div class="portal-grid">
+        
+        <a href="skill-hub.html" class="glass-portal p-6 text-center group">
+            <div class="text-3xl mb-4 group-hover:scale-125 transition">🛠️</div>
+            <h3 class="text-sm font-bold uppercase tracking-widest">Koyon Sana'a</h3>
+            <p class="text-[10px] text-gray-500 mt-2">Skill Acquisition Hub</p>
+        </a>
+
+        <a href="solutions.html" class="glass-portal p-6 text-center group">
+            <div class="text-3xl mb-4 group-hover:scale-125 transition">💡</div>
+            <h3 class="text-sm font-bold uppercase tracking-widest">Neman Mafita</h3>
+            <p class="text-[10px] text-gray-500 mt-2">Life Solutions Portal</p>
+        </a>
+
+        <a href="experts.html" class="glass-portal p-6 text-center group">
+            <div class="text-3xl mb-4 group-hover:scale-125 transition">🛡️</div>
+            <h3 class="text-sm font-bold uppercase tracking-widest">Kwararru</h3>
+            <p class="text-[10px] text-gray-500 mt-2">Verified Professional AI</p>
+        </a>
+
+        <a href="health.html" class="glass-portal p-6 text-center group">
+            <div class="text-3xl mb-4 group-hover:scale-125 transition">🩺</div>
+            <h3 class="text-sm font-bold uppercase tracking-widest">Kiwon Lafiya</h3>
+            <p class="text-[10px] text-gray-500 mt-2">Health & Wellness Hub</p>
+        </a>
+
+        <a href="market.html" class="glass-portal p-6 text-center group">
+            <div class="text-3xl mb-4 group-hover:scale-125 transition">🛒</div>
+            <h3 class="text-sm font-bold uppercase tracking-widest">Yan Kasuwa</h3>
+            <p class="text-[10px] text-gray-500 mt-2">Elite Marketplace</p>
+        </a>
+
+        <a href="marriage.html" class="glass-portal p-6 text-center group">
+            <div class="text-3xl mb-4 group-hover:scale-125 transition">❤️</div>
+            <h3 class="text-sm font-bold uppercase tracking-widest">Hadin Aure</h3>
+            <p class="text-[10px] text-gray-500 mt-2">Family & Marriage Hub</p>
+        </a>
+
+    </div>
+
+    <footer class="mt-20 border-t border-gray-800 pt-6 text-center">
+        <button onclick="logout()" class="text-gray-600 hover:text-red-500 transition text-xs font-bold tracking-widest">
+            <i class="fa-solid fa-power-off mr-2"></i> EXIT MASTER PORTAL
+        </button>
+    </footer>
+
+    <script>
+        // Dauko sunan mamba
+        window.onload = function() {
+            const name = localStorage.getItem('currentUserName') || "Elite Member";
+            document.getElementById('userName').innerText = name;
         }
 
-        // 4. FIREBASE LOGIC (Wanda zai kawo Approved Vendors)
-        const q = query(collection(db, "vendors"), where("status", "==", "approved"));
-        onSnapshot(q, (snapshot) => {
-            const grid = document.getElementById('vendorGrid');
-            grid.innerHTML = '';
-            snapshot.forEach(doc => {
-                const v = doc.data();
-                grid.innerHTML += `
-                    <div class="glass p-6 rounded-[30px] hover:border-yellow-500 transition shadow-lg">
-                        <h3 class="text-2xl font-bold mb-2">${v.name}</h3>
-                        <p class="text-xs text-gray-400 uppercase tracking-widest">${v.type}</p>
-                        <button class="mt-4 w-full py-3 bg-white text-black font-bold rounded-xl text-sm hover:bg-yellow-500 transition">VIEW PRODUCTS</button>
-                    </div>
-                `;
-            });
-        });
+        function logout() {
+            if(confirm("Kana son fita daga Master Portal?")) {
+                localStorage.removeItem('currentUserName');
+                window.location.href = 'index.html';
+            }
+        }
     </script>
+
 </body>
 </html>
