@@ -45,100 +45,50 @@
             border-bottom: 1px solid rgba(212, 175, 55, 0.1);
         }
 
-        /* PROFESSIONAL SIDEBAR CSS */
-.futuristic-sidebar {
-    width: 260px;
-    background: rgba(10, 15, 26, 0.95);
-    backdrop-filter: blur(15px);
-    border-right: 1px solid rgba(212, 175, 55, 0.15);
-    height: 100vh;
-    position: fixed;
-    left: -260px;
-    top: 0;
-    z-index: 9999;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-}
+        /* SIDEBAR */
+        .futuristic-sidebar {
+            width: 240px;
+            background: #0f172a;
+            border-right: 1px solid rgba(212, 175, 55, 0.2);
+            height: 100vh;
+            position: fixed;
+            left: -240px;
+            top: 0;
+            z-index: 9999;
+            transition: 0.4s ease-in-out;
+            padding: 20px;
+            padding-top: 80px;
+            display: flex;
+            flex-direction: column;
+        }
 
-.sidebar-active { left: 0 !important; box-shadow: 25px 0 50px rgba(0,0,0,0.6); }
+        .sidebar-active { left: 0 !important; }
 
-/* Profile Section in Sidebar */
-.sidebar-user-box {
-    padding: 30px 20px;
-    background: linear-gradient(to bottom, rgba(212, 175, 55, 0.05), transparent);
-    border-bottom: 1px solid rgba(255,255,255,0.03);
-    margin-bottom: 15px;
-}
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            color: #94a3b8;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+            text-decoration: none;
+        }
 
-.nav-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 14px 25px;
-    color: #8a99af;
-    font-size: 0.85rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    border-left: 3px solid transparent;
-    margin: 2px 0;
-}
+        .nav-item:hover, .nav-item.active { background: rgba(212, 175, 55, 0.1); color: var(--neon-gold); }
 
-.nav-item i {
-    font-size: 1.1rem;
-    width: 25px;
-}
-
-.nav-item:hover {
-    color: #fff;
-    background: linear-gradient(to right, rgba(212, 175, 55, 0.1), transparent);
-    border-left: 3px solid var(--neon-gold);
-}
-
-.nav-item.active {
-    color: var(--neon-gold);
-    background: rgba(212, 175, 55, 0.08);
-    border-left: 3px solid var(--neon-gold);
-}
-
-.nav-label {
-    font-size: 10px;
-    color: #4b5563;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    padding: 20px 25px 10px;
-    font-weight: 800;
-}
-
-.logout-container {
-    padding: 20px;
-    border-top: 1px solid rgba(255,255,255,0.03);
-    margin-top: auto;
-}
-
-.pro-logout {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    padding: 12px;
-    background: rgba(239, 68, 68, 0.05);
-    color: #ef4444;
-    border: 1px solid rgba(239, 68, 68, 0.1);
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.pro-logout:hover {
-    background: #ef4444;
-    color: white;
-}
-        
+        .logout-btn {
+            margin-top: auto;
+            color: #ef4444;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+        }
 
         .menu-trigger {
             background: #1e293b;
@@ -204,56 +154,17 @@
     <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
 
     <aside id="sidebar" class="futuristic-sidebar">
-    <div class="sidebar-user-box">
-        <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-yellow-800 flex items-center justify-center text-white font-bold text-xl shadow-lg border border-yellow-400/30">
-                A
-            </div>
-            <div>
-                <h2 class="text-sm font-bold text-white tracking-wide">MD ADMIN</h2>
-                <p class="text-[10px] text-yellow-500 font-bold uppercase tracking-tighter">System Commander</p>
-            </div>
+        <div class="mb-6 px-2">
+            <h2 class="cyber-heading" style="color: white;">MD OS</h2>
         </div>
-    </div>
-
-    <div class="nav-label">Main Menu</div>
-    <nav class="flex-1 overflow-y-auto">
-        <a href="#" class="nav-item active">
-            <i class="fa-solid fa-house-chimney-window"></i>
-            <span>Control Center</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="fa-solid fa-user-shield"></i>
-            <span>Member Matrix</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="fa-solid fa-handshake-angle"></i>
-            <span>Vendor Nodes</span>
-        </a>
-
-        <div class="nav-label">Security & Logs</div>
-        <a href="#" class="nav-item">
-            <i class="fa-solid fa-server"></i>
-            <span>System Status</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="fa-solid fa-file-shield"></i>
-            <span>Audit Logs</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="fa-solid fa-gear"></i>
-            <span>Advanced Config</span>
-        </a>
-    </nav>
-
-    <div class="logout-container">
-        <button class="pro-logout" onclick="alert('Securing System... Goodbye!')">
-            <i class="fa-solid fa-power-off"></i>
-            <span>TERMINATE SESSION</span>
-        </button>
-    </div>
+        <nav style="flex: 1">
+            <a href="#" class="nav-item active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-users"></i> Members</a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-shop"></i> Vendors</a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-shield"></i> Security</a>
+        </nav>
+        <div class="logout-btn" onclick="alert('Logging out...')">LOGOUT</div>
     </aside>
-    
 
     <main class="main-content">
         <div class="stat-grid">
