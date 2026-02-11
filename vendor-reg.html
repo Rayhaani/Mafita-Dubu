@@ -7,7 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Satisfy&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
         :root { --milk-bg: #FFF5E1; --royal-black: #1a1405; --gold: #bf953f; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--milk-bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
@@ -20,10 +22,11 @@
         .scanner-box { width: 100%; height: 200px; background: #000; border-radius: 15px; position: relative; overflow: hidden; }
         video { width: 100%; height: 100%; object-fit: cover; }
         
-        /* Font din da kake so ba tare da karkata ba */
+        /* 2. Gyaran CSS Style (Satisfy Font - No Italics, No Breaking) */
         .alphabet-font { 
-            font-family: 'Dancing Script', cursive; 
+            font-family: 'Satisfy', cursive; 
             font-style: normal !important; 
+            white-space: nowrap;
         }
     </style>
 </head>
@@ -71,18 +74,17 @@
         </p>
         
         <div class="space-y-4">
-            <button onclick="window.location.href='member-dashboard.html'" class="w-full bg-white text-black font-black py-4 rounded-2xl hover:bg-gray-200 transition shadow-xl">
+            <button onclick="window.location.href='member-dashboard.html'" class="w-full bg-white text-black font-black py-4 rounded-2xl hover:scale-95 transition shadow-xl border-b-4 border-gray-400">
                 SWITCH TO MEMBER DASHBOARD
             </button>
-            <button id="reapplyBtn" onclick="location.reload()" class="hidden w-full border border-[#D4AF37] text-[#D4AF37] font-bold py-3 rounded-2xl text-xs uppercase tracking-widest">
-                Re-Apply & Fix Errors
+            <button id="reapplyBtn" onclick="location.reload()" class="hidden w-full border border-[#D4AF37] text-[#D4AF37] font-bold py-3 rounded-2xl text-xs uppercase tracking-widest hover:bg-[#D4AF37]/10 transition">
+                RE-APPLY NOW
             </button>
         </div>
     </div>
 </div>
 
 <script>
-    // 1. Firebase Initialize
     const firebaseConfig = {
         apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
         authDomain: "global-market-admin.firebaseapp.com",
@@ -131,7 +133,6 @@
         }, 3000);
     }
 
-    // 2. HANDLE MODAL STATUS
     function handleStatus(statusType) {
         const modal = document.getElementById('statusModal');
         const title = document.getElementById('modalTitle');
@@ -155,7 +156,6 @@
         }
     }
 
-    // 3. UPLOAD TO FIREBASE
     async function saveToFirebase() {
         const btn = document.querySelector('#layer3 .primary-btn');
         btn.innerText = "UPLOADING...";
@@ -165,13 +165,13 @@
             name: document.getElementById('bizName').value,
             type: document.getElementById('bizType').value,
             location: vendorLocation,
-            status: "pending", // Sabon mamba zai zama pending
+            status: "pending",
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         };
 
         try {
             await db.collection("vendors").add(data);
-            handleStatus('pending'); // Nuna Modal din "Under Review" nan take
+            handleStatus('pending');
         } catch (e) {
             alert("Error: " + e.message);
             btn.disabled = false;
