@@ -164,10 +164,10 @@
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 const uid = userCredential.user.uid;
 
-                // 1. Duba ko shi Admin ne
+                // 1. Duba ko shi Admin ne - Mun saita ya shiga cikin folder ta Admin
                 const adminDoc = await getDoc(doc(db, "admins", uid));
                 if (adminDoc.exists()) {
-                    window.location.href = "admin-radar.html";
+                    window.location.href = "Admin/admin-dashboard.html";
                     return;
                 }
 
@@ -175,19 +175,23 @@
                 const vendorDoc = await getDoc(doc(db, "vendors", uid));
                 if (vendorDoc.exists()) {
                     if (vendorDoc.data().status === "approved") {
-                        window.location.href = "vendor-dashboard.html";
+                        window.location.href = "Admin/vendor-dashboard.html";
                     } else {
                         alert("Har yanzu Admin bai amince da takardunka ba.");
-                        btn.disabled = false; loader.style.display = 'none'; text.innerText = 'LOG IN';
+                        resetUI();
                     }
                     return;
                 }
 
                 // 3. Idan duk babu, to Member ne
-                window.location.href = "member-dashboard.html";
+                window.location.href = "Admin/member-dashboard.html";
 
             } catch (error) {
                 alert("Kuskure: " + error.message);
+                resetUI();
+            }
+
+            function resetUI() {
                 btn.disabled = false;
                 loader.style.display = 'none';
                 text.innerText = 'LOG IN';
