@@ -244,22 +244,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
         const auth = getAuth(app);
 
-// Wannan zai tambayeka Email da Password duk lokacin da ka bude shafin
-if (!auth.currentUser) {
-    const email = prompt("Shigar da Email din Admin:");
-    const password = prompt("Shigar da Password:");
-    
-    signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-            alert("Barka da shigowa MD!");
-            location.reload(); // Zai sake loda shafin yanzu da kake da iko
-        })
-        .catch((error) => {
-            alert("Kuskure: Ba kai ne Admin ba!");
-            console.error(error);
-        });
-}
-        
+
 
 // --- 1. FUNCTION NA APPROVAL ---
 window.approveVendor = async (vendorId) => {
