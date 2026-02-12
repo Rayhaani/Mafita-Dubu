@@ -167,7 +167,7 @@
                 // 1. Duba ko shi Admin ne - Mun saita ya shiga cikin folder ta Admin
                 const adminDoc = await getDoc(doc(db, "admins", uid));
                 if (adminDoc.exists()) {
-                    window.location.href = "Admin/admin-dashboard.html";
+                    window.location.href = "admin-dashboard.html";
                     return;
                 }
 
@@ -175,7 +175,7 @@
                 const vendorDoc = await getDoc(doc(db, "vendors", uid));
                 if (vendorDoc.exists()) {
                     if (vendorDoc.data().status === "approved") {
-                        window.location.href = "Admin/vendor-dashboard.html";
+                        window.location.href = "vendor-dashboard.html";
                     } else {
                         alert("Har yanzu Admin bai amince da takardunka ba.");
                         resetUI();
@@ -184,7 +184,7 @@
                 }
 
                 // 3. Idan duk babu, to Member ne
-                window.location.href = "Admin/member-dashboard.html";
+                window.location.href = "member-dashboard.html";
 
             } catch (error) {
                 alert("Kuskure: " + error.message);
