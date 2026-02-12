@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Access | Global Market</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; }
+        .cyber-border { border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 0 15px rgba(212, 175, 55, 0.1); }
+    </style>
+</head>
+<body class="h-screen flex items-center justify-center p-6">
+
+    <div class="max-w-md w-full p-8 rounded-2xl cyber-border bg-white/[0.02] backdrop-blur-xl text-center">
+        <div class="mb-6 text-[#D4AF37] text-4xl">
+            <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h2 class="text-2xl font-black tracking-widest mb-2">ADMIN ACCESS</h2>
+        <p class="text-gray-500 text-xs mb-8 uppercase tracking-tighter">Enter credentials to unlock Radar</p>
+
+        <form id="adminLoginForm" class="space-y-4 text-left">
+            <div>
+                <label class="text-[10px] text-[#D4AF37] font-bold ml-1">ADMIN EMAIL</label>
+                <input type="email" id="email" required class="w-full bg-white/5 border border-white/10 p-3 rounded-lg focus:outline-none focus:border-[#D4AF37] transition text-sm">
+            </div>
+            <div>
+                <label class="text-[10px] text-[#D4AF37] font-bold ml-1">ENCRYPTED PASSWORD</label>
+                <input type="password" id="password" required class="w-full bg-white/5 border border-white/10 p-3 rounded-lg focus:outline-none focus:border-[#D4AF37] transition text-sm text-[#D4AF37]">
+            </div>
+            <button type="submit" class="w-full bg-[#D4AF37] text-black font-black py-3 rounded-lg hover:bg-[#b8962d] transition uppercase text-xs mt-4">
+                Initialize Login
+            </button>
+        </form>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
+            authDomain: "global-market-admin.firebaseapp.com",
+            projectId: "global-market-admin",
+            storageBucket: "global-market-admin.firebasestorage.app",
+            messagingSenderId: "259715265619",
+            appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.getElementById('adminLoginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then(() => {
+                    window.location.href = "admin-radar.html"; // Wannan zai kai ka Radar
+                })
+                .catch((error) => {
+                    alert("Kuskure: " + error.message);
+                });
+        });
+    </script>
+</body>
+</html>
