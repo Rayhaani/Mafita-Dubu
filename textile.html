@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MD | Textile & Clothing Elite</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Montserrat:wght@900&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --milk-bg: #E8E1D5; 
             --dark-chocolate: #1A0F0D; 
             --gold-accent: #B8860B;
+            --neon-gold: #D4AF37;
         }
 
         body {
@@ -21,34 +23,46 @@
             padding: 0;
         }
 
-        /* 1. HEADING - Fixed with Capital Letters and Spaces */
-        .header-area {
-            padding: 5px 0 25px; 
-            text-align: center;
-            margin-top: 0;
+        /* FUTURISTIC STICKY HEADER - Ba zai bace ba idan anyi scrolling */
+        .glass-header {
+            background: rgba(26, 15, 13, 0.98); /* Dark base don ya fito fili */
+            backdrop-filter: blur(20px);
+            border-bottom: 1.5px solid rgba(212, 175, 55, 0.4);
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         .header-title {
-            font-size: 2.1rem; 
-            font-weight: 900;
-            color: var(--dark-chocolate);
-            letter-spacing: -0.5px;
-            text-transform: none; 
-            line-height: 1;
-            display: inline-block;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--neon-gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
         }
 
-        .header-title span {
-            color: var(--gold-accent);
-            margin: 0 8px; 
+        .header-subtext {
+            font-size: 0.5rem;
+            color: #A0A0A0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+            text-align: center;
         }
 
-        /* 2. GRID SYSTEM */
+        /* GRID SYSTEM - Boxes dinka ba'a taba su ba */
         .compact-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 25px 15px;
-            padding: 10px 15px;
+            padding: 20px 15px;
             max-width: 500px;
             margin: auto;
         }
@@ -61,7 +75,6 @@
             width: 100%;
         }
 
-        /* 3. THE BOX STYLE */
         .box-frame {
             width: 100%;
             aspect-ratio: 1 / 1;
@@ -72,7 +85,6 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
-        /* 4. REFINED LABEL BUTTONS */
         .label-bar {
             background: var(--dark-chocolate);
             padding: 5px 10px;
@@ -97,14 +109,20 @@
 </head>
 <body>
 
-    <header class="header-area">
-        <h1 class="header-title">Textile<span>&</span>Clothing</h1>
-    </header>
+    <header class="glass-header">
+        <button onclick="history.back()" class="text-white text-lg active:scale-90 transition-transform">
+            <i class="fa-solid fa-arrow-left-long"></i>
+        </button>
+        
+        <div>
+            <h1 class="header-title">TEXTILE & CLOTHING</h1>
+            <p class="header-subtext">Select Sub-Category Hub</p>
+        </div>
+        
+        <div class="w-6"></div> </header>
 
     <main class="compact-grid">
-        
         <script>
-            // Added the 4 new categories to the existing list
             const categories = [
                 "Atamfa", "Laces", "Shadda", "Yadi", 
                 "Lifaya", "Sleepwear", "Hijabs", "Gyale", 
@@ -123,7 +141,6 @@
                 `);
             });
         </script>
-
     </main>
 
     <div style="height: 40px;"></div>
