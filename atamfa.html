@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD | Atamfa Elite Market</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Plus+Jakarta+Sans:wght@400;500;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --milk-bg: #E8E1D5; 
+            --dark-chocolate: #1A0F0D; 
+            --neon-gold: #D4AF37;
+            --verified-blue: #00BAFF;
+        }
+
+        body {
+            background-color: var(--milk-bg);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            color: var(--dark-chocolate);
+        }
+
+        .orbitron { font-family: 'Orbitron', sans-serif; }
+
+        /* HEADER SECTION */
+        .header-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--dark-chocolate);
+            padding: 12px 15px;
+            border-bottom: 2px solid var(--neon-gold);
+        }
+
+        .search-bar {
+            background: white;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            margin-top: 10px;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        /* PRODUCT GRID */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 15px;
+        }
+
+        /* ELITE PRODUCT CARD */
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .img-area {
+            width: 100%;
+            aspect-ratio: 1 / 1.1;
+            background: #f4f4f4;
+        }
+
+        .img-area img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .details-area {
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px; /* Gap tsakanin bar guda biyu */
+        }
+
+        /* SHARED BAR STYLE (The Mirror Effect) */
+        .info-bar {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 6px 10px;
+            border: 0.5px solid #ececec;
+        }
+
+        /* Upper Bar: Name & Price */
+        .name-price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .p-name {
+            font-size: 0.6rem;
+            font-weight: 800;
+            color: #222;
+            text-transform: uppercase;
+            max-width: 60%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .p-price {
+            font-size: 0.65rem;
+            font-weight: 900;
+            color: var(--dark-chocolate);
+        }
+
+        /* Lower Bar: TrustID & Location */
+        .trust-line {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.5rem;
+            font-weight: 700;
+            color: #444;
+        }
+
+        .loc-line {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 0.48rem;
+            color: #777;
+            margin-top: 2px;
+        }
+
+        .verified-icon { color: var(--verified-blue); font-size: 0.55rem; }
+
+        .btn-buy {
+            background: var(--dark-chocolate);
+            color: var(--neon-gold);
+            width: 100%;
+            padding: 8px;
+            border-radius: 10px;
+            font-size: 0.65rem;
+            font-weight: 900;
+            border: 1px solid var(--neon-gold);
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-container">
+        <div class="flex justify-between items-center">
+            <button onclick="history.back()" class="text-white"><i class="fa-solid fa-arrow-left"></i></button>
+            <h1 class="orbitron text-[#D4AF37] text-xs">ATAMFA MARKET</h1>
+            <div class="w-5"></div>
+        </div>
+        <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+            <input type="text" placeholder="Bincika kaya...">
+        </div>
+    </header>
+
+    <main class="product-grid">
+
+        <div class="product-card">
+            <div class="img-area">
+                <img src="https://via.placeholder.com/300x340" alt="Atamfa">
+            </div>
+            <div class="details-area">
+                
+                <div class="info-bar">
+                    <div class="name-price-row">
+                        <span class="p-name">Super Wax Luxury</span>
+                        <span class="p-price">₦22,500</span>
+                    </div>
+                </div>
+
+                <div class="info-bar">
+                    <div class="trust-line">
+                        <i class="fa-solid fa-circle-check verified-icon"></i>
+                        <span>TrustID Verified</span>
+                        <span class="text-gray-300">|</span>
+                        <span>5+ Years</span>
+                    </div>
+                    <div class="loc-line">
+                        <i class="fa-solid fa-location-dot text-red-500"></i>
+                        <span>Kano, Kwari Market</span>
+                    </div>
+                </div>
+
+                <button class="btn-buy">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="img-area">
+                <img src="https://via.placeholder.com/300x340" alt="Atamfa">
+            </div>
+            <div class="details-area">
+                
+                <div class="info-bar">
+                    <div class="name-price-row">
+                        <span class="p-name">Hi-Target Gold</span>
+                        <span class="p-price">₦9,800</span>
+                    </div>
+                </div>
+
+                <div class="info-bar">
+                    <div class="trust-line">
+                        <i class="fa-solid fa-circle-check verified-icon"></i>
+                        <span>TrustID Verified</span>
+                        <span class="text-gray-300">|</span>
+                        <span>3+ Years</span>
+                    </div>
+                    <div class="loc-line">
+                        <i class="fa-solid fa-location-dot text-red-500"></i>
+                        <span>Kaduna, Gumi Market</span>
+                    </div>
+                </div>
+
+                <button class="btn-buy">Buy Now</button>
+            </div>
+        </div>
+
+    </main>
+
+    <div style="height: 50px;"></div>
+
+</body>
+                          </html>
+                          
