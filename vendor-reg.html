@@ -179,6 +179,36 @@
             btn.innerText = "RETRY UPLOAD";
         }
     }
+
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+async function registerVendor(email, password, fullName, businessName) {
+    const auth = getAuth();
+    const db = getFirestore();
+
+    try {
+        // 1. Kirkirar account a Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // 2. Aika bayanan zuwa Firestore (inda Radar dinka take kallo)
+        await setDoc(doc(db, "vendors", user.uid), {
+            uid: user.uid,
+            name: fullName,
+            business: businessName,
+            email: email,
+            status: "pending", // Wannan zai sa ya fito a Radar dinka
+            role: "vendor",
+            createdAt: new Date()
+        });
+
+        alert("Rajista tayi kyau! Jira Admin ya duba.");
+    } catch (error) {
+        console.error("Kuskure:", error.message);
+    }
+}
+    
 </script>
 </body>
 </html>
