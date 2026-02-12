@@ -167,7 +167,7 @@
                 // 1. Duba ko shi Admin ne - Mun saita ya shiga cikin folder ta Admin
                 const adminDoc = await getDoc(doc(db, "admins", uid));
                 if (adminDoc.exists()) {
-                    window.location.href = "admin-dashboard.html";
+                    window.location.href = "admin_dashboard.html";
                     return;
                 }
 
