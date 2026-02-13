@@ -7,197 +7,133 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script src="market.js" defer></script>
+    
+    <style>
+        /* CSS din da ke daidaita dukkan launuka */
+        :root {
+            --milk-bg: #E8E1D5; 
+            --dark-chocolate: #1A0F0D; 
+            --neon-gold: #D4AF37;
+        }
+
+        body { background-color: #F5F1E9; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
+
+        /* SEARCH BAR STYLING */
+        .temu-style-camera {
+            background: var(--dark-chocolate);
+            width: 35px; height: 35px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid var(--neon-gold);
+        }
+
+        /* OVERLAY STYLING (A Ine kake son bincikawa?) */
+        #search-overlay {
+            position: fixed; inset: 0; background: rgba(26, 15, 13, 0.98);
+            z-index: 9999; display: none; flex-direction: column;
+            align-items: center; justify-content: center; padding: 20px;
+            backdrop-filter: blur(15px);
+        }
+
+        .pearl-btn {
+            width: 100%; max-width: 320px; padding: 20px;
+            border-radius: 20px; margin-bottom: 15px;
+            border: 2px solid var(--neon-gold);
+            text-align: center; color: white; transition: 0.3s;
+        }
+
+        .cta-global { background: linear-gradient(135deg, #8B6508, #B8860B); }
+    </style>
 </head>
 <body>
 
-<div id="ai-loading-screen" style="display:none; position:fixed; inset:0; background:#ffffff; z-index:9999; flex-direction:column; align-items:center; justify-content:center; padding: 20px;">
-    
-    <div style="width: 85%; height: 60%; border: 8px solid #F5F1E9; border-radius: 40px; overflow: hidden; position: relative;">
-        
-        <img id="scanned-image-preview" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;">
-        
+    <div id="ai-loading-screen" style="display:none; position:fixed; inset:0; background:#ffffff; z-index:10000; flex-direction:column; align-items:center; justify-content:center; padding: 20px;">
+        <div style="width: 85%; height: 60%; border: 8px solid #F5F1E9; border-radius: 40px; overflow: hidden; position: relative;">
+            <img id="scanned-image-preview" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        </div>
+        <p style="margin-top:20px; color:#8B6508; font-weight: bold; letter-spacing: 2px;">SCANNING...</p>
     </div>
-
-    <p style="margin-top:20px; color:#8B6508; font-weight: bold; letter-spacing: 2px;">SCANNING...</p>
-</div>
 
     <header class="sticky top-0 z-[100] bg-[#F5F1E9] pt-4 pb-2 px-4 text-center">
         <h1 class="text-[7px] font-black tracking-[0.5em] text-[#5D4037] uppercase opacity-60 mb-1">African Elite Ecosystem</h1>
-        <h2 class="market-title !text-xl">GLOBAL MARKET</h2>
+        <h2 class="text-xl font-black text-[#1A0F0D]">GLOBAL MARKET</h2>
     </header>
 
-<audio id="arrival-sound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
-    
-    <div class="px-6 header-spacer relative z-10">
+    <div class="px-6 mt-4 relative z-10">
         <div class="relative group max-w-md mx-auto">
-            <div class="relative bg-white border border-[#E0D7C6] rounded-full flex items-center pr-1.5 pl-5 py-1.5">
-                <input type="text" id="market-search" placeholder="Me kake nema?" class="bg-transparent border-none outline-none w-full text-xs font-bold text-[#3E2723]" oninput="handleSearch(this)">
+            <div class="relative bg-white border border-[#E0D7C6] rounded-full flex items-center pr-1.5 pl-5 py-1.5 shadow-sm">
+                <input type="text" id="market-search" placeholder="Me kake nema?" class="bg-transparent border-none outline-none w-full text-xs font-bold text-[#3E2723]">
                 <div class="flex items-center space-x-2">
                     <button onclick="openAICamera()" class="ml-2 active:scale-90 transition-transform">
-                        <div class="temu-style-camera"><div class="camera-inner"><i class="fa-solid fa-camera text-white text-[10px]"></i></div></div>
+                        <div class="temu-style-camera"><i class="fa-solid fa-camera text-white text-[10px]"></i></div>
                     </button>
-                    <button class="bg-gradient-to-r from-[#8B6508] to-[#B8860B] w-8 h-8 rounded-full flex items-center justify-center text-white shadow-lg">
-                        <i class="fa-solid fa-magnifying-glass" onclick="manualSearch()"></i>
+                    <button onclick="showSearchOverlay()" class="bg-gradient-to-r from-[#8B6508] to-[#B8860B] w-8 h-8 rounded-full flex items-center justify-center text-white shadow-lg">
+                        <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </div>
             </div>
-            <div id="suggestionBox" style="display:none; position:absolute; top:100%; left:0; right:0; background:white; z-index:9999; border-radius:10px; border:1px solid #ddd;">
-                <ul id="suggestionList"></ul>
-            </div>
         </div>
     </div>
 
-<div class="duet-grid">
-    <div class="industry-mini-box">
-    <a href="textile.html" style="text-decoration: none; display: block; width: 100%; height: 100%;">
-        <div class="box-content">
-            <div class="display-area" id="box1"><img src="" onerror="this.style.display='none'"></div>
-            <button class="category-btn">TEXTILES</button>
-        </div>
-    </a>
-    </div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box2"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">FOOTWEAR</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box3"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">ELECTRONICS</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box4"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">COSMETICS</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box5"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">FURNITURE</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box6"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">GROCERIES</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box7"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">AUTO SPARE</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box8"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">PHARMACY</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box9"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">KITCHEN</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box10"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">SPORTS</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box11"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">HEALTH</button></div></div>
-    <div class="industry-mini-box"><div class="box-content"><div class="display-area" id="box12"><img src="" onerror="this.style.display='none'"></div><button class="category-btn">FASHION</button></div></div>
-</div>
-    
-    
-    <div id="search-overlay" style="display:none;">
-        <div class="world-box"><div class="sphere"></div><div class="ring"></div></div>
-        <h2 class="search-text">A Ina ne Kake Son Bincikawa?</h2>
+    <div id="search-overlay">
+        <h2 class="text-white text-xl font-bold mb-8 text-center">A Ina ne Kake Son Bincikawa?</h2>
         
-        <button id="btn-global" class="pearl-btn cta-global" onclick="globalSearchMotsi('global');">
-    <i class="fa-solid fa-earth-africa mr-2"></i> GLOBAL SEARCH
-    <span class="block text-[13px] font-bold" style="color: #FFFDD0 !important;">Bincika duka kasuwannin duniya</span>
-</button>
+        <button class="pearl-btn cta-global" onclick="handleFinalSearch('global')">
+            <i class="fa-solid fa-earth-africa mr-2"></i> GLOBAL SEARCH
+            <span class="block text-[11px] font-medium text-cream-100">Bincika duka kasuwannin duniya</span>
+        </button>
 
-<button id="btn-near" class="pearl-btn cta-global" onclick="globalSearchMotsi('near_me');">
-    <i class="fa-solid fa-location-crosshairs mr-2"></i> NEAR YOU
-    <span class="block text-[13px] font-bold" style="color: #FFFDD0 !important;">Bincika vendors dake kusa da kai</span>
-</button>
+        <button class="pearl-btn cta-global" onclick="handleFinalSearch('near_me')">
+            <i class="fa-solid fa-location-crosshairs mr-2"></i> NEAR YOU
+            <span class="block text-[11px] font-medium text-cream-100">Bincika vendors dake kusa da kai</span>
+        </button>
         
-        
-        <p class="fixed bottom-10 left-0 right-0 text-center text-gray-400 font-bold text-xs" onclick="closeSearch()">
-            <i class="fa-solid fa-xmark mr-1"></i> Soke Bincike (Cancel)
+        <p class="mt-10 text-gray-400 font-bold text-xs" onclick="closeSearchOverlay()">
+            <i class="fa-solid fa-xmark mr-1"></i> Soke Bincike
         </p>
     </div>
 
-
-    <div id="vendor-reg-page" style="padding: 20px; font-family: sans-serif; max-width: 400px; margin: auto;">
-    <h2 style="text-align: center; color: #333;">Vendor Registration</h2>
-    <p style="font-size: 12px; color: #666; text-align: center;">Tabbatar kana cikin shagonka yayin yin wannan rijistar.</p>
-
-    <div style="margin-bottom: 15px;">
-        <label style="display: block; font-weight: bold; font-size: 14px;">Store Name</label>
-        <input type="text" id="store-name" placeholder="Misali: Al-Amin Global" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+    <div id="results-page" class="hidden fixed inset-0 bg-[#E8E1D5] z-[10001] overflow-y-auto">
+        <div id="dynamic-content"></div>
     </div>
 
-    <div style="margin-bottom: 15px;">
-        <label style="display: block; font-weight: bold; font-size: 14px;">Shop Location (GPS)</label>
-        <div style="display: flex; gap: 10px;">
-            <input type="text" id="shop-coords" readonly placeholder="Ba a dauki location ba" style="flex: 1; padding: 10px; background: #f9f9f9; border: 1px solid #ccc; border-radius: 8px; font-size: 12px;">
-            <button onclick="fetchStoreLocation()" style="padding: 10px; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer;">
-                <i class="fa-solid fa-location-dot"></i> Get
-            </button>
-        </div>
-    </div>
+    <script>
+        // Bude Overlay
+        function showSearchOverlay() {
+            document.getElementById('search-overlay').style.display = 'flex';
+        }
 
-    <button onclick="saveVendor()" style="width: 100%; padding: 15px; background: #007bff; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 16px;">Complete Registration</button>
-    </div>
+        // Rufe Overlay
+        function closeSearchOverlay() {
+            document.getElementById('search-overlay').style.display = 'none';
+        }
 
+        // 1. Gyaran Near Me & Global Search Logic
+        function handleFinalSearch(type) {
+            const overlay = document.getElementById('search-overlay');
+            const loading = document.getElementById('ai-loading-screen');
+            
+            overlay.style.display = 'none';
+            loading.style.display = 'flex';
 
-    <div id="near-me-results" class="fixed inset-0 bg-white z-[6000] hidden flex-col">
-    <div style="padding: 20px; background: #f8f9fa; display: flex; align-items: center; border-bottom: 1px solid #ddd;">
-        <button onclick="closeResults()" style="background: none; border: none; font-size: 20px; cursor: pointer;">
-            <i class="fa-solid fa-arrow-left"></i>
-        </button>
-        <h3 style="margin-left: 15px; font-size: 18px; font-weight: 800; color: #333;">Vendors Near You</h3>
-    </div>
+            // Maimakon dogon scanning, zamu yi 1 second kacal
+            setTimeout(() => {
+                loading.style.display = 'none';
+                
+                if(type === 'global') {
+                    // Anan ne zamu sa shi ya bude "atamfa.html" ko ya nuna template din
+                    alert("Yanzu system zata loda Template din Atamfa tare da kayan da ka nema!");
+                    // location.href = 'atamfa.html'; // Misali
+                } else {
+                    alert("Ga vendors dake kusa da kai nan take!");
+                    // Buɗe "near-me-results" nan take
+                }
+            }, 1000); 
+        }
 
-    <div id="gps-error-state" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:40px; text-align:center; flex: 1;">
-        <div class="map-animation" style="width:120px; height:120px; background:#f0f4ff; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
-            <i class="fa-solid fa-map-location-dot" style="font-size:50px; color:#007bff;"></i>
-        </div>
-        <h3 style="font-weight:bold; font-size:18px; color:#222;">Enable Location Services</h3>
-        <p style="color:#666; font-size:13px; margin:10px 0 20px 0;">Muna bukatar location dinka don nuna maka shagunan da ke kusa da kai.</p>
-        <button onclick="nearYouSearch()" style="width:100%; padding:15px; background:#007bff; color:white; border:none; border-radius:12px; font-weight:bold;">
-            Share Location
-        </button>
-    </div>
-
-    <div id="vendors-list" style="flex: 1; overflow-y: auto; padding: 15px;">
-        </div>
-    </div>
-
-
-  <div id="gps-toast" style="display:none; position:fixed; top:15px; left:50%; transform:translateX(-50%); z-index:999999; width:94%; max-width:430px; opacity:0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
-    <div class="elite-glass">
-        <div class="glow-border"></div>
-        <div class="content-wrapper">
-            <div class="icon-sector">
-                <div class="main-pulse">
-                    <i class="fa-solid fa-location-dot"></i>
-                </div>
-                <div class="echo-pulse"></div>
-            </div>
-            <div class="text-sector">
-                <h3 style="letter-spacing: 3px;">GPS REQUIRED</h3>
-                <p>Don Allah kunna <span>Location</span> dinka domin gano vendors mafi kusa da kai.</p>
-            </div>
-        </div>
-        <div class="timer-bar"></div>
-    </div>
-</div>
-
-<audio id="toast-sound" src="https://assets.mixkit.co/active_storage/sfx/2358/2358-preview.mp3" preload="auto"></audio>
-
-<style>
-.elite-glass {
-    background: rgba(10, 10, 10, 0.92);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(184, 134, 11, 0.5);
-    border-radius: 28px;
-    padding: 18px 22px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px rgba(184, 134, 11, 0.2);
-    position: relative;
-    overflow: hidden;
-}
-.glow-border {
-    position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-    background: linear-gradient(90deg, transparent, #B8860B, transparent);
-    animation: slideGlow 3s infinite;
-}
-@keyframes slideGlow { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-.content-wrapper { display: flex; align-items: center; gap: 18px; }
-.main-pulse {
-    background: linear-gradient(135deg, #8B6508, #FFD700);
-    min-width: 50px; height: 50px; border-radius: 18px;
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-size: 22px;
-    box-shadow: 0 0 15px rgba(184, 134, 11, 0.4);
-}
-.text-sector h3 { color: #FFD700; font-size: 10px; font-weight: 900; margin: 0 0 4px 0; }
-.text-sector p { color: #F5F1E9; font-size: 13px; font-weight: 500; line-height: 1.4; margin: 0; }
-.text-sector span { color: #FFD700; font-weight: 800; text-decoration: underline; }
-.timer-bar {
-    position: absolute; bottom: 0; left: 0; height: 3.5px;
-    background: linear-gradient(to right, #8B6508, #FFD700);
-    width: 100%; animation: shrinkBar 6s linear forwards;
-}
-@keyframes shrinkBar { from { width: 100%; } to { width: 0%; } }
-</style>
-    
-    
-    </body>
+        // Camera Simulation
+        function openAICamera() {
+            alert("Kyamara tana budewa...");
+        }
+    </script>
+</body>
 </html>
