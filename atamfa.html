@@ -14,22 +14,17 @@
             --dark-chocolate: #1A0F0D; 
             --neon-gold: #D4AF37;
             --verified-blue: #00BAFF;
-            --dark-milk-ads: #D2C9B8; /* Sabuwar kalar boxes din ads */
+            --dark-milk-ads: #D2C9B8; /* Dark Milk color for ads */
         }
 
         body { background-color: var(--milk-bg); font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
 
-        /* ADS SECTION - STICKY & SLOWER */
+        /* ADS SECTION - NOT STATIC (Will scroll with page) */
         .ads-wrapper { 
             width: 100%; 
             overflow: hidden; 
             padding: 15px 0; 
-            background: rgba(232, 225, 213, 0.95); 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
-            border-bottom: 2px solid var(--neon-gold);
-            backdrop-filter: blur(10px);
+            background: #120a09; /* Original dark background for the track area */
         }
         .ads-track { 
             display: flex; 
@@ -41,16 +36,15 @@
 
         .ad-card {
             min-width: 150px; height: 160px;
-            background: var(--dark-milk-ads); /* Canja kalar zuwa Dark Milk */
+            background: var(--dark-milk-ads); /* Canja kalar background zuwa Dark Milk */
             border-radius: 20px; border: 1.5px solid var(--neon-gold);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             position: relative;
         }
         .ad-card i { font-size: 2rem; color: var(--neon-gold); margin-bottom: 8px; }
         .ad-card span { font-size: 0.7rem; color: var(--dark-chocolate); font-weight: 800; text-align: center; text-transform: uppercase; }
 
-        /* MASONRY GRID SYSTEM - NO CHANGES MADE HERE */
+        /* MASONRY GRID SYSTEM - NO CHANGES MADE */
         .main-container { display: flex; gap: 8px; padding: 8px; align-items: flex-start; }
         .column { flex: 1; display: flex; flex-direction: column; gap: 8px; }
 
@@ -191,5 +185,4 @@
         window.onload = updateDurations;
     </script>
 </body>
-                                                                    </html>
-                                                                                                                                                                                                                                                   
+</html>
