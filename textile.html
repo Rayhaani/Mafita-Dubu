@@ -23,9 +23,8 @@
             padding: 0;
         }
 
-        /* FUTURISTIC STICKY HEADER - Ba zai bace ba idan anyi scrolling */
         .glass-header {
-            background: rgba(26, 15, 13, 0.98); /* Dark base don ya fito fili */
+            background: rgba(26, 15, 13, 0.98); 
             backdrop-filter: blur(20px);
             border-bottom: 1.5px solid rgba(212, 175, 55, 0.4);
             position: sticky; 
@@ -57,7 +56,6 @@
             text-align: center;
         }
 
-        /* GRID SYSTEM - Boxes dinka ba'a taba su ba */
         .compact-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -83,6 +81,11 @@
             position: relative;
             border: 1.5px solid var(--gold-accent);
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
+        }
+
+        .category-item:active .box-frame {
+            transform: scale(0.95);
         }
 
         .label-bar {
@@ -119,7 +122,8 @@
             <p class="header-subtext">Select Sub-Category Hub</p>
         </div>
         
-        <div class="w-6"></div> </header>
+        <div class="w-6"></div> 
+    </header>
 
     <main class="compact-grid">
         <script>
@@ -131,8 +135,14 @@
             ];
 
             categories.forEach(item => {
+                // Anan ne za'a hada link din
+                let link = "#";
+                if (item === "Atamfa") {
+                    link = "atamfa.html";
+                }
+
                 document.write(`
-                    <a href="#" class="category-item">
+                    <a href="${link}" class="category-item">
                         <div class="box-frame"></div>
                         <div class="label-bar">
                             <span>${item}</span>
