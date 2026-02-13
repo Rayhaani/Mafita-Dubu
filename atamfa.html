@@ -182,7 +182,38 @@
                 else badge.textContent = diffYears + "+ Years";
             });
         }
+   
         window.onload = updateDurations;
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+    // 1. Karbo kalmar da aka nemo daga localStorage
+    const searchWord = localStorage.getItem('currentSearch') || "Global Items";
+    
+    // 2. Canja Title din shafin ya zama abin da aka nemo
+    const pageTitle = document.querySelector('h2');
+    if (pageTitle) pageTitle.innerText = searchWord.toUpperCase();
+
+    // 3. Logic na "Wanke" tsofaffin hotuna (Template Injection)
+    // Wannan misali ne: zai dauko hotuna daga intanet dangane da kalmar da aka nema
+    const productImages = document.querySelectorAll('.product-card img');
+    
+    productImages.forEach((img, index) => {
+        // Zamu yi amfani da Source.Unsplash don gwaji (Testing)
+        // Yana kawo hoto dangane da kalmar da aka baka (keyword)
+        img.src = `https://source.unsplash.com/500x${700 + index}/?${searchWord},fashion`;
+        
+        // Idan hoton ya ki budewa, ya saka hoton placeholder
+        img.onerror = function() {
+            this.src = 'https://via.placeholder.com/500x700?text=' + searchWord;
+        };
+    });
+
+    // 4. Bayan an gama komai, sai mu share localStorage din don bincike na gaba
+    // localStorage.removeItem('currentSearch'); 
+});
+        
+    
     </script>
 </body>
 </html>
