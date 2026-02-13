@@ -6,7 +6,7 @@
     <title>MD | Atamfa Elite Market</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Plus+Jakarta+Sans:wght@400;500;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -14,228 +14,182 @@
             --dark-chocolate: #1A0F0D; 
             --neon-gold: #D4AF37;
             --verified-blue: #00BAFF;
+            --dark-milk-ads: #D2C9B8; /* Sabuwar kalar boxes din ads */
         }
 
-        body {
-            background-color: var(--milk-bg);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            margin: 0;
-            color: var(--dark-chocolate);
-        }
+        body { background-color: var(--milk-bg); font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
 
-        .orbitron { font-family: 'Orbitron', sans-serif; }
-
-        /* HEADER SECTION */
-        .header-container {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: var(--dark-chocolate);
-            padding: 12px 15px;
+        /* ADS SECTION - STICKY & SLOWER */
+        .ads-wrapper { 
+            width: 100%; 
+            overflow: hidden; 
+            padding: 15px 0; 
+            background: rgba(232, 225, 213, 0.95); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
             border-bottom: 2px solid var(--neon-gold);
+            backdrop-filter: blur(10px);
         }
-
-        .search-bar {
-            background: white;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            padding: 8px 15px;
-            margin-top: 10px;
+        .ads-track { 
+            display: flex; 
+            gap: 12px; 
+            padding-left: 15px; 
+            animation: scroll-ads 45s linear infinite; 
         }
+        @keyframes scroll-ads { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .search-bar input {
-            border: none;
-            outline: none;
-            width: 100%;
-            font-size: 0.8rem;
-            margin-left: 10px;
+        .ad-card {
+            min-width: 150px; height: 160px;
+            background: var(--dark-milk-ads); /* Canja kalar zuwa Dark Milk */
+            border-radius: 20px; border: 1.5px solid var(--neon-gold);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
         }
+        .ad-card i { font-size: 2rem; color: var(--neon-gold); margin-bottom: 8px; }
+        .ad-card span { font-size: 0.7rem; color: var(--dark-chocolate); font-weight: 800; text-align: center; text-transform: uppercase; }
 
-        /* PRODUCT GRID */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            padding: 15px;
-        }
+        /* MASONRY GRID SYSTEM - NO CHANGES MADE HERE */
+        .main-container { display: flex; gap: 8px; padding: 8px; align-items: flex-start; }
+        .column { flex: 1; display: flex; flex-direction: column; gap: 8px; }
 
-        /* ELITE PRODUCT CARD */
         .product-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            background: white; border-radius: 12px; overflow: hidden;
+            display: flex; flex-direction: column; border: 0.5px solid rgba(0,0,0,0.08);
         }
 
-        .img-area {
-            width: 100%;
-            aspect-ratio: 1 / 1.1;
-            background: #f4f4f4;
-        }
+        .first-box .img-area { height: 320px !important; }
+        .standard-box .img-area { height: 240px; }
 
-        .img-area img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .img-area { width: 100%; position: relative; background: #f0f0f0; }
+        .img-area img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        .details-area {
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px; /* Gap tsakanin bar guda biyu */
-        }
+        .details-area { padding: 8px; }
+        .p-name { font-size: 10.5px; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        .price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .p-price { font-size: 14px; font-weight: 800; color: #000; }
 
-        /* SHARED BAR STYLE (The Mirror Effect) */
-        .info-bar {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 6px 10px;
-            border: 0.5px solid #ececec;
-        }
+        .stars-box { display: flex; align-items: center; gap: 2px; }
+        .stars { color: #ff9900; font-size: 8px; display: flex; }
+        .review-count { font-size: 8px; color: #999; }
 
-        /* Upper Bar: Name & Price */
-        .name-price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .trust-section {
+            background: #f9f9f9; border-radius: 8px; padding: 5px;
+            border: 0.5px solid #eee; margin-bottom: 6px;
         }
-
-        .p-name {
-            font-size: 0.6rem;
-            font-weight: 800;
-            color: #222;
-            text-transform: uppercase;
-            max-width: 60%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .p-price {
-            font-size: 0.65rem;
-            font-weight: 900;
-            color: var(--dark-chocolate);
-        }
-
-        /* Lower Bar: TrustID & Location */
-        .trust-line {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.5rem;
-            font-weight: 700;
-            color: #444;
-        }
-
-        .loc-line {
-            display: flex;
-            align-items: center;
-            gap: 3px;
-            font-size: 0.48rem;
-            color: #777;
-            margin-top: 2px;
-        }
-
-        .verified-icon { color: var(--verified-blue); font-size: 0.55rem; }
+        .trust-line { display: flex; align-items: center; gap: 4px; font-size: 9px; font-weight: 700; }
+        .loc-line { display: flex; align-items: center; gap: 4px; font-size: 8.5px; color: #777; margin-top: 2px; }
+        .verified-icon { color: var(--verified-blue); font-size: 10px; }
 
         .btn-buy {
-            background: var(--dark-chocolate);
-            color: var(--neon-gold);
-            width: 100%;
-            padding: 8px;
-            border-radius: 10px;
-            font-size: 0.65rem;
-            font-weight: 900;
-            border: 1px solid var(--neon-gold);
-            margin-top: 4px;
+            background: var(--dark-chocolate); color: var(--neon-gold);
+            width: 100%; padding: 8px; border-radius: 8px; font-size: 10px;
+            font-weight: 800; border: 1.5px solid var(--neon-gold);
         }
     </style>
 </head>
 <body>
 
-    <header class="header-container">
-        <div class="flex justify-between items-center">
-            <button onclick="history.back()" class="text-white"><i class="fa-solid fa-arrow-left"></i></button>
-            <h1 class="orbitron text-[#D4AF37] text-xs">ATAMFA MARKET</h1>
-            <div class="w-5"></div>
+    <div class="ads-wrapper">
+        <div class="ads-track">
+            <div class="ad-card"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Premium <br> Cotton Hub</span></div>
+            <div class="ad-card" style="border-color: #00BAFF;"><i class="fa-solid fa-bolt-lightning" style="color:#00BAFF;"></i><span>Flash Sales <br> Live Now</span></div>
+            <div class="ad-card"><i class="fa-solid fa-crown"></i><span>Royal <br> Vendor Space</span></div>
+            <div class="ad-card"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Premium <br> Cotton Hub</span></div>
+            <div class="ad-card"><i class="fa-solid fa-crown"></i><span>Royal <br> Vendor Space</span></div>
         </div>
-        <div class="search-bar">
-            <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
-            <input type="text" placeholder="Bincika kaya...">
-        </div>
-    </header>
+    </div>
 
-    <main class="product-grid">
-
-        <div class="product-card">
-            <div class="img-area">
-                <img src="https://via.placeholder.com/300x340" alt="Atamfa">
+    <div class="main-container">
+        
+        <div class="column">
+            <div class="product-card first-box">
+                <div class="img-area"><img src="https://images.unsplash.com/photo-1582733075929-5867493b3a7d?w=500"></div>
+                <div class="details-area">
+                    <p class="p-name">super wax luxury hollandant original</p>
+                    <div class="price-row"><span class="p-price">₦22,500</span><div class="stars-box"><div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><span class="review-count">(1.2k)</span></div></div>
+                    <div class="trust-section">
+                        <div class="trust-line"><i class="fa-solid fa-circle-check verified-icon"></i>TrustID Verified | <span class="duration-badge" data-join-date="2024-01-10">...</span></div>
+                        <div class="loc-line"><i class="fa-solid fa-location-dot text-red-600"></i>Kano, Kwari market</div>
+                    </div>
+                    <button class="btn-buy">BUY NOW</button>
+                </div>
             </div>
-            <div class="details-area">
-                
-                <div class="info-bar">
-                    <div class="name-price-row">
-                        <span class="p-name">Super Wax Luxury</span>
-                        <span class="p-price">₦22,500</span>
-                    </div>
-                </div>
 
-                <div class="info-bar">
-                    <div class="trust-line">
-                        <i class="fa-solid fa-circle-check verified-icon"></i>
-                        <span>TrustID Verified</span>
-                        <span class="text-gray-300">|</span>
-                        <span>5+ Years</span>
-                    </div>
-                    <div class="loc-line">
-                        <i class="fa-solid fa-location-dot text-red-500"></i>
-                        <span>Kano, Kwari Market</span>
-                    </div>
+            <div class="product-card standard-box">
+                <div class="img-area"><img src="https://images.unsplash.com/photo-1544441893-675973e31985?w=500"></div>
+                <div class="details-area">
+                    <p class="p-name">vlisco dutch wax original</p>
+                    <div class="price-row"><span class="p-price">₦85,000</span><div class="stars-box"><div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><span class="review-count">(89)</span></div></div>
+                    <div class="trust-section"><div class="trust-line"><i class="fa-solid fa-circle-check verified-icon"></i>TrustID Verified | <span class="duration-badge" data-join-date="2025-05-20">...</span></div><div class="loc-line"><i class="fa-solid fa-location-dot text-red-600"></i>Lagos, Balogun</div></div>
+                    <button class="btn-buy">BUY NOW</button>
                 </div>
-
-                <button class="btn-buy">Buy Now</button>
             </div>
-        </div>
 
-        <div class="product-card">
-            <div class="img-area">
-                <img src="https://via.placeholder.com/300x340" alt="Atamfa">
-            </div>
-            <div class="details-area">
-                
-                <div class="info-bar">
-                    <div class="name-price-row">
-                        <span class="p-name">Hi-Target Gold</span>
-                        <span class="p-price">₦9,800</span>
-                    </div>
+            <div class="product-card standard-box">
+                <div class="img-area"><img src="https://images.unsplash.com/photo-1605902711622-cf257c445aaa?w=500"></div>
+                <div class="details-area">
+                    <p class="p-name">luxury lace material white</p>
+                    <div class="price-row"><span class="p-price">₦45,000</span><div class="stars-box"><div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div><span class="review-count">(15)</span></div></div>
+                    <div class="trust-section"><div class="trust-line"><i class="fa-solid fa-circle-check verified-icon"></i>TrustID Verified | <span class="duration-badge" data-join-date="2026-02-13">...</span></div><div class="loc-line"><i class="fa-solid fa-location-dot text-red-600"></i>Onitsha, Main Market</div></div>
+                    <button class="btn-buy">BUY NOW</button>
                 </div>
-
-                <div class="info-bar">
-                    <div class="trust-line">
-                        <i class="fa-solid fa-circle-check verified-icon"></i>
-                        <span>TrustID Verified</span>
-                        <span class="text-gray-300">|</span>
-                        <span>3+ Years</span>
-                    </div>
-                    <div class="loc-line">
-                        <i class="fa-solid fa-location-dot text-red-500"></i>
-                        <span>Kaduna, Gumi Market</span>
-                    </div>
-                </div>
-
-                <button class="btn-buy">Buy Now</button>
             </div>
         </div>
 
-    </main>
+        <div class="column">
+            <div class="product-card standard-box">
+                <div class="img-area"><img src="https://images.unsplash.com/photo-1621335829175-95f437384d7c?w=500"></div>
+                <div class="details-area">
+                    <p class="p-name">hi-target gold exclusive limited</p>
+                    <div class="price-row"><span class="p-price">₦9,800</span><div class="stars-box"><div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><span class="review-count">(450)</span></div></div>
+                    <div class="trust-section"><div class="trust-line"><i class="fa-solid fa-circle-check verified-icon"></i>TrustID Verified | <span class="duration-badge" data-join-date="2026-02-12">...</span></div><div class="loc-line"><i class="fa-solid fa-location-dot text-red-600"></i>Kaduna, Gumi</div></div>
+                    <button class="btn-buy">BUY NOW</button>
+                </div>
+            </div>
 
-    <div style="height: 50px;"></div>
+            <div class="product-card standard-box">
+                <div class="img-area"><img src="https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=500"></div>
+                <div class="details-area">
+                    <p class="p-name">new arrivals cotton 2024</p>
+                    <div class="price-row"><span class="p-price">₦12,000</span><div class="stars-box"><div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div><span class="review-count">(310)</span></div></div>
+                    <div class="trust-section"><div class="trust-line"><i class="fa-solid fa-circle-check verified-icon"></i>TrustID Verified | <span class="duration-badge" data-join-date="2025-11-01">...</span></div><div class="loc-line"><i class="fa-solid fa-location-dot text-red-600"></i>Kano, Wapa</div></div>
+                    <button class="btn-buy">BUY NOW</button>
+                </div>
+            </div>
 
+            <div class="product-card standard-box">
+                <div class="img-area"><img src="https://images.unsplash.com/photo-1574634534894-89d7576c8259?w=500"></div>
+                <div class="details-area">
+                    <p class="p-name">shadda getzner original fabric</p>
+                    <div class="price-row"><span class="p-price">₦120,000</span><div class="stars-box"><div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><span class="review-count">(500)</span></div></div>
+                    <div class="trust-section"><div class="trust-line"><i class="fa-solid fa-circle-check verified-icon"></i>TrustID Verified | <span class="duration-badge" data-join-date="2024-06-01">...</span></div><div class="loc-line"><i class="fa-solid fa-location-dot text-red-600"></i>Abuja, Wuse II</div></div>
+                    <button class="btn-buy">BUY NOW</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function updateDurations() {
+            const badges = document.querySelectorAll('.duration-badge');
+            badges.forEach(badge => {
+                const joinDate = new Date(badge.getAttribute('data-join-date'));
+                const diffTime = Math.abs(new Date() - joinDate);
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                const diffMonths = Math.floor(diffDays / 30);
+                const diffYears = Math.floor(diffDays / 365);
+                if (diffDays === 0) badge.textContent = "New";
+                else if (diffDays < 30) badge.textContent = diffDays + " Days";
+                else if (diffDays < 365) badge.textContent = diffMonths + "+ Months";
+                else badge.textContent = diffYears + "+ Years";
+            });
+        }
+        window.onload = updateDurations;
+    </script>
 </body>
-                          </html>
-                          
+                                                                    </html>
+                                                                                                                                                                                                                                                   
