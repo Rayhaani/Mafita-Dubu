@@ -1,1 +1,214 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mafita Dubu | Vendor Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Satisfy&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --milk-bg: #FFF5E1; --royal-black: #1a1405; --gold: #bf953f; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--milk-bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .luxury-card { background: var(--royal-black); border: 2px solid var(--gold); border-radius: 40px 10px; padding: 30px; width: 100%; max-width: 450px; color: white; }
+        .step-layer { display: none; }
+        .active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .gold-input { width: 100%; background: #2a2210; border: 1px solid var(--gold); padding: 12px; border-radius: 10px; color: white; margin-bottom: 10px; }
+        .primary-btn { background: linear-gradient(135deg, #bf953f, #fcf6ba); color: #000; font-weight: 800; width: 100%; padding: 14px; border-radius: 10px; cursor: pointer; border: none; }
+        .scanner-box { width: 100%; height: 200px; background: #000; border-radius: 15px; position: relative; overflow: hidden; }
+        video { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* 2. Gyaran CSS Style (Satisfy Font - No Italics, No Breaking) */
+        .alphabet-font { 
+            font-family: 'Satisfy', cursive; 
+            font-style: normal !important; 
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
 
+<div class="luxury-card">
+    <h2 style="font-family: 'Cinzel'; color: #fcf6ba; text-align: center; margin-bottom: 20px;">Vendor Setup</h2>
+
+    <div class="step-layer active" id="layer1">
+        <input type="text" id="bizName" class="gold-input" placeholder="Business Name (Suna)">
+        <select id="bizType" class="gold-input" onchange="startGPS()">
+            <option value="">-- Select Category --</option>
+            <option value="Store">Physical Store</option>
+            <option value="Home">Home-Based</option>
+        </select>
+        <div id="gps-status" style="font-size: 0.75rem; color: #ff4d4d; margin-bottom: 10px;">📍 GPS: Not Fixed</div>
+        <button class="primary-btn" onclick="validateLayer1()">NEXT: AI SCAN</button>
+    </div>
+
+    <div class="step-layer" id="layer2">
+        <div class="scanner-box">
+            <video id="webcam" autoplay playsinline></video>
+        </div>
+        <p id="ai-msg" style="text-align:center; font-size: 0.8rem; margin: 10px 0;">[ INITIALIZING SCAN... ]</p>
+        <button class="primary-btn" id="camBtn" disabled onclick="goToLayer(3)">CONTINUE</button>
+    </div>
+
+    <div class="step-layer" id="layer3">
+        <div id="items-list">
+            <input type="text" class="gold-input item-name" placeholder="Business Description">
+            <p class="text-[10px] text-gray-400 mb-4">Danna Finish don tura aikinka ga Admin don dubawa.</p>
+        </div>
+        <button class="primary-btn" onclick="saveToFirebase()">FINISH & UPLOAD</button>
+    </div>
+</div>
+
+<div id="statusModal" class="fixed inset-0 bg-black/95 hidden items-center justify-center z-[9999] p-6 backdrop-blur-sm">
+    <div class="bg-[#0a0a0a] border-2 border-[#D4AF37] w-full max-w-sm rounded-[45px] p-10 text-center shadow-[0_0_50px_rgba(212,175,55,0.2)]">
+        <div id="modalIcon" class="w-20 h-20 bg-gradient-to-tr from-[#D4AF37] to-[#fcf6ba] rounded-full mx-auto mb-6 flex items-center justify-center text-black text-3xl font-bold shadow-lg">!</div>
+        
+        <h2 id="modalTitle" class="alphabet-font text-5xl mb-4 text-[#D4AF37]">Under Review</h2>
+        
+        <p id="modalMsg" class="text-gray-300 text-sm leading-relaxed mb-10">
+            Masha Allah! Application dinka yana karkashin tantancewa. Ba za'a dauki lokaci ba zaka sami sakamako mai dadi.
+        </p>
+        
+        <div class="space-y-4">
+            <button onclick="window.location.href='member-dashboard.html'" class="w-full bg-white text-black font-black py-4 rounded-2xl hover:scale-95 transition shadow-xl border-b-4 border-gray-400">
+                SWITCH TO MEMBER DASHBOARD
+            </button>
+            <button id="reapplyBtn" onclick="location.reload()" class="hidden w-full border border-[#D4AF37] text-[#D4AF37] font-bold py-3 rounded-2xl text-xs uppercase tracking-widest hover:bg-[#D4AF37]/10 transition">
+                RE-APPLY NOW
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
+        authDomain: "global-market-admin.firebaseapp.com",
+        projectId: "global-market-admin",
+        storageBucket: "global-market-admin.firebasestorage.app",
+        messagingSenderId: "259715265619",
+        appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    let vendorLocation = null;
+
+    function startGPS() {
+        const status = document.getElementById('gps-status');
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(pos => {
+                vendorLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+                status.innerText = `📍 GPS Fixed: ${vendorLocation.lat.toFixed(4)}, ${vendorLocation.lng.toFixed(4)}`;
+                status.style.color = "#00ffcc";
+            }, () => { alert("Please enable Location!"); });
+        }
+    }
+
+    function validateLayer1() {
+        if(!document.getElementById('bizName').value || !vendorLocation) {
+            alert("Saka Suna sannan ka tabbatar GPS ya nuna!");
+            return;
+        }
+        goToLayer(2);
+        startCamera();
+    }
+
+    function goToLayer(n) {
+        document.querySelectorAll('.step-layer').forEach(l => l.classList.remove('active'));
+        document.getElementById('layer' + n).classList.add('active');
+    }
+
+    async function startCamera() {
+        const video = document.getElementById('webcam');
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+        video.srcObject = stream;
+        setTimeout(() => {
+            document.getElementById('ai-msg').innerText = "✅ SCAN SUCCESSFUL";
+            document.getElementById('camBtn').disabled = false;
+        }, 3000);
+    }
+
+    function handleStatus(statusType) {
+        const modal = document.getElementById('statusModal');
+        const title = document.getElementById('modalTitle');
+        const msg = document.getElementById('modalMsg');
+        const icon = document.getElementById('modalIcon');
+        const reapply = document.getElementById('reapplyBtn');
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        if(statusType === 'pending') {
+            title.innerText = "Under Review";
+            msg.innerText = "Muna duba bayananka. Zaka iya cigaba da amfani da sauran sassan site din as a member kafin mu baka dama.";
+        } else if(statusType === 'rejected') {
+            title.innerText = "Yi Hakuri";
+            title.style.color = "#ef4444";
+            msg.innerText = "An samu kuskure a application dinka. Daure ka gyara domin ka shiga sahun kwararrunmu.";
+            reapply.classList.remove('hidden');
+            icon.innerText = "✕";
+            icon.style.background = "#ef4444";
+        }
+    }
+
+    async function saveToFirebase() {
+        const btn = document.querySelector('#layer3 .primary-btn');
+        btn.innerText = "UPLOADING...";
+        btn.disabled = true;
+
+        const data = {
+            name: document.getElementById('bizName').value,
+            type: document.getElementById('bizType').value,
+            location: vendorLocation,
+            status: "pending",
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            localStorage.setItem('currentUserName', document.getElementById('bizName').value);
+        };
+
+        try {
+            await db.collection("vendors").add(data);
+            handleStatus('pending');
+        } catch (e) {
+            alert("Error: " + e.message);
+            btn.disabled = false;
+            btn.innerText = "RETRY UPLOAD";
+        }
+    }
+
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+async function registerVendor(email, password, fullName, businessName) {
+    const auth = getAuth();
+    const db = getFirestore();
+
+    try {
+        // 1. Kirkirar account a Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // 2. Aika bayanan zuwa Firestore (inda Radar dinka take kallo)
+        await setDoc(doc(db, "vendors", user.uid), {
+            uid: user.uid,
+            name: fullName,
+            business: businessName,
+            email: email,
+            status: "pending", // Wannan zai sa ya fito a Radar dinka
+            role: "vendor",
+            createdAt: new Date()
+        });
+
+        alert("Rajista tayi kyau! Jira Admin ya duba.");
+    } catch (error) {
+        console.error("Kuskure:", error.message);
+    }
+}
+    
+</script>
+</body>
+</html>
