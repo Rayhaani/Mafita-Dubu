@@ -187,36 +187,39 @@
 
 
         document.addEventListener('DOMContentLoaded', () => {
-    // 1. Karbo kalmar bincike
+    // 1. Nemo kalmar bincike
     const searchWord = localStorage.getItem('currentSearch');
     
-    // Idan babu binciken da aka yi (ko kuma binciken Atamfa ne), to kar a taba komai
+    // 2. Idan babu komai ko kuma "atamfa" aka nema, bar shi yadda yake
     if (!searchWord || searchWord.toLowerCase() === 'atamfa' || searchWord.toLowerCase() === 'textile') {
-        console.log("Loading original Atamfa images...");
-        return; // Tsaya anan, kar a goge hotunan asali
+        return; 
     }
 
-    // 2. Idan an nemo wani abu na daban (misali: Shoes), sai a canja Title
+    // 3. Canja Title din shafin
     const pageTitle = document.querySelector('h2');
     if (pageTitle) pageTitle.innerText = searchWord.toUpperCase();
 
-    // 3. Template Injection (Tare da kariya)
+    // 4. Tilasta canja hotuna (Forced Update)
     const productImages = document.querySelectorAll('.product-card img');
     
     productImages.forEach((img, index) => {
-        // Saka hoton placeholder yayin da sabon yake lodi
-        const originalSrc = img.src; 
+        // Muna amfani da "source.unsplash.com" kai tsaye don ya fi sauki
+        const newSrc = `https://source.unsplash.com/featured/500x700?${searchWord},${index}`;
         
-        // Nemo hoto daga yanar gizo dangane da sabuwar kalmar bincike
-        // Mun rage girman hoton (w=400) don yayi saurin fitowa
-        img.src = `https://images.unsplash.com/photo-1?auto=format&fit=crop&w=400&q=60&sig=${index}&search=${searchWord}`;
-        
-        // Idan sabon hoton ya gaza lodi, mayar da tsohon hoton Atamfa din
-        img.onerror = function() {
-            this.src = originalSrc;
+        // Zamu nuna hoton ne kawai idan ya gama lodi (don kar ya bace)
+        const tempImg = new Image();
+        tempImg.src = newSrc;
+        tempImg.onload = () => {
+            img.src = newSrc; // Canja hoton kawai idan ya riga ya lodo
+        };
+
+        // Idan ya ki lodawa, zai bar hoton Atamfa din ne kawai
+        tempImg.onerror = () => {
+            console.log("Hoton " + searchWord + " ya ki loduwa.");
         };
     });
 });
+        
           
     
     </script>
