@@ -168,62 +168,53 @@
     </div>
 
     <script>
-
-   // 1. Lissafa lokacin badges (Kada a taɓa wannan)
+// 1. Lissafa lokacin badges (Karka taba wannan)
 function updateDurations() {
     const badges = document.querySelectorAll('.duration-badge');
     badges.forEach(badge => {
         const joinDate = new Date(badge.getAttribute('data-join-date'));
         const diffTime = Math.abs(new Date() - joinDate);
         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-        const diffMonths = Math.floor(diffDays / 30);
-        const diffYears = Math.floor(diffDays / 365);
         if (diffDays === 0) badge.textContent = "New";
-        else if (diffDays < 30) badge.textContent = diffDays + " Days";
-        else if (diffDays < 365) badge.textContent = diffMonths + "+ Months";
-        else badge.textContent = diffYears + "+ Years";
+        else badge.textContent = diffDays + " Days";
     });
 }
 
-// 2. Database na Gwaji (Local Mock Database)
-const mockDatabase = {
-    "shoes": [
-        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500",
-        "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500",
-        "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=500"
-    ],
-    "watch": [
-        "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=500",
-        "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=500",
-        "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=500"
-    ]
+// 2. Database namu na gwaji (Saka links na gaske)
+const kayanGidajenmu = {
+    "shoes": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",
+    "watch": "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400",
+    "earrings": "https://images.unsplash.com/photo-1535633302704-b02f4f69273c?w=400"
 };
 
-// 3. Main Search Logic
+// 3. Tilasta canja hotuna
 document.addEventListener('DOMContentLoaded', () => {
     updateDurations();
     
-    const searchWord = localStorage.getItem('currentSearch')?.toLowerCase();
+    // Karbo abinda aka nemo
+    const searchWord = localStorage.getItem('currentSearch')?.toLowerCase().trim();
     
-    // Idan ba Atamfa aka nema ba, kuma muna da kayan a Database dinmu na gwaji
-    if (searchWord && searchWord !== 'atamfa' && mockDatabase[searchWord]) {
+    // Idan an nemo wani abu daban (kamar shoes ko earrings)
+    if (searchWord && searchWord !== 'atamfa' && kayanGidajenmu[searchWord]) {
         
+        // Nemo duka akwatunan hotuna
+        const allImages = document.getElementsByTagName('img');
+        
+        for (let img of allImages) {
+            // Wannan layin zai tabbatar mun wanke tsohon hoton
+            img.removeAttribute('srcset'); // Cire duka wani backup image
+            img.src = kayanGidajenmu[searchWord]; // Saka sabon hotonmu
+            
+            // Kara transition don mu ga sanda ya sauya
+            img.style.border = "5px solid #8B6508"; 
+        }
+
         const pageTitle = document.querySelector('h2');
         if (pageTitle) pageTitle.innerText = searchWord.toUpperCase();
-
-        const productImages = document.querySelectorAll('.product-card img');
-        const availablePhotos = mockDatabase[searchWord];
-
-        productImages.forEach((img, index) => {
-            // Mu zaba hoto daga database dinmu (re-looping idan hotunan sun kare)
-            const photoIndex = index % availablePhotos.length;
-            img.src = availablePhotos[photoIndex];
-            
-            // Kara transition don kyan gani
-            img.style.transition = "all 0.5s ease";
-        });
     }
 });
+        
+   
         
     </script>
 </body>
