@@ -168,8 +168,8 @@
     </div>
 
     <script>
-        
-    // 1. Lissafa lokacin badges (Wannan dole ya tsaya a sama)
+
+   // 1. Lissafa lokacin badges (Kada a taɓa wannan)
 function updateDurations() {
     const badges = document.querySelectorAll('.duration-badge');
     badges.forEach(badge => {
@@ -185,50 +185,45 @@ function updateDurations() {
     });
 }
 
-// 2. Babban Logic na Canja Hotuna
-(function() {
-    const searchWord = localStorage.getItem('currentSearch');
+// 2. Database na Gwaji (Local Mock Database)
+const mockDatabase = {
+    "shoes": [
+        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500",
+        "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500",
+        "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=500"
+    ],
+    "watch": [
+        "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=500",
+        "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=500",
+        "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=500"
+    ]
+};
+
+// 3. Main Search Logic
+document.addEventListener('DOMContentLoaded', () => {
+    updateDurations();
     
-    // Idan babu komai ko binciken Atamfa ne, kar a taba komai
-    if (!searchWord || searchWord.toLowerCase() === 'atamfa') {
-        window.addEventListener('load', updateDurations);
-        return;
-    }
-
-    // TILASTA WANKA: Boye duka hotuna tun kafin page ya gama loda (CSS Injection)
-    const style = document.createElement('style');
-    style.innerHTML = '.product-card img { opacity: 0 !important; transition: opacity 0.5s !important; }';
-    document.head.appendChild(style);
-
-    window.addEventListener('DOMContentLoaded', () => {
-        updateDurations();
+    const searchWord = localStorage.getItem('currentSearch')?.toLowerCase();
+    
+    // Idan ba Atamfa aka nema ba, kuma muna da kayan a Database dinmu na gwaji
+    if (searchWord && searchWord !== 'atamfa' && mockDatabase[searchWord]) {
         
         const pageTitle = document.querySelector('h2');
         if (pageTitle) pageTitle.innerText = searchWord.toUpperCase();
 
         const productImages = document.querySelectorAll('.product-card img');
-        
+        const availablePhotos = mockDatabase[searchWord];
+
         productImages.forEach((img, index) => {
-            // Muna kara lokaci (timestamp) don karya Caching
-            const timestamp = new Date().getTime();
-            const newSrc = `https://images.unsplash.com/photo-1?auto=format&fit=crop&w=500&q=80&search=${searchWord}&sig=${index}-${timestamp}`;
+            // Mu zaba hoto daga database dinmu (re-looping idan hotunan sun kare)
+            const photoIndex = index % availablePhotos.length;
+            img.src = availablePhotos[photoIndex];
             
-            // Halittar Loader
-            const loader = new Image();
-            loader.src = newSrc;
-            
-            loader.onload = () => {
-                img.src = newSrc;
-                img.style.opacity = "1"; // Nuna sabon hoton kawai
-            };
-            
-            loader.onerror = () => {
-                img.src = `https://via.placeholder.com/500x700?text=${searchWord}`;
-                img.style.opacity = "1";
-            };
+            // Kara transition don kyan gani
+            img.style.transition = "all 0.5s ease";
         });
-    });
-})();
+    }
+});
         
     </script>
 </body>
