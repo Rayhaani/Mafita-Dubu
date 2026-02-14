@@ -1,1 +1,121 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mafita Dubu | Lab Science Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --royal-black: #0a0e14;
+            --science-blue: #00d4ff;
+            --dark-gold: #8b6b1b;
+            --light-gold: #f3cf7a;
+            --milk-bg: #f0f4f8;
+        }
+        
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--milk-bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        
+        .lab-card {
+            background: var(--royal-black); border: 2px solid var(--science-blue);
+            border-radius: 40px 10px 40px 10px; padding: 35px 25px;
+            width: 100%; max-width: 480px; box-shadow: 0 0 40px rgba(0, 212, 255, 0.2);
+        }
 
+        .gps-lock {
+            background: rgba(0, 212, 255, 0.05); border: 1px solid var(--science-blue);
+            padding: 12px; border-radius: 12px; color: var(--science-blue);
+            font-size: 0.7rem; text-align: center; margin-bottom: 20px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            letter-spacing: 1px; font-weight: 800;
+        }
+
+        .gold-input {
+            width: 100%; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 212, 255, 0.2);
+            padding: 14px; border-radius: 12px; color: #fff; font-size: 0.85rem; margin-bottom: 15px; outline: none;
+            transition: 0.3s;
+        }
+
+        .gold-input:focus { border-color: var(--science-blue); background: rgba(0, 212, 255, 0.05); }
+
+        .upload-box {
+            border: 1px dashed var(--dark-gold); background: rgba(243, 207, 122, 0.03);
+            padding: 15px; border-radius: 15px; margin-bottom: 15px;
+        }
+
+        .scan-btn {
+            width: 100%; background: #111; border: 1px solid var(--dark-gold);
+            color: var(--light-gold); padding: 12px; border-radius: 10px; font-size: 0.75rem;
+            margin-top: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #00d4ff, #0056b3);
+            color: #fff; font-family: 'Cinzel', serif; font-weight: 900;
+            width: 100%; padding: 16px; border-radius: 12px; cursor: pointer; border: none;
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3); margin-top: 10px;
+        }
+
+        optgroup { background: var(--royal-black); color: var(--light-gold); }
+    </style>
+</head>
+<body>
+
+    <div class="lab-card">
+        <h2 style="color: var(--science-blue); font-family: 'Cinzel'; text-align: center; font-size: 1.6rem; margin-bottom: 5px;">LAB HUB</h2>
+        <p style="color: #666; text-align: center; font-size: 0.7rem; margin-bottom: 25px; text-transform: uppercase;">Scientific Trust & Safety</p>
+
+        <div class="gps-lock">
+            <div style="width: 8px; height: 8px; background: var(--science-blue); border-radius: 50%; box-shadow: 0 0 10px var(--science-blue); animation: pulse 1.5s infinite;"></div>
+            <span>OFFICIAL FACILITY GPS TRACKING ACTIVE</span>
+        </div>
+
+        <form onsubmit="finishLabReg(event)">
+            <input type="text" class="gold-input" placeholder="Sunan Laboratory (Registered Name)" required>
+            
+            <select class="gold-input" id="labCategory" required>
+                <option value="">-- Zabi Nau'in Laboratory --</option>
+                <optgroup label="Health Services">
+                    <option value="diagnostic">Diagnostic Lab (Jini, Fitsari, Scan)</option>
+                    <option value="pathology">Pathology (Kwayoyin Cututtuka)</option>
+                </optgroup>
+                <optgroup label="Safety & Quality">
+                    <option value="food-water">Food & Water Testing (Abinci/Ruwa)</option>
+                    <option value="pharma">Pharmaceutical Lab (Ingancin Magani)</option>
+                </optgroup>
+                <optgroup label="Industrial">
+                    <option value="chemical">Chemical Analysis</option>
+                    <option value="dna">DNA & Genetics Research</option>
+                </optgroup>
+            </select>
+
+            <input type="text" class="gold-input" placeholder="Government License No (MLSCN/NAFDAC)" required>
+            
+            <input type="text" class="gold-input" placeholder="Office Address (No House-Base allowed)" required>
+
+            <div class="upload-box">
+                <p style="color: var(--light-gold); font-size: 0.65rem; font-weight: 800; margin-bottom: 10px;">REQUIRED EVIDENCE (AI SCAN):</p>
+                
+                <button type="button" class="scan-btn" onclick="alert('Camera Opening...')">
+                    🔬 SCAN: Medical/Testing Equipment
+                </button>
+                
+                <button type="button" class="scan-btn" onclick="alert('Camera Opening...')">
+                    🏢 SCAN: Lab Frontage (Kofar Ofis)
+                </button>
+            </div>
+
+            <button type="submit" class="submit-btn">VALIDATE & REGISTER</button>
+        </form>
+    </div>
+
+    <script>
+        function finishLabReg(e) {
+            e.preventDefault();
+            alert("Masha Allah! Lab dinka ya tafi tantancewa. Idan mun gama duba lasisinka da GPS dinka, zaka fara bayyana a 'Mafita Dubu'.");
+        }
+    </script>
+</body>
+</html>
