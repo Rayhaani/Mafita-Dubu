@@ -1,1 +1,181 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <title>Mafita Dubu | Elite Vendor Terminal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Plus+Jakarta+Sans:wght@400;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            background: radial-gradient(circle at top right, #0a0f1d, #020617); 
+            color: white; 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+        }
 
+        .alphabet-font { font-family: 'Satisfy', cursive; color: #D4AF37; }
+
+        /* Futuristic Glass Card */
+        .elite-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .elite-card:hover {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.03);
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(212, 175, 55, 0.1);
+        }
+
+        /* Neon Glow Text */
+        .neon-text {
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Animated Progress Bar */
+        .progress-bar {
+            height: 6px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #D4AF37, #fde047);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Glowing Star */
+        .star-glow { color: #fbbf24; filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.6)); }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+            color: black;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .btn-gold:hover {
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="p-6">
+
+    <div class="max-w-7xl mx-auto">
+        <header class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+            <div class="relative">
+                <h1 class="text-6xl alphabet-font neon-text">Vendor Center</h1>
+                <p class="text-[10px] tracking-[0.5em] text-gray-500 font-bold uppercase mt-2">The Global Elite Marketplace</p>
+            </div>
+            
+            <div class="flex gap-4">
+                <div class="elite-card px-8 py-4 flex items-center gap-4">
+                    <div class="text-right">
+                        <p class="text-[10px] text-gray-500 font-bold uppercase">Reputation</p>
+                        <div class="flex gap-1">
+                            <i class="fa-solid fa-star star-glow"></i>
+                            <i class="fa-solid fa-star star-glow"></i>
+                            <i class="fa-solid fa-star star-glow"></i>
+                            <i class="fa-solid fa-star star-glow"></i>
+                            <i class="fa-solid fa-star-half-stroke star-glow"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-12">
+            
+            <div class="md:col-span-8 elite-card p-10 flex justify-between items-center bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]">
+                <div>
+                    <span class="text-xs font-bold text-[#D4AF37] tracking-widest uppercase mb-4 block">Available Liquidity</span>
+                    <h2 class="text-6xl font-black tracking-tighter">₦<span id="balance">450,000</span><span class="text-2xl text-gray-600">.00</span></h2>
+                    <div class="mt-8 flex gap-6">
+                        <button class="btn-gold px-8 py-3 rounded-2xl text-xs">Pita da Kudi</button>
+                        <button class="text-xs font-bold text-gray-400 border-b border-gray-800 pb-1">Historical Data</button>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <i class="fa-solid fa-building-columns text-9xl opacity-5"></i>
+                </div>
+            </div>
+
+            <div class="md:col-span-4 elite-card p-10 flex flex-col justify-between">
+                <div>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase">Successful Deliveries</p>
+                    <h3 class="text-5xl font-black mt-2">1,208</h3>
+                </div>
+                <div class="mt-4">
+                    <div class="flex justify-between text-[10px] font-bold mb-2">
+                        <span>Target: 2,000</span>
+                        <span class="text-[#D4AF37]">60%</span>
+                    </div>
+                    <div class="w-full bg-white/5 rounded-full overflow-hidden">
+                        <div class="progress-bar" style="width: 60%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-12 elite-card p-1">
+                <div class="bg-black/40 rounded-[28px] p-8 grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="space-y-6">
+                        <div class="border-2 border-dashed border-white/10 rounded-[40px] h-64 flex flex-col items-center justify-center hover:border-[#D4AF37] transition cursor-pointer group">
+                            <i class="fa-solid fa-plus text-4xl text-gray-800 group-hover:text-[#D4AF37] mb-2"></i>
+                            <p class="text-[10px] font-bold uppercase tracking-widest text-gray-600">Saka Hoton Kaya</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" placeholder="Sunan Kaya" class="bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-[#D4AF37] text-sm font-bold">
+                            <select class="bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-[#D4AF37] text-sm font-bold text-gray-400">
+                                <option>Category</option>
+                                <option>Fashion</option>
+                                <option>Electronics</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col justify-between">
+                        <div class="space-y-6">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-500">Your Price</span>
+                                <input type="number" placeholder="₦ 0.00" class="bg-transparent text-right text-3xl font-black outline-none border-b border-white/5 focus:border-[#D4AF37] w-1/2">
+                            </div>
+                            <div class="p-6 bg-[#D4AF37]/5 rounded-3xl border border-[#D4AF37]/10">
+                                <div class="flex justify-between text-[10px] font-bold mb-2">
+                                    <span class="text-gray-400">MAFITADUBU SERVICE FEE (5%)</span>
+                                    <span class="text-red-500">+ ₦500.00</span>
+                                </div>
+                                <div class="flex justify-between items-end">
+                                    <span class="text-xs font-black uppercase tracking-tighter">Market Display Price</span>
+                                    <span class="text-3xl font-black text-[#D4AF37]">₦10,500.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-gold w-full py-5 rounded-[2rem] mt-6">Publish to World Market</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="elite-card p-8 border-l-8 border-blue-600">
+            <div class="flex items-center gap-6">
+                <div class="w-16 h-16 bg-blue-600/20 rounded-full flex items-center justify-center text-blue-500 text-2xl">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h4 class="text-lg font-black uppercase tracking-tighter">Amana Security Shield Active</h4>
+                    <p class="text-xs text-gray-500 max-w-2xl mt-1 leading-relaxed">Duk wata ma'amala da kake yi tana karkashin kariya. Kudin ka yana nan a adana har sai an tabbatar da gamsuwar mamba.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+                                  </html>
