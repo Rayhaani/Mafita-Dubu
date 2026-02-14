@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Grotesk:wght@300;700&family=Exo+2:wght@100;400;700&family=Outfit:wght@200;400;900&display=swap');
+        
+        body { background-color: #020205; color: white; margin: 0; font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; padding-bottom: 130px; }
+        .hidden-engine { display: none !important; }
+
+        .app-header-container { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: #000; position: sticky; top: 0; z-index: 5000; }
+        .cyber-header { font-family: 'Audiowide', cursive; }
+        
+        .view-switcher { 
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px);
+            padding: 3px; border-radius: 8px; border: 1px solid rgba(0, 242, 255, 0.4);
+            display: flex; gap: 3px; height: 36px; align-items: center; 
+        }
+        .sw-btn { color: #777; font-size: 8px; padding: 4px 8px; cursor: pointer; font-weight: bold; font-family: 'Audiowide', sans-serif; }
+        .sw-btn.active { background: #00f2ff; color: black; border-radius: 5px; box-shadow: 0 0 10px #00f2ff; }
+
+        .search-fab {
+            position: fixed; bottom: 90px; right: 20px;
+            width: 42px; height: 42px; background: #00f2ff;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3); z-index: 5500; cursor: pointer;
+        }
+
+        .search-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 2, 5, 0.98); backdrop-filter: blur(20px);
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 7000;
+        }
+        .search-overlay.active { display: flex; }
+        .futuristic-search-box { width: 85%; max-width: 500px; position: relative; }
+        .futuristic-search-box input {
+            width: 100%; background: rgba(255, 255, 255, 0.03); border: none;
+            border-bottom: 2px solid #00f2ff; padding: 15px 40px; color: white;
+            font-family: 'Audiowide'; font-size: 14px; outline: none;
+        }
+
+        .floating-nav { 
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
+            width: 92%; max-width: 450px; height: 60px;
+            background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; 
+            display: flex; justify-content: space-around; align-items: center; 
+            z-index: 6000; transition: 0.5s; 
+        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #999; }
+        .nav-item.active { color: #00f2ff; }
+        .nav-label { font-size: 7px; font-weight: bold; text-transform: uppercase; font-family: 'Audiowide'; margin-top: 2px; }
+
+        .nav-add-btn { 
+            width: 45px; height: 45px; background: linear-gradient(135deg, #00f2ff, #bc13fe); 
+            border-radius: 12px; display: flex; align-items: center; justify-content: center; 
+            border: 3px solid #020205; transform: rotate(45deg); 
+        }
+        .nav-add-btn i { transform: rotate(-45deg); color: white; font-size: 18px; }
+        .nav-hide { transform: translateX(-50%) translateY(150%); opacity: 0; }
+
+        #sell-notification { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(150%); width: 90%; max-width: 400px; opacity: 0; background: rgba(20, 20, 25, 0.95); backdrop-filter: blur(25px); border: 1px solid rgba(212, 175, 55, 0.5); border-radius: 25px; padding: 12px 20px; display: flex; align-items: center; gap: 15px; z-index: 6001; transition: 0.5s; }
+        #sell-notification.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .sell-btn-blinking { background: #d4af37; color: black; font-weight: 900; font-size: 10px; padding: 10px 15px; border-radius: 12px; animation: cyber-blink 1.5s infinite; font-family: 'Audiowide'; }
+
+        .grid-body { padding: 10px 20px; }
+        .luxury-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 35px 5px 35px 5px; overflow: hidden; }
+        .hologram-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 242, 255, 0.1); border-radius: 40px 5px 40px 5px; padding: 15px; margin-bottom: 25px; }
+
+        .loc-text { font-size: 7px; color: #00f2ff; opacity: 0.8; font-weight: bold; display: flex; align-items: center; gap: 3px; margin-top: 1px; }
+    </style>
+</head>
+<body>
+
+    <header class="app-header-container">
+        <h1 class="cyber-header text-3xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">USED<span class="text-white">HUB</span>.V3</h1>
+        <div class="view-switcher">
+            <div id="btnGrid" onclick="switchView('grid')" class="sw-btn active">GRID</div>
+            <div id="btnList" onclick="switchView('list')" class="sw-btn">LIST</div>
+        </div>
+    </header>
+
+    <div class="search-fab" onclick="toggleSearch(true)">
+        <i class="fa-solid fa-magnifying-glass text-black text-lg"></i>
+    </div>
+
+    <div id="searchOverlay" class="search-overlay">
+        <div class="futuristic-search-box">
+            <i class="fa-solid fa-magnifying-glass absolute left-0 top-4 text-[#00f2ff]"></i>
+            <input type="text" placeholder="BINCIKI_SYSTEM...">
+            <i class="fa-solid fa-xmark absolute right-0 top-4 text-gray-500 cursor-pointer" onclick="toggleSearch(false)"></i>
+        </div>
+    </div>
+
+    <div id="grid-view" class="grid-body">
+        <div id="grid-container" class="grid grid-cols-2 gap-5 mt-4"></div>
+    </div>
+    <div id="list-view" class="grid-body hidden-engine">
+        <div id="list-container" class="mt-4"></div>
+    </div>
+
+    <div id="sell-notification">
+        <div class="w-10 h-10 bg-[#d4af37]/20 border border-[#d4af37] rounded-xl flex items-center justify-center"><i class="fa-solid fa-camera text-[#d4af37]"></i></div>
+        <div class="flex-1">
+            <p class="text-[10px] font-bold text-white uppercase tracking-tighter">kana da abunda kake so ka siyar yanzu?</p>
+            <p class="text-[9px] text-gray-500 italic">Post in 30 seconds</p>
+        </div>
+        <button class="sell-btn-blinking">SELL NOW</button>
+    </div>
+
+    <nav id="main-nav" class="floating-nav">
+        <div class="nav-item active"><i class="fa-solid fa-house-crack text-lg"></i><span class="nav-label">Home</span></div>
+        <div class="nav-item"><i class="fa-solid fa-clock-rotate-left text-lg"></i><span class="nav-label">History</span></div>
+        <div class="nav-add-btn"><i class="fa-solid fa-plus"></i></div>
+        <div class="nav-item"><i class="fa-solid fa-comment-dots text-lg"></i><span class="nav-label">Chat</span></div>
+        <div class="nav-item"><i class="fa-solid fa-user-gear text-lg"></i><span class="nav-label">Profile</span></div>
+    </nav>
+
+    <script>
+        const originalItems = [
+            { name: "iPhone 13 Pro Max", price: "₦420k", loc: "Abuja, NG", img: "https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=500" },
+            { name: "Gold Watch", price: "₦15k", loc: "Lagos, NG", img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500" },
+            { name: "Supreme Puffer", price: "₦85,000", loc: "Kano, NG", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600" },
+            { name: "Workstation Z", price: "₦1.4M", loc: "Kaduna, NG", img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600" }
+        ];
+        const items = [...originalItems, ...originalItems];
+
+        function renderItems() {
+            const grid = document.getElementById('grid-container');
+            const list = document.getElementById('list-container');
+            items.forEach(item => {
+                // GRID SECTION GYARA: p-1.5 don rage girman slave, flex don tura price dama
+                grid.innerHTML += `<div class="luxury-card">
+                    <div class="aspect-[4/5]"><img src="${item.img}" class="w-full h-full object-cover"></div>
+                    <div class="p-1.5 flex justify-between items-start">
+                        <div>
+                            <p class="text-[7.5px] text-gray-500 font-bold uppercase truncate max-w-[70px]">${item.name}</p>
+                            <div class="loc-text"><i class="fa-solid fa-location-dot"></i>${item.loc}</div>
+                        </div>
+                        <p class="text-[13px] font-black text-white">${item.price}</p>
+                    </div>
+                </div>`;
+                
+                list.innerHTML += `<div class="hologram-card">
+                    <div class="relative h-48 rounded-[25px] overflow-hidden mb-4"><img src="${item.img}" class="w-full h-full object-cover opacity-80"></div>
+                    <div class="flex justify-between items-center px-1">
+                        <div>
+                            <h3 class="cyber-header text-sm text-[#00f2ff]">${item.name}</h3>
+                            <div class="loc-text !text-[9px]"><i class="fa-solid fa-location-dot"></i>${item.loc}</div>
+                        </div>
+                        <p class="text-xl font-bold text-white">${item.price}</p>
+                    </div>
+                </div>`;
+            });
+        }
+
+        function switchView(mode) {
+            const g = document.getElementById('grid-view'), l = document.getElementById('list-view');
+            const bg = document.getElementById('btnGrid'), bl = document.getElementById('btnList');
+            if (mode === 'grid') { g.classList.remove('hidden-engine'); l.classList.add('hidden-engine'); bg.classList.add('active'); bl.classList.remove('active'); }
+            else { l.classList.remove('hidden-engine'); g.classList.add('hidden-engine'); bl.classList.add('active'); bg.classList.remove('active'); }
+        }
+
+        function toggleSearch(show) { document.getElementById('searchOverlay').classList.toggle('active', show); }
+
+        function toggleNavs() {
+            const nav = document.getElementById('main-nav');
+            const note = document.getElementById('sell-notification');
+            nav.classList.add('nav-hide');
+            setTimeout(() => {
+                note.classList.add('show');
+                setTimeout(() => {
+                    note.classList.remove('show');
+                    setTimeout(() => nav.classList.remove('nav-hide'), 500);
+                }, 8000);
+            }, 500);
+        }
+
+        renderItems();
+        setTimeout(toggleNavs, 3000);
+    </script>
+</body>
+</html>
