@@ -168,70 +168,68 @@
     </div>
 
     <script>
-        function updateDurations() {
-            const badges = document.querySelectorAll('.duration-badge');
-            badges.forEach(badge => {
-                const joinDate = new Date(badge.getAttribute('data-join-date'));
-                const diffTime = Math.abs(new Date() - joinDate);
-                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-                const diffMonths = Math.floor(diffDays / 30);
-                const diffYears = Math.floor(diffDays / 365);
-                if (diffDays === 0) badge.textContent = "New";
-                else if (diffDays < 30) badge.textContent = diffDays + " Days";
-                else if (diffDays < 365) badge.textContent = diffMonths + "+ Months";
-                else badge.textContent = diffYears + "+ Years";
-            });
-        }
-   
-        window.onload = updateDurations;
+        
+    // 1. Lissafa lokacin badges (Wannan dole ya tsaya a sama)
+function updateDurations() {
+    const badges = document.querySelectorAll('.duration-badge');
+    badges.forEach(badge => {
+        const joinDate = new Date(badge.getAttribute('data-join-date'));
+        const diffTime = Math.abs(new Date() - joinDate);
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const diffMonths = Math.floor(diffDays / 30);
+        const diffYears = Math.floor(diffDays / 365);
+        if (diffDays === 0) badge.textContent = "New";
+        else if (diffDays < 30) badge.textContent = diffDays + " Days";
+        else if (diffDays < 365) badge.textContent = diffMonths + "+ Months";
+        else badge.textContent = diffYears + "+ Years";
+    });
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Lissafa lokacin badges (updateDurations dinka na asali)
-    if (typeof updateDurations === 'function') {
-        updateDurations();
-    }
-
-    // 2. Karbo kalmar bincike
+// 2. Babban Logic na Canja Hotuna
+(function() {
     const searchWord = localStorage.getItem('currentSearch');
     
-    // Idan babu komai ko kuma binciken Atamfa ne, bar shi yadda yake
-    if (!searchWord || searchWord.toLowerCase() === 'atamfa' || searchWord.toLowerCase() === 'textile') {
-        return; 
+    // Idan babu komai ko binciken Atamfa ne, kar a taba komai
+    if (!searchWord || searchWord.toLowerCase() === 'atamfa') {
+        window.addEventListener('load', updateDurations);
+        return;
     }
 
-    // 3. Canja Title
-    const pageTitle = document.querySelector('h2');
-    if (pageTitle) pageTitle.innerText = searchWord.toUpperCase();
+    // TILASTA WANKA: Boye duka hotuna tun kafin page ya gama loda (CSS Injection)
+    const style = document.createElement('style');
+    style.innerHTML = '.product-card img { opacity: 0 !important; transition: opacity 0.5s !important; }';
+    document.head.appendChild(style);
 
-    // 4. Tilasta canja hotuna (Force Update)
-    const productImages = document.querySelectorAll('.product-card img');
-    
-    productImages.forEach((img, index) => {
-        // Wannan shi ne babban sirrin: Wanke asalin hoton Atamfa gaba daya
-        img.style.opacity = "0"; // Boye tsohon hoton
+    window.addEventListener('DOMContentLoaded', () => {
+        updateDurations();
         
-        // Sabon link din Unsplash wanda ya fi sauri
-        const newSrc = `https://images.unsplash.com/photo-1?auto=format&fit=crop&w=500&q=80&sig=${index}&search=${searchWord},jewelry`;
-        
-        // Halittar sabon hoto a background
-        const loader = new Image();
-        loader.src = newSrc;
-        
-        loader.onload = () => {
-            img.src = newSrc; // Saka sabon hoton earrings din
-            img.style.opacity = "1"; // Nuna shi yanzu
-            img.style.transition = "opacity 0.5s ease-in-out";
-        };
+        const pageTitle = document.querySelector('h2');
+        if (pageTitle) pageTitle.innerText = searchWord.toUpperCase();
 
-        loader.onerror = () => {
-            // Idan aka samu matsala, nuna placeholder maimakon Atamfa
-            img.src = `https://via.placeholder.com/500x700?text=${searchWord}`;
-            img.style.opacity = "1";
-        };
+        const productImages = document.querySelectorAll('.product-card img');
+        
+        productImages.forEach((img, index) => {
+            // Muna kara lokaci (timestamp) don karya Caching
+            const timestamp = new Date().getTime();
+            const newSrc = `https://images.unsplash.com/photo-1?auto=format&fit=crop&w=500&q=80&search=${searchWord}&sig=${index}-${timestamp}`;
+            
+            // Halittar Loader
+            const loader = new Image();
+            loader.src = newSrc;
+            
+            loader.onload = () => {
+                img.src = newSrc;
+                img.style.opacity = "1"; // Nuna sabon hoton kawai
+            };
+            
+            loader.onerror = () => {
+                img.src = `https://via.placeholder.com/500x700?text=${searchWord}`;
+                img.style.opacity = "1";
+            };
+        });
     });
-});
+})();
         
-    
     </script>
 </body>
 </html>
