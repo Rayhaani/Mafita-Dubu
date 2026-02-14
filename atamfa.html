@@ -186,36 +186,51 @@
         window.onload = updateDurations;
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Karbo kalmar bincike daga memory
-    const searchWord = localStorage.getItem('currentSearch');
-    
-    // Idan babu komai, ko kuma binciken Atamfa ne, to tsaya a nan
-    if (!searchWord || searchWord.toLowerCase() === 'atamfa') {
-        return;
+    // 1. Lissafa lokacin badges (updateDurations dinka na asali)
+    if (typeof updateDurations === 'function') {
+        updateDurations();
     }
 
-    // 2. Canja Sunan Page din (Title)
+    // 2. Karbo kalmar bincike
+    const searchWord = localStorage.getItem('currentSearch');
+    
+    // Idan babu komai ko kuma binciken Atamfa ne, bar shi yadda yake
+    if (!searchWord || searchWord.toLowerCase() === 'atamfa' || searchWord.toLowerCase() === 'textile') {
+        return; 
+    }
+
+    // 3. Canja Title
     const pageTitle = document.querySelector('h2');
     if (pageTitle) pageTitle.innerText = searchWord.toUpperCase();
 
-    // 3. Tilasta canja kowane hoto (Exact Search)
+    // 4. Tilasta canja hotuna (Force Update)
     const productImages = document.querySelectorAll('.product-card img');
     
     productImages.forEach((img, index) => {
-        // Muna kara 'fashion' ko 'product' domin Unsplash ya gano cewa kayan sayarwa muke nema
-        // Kuma muna kara 'sig' (Signature) domin kowane hoto ya bambanta da dan uwansa
-        const exactSearchUrl = `https://source.unsplash.com/featured/500x700?${searchWord},product,${index}`;
+        // Wannan shi ne babban sirrin: Wanke asalin hoton Atamfa gaba daya
+        img.style.opacity = "0"; // Boye tsohon hoton
         
-        // Wannan ita ce dabara mafi girma: muna gaya wa browser ta wanke tsohon hoto
-        img.src = ""; // Wanke tsohon hoton Atamfa
-        img.src = exactSearchUrl; // Saka sabon hoton abin da aka nema
+        // Sabon link din Unsplash wanda ya fi sauri
+        const newSrc = `https://images.unsplash.com/photo-1?auto=format&fit=crop&w=500&q=80&sig=${index}&search=${searchWord},jewelry`;
         
-        // Idan hoton ya ki budewa (Network issue)
-        img.onerror = function() {
-            this.src = 'https://via.placeholder.com/500x700?text=' + searchWord;
+        // Halittar sabon hoto a background
+        const loader = new Image();
+        loader.src = newSrc;
+        
+        loader.onload = () => {
+            img.src = newSrc; // Saka sabon hoton earrings din
+            img.style.opacity = "1"; // Nuna shi yanzu
+            img.style.transition = "opacity 0.5s ease-in-out";
+        };
+
+        loader.onerror = () => {
+            // Idan aka samu matsala, nuna placeholder maimakon Atamfa
+            img.src = `https://via.placeholder.com/500x700?text=${searchWord}`;
+            img.style.opacity = "1";
         };
     });
-});         
+});
+        
     
     </script>
 </body>
