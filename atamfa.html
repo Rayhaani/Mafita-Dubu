@@ -185,42 +185,37 @@
    
         window.onload = updateDurations;
 
-
-        document.addEventListener('DOMContentLoaded', () => {
-    // 1. Nemo kalmar bincike
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Karbo kalmar bincike daga memory
     const searchWord = localStorage.getItem('currentSearch');
     
-    // 2. Idan babu komai ko kuma "atamfa" aka nema, bar shi yadda yake
-    if (!searchWord || searchWord.toLowerCase() === 'atamfa' || searchWord.toLowerCase() === 'textile') {
-        return; 
+    // Idan babu komai, ko kuma binciken Atamfa ne, to tsaya a nan
+    if (!searchWord || searchWord.toLowerCase() === 'atamfa') {
+        return;
     }
 
-    // 3. Canja Title din shafin
+    // 2. Canja Sunan Page din (Title)
     const pageTitle = document.querySelector('h2');
     if (pageTitle) pageTitle.innerText = searchWord.toUpperCase();
 
-    // 4. Tilasta canja hotuna (Forced Update)
+    // 3. Tilasta canja kowane hoto (Exact Search)
     const productImages = document.querySelectorAll('.product-card img');
     
     productImages.forEach((img, index) => {
-        // Muna amfani da "source.unsplash.com" kai tsaye don ya fi sauki
-        const newSrc = `https://source.unsplash.com/featured/500x700?${searchWord},${index}`;
+        // Muna kara 'fashion' ko 'product' domin Unsplash ya gano cewa kayan sayarwa muke nema
+        // Kuma muna kara 'sig' (Signature) domin kowane hoto ya bambanta da dan uwansa
+        const exactSearchUrl = `https://source.unsplash.com/featured/500x700?${searchWord},product,${index}`;
         
-        // Zamu nuna hoton ne kawai idan ya gama lodi (don kar ya bace)
-        const tempImg = new Image();
-        tempImg.src = newSrc;
-        tempImg.onload = () => {
-            img.src = newSrc; // Canja hoton kawai idan ya riga ya lodo
-        };
-
-        // Idan ya ki lodawa, zai bar hoton Atamfa din ne kawai
-        tempImg.onerror = () => {
-            console.log("Hoton " + searchWord + " ya ki loduwa.");
+        // Wannan ita ce dabara mafi girma: muna gaya wa browser ta wanke tsohon hoto
+        img.src = ""; // Wanke tsohon hoton Atamfa
+        img.src = exactSearchUrl; // Saka sabon hoton abin da aka nema
+        
+        // Idan hoton ya ki budewa (Network issue)
+        img.onerror = function() {
+            this.src = 'https://via.placeholder.com/500x700?text=' + searchWord;
         };
     });
-});
-        
-          
+});         
     
     </script>
 </body>
