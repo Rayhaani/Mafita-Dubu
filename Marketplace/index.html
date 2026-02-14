@@ -450,9 +450,83 @@
     </div>
 </section>
 
-<script>
+    <script>
 function openPortal() {
     // Tabbatar ka canja sunan ID din anan ma zuwa portal-new-v3
     const portal = document.getElementById('portal-new-v3');
     if (portal) {
-        portal.classList.remove('opacity-0', 'pointer-ev
+        portal.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
+        portal.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+    }
+}
+
+function toggleMenu() {
+    // Tabbatar ka canja sunan ID din anan ma
+    const portal = document.getElementById('portal-new-v3');
+    if (portal) {
+        portal.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        portal.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
+    }
+}
+            </script>
+
+<div id="final-perfect-header">
+    <style>
+        .header-ui {
+            position: fixed; top: 25px; right: 25px;
+            display: flex; align-items: center; gap: 20px;
+            z-index: 10001;
+        }
+
+        .ui-btn {
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .ui-btn:hover { transform: scale(1.1); }
+
+        /* Gyaran Girman Duniya (Language Portal) */
+        .language-portal {
+            width: 34px; height: 34px; /* Na rage girman daga 40px zuwa 34px */
+            background: #2b170e; 
+            border-radius: 50%;
+            border: 1.5px solid #d4af37;
+            box-shadow: 0 0 10px rgba(43, 23, 14, 0.5);
+        }
+
+        .gold-svg {
+            fill: none; stroke: url(#premiumGold);
+            stroke-width: 2.5; stroke-linecap: round;
+        }
+
+        /* Premium Menus */
+        .premium-card {
+            position: fixed; top: 80px; right: 20px;
+            width: 230px; background: #1a1a1a !important;
+            border-radius: 1.2rem; overflow: hidden;
+            display: none; z-index: 10000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            border: 1px solid #4a3c14;
+        }
+        .premium-card.active { display: block !important; animation: popIn 0.25s ease-out; }
+
+        @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+        .menu-list { padding: 10px 0; }
+        .menu-item {
+            display: flex; align-items: center; padding: 12px 20px;
+            text-decoration: none; color: #f0f0f0; font-size: 13px; font-weight: 600; cursor: pointer;
+        }
+        .menu-item:hover { background: rgba(212, 175, 55, 0.1); color: #d4af37; }
+        .menu-item span { margin-right: 12px; font-size: 16px; }
+        .divider { height: 1px; background: #333; margin: 8px 15px; }
+    </style>
+
+    <svg width="0" height="0" style="position:absolute;">
+        <defs>
+            <linearGradient id="premiumGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#d4af37" />
+                <stop offset="100%" style="stop-color:#8b6b1b" />
+            </linearGradient>
+        </defs>
+    </svg>
