@@ -16,11 +16,24 @@
             --emergency: #ff0055;
         }
 
+        /* GYARARREN BACKGROUND: GOLDEN DA CHOCOLATE KADAI */
         body {
-            background-color: var(--bg-dark);
+            background-color: #050505;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(218, 165, 32, 0.15) 0%, transparent 40%), /* Golden */
+                radial-gradient(circle at 80% 70%, rgba(139, 69, 19, 0.15) 0%, transparent 40%),  /* Chocolate/Brown */
+                url('https://www.transparenttextures.com/patterns/stardust.png');
+            background-attachment: fixed;
             color: #ffffff;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+        }
+
+        /* Galaxy Effect Overlay */
+        .galaxy-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(5, 5, 5, 0.9) 100%);
+            z-index: -1;
         }
 
         .header-text { font-family: 'Syncopate', sans-serif; letter-spacing: 0.5rem; text-transform: uppercase; }
@@ -53,7 +66,7 @@
 
         .orb {
             position: absolute; width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(0, 242, 255, 0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(218, 165, 32, 0.05) 0%, transparent 70%);
             border-radius: 50%; z-index: -1; filter: blur(80px);
             animation: move 20s infinite alternate;
         }
@@ -72,18 +85,19 @@
 </head>
 <body>
 
+    <div class="galaxy-overlay"></div>
+    <div class="orb"></div>
+
     <div id="neuralOverlay">
         <div class="neural-grid-display" id="nodeContainer"></div>
         <div class="header-text text-cyan-400 text-sm mb-2">Nexus Brain v4.0 Active</div>
         <div id="expertStatus" class="text-[10px] text-gray-400 font-mono">SCANNING GLOBAL OPEN-SOURCE MODELS...</div>
     </div>
 
-    <div class="orb"></div>
-
     <div class="min-h-screen py-10 px-6 max-w-7xl mx-auto">
         
         <header class="text-center mb-16">
-            <h1 class="header-text text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-300 to-gray-500">
+            <h1 class="header-text text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-white to-cyan-400">
                 Nexus Medical City
             </h1>
             <p class="text-[10px] tracking-[0.5rem] mt-2 opacity-50 uppercase">Global Intelligence Hospital</p>
@@ -281,7 +295,6 @@
     </div>
 
     <script>
-        // Setup Neural Nodes
         const container = document.getElementById('nodeContainer');
         for (let i = 0; i < 25; i++) {
             const node = document.createElement('div');
@@ -309,10 +322,4 @@
                 if (count > 6) {
                     clearInterval(interval);
                     overlay.style.display = 'none';
-                    alert(`Nexus AI ya gama binciken ${unitName}. Kwararru 1,000 sun bada sakamako 100% perfect!`);
-                }
-            }, 1000);
-        }
-    </script>
-</body>
-                    </html>
+                    alert(`Nexus AI ya gama binciken ${unitName}. Kwararru 1,000 sun b
