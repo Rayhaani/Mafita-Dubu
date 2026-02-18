@@ -9,219 +9,137 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-body {
-    margin: 0;
-    background: black;
-    overflow-y: auto; 
-    font-family: 'Segoe UI', sans-serif;
-    color: white;
-}
+/* --- ASALIN STYLE DINKA (PROTECTED) --- */
+body { margin: 0; background: black; overflow-y: auto; font-family: 'Segoe UI', sans-serif; color: white; }
+canvas { display: block; position: fixed; top: 0; left: 0; z-index: 1; }
+.header-static { position: fixed; top: 0; left: 0; width: 100%; z-index: 30; text-align: center; padding: 10px 0; }
+.header-static h1 { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: #FFD700; margin: 0; display: inline-block; background: rgba(0, 0, 0, 0.9); padding: 5px 30px; border-radius: 0 0 15px 15px; border: 1px solid rgba(255, 215, 0, 0.3); }
 
-canvas {
-    display: block;
-    position: fixed;
-    top: 0; left: 0;
-    z-index: 1;
-}
+#grid-container { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; padding: 100px 20px 150px; gap: 15px; }
 
-.header-static {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    z-index: 30;
-    text-align: center;
-    padding: 10px 0;
-}
-
-.header-static h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.8rem;
-    color: #FFD700;
-    margin: 0;
-    display: inline-block;
-    background: rgba(0, 0, 0, 0.9);
-    padding: 5px 30px;
-    border-radius: 0 0 15px 15px;
-    border: 1px solid rgba(255, 215, 0, 0.3);
-}
-
-#grid-container {
-    position: relative;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 100px 20px 50px;
-    gap: 15px;
-}
-
-/* Kwalliyar Hexagon tare da Animation */
 .hex-item {
-    width: 260px;
-    height: 280px;
-    background: rgba(0, 255, 204, 0.03);
+    width: 260px; height: 280px; background: rgba(0, 255, 204, 0.03);
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    border: 1px solid rgba(0, 255, 204, 0.2);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    transition: 0.4s;
-    backdrop-filter: blur(10px);
-    position: relative;
-    animation: glowPulse 3s infinite alternate;
+    border: 1px solid rgba(0, 255, 204, 0.2); display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    transition: 0.4s; backdrop-filter: blur(10px); position: relative;
+    animation: glowPulse 3s infinite alternate; cursor: pointer;
+}
+@keyframes glowPulse { from { box-shadow: 0 0 5px rgba(0, 255, 204, 0.1); border-color: rgba(0, 255, 204, 0.2); } to { box-shadow: 0 0 20px rgba(0, 255, 204, 0.4); border-color: rgba(0, 255, 204, 0.6); } }
+.hex-item:hover { background: rgba(0, 255, 204, 0.15); transform: scale(1.05) translateY(-5px); }
+.hex-item i { font-size: 3.2rem; color: #00ffcc; margin-bottom: 12px; }
+.hex-item h3 { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: #00ffcc; margin: 0; padding: 0 10px; text-transform: uppercase; }
+.hex-item p { font-size: 0.85rem; color: #ddd; margin: 8px 0 0; padding: 0 25px; line-height: 1.3; }
+
+/* --- MENU WITH ROLL PHYSICS --- */
+#carpet {
+    position: fixed; top: 90px; left: 50%; transform: translateX(-50%);
+    width: 320px; height: 0; visibility: hidden;
+    background: rgba(0,0,0,0.98); border: 2px solid rgba(0,255,204,0.6); border-radius: 25px;
+    z-index: 1000; backdrop-filter: blur(30px); overflow: hidden;
+    box-shadow: 0 10px 60px rgba(0,255,204,0.3);
 }
 
-@keyframes glowPulse {
-    from { box-shadow: 0 0 5px rgba(0, 255, 204, 0.1); border-color: rgba(0, 255, 204, 0.2); }
-    to { box-shadow: 0 0 20px rgba(0, 255, 204, 0.4); border-color: rgba(0, 255, 204, 0.6); }
+#roll {
+    position: absolute; bottom: 0; width: 100%; height: 40px;
+    border-radius: 50%; background: radial-gradient(circle at center, #00ffcc, transparent 70%);
+    filter: blur(8px); transform-origin: center; pointer-events: none;
 }
 
-.hex-item:hover {
-    background: rgba(0, 255, 204, 0.15);
-    transform: scale(1.05) translateY(-5px);
-}
+.carpet-slider { display: flex; width: 200%; height: 100%; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.panel { width: 50%; height: 100%; overflow-y: auto; padding: 25px 15px; box-sizing: border-box; scrollbar-width: none; }
+.panel::-webkit-scrollbar { display: none; }
+.panel-main { display: flex; flex-direction: column; justify-content: space-between; }
 
-.hex-item i {
-    font-size: 3.2rem;
-    color: #00ffcc;
-    margin-bottom: 12px;
-}
+.cat-link { padding: 14px 12px; cursor: pointer; color: #00ffcc; font-weight: bold; font-size: 11px; display: flex; justify-content: space-between; align-items: center; }
+.cat-link:hover { background: rgba(0,255,204,0.15); border-radius: 12px; }
 
-.hex-item h3 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1rem;
-    color: #00ffcc;
-    margin: 0;
-    padding: 0 10px;
-    text-transform: uppercase;
-}
-
-.hex-item p {
-    font-size: 0.85rem;
-    color: #ddd;
-    margin: 8px 0 0;
-    padding: 0 25px;
-    line-height: 1.3;
-}
+.close-btn { position: absolute; top: 15px; right: 20px; color: #ff3366; font-size: 24px; cursor: pointer; z-index: 1001; }
+.sub-header { color: #FFD700; padding-bottom: 20px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.sub-group-title { color: #FFD700; margin: 25px 0 10px; font-size: 11px; font-weight: 800; text-transform: uppercase; border-left: 3px solid #FFD700; padding-left: 8px; }
+.sub-item { display: block; padding: 14px 10px; font-size: 11px; color: #fff; text-decoration: none; transition: 0.3s; }
+.sub-item:hover { background: rgba(0,255,204,0.15); color: #00ffcc; padding-left: 20px; border-radius: 10px; }
 </style>
 </head>
 
 <body>
-
 <canvas id="galaxy"></canvas>
-
-<div class="header-static">
-    <h1>DAULAR SANA'A</h1>
-</div>
+<div class="header-static"><h1>DAULAR SANA'A</h1></div>
 
 <div id="grid-container">
-    <div class="hex-item">
-        <i class="fas fa-code"></i>
-        <h3>Software & Future Tech</h3>
-        <p>Ilimin gina Web, Apps, AI, da tsaron yanar gizo (Cyber Security).</p>
-    </div>
+    <div class="hex-item" onclick="openCarpet()"><i class="fas fa-code"></i><h3>Software & Future Tech</h3><p>Ilimin gina Web, Apps, AI, da tsaron yanar gizo.</p></div>
+    <div class="hex-item" onclick="openCarpet()"><i class="fas fa-car-battery"></i><h3>Modern Mechanics</h3><p>Gyaran motocin lantarki, na'urori masu motsi, da Robotics.</p></div>
+    <div class="hex-item" onclick="openCarpet()"><i class="fas fa-gem"></i><h3>Elite Fashion</h3><p>Dinkin alfarma, sarrafa fatu, da kayan ado na zinariya.</p></div>
+    <div class="hex-item" onclick="openCarpet()"><i class="fas fa-seedling"></i><h3>Agro-Industrial</h3><p>Noma mai amfani da sensor da na'urori, da kiwon zamani.</p></div>
+    <div class="hex-item" onclick="openCarpet()"><i class="fas fa-drafting-table"></i><h3>Architecture & Interior</h3><p>Zanen gidaje na 3D, POP, da gina Smart Homes.</p></div>
+    <div class="hex-item" onclick="openCarpet()"><i class="fas fa-charging-station"></i><h3>Energy & Power Systems</h3><p>Hasken Sola, Inverters, da gyaran kayan lantarki.</p></div>
+    <div class="hex-item" onclick="openCarpet()"><i class="fas fa-clapperboard"></i><h3>Creative Media & Arts</h3><p>Aikin fim, Animation, da Graphic Design.</p></div>
+    <div class="hex-item" onclick="openCarpet()"><i class="fas fa-mortar-pestle"></i><h3>Home Sciences</h3><p>Sarrafa sabulu, turaruka, abinci, da sinadarai.</p></div>
+    <div class="hex-item" onclick="openCarpet()"><i class="fas fa-tools"></i><h3>Industrial Forge</h3><p>Manyan ayyukan walda, sassaƙa, da gyaran injina.</p></div>
+    <div class="hex-item" onclick="openCarpet()"><i class="fas fa-chart-line"></i><h3>Digital Commerce</h3><p>Kasuwancin duniya, hannun jari, da tallace-tallace.</p></div>
+    <div class="hex-item" onclick="openCarpet()"><i class="fas fa-truck-fast"></i><h3>Logistics & Route</h3><p>Hanyoyin jigilar kaya da adana su a fadin duniya.</p></div>
+    <div class="hex-item" onclick="openCarpet()"><i class="fas fa-microscope"></i><h3>Bio-Chemical Tech</h3><p>Ilimin sarrafa sinadarai na kimiya don magunguna.</p></div>
+</div>
 
-    <div class="hex-item">
-        <i class="fas fa-car-battery"></i>
-        <h3>Modern Mechanics</h3>
-        <p>Gyaran motocin lantarki (Tesla), na'urori masu motsi, da Robotics.</p>
-    </div>
+<div id="carpet">
+    <i class="fas fa-times-circle close-btn" onclick="closeCarpet()"></i>
+    <div class="carpet-slider" id="slider">
+        <div class="panel panel-main">
+            <div class="cat-link" onclick="goToSub()">1. ENGINEERING & INFRA <i class="fas fa-chevron-right"></i></div>
+            <div class="cat-link">2. ARTIFICIAL INTELLIGENCE <i class="fas fa-lock"></i></div>
+            <div class="cat-link">3. CYBER SECURITY <i class="fas fa-lock"></i></div>
+            <div class="cat-link">4. MOBILE & SMART DEVICES <i class="fas fa-mobile-alt"></i></div>
+            <div class="cat-link">5. DATA SCIENCE <i class="fas fa-database"></i></div>
+            <div class="cat-link">6. GAMING & METAVERSE <i class="fas fa-gamepad"></i></div>
+            <div class="cat-link">7. BLOCKCHAIN & FINTECH <i class="fas fa-coins"></i></div>
+            <div class="cat-link">8. DESIGN & UX <i class="fas fa-pen-nib"></i></div>
+            <div class="cat-link">9. TESTING & QA <i class="fas fa-vial"></i></div>
+            <div class="cat-link">10. FUTURE FRONTIER <i class="fas fa-rocket"></i></div>
+        </div>
 
-    <div class="hex-item">
-        <i class="fas fa-gem"></i>
-        <h3>Elite Fashion</h3>
-        <p>Dinkin alfarma, sarrafa fatu, da kayan ado na zinariya da azurfa.</p>
+        <div class="panel">
+            <div class="sub-header" onclick="goBack()"><i class="fas fa-arrow-left"></i> BACK TO MENU</div>
+            <div class="sub-group-title">1. WEB & FOUNDATION (20)</div>
+            <a href="#" class="sub-item">01. Frontend Architect</a><a href="#" class="sub-item">02. Backend Infrastructure Lead</a><a href="#" class="sub-item">03. Microservices Developer</a><a href="#" class="sub-item">04. Server-Side Specialist</a><a href="#" class="sub-item">05. API Gateway Engineer</a><a href="#" class="sub-item">06. Web Performance Optimizer</a><a href="#" class="sub-item">07. Progressive Web App Expert</a><a href="#" class="sub-item">08. Next.js Architect</a><a href="#" class="sub-item">09. Headless CMS Specialist</a><a href="#" class="sub-item">10. Web Security Hardener</a><a href="#" class="sub-item">11. UI-to-Code Engineer</a><a href="#" class="sub-item">12. JAMStack Developer</a><a href="#" class="sub-item">13. Real-time App Engineer</a><a href="#" class="sub-item">14. Web Accessibility Expert</a><a href="#" class="sub-item">15. Serverless Web Builder</a><a href="#" class="sub-item">16. Web Assembly (Wasm) Dev</a><a href="#" class="sub-item">17. Static Site Specialist</a><a href="#" class="sub-item">18. Browser Extension Creator</a><a href="#" class="sub-item">19. WebRTC Video Engineer</a><a href="#" class="sub-item">20. Advanced SEO Engineer</a>
+            <div class="sub-group-title">2. CLOUD & VIRTUALIZATION (20)</div>
+            <a href="#" class="sub-item">21. AWS Solutions Architect</a><a href="#" class="sub-item">22. Azure Cloud Engineer</a><a href="#" class="sub-item">23. Google Cloud (GCP) Specialist</a><a href="#" class="sub-item">24. Multi-Cloud Integrator</a><a href="#" class="sub-item">25. Cloud Migration Consultant</a><a href="#" class="sub-item">26. Serverless Architect</a><a href="#" class="sub-item">27. Docker Container Expert</a><a href="#" class="sub-item">28. Kubernetes Administrator</a><a href="#" class="sub-item">29. Hybrid Cloud Engineer</a><a href="#" class="sub-item">30. Cloud Cost Optimizer</a><a href="#" class="sub-item">31. Cloud Security Lead</a><a href="#" class="sub-item">32. Virtual Desktop Architect</a><a href="#" class="sub-item">33. Edge Computing Engineer</a><a href="#" class="sub-item">34. Cloud Native Developer</a><a href="#" class="sub-item">35. Disaster Recovery Architect</a><a href="#" class="sub-item">36. Private Cloud Builder</a><a href="#" class="sub-item">37. Cloud Monitoring Expert</a><a href="#" class="sub-item">38. Micro-SaaS Infrastructure</a><a href="#" class="sub-item">39. Cloud Governance Lead</a><a href="#" class="sub-item">40. Serverless Backend Dev</a>
+            <div class="sub-group-title">3. DATABASE & STORAGE (20)</div>
+            <a href="#" class="sub-item">41. SQL Database Admin</a><a href="#" class="sub-item">42. NoSQL Architect</a><a href="#" class="sub-item">43. MongoDB Specialist</a><a href="#" class="sub-item">44. Graph DB Expert (Neo4j)</a><a href="#" class="sub-item">45. Data Warehouse Builder</a><a href="#" class="sub-item">46. DB Security Specialist</a><a href="#" class="sub-item">47. Time-Series DB Admin</a><a href="#" class="sub-item">48. Object Storage Expert</a><a href="#" class="sub-item">49. Redis Caching Expert</a><a href="#" class="sub-item">50. Distributed Systems Dev</a><a href="#" class="sub-item">51. Database Migration Lead</a><a href="#" class="sub-item">52. SQL Query Optimizer</a><a href="#" class="sub-item">53. Cassandra Architect</a><a href="#" class="sub-item">54. Blockchain DB Hybrid</a><a href="#" class="sub-item">55. Data Recovery Expert</a><a href="#" class="sub-item">56. ETL Pipeline Engineer</a><a href="#" class="sub-item">57. Big Data Lake Architect</a><a href="#" class="sub-item">58. Real-time Stream Admin</a><a href="#" class="sub-item">59. PostgreSQL Power User</a><a href="#" class="sub-item">60. Database Automation Dev</a>
+            <div class="sub-group-title">4. DEVOPS & AUTOMATION (20)</div>
+            <a href="#" class="sub-item">61. CI/CD Pipeline Expert</a><a href="#" class="sub-item">62. Terraform (IaC) Specialist</a><a href="#" class="sub-item">63. Site Reliability (SRE)</a><a href="#" class="sub-item">64. Automation Architect</a><a href="#" class="sub-item">65. Linux System Admin</a><a href="#" class="sub-item">66. Jenkins/GitLab Lead</a><a href="#" class="sub-item">67. Ansible/Chef Expert</a><a href="#" class="sub-item">68. DevSecOps Lead</a><a href="#" class="sub-item">69. Monitoring Lead (Grafana)</a><a href="#" class="sub-item">70. Chaos Engineer</a><a href="#" class="sub-item">71. Infrastructure Auditor</a><a href="#" class="sub-item">72. Python for DevOps</a><a href="#" class="sub-item">73. Docker Swarm Master</a><a href="#" class="sub-item">74. Cloud Formation Lead</a><a href="#" class="sub-item">75. Release Manager</a><a href="#" class="sub-item">76. Performance Tester</a><a href="#" class="sub-item">77. Shell Scripting Pro</a><a href="#" class="sub-item">78. Incident Response Lead</a><a href="#" class="sub-item">79. Server Hardening Expert</a><a href="#" class="sub-item">80. CI/CD Security Audit</a>
+            <div class="sub-group-title">5. NETWORKING & CONNECTIVITY (20)</div>
+            <a href="#" class="sub-item">81. Network Architect</a><a href="#" class="sub-item">82. SDN Specialist</a><a href="#" class="sub-item">83. Firewall/VPN Engineer</a><a href="#" class="sub-item">84. Load Balancing Master</a><a href="#" class="sub-item">85. CDN Infrastructure Dev</a><a href="#" class="sub-item">86. DNS/BGP Specialist</a><a href="#" class="sub-item">87. Fiber/5G Tech Lead</a><a href="#" class="sub-item">88. Low-Latency Engineer</a><a href="#" class="sub-item">89. IoT Network Architect</a><a href="#" class="sub-item">90. Network Monitoring Pro</a><a href="#" class="sub-item">91. Wireless Security Lead</a><a href="#" class="sub-item">92. IPv6 Migration Expert</a><a href="#" class="sub-item">93. SD-WAN Engineer</a><a href="#" class="sub-item">94. Network Virtualization</a><a href="#" class="sub-item">95. Proxy/Reverse Proxy Lead</a><a href="#" class="sub-item">96. Packet Analyst (Wireshark)</a><a href="#" class="sub-item">97. Data Center Technician</a><a href="#" class="sub-item">98. Quantum Network Basic</a><a href="#" class="sub-item">99. Edge Network Designer</a><a href="#" class="sub-item">100. Global Traffic Manager</a>
+        </div>
     </div>
-
-    <div class="hex-item">
-        <i class="fas fa-seedling"></i>
-        <h3>Agro-Industrial</h3>
-        <p>Noma mai amfani da sensor da na'urori, da kiwon zamani na kimiya.</p>
-    </div>
-
-    <div class="hex-item">
-        <i class="fas fa-drafting-table"></i>
-        <h3>Architecture & Interior</h3>
-        <p>Zanen gidaje na 3D, POP, da gina gidaje masu amfani da basira (Smart Homes).</p>
-    </div>
-
-    <div class="hex-item">
-        <i class="fas fa-charging-station"></i>
-        <h3>Energy & Power Systems</h3>
-        <p>Hasken Sola, Inverters, iska, da gyaran manyan kayan lantarki.</p>
-    </div>
-
-    <div class="hex-item">
-        <i class="fas fa-clapperboard"></i>
-        <h3>Creative Media & Arts</h3>
-        <p>Aikin fim, Animation, Graphic Design, da sarrafa sautin kide-kide.</p>
-    </div>
-
-    <div class="hex-item">
-        <i class="fas fa-mortar-pestle"></i>
-        <h3>Home Sciences</h3>
-        <p>Sarrafa sabulu, turaruka, abinci, da sinadarai na amfanin gida.</p>
-    </div>
-
-    <div class="hex-item">
-        <i class="fas fa-tools"></i>
-        <h3>Industrial Forge</h3>
-        <p>Manyan ayyukan walda, sassaƙa, da gyaran injinan masana'antu.</p>
-    </div>
-
-    <div class="hex-item">
-        <i class="fas fa-chart-line"></i>
-        <h3>Digital Commerce</h3>
-        <p>Kasuwancin duniya, hannun jari, da dabarun tallace-tallace a gizo.</p>
-    </div>
-
-    <div class="hex-item">
-        <i class="fas fa-truck-fast"></i>
-        <h3>Logistics & Route</h3>
-        <p>Hanyoyin jigilar kaya da adana su cikin tsanaki a fadin duniya.</p>
-    </div>
-
-    <div class="hex-item">
-        <i class="fas fa-microscope"></i>
-        <h3>Bio-Chemical Tech</h3>
-        <p>Ilimin sarrafa sinadarai na kimiya don magunguna da masana'antu.</p>
-    </div>
+    <div id="roll"></div>
 </div>
 
 <script>
-const canvas=document.getElementById("galaxy");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-let nodes=[];
-for(let i=0;i<200;i++){
-    nodes.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5});
-}
-function draw(){
-    ctx.fillStyle="rgba(0,0,0,0.2)";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-    for(let i=0;i<nodes.length;i++){
-        let n=nodes[i];
-        ctx.beginPath(); ctx.arc(n.x,n.y,2,0,Math.PI*2); ctx.fillStyle="#00ffcc"; ctx.fill();
-        n.x+=n.vx; n.y+=n.vy;
-        if(n.x<0||n.x>canvas.width) n.vx*=-1;
-        if(n.y<0||n.y>canvas.height) n.vy*=-1;
-        for(let j=i;j<nodes.length;j++){
-            let m=nodes[j];
-            let dx=n.x-m.x; let dy=n.y-m.y;
-            let dist=Math.sqrt(dx*dx+dy*dy);
-            if(dist<100){
-                ctx.beginPath(); ctx.moveTo(n.x,n.y); ctx.lineTo(m.x,m.y);
-                ctx.strokeStyle="rgba(0,255,204,0.1)"; ctx.stroke();
-            }
-        }
-    }
-    requestAnimationFrame(draw);
-}
-draw();
-</script>
+/* GALAXY BACKGROUND (ASALIN TSARINKA) */
+const canvas=document.getElementById("galaxy");const ctx=canvas.getContext("2d");canvas.width=window.innerWidth;canvas.height=window.innerHeight;let nodes=[];for(let i=0;i<200;i++){nodes.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5});}
+function draw(){ctx.fillStyle="rgba(0,0,0,0.2)";ctx.fillRect(0,0,canvas.width,canvas.height);for(let i=0;i<nodes.length;i++){let n=nodes[i];ctx.beginPath();ctx.arc(n.x,n.y,2,0,Math.PI*2);ctx.fillStyle="#00ffcc";ctx.fill();n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>canvas.width)n.vx*=-1;if(n.y<0||n.y>canvas.height)n.vy*=-1;for(let j=i;j<nodes.length;j++){let m=nodes[j];let dx=n.x-m.x;let dy=n.y-m.y;let dist=Math.sqrt(dx*dx+dy*dy);if(dist<100){ctx.beginPath();ctx.moveTo(n.x,n.y);ctx.lineTo(m.x,m.y);ctx.strokeStyle="rgba(0,255,204,0.1)";ctx.stroke();}}}requestAnimationFrame(draw);}draw();
 
+/* ROLL PHYSICS ENGINE */
+let carpet=document.getElementById("carpet");let roll=document.getElementById("roll");let slider=document.getElementById("slider");
+let height=0, velocity=0, target=0;
+let stiffness=0.08, damping=0.85;
+
+function openCarpet(){ target = 540; carpet.style.visibility="visible"; }
+function closeCarpet(){ target=0; goBack(); setTimeout(()=>{if(target===0)carpet.style.visibility="hidden";},800); }
+function goToSub(){slider.style.transform="translateX(-50%)";}
+function goBack(){slider.style.transform="translateX(0)";}
+
+function animate(){
+    let force = (target - height) * stiffness;
+    velocity += force; velocity *= damping; height += velocity;
+    if(height < 0.1 && target === 0) height = 0;
+    carpet.style.height = height + "px";
+    let scale = 1 + (height/300);
+    roll.style.transform = `scaleY(${scale}) rotate(${height*0.2}deg)`;
+    requestAnimationFrame(animate);
+}
+animate();
+</script>
 </body>
-</html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </html>
+                
