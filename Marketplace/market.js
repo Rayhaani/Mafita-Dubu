@@ -156,26 +156,29 @@ function globalSearchMotsi(mode) {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    // IDAN AKWAI LOCATION: Wuce kai tsaye, kada ka nuna Toast
+                    // IDAN GPS A KUNNE YAKE: Wuce da lat/lon
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
                 },
                 (error) => {
-                    // IDAN BABU LOCATION: Tsaya a nan, nuna Toast kawai
-                    console.log("GPS Error:", error.message);
+                    // IDAN GPS A KULLE YAKE (Koda an danna Allow):
+                    // Maimakon mu bar shi a Global Market, mu kai shi results kawai
+                    console.log("GPS is off, redirecting to general results...");
+                    
                     if (typeof showGpsToast === "function") {
-                        showGpsToast(); 
-                    } else {
-                        alert("Don Allah kunna Location dinka");
+                        showGpsToast(); // Nuna masa cewa zai ga results amma ba na kusa ba
                     }
-                    // Ba za mu sanya window.location.href a nan ba don kar ya wuce results page
+                    
+                    // Bayan sakan 2, mu tura shi results page ko da bai kunna GPS ba
+                    setTimeout(() => {
+                        window.location.href = "results.html?view=nearme&gps=off";
+                    }, 2500);
                 },
                 { enableHighAccuracy: true, timeout: 5000 }
             );
         }
     } else {
-        // Global Search Logic
         if(overlay) overlay.style.display = 'none';
         window.location.href = 'atamfa.html';
     }
