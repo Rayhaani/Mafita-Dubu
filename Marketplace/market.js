@@ -147,39 +147,55 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-function globalSearchMotsi(mode) {
-    const overlay = document.getElementById('search-overlay');
-    const loading = document.getElementById('ai-loading-screen');
+<script>
+    function globalSearchMotsi(type) {
+        const loading = document.getElementById('ai-loading-screen');
+        const overlay = document.getElementById('search-overlay');
+        const searchTerm = document.getElementById('market-search').value;
 
-    if (mode === 'near_me') {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    if(overlay) overlay.style.display = 'none';
-                    if(loading) loading.style.display = 'flex';
-                    
-                    // Bayan sakan 3 zai wuce, amma idan an dawo browser za ta ga sabon shafi
-                    setTimeout(() => { 
-                        window.location.href = "results.html?view=nearme";
-                        // Wannan layin yana kashe loading din a "background" 
-                        // yadda idan an dawo ba za a same shi yana loading ba
-                        setTimeout(() => { if(loading) loading.style.display = 'none'; }, 500);
-                    }, 3000);
-                },
-                (error) => { showGpsToast(); },
-                { timeout: 5000 }
-            );
+        // 1. Rufe overlay din zabi nan take
+        overlay.style.display = 'none';
+
+        if (type === 'near_me') {
+            // SHARADI: Cire scanning page, nuna result nan take
+            // Ba za mu kunna 'loading.style.display = 'flex'' ba
+            
+            const resultsPage = document.getElementById('near-me-results');
+            resultsPage.classList.remove('hidden');
+            resultsPage.style.display = 'flex';
+            
+            // System zai fara nemo vendors a background ba tare da ya tsayar da mutum ba
+            if (typeof fetchVendorsNearMe === "function") {
+                fetchVendorsNearMe(); 
+            }
+        } 
+        else if (type === 'global') {
+            if(searchTerm === "") {
+                alert("Don Allah rubuta abinda kake nema kafin ka danna Global Search");
+                overlay.style.display = 'flex';
+                return;
+            }
+            localStorage.setItem('currentSearch', searchTerm);
+            
+            // Wucewa kai tsaye zuwa atamfa.html ba tare da bata lokaci ba
+            window.location.href = 'atamfa.html';
         }
-    } else {
-        if(overlay) overlay.style.display = 'none';
-        if(loading) loading.style.display = 'flex';
-        // Maimakon loading ya dawama, muna so ya tsaya idan an dade
-        setTimeout(() => {
-            if(loading) loading.style.display = 'none';
-            kammalaBincike();
-        }, 3000);
     }
-}
+
+    function manualSearch() {
+        document.getElementById('search-overlay').style.display = 'flex';
+    }
+
+    function closeSearch() {
+        document.getElementById('search-overlay').style.display = 'none';
+    }
+
+    function closeResults() {
+        document.getElementById('near-me-results').classList.add('hidden');
+        document.getElementById('near-me-results').style.display = 'none';
+    }
+</script>
+
 
 
  let watchID = null; // Wannan zai rike tracking din
