@@ -185,8 +185,6 @@ function globalSearchMotsi(mode) {
 }
 
 
-
-
  let watchID = null; // Wannan zai rike tracking din
 
 function nearYouSearch() {
