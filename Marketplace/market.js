@@ -148,47 +148,39 @@ function startAISimulation(file) {
 // 5. GLOBAL SEARCH MOTSI (GYARARREN INSTANT VERSION)
 function globalSearchMotsi(mode) {
     const overlay = document.getElementById('search-overlay');
-    const loading = document.getElementById('ai-loading-screen'); // Scanning screen
-
-    // 1. Rufe zabin bincike nan take
-    if(overlay) overlay.style.display = 'none';
-
+    
     if (mode === 'near_me') {
+        // MUHIMMI: Kada ka sa 'overlay.style.display = none' a nan!
+        // Mu bar shi a bude har sai mun tabbatar GPS yana aiki.
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    // SHARADI: Mun cire 'loading.style.display = flex'
-                    // Mun cire 'setTimeout' na sakan 3
-                    // System zai wuce zuwa results nan take (Zero Lag)
+                    // 1. AN SAMU LOCATION: Yanzu ne za mu rufe overlay mu wuce
+                    if(overlay) overlay.style.display = 'none';
                     
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
-                    
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
                 },
-                (error) => { 
-                    // Idan GPS a kashe yake
-                    if(typeof showGpsToast === "function") {
+                (error) => {
+                    // 2. AN SAMU MATSALA (GPS a kulle): 
+                    // Kada mu rufe overlay, mu nuna Toast kawai mutum ya gani a nan
+                    console.log("GPS a kulle yake.");
+                    
+                    if (typeof showGpsToast === "function") {
                         showGpsToast(); 
-                    } else {
-                        alert("Don Allah kunna GPS dinka");
                     }
+                    
+                    // Overlay zai cigaba da zama a bude don mutum ya sake gwadawa ko ya zabi Global Search
                 },
-                { timeout: 5000, enableHighAccuracy: true }
+                { enableHighAccuracy: true, timeout: 5000 }
             );
-        } else {
-            // Idan browser ba ta da Geolocation
-            window.location.href = "results.html?view=nearme";
         }
     } else {
-        // Idan Global Search ne
-        // Nan ma mun cire scanning din sakan 3
-        if(typeof kammalaBincike === "function") {
-            kammalaBincike();
-        } else {
-            // Idan baka da kammalaBincike, mu kai shi atamfa.html kai tsaye
-            window.location.href = 'atamfa.html';
-        }
+        // Idan Global Search ne, wannan kam sai mu rufe mu wuce
+        if(overlay) overlay.style.display = 'none';
+        window.location.href = 'atamfa.html';
     }
 }
 
