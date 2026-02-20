@@ -147,43 +147,83 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
+// 1. GYARARREN GLOBAL SEARCH MOTSI (INSTANT & NO SCANNING)
 function globalSearchMotsi(mode) {
     const overlay = document.getElementById('search-overlay');
-    
-    if (mode === 'near_me') {
-        if(overlay) overlay.style.display = 'none';
+    const loading = document.getElementById('ai-loading-screen');
 
+    // Rufe zabin bincike nan take
+    if(overlay) overlay.style.display = 'none';
+
+    if (mode === 'near_me') {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    // IDAN GPS A KUNNE YAKE: Wuce da lat/lon
+                    // IDAN AKWAI GPS: Wuce kai tsaye
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
                 },
                 (error) => {
-                    // IDAN GPS A KULLE YAKE (Koda an danna Allow):
-                    // Maimakon mu bar shi a Global Market, mu kai shi results kawai
-                    console.log("GPS is off, redirecting to general results...");
-                    
+                    // IDAN GPS A KULLE YAKE: Nuna Toast kawai, sannan wucewa
                     if (typeof showGpsToast === "function") {
-                        showGpsToast(); // Nuna masa cewa zai ga results amma ba na kusa ba
+                        showGpsToast(); 
                     }
-                    
-                    // Bayan sakan 2, mu tura shi results page ko da bai kunna GPS ba
+                    // Jinkiri kadan don mutum ya ga Toast din, sannan ya wuce results
                     setTimeout(() => {
                         window.location.href = "results.html?view=nearme&gps=off";
                     }, 2500);
                 },
                 { enableHighAccuracy: true, timeout: 5000 }
             );
+        } else {
+            window.location.href = "results.html?view=nearme";
         }
     } else {
-        if(overlay) overlay.style.display = 'none';
+        // Idan Global Search ne (Global Mode)
         window.location.href = 'atamfa.html';
     }
 }
 
+// 2. GYARARREN NEAR YOU SEARCH (INSTANT RESULTS)
+function nearYouSearch() {
+    const loading = document.getElementById('ai-loading-screen'); // Scanning screen
+    const listContainer = document.getElementById('vendors-list');
+    const resultsPage = document.getElementById('near-me-results');
+    const errorState = document.getElementById('gps-error-state');
+
+    // SHARADI: Mun cire 'loading.style.display = flex'
+    if (loading) loading.style.display = 'none'; 
+    
+    if (watchID) navigator.geolocation.clearWatch(watchID);
+
+    watchID = navigator.geolocation.watchPosition((pos) => {
+        const userLat = pos.coords.latitude;
+        const userLon = pos.coords.longitude;
+
+        let nearbyVendors = vendorsDatabase.map(vendor => {
+            const distance = lissafaNisa(userLat, userLon, vendor.lat, vendor.lon);
+            return { ...vendor, distance: distance };
+        }).sort((a, b) => a.distance - b.distance);
+
+        // Nuna sakamako nan take
+        if (resultsPage) resultsPage.style.display = 'flex';
+        if (listContainer) {
+            listContainer.style.display = 'block';
+            displayNearbyVendors(nearbyVendors);
+        }
+        if (errorState) errorState.style.display = 'none';
+        
+    }, (err) => {
+        if (resultsPage) resultsPage.style.display = 'flex';
+        if (listContainer) listContainer.style.display = 'none';
+        if (errorState) errorState.style.display = 'flex';
+    }, { 
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: 5000 
+    });
+}
 
  let watchID = null; // Wannan zai rike tracking din
 
