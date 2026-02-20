@@ -149,49 +149,52 @@ function startAISimulation(file) {
 
 function globalSearchMotsi(mode) {
     const overlay = document.getElementById('search-overlay');
-    const loading = document.getElementById('ai-loading-screen'); // Scanning screen
-
-    // 1. Rufe zabin bincike nan take
-    if(overlay) overlay.style.display = 'none';
+    const loading = document.getElementById('ai-loading-screen');
 
     if (mode === 'near_me') {
+        // 1. Rufe overlay din zabi
+        if(overlay) overlay.style.display = 'none';
+
         if (navigator.geolocation) {
+            // Muna amfani da 'watchPosition' ko 'getCurrentPosition' tare da high accuracy
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    // SHARADI: Mun cire 'loading.style.display = flex'
-                    // Mun cire 'setTimeout' na sakan 3
-                    // System zai wuce zuwa results nan take (Zero Lag)
-                    
+                    // IDAN AN DANNA ALLOW:
+                    // System zai dauki location din ya wuce da kai results.html nan take
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
                     
+                    // Wucewa nan take ba tare da refresh ba
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
                 },
-                (error) => { 
-                    // Idan GPS a kashe yake
-                    if(typeof showGpsToast === "function") {
+                (error) => {
+                    // IDAN AN KI BADAN IZA (DENY) KO AKWAI MATSALA
+                    if (error.code === error.PERMISSION_DENIED) {
+                        // Idan mutum ya ki badawa, nuna masa Toast din nan
                         showGpsToast(); 
                     } else {
-                        alert("Don Allah kunna GPS dinka");
+                        // Idan wata matsalar ce, mu kai shi results kawai
+                        window.location.href = "results.html?view=nearme";
                     }
                 },
-                { timeout: 5000, enableHighAccuracy: true }
+                { 
+                    enableHighAccuracy: true, 
+                    timeout: 10000, // Mun ba shi sakan 10 ya jira mutum ya danna 'Allow'
+                    maximumAge: 0 
+                }
             );
-        } else {
-            // Idan browser ba ta da Geolocation
-            window.location.href = "results.html?view=nearme";
         }
     } else {
-        // Idan Global Search ne
-        // Nan ma mun cire scanning din sakan 3
+        // Sashen Global Search
+        if(overlay) overlay.style.display = 'none';
         if(typeof kammalaBincike === "function") {
             kammalaBincike();
         } else {
-            // Idan baka da kammalaBincike, mu kai shi atamfa.html kai tsaye
             window.location.href = 'atamfa.html';
         }
     }
 }
+
 
 
 
