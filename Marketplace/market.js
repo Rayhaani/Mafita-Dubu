@@ -148,29 +148,47 @@ function startAISimulation(file) {
 // 5. GLOBAL SEARCH MOTSI (GYARARREN INSTANT VERSION)
 function globalSearchMotsi(mode) {
     const overlay = document.getElementById('search-overlay');
+    const loading = document.getElementById('ai-loading-screen'); // Scanning screen
+
+    // 1. Rufe zabin bincike nan take
     if(overlay) overlay.style.display = 'none';
 
     if (mode === 'near_me') {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
+                    // SHARADI: Mun cire 'loading.style.display = flex'
+                    // Mun cire 'setTimeout' na sakan 3
+                    // System zai wuce zuwa results nan take (Zero Lag)
+                    
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
+                    
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
                 },
-                (error) => {
-                    if (typeof showGpsToast === "function") { showGpsToast(); }
-                    setTimeout(() => {
-                        window.location.href = "results.html?view=nearme&gps=off";
-                    }, 2500);
+                (error) => { 
+                    // Idan GPS a kashe yake
+                    if(typeof showGpsToast === "function") {
+                        showGpsToast(); 
+                    } else {
+                        alert("Don Allah kunna GPS dinka");
+                    }
                 },
-                { enableHighAccuracy: true, timeout: 5000 }
+                { timeout: 5000, enableHighAccuracy: true }
             );
         } else {
+            // Idan browser ba ta da Geolocation
             window.location.href = "results.html?view=nearme";
         }
     } else {
-        window.location.href = 'atamfa.html';
+        // Idan Global Search ne
+        // Nan ma mun cire scanning din sakan 3
+        if(typeof kammalaBincike === "function") {
+            kammalaBincike();
+        } else {
+            // Idan baka da kammalaBincike, mu kai shi atamfa.html kai tsaye
+            window.location.href = 'atamfa.html';
+        }
     }
 }
 
