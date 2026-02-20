@@ -147,54 +147,51 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-<script>
-    function globalSearchMotsi(type) {
-        const loading = document.getElementById('ai-loading-screen');
-        const overlay = document.getElementById('search-overlay');
-        const searchTerm = document.getElementById('market-search').value;
+function globalSearchMotsi(mode) {
+    const overlay = document.getElementById('search-overlay');
+    const loading = document.getElementById('ai-loading-screen'); // Scanning screen
 
-        // 1. Rufe overlay din zabi nan take
-        overlay.style.display = 'none';
+    // 1. Rufe zabin bincike nan take
+    if(overlay) overlay.style.display = 'none';
 
-        if (type === 'near_me') {
-            // SHARADI: Cire scanning page, nuna result nan take
-            // Ba za mu kunna 'loading.style.display = 'flex'' ba
-            
-            const resultsPage = document.getElementById('near-me-results');
-            resultsPage.classList.remove('hidden');
-            resultsPage.style.display = 'flex';
-            
-            // System zai fara nemo vendors a background ba tare da ya tsayar da mutum ba
-            if (typeof fetchVendorsNearMe === "function") {
-                fetchVendorsNearMe(); 
-            }
-        } 
-        else if (type === 'global') {
-            if(searchTerm === "") {
-                alert("Don Allah rubuta abinda kake nema kafin ka danna Global Search");
-                overlay.style.display = 'flex';
-                return;
-            }
-            localStorage.setItem('currentSearch', searchTerm);
-            
-            // Wucewa kai tsaye zuwa atamfa.html ba tare da bata lokaci ba
+    if (mode === 'near_me') {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    // SHARADI: Mun cire 'loading.style.display = flex'
+                    // Mun cire 'setTimeout' na sakan 3
+                    // System zai wuce zuwa results nan take (Zero Lag)
+                    
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    
+                    window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
+                },
+                (error) => { 
+                    // Idan GPS a kashe yake
+                    if(typeof showGpsToast === "function") {
+                        showGpsToast(); 
+                    } else {
+                        alert("Don Allah kunna GPS dinka");
+                    }
+                },
+                { timeout: 5000, enableHighAccuracy: true }
+            );
+        } else {
+            // Idan browser ba ta da Geolocation
+            window.location.href = "results.html?view=nearme";
+        }
+    } else {
+        // Idan Global Search ne
+        // Nan ma mun cire scanning din sakan 3
+        if(typeof kammalaBincike === "function") {
+            kammalaBincike();
+        } else {
+            // Idan baka da kammalaBincike, mu kai shi atamfa.html kai tsaye
             window.location.href = 'atamfa.html';
         }
     }
-
-    function manualSearch() {
-        document.getElementById('search-overlay').style.display = 'flex';
-    }
-
-    function closeSearch() {
-        document.getElementById('search-overlay').style.display = 'none';
-    }
-
-    function closeResults() {
-        document.getElementById('near-me-results').classList.add('hidden');
-        document.getElementById('near-me-results').style.display = 'none';
-    }
-</script>
+}
 
 
 
