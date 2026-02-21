@@ -140,40 +140,43 @@ function startAISimulation(file) {
 
 // 5. GLOBAL SEARCH MOTSI (GYARARRE)
 function globalSearchMotsi(type) {
-    // 1. Hana overlay din rufewa da kansa
-    if (window.event) window.event.stopPropagation();
-
     const overlay = document.getElementById('search-overlay');
     const searchTerm = document.getElementById('market-search').value;
 
+    // MUN TABBATAR: Babu overlay.style.display = 'none' anan farkon
+    
     if (type === 'near_me') {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
                 
-                // Idan an samu location, mu bar overlay a bude har zuwa lokacin tafiya
-                setTimeout(() => { 
-                    window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`; 
+                // Idan komai ya yi daidai, sai mu jira mu tafi
+                setTimeout(() => {
+                    // Lokacin tafiya ne kawai za a rufe overlay
+                    if(overlay) overlay.style.display = 'none';
+                    window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
                 }, 1500);
             }, (error) => {
-                // IDAN AN SAMU ERROR:
-                // Kada mu taba overlay din, mu bar shi a bude yadda yake
-                // Kawai mu kira Toast din ya fito a saman komai
+                // ANAN NE MATSALAR:
+                // Ba za mu sake boye overlay din ba idan aka samu error
+                // Don haka bazaka taba ganin Global Market page din ba
                 showGpsToast();
             });
         }
     } else if (type === 'global') {
-        if(searchTerm === "") { 
-            alert("Don Allah rubuta abinda kake nema"); 
-            return; 
+        if(searchTerm === "") {
+            alert("Don Allah rubuta abinda kake nema");
+            return;
         }
         localStorage.setItem('currentSearch', searchTerm);
-        setTimeout(() => { 
-            window.location.href = 'atamfa.html'; 
+        setTimeout(() => {
+            if(overlay) overlay.style.display = 'none';
+            window.location.href = 'atamfa.html';
         }, 1500);
     }
 }
+
 
                              
 // 6. UTILS & DATABASE
