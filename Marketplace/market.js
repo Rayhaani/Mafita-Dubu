@@ -34,11 +34,13 @@ function manualSearch() {
     if (kalma.length >= 2) {
         clearTimeout(typingTimer); 
         input.blur(); 
-        showSearchOverlay(kalma);
+        // Saka 'false' anan don tabbatar ba hoto ba ne
+        showSearchOverlay(kalma, false); 
         const box = document.getElementById('suggestionList');
         if(box) box.parentElement.style.display = 'none';
     }
 }
+
 
 document.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
@@ -80,21 +82,26 @@ function showSearchOverlay(kalma, isImage = false) {
     const overlay = document.getElementById('search-overlay');
     const display = document.getElementById('query-val');
     const listContainer = document.getElementById('suggestionList');
-    const imageBox = document.querySelector('.scanned-image-container'); // Box din hoton
+    
+    // Nemo box din hoton ta ID ko Class
+    const imagePreviewBox = document.querySelector('.scanned-image-container'); 
 
     if(listContainer) listContainer.parentElement.style.display = 'none';
     if (display) display.innerText = `"${kalma}"`;
-    
-    // IDAN BINCIKEN RUBUTU NE (Kamar "Panties")
-    if (!isImage) {
-        if (imageBox) imageBox.style.display = 'none'; // Boye box din hoton gaba daya
-    } else {
-        // IDAN NA HOTO NE
-        if (imageBox) imageBox.style.display = 'block'; // Nuna box din hoton
-    }
 
     if (overlay) {
         overlay.style.display = 'flex';
+        
+        // --- GYARAN NAN NE ---
+        if (imagePreviewBox) {
+            if (isImage === true) {
+                imagePreviewBox.style.setProperty('display', 'block', 'important');
+            } else {
+                imagePreviewBox.style.setProperty('display', 'none', 'important');
+            }
+        }
+        // ---------------------
+
         setTimeout(() => overlay.classList.add('active'), 50);
     }
 }
