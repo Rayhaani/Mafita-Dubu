@@ -5,7 +5,7 @@ let isPaused = false;
 let direction = 1;
 let watchID = null;
 
-// 1. GYARAN SLIDER (Auto Scroll)
+// 1. AUTO SCROLL SLIDER
 function startProfessionalScroll() {
     const searchBar = document.getElementById('market-search');
     const isTyping = searchBar === document.activeElement || (searchBar && searchBar.value.length > 0);
@@ -26,7 +26,7 @@ function startProfessionalScroll() {
 }
 window.onload = () => setTimeout(startProfessionalScroll, 3000);
 
-// 2. GYARAN ENTER KEY & SEARCH ICON
+// 2. SEARCH ACTIONS
 function manualSearch() {
     const input = document.getElementById('market-search');
     if (!input) return;
@@ -49,7 +49,6 @@ document.addEventListener('keypress', function (e) {
     }
 });
 
-// 3. SEARCH HANDLING
 function handleSearch(textbox) {
     let kalma = textbox.value.trim();
     const listContainer = document.getElementById('suggestionList'); 
@@ -78,8 +77,6 @@ function selectItem(word) {
 
 function showSearchOverlay(kalma, isImage = false) {
     const overlay = document.getElementById('search-overlay');
-    const display = document.getElementById('query-val');
-
     if (overlay) {
         overlay.style.display = 'flex';
         setTimeout(() => overlay.classList.add('active'), 50);
@@ -98,7 +95,64 @@ function closeSearch() {
     }
 }
 
-// 4. AI CAMERA & SIMULATION
+// 3. GLOBAL SEARCH MOTSI (GYARARRE)
+function globalSearchMotsi(type) {
+    const overlay = document.getElementById('search-overlay');
+    const searchTerm = document.getElementById('market-search').value;
+
+    if (type === 'near_me') {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                setTimeout(() => {
+                    window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
+                }, 1500);
+            }, (error) => {
+                // GYARA: Rufe overlay din nan take idan an samu error
+                if (overlay) {
+                    overlay.style.display = 'none';
+                    overlay.classList.remove('active');
+                }
+                // Sannan a nuna notification din GPS
+                if (typeof showGpsToast === "function") { 
+                    showGpsToast(); 
+                }
+            }, { 
+                enableHighAccuracy: true, 
+                timeout: 5000, 
+                maximumAge: 0 
+            });
+        }
+    } 
+    else if (type === 'global') {
+        if(searchTerm === "") {
+            alert("Don Allah rubuta abinda kake nema");
+            return;
+        }
+        localStorage.setItem('currentSearch', searchTerm);
+        setTimeout(() => {
+            window.location.href = 'atamfa.html';
+        }, 1500);
+    }
+}
+
+// 4. GPS NOTIFICATION
+function showGpsToast() {
+    const toast = document.getElementById('gps-toast');
+    if (!toast) return;
+    toast.style.display = 'block';
+    setTimeout(() => { 
+        toast.style.opacity = '1'; 
+        toast.style.transform = 'translateX(-50%) translateY(10px)'; 
+    }, 10);
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => { toast.style.display = 'none'; }, 500);
+    }, 6000);
+}
+
+// 5. AI CAMERA & GALLERY
 function openAICamera() {
     const existing = document.getElementById('ai-sheet');
     if(existing) existing.remove();
@@ -141,89 +195,19 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-// 5. GLOBAL SEARCH MOTSI (COMPLETE VERSION)
-function globalSearchMotsi(type) {
-    const overlay = document.getElementById('search-overlay');
-    const searchTerm = document.getElementById('market-search').value;
-
-    if (type === 'near_me') {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-                
-                // Idan an samu location, jira kadan sannan a tafi results
-                setTimeout(() => {
-                    window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
-                }, 1500);
-            }, (error) => {
-                // GYARA: Rufe overlay din nan take idan location a kashe yake
-                if (overlay) {
-                    overlay.style.display = 'none';
-                    overlay.classList.remove('active');
-                }
-                
-                // Kira notification din ya fito radau a main page
-                if (typeof showGpsToast === "function") { 
-                    showGpsToast(); 
-                }
-            }, { 
-                enableHighAccuracy: true, 
-                timeout: 5000, 
-                maximumAge: 0 
-            });
-        }
-    } 
-    else if (type === 'global') {
-        // Idan Global Search aka danna
-        if(searchTerm === "") {
-            alert("Don Allah rubuta abinda kake nema");
-            return;
-        }
-        localStorage.setItem('currentSearch', searchTerm);
-        
-        // Jinkiri don nuna AI rings kafin tafiya
-        setTimeout(() => {
-            window.location.href = 'atamfa.html';
-        }, 1500);
-    }
+// 6. DISTANCE CALCULATION (GYARARRE)
+function lissafaNisa(lat1, lon1, lat2, lon2) {
+    const R = 6371; 
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; 
 }
 
-
-// 6. NEAR YOU SEARCH
-function nearYouSearch() {
-    const loading = document.getElementById('ai-loading-screen');
-    const resultsPage = document.getElementById('near-me-results');
-    const listContainer = document.getElementById('vendors-list');
-    const errorState = document.getElementById('gps-error-state');
-
-    if (loading) loading.style.display = 'none';
-    if (watchID) navigator.geolocation.clearWatch(watchID);
-
-    watchID = navigator.geolocation.watchPosition((pos) => {
-        const userLat = pos.coords.latitude;
-        const userLon = pos.coords.longitude;
-
-        let nearbyVendors = vendorsDatabase.map(vendor => {
-            const distance = lissafaNisa(userLat, userLon, vendor.lat, vendor.lon);
-            return { ...vendor, distance: distance };
-        }).sort((a, b) => a.distance - b.distance);
-
-        if (resultsPage) resultsPage.style.display = 'flex';
-        if (listContainer) {
-            listContainer.style.display = 'block';
-            displayNearbyVendors(nearbyVendors);
-        }
-        if (errorState) errorState.style.display = 'none';
-        
-    }, (err) => {
-        if (resultsPage) resultsPage.style.display = 'flex';
-        if (listContainer) listContainer.style.display = 'none';
-        if (errorState) errorState.style.display = 'flex';
-    }, { enableHighAccuracy: true, timeout: 5000 });
-}
-
-// 7. VENDOR & LOCATION UTILS
+// 7. VENDORS & LOCATION UTILS
 function fetchStoreLocation() {
     const coordsInput = document.getElementById('shop-coords');
     if (!navigator.geolocation) { alert("Wayarka ba ta tallafawa GPS."); return; }
@@ -238,18 +222,6 @@ function fetchStoreLocation() {
     );
 }
 
-function lissafaNisa(lat1, lon1, lat2, lon2) {
-    const R = 6371; 
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-              Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c; 
-}
-
-// 8. VENDORS DATABASE & DISPLAY
 let vendorsDatabase = [
     { name: "Al-Amin Pharmacy", lat: 10.5105, lon: 7.4165, items: ["medicine"] },
     { name: "Musa Bread & Butter", lat: 10.5200, lon: 7.4200, items: ["bread"] },
@@ -275,19 +247,5 @@ function displayNearbyVendors(nearbyVendors) {
 function closeResults() {
     const res = document.getElementById('near-me-results');
     if(res) res.style.display = 'none';
-}
-
-function showGpsToast() {
-    const toast = document.getElementById('gps-toast');
-    if (!toast) return;
-    toast.style.display = 'block';
-    setTimeout(() => { 
-        toast.style.opacity = '1'; 
-        toast.style.transform = 'translateX(-50%) translateY(10px)'; 
-    }, 10);
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => { toast.style.display = 'none'; }, 500);
-    }, 6000);
-                }
-    
+            }
+        
