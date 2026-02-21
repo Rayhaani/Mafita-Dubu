@@ -434,13 +434,6 @@ content: '';
 .duet-grid {
     transition: transform 3s ease-in-out !important;
 }
-    /* Wannan zai raba abubuwan: Sama, Tsakiya, da Kasa */
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: space-between !important; 
-    padding: 80px 20px 40px 20px !important;
-}
 
 /* Tabbatar Buttons din ba su yi gudu ba */
 .pearl-btn {
@@ -496,6 +489,7 @@ content: '';
 .world-box {
     margin: 0 auto !important;
 }
+
 #search-overlay {
     display: none; /* JavaScript ne zai nuna shi */
     position: fixed !important;
@@ -510,6 +504,7 @@ content: '';
     /* Wannan zai tsaita yadda abubuwa suke jeri */
     flex-direction: column !important;
     align-items: center !important;
+    padding-top: 15vh !important; 
 }
 
 /* Wannan zai tilasta wa Cancel button din komawa kasa can */
@@ -519,12 +514,6 @@ content: '';
     cursor: pointer;
 }
 
-#search-overlay { 
-    display: none; 
-    flex-direction: column !important; 
-    align-items: center !important; 
-    padding-top: 15vh !important; 
-}
 /* --- NEW SUPER SLOW SLIDER --- */
 .slider-track {
     display: flex !important;
@@ -694,3 +683,8 @@ content: '';
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+/* GYARA: Mun saita gps-toast ya zama yana gaba da kowa a UI */
+#gps-toast {
+    z-index: 20000 !important; /* Mun kara masa girma domin ya tsallake overlay */
+            }
