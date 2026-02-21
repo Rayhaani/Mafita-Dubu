@@ -64,11 +64,13 @@ function handleSearch(textbox) {
             listContainer.parentElement.style.display = 'block';
             listContainer.innerHTML = filtered.map(item => `<li onclick="selectItem('${item}')" style="padding:12px;border-bottom:1px solid #eee;cursor:pointer;color:#333;font-weight:bold;">${item}</li>`).join('');
         }
-        typingTimer = setTimeout(() => { showSearchOverlay(kalma); }, doneTypingInterval);
+        // Mun sanya 'false' anan don boye empty box na hoto
+        typingTimer = setTimeout(() => { showSearchOverlay(kalma, false); }, doneTypingInterval);
     } else {
         if(listContainer) listContainer.parentElement.style.display = 'none';
     }
 }
+
 
 function selectItem(word) {
     const input = document.getElementById('market-search');
@@ -81,26 +83,23 @@ function selectItem(word) {
 function showSearchOverlay(kalma, isImage = false) {
     const overlay = document.getElementById('search-overlay');
     const display = document.getElementById('query-val');
-    const listContainer = document.getElementById('suggestionList');
-    
-    // Nemo box din hoton ta ID ko Class
-    const imagePreviewBox = document.querySelector('.scanned-image-container'); 
+    const imagePreviewBox = document.getElementById('scanned-image-preview-box') || document.querySelector('.scanned-image-container');
 
-    if(listContainer) listContainer.parentElement.style.display = 'none';
+    console.log("Bincike akan:", kalma, "Hoto ne?", isImage);
+
     if (display) display.innerText = `"${kalma}"`;
 
     if (overlay) {
         overlay.style.display = 'flex';
         
-        // --- GYARAN NAN NE ---
+        // GYARA MAFI KARFI:
         if (imagePreviewBox) {
             if (isImage === true) {
-                imagePreviewBox.style.setProperty('display', 'block', 'important');
+                imagePreviewBox.setAttribute('style', 'display: block !important;');
             } else {
-                imagePreviewBox.style.setProperty('display', 'none', 'important');
+                imagePreviewBox.setAttribute('style', 'display: none !important;');
             }
         }
-        // ---------------------
 
         setTimeout(() => overlay.classList.add('active'), 50);
     }
