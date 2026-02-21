@@ -104,6 +104,11 @@ function showSearchOverlay(kalma, isImage = false) {
         setTimeout(() => overlay.classList.add('active'), 50);
     }
 }
+// A cikin market.js (showSearchOverlay function)
+const loadingScreen = document.getElementById('ai-loading-screen');
+if (loadingScreen && isImage === false) {
+    loadingScreen.style.display = 'none'; // Wannan zai hana box din fitowa yayin text search
+}
 
 
 function closeSearch() {
