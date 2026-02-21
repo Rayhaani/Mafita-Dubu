@@ -141,59 +141,45 @@ function startAISimulation(file) {
 // 5. GLOBAL SEARCH MOTSI (FINAL FORCE VERSION)
 function globalSearchMotsi(type) {
     const overlay = document.getElementById('search-overlay');
-    
+    const searchTerm = document.getElementById('market-search').value;
+
     if (type === 'near_me') {
-        // MATAKI NA 1: Fara nuna Toast din tukunna kafin mu nemi GPS
-        // Wannan zai sa ya fito nan take ba tare da jiran bincike ba
-        showGpsToast(); 
+        // 1. Nuna Notification din nan take a danna na farko
+        showGpsToast();
 
-        // MATAKI NA 2: Jira sakan 1 (1000ms) sannan mu fara neman GPS
-        // Wannan jinkirin zai baiwa UI damar nuna Notification din
-        setTimeout(() => {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((position) => {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-                    
-                    setTimeout(() => {
-                        if(overlay) overlay.style.display = 'none';
-                        window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
-                    }, 1000);
-                }, (error) => {
-                    // Idan error ya faru, mun riga mun nuna Toast a sama
-                    console.log("GPS Error occurred");
-                });
-            }
-        }, 800); 
-
+        if (navigator.geolocation) {
+            // 2. Fara neman location nan take
+            navigator.geolocation.getCurrentPosition((position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                
+                // 3. Tafi results page nan take ba tare da jinkiri ba
+                // Wannan zai hana Global Market fitowa (No Flash)
+                window.location.replace(`results.html?view=nearme&lat=${lat}&lon=${lon}`);
+                
+            }, (error) => {
+                // Idan an samu matsala, notification din ya riga ya fito dama
+                console.log("GPS Error");
+            }, { enableHighAccuracy: true, timeout: 5000 });
+        }
     } else if (type === 'global') {
-        const searchTerm = document.getElementById('market-search').value;
         if(searchTerm === "") { alert("Don Allah rubuta abinda kake nema"); return; }
         localStorage.setItem('currentSearch', searchTerm);
-        setTimeout(() => {
-            if(overlay) overlay.style.display = 'none';
-            window.location.href = 'atamfa.html';
-        }, 1500);
+        window.location.href = 'atamfa.html';
     }
 }
 
 function showGpsToast() {
     const toast = document.getElementById('gps-toast');
     if (!toast) return;
-
-    // MATAKI NA 3: Force visibility ta amfani da dabarar 'requestAnimationFrame'
-    requestAnimationFrame(() => {
-        toast.style.display = 'block';
-        toast.style.zIndex = "2000000";
-        toast.style.opacity = '1';
-        toast.style.transform = 'translateX(-50%) translateY(20px)';
-        
-        if ("vibrate" in navigator) navigator.vibrate(200);
-    });
-
+    toast.style.display = 'block';
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(15px)';
+    if ("vibrate" in navigator) navigator.vibrate(200);
+    
+    // Zai bace bayan sakan 4 idan ba a tafi kowane shafi ba
     setTimeout(() => {
         toast.style.opacity = '0';
         setTimeout(() => { toast.style.display = 'none'; }, 500);
-    }, 6000);
-    }
-                
+    }, 4000);
+}
