@@ -34,13 +34,11 @@ function manualSearch() {
     if (kalma.length >= 2) {
         clearTimeout(typingTimer); 
         input.blur(); 
-        // Saka 'false' anan don tabbatar ba hoto ba ne
         showSearchOverlay(kalma, false); 
         const box = document.getElementById('suggestionList');
         if(box) box.parentElement.style.display = 'none';
     }
 }
-
 
 document.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
@@ -64,13 +62,11 @@ function handleSearch(textbox) {
             listContainer.parentElement.style.display = 'block';
             listContainer.innerHTML = filtered.map(item => `<li onclick="selectItem('${item}')" style="padding:12px;border-bottom:1px solid #eee;cursor:pointer;color:#333;font-weight:bold;">${item}</li>`).join('');
         }
-        // Mun sanya 'false' anan don boye empty box na hoto
         typingTimer = setTimeout(() => { showSearchOverlay(kalma, false); }, doneTypingInterval);
     } else {
         if(listContainer) listContainer.parentElement.style.display = 'none';
     }
 }
-
 
 function selectItem(word) {
     const input = document.getElementById('market-search');
@@ -83,15 +79,9 @@ function selectItem(word) {
 function showSearchOverlay(kalma, isImage = false) {
     const overlay = document.getElementById('search-overlay');
     const display = document.getElementById('query-val');
-    const imagePreviewBox = document.getElementById('scanned-image-preview-box') || document.querySelector('.scanned-image-container');
-
-    console.log("Bincike akan:", kalma, "Hoto ne?", isImage);
-
     if (display) display.innerText = `"${kalma}"`;
-
     if (overlay) {
         overlay.style.display = 'flex';
-
         setTimeout(() => overlay.classList.add('active'), 50);
     }
 }
@@ -125,17 +115,14 @@ function closeAIVision() {
 
 function handleCamera() {
     const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.capture = 'environment';
+    input.type = 'file'; input.accept = 'image/*'; input.capture = 'environment';
     input.onchange = e => startAISimulation(e.target.files[0]);
     input.click();
 }
 
 function handleGallery() {
     const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
+    input.type = 'file'; input.accept = 'image/*';
     input.onchange = e => startAISimulation(e.target.files[0]);
     input.click();
 }
@@ -144,155 +131,64 @@ function startAISimulation(file) {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = e => {
-        const preview = document.getElementById('scanned-image-preview');
-        if (preview) {
-            preview.src = e.target.result;
-        }
-        
         localStorage.setItem('user_captured_image', e.target.result);
         closeAIVision();
-        // Mun kara 'true' anan don ya san hoto ne aka yi uploading
         showSearchOverlay('Scanned Item', true);
     };
     reader.readAsDataURL(file);
 }
 
-
-// 5. GLOBAL SEARCH MOTSI (GYARARREN INSTANT VERSION)
+// 5. GLOBAL SEARCH MOTSI (GYARARRE)
 function globalSearchMotsi(type) {
     const overlay = document.getElementById('search-overlay');
     const searchTerm = document.getElementById('market-search').value;
 
-    // KADA ka sanya overlay.style.display = 'none' anan!
-    
     if (type === 'near_me') {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
-                
-                // Jinkiri na sakan 1.5 don professionalism
-                setTimeout(() => {
-                    // Yanzu ne za mu tafi, don haka overlay din zai kare mu daga ganin Global Market
-                    window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
-                }, 1500);
+                setTimeout(() => { window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`; }, 1500);
             }, (error) => {
-    // Wannan layin zai dawo da notification din idan aka samu matsala
-    if (typeof showGpsToast === "function") { 
-        showGpsToast(); 
-    } else {
-        // Idan showGpsToast bata nan, wannan zai nuna notification na asali
-        const toast = document.getElementById('gps-toast');
-        if(toast) {
-            toast.style.display = 'block';
-            setTimeout(() => toast.style.opacity = '1', 50);
-            // Bayan sakan 5 sai mu sake boye shi
-            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.style.display = 'none', 500); }, 5000);
+                // Idan an samu error, muna rufe overlay don a ga notification din
+                if(overlay) overlay.style.display = 'none';
+                showGpsToast();
+            });
         }
+    } else if (type === 'global') {
+        if(searchTerm === "") { alert("Don Allah rubuta abinda kake nema"); return; }
+        localStorage.setItem('currentSearch', searchTerm);
+        setTimeout(() => { window.location.href = 'atamfa.html'; }, 1500);
     }
-});
-            
-// 6. NEAR YOU SEARCH (INSTANT RESULTS)
-function nearYouSearch() {
-    const loading = document.getElementById('ai-loading-screen');
-    const resultsPage = document.getElementById('near-me-results');
-    const listContainer = document.getElementById('vendors-list');
-    const errorState = document.getElementById('gps-error-state');
-
-    // Cire scanning screen gaba daya
-    if (loading) loading.style.display = 'none';
-    
-    if (watchID) navigator.geolocation.clearWatch(watchID);
-
-    watchID = navigator.geolocation.watchPosition((pos) => {
-        const userLat = pos.coords.latitude;
-        const userLon = pos.coords.longitude;
-
-        let nearbyVendors = vendorsDatabase.map(vendor => {
-            const distance = lissafaNisa(userLat, userLon, vendor.lat, vendor.lon);
-            return { ...vendor, distance: distance };
-        }).sort((a, b) => a.distance - b.distance);
-
-        if (resultsPage) resultsPage.style.display = 'flex';
-        if (listContainer) {
-            listContainer.style.display = 'block';
-            displayNearbyVendors(nearbyVendors);
-        }
-        if (errorState) errorState.style.display = 'none';
-        
-    }, (err) => {
-        if (resultsPage) resultsPage.style.display = 'flex';
-        if (listContainer) listContainer.style.display = 'none';
-        if (errorState) errorState.style.display = 'flex';
-    }, { enableHighAccuracy: true, timeout: 5000 });
 }
 
-// 7. VENDOR & LOCATION UTILS
+// 6. UTILS & DATABASE
 function fetchStoreLocation() {
     const coordsInput = document.getElementById('shop-coords');
-    if (!navigator.geolocation) { alert("Wayarka ba ta tallafawa GPS."); return; }
+    if (!navigator.geolocation) return;
     coordsInput.value = "Ana daukar location...";
-    navigator.geolocation.getCurrentPosition(
-        (pos) => {
-            coordsInput.value = `${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`;
-            coordsInput.style.color = "green";
-        },
-        (error) => { alert("Kuskure: Tabbatar ka kunna GPS."); },
-        { enableHighAccuracy: true }
-    );
-}
-
-function lissafaNisa(lat1, lon1, lat2, lon2) {
-    const R = 6371; 
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-              Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c; 
-}
-
-// 8. VENDORS DATABASE & DISPLAY
-let vendorsDatabase = [
-    { name: "Al-Amin Pharmacy", lat: 10.5105, lon: 7.4165, items: ["medicine"] },
-    { name: "Musa Bread & Butter", lat: 10.5200, lon: 7.4200, items: ["bread"] },
-    { name: "Fatima Fashion Home", lat: 10.4900, lon: 7.4000, items: ["gown"] }
-];
-
-function displayNearbyVendors(nearbyVendors) {
-    const listContainer = document.getElementById('vendors-list');
-    if(!listContainer) return;
-    listContainer.innerHTML = '';
-    nearbyVendors.forEach(v => {
-        if (v.distance <= 0.02) {
-            if ("vibrate" in navigator) navigator.vibrate([200, 100, 200]);
-            const sound = document.getElementById('arrival-sound');
-            if (sound) sound.play().catch(() => {}); 
-        }
-        const card = `<div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #eee; background: white; border-radius: 12px; margin-bottom: 10px;">
-                <div style="display:flex; align-items:center; gap: 15px;">
-                    <div style="width:50px; height:50px; background:#e9ecef; border-radius:50%; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-shop"></i></div>
-                    <div><h4 style="margin:0;">${v.name}</h4><p style="margin:0; font-size:12px;">${v.distance.toFixed(2)} km away</p></div>
-                </div>
-                <button style="padding:8px 15px; background:#007bff; color:white; border:none; border-radius:20px;">Visit</button>
-            </div>`;
-        listContainer.innerHTML += card;
-    });
-}
-
-function closeResults() {
-    const res = document.getElementById('near-me-results');
-    if(res) res.style.display = 'none';
+    navigator.geolocation.getCurrentPosition((pos) => {
+        coordsInput.value = `${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`;
+    }, (error) => { showGpsToast(); });
 }
 
 function showGpsToast() {
     const toast = document.getElementById('gps-toast');
     if (!toast) return;
+    
+    // Tabbatar z-index ya isa saman komai (Zaka iya gyara wannan a HTML ma)
+    toast.style.zIndex = "999999";
     toast.style.display = 'block';
-    setTimeout(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(10px)'; }, 10);
+    
+    // Sake nuna shi ko da an taba nuna shi a baya
+    setTimeout(() => { 
+        toast.style.opacity = '1'; 
+        toast.style.transform = 'translateX(-50%) translateY(10px)'; 
+    }, 10);
+    
     setTimeout(() => {
         toast.style.opacity = '0';
         setTimeout(() => { toast.style.display = 'none'; }, 500);
     }, 6000);
-}
+                                                  }
+        
