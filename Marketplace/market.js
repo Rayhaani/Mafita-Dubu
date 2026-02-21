@@ -141,7 +141,7 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-// 5. GLOBAL SEARCH MOTSI
+// 5. GLOBAL SEARCH MOTSI (COMPLETE VERSION)
 function globalSearchMotsi(type) {
     const overlay = document.getElementById('search-overlay');
     const searchTerm = document.getElementById('market-search').value;
@@ -151,15 +151,22 @@ function globalSearchMotsi(type) {
             navigator.geolocation.getCurrentPosition((position) => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
+                
+                // Idan an samu location, jira kadan sannan a tafi results
                 setTimeout(() => {
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
                 }, 1500);
             }, (error) => {
+                // GYARA: Rufe overlay din nan take idan location a kashe yake
                 if (overlay) {
                     overlay.style.display = 'none';
                     overlay.classList.remove('active');
                 }
-                if (typeof showGpsToast === "function") { showGpsToast(); }
+                
+                // Kira notification din ya fito radau a main page
+                if (typeof showGpsToast === "function") { 
+                    showGpsToast(); 
+                }
             }, { 
                 enableHighAccuracy: true, 
                 timeout: 5000, 
@@ -168,16 +175,20 @@ function globalSearchMotsi(type) {
         }
     } 
     else if (type === 'global') {
+        // Idan Global Search aka danna
         if(searchTerm === "") {
             alert("Don Allah rubuta abinda kake nema");
             return;
         }
         localStorage.setItem('currentSearch', searchTerm);
+        
+        // Jinkiri don nuna AI rings kafin tafiya
         setTimeout(() => {
             window.location.href = 'atamfa.html';
         }, 1500);
     }
 }
+
 
 // 6. NEAR YOU SEARCH
 function nearYouSearch() {
