@@ -63,28 +63,66 @@
         
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-        /* 2. 3D WORLD SPHERE */
-        .world-box {
-            width: 130px; height: 130px; margin: 20px auto;
-            position: relative;
-        }
-        .sphere {
-            width: 100%; height: 100%;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/2/22/Earth_Western_Hemisphere_transparent_background.png');
-            background-size: cover;
-            border-radius: 50%;
-            box-shadow: inset -10px -10px 30px rgba(0,0,0,0.2), 0 10px 30px rgba(0,0,0,0.1);
-            animation: rotateWorld 12s linear infinite;
-        }
-        @keyframes rotateWorld { from { background-position: 0 0; } to { background-position: 260px 0; } }
+        /* 2. 3D WORLD SPHERE (MODERN VERSION) */
+.world-box {
+    width: 130px; 
+    height: 130px; 
+    margin: 20px auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        /* 3. PULSE RINGS (ALAMAR JIRAN AMSA) */
-        .ring {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 100%; height: 100%; border: 2px solid #8B4513;
-            border-radius: 50%; opacity: 0; animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0% { scale: 0.8; opacity: 0.5; } 100% { scale: 1.8; opacity: 0; } }
+.sphere {
+    width: 80px; 
+    height: 80px;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/2/22/Earth_Western_Hemisphere_transparent_background.png');
+    background-size: cover;
+    border-radius: 50%;
+    box-shadow: inset -10px -10px 30px rgba(0,0,0,0.4), 0 0 20px rgba(184, 134, 11, 0.4);
+    z-index: 2;
+    animation: rotateWorld 15s linear infinite;
+}
+
+/* 3. AI SPINNING RINGS (WANNAN SHINE GYARAN) */
+.ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 130px;
+    height: 130px;
+    border: 2px solid transparent;
+    border-top: 2px solid #FFD700; /* Kalar zinariya a sama */
+    border-bottom: 2px solid #8B4513; /* Kalar Maroon a kasa */
+    border-radius: 50%;
+    opacity: 0.8;
+    z-index: 1;
+    /* Maimakon pulse, yanzu juyawa zai dinga yi */
+    animation: rotateRing 2s linear infinite;
+}
+
+/* Kara wani ring na biyu don ya kara kyan gani */
+.ring::after {
+    content: '';
+    position: absolute;
+    inset: 10px;
+    border: 1px solid transparent;
+    border-left: 1px solid #FFD700;
+    border-radius: 50%;
+    animation: rotateRing 1.5s linear infinite reverse;
+}
+
+/* --- SABBIN ANIMATIONS --- */
+@keyframes rotateWorld {
+    from { background-position: 0 0; }
+    to { background-position: 260px 0; }
+}
+
+@keyframes rotateRing {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
 
         /* 4. PASSIONATE SEARCH BAR (MINIMALIST) */
         .search-trigger {
