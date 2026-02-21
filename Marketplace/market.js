@@ -34,13 +34,11 @@ function manualSearch() {
     if (kalma.length >= 2) {
         clearTimeout(typingTimer); 
         input.blur(); 
-        // Saka 'false' anan don tabbatar ba hoto ba ne
         showSearchOverlay(kalma, false); 
         const box = document.getElementById('suggestionList');
         if(box) box.parentElement.style.display = 'none';
     }
 }
-
 
 document.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
@@ -64,34 +62,26 @@ function handleSearch(textbox) {
             listContainer.parentElement.style.display = 'block';
             listContainer.innerHTML = filtered.map(item => `<li onclick="selectItem('${item}')" style="padding:12px;border-bottom:1px solid #eee;cursor:pointer;color:#333;font-weight:bold;">${item}</li>`).join('');
         }
-        // Mun sanya 'false' anan don boye empty box na hoto
         typingTimer = setTimeout(() => { showSearchOverlay(kalma, false); }, doneTypingInterval);
     } else {
         if(listContainer) listContainer.parentElement.style.display = 'none';
     }
 }
 
-
 function selectItem(word) {
     const input = document.getElementById('market-search');
     if(input) input.value = word;
     const box = document.getElementById('suggestionList');
     if(box) box.parentElement.style.display = 'none';
-    showSearchOverlay(word);
+    showSearchOverlay(word, false);
 }
 
 function showSearchOverlay(kalma, isImage = false) {
     const overlay = document.getElementById('search-overlay');
     const display = document.getElementById('query-val');
-    const imagePreviewBox = document.getElementById('scanned-image-preview-box') || document.querySelector('.scanned-image-container');
-
-    console.log("Bincike akan:", kalma, "Hoto ne?", isImage);
-
-    if (display) display.innerText = `"${kalma}"`;
 
     if (overlay) {
         overlay.style.display = 'flex';
-
         setTimeout(() => overlay.classList.add('active'), 50);
     }
 }
@@ -144,21 +134,14 @@ function startAISimulation(file) {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = e => {
-        const preview = document.getElementById('scanned-image-preview');
-        if (preview) {
-            preview.src = e.target.result;
-        }
-        
         localStorage.setItem('user_captured_image', e.target.result);
         closeAIVision();
-        // Mun kara 'true' anan don ya san hoto ne aka yi uploading
         showSearchOverlay('Scanned Item', true);
     };
     reader.readAsDataURL(file);
 }
 
-
-// 5. GLOBAL SEARCH MOTSI (GYARARREN INSTANT VERSION)
+// 5. GLOBAL SEARCH MOTSI
 function globalSearchMotsi(type) {
     const overlay = document.getElementById('search-overlay');
     const searchTerm = document.getElementById('market-search').value;
@@ -168,13 +151,10 @@ function globalSearchMotsi(type) {
             navigator.geolocation.getCurrentPosition((position) => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
-                
-                // Jinkiri na sakan 1.5 don professionalism
                 setTimeout(() => {
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
                 }, 1500);
             }, (error) => {
-                // GYARA: Rufe overlay din nan take domin Toast ya fito fili ba tare da minimizing ba
                 if (overlay) {
                     overlay.style.display = 'none';
                     overlay.classList.remove('active');
@@ -182,7 +162,7 @@ function globalSearchMotsi(type) {
                 if (typeof showGpsToast === "function") { showGpsToast(); }
             }, { 
                 enableHighAccuracy: true, 
-                timeout: 5000, // Wannan timeout din zai sa notification din ya fito koda location a kashe yake
+                timeout: 5000, 
                 maximumAge: 0 
             });
         }
@@ -193,25 +173,20 @@ function globalSearchMotsi(type) {
             return;
         }
         localStorage.setItem('currentSearch', searchTerm);
-        
-        // Jinkiri don AI Rings su yi aiki
         setTimeout(() => {
             window.location.href = 'atamfa.html';
         }, 1500);
     }
 }
 
-
-// 6. NEAR YOU SEARCH (INSTANT RESULTS)
+// 6. NEAR YOU SEARCH
 function nearYouSearch() {
     const loading = document.getElementById('ai-loading-screen');
     const resultsPage = document.getElementById('near-me-results');
     const listContainer = document.getElementById('vendors-list');
     const errorState = document.getElementById('gps-error-state');
 
-    // Cire scanning screen gaba daya
     if (loading) loading.style.display = 'none';
-    
     if (watchID) navigator.geolocation.clearWatch(watchID);
 
     watchID = navigator.geolocation.watchPosition((pos) => {
@@ -257,7 +232,6 @@ function lissafaNisa(lat1, lon1, lat2, lon2) {
     const dLat = (lat2 - lat1) * Math.PI / 180;
     const dLon = (lon2 - lon1) * Math.PI / 180;
     const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-              # Mun gyara lissafin nan
               Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
               Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
@@ -276,11 +250,6 @@ function displayNearbyVendors(nearbyVendors) {
     if(!listContainer) return;
     listContainer.innerHTML = '';
     nearbyVendors.forEach(v => {
-        if (v.distance <= 0.02) {
-            if ("vibrate" in navigator) navigator.vibrate([200, 100, 200]);
-            const sound = document.getElementById('arrival-sound');
-            if (sound) sound.play().catch(() => {}); 
-        }
         const card = `<div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #eee; background: white; border-radius: 12px; margin-bottom: 10px;">
                 <div style="display:flex; align-items:center; gap: 15px;">
                     <div style="width:50px; height:50px; background:#e9ecef; border-radius:50%; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-shop"></i></div>
@@ -301,10 +270,13 @@ function showGpsToast() {
     const toast = document.getElementById('gps-toast');
     if (!toast) return;
     toast.style.display = 'block';
-    setTimeout(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(10px)'; }, 10);
+    setTimeout(() => { 
+        toast.style.opacity = '1'; 
+        toast.style.transform = 'translateX(-50%) translateY(10px)'; 
+    }, 10);
     setTimeout(() => {
         toast.style.opacity = '0';
         setTimeout(() => { toast.style.display = 'none'; }, 500);
     }, 6000);
-                                            }
-                
+                }
+    
