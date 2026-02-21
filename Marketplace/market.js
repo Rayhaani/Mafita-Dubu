@@ -192,20 +192,24 @@ function fetchStoreLocation() {
 function showGpsToast() {
     const toast = document.getElementById('gps-toast');
     if (!toast) return;
-    
-    // Tabbatar Toast din yana saman Overlay (z-index na overlay 10000 ne)
-    toast.style.zIndex = "100001"; 
-    toast.style.display = 'block';
-    
-    // Girgiza waya kadan idan error ya faru
-    if ("vibrate" in navigator) navigator.vibrate(200);
 
-    setTimeout(() => { 
-        toast.style.opacity = '1'; 
-        toast.style.transform = 'translateX(-50%) translateY(10px)'; 
-    }, 10);
+    // 1. Kashe kowane jinkiri, sanya shi block nan take
+    toast.style.display = 'block';
+    toast.style.zIndex = "1000000"; // Mafi kololuwa
     
-    // Bayan sakan 6 ya bace da kansa
+    // 2. Tabbatar opacity ya fara daga 0 don animation din ya yi aiki
+    toast.style.opacity = '0';
+    
+    // 3. Vibrating waya (don mutum ya ji ko baya kallo)
+    if ("vibrate" in navigator) navigator.vibrate(300);
+
+    // 4. Force show
+    setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(20px)';
+    }, 50);
+
+    // 5. Boye shi bayan sakan 6
     setTimeout(() => {
         toast.style.opacity = '0';
         setTimeout(() => { toast.style.display = 'none'; }, 500);
