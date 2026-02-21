@@ -163,8 +163,6 @@ function globalSearchMotsi(type) {
     const overlay = document.getElementById('search-overlay');
     const searchTerm = document.getElementById('market-search').value;
 
-    // KADA ka sanya overlay.style.display = 'none' anan!
-    
     if (type === 'near_me') {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -173,11 +171,19 @@ function globalSearchMotsi(type) {
                 
                 // Jinkiri na sakan 1.5 don professionalism
                 setTimeout(() => {
-                    // Yanzu ne za mu tafi, don haka overlay din zai kare mu daga ganin Global Market
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
                 }, 1500);
             }, (error) => {
+                // GYARA: Rufe overlay din nan take domin Toast ya fito fili ba tare da minimizing ba
+                if (overlay) {
+                    overlay.style.display = 'none';
+                    overlay.classList.remove('active');
+                }
                 if (typeof showGpsToast === "function") { showGpsToast(); }
+            }, { 
+                enableHighAccuracy: true, 
+                timeout: 5000, // Wannan timeout din zai sa notification din ya fito koda location a kashe yake
+                maximumAge: 0 
             });
         }
     } 
@@ -251,6 +257,7 @@ function lissafaNisa(lat1, lon1, lat2, lon2) {
     const dLat = (lat2 - lat1) * Math.PI / 180;
     const dLon = (lon2 - lon1) * Math.PI / 180;
     const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              # Mun gyara lissafin nan
               Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
               Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
@@ -299,4 +306,5 @@ function showGpsToast() {
         toast.style.opacity = '0';
         setTimeout(() => { toast.style.display = 'none'; }, 500);
     }, 6000);
-}
+                                            }
+                
