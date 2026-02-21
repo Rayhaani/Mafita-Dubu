@@ -159,33 +159,42 @@ function startAISimulation(file) {
 
 
 // 5. GLOBAL SEARCH MOTSI (GYARARREN INSTANT VERSION)
-function globalSearchMotsi(mode) {
+function globalSearchMotsi(type) {
     const overlay = document.getElementById('search-overlay');
-    // Ba ma bukatar loading screen din nan, overlay din kansa ya isa
+    const searchTerm = document.getElementById('market-search').value;
+
+    // KADA ka sanya overlay.style.display = 'none' anan!
     
-    if (mode === 'near_me') {
-        // Nuna wa mutum cewa ana aiki
+    if (type === 'near_me') {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
-                // JINKIRI NA PROFESSIONALISM: Ba wa mutum sakan 1.5 yana ganin AI Rings
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                
+                // Jinkiri na sakan 1.5 don professionalism
                 setTimeout(() => {
-                    if(overlay) overlay.style.display = 'none';
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
+                    // Yanzu ne za mu tafi, don haka overlay din zai kare mu daga ganin Global Market
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
-                }, 1500); 
+                }, 1500);
             }, (error) => {
                 if (typeof showGpsToast === "function") { showGpsToast(); }
             });
         }
-    } else {
-        // Global Search ma ya yi ɗan jinkiri don ya yi kyau
+    } 
+    else if (type === 'global') {
+        if(searchTerm === "") {
+            alert("Don Allah rubuta abinda kake nema");
+            return;
+        }
+        localStorage.setItem('currentSearch', searchTerm);
+        
+        // Jinkiri don AI Rings su yi aiki
         setTimeout(() => {
-            if(overlay) overlay.style.display = 'none';
             window.location.href = 'atamfa.html';
         }, 1500);
     }
 }
+
 
 // 6. NEAR YOU SEARCH (INSTANT RESULTS)
 function nearYouSearch() {
