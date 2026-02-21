@@ -176,7 +176,7 @@ function globalSearchMotsi(type) {
                     // Yanzu ne za mu tafi, don haka overlay din zai kare mu daga ganin Global Market
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
                 }, 1500);
-           }, (error) => {
+            }, (error) => {
                 if (typeof showGpsToast === "function") { showGpsToast(); }
             });
         }
@@ -192,8 +192,10 @@ function globalSearchMotsi(type) {
         setTimeout(() => {
             window.location.href = 'atamfa.html';
         }, 1500);
-    } 
-        
+    }
+}
+
+
 // 6. NEAR YOU SEARCH (INSTANT RESULTS)
 function nearYouSearch() {
     const loading = document.getElementById('ai-loading-screen');
@@ -297,4 +299,4 @@ function showGpsToast() {
         toast.style.opacity = '0';
         setTimeout(() => { toast.style.display = 'none'; }, 500);
     }, 6000);
-    }
+}
