@@ -148,40 +148,32 @@ function startAISimulation(file) {
 // 5. GLOBAL SEARCH MOTSI (GYARARREN INSTANT VERSION)
 function globalSearchMotsi(mode) {
     const overlay = document.getElementById('search-overlay');
-    const btnNear = document.getElementById('btn-near'); // Button din Near Me
+    const loading = document.getElementById('ai-loading-screen'); // Wannan ne scanning screen dinka
 
     if (mode === 'near_me') {
-        // 1. Canja yanayin button din don mutum ya san an fara aiki
-        if(btnNear) {
-            btnNear.innerHTML = '<i class="fa-solid fa-spinner animate-spin mr-2"></i> LOADING...';
-            btnNear.style.opacity = "0.7";
-        }
-
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    // 2. RUFE OVERLAY NAN TAKE (Da zaran an samu location)
+                    // 1. AN SAMU LOCATION: Nan take mu nuna loading screen don ya rufe komai
+                    if(loading) {
+                        loading.style.display = 'flex';
+                        loading.style.background = '#ffffff'; // Fari sol don kar a ga komai na baya
+                    }
+                    
+                    // 2. Rufe overlay a hankali a karkashin loading screen din
                     if(overlay) overlay.style.display = 'none';
                     
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
                     
-                    // 3. Wucewa zuwa Results Page kai tsaye
+                    // 3. Wucewa zuwa results
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
                 },
                 (error) => {
-                    // Idan aka samu matsala, mayar da button din yadda yake
-                    if(btnNear) {
-                        btnNear.innerHTML = '<i class="fa-solid fa-location-crosshairs mr-2"></i> NEAR YOU';
-                        btnNear.style.opacity = "1";
-                    }
+                    // Idan an samu matsala, kar mu rufe komai
                     if (typeof showGpsToast === "function") { showGpsToast(); }
                 },
-                { 
-                    enableHighAccuracy: true, 
-                    timeout: 5000,
-                    maximumAge: 0 // Tabbatar ya dauki sabon location ba tsoho ba
-                }
+                { enableHighAccuracy: true, timeout: 5000 }
             );
         }
     } else {
