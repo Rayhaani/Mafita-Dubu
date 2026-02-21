@@ -91,25 +91,10 @@ function showSearchOverlay(kalma, isImage = false) {
 
     if (overlay) {
         overlay.style.display = 'flex';
-        
-        // GYARA MAFI KARFI:
-        if (imagePreviewBox) {
-            if (isImage === true) {
-                imagePreviewBox.setAttribute('style', 'display: block !important;');
-            } else {
-                imagePreviewBox.setAttribute('style', 'display: none !important;');
-            }
-        }
 
         setTimeout(() => overlay.classList.add('active'), 50);
     }
 }
-// A cikin market.js (showSearchOverlay function)
-const loadingScreen = document.getElementById('ai-loading-screen');
-if (loadingScreen && isImage === false) {
-    loadingScreen.style.display = 'none'; // Wannan zai hana box din fitowa yayin text search
-}
-
 
 function closeSearch() {
     const overlay = document.getElementById('search-overlay');
@@ -176,37 +161,29 @@ function startAISimulation(file) {
 // 5. GLOBAL SEARCH MOTSI (GYARARREN INSTANT VERSION)
 function globalSearchMotsi(mode) {
     const overlay = document.getElementById('search-overlay');
-    const loading = document.getElementById('ai-loading-screen'); // Wannan ne scanning screen dinka
-
+    // Ba ma bukatar loading screen din nan, overlay din kansa ya isa
+    
     if (mode === 'near_me') {
+        // Nuna wa mutum cewa ana aiki
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    // 1. AN SAMU LOCATION: Nan take mu nuna loading screen don ya rufe komai
-                    if(loading) {
-                        loading.style.display = 'flex';
-                        loading.style.background = '#ffffff'; // Fari sol don kar a ga komai na baya
-                    }
-                    
-                    // 2. Rufe overlay a hankali a karkashin loading screen din
+            navigator.geolocation.getCurrentPosition((position) => {
+                // JINKIRI NA PROFESSIONALISM: Ba wa mutum sakan 1.5 yana ganin AI Rings
+                setTimeout(() => {
                     if(overlay) overlay.style.display = 'none';
-                    
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
-                    
-                    // 3. Wucewa zuwa results
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
-                },
-                (error) => {
-                    // Idan an samu matsala, kar mu rufe komai
-                    if (typeof showGpsToast === "function") { showGpsToast(); }
-                },
-                { enableHighAccuracy: true, timeout: 5000 }
-            );
+                }, 1500); 
+            }, (error) => {
+                if (typeof showGpsToast === "function") { showGpsToast(); }
+            });
         }
     } else {
-        if(overlay) overlay.style.display = 'none';
-        window.location.href = 'atamfa.html';
+        // Global Search ma ya yi ɗan jinkiri don ya yi kyau
+        setTimeout(() => {
+            if(overlay) overlay.style.display = 'none';
+            window.location.href = 'atamfa.html';
+        }, 1500);
     }
 }
 
