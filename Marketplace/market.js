@@ -140,11 +140,11 @@ function startAISimulation(file) {
 
 // 5. GLOBAL SEARCH MOTSI (GYARARRE)
 function globalSearchMotsi(type) {
+    // 1. Hana overlay din rufewa da kansa
+    if (window.event) window.event.stopPropagation();
+
     const overlay = document.getElementById('search-overlay');
     const searchTerm = document.getElementById('market-search').value;
-
-    // MUN COKE overlay.style.display = 'none' NA NAN SAMA!
-    // Wannan ne yake kawo flash din.
 
     if (type === 'near_me') {
         if (navigator.geolocation) {
@@ -152,14 +152,14 @@ function globalSearchMotsi(type) {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
                 
-                // Idan komai lafiya, sai mu jira mu tafi results
+                // Idan an samu location, mu bar overlay a bude har zuwa lokacin tafiya
                 setTimeout(() => { 
-                    if(overlay) overlay.style.display = 'none';
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`; 
                 }, 1500);
             }, (error) => {
-                // Idan an samu error, overlay din bazai bace ba
-                // Kawai Toast din ne zai fito a samansa
+                // IDAN AN SAMU ERROR:
+                // Kada mu taba overlay din, mu bar shi a bude yadda yake
+                // Kawai mu kira Toast din ya fito a saman komai
                 showGpsToast();
             });
         }
@@ -170,13 +170,12 @@ function globalSearchMotsi(type) {
         }
         localStorage.setItem('currentSearch', searchTerm);
         setTimeout(() => { 
-            if(overlay) overlay.style.display = 'none';
             window.location.href = 'atamfa.html'; 
         }, 1500);
     }
 }
 
-                                   
+                             
 // 6. UTILS & DATABASE
 function fetchStoreLocation() {
     const coordsInput = document.getElementById('shop-coords');
