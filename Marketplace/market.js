@@ -191,7 +191,8 @@ function globalSearchMotsi(type) {
         }
     }
 });
-
+        }
+        
 // 6. NEAR YOU SEARCH (INSTANT RESULTS)
 function nearYouSearch() {
     const loading = document.getElementById('ai-loading-screen');
