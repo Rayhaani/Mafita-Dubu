@@ -143,21 +143,29 @@ function globalSearchMotsi(type) {
     const overlay = document.getElementById('search-overlay');
     
     if (type === 'near_me') {
-        // MU TABBATAR: Idan an danna Near Me, kar overlay ya motsa
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-                
-                setTimeout(() => {
-                    if(overlay) overlay.style.display = 'none';
-                    window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
-                }, 1500);
-            }, (error) => {
-                // FORCE SHOW: Ko wayar tana so ko ba ta so
-                showGpsToast();
-            });
-        }
+        // MATAKI NA 1: Fara nuna Toast din tukunna kafin mu nemi GPS
+        // Wannan zai sa ya fito nan take ba tare da jiran bincike ba
+        showGpsToast(); 
+
+        // MATAKI NA 2: Jira sakan 1 (1000ms) sannan mu fara neman GPS
+        // Wannan jinkirin zai baiwa UI damar nuna Notification din
+        setTimeout(() => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    
+                    setTimeout(() => {
+                        if(overlay) overlay.style.display = 'none';
+                        window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
+                    }, 1000);
+                }, (error) => {
+                    // Idan error ya faru, mun riga mun nuna Toast a sama
+                    console.log("GPS Error occurred");
+                });
+            }
+        }, 800); 
+
     } else if (type === 'global') {
         const searchTerm = document.getElementById('market-search').value;
         if(searchTerm === "") { alert("Don Allah rubuta abinda kake nema"); return; }
@@ -169,22 +177,23 @@ function globalSearchMotsi(type) {
     }
 }
 
-// 7. SHOW GPS TOAST (FORCE VISIBILITY)
 function showGpsToast() {
     const toast = document.getElementById('gps-toast');
     if (!toast) return;
 
-    // KARYA DUKKAN SHAMAKI:
-    // Muna amfani da !important a cikin JS don tilasta nuna shi
-    toast.setAttribute('style', 'display: block !important; opacity: 1 !important; z-index: 2000000 !important; position: fixed; top: 15px; left: 50%; transform: translateX(-50%) translateY(20px); width: 94%; max-width: 430px; transition: all 0.5s ease;');
+    // MATAKI NA 3: Force visibility ta amfani da dabarar 'requestAnimationFrame'
+    requestAnimationFrame(() => {
+        toast.style.display = 'block';
+        toast.style.zIndex = "2000000";
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(20px)';
+        
+        if ("vibrate" in navigator) navigator.vibrate(200);
+    });
 
-    if ("vibrate" in navigator) navigator.vibrate(300);
-
-    // Boye shi bayan sakan 6
     setTimeout(() => {
         toast.style.opacity = '0';
-        setTimeout(() => { 
-            toast.style.display = 'none'; 
-        }, 500);
+        setTimeout(() => { toast.style.display = 'none'; }, 500);
     }, 6000);
-}
+    }
+                
