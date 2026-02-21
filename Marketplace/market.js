@@ -82,7 +82,6 @@ function showSearchOverlay(kalma, isImage = false) {
     if (display) display.innerText = `"${kalma}"`;
     if (overlay) {
         overlay.style.display = 'flex';
-        overlay.style.opacity = '1';
         setTimeout(() => overlay.classList.add('active'), 50);
     }
 }
@@ -139,47 +138,61 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-// 5. GLOBAL SEARCH MOTSI (GYARARRE - NO FLICKER)
+// 5. GLOBAL SEARCH MOTSI (GYARARRE)
 function globalSearchMotsi(type) {
     const overlay = document.getElementById('search-overlay');
     const searchTerm = document.getElementById('market-search').value;
 
     if (type === 'near_me') {
 
-    // ❌ KAR KA TAƁA overlay gaba ɗaya
-    // (no hide, no opacity change)
-
-    if (!navigator.geolocation) {
-        showGpsToast();
-        return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-        (position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-
-            setTimeout(() => {
-                window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
-            }, 1500);
-        },
-        (error) => {
-            showGpsToast();
-        },
-        {
-            enableHighAccuracy: true,
-            timeout: 8000,
-            maximumAge: 0
+        // ✅ rufe overlay
+        if (overlay) {
+            overlay.classList.remove('active');
+            setTimeout(() => overlay.style.display = 'none', 300);
         }
-    );
-    }
+
+        setTimeout(() => {
+
+            if (!navigator.geolocation) {
+                showGpsToast();
+                return;
+            }
+
+            // ✅ MUHIMMI: timeout + error handling
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+
+                    setTimeout(() => {
+                        window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
+                    }, 1500);
+                },
+                (error) => {
+                    // ✅ idan GPS a kashe ko permission denied
+                    showGpsToast();
+
+                    // ⚠️ hana page refresh glitch
+                    if (overlay) {
+                        overlay.style.display = 'flex';
+                        setTimeout(() => overlay.classList.add('active'), 50);
+                    }
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 8000,
+                    maximumAge: 0
+                }
+            );
+
+        }, 400);
 
     } else if (type === 'global') {
         if(searchTerm === "") { alert("Don Allah rubuta abinda kake nema"); return; }
         localStorage.setItem('currentSearch', searchTerm);
         setTimeout(() => { window.location.href = 'atamfa.html'; }, 1500);
     }
-}
+                                   }
 
 // 6. UTILS & DATABASE
 function fetchStoreLocation() {
@@ -207,4 +220,4 @@ function showGpsToast() {
         toast.style.opacity = '0';
         setTimeout(() => { toast.style.display = 'none'; }, 500);
     }, 6000);
-                                                                      }
+                         }
