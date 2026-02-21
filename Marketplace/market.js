@@ -82,6 +82,7 @@ function showSearchOverlay(kalma, isImage = false) {
     if (display) display.innerText = `"${kalma}"`;
     if (overlay) {
         overlay.style.display = 'flex';
+        overlay.style.opacity = '1';
         setTimeout(() => overlay.classList.add('active'), 50);
     }
 }
@@ -138,17 +139,17 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-// 5. GLOBAL SEARCH MOTSI (GYARARRE)
+// 5. GLOBAL SEARCH MOTSI (GYARARRE - NO FLICKER)
 function globalSearchMotsi(type) {
     const overlay = document.getElementById('search-overlay');
     const searchTerm = document.getElementById('market-search').value;
 
     if (type === 'near_me') {
 
-        // ✅ rufe overlay
+        // ✅ KADA a cire overlay gaba daya
         if (overlay) {
             overlay.classList.remove('active');
-            setTimeout(() => overlay.style.display = 'none', 300);
+            overlay.style.opacity = '0';
         }
 
         setTimeout(() => {
@@ -158,7 +159,6 @@ function globalSearchMotsi(type) {
                 return;
             }
 
-            // ✅ MUHIMMI: timeout + error handling
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const lat = position.coords.latitude;
@@ -169,12 +169,12 @@ function globalSearchMotsi(type) {
                     }, 1500);
                 },
                 (error) => {
-                    // ✅ idan GPS a kashe ko permission denied
                     showGpsToast();
 
-                    // ⚠️ hana page refresh glitch
+                    // ✅ dawo da overlay ba tare da flicker ba
                     if (overlay) {
                         overlay.style.display = 'flex';
+                        overlay.style.opacity = '1';
                         setTimeout(() => overlay.classList.add('active'), 50);
                     }
                 },
@@ -192,7 +192,7 @@ function globalSearchMotsi(type) {
         localStorage.setItem('currentSearch', searchTerm);
         setTimeout(() => { window.location.href = 'atamfa.html'; }, 1500);
     }
-                                   }
+}
 
 // 6. UTILS & DATABASE
 function fetchStoreLocation() {
@@ -220,4 +220,4 @@ function showGpsToast() {
         toast.style.opacity = '0';
         setTimeout(() => { toast.style.display = 'none'; }, 500);
     }, 6000);
-                         }
+                                                                      }
