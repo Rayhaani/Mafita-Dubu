@@ -143,25 +143,36 @@ function globalSearchMotsi(type) {
     const overlay = document.getElementById('search-overlay');
     const searchTerm = document.getElementById('market-search').value;
 
+    // MUN COKE overlay.style.display = 'none' NA NAN SAMA!
+    // Wannan ne yake kawo flash din.
+
     if (type === 'near_me') {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
-                // Idan an samu location, za mu jira sakan 1.5 sannan mu tafi results page
+                
+                // Idan komai lafiya, sai mu jira mu tafi results
                 setTimeout(() => { 
+                    if(overlay) overlay.style.display = 'none';
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`; 
                 }, 1500);
             }, (error) => {
-                // ANAN NE MATSALAR TAKE:
-                // Ba za mu sake goge overlay ba, za mu kira toast din kai tsaye a samansa
+                // Idan an samu error, overlay din bazai bace ba
+                // Kawai Toast din ne zai fito a samansa
                 showGpsToast();
             });
         }
     } else if (type === 'global') {
-        if(searchTerm === "") { alert("Don Allah rubuta abinda kake nema"); return; }
+        if(searchTerm === "") { 
+            alert("Don Allah rubuta abinda kake nema"); 
+            return; 
+        }
         localStorage.setItem('currentSearch', searchTerm);
-        setTimeout(() => { window.location.href = 'atamfa.html'; }, 1500);
+        setTimeout(() => { 
+            if(overlay) overlay.style.display = 'none';
+            window.location.href = 'atamfa.html'; 
+        }, 1500);
     }
 }
 
