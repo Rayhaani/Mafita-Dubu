@@ -176,22 +176,23 @@ function globalSearchMotsi(type) {
                     // Yanzu ne za mu tafi, don haka overlay din zai kare mu daga ganin Global Market
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
                 }, 1500);
-            }, (error) => {
-    // Wannan layin zai dawo da notification din idan aka samu matsala
-    if (typeof showGpsToast === "function") { 
-        showGpsToast(); 
-    } else {
-        // Idan showGpsToast bata nan, wannan zai nuna notification na asali
-        const toast = document.getElementById('gps-toast');
-        if(toast) {
-            toast.style.display = 'block';
-            setTimeout(() => toast.style.opacity = '1', 50);
-            // Bayan sakan 5 sai mu sake boye shi
-            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.style.display = 'none', 500); }, 5000);
+           }, (error) => {
+                if (typeof showGpsToast === "function") { showGpsToast(); }
+            });
         }
-    }
-});
+    } 
+    else if (type === 'global') {
+        if(searchTerm === "") {
+            alert("Don Allah rubuta abinda kake nema");
+            return;
         }
+        localStorage.setItem('currentSearch', searchTerm);
+        
+        // Jinkiri don AI Rings su yi aiki
+        setTimeout(() => {
+            window.location.href = 'atamfa.html';
+        }, 1500);
+    } 
         
 // 6. NEAR YOU SEARCH (INSTANT RESULTS)
 function nearYouSearch() {
