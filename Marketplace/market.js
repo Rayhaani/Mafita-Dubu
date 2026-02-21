@@ -76,17 +76,29 @@ function selectItem(word) {
     showSearchOverlay(word);
 }
 
-function showSearchOverlay(kalma) {
+function showSearchOverlay(kalma, isImage = false) {
     const overlay = document.getElementById('search-overlay');
     const display = document.getElementById('query-val');
     const listContainer = document.getElementById('suggestionList');
+    const imageBox = document.querySelector('.scanned-image-container'); // Box din hoton
+
     if(listContainer) listContainer.parentElement.style.display = 'none';
     if (display) display.innerText = `"${kalma}"`;
+    
+    // IDAN BINCIKEN RUBUTU NE (Kamar "Panties")
+    if (!isImage) {
+        if (imageBox) imageBox.style.display = 'none'; // Boye box din hoton gaba daya
+    } else {
+        // IDAN NA HOTO NE
+        if (imageBox) imageBox.style.display = 'block'; // Nuna box din hoton
+    }
+
     if (overlay) {
         overlay.style.display = 'flex';
         setTimeout(() => overlay.classList.add('active'), 50);
     }
 }
+
 
 function closeSearch() {
     const overlay = document.getElementById('search-overlay');
@@ -137,13 +149,18 @@ function startAISimulation(file) {
     const reader = new FileReader();
     reader.onload = e => {
         const preview = document.getElementById('scanned-image-preview');
-        if (preview) { preview.src = e.target.result; }
+        if (preview) {
+            preview.src = e.target.result;
+        }
+        
         localStorage.setItem('user_captured_image', e.target.result);
         closeAIVision();
-        showSearchOverlay('Scanned Item');
+        // Mun kara 'true' anan don ya san hoto ne aka yi uploading
+        showSearchOverlay('Scanned Item', true);
     };
     reader.readAsDataURL(file);
 }
+
 
 // 5. GLOBAL SEARCH MOTSI (GYARARREN INSTANT VERSION)
 function globalSearchMotsi(mode) {
