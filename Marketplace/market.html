@@ -140,44 +140,11 @@
 @keyframes shrinkBar { from { width: 100%; } to { width: 0%; } }
 </style>
     
-  <script>
-    function globalSearchMotsi(type) {
-        const loading = document.getElementById('ai-loading-screen');
-        const overlay = document.getElementById('search-overlay');
-        const searchTerm = document.getElementById('market-search').value;
-
-        overlay.style.display = 'none';
-
-        if (type === 'near_me') {
-            loading.style.display = 'flex';
-            setTimeout(() => {
-                loading.style.display = 'none';
-                document.getElementById('near-me-results').classList.remove('hidden');
-                document.getElementById('near-me-results').style.display = 'flex';
-            }, 1000); 
-        } 
-        else if (type === 'global') {
-            if(searchTerm === "") {
-                alert("Don Allah rubuta abinda kake nema kafin ka danna Global Search");
-                overlay.style.display = 'flex';
-                return;
-            }
-            localStorage.setItem('currentSearch', searchTerm);
-            loading.style.display = 'flex';
-            setTimeout(() => {
-                window.location.href = 'atamfa.html';
-            }, 1200);
-        }
-    }
-
-    function manualSearch() {
-        document.getElementById('search-overlay').style.display = 'flex';
-    }
-
-    function closeSearch() {
-        document.getElementById('search-overlay').style.display = 'none';
-    }
-  </script>
+    <script>
+    function globalSearchMotsi(type) { ... }
+    function manualSearch() { ... }
+    function closeSearch() { ... }
+</script>
     
 </body>
     </html>
