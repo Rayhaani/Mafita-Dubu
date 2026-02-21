@@ -148,37 +148,43 @@ function startAISimulation(file) {
 // 5. GLOBAL SEARCH MOTSI (GYARARREN INSTANT VERSION)
 function globalSearchMotsi(mode) {
     const overlay = document.getElementById('search-overlay');
-    
+    const btnNear = document.getElementById('btn-near'); // Button din Near Me
+
     if (mode === 'near_me') {
-        // MUHIMMI: Kada ka sa 'overlay.style.display = none' a nan!
-        // Mu bar shi a bude har sai mun tabbatar GPS yana aiki.
+        // 1. Canja yanayin button din don mutum ya san an fara aiki
+        if(btnNear) {
+            btnNear.innerHTML = '<i class="fa-solid fa-spinner animate-spin mr-2"></i> LOADING...';
+            btnNear.style.opacity = "0.7";
+        }
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    // 1. AN SAMU LOCATION: Yanzu ne za mu rufe overlay mu wuce
+                    // 2. RUFE OVERLAY NAN TAKE (Da zaran an samu location)
                     if(overlay) overlay.style.display = 'none';
                     
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
+                    
+                    // 3. Wucewa zuwa Results Page kai tsaye
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
                 },
                 (error) => {
-                    // 2. AN SAMU MATSALA (GPS a kulle): 
-                    // Kada mu rufe overlay, mu nuna Toast kawai mutum ya gani a nan
-                    console.log("GPS a kulle yake.");
-                    
-                    if (typeof showGpsToast === "function") {
-                        showGpsToast(); 
+                    // Idan aka samu matsala, mayar da button din yadda yake
+                    if(btnNear) {
+                        btnNear.innerHTML = '<i class="fa-solid fa-location-crosshairs mr-2"></i> NEAR YOU';
+                        btnNear.style.opacity = "1";
                     }
-                    
-                    // Overlay zai cigaba da zama a bude don mutum ya sake gwadawa ko ya zabi Global Search
+                    if (typeof showGpsToast === "function") { showGpsToast(); }
                 },
-                { enableHighAccuracy: true, timeout: 5000 }
+                { 
+                    enableHighAccuracy: true, 
+                    timeout: 5000,
+                    maximumAge: 0 // Tabbatar ya dauki sabon location ba tsoho ba
+                }
             );
         }
     } else {
-        // Idan Global Search ne, wannan kam sai mu rufe mu wuce
         if(overlay) overlay.style.display = 'none';
         window.location.href = 'atamfa.html';
     }
