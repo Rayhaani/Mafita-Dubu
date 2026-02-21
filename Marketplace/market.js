@@ -138,12 +138,12 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-// 5. GLOBAL SEARCH MOTSI (ULTRA-STABLE)
+// 5. GLOBAL SEARCH MOTSI (FINAL FORCE VERSION)
 function globalSearchMotsi(type) {
     const overlay = document.getElementById('search-overlay');
-    const searchTerm = document.getElementById('market-search').value;
-
+    
     if (type === 'near_me') {
+        // MU TABBATAR: Idan an danna Near Me, kar overlay ya motsa
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 const lat = position.coords.latitude;
@@ -154,18 +154,13 @@ function globalSearchMotsi(type) {
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
                 }, 1500);
             }, (error) => {
-                // Idan aka samu matsalar GPS, kada mu taba overlay din
+                // FORCE SHOW: Ko wayar tana so ko ba ta so
                 showGpsToast();
             });
-        } else {
-            // Idan browser bata da GPS ma
-            showGpsToast();
         }
     } else if (type === 'global') {
-        if(searchTerm === "") {
-            alert("Don Allah rubuta abinda kake nema");
-            return;
-        }
+        const searchTerm = document.getElementById('market-search').value;
+        if(searchTerm === "") { alert("Don Allah rubuta abinda kake nema"); return; }
         localStorage.setItem('currentSearch', searchTerm);
         setTimeout(() => {
             if(overlay) overlay.style.display = 'none';
@@ -174,41 +169,22 @@ function globalSearchMotsi(type) {
     }
 }
 
-// 6. UTILS & DATABASE (GYARARRE)
-function fetchStoreLocation() {
-    const coordsInput = document.getElementById('shop-coords');
-    if (!navigator.geolocation) return;
-    coordsInput.value = "Ana daukar location...";
-    navigator.geolocation.getCurrentPosition((pos) => {
-        coordsInput.value = `${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`;
-    }, (error) => { 
-        showGpsToast(); 
-    });
-}
-
-// 7. SHOW GPS TOAST (ULTRA-FAST DISPLAY)
+// 7. SHOW GPS TOAST (FORCE VISIBILITY)
 function showGpsToast() {
     const toast = document.getElementById('gps-toast');
     if (!toast) return;
 
-    // 1. Nan take mu sanya shi block kuma opacity 1
-    // Muna guje wa jinkiri don kada wayar ta yi freezing dinsa
-    toast.style.display = 'block';
-    toast.style.zIndex = "2000000"; 
-    
-    // 2. Girgiza waya kai tsaye
+    // KARYA DUKKAN SHAMAKI:
+    // Muna amfani da !important a cikin JS don tilasta nuna shi
+    toast.setAttribute('style', 'display: block !important; opacity: 1 !important; z-index: 2000000 !important; position: fixed; top: 15px; left: 50%; transform: translateX(-50%) translateY(20px); width: 94%; max-width: 430px; transition: all 0.5s ease;');
+
     if ("vibrate" in navigator) navigator.vibrate(300);
 
-    // 3. Nuna shi nan take
-    toast.style.opacity = '1';
-    toast.style.transform = 'translateX(-50%) translateY(20px)';
-
-    // 4. Boye shi bayan sakan 6
+    // Boye shi bayan sakan 6
     setTimeout(() => {
         toast.style.opacity = '0';
         setTimeout(() => { 
             toast.style.display = 'none'; 
-            toast.style.transform = 'translateX(-50%) translateY(0px)';
         }, 500);
     }, 6000);
 }
