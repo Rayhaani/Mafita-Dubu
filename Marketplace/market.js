@@ -144,17 +144,25 @@ function globalSearchMotsi(type) {
     const searchTerm = document.getElementById('market-search').value;
 
     if (type === 'near_me') {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-                setTimeout(() => { window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`; }, 1500);
-            }, (error) => {
-                // Idan an samu error, muna rufe overlay don a ga notification din
-                if(overlay) overlay.style.display = 'none';
-                showGpsToast();
-            });
+
+        // ✅ FIX: rufe overlay kafin GPS request
+        if (overlay) {
+            overlay.classList.remove('active');
+            setTimeout(() => overlay.style.display = 'none', 300);
         }
+
+        setTimeout(() => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    setTimeout(() => { window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`; }, 1500);
+                }, (error) => {
+                    showGpsToast();
+                });
+            }
+        }, 400);
+
     } else if (type === 'global') {
         if(searchTerm === "") { alert("Don Allah rubuta abinda kake nema"); return; }
         localStorage.setItem('currentSearch', searchTerm);
@@ -176,11 +184,9 @@ function showGpsToast() {
     const toast = document.getElementById('gps-toast');
     if (!toast) return;
     
-    // Tabbatar z-index ya isa saman komai (Zaka iya gyara wannan a HTML ma)
     toast.style.zIndex = "999999";
     toast.style.display = 'block';
     
-    // Sake nuna shi ko da an taba nuna shi a baya
     setTimeout(() => { 
         toast.style.opacity = '1'; 
         toast.style.transform = 'translateX(-50%) translateY(10px)'; 
@@ -190,5 +196,4 @@ function showGpsToast() {
         toast.style.opacity = '0';
         setTimeout(() => { toast.style.display = 'none'; }, 500);
     }, 6000);
-                                                  }
-        
+                         }
