@@ -145,22 +145,46 @@ function globalSearchMotsi(type) {
 
     if (type === 'near_me') {
 
-        // ✅ FIX: rufe overlay kafin GPS request
+        // ✅ rufe overlay
         if (overlay) {
             overlay.classList.remove('active');
             setTimeout(() => overlay.style.display = 'none', 300);
         }
 
         setTimeout(() => {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((position) => {
+
+            if (!navigator.geolocation) {
+                showGpsToast();
+                return;
+            }
+
+            // ✅ MUHIMMI: timeout + error handling
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
-                    setTimeout(() => { window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`; }, 1500);
-                }, (error) => {
+
+                    setTimeout(() => {
+                        window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
+                    }, 1500);
+                },
+                (error) => {
+                    // ✅ idan GPS a kashe ko permission denied
                     showGpsToast();
-                });
-            }
+
+                    // ⚠️ hana page refresh glitch
+                    if (overlay) {
+                        overlay.style.display = 'flex';
+                        setTimeout(() => overlay.classList.add('active'), 50);
+                    }
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 8000,
+                    maximumAge: 0
+                }
+            );
+
         }, 400);
 
     } else if (type === 'global') {
@@ -168,7 +192,7 @@ function globalSearchMotsi(type) {
         localStorage.setItem('currentSearch', searchTerm);
         setTimeout(() => { window.location.href = 'atamfa.html'; }, 1500);
     }
-}
+                                   }
 
 // 6. UTILS & DATABASE
 function fetchStoreLocation() {
