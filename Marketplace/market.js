@@ -146,46 +146,33 @@ function globalSearchMotsi(type) {
 
     if (type === 'near_me') {
 
-        // ✅ KADA a cire overlay gaba daya
-        if (overlay) {
-            overlay.classList.remove('active');
-            overlay.style.opacity = '0';
+    // ❌ KAR KA TAƁA overlay gaba ɗaya
+    // (no hide, no opacity change)
+
+    if (!navigator.geolocation) {
+        showGpsToast();
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            setTimeout(() => {
+                window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
+            }, 1500);
+        },
+        (error) => {
+            showGpsToast();
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 8000,
+            maximumAge: 0
         }
-
-        setTimeout(() => {
-
-            if (!navigator.geolocation) {
-                showGpsToast();
-                return;
-            }
-
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-
-                    setTimeout(() => {
-                        window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
-                    }, 1500);
-                },
-                (error) => {
-                    showGpsToast();
-
-                    // ✅ dawo da overlay ba tare da flicker ba
-                    if (overlay) {
-                        overlay.style.display = 'flex';
-                        overlay.style.opacity = '1';
-                        setTimeout(() => overlay.classList.add('active'), 50);
-                    }
-                },
-                {
-                    enableHighAccuracy: true,
-                    timeout: 8000,
-                    maximumAge: 0
-                }
-            );
-
-        }, 400);
+    );
+    }
 
     } else if (type === 'global') {
         if(searchTerm === "") { alert("Don Allah rubuta abinda kake nema"); return; }
