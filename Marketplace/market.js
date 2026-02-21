@@ -138,29 +138,30 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-// 5. GLOBAL SEARCH MOTSI (GYARARRE)
+// 5. GLOBAL SEARCH MOTSI (ULTRA-STABLE VERSION)
 function globalSearchMotsi(type) {
     const overlay = document.getElementById('search-overlay');
     const searchTerm = document.getElementById('market-search').value;
 
-    // MUN TABBATAR: Babu overlay.style.display = 'none' anan farkon
+    // Ba za mu taba display = 'none' anan ba don hana flash
     
     if (type === 'near_me') {
         if (navigator.geolocation) {
+            // Muna kiran geolocation kai tsaye ba tare da boye komai ba
             navigator.geolocation.getCurrentPosition((position) => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
                 
-                // Idan komai ya yi daidai, sai mu jira mu tafi
+                // Idan an samu location, sai mu jira sakan 1.5 sannan mu tafi
                 setTimeout(() => {
-                    // Lokacin tafiya ne kawai za a rufe overlay
+                    // Yanzu ne kawai za mu rufe overlay mu wuce
                     if(overlay) overlay.style.display = 'none';
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
                 }, 1500);
             }, (error) => {
-                // ANAN NE MATSALAR:
-                // Ba za mu sake boye overlay din ba idan aka samu error
-                // Don haka bazaka taba ganin Global Market page din ba
+                // IDAN AN SAMU ERROR (Babu GPS):
+                // Overlay dinka bazai boyu ba, don haka babu flash na Global Market
+                // Kawai Notification din zai fito a samansa
                 showGpsToast();
             });
         }
@@ -176,7 +177,6 @@ function globalSearchMotsi(type) {
         }, 1500);
     }
 }
-
 
                              
 // 6. UTILS & DATABASE
