@@ -8,7 +8,7 @@ let watchID = null;
 // 1. AUTO SCROLL SLIDER
 function startProfessionalScroll() {
     const searchBar = document.getElementById('market-search');
-    const isTyping = searchBar === document.activeElement || (searchBar && searchBar.value.length > 0);
+    const isTyping = (searchBar === document.activeElement) || (searchBar && searchBar.value.length > 0);
 
     if (!isPaused && !isTyping) {
         window.scrollBy(0, direction * 0.2); 
@@ -95,34 +95,35 @@ function closeSearch() {
     }
 }
 
-// 3. GLOBAL SEARCH MOTSI (GYARARRE)
+// 3. GLOBAL SEARCH MOTSI (GYARARRE SOSAI)
 function globalSearchMotsi(type) {
     const overlay = document.getElementById('search-overlay');
     const searchTerm = document.getElementById('market-search').value;
 
     if (type === 'near_me') {
         if (navigator.geolocation) {
+            // Mun saka timeout na sakan 5 don kada ya tsaya cak idan GPS a kashe yake
             navigator.geolocation.getCurrentPosition((position) => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
                 setTimeout(() => {
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
-                }, 1500);
+                }, 1000);
             }, (error) => {
-                // GYARA: Rufe overlay din nan take idan an samu error
+                // Idan an samu error, rufe overlay nan take
                 if (overlay) {
                     overlay.style.display = 'none';
                     overlay.classList.remove('active');
                 }
-                // Sannan a nuna notification din GPS
-                if (typeof showGpsToast === "function") { 
-                    showGpsToast(); 
-                }
+                // Nuna sanarwar GPS Required
+                showGpsToast();
             }, { 
                 enableHighAccuracy: true, 
                 timeout: 5000, 
                 maximumAge: 0 
             });
+        } else {
+            alert("Browser dinka ba ta da GPS support.");
         }
     } 
     else if (type === 'global') {
@@ -142,10 +143,14 @@ function showGpsToast() {
     const toast = document.getElementById('gps-toast');
     if (!toast) return;
     toast.style.display = 'block';
+    // Restart animation
+    toast.style.opacity = '0';
     setTimeout(() => { 
         toast.style.opacity = '1'; 
         toast.style.transform = 'translateX(-50%) translateY(10px)'; 
     }, 10);
+    
+    // Yana bacewa bayan sakan 6
     setTimeout(() => {
         toast.style.opacity = '0';
         setTimeout(() => { toast.style.display = 'none'; }, 500);
@@ -195,7 +200,7 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-// 6. DISTANCE CALCULATION (GYARARRE)
+// 6. DISTANCE CALCULATION
 function lissafaNisa(lat1, lon1, lat2, lon2) {
     const R = 6371; 
     const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -206,46 +211,3 @@ function lissafaNisa(lat1, lon1, lat2, lon2) {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c; 
 }
-
-// 7. VENDORS & LOCATION UTILS
-function fetchStoreLocation() {
-    const coordsInput = document.getElementById('shop-coords');
-    if (!navigator.geolocation) { alert("Wayarka ba ta tallafawa GPS."); return; }
-    coordsInput.value = "Ana daukar location...";
-    navigator.geolocation.getCurrentPosition(
-        (pos) => {
-            coordsInput.value = `${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`;
-            coordsInput.style.color = "green";
-        },
-        (error) => { alert("Kuskure: Tabbatar ka kunna GPS."); },
-        { enableHighAccuracy: true }
-    );
-}
-
-let vendorsDatabase = [
-    { name: "Al-Amin Pharmacy", lat: 10.5105, lon: 7.4165, items: ["medicine"] },
-    { name: "Musa Bread & Butter", lat: 10.5200, lon: 7.4200, items: ["bread"] },
-    { name: "Fatima Fashion Home", lat: 10.4900, lon: 7.4000, items: ["gown"] }
-];
-
-function displayNearbyVendors(nearbyVendors) {
-    const listContainer = document.getElementById('vendors-list');
-    if(!listContainer) return;
-    listContainer.innerHTML = '';
-    nearbyVendors.forEach(v => {
-        const card = `<div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #eee; background: white; border-radius: 12px; margin-bottom: 10px;">
-                <div style="display:flex; align-items:center; gap: 15px;">
-                    <div style="width:50px; height:50px; background:#e9ecef; border-radius:50%; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-shop"></i></div>
-                    <div><h4 style="margin:0;">${v.name}</h4><p style="margin:0; font-size:12px;">${v.distance.toFixed(2)} km away</p></div>
-                </div>
-                <button style="padding:8px 15px; background:#007bff; color:white; border:none; border-radius:20px;">Visit</button>
-            </div>`;
-        listContainer.innerHTML += card;
-    });
-}
-
-function closeResults() {
-    const res = document.getElementById('near-me-results');
-    if(res) res.style.display = 'none';
-            }
-        
