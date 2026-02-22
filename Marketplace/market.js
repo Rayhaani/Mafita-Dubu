@@ -155,31 +155,37 @@ function globalSearchMotsi(mode) {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    if(overlay) overlay.style.display = 'none';
+                    // MATAKI NA 1: Kada mu kashe Overlay tukuna don hana ganin Global Market (Flash)
+                    // Muna kunna Loading Screen a samansa
                     if(loading) loading.style.display = 'flex';
                     
-                    // Bayan sakan 3 zai wuce, amma idan an dawo browser za ta ga sabon shafi
+                    // MATAKI NA 2: Adana Location don amfani a Results Page
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    localStorage.setItem('user_lat', lat);
+                    localStorage.setItem('user_lon', lon);
+
+                    // MATAKI NA 3: Wucewa zuwa Results Page
+                    // Muna amfani da location.replace don gudun flash
                     setTimeout(() => { 
-                        window.location.href = "results.html?view=nearme";
-                        // Wannan layin yana kashe loading din a "background" 
-                        // yadda idan an dawo ba za a same shi yana loading ba
-                        setTimeout(() => { if(loading) loading.style.display = 'none'; }, 500);
-                    }, 3000);
+                        window.location.replace("results.html?view=nearme");
+                    }, 2000);
                 },
-                (error) => { showGpsToast(); },
-                { timeout: 5000 }
+                (error) => { 
+                    showGpsToast(); 
+                },
+                { enableHighAccuracy: false, timeout: 5000 }
             );
         }
     } else {
-        if(overlay) overlay.style.display = 'none';
+        // Idan bincike ne na Global
         if(loading) loading.style.display = 'flex';
-        // Maimakon loading ya dawama, muna so ya tsaya idan an dade
         setTimeout(() => {
-            if(loading) loading.style.display = 'none';
-            kammalaBincike();
-        }, 3000);
+            window.location.href = 'atamfa.html';
+        }, 2000);
     }
 }
+
 
 
  let watchID = null; // Wannan zai rike tracking din
