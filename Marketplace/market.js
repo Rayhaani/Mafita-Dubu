@@ -159,72 +159,67 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-async function globalSearchMotsi(mode) {
+
+   function globalSearchMotsi(mode) {
     const overlay = document.getElementById('search-overlay');
     const loading = document.getElementById('ai-loading-screen');
 
     if (mode === 'near_me') {
-        // 1. Duba matsayin izini (Permission Status) tun kafin komai
-        try {
-            const status = await navigator.permissions.query({ name: 'geolocation' });
-            
-            // Idan an riga an ba da izini, mu wuce kai tsaye ba tare da nuna Toast ba
-            if (status.state === 'granted') {
-                proceedToResults();
-            } else {
-                // Idan ba a ba da izini ba ko kuma yana jiran tambaya (prompt)
-                startLocationProcess();
-            }
-        } catch (e) {
-            // Idan browser ba ta tallafa wa permissions query, mu gwada processing kai tsaye
-            startLocationProcess();
-        }
-    } else {
-        // Global Search
-        if(loading) loading.style.display = 'flex';
-        setTimeout(() => {
-            document.body.classList.add('fade-out-active');
-            setTimeout(() => { window.location.href = 'atamfa.html'; }, 800);
-        }, 1500);
-    }
-
-    // --- INTERNAL HELPER FUNCTIONS ---
-
-    function startLocationProcess() {
+        // MATAKI NA 1: Kada mu nuna komai namu tukunna. 
+        // Mu kira GPS din waya kai tsaye domin ita ta fara nuna nata prompt din.
         if (navigator.geolocation) {
-            // Nuna Toast kawai idan muna buƙatar tunatar da mai amfani ya duba "Permission Prompt"
-            showGpsToast(); 
-            
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    proceedToResults(position);
+                    // IDAN MAI AMFANI YA YARDA (Success)
+                    // 1. Kunna loading screen don boye "flash" na Global Market
+                    if(loading) loading.style.display = 'flex';
+                    
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    localStorage.setItem('user_lat', lat);
+                    localStorage.setItem('user_lon', lon);
+
+                    // 2. Wucewa zuwa results page bayan dan lokaci kadan
+                    setTimeout(() => {
+                        window.location.replace("results.html?view=nearme");
+                    }, 1000);
                 },
                 (error) => {
-                    console.log("GPS Error: ", error.message);
-                    // Mun riga mun nuna toast a sama
+                    // IDAN AN SAMU MATSALA (Misali: An danna 'Never Allow' ko GPS a kashe yake)
+                    // A nan ne kawai namu notification din zai fito
+                    showGpsToast();
                 },
-                { enableHighAccuracy: false, timeout: 5000 }
+                { enableHighAccuracy: false, timeout: 8000 }
             );
         }
-    }
-
-    function proceedToResults(position) {
+    } else {
+        // Global Search logic
         if(loading) loading.style.display = 'flex';
-        
-        if (position) {
-            localStorage.setItem('user_lat', position.coords.latitude);
-            localStorage.setItem('user_lon', position.coords.longitude);
-        }
+        setTimeout(() => { window.location.href = 'atamfa.html'; }, 1000);
+    }
+}
 
-        // Force Transition
-        setTimeout(() => {
-            document.body.classList.add('fade-out-active');
-            setTimeout(() => { 
-                window.location.replace("results.html?view=nearme");
-            }, 800);
-        }, 1000);
-    }
-    }
+function showGpsToast() {
+    const toast = document.getElementById('gps-toast');
+    if (!toast) return;
+
+    // Kunna shi kawai idan muna bukata
+    toast.style.display = 'block';
+    setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(15px)';
+    }, 50);
+
+    if ("vibrate" in navigator) navigator.vibrate(200);
+
+    // Boye shi bayan sakan 5
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => { toast.style.display = 'none'; }, 500);
+    }, 5000);
+}
+
+        
 
 
  let watchID = null; // Wannan zai rike tracking din
