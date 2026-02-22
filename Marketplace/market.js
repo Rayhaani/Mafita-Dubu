@@ -1,14 +1,14 @@
-  let typingTimer;
+let typingTimer;
 const doneTypingInterval = 3000;
 let sliderPos = 0; 
 let isPaused = false;
 let direction = 1;
 let watchID = null;
 
-// 1. AUTO SCROLL SLIDER
+// 1. GYARAN SLIDER (Auto Scroll)
 function startProfessionalScroll() {
     const searchBar = document.getElementById('market-search');
-    const isTyping = (searchBar === document.activeElement) || (searchBar && searchBar.value.length > 0);
+    const isTyping = searchBar === document.activeElement || (searchBar && searchBar.value.length > 0);
 
     if (!isPaused && !isTyping) {
         window.scrollBy(0, direction * 0.2); 
@@ -26,7 +26,7 @@ function startProfessionalScroll() {
 }
 window.onload = () => setTimeout(startProfessionalScroll, 3000);
 
-// 2. SEARCH & OVERLAY ACTIONS
+// 2. GYARAN ENTER KEY & SEARCH ICON
 function manualSearch() {
     const input = document.getElementById('market-search');
     if (!input) return;
@@ -34,11 +34,13 @@ function manualSearch() {
     if (kalma.length >= 2) {
         clearTimeout(typingTimer); 
         input.blur(); 
+        // Saka 'false' anan don tabbatar ba hoto ba ne
         showSearchOverlay(kalma, false); 
         const box = document.getElementById('suggestionList');
         if(box) box.parentElement.style.display = 'none';
     }
 }
+
 
 document.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
@@ -49,6 +51,7 @@ document.addEventListener('keypress', function (e) {
     }
 });
 
+// 3. SEARCH HANDLING
 function handleSearch(textbox) {
     let kalma = textbox.value.trim();
     const listContainer = document.getElementById('suggestionList'); 
@@ -61,24 +64,34 @@ function handleSearch(textbox) {
             listContainer.parentElement.style.display = 'block';
             listContainer.innerHTML = filtered.map(item => `<li onclick="selectItem('${item}')" style="padding:12px;border-bottom:1px solid #eee;cursor:pointer;color:#333;font-weight:bold;">${item}</li>`).join('');
         }
+        // Mun sanya 'false' anan don boye empty box na hoto
         typingTimer = setTimeout(() => { showSearchOverlay(kalma, false); }, doneTypingInterval);
     } else {
         if(listContainer) listContainer.parentElement.style.display = 'none';
     }
 }
 
+
 function selectItem(word) {
     const input = document.getElementById('market-search');
     if(input) input.value = word;
     const box = document.getElementById('suggestionList');
     if(box) box.parentElement.style.display = 'none';
-    showSearchOverlay(word, false);
+    showSearchOverlay(word);
 }
 
 function showSearchOverlay(kalma, isImage = false) {
     const overlay = document.getElementById('search-overlay');
+    const display = document.getElementById('query-val');
+    const imagePreviewBox = document.getElementById('scanned-image-preview-box') || document.querySelector('.scanned-image-container');
+
+    console.log("Bincike akan:", kalma, "Hoto ne?", isImage);
+
+    if (display) display.innerText = `"${kalma}"`;
+
     if (overlay) {
         overlay.style.display = 'flex';
+
         setTimeout(() => overlay.classList.add('active'), 50);
     }
 }
@@ -95,74 +108,7 @@ function closeSearch() {
     }
 }
 
-// 3. GLOBAL SEARCH MOTSI (ULTRA FIX)
-function globalSearchMotsi(type) {
-    const overlay = document.getElementById('search-overlay');
-    const searchTerm = document.getElementById('market-search').value;
-
-    if (type === 'near_me') {
-        if (navigator.geolocation) {
-            // Tabbatar mu rufe dukkan watch idan akwai don kada ya daskare
-            if (watchID) navigator.geolocation.clearWatch(watchID);
-
-            navigator.geolocation.getCurrentPosition((position) => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-                setTimeout(() => {
-                    window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
-                }, 1000);
-            }, (error) => {
-                // MUHIMMI: Rufe overlay nan take domin a ga notification
-                if (overlay) {
-                    overlay.classList.remove('active');
-                    overlay.style.display = 'none';
-                }
-                // Nuna sanarwar GPS
-                showGpsToast();
-            }, { 
-                enableHighAccuracy: true, 
-                timeout: 5000, // Idan ya kai sakan 5 bai samu location ba, zai bada error
-                maximumAge: 0 
-            });
-        } else {
-            alert("Wayarka ba ta da GPS.");
-        }
-    } 
-    else if (type === 'global') {
-        if(searchTerm === "") {
-            alert("Don Allah rubuta abinda kake nema");
-            return;
-        }
-        localStorage.setItem('currentSearch', searchTerm);
-        setTimeout(() => {
-            window.location.href = 'atamfa.html';
-        }, 1500);
-    }
-}
-
-// 4. GPS TOAST NOTIFICATION
-function showGpsToast() {
-    const toast = document.getElementById('gps-toast');
-    if (!toast) return;
-
-    // Reset styles don ya fito koda an danna sau 100
-    toast.style.display = 'block';
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateX(-50%) translateY(-20px)';
-
-    setTimeout(() => { 
-        toast.style.opacity = '1'; 
-        toast.style.transform = 'translateX(-50%) translateY(10px)'; 
-    }, 50);
-    
-    // Bace bayan sakan 6
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => { toast.style.display = 'none'; }, 500);
-    }, 6000);
-}
-
-// 5. CAMERA & AI HANDLING
+// 4. AI CAMERA & SIMULATION
 function openAICamera() {
     const existing = document.getElementById('ai-sheet');
     if(existing) existing.remove();
@@ -198,19 +144,68 @@ function startAISimulation(file) {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = e => {
+        const preview = document.getElementById('scanned-image-preview');
+        if (preview) {
+            preview.src = e.target.result;
+        }
+        
         localStorage.setItem('user_captured_image', e.target.result);
         closeAIVision();
+        // Mun kara 'true' anan don ya san hoto ne aka yi uploading
         showSearchOverlay('Scanned Item', true);
     };
     reader.readAsDataURL(file);
 }
 
-// 6. NEAR YOU SEARCH LOGIC
+
+// 5. GLOBAL SEARCH MOTSI (GYARARREN INSTANT VERSION)
+function globalSearchMotsi(type) {
+    const overlay = document.getElementById('search-overlay');
+    const searchTerm = document.getElementById('market-search').value;
+
+    // KADA ka sanya overlay.style.display = 'none' anan!
+    
+    if (type === 'near_me') {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                
+                // Jinkiri na sakan 1.5 don professionalism
+                setTimeout(() => {
+                    // Yanzu ne za mu tafi, don haka overlay din zai kare mu daga ganin Global Market
+                    window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
+                }, 1500);
+            }, (error) => {
+                if (typeof showGpsToast === "function") { showGpsToast(); }
+            });
+        }
+    } 
+    else if (type === 'global') {
+        if(searchTerm === "") {
+            alert("Don Allah rubuta abinda kake nema");
+            return;
+        }
+        localStorage.setItem('currentSearch', searchTerm);
+        
+        // Jinkiri don AI Rings su yi aiki
+        setTimeout(() => {
+            window.location.href = 'atamfa.html';
+        }, 1500);
+    }
+}
+
+
+// 6. NEAR YOU SEARCH (INSTANT RESULTS)
 function nearYouSearch() {
+    const loading = document.getElementById('ai-loading-screen');
     const resultsPage = document.getElementById('near-me-results');
     const listContainer = document.getElementById('vendors-list');
     const errorState = document.getElementById('gps-error-state');
 
+    // Cire scanning screen gaba daya
+    if (loading) loading.style.display = 'none';
+    
     if (watchID) navigator.geolocation.clearWatch(watchID);
 
     watchID = navigator.geolocation.watchPosition((pos) => {
@@ -236,6 +231,21 @@ function nearYouSearch() {
     }, { enableHighAccuracy: true, timeout: 5000 });
 }
 
+// 7. VENDOR & LOCATION UTILS
+function fetchStoreLocation() {
+    const coordsInput = document.getElementById('shop-coords');
+    if (!navigator.geolocation) { alert("Wayarka ba ta tallafawa GPS."); return; }
+    coordsInput.value = "Ana daukar location...";
+    navigator.geolocation.getCurrentPosition(
+        (pos) => {
+            coordsInput.value = `${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`;
+            coordsInput.style.color = "green";
+        },
+        (error) => { alert("Kuskure: Tabbatar ka kunna GPS."); },
+        { enableHighAccuracy: true }
+    );
+}
+
 function lissafaNisa(lat1, lon1, lat2, lon2) {
     const R = 6371; 
     const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -247,6 +257,7 @@ function lissafaNisa(lat1, lon1, lat2, lon2) {
     return R * c; 
 }
 
+// 8. VENDORS DATABASE & DISPLAY
 let vendorsDatabase = [
     { name: "Al-Amin Pharmacy", lat: 10.5105, lon: 7.4165, items: ["medicine"] },
     { name: "Musa Bread & Butter", lat: 10.5200, lon: 7.4200, items: ["bread"] },
@@ -258,6 +269,11 @@ function displayNearbyVendors(nearbyVendors) {
     if(!listContainer) return;
     listContainer.innerHTML = '';
     nearbyVendors.forEach(v => {
+        if (v.distance <= 0.02) {
+            if ("vibrate" in navigator) navigator.vibrate([200, 100, 200]);
+            const sound = document.getElementById('arrival-sound');
+            if (sound) sound.play().catch(() => {}); 
+        }
         const card = `<div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #eee; background: white; border-radius: 12px; margin-bottom: 10px;">
                 <div style="display:flex; align-items:center; gap: 15px;">
                     <div style="width:50px; height:50px; background:#e9ecef; border-radius:50%; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-shop"></i></div>
@@ -272,5 +288,15 @@ function displayNearbyVendors(nearbyVendors) {
 function closeResults() {
     const res = document.getElementById('near-me-results');
     if(res) res.style.display = 'none';
-        }
-        
+}
+
+function showGpsToast() {
+    const toast = document.getElementById('gps-toast');
+    if (!toast) return;
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(10px)'; }, 10);
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => { toast.style.display = 'none'; }, 500);
+    }, 6000);
+      }
