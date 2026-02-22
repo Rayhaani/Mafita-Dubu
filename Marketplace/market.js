@@ -3,7 +3,6 @@ const doneTypingInterval = 3000;
 let sliderPos = 0; 
 let isPaused = false;
 let direction = 1;
-let watchID = null;
 
 // 1. GYARAN SLIDER (Auto Scroll)
 function startProfessionalScroll() {
@@ -34,13 +33,11 @@ function manualSearch() {
     if (kalma.length >= 2) {
         clearTimeout(typingTimer); 
         input.blur(); 
-        // Saka 'false' anan don tabbatar ba hoto ba ne
-        showSearchOverlay(kalma, false); 
+        showSearchOverlay(kalma);
         const box = document.getElementById('suggestionList');
         if(box) box.parentElement.style.display = 'none';
     }
 }
-
 
 document.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
@@ -78,34 +75,17 @@ function selectItem(word) {
     showSearchOverlay(word);
 }
 
-function showSearchOverlay(kalma, isImage = false) {
+function showSearchOverlay(kalma) {
     const overlay = document.getElementById('search-overlay');
     const display = document.getElementById('query-val');
     const listContainer = document.getElementById('suggestionList');
-    
-    // Nemo box din hoton ta ID ko Class
-    const imagePreviewBox = document.querySelector('.scanned-image-container'); 
-
     if(listContainer) listContainer.parentElement.style.display = 'none';
     if (display) display.innerText = `"${kalma}"`;
-
     if (overlay) {
         overlay.style.display = 'flex';
-        
-        // --- GYARAN NAN NE ---
-        if (imagePreviewBox) {
-            if (isImage === true) {
-                imagePreviewBox.style.setProperty('display', 'block', 'important');
-            } else {
-                imagePreviewBox.style.setProperty('display', 'none', 'important');
-            }
-        }
-        // ---------------------
-
         setTimeout(() => overlay.classList.add('active'), 50);
     }
 }
-
 
 function closeSearch() {
     const overlay = document.getElementById('search-overlay');
@@ -119,7 +99,7 @@ function closeSearch() {
     }
 }
 
-// 4. AI CAMERA & SIMULATION
+// 4. AI CAMERA (ASALIN TSOHON CODE DINKA 100%)
 function openAICamera() {
     const existing = document.getElementById('ai-sheet');
     if(existing) existing.remove();
@@ -150,11 +130,11 @@ function handleGallery() {
     input.onchange = e => startAISimulation(e.target.files[0]);
     input.click();
 }
-
 function startAISimulation(file) {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = e => {
+        // Wannan layin shi ne zai saka hoton a loading screen din
         const preview = document.getElementById('scanned-image-preview');
         if (preview) {
             preview.src = e.target.result;
@@ -162,60 +142,57 @@ function startAISimulation(file) {
         
         localStorage.setItem('user_captured_image', e.target.result);
         closeAIVision();
-        // Mun kara 'true' anan don ya san hoto ne aka yi uploading
-        showSearchOverlay('Scanned Item', true);
+        showSearchOverlay('Scanned Item');
     };
     reader.readAsDataURL(file);
 }
 
-
-// 5. GLOBAL SEARCH MOTSI (GYARARREN INSTANT VERSION)
 function globalSearchMotsi(mode) {
     const overlay = document.getElementById('search-overlay');
-    const loading = document.getElementById('ai-loading-screen'); // Wannan ne scanning screen dinka
+    const loading = document.getElementById('ai-loading-screen');
 
     if (mode === 'near_me') {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    // 1. AN SAMU LOCATION: Nan take mu nuna loading screen don ya rufe komai
-                    if(loading) {
-                        loading.style.display = 'flex';
-                        loading.style.background = '#ffffff'; // Fari sol don kar a ga komai na baya
-                    }
-                    
-                    // 2. Rufe overlay a hankali a karkashin loading screen din
                     if(overlay) overlay.style.display = 'none';
+                    if(loading) loading.style.display = 'flex';
                     
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-                    
-                    // 3. Wucewa zuwa results
-                    window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
+                    // Bayan sakan 3 zai wuce, amma idan an dawo browser za ta ga sabon shafi
+                    setTimeout(() => { 
+                        window.location.href = "results.html?view=nearme";
+                        // Wannan layin yana kashe loading din a "background" 
+                        // yadda idan an dawo ba za a same shi yana loading ba
+                        setTimeout(() => { if(loading) loading.style.display = 'none'; }, 500);
+                    }, 3000);
                 },
-                (error) => {
-                    // Idan an samu matsala, kar mu rufe komai
-                    if (typeof showGpsToast === "function") { showGpsToast(); }
-                },
-                { enableHighAccuracy: true, timeout: 5000 }
+                (error) => { showGpsToast(); },
+                { timeout: 5000 }
             );
         }
     } else {
         if(overlay) overlay.style.display = 'none';
-        window.location.href = 'atamfa.html';
+        if(loading) loading.style.display = 'flex';
+        // Maimakon loading ya dawama, muna so ya tsaya idan an dade
+        setTimeout(() => {
+            if(loading) loading.style.display = 'none';
+            kammalaBincike();
+        }, 3000);
     }
 }
 
-// 6. NEAR YOU SEARCH (INSTANT RESULTS)
+
+ let watchID = null; // Wannan zai rike tracking din
+
 function nearYouSearch() {
     const loading = document.getElementById('ai-loading-screen');
-    const resultsPage = document.getElementById('near-me-results');
-    const listContainer = document.getElementById('vendors-list');
     const errorState = document.getElementById('gps-error-state');
+    const listContainer = document.getElementById('vendors-list');
+    const resultsPage = document.getElementById('near-me-results');
 
-    // Cire scanning screen gaba daya
-    if (loading) loading.style.display = 'none';
+    if (loading) loading.style.display = 'flex';
     
+    // Idan an riga an fara tracking, a tsayar da shi a sake sabo
     if (watchID) navigator.geolocation.clearWatch(watchID);
 
     watchID = navigator.geolocation.watchPosition((pos) => {
@@ -227,37 +204,116 @@ function nearYouSearch() {
             return { ...vendor, distance: distance };
         }).sort((a, b) => a.distance - b.distance);
 
-        if (resultsPage) resultsPage.style.display = 'flex';
-        if (listContainer) {
-            listContainer.style.display = 'block';
-            displayNearbyVendors(nearbyVendors);
-        }
-        if (errorState) errorState.style.display = 'none';
+        // Nuna sakamako
+        if (loading) loading.style.display = 'none';
+        resultsPage.style.display = 'flex';
+        listContainer.style.display = 'block';
+        errorState.style.display = 'none';
+
+        displayNearbyVendors(nearbyVendors);
         
     }, (err) => {
-        if (resultsPage) resultsPage.style.display = 'flex';
-        if (listContainer) listContainer.style.display = 'none';
-        if (errorState) errorState.style.display = 'flex';
-    }, { enableHighAccuracy: true, timeout: 5000 });
+        if (loading) loading.style.display = 'none';
+        resultsPage.style.display = 'flex';
+        listContainer.style.display = 'none';
+        errorState.style.display = 'flex';
+    }, { 
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: 5000 
+    });
 }
 
-// 7. VENDOR & LOCATION UTILS
 function fetchStoreLocation() {
     const coordsInput = document.getElementById('shop-coords');
-    if (!navigator.geolocation) { alert("Wayarka ba ta tallafawa GPS."); return; }
+    
+    if (!navigator.geolocation) {
+        alert("Wayarka ba ta tallafawa GPS. Amfani da tsohuwar hanya.");
+        return;
+    }
+
+    // Nuna wa vendor cewa ana kokarin daukar location
     coordsInput.value = "Ana daukar location...";
+
     navigator.geolocation.getCurrentPosition(
         (pos) => {
-            coordsInput.value = `${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`;
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            // Adana shi a cikin input yadda Vendor zai gani
+            coordsInput.value = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
             coordsInput.style.color = "green";
+            coordsInput.style.fontWeight = "bold";
         },
-        (error) => { alert("Kuskure: Tabbatar ka kunna GPS."); },
+        (error) => {
+            coordsInput.value = "";
+            alert("Kuskure: Tabbatar ka kunna GPS kuma ka bada izini (Permission).");
+        },
         { enableHighAccuracy: true }
     );
 }
 
+function saveVendor() {
+    const name = document.getElementById('store-name').value;
+    const coords = document.getElementById('shop-coords').value;
+
+    if (!name || !coords) {
+        alert("Don Allah cika duka bayanan.");
+        return;
+    }
+
+    // A matsayin Senior Developer, nan ne zaka tura data zuwa Database dinka
+    console.log("Saving Vendor:", { storeName: name, location: coords });
+    alert("An yi rijistar shagonka cikin nasara tare da authentic GPS location!");
+}
+
+// Wannan jerin (List) ne na Vendors da suka riga sun yi registration
+let vendorsDatabase = [
+    { name: "Al-Amin Pharmacy", lat: 10.5105, lon: 7.4165, items: ["medicine", "paracetamol"] },
+    { name: "Musa Bread & Butter", lat: 10.5200, lon: 7.4200, items: ["bread", "butter", "milk"] },
+    { name: "Fatima Fashion Home", lat: 10.4900, lon: 7.4000, items: ["gown", "bra", "shoes"] }
+];
+
+function displayNearbyVendors(nearbyVendors) {
+    const resultsPage = document.getElementById('near-me-results');
+    const listContainer = document.getElementById('vendors-list');
+    listContainer.innerHTML = '';
+
+    nearbyVendors.forEach(v => {
+        // --- JINIYA DA SAUTI ---
+        if (v.distance <= 0.02) {
+            if ("vibrate" in navigator) navigator.vibrate([200, 100, 200]);
+            const sound = document.getElementById('arrival-sound'); // Layin sauti
+            if (sound) sound.play().catch(() => {}); 
+        }
+
+        const card = `
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #eee; background: white; border-radius: 12px; margin-bottom: 10px; border-left: ${v.distance <= 0.02 ? '5px solid #28a745' : 'none'};">
+                <div style="display:flex; align-items:center; gap: 15px;">
+                    <div style="width:50px; height:50px; background:#e9ecef; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                        <i class="fa-solid fa-shop" style="color:${v.distance <= 0.02 ? '#28a745' : '#007bff'};"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin:0; font-size:16px; font-weight:bold;">${v.name}</h4>
+                        <p style="margin:0; font-size:12px; color:${v.distance <= 0.02 ? '#28a745' : '#666'}; font-weight:600;">
+                            ${v.distance <= 0.02 ? 'Ka Iso! (Arrived)' : v.distance.toFixed(2) + ' km away'}
+                        </p>
+                    </div>
+                </div>
+                <button style="padding:8px 15px; background:${v.distance <= 0.02 ? '#28a745' : '#007bff'}; color:white; border:none; border-radius:20px; font-size:12px; font-weight:bold;">Visit</button>
+            </div>`;
+        listContainer.innerHTML += card;
+    });
+    resultsPage.style.display = 'flex';
+}
+
+
+function closeResults() {
+    document.getElementById('near-me-results').style.display = 'none';
+}
+
+// Saka wannan a can kasa don lissafa tazara tsakanin mutum da shago
 function lissafaNisa(lat1, lon1, lat2, lon2) {
-    const R = 6371; 
+    const R = 6371; // Radius na duniya a km
     const dLat = (lat2 - lat1) * Math.PI / 180;
     const dLon = (lon2 - lon1) * Math.PI / 180;
     const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
@@ -265,48 +321,113 @@ function lissafaNisa(lat1, lon1, lat2, lon2) {
               Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c; 
-}
-
-// 8. VENDORS DATABASE & DISPLAY
-let vendorsDatabase = [
-    { name: "Al-Amin Pharmacy", lat: 10.5105, lon: 7.4165, items: ["medicine"] },
-    { name: "Musa Bread & Butter", lat: 10.5200, lon: 7.4200, items: ["bread"] },
-    { name: "Fatima Fashion Home", lat: 10.4900, lon: 7.4000, items: ["gown"] }
-];
-
-function displayNearbyVendors(nearbyVendors) {
-    const listContainer = document.getElementById('vendors-list');
-    if(!listContainer) return;
-    listContainer.innerHTML = '';
-    nearbyVendors.forEach(v => {
-        if (v.distance <= 0.02) {
-            if ("vibrate" in navigator) navigator.vibrate([200, 100, 200]);
-            const sound = document.getElementById('arrival-sound');
-            if (sound) sound.play().catch(() => {}); 
         }
-        const card = `<div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #eee; background: white; border-radius: 12px; margin-bottom: 10px;">
-                <div style="display:flex; align-items:center; gap: 15px;">
-                    <div style="width:50px; height:50px; background:#e9ecef; border-radius:50%; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-shop"></i></div>
-                    <div><h4 style="margin:0;">${v.name}</h4><p style="margin:0; font-size:12px;">${v.distance.toFixed(2)} km away</p></div>
-                </div>
-                <button style="padding:8px 15px; background:#007bff; color:white; border:none; border-radius:20px;">Visit</button>
-            </div>`;
-        listContainer.innerHTML += card;
-    });
+
+function startRegistration(type) {
+    closePortal();
+    // Nan gaba zamu sa code din da zai bude babban registration form din da AI scanner
+    console.log("Starting registration for:", type);
+    
+    if(type === 'vendor') {
+        alert("Preparing AI-Integrated Vendor Registration...");
+        // openVendorRegistrationForm(); // Zamu hada wannan a mataki na gaba
+    }
 }
 
-function closeResults() {
-    const res = document.getElementById('near-me-results');
-    if(res) res.style.display = 'none';
+function openPortal() {
+    const portal = document.getElementById('portal-sheet');
+    const content = document.getElementById('portal-content');
+    portal.classList.remove('hidden');
+    setTimeout(() => content.style.transform = "translateY(0)", 10);
+}
+
+function closePortal() {
+    const portal = document.getElementById('portal-sheet');
+    const content = document.getElementById('portal-content');
+    content.style.transform = "translateY(100%)";
+    setTimeout(() => portal.classList.add('hidden'), 300);
+}
+
+
+function kammalaBincike() {
+    // 1. Kashe loading screen
+    const loading = document.getElementById('ai-loading-screen');
+    if (loading) loading.style.display = 'none';
+
+    // 2. Nemo sunan abin da mutum ya bincika (daga search bar)
+    const searchInput = document.getElementById('market-search');
+    const bincike = searchInput ? searchInput.value : "Abinda ka nema";
+
+    // 3. Nuna sakamako (A nan zaka iya sa logic na fitar da kaya daga database)
+    alert("AI Search Completed: Mun nemo maka " + bincike + " a shaguna 5 dake kusa da kai.");
+    
+    // Zaka iya kiran nearYouSearch() anan don nuna shagunan da suke da kayan
+    nearYouSearch();
+}
+
+function openPortal() {
+    const portal = document.getElementById('portal-sheet');
+    const content = document.getElementById('portal-content');
+    if(portal && content) {
+        portal.classList.remove('hidden');
+        setTimeout(() => {
+            content.style.transform = "translateY(0)";
+        }, 10);
+    }
+}
+
+function closePortal() {
+    const portal = document.getElementById('portal-sheet');
+    const content = document.getElementById('portal-content');
+    if(portal && content) {
+        content.style.transform = "translateY(100%)";
+        setTimeout(() => {
+            portal.classList.add('hidden');
+        }, 300);
+    }
+}
+
+function openVendorForm() {
+    closePortal();
+    const form = document.getElementById('vendor-form-overlay');
+    if(form) form.classList.remove('hidden');
+}
+
+function closeVendorForm() {
+    const form = document.getElementById('vendor-form-overlay');
+    if(form) form.classList.add('hidden');
+}
+
+function startRegistration(type) {
+    alert("Kayi nasarar fara registration a matsayin: " + type);
+    closePortal();
 }
 
 function showGpsToast() {
     const toast = document.getElementById('gps-toast');
+    const sound = document.getElementById('toast-sound');
+    
     if (!toast) return;
+
+    // Kunna Sauti
+    if (sound) {
+        sound.currentTime = 0;
+        sound.play().catch(() => {});
+    }
+
+    // Nuna shi da kyau (Slide down)
     toast.style.display = 'block';
-    setTimeout(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(10px)'; }, 10);
+    setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(10px)'; 
+    }, 10);
+    
+    // Bace bayan sakan 6
     setTimeout(() => {
         toast.style.opacity = '0';
-        setTimeout(() => { toast.style.display = 'none'; }, 500);
+        toast.style.transform = 'translateX(-50%) translateY(-20px)';
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, 500);
     }, 6000);
-}    
+            }
