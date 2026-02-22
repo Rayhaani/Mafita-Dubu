@@ -167,21 +167,23 @@ function globalSearchMotsi(mode) {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    // MATAKI NA 1: Kada mu kashe Overlay tukuna don hana ganin Global Market (Flash)
-                    // Muna kunna Loading Screen a samansa
+                    // 1. Nuna Loading a saman Overlay
                     if(loading) loading.style.display = 'flex';
                     
-                    // MATAKI NA 2: Adana Location don amfani a Results Page
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
                     localStorage.setItem('user_lat', lat);
                     localStorage.setItem('user_lon', lon);
 
-                    // MATAKI NA 3: Wucewa zuwa Results Page
-                    // Muna amfani da location.replace don gudun flash
-                    setTimeout(() => { 
-                        window.location.replace("results.html?view=nearme");
-                    }, 2000);
+                    // 2. Jira kadan sannan a dusashe shafin (Fade Out)
+                    setTimeout(() => {
+                        document.body.classList.add('fade-out-active');
+                        
+                        // 3. Wucewa zuwa Results Page
+                        setTimeout(() => { 
+                            window.location.replace("results.html?view=nearme");
+                        }, 800); 
+                    }, 1500);
                 },
                 (error) => { 
                     showGpsToast(); 
@@ -190,13 +192,16 @@ function globalSearchMotsi(mode) {
             );
         }
     } else {
-        // Idan bincike ne na Global
+        // Global Search Transition
         if(loading) loading.style.display = 'flex';
         setTimeout(() => {
-            window.location.href = 'atamfa.html';
-        }, 2000);
+            document.body.classList.add('fade-out-active');
+            setTimeout(() => {
+                window.location.href = 'atamfa.html';
+            }, 800);
+        }, 1500);
     }
-}
+                    }
 
 
 
