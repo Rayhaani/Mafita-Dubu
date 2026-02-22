@@ -168,7 +168,8 @@
     </div>
 
     <script>
-// 1. Lissafa lokacin badges (Karka taba wannan)
+        
+// 1. Lissafa lokacin badges (An gyara shi ya zama guda daya)
 function updateDurations() {
     const badges = document.querySelectorAll('.duration-badge');
     badges.forEach(badge => {
@@ -180,49 +181,85 @@ function updateDurations() {
     });
 }
 
-// 1. Lissafa lokacin badges
-function updateDurations() {
-    const badges = document.querySelectorAll('.duration-badge');
-    badges.forEach(badge => {
-        const joinDate = new Date(badge.getAttribute('data-join-date'));
-        const diffTime = Math.abs(new Date() - joinDate);
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-        if (diffDays === 0) badge.textContent = "New";
-        else badge.textContent = diffDays + " Days";
-    });
-}
-
-// 2. ELITE DATABASE (Fadaɗaɗɗen lissafin hotuna)
+// 2. ELITE DATABASE (Kayan Gidajenmu)
 const kayanGidajenmu = {
-    // Underwear & Accessories
     "bra": "https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=500",
     "woman bra": "https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=500",
     "woman panties": "https://images.unsplash.com/photo-1610450949065-1f280957ec66?w=500",
-    
-    // Fashion & Clothing
     "atamfa": "https://images.unsplash.com/photo-1582733075929-5867493b3a7d?w=500",
     "woman gown": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500",
     "men shirt": "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500",
     "men trousers": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500",
-    
-    // Beauty & Cosmetics
     "cosmetics": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500",
     "perfumes": "https://images.unsplash.com/photo-1541643600914-78b084683601?w=500",
     "body cream": "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=500",
     "makeup kit": "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=500",
-    
-    // Shoes & Bags
     "shoes": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500",
     "woman shoes": "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=500",
-    
-    // Electronics & Others
     "electronics": "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=500",
     "smartphones": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500",
     "laptops": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500",
-    
-    // WANNAN SHINE NA AI CAMERA (Karka taba wannan)
     "scanned item": localStorage.getItem('user_captured_image')
-};   
+};
+
+// 3. PRICE DATABASE (Farashi)
+const priceDatabase = {
+    "shoes": { min: 5000, max: 45000 },
+    "watch": { min: 3500, max: 120000 },
+    "bra": { min: 1500, max: 8500 },
+    "cosmetics": { min: 2000, max: 25000 },
+    "atamfa": { min: 4500, max: 95000 },
+    "electronics": { min: 15000, max: 500000 },
+    "default": { min: 2500, max: 50000 }
+};
+
+// 4. MASTER SEARCH LOGIC (Action)
+document.addEventListener('DOMContentLoaded', () => {
+    updateDurations();
+    
+    const searchWord = localStorage.getItem('currentSearch')?.toLowerCase().trim() || "atamfa";
+    const capturedImage = localStorage.getItem('user_captured_image');
+    
+    let hotonDaZamuSaka = null;
+    if (searchWord === "scanned item" && capturedImage) {
+        hotonDaZamuSaka = capturedImage;
+    } else if (kayanGidajenmu[searchWord]) {
+        hotonDaZamuSaka = kayanGidajenmu[searchWord];
+    }
+
+    const productCards = document.querySelectorAll('.product-card');
+    const garuruwa = ["Kano, Kwari", "Lagos, Balogun", "Abuja, Wuse", "Kaduna, Gumi", "Onitsha, Main"];
+
+    productCards.forEach((card, index) => {
+        // A. Sauya Hoto
+        if (hotonDaZamuSaka) {
+            const img = card.querySelector('img');
+            if (img) img.src = hotonDaZamuSaka;
+        }
+
+        // B. Real Price Generator
+        const priceTag = card.querySelector('.p-price');
+        if (priceTag) {
+            const range = priceDatabase[searchWord] || priceDatabase["default"];
+            const randomPrice = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
+            priceTag.innerText = "₦" + randomPrice.toLocaleString();
+        }
+
+        // C. Location (Gari) maimakon Nisa
+        const locLine = card.querySelector('.loc-line');
+        if (locLine) {
+            const randomGari = garuruwa[Math.floor(Math.random() * garuruwa.length)];
+            locLine.innerHTML = `<i class="fa-solid fa-location-dot text-red-600"></i> ${randomGari} Market`;
+        }
+        
+        // D. Sauya Sunan Kaya
+        const pName = card.querySelector('.p-name');
+        if (pName && searchWord !== "scanned item") {
+            pName.innerText = searchWord.toUpperCase() + " ELITE SELECTION";
+        }
+    });
+});
+    
         
     </script>
 </body>
