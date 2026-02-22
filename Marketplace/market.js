@@ -411,29 +411,20 @@ function startRegistration(type) {
 
 function showGpsToast() {
     const toast = document.getElementById('gps-toast');
-    const sound = document.getElementById('toast-sound');
-    
     if (!toast) return;
 
-    // Kunna Sauti
-    if (sound) {
-        sound.currentTime = 0;
-        sound.play().catch(() => {});
-    }
-
-    // Nuna shi da kyau (Slide down)
     toast.style.display = 'block';
-    setTimeout(() => {
+    // Nan take ya bayyana ba tare da jiran setTimeout ba
+    requestAnimationFrame(() => {
         toast.style.opacity = '1';
-        toast.style.transform = 'translateX(-50%) translateY(10px)'; 
-    }, 10);
+        toast.style.transform = 'translateX(-50%) translateY(15px)'; 
+    });
     
-    // Bace bayan sakan 6
+    if ("vibrate" in navigator) navigator.vibrate(200);
+
     setTimeout(() => {
         toast.style.opacity = '0';
-        toast.style.transform = 'translateX(-50%) translateY(-20px)';
-        setTimeout(() => {
-            toast.style.display = 'none';
-        }, 500);
-    }, 6000);
-            }
+        toast.style.transform = 'translateX(-50%) translateY(0px)';
+        setTimeout(() => { toast.style.display = 'none'; }, 500);
+    }, 5000);
+}
