@@ -1,4 +1,4 @@
-let typingTimer;
+  let typingTimer;
 const doneTypingInterval = 3000;
 let sliderPos = 0; 
 let isPaused = false;
@@ -26,7 +26,7 @@ function startProfessionalScroll() {
 }
 window.onload = () => setTimeout(startProfessionalScroll, 3000);
 
-// 2. SEARCH ACTIONS
+// 2. SEARCH & OVERLAY ACTIONS
 function manualSearch() {
     const input = document.getElementById('market-search');
     if (!input) return;
@@ -95,14 +95,16 @@ function closeSearch() {
     }
 }
 
-// 3. GLOBAL SEARCH MOTSI (GYARARRE SOSAI)
+// 3. GLOBAL SEARCH MOTSI (ULTRA FIX)
 function globalSearchMotsi(type) {
     const overlay = document.getElementById('search-overlay');
     const searchTerm = document.getElementById('market-search').value;
 
     if (type === 'near_me') {
         if (navigator.geolocation) {
-            // Mun saka timeout na sakan 5 don kada ya tsaya cak idan GPS a kashe yake
+            // Tabbatar mu rufe dukkan watch idan akwai don kada ya daskare
+            if (watchID) navigator.geolocation.clearWatch(watchID);
+
             navigator.geolocation.getCurrentPosition((position) => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
@@ -110,20 +112,20 @@ function globalSearchMotsi(type) {
                     window.location.href = `results.html?view=nearme&lat=${lat}&lon=${lon}`;
                 }, 1000);
             }, (error) => {
-                // Idan an samu error, rufe overlay nan take
+                // MUHIMMI: Rufe overlay nan take domin a ga notification
                 if (overlay) {
-                    overlay.style.display = 'none';
                     overlay.classList.remove('active');
+                    overlay.style.display = 'none';
                 }
-                // Nuna sanarwar GPS Required
+                // Nuna sanarwar GPS
                 showGpsToast();
             }, { 
                 enableHighAccuracy: true, 
-                timeout: 5000, 
+                timeout: 5000, // Idan ya kai sakan 5 bai samu location ba, zai bada error
                 maximumAge: 0 
             });
         } else {
-            alert("Browser dinka ba ta da GPS support.");
+            alert("Wayarka ba ta da GPS.");
         }
     } 
     else if (type === 'global') {
@@ -138,26 +140,29 @@ function globalSearchMotsi(type) {
     }
 }
 
-// 4. GPS NOTIFICATION
+// 4. GPS TOAST NOTIFICATION
 function showGpsToast() {
     const toast = document.getElementById('gps-toast');
     if (!toast) return;
+
+    // Reset styles don ya fito koda an danna sau 100
     toast.style.display = 'block';
-    // Restart animation
     toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(-20px)';
+
     setTimeout(() => { 
         toast.style.opacity = '1'; 
         toast.style.transform = 'translateX(-50%) translateY(10px)'; 
-    }, 10);
+    }, 50);
     
-    // Yana bacewa bayan sakan 6
+    // Bace bayan sakan 6
     setTimeout(() => {
         toast.style.opacity = '0';
         setTimeout(() => { toast.style.display = 'none'; }, 500);
     }, 6000);
 }
 
-// 5. AI CAMERA & GALLERY
+// 5. CAMERA & AI HANDLING
 function openAICamera() {
     const existing = document.getElementById('ai-sheet');
     if(existing) existing.remove();
@@ -200,7 +205,37 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-// 6. DISTANCE CALCULATION
+// 6. NEAR YOU SEARCH LOGIC
+function nearYouSearch() {
+    const resultsPage = document.getElementById('near-me-results');
+    const listContainer = document.getElementById('vendors-list');
+    const errorState = document.getElementById('gps-error-state');
+
+    if (watchID) navigator.geolocation.clearWatch(watchID);
+
+    watchID = navigator.geolocation.watchPosition((pos) => {
+        const userLat = pos.coords.latitude;
+        const userLon = pos.coords.longitude;
+
+        let nearbyVendors = vendorsDatabase.map(vendor => {
+            const distance = lissafaNisa(userLat, userLon, vendor.lat, vendor.lon);
+            return { ...vendor, distance: distance };
+        }).sort((a, b) => a.distance - b.distance);
+
+        if (resultsPage) resultsPage.style.display = 'flex';
+        if (listContainer) {
+            listContainer.style.display = 'block';
+            displayNearbyVendors(nearbyVendors);
+        }
+        if (errorState) errorState.style.display = 'none';
+        
+    }, (err) => {
+        if (resultsPage) resultsPage.style.display = 'flex';
+        if (listContainer) listContainer.style.display = 'none';
+        if (errorState) errorState.style.display = 'flex';
+    }, { enableHighAccuracy: true, timeout: 5000 });
+}
+
 function lissafaNisa(lat1, lon1, lat2, lon2) {
     const R = 6371; 
     const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -211,3 +246,31 @@ function lissafaNisa(lat1, lon1, lat2, lon2) {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c; 
 }
+
+let vendorsDatabase = [
+    { name: "Al-Amin Pharmacy", lat: 10.5105, lon: 7.4165, items: ["medicine"] },
+    { name: "Musa Bread & Butter", lat: 10.5200, lon: 7.4200, items: ["bread"] },
+    { name: "Fatima Fashion Home", lat: 10.4900, lon: 7.4000, items: ["gown"] }
+];
+
+function displayNearbyVendors(nearbyVendors) {
+    const listContainer = document.getElementById('vendors-list');
+    if(!listContainer) return;
+    listContainer.innerHTML = '';
+    nearbyVendors.forEach(v => {
+        const card = `<div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #eee; background: white; border-radius: 12px; margin-bottom: 10px;">
+                <div style="display:flex; align-items:center; gap: 15px;">
+                    <div style="width:50px; height:50px; background:#e9ecef; border-radius:50%; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-shop"></i></div>
+                    <div><h4 style="margin:0;">${v.name}</h4><p style="margin:0; font-size:12px;">${v.distance.toFixed(2)} km away</p></div>
+                </div>
+                <button style="padding:8px 15px; background:#007bff; color:white; border:none; border-radius:20px;">Visit</button>
+            </div>`;
+        listContainer.innerHTML += card;
+    });
+}
+
+function closeResults() {
+    const res = document.getElementById('near-me-results');
+    if(res) res.style.display = 'none';
+        }
+        
