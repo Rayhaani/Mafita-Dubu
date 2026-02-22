@@ -159,50 +159,72 @@ function startAISimulation(file) {
     reader.readAsDataURL(file);
 }
 
-function globalSearchMotsi(mode) {
+async function globalSearchMotsi(mode) {
     const overlay = document.getElementById('search-overlay');
     const loading = document.getElementById('ai-loading-screen');
 
     if (mode === 'near_me') {
+        // 1. Duba matsayin izini (Permission Status) tun kafin komai
+        try {
+            const status = await navigator.permissions.query({ name: 'geolocation' });
+            
+            // Idan an riga an ba da izini, mu wuce kai tsaye ba tare da nuna Toast ba
+            if (status.state === 'granted') {
+                proceedToResults();
+            } else {
+                // Idan ba a ba da izini ba ko kuma yana jiran tambaya (prompt)
+                startLocationProcess();
+            }
+        } catch (e) {
+            // Idan browser ba ta tallafa wa permissions query, mu gwada processing kai tsaye
+            startLocationProcess();
+        }
+    } else {
+        // Global Search
+        if(loading) loading.style.display = 'flex';
+        setTimeout(() => {
+            document.body.classList.add('fade-out-active');
+            setTimeout(() => { window.location.href = 'atamfa.html'; }, 800);
+        }, 1500);
+    }
+
+    // --- INTERNAL HELPER FUNCTIONS ---
+
+    function startLocationProcess() {
         if (navigator.geolocation) {
+            // Nuna Toast kawai idan muna buƙatar tunatar da mai amfani ya duba "Permission Prompt"
+            showGpsToast(); 
+            
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    // 1. Nuna Loading a saman Overlay
-                    if(loading) loading.style.display = 'flex';
-                    
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-                    localStorage.setItem('user_lat', lat);
-                    localStorage.setItem('user_lon', lon);
-
-                    // 2. Jira kadan sannan a dusashe shafin (Fade Out)
-                    setTimeout(() => {
-                        document.body.classList.add('fade-out-active');
-                        
-                        // 3. Wucewa zuwa Results Page
-                        setTimeout(() => { 
-                            window.location.replace("results.html?view=nearme");
-                        }, 800); 
-                    }, 1500);
+                    proceedToResults(position);
                 },
-                (error) => { 
-                    showGpsToast(); 
+                (error) => {
+                    console.log("GPS Error: ", error.message);
+                    // Mun riga mun nuna toast a sama
                 },
                 { enableHighAccuracy: false, timeout: 5000 }
             );
         }
-    } else {
-        // Global Search Transition
+    }
+
+    function proceedToResults(position) {
         if(loading) loading.style.display = 'flex';
+        
+        if (position) {
+            localStorage.setItem('user_lat', position.coords.latitude);
+            localStorage.setItem('user_lon', position.coords.longitude);
+        }
+
+        // Force Transition
         setTimeout(() => {
             document.body.classList.add('fade-out-active');
-            setTimeout(() => {
-                window.location.href = 'atamfa.html';
+            setTimeout(() => { 
+                window.location.replace("results.html?view=nearme");
             }, 800);
-        }, 1500);
+        }, 1000);
     }
-                    }
-
+    }
 
 
  let watchID = null; // Wannan zai rike tracking din
