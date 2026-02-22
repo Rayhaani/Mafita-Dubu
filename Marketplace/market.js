@@ -4,6 +4,18 @@ let sliderPos = 0;
 let isPaused = false;
 let direction = 1;
 
+// Fade-out Style
+const style = document.createElement('style');
+style.innerHTML = `
+    .fade-out-active {
+        opacity: 0 !important;
+        transition: opacity 0.8s ease-out !important;
+        pointer-events: none !important;
+    }
+`;
+document.head.appendChild(style);
+
+
 // 1. GYARAN SLIDER (Auto Scroll)
 function startProfessionalScroll() {
     const searchBar = document.getElementById('market-search');
@@ -411,20 +423,29 @@ function startRegistration(type) {
 
 function showGpsToast() {
     const toast = document.getElementById('gps-toast');
+    const sound = document.getElementById('toast-sound');
+    
     if (!toast) return;
 
-    toast.style.display = 'block';
-    // Nan take ya bayyana ba tare da jiran setTimeout ba
-    requestAnimationFrame(() => {
-        toast.style.opacity = '1';
-        toast.style.transform = 'translateX(-50%) translateY(15px)'; 
-    });
-    
-    if ("vibrate" in navigator) navigator.vibrate(200);
+    // Kunna Sauti
+    if (sound) {
+        sound.currentTime = 0;
+        sound.play().catch(() => {});
+    }
 
+    // Nuna shi da kyau (Slide down)
+    toast.style.display = 'block';
+    setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(10px)'; 
+    }, 10);
+    
+    // Bace bayan sakan 6
     setTimeout(() => {
         toast.style.opacity = '0';
-        toast.style.transform = 'translateX(-50%) translateY(0px)';
-        setTimeout(() => { toast.style.display = 'none'; }, 500);
-    }, 5000);
+        toast.style.transform = 'translateX(-50%) translateY(-20px)';
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, 500);
+    }, 6000);
 }
