@@ -103,9 +103,9 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
-        <script>
+<script>
     
-       // 1. Firebase Configuration
+// 1. Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
   authDomain: "global-market-admin.firebaseapp.com",
@@ -119,6 +119,20 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+ SCRIPT NA LODA KAYA (Upload Test Data)
+async function uploadTestData() {
+    const testProducts = [
+        { name: "Super Wax Elite", price: 15500, category: "atamfa", img: "https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=800", location: "Kano, NG", reviews: "120" },
+        { name: "Sukur Silk Luxury", price: 18000, category: "atamfa", img: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=800", location: "Kaduna, NG", reviews: "85" },
+        { name: "Hollandis Premium", price: 24500, category: "atamfa", img: "https://images.unsplash.com/photo-1582733075929-5867493b3a7d?w=800", location: "Lagos, NG", reviews: "210" },
+        { name: "Viscoz Floral Print", price: 12000, category: "atamfa", img: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=800", location: "Kano, NG", reviews: "50" }
+    ];
+    for (const p of testProducts) { await db.collection('products').add(p); }
+    alert("Kaya sun hau! Refresh shafin yanzu.");
+}
+// Don loda kayan, ka cire alamar '//' a layin kasa, sannan kayi save/refresh:
+// uploadTestData();
+
 // 2. Duba abinda aka bincika
 const searchWord = localStorage.getItem('currentSearch')?.toLowerCase().trim() || "atamfa";
 
@@ -126,7 +140,6 @@ async function fetchRealProducts() {
     const grid = document.querySelector('.main-container');
     const searchWord = localStorage.getItem('currentSearch')?.toLowerCase().trim() || "atamfa";
     
-    // Share tsofaffin katinan karya
     grid.innerHTML = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
 
     try {
@@ -137,8 +150,6 @@ async function fetchRealProducts() {
             const p = doc.data();
             const colId = count % 2 === 0 ? 'col1' : 'col2';
             const column = document.getElementById(colId);
-            
-            // Amfani da exact template dinka
             const cardClass = count === 0 ? "first-box" : "standard-box";
             
             const cardHTML = `
@@ -162,33 +173,10 @@ async function fetchRealProducts() {
             <button class="btn-buy" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')">VIEW PRODUCT</button>
         </div>
     </div>`;
-            
-            
             column.insertAdjacentHTML('beforeend', cardHTML);
             count++;
         });
     } catch (e) { console.error(e); }
-    }
-                
-
-function renderProduct(p, colId) {
-    const column = document.getElementById(colId);
-    const cardHTML = `
-        <div class="product-card standard-box">
-            <div class="img-area"><img src="${p.img}"></div>
-            <div class="details-area">
-                <p class="p-name">${p.name}</p>
-                <div class="price-row">
-                    <span class="p-price">₦${p.price.toLocaleString()}</span>
-                </div>
-                <div class="trust-section">
-                    <div class="trust-line"><i class="fa-solid fa-circle-check verified-icon"></i>Verified Vendor</div>
-                    <div class="loc-line"><i class="fa-solid fa-location-dot text-red-600"></i>${p.location || 'Kano'}</div>
-                </div>
-                <button class="btn-buy" onclick="orderViaWhatsApp('${p.name}', ${p.price})">BUY NOW</button>
-            </div>
-        </div>`;
-    column.insertAdjacentHTML('beforeend', cardHTML);
 }
 
 function orderViaWhatsApp(name, price) {
@@ -196,22 +184,13 @@ function orderViaWhatsApp(name, price) {
     window.open(`https://wa.me/2340000000000?text=${encodeURIComponent(msg)}`);
 }
 
-// Kunna binciken
 document.addEventListener('DOMContentLoaded', fetchRealProducts);
 
 function goToProduct(name, price, img) {
-    // Adana bayanan kaya domin products-page.html ya gani
-    const productDetails = {
-        name: name,
-        price: price,
-        img: img
-    };
+    const productDetails = { name: name, price: price, img: img };
     localStorage.setItem('selectedProduct', JSON.stringify(productDetails));
-    
-    // Kai mutum zuwa shafin products-page.html
     window.location.href = 'products-page.html';
 }
-            
-    </script>
+</script>
 </body>
-  </html>
+</html>
