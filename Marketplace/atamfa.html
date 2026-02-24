@@ -143,7 +143,14 @@ async function fetchRealProducts() {
     grid.innerHTML = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
 
     try {
-        const snapshot = await db.collection('products').where('category', '==', searchWord).get();
+        // Wannan zai nuna dukkan kaya idan binciken bai samar da komai ba
+let snapshot = await db.collection('products').where('category', '==', searchWord).get();
+
+if (snapshot.empty) {
+    // Idan babu komai a karkashin "atamfa", to ya nuna dukkan kayan dake ciki
+    snapshot = await db.collection('products').limit(10).get();
+}
+        
 
         let count = 0;
         snapshot.forEach(doc => {
