@@ -142,24 +142,28 @@ async function fetchRealProducts() {
             const cardClass = count === 0 ? "first-box" : "standard-box";
             
             const cardHTML = `
-                <div class="product-card ${cardClass}">
-                    <div class="img-area"><img src="${p.img}" onerror="this.src='https://via.placeholder.com/300'"></div>
-                    <div class="details-area">
-                        <p class="p-name">${p.name.toUpperCase()}</p>
-                        <div class="price-row">
-                            <span class="p-price">₦${Number(p.price).toLocaleString()}</span>
-                            <div class="stars-box">
-                                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                                <span class="review-count">(${p.reviews || '0'})</span>
-                            </div>
-                        </div>
-                        <div class="trust-section">
-                            <div class="trust-line"><i class="fa-solid fa-circle-check verified-icon"></i>TrustID Verified | ${getDays(p.date)}</div>
-                            <div class="loc-line"><i class="fa-solid fa-location-dot text-red-600"></i>${p.location}</div>
-                        </div>
-                        <button class="btn-buy" onclick="orderViaWhatsApp('${p.name}', '${p.price}', '${p.vendorPhone}')">BUY NOW</button>
-                    </div>
-                </div>`;
+    <div class="product-card ${cardClass}">
+        <div class="img-area" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">
+            <img src="${p.img}" onerror="this.src='https://via.placeholder.com/300'">
+        </div>
+        <div class="details-area">
+            <p class="p-name">${p.name.toUpperCase()}</p>
+            <div class="price-row">
+                <span class="p-price">₦${Number(p.price).toLocaleString()}</span>
+                <div class="stars-box">
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <span class="review-count">(${p.reviews || '0'})</span>
+                </div>
+            </div>
+            <div class="trust-section">
+                <div class="trust-line"><i class="fa-solid fa-circle-check verified-icon"></i>TrustID Verified</div>
+                <div class="loc-line"><i class="fa-solid fa-location-dot text-red-600"></i>${p.location}</div>
+            </div>
+            <button class="btn-buy" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')">VIEW PRODUCT</button>
+        </div>
+    </div>`;
+            
+            
             column.insertAdjacentHTML('beforeend', cardHTML);
             count++;
         });
@@ -194,6 +198,19 @@ function orderViaWhatsApp(name, price) {
 
 // Kunna binciken
 document.addEventListener('DOMContentLoaded', fetchRealProducts);
+
+function goToProduct(name, price, img) {
+    // Adana bayanan kaya domin products-page.html ya gani
+    const productDetails = {
+        name: name,
+        price: price,
+        img: img
+    };
+    localStorage.setItem('selectedProduct', JSON.stringify(productDetails));
+    
+    // Kai mutum zuwa shafin products-page.html
+    window.location.href = 'products-page.html';
+}
             
     </script>
 </body>
