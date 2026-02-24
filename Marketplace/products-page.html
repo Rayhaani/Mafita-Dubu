@@ -52,11 +52,12 @@
 </div>
 
 <div class="content-layer">
-    <div class="hero-container">
-        <div class="hero-slider no-scrollbar">
-            <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200" onclick="openFS(['https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200','https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=1200'])">
-        </div>
+  <div class="hero-container">
+    <div class="hero-slider no-scrollbar" id="main-slider">
+        <img src="" id="dynamic-img" onclick="openFS([this.src])">
     </div>
+  </div>
+    
 
     <div class="floating-card">
         <div class="flex justify-between items-start">
@@ -156,6 +157,34 @@ function showStack() {
     document.getElementById('seeAllBox').style.display = 'none';
     document.getElementById('tripleStack').style.display = 'block';
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Dauko bayanan daga localStorage
+    const data = localStorage.getItem('selectedProduct');
+    
+    if (data) {
+        const product = JSON.parse(data);
+        
+        // 2. Saka hoton Atamfar a babban Slider
+        const mainImg = document.getElementById('dynamic-img');
+        if(mainImg) mainImg.src = product.img;
+        
+        // 3. Saka hoton a Cropped View (Visual Proof)
+        const croppedImg = document.querySelector('.cropped-view img');
+        if(croppedImg) croppedImg.src = product.img;
+        
+        // 4. Saka sunan Atamfar
+        document.querySelector('h1').innerText = product.name;
+        
+        // 5. Saka farashin Atamfar
+        document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
+        
+        // 6. Gyara hotunan dake cikin "See All" stack
+        const stackImgs = document.querySelectorAll('#tripleStack img');
+        stackImgs.forEach(img => img.src = product.img);
+    }
+});
+    
 </script>
 </body>
               </html>
