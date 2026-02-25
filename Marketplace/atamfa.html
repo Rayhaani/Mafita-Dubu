@@ -60,10 +60,9 @@
             background: white; border-radius: 14px; overflow: hidden;
             display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            position: relative; /* Added for positioning tags */
+            position: relative;
         }
 
-        /* NEW FEATURES STYLING */
         .hot-tag {
             position: absolute; top: 8px; left: 8px;
             background: #FF3131; color: white;
@@ -94,14 +93,12 @@
         }
         .product-card:hover .ghost-talk { transform: translateY(0); }
 
-        /* IMAGE AREA */
         .first-box .img-area { height: 260px !important; }
         .standard-box .img-area { height: 160px; }
         .img-area { width: 100%; position: relative; background: #f3f3f3; overflow: hidden; }
         .img-area img { width: 100%; height: 100%; object-fit: cover; display: block; transition: 0.5s; }
         .product-card:hover img { transform: scale(1.1); }
 
-        /* DETAILS AREA */
         .details-area { padding: 8px; display: flex; flex-direction: column; gap: 2px; }
         .p-name { font-size: 10px; color: #555; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0 !important; letter-spacing: 0.2px; }
         .p-price { font-size: 15px; font-weight: 800; color: var(--dark-chocolate); margin-bottom: 4px; display: block; line-height: 1; }
@@ -144,34 +141,9 @@ const firebaseConfig = {
   appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
 };
 
-// 1. Dole ne wannan ya zo farko
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-const sabbinKaya = [
-    { name: "Brocade Superior", price: 25000, location: "Kano", status: "online", reviews: "210", img: "https://images.unsplash.com/photo-1605341662540-3343d0476484?q=80&w=1480&auto=format&fit=crop", shout: "Gaskiya wannan kalar sarautace, karka bari a baka labari!" },
-    { name: "Getzner Gold", price: 45000, location: "Kaduna", status: "offline", reviews: "95", img: "https://images.unsplash.com/photo-1590736962031-299f24204d1c?q=80&w=1335&auto=format&fit=crop", shout: "An kawo ta yanzu daga Dubai, guda 5 kacal suka rage!" },
-    { name: "Super Wax Star", price: 12500, location: "Lagos", status: "online", reviews: "180", img: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=1480&auto=format&fit=crop", shout: "Free delivery idan ka sayi guda biyu yau!" },
-    { name: "Swiss Voile", price: 30000, location: "Abuja", status: "online", reviews: "120", img: "https://images.unsplash.com/photo-1524234107056-1c1f48f64ab8?q=80&w=1374&auto=format&fit=crop", shout: "Wannan ita ce kalar da aka fi yayi a bikin satin nan." },
-    { name: "Atamfa Silk", price: 15000, location: "Kano", status: "offline", reviews: "75", img: "https://images.unsplash.com/photo-1589156206699-dec21e05a062?q=80&w=1374&auto=format&fit=crop", shout: "Kalli yadda take kyalli, ba za ta taba fita kala ba." },
-    { name: "Shadda Medium", price: 18000, location: "Katsina", status: "online", reviews: "50", img: "https://images.unsplash.com/photo-1621184455862-c163dfb30e0f?q=80&w=1374&auto=format&fit=crop", shout: "Ragi na musamman ga mutum 3 na farko!" },
-    { name: "Elite Cotton", price: 9500, location: "Jos", status: "online", reviews: "310", img: "https://images.unsplash.com/photo-1597101014035-da736c93627f?q=80&w=1471&auto=format&fit=crop", shout: "Inganci a farashi mai sauki. Taba ka gani!" }
-];
-
-async function yiBulkUpload() {
-    console.log("Aiki ya fara...");
-    for (const kaya of sabbinKaya) {
-        try {
-            await db.collection('products').add(kaya);
-            console.log("An saka: " + kaya.name);
-        } catch (error) {
-            console.error("Matsala a: " + kaya.name, error);
-        }
-    }
-    alert("Kaya 7 sun shiga database yanzu! Karka sake refreshing har sai ka rufe layin upload.");
-}
-
-// --- SAURAN CODE DIN KA NA CI GABA DA AIKI ---
 const shouts = [
     "Wlh wannan kalar tafi tafiya!",
     "Zan rage maka ₦500 idan ka siya!",
@@ -181,12 +153,15 @@ const shouts = [
 ];
  
 async function fetchRealProducts() {
-    const grid = document.querySelector('.main-container');
+    const grid = document.getElementById('product-grid');
     grid.innerHTML = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
 
     try {
         let snapshot = await db.collection('products').get();
-        if (snapshot.empty) return;
+        if (snapshot.empty) {
+            console.log("Database fanko ne.");
+            return;
+        }
 
         let count = 0;
         snapshot.forEach(doc => {
@@ -194,7 +169,9 @@ async function fetchRealProducts() {
             const colId = count % 2 === 0 ? 'col1' : 'col2';
             const column = document.getElementById(colId);
             const cardClass = count % 2 === 0 ? "first-box" : "standard-box";
-            const randomShout = shouts[Math.floor(Math.random() * shouts.length)];
+            
+            // Amfani da "shout" daga database idan akwai, idan babu a dauki random
+            const displayShout = p.shout || shouts[Math.floor(Math.random() * shouts.length)];
             
             const cardHTML = `
                 <div class="product-card ${cardClass}" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">
@@ -208,7 +185,7 @@ async function fetchRealProducts() {
 
                         <div class="ghost-talk">
                            <i class="fa-solid fa-bullhorn" style="font-size:12px; margin-bottom:4px;"></i><br>
-                           "${randomShout}"
+                           "${displayShout}"
                         </div>
 
                         <img src="${p.img}" onerror="this.src='https://via.placeholder.com/300'">
@@ -243,10 +220,11 @@ async function fetchRealProducts() {
             column.insertAdjacentHTML('beforeend', cardHTML);
             count++;
         });
-    } catch (e) { console.error(e); }
+    } catch (e) { console.error("Error fetching products: ", e); }
 }
 
 document.addEventListener('DOMContentLoaded', fetchRealProducts);
+
 function goToProduct(name, price, img) {
     localStorage.setItem('selectedProduct', JSON.stringify({name, price, img}));
     window.location.href = 'products-page.html';
