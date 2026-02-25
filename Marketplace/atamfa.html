@@ -138,19 +138,23 @@ const searchWord = localStorage.getItem('currentSearch')?.toLowerCase().trim() |
 
 async function fetchRealProducts() {
     const grid = document.querySelector('.main-container');
-    const searchWord = localStorage.getItem('currentSearch')?.toLowerCase().trim() || "atamfa";
-    
     grid.innerHTML = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
 
     try {
-        // Wannan zai nuna dukkan kaya idan binciken bai samar da komai ba
-let snapshot = await db.collection('products').where('category', '==', searchWord).get();
+        // 1. Gwada neman category din da aka bincika
+        let snapshot = await db.collection('products').where('category', '==', searchWord).get();
 
-if (snapshot.empty) {
-    // Idan babu komai a karkashin "atamfa", to ya nuna dukkan kayan dake ciki
-    snapshot = await db.collection('products').limit(10).get();
-}
-        
+        // 2. Idan babu komai a category din, dauko komai dake ciki (Gaba daya)
+        if (snapshot.empty) {
+            snapshot = await db.collection('products').get();
+        }
+
+        // 3. Idan har yanzu empty yake, to lallai babu komai a babban Collection din 'products'
+        if (snapshot.empty) {
+            alert("Sako daga Database: Babu komai a babban Collection din 'products'. Duba Firebase dinka!");
+            grid.innerHTML = "<p style='text-align:center; width:100%; padding:20px;'>Database din empty yake faufau!</p>";
+            return;
+        }
 
         let count = 0;
         snapshot.forEach(doc => {
@@ -160,31 +164,35 @@ if (snapshot.empty) {
             const cardClass = count === 0 ? "first-box" : "standard-box";
             
             const cardHTML = `
-    <div class="product-card ${cardClass}">
-        <div class="img-area" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">
-            <img src="${p.img}" onerror="this.src='https://via.placeholder.com/300'">
-        </div>
-        <div class="details-area">
-            <p class="p-name">${p.name.toUpperCase()}</p>
-            <div class="price-row">
-                <span class="p-price">₦${Number(p.price).toLocaleString()}</span>
-                <div class="stars-box">
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <span class="review-count">(${p.reviews || '0'})</span>
-                </div>
-            </div>
-            <div class="trust-section">
-                <div class="trust-line"><i class="fa-solid fa-circle-check verified-icon"></i>TrustID Verified</div>
-                <div class="loc-line"><i class="fa-solid fa-location-dot text-red-600"></i>${p.location}</div>
-            </div>
-            <button class="btn-buy" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')">VIEW PRODUCT</button>
-        </div>
-    </div>`;
+                <div class="product-card ${cardClass}">
+                    <div class="img-area" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">
+                        <img src="${p.img}" onerror="this.src='https://via.placeholder.com/300'">
+                    </div>
+                    <div class="details-area">
+                        <p class="p-name">${p.name.toUpperCase()}</p>
+                        <div class="price-row">
+                            <span class="p-price">₦${Number(p.price).toLocaleString()}</span>
+                            <div class="stars-box">
+                                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                                <span class="review-count">(${p.reviews || '0'})</span>
+                            </div>
+                        </div>
+                        <div class="trust-section">
+                            <div class="trust-line"><i class="fa-solid fa-circle-check verified-icon"></i>TrustID Verified</div>
+                            <div class="loc-line"><i class="fa-solid fa-location-dot text-red-600"></i>${p.location || 'Kano'}</div>
+                        </div>
+                        <button class="btn-buy" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')">VIEW PRODUCT</button>
+                    </div>
+                </div>`;
             column.insertAdjacentHTML('beforeend', cardHTML);
             count++;
         });
-    } catch (e) { console.error(e); }
+    } catch (e) { 
+        alert("Matsalar Firebase: " + e.message);
+        grid.innerHTML = "<p style='color:red; padding:20px;'>Error: " + e.message + "</p>";
+    }
 }
+    
 
 function orderViaWhatsApp(name, price) {
     const msg = `Sannu Vendor, ina son siyan ${name} akan farashin ₦${price}.`;
