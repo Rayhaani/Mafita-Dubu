@@ -104,7 +104,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
 <script>
-    
 // 1. Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
@@ -119,40 +118,30 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
- // SCRIPT NA LODA KAYA (Upload Test Data)
-async function uploadTestData() { ... }
+// Gwajin gaggawa: Idan ka ga wannan sakon, to code din yana aiki
+alert("Code ya fara aiki! Yanzu zai duba Database.");
+
+// SCRIPT NA LODA KAYA (Wanda aka gyara)
+async function uploadTestData() {
     const testProducts = [
         { name: "Super Wax Elite", price: 15500, category: "atamfa", img: "https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=800", location: "Kano, NG", reviews: "120" },
-        { name: "Sukur Silk Luxury", price: 18000, category: "atamfa", img: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=800", location: "Kaduna, NG", reviews: "85" },
-        { name: "Hollandis Premium", price: 24500, category: "atamfa", img: "https://images.unsplash.com/photo-1582733075929-5867493b3a7d?w=800", location: "Lagos, NG", reviews: "210" },
-        { name: "Viscoz Floral Print", price: 12000, category: "atamfa", img: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=800", location: "Kano, NG", reviews: "50" }
+        { name: "Sukur Silk Luxury", price: 18000, category: "atamfa", img: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=800", location: "Kaduna, NG", reviews: "85" }
     ];
     for (const p of testProducts) { await db.collection('products').add(p); }
     alert("Kaya sun hau! Refresh shafin yanzu.");
 }
-// Don loda kayan, ka cire alamar '//' a layin kasa, sannan kayi save/refresh:
-// uploadTestData();
-
-// 2. Duba abinda aka bincika
-const searchWord = localStorage.getItem('currentSearch')?.toLowerCase().trim() || "atamfa";
 
 async function fetchRealProducts() {
     const grid = document.querySelector('.main-container');
     grid.innerHTML = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
 
     try {
-        // 1. Gwada neman category din da aka bincika
+        // Neman dukkan kaya ba tare da category ba don gwaji
         let snapshot = await db.collection('products').get();
 
-        // 2. Idan babu komai a category din, dauko komai dake ciki (Gaba daya)
         if (snapshot.empty) {
-            snapshot = await db.collection('products').get();
-        }
-
-        // 3. Idan har yanzu empty yake, to lallai babu komai a babban Collection din 'products'
-        if (snapshot.empty) {
-            alert("Sako daga Database: Babu komai a babban Collection din 'products'. Duba Firebase dinka!");
-            grid.innerHTML = "<p style='text-align:center; width:100%; padding:20px;'>Database din empty yake faufau!</p>";
+            alert("Database din empty yake! Ka tabbata akwai 'products' collection a Firebase.");
+            grid.innerHTML = "<p style='text-align:center; width:100%; padding:20px;'>Babu komai a Database.</p>";
             return;
         }
 
@@ -189,14 +178,7 @@ async function fetchRealProducts() {
         });
     } catch (e) { 
         alert("Matsalar Firebase: " + e.message);
-        grid.innerHTML = "<p style='color:red; padding:20px;'>Error: " + e.message + "</p>";
     }
-}
-    
-
-function orderViaWhatsApp(name, price) {
-    const msg = `Sannu Vendor, ina son siyan ${name} akan farashin ₦${price}.`;
-    window.open(`https://wa.me/2340000000000?text=${encodeURIComponent(msg)}`);
 }
 
 document.addEventListener('DOMContentLoaded', fetchRealProducts);
@@ -206,6 +188,7 @@ function goToProduct(name, price, img) {
     localStorage.setItem('selectedProduct', JSON.stringify(productDetails));
     window.location.href = 'products-page.html';
 }
-</script>
+            </script>
+    
 </body>
 </html>
