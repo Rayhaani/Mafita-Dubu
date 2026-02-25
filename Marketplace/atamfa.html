@@ -144,7 +144,34 @@ const firebaseConfig = {
   appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
 };
 
-const app = firebase.initializeApp(firebaseConfig);
+    const sabbinKaya = [
+    { name: "Brocade Superior", price: 25000, location: "Kano", status: "online", reviews: "210", img: "https://images.unsplash.com/photo-1605341662540-3343d0476484?q=80&w=1480&auto=format&fit=crop", shout: "Gaskiya wannan kalar sarautace, karka bari a baka labari!" },
+    { name: "Getzner Gold", price: 45000, location: "Kaduna", status: "offline", reviews: "95", img: "https://images.unsplash.com/photo-1590736962031-299f24204d1c?q=80&w=1335&auto=format&fit=crop", shout: "An kawo ta yanzu daga Dubai, guda 5 kacal suka rage!" },
+    { name: "Super Wax Star", price: 12500, location: "Lagos", status: "online", reviews: "180", img: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=1480&auto=format&fit=crop", shout: "Free delivery idan ka sayi guda biyu yau!" },
+    { name: "Swiss Voile", price: 30000, location: "Abuja", status: "online", reviews: "120", img: "https://images.unsplash.com/photo-1524234107056-1c1f48f64ab8?q=80&w=1374&auto=format&fit=crop", shout: "Wannan ita ce kalar da aka fi yayi a bikin satin nan." },
+    { name: "Atamfa Silk", price: 15000, location: "Kano", status: "offline", reviews: "75", img: "https://images.unsplash.com/photo-1589156206699-dec21e05a062?q=80&w=1374&auto=format&fit=crop", shout: "Kalli yadda take kyalli, ba za ta taba fita kala ba." },
+    { name: "Shadda Medium", price: 18000, location: "Katsina", status: "online", reviews: "50", img: "https://images.unsplash.com/photo-1621184455862-c163dfb30e0f?q=80&w=1374&auto=format&fit=crop", shout: "Ragi na musamman ga mutum 3 na farko!" },
+    { name: "Elite Cotton", price: 9500, location: "Jos", status: "online", reviews: "310", img: "https://images.unsplash.com/photo-1597101014035-da736c93627f?q=80&w=1471&auto=format&fit=crop", shout: "Inganci a farashi mai sauki. Taba ka gani!" }
+];
+
+async function yiBulkUpload() {
+    console.log("Aiki ya fara...");
+    for (const kaya of sabbinKaya) {
+        try {
+            await db.collection('products').add(kaya);
+            console.log("An saka: " + kaya.name);
+        } catch (error) {
+            console.error("Matsala a: " + kaya.name, error);
+        }
+    }
+    alert("Kaya 7 sun shiga database yanzu!");
+}
+
+// Bude wannan idan kana son tura su, sannan ka sake rufe shi da // idan ka gama
+// yiBulkUpload();
+
+    
+    const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 // Kalaman Talla
