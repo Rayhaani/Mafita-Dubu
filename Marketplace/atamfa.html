@@ -119,8 +119,8 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
- SCRIPT NA LODA KAYA (Upload Test Data)
-async function uploadTestData() {
+ // SCRIPT NA LODA KAYA (Upload Test Data)
+async function uploadTestData() { ... }
     const testProducts = [
         { name: "Super Wax Elite", price: 15500, category: "atamfa", img: "https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=800", location: "Kano, NG", reviews: "120" },
         { name: "Sukur Silk Luxury", price: 18000, category: "atamfa", img: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=800", location: "Kaduna, NG", reviews: "85" },
@@ -142,7 +142,7 @@ async function fetchRealProducts() {
 
     try {
         // 1. Gwada neman category din da aka bincika
-        let snapshot = await db.collection('products').where('category', '==', searchWord).get();
+        let snapshot = await db.collection('products').get();
 
         // 2. Idan babu komai a category din, dauko komai dake ciki (Gaba daya)
         if (snapshot.empty) {
