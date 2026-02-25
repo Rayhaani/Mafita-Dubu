@@ -144,7 +144,11 @@ const firebaseConfig = {
   appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
 };
 
-    const sabbinKaya = [
+// 1. Dole ne wannan ya zo farko
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+const sabbinKaya = [
     { name: "Brocade Superior", price: 25000, location: "Kano", status: "online", reviews: "210", img: "https://images.unsplash.com/photo-1605341662540-3343d0476484?q=80&w=1480&auto=format&fit=crop", shout: "Gaskiya wannan kalar sarautace, karka bari a baka labari!" },
     { name: "Getzner Gold", price: 45000, location: "Kaduna", status: "offline", reviews: "95", img: "https://images.unsplash.com/photo-1590736962031-299f24204d1c?q=80&w=1335&auto=format&fit=crop", shout: "An kawo ta yanzu daga Dubai, guda 5 kacal suka rage!" },
     { name: "Super Wax Star", price: 12500, location: "Lagos", status: "online", reviews: "180", img: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=1480&auto=format&fit=crop", shout: "Free delivery idan ka sayi guda biyu yau!" },
@@ -164,17 +168,13 @@ async function yiBulkUpload() {
             console.error("Matsala a: " + kaya.name, error);
         }
     }
-    alert("Kaya 7 sun shiga database yanzu!");
+    alert("Kaya 7 sun shiga database yanzu! Karka sake refreshing har sai ka rufe layin upload.");
 }
 
-// Bude wannan idan kana son tura su, sannan ka sake rufe shi da // idan ka gama
-// yiBulkUpload();
+// 2. NA BUDE SHI! Refresh shafinka sau daya yanzu
+yiBulkUpload(); 
 
-    
-    const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-// Kalaman Talla
+// --- SAURAN CODE DIN KA NA CI GABA DA AIKI ---
 const shouts = [
     "Wlh wannan kalar tafi tafiya!",
     "Zan rage maka ₦500 idan ka siya!",
@@ -182,7 +182,7 @@ const shouts = [
     "Original ne, idan ya fita kala dawo dashi.",
     "Mutum 10 suna kallon wannan yanzu!"
 ];
-
+ 
 async function fetchRealProducts() {
     const grid = document.querySelector('.main-container');
     grid.innerHTML = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
