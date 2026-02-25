@@ -14,17 +14,21 @@
             --dark-chocolate: #1A0F0D; 
             --neon-gold: #D4AF37;
             --verified-blue: #00BAFF;
-            --dark-milk-ads: #D2C9B8; /* Dark Milk color for ads */
         }
 
-        body { background-color: var(--milk-bg); font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
+        body { 
+            background-color: var(--milk-bg); 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            overflow-x: hidden;
+        }
 
-        /* ADS SECTION - NOT STATIC (Will scroll with page) */
+        /* ADS SECTION */
         .ads-wrapper { 
             width: 100%; 
             overflow: hidden; 
-            padding: 15px 0; 
-            background: #120a09; /* Original dark background for the track area */
+            padding: 8px 0; 
+            background: transparent; 
         }
         .ads-track { 
             display: flex; 
@@ -36,52 +40,83 @@
 
         .ad-card {
             min-width: 150px; height: 160px;
-            background: var(--dark-milk-ads); /* Canja kalar background zuwa Dark Milk */
+            background: transparent; 
             border-radius: 20px; border: 1.5px solid var(--neon-gold);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            position: relative;
         }
         .ad-card i { font-size: 2rem; color: var(--neon-gold); margin-bottom: 8px; }
         .ad-card span { font-size: 0.7rem; color: var(--dark-chocolate); font-weight: 800; text-align: center; text-transform: uppercase; }
 
-        /* MASONRY GRID SYSTEM - NO CHANGES MADE */
-        .main-container { display: flex; gap: 8px; padding: 8px; align-items: flex-start; }
-        .column { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        /* MASONRY GRID SYSTEM */
+        .main-container { 
+            display: flex; 
+            gap: 10px; 
+            padding: 5px 10px; 
+            align-items: flex-start; 
+        }
+        .column { flex: 1; display: flex; flex-direction: column; gap: 10px; }
 
         .product-card {
-            background: white; border-radius: 12px; overflow: hidden;
-            display: flex; flex-direction: column; border: 0.5px solid rgba(0,0,0,0.08);
+            background: white; border-radius: 14px; overflow: hidden;
+            display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: relative; /* Added for positioning tags */
         }
 
-        .first-box .img-area { height: 320px !important; }
-        .standard-box .img-area { height: 240px; }
-
-        .img-area { width: 100%; position: relative; background: #f0f0f0; }
-        .img-area img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-        .details-area { padding: 8px; }
-        .p-name { font-size: 10.5px; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        
-        .price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-        .p-price { font-size: 14px; font-weight: 800; color: #000; }
-
-        .stars-box { display: flex; align-items: center; gap: 2px; }
-        .stars { color: #ff9900; font-size: 8px; display: flex; }
-        .review-count { font-size: 8px; color: #999; }
-
-        .trust-section {
-            background: #f9f9f9; border-radius: 8px; padding: 5px;
-            border: 0.5px solid #eee; margin-bottom: 6px;
+        /* NEW FEATURES STYLING */
+        .hot-tag {
+            position: absolute; top: 8px; left: 8px;
+            background: #FF3131; color: white;
+            font-size: 7px; font-weight: 900; padding: 2px 6px;
+            border-radius: 4px; z-index: 5; box-shadow: 0 0 10px rgba(255,49,49,0.5);
         }
-        .trust-line { display: flex; align-items: center; gap: 4px; font-size: 9px; font-weight: 700; }
-        .loc-line { display: flex; align-items: center; gap: 4px; font-size: 8.5px; color: #777; margin-top: 2px; }
-        .verified-icon { color: var(--verified-blue); font-size: 10px; }
 
-        .btn-buy {
-            background: var(--dark-chocolate); color: var(--neon-gold);
-            width: 100%; padding: 8px; border-radius: 8px; font-size: 10px;
-            font-weight: 800; border: 1.5px solid var(--neon-gold);
+        .live-dot-container {
+            position: absolute; top: 8px; right: 8px;
+            background: rgba(0,0,0,0.4); padding: 3px 6px;
+            border-radius: 20px; display: flex; align-items: center; gap: 4px; z-index: 5;
         }
+        .green-pulse {
+            width: 6px; height: 6px; background: #39FF14; border-radius: 50%;
+            position: relative;
+        }
+        .green-pulse::after {
+            content: ""; position: absolute; width: 100%; height: 100%;
+            background: #39FF14; border-radius: 50%; animation: pulse-ring 1.5s infinite;
+        }
+        @keyframes pulse-ring { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(3.5); opacity: 0; } }
+
+        .ghost-talk {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: rgba(26, 15, 13, 0.85); color: var(--neon-gold);
+            font-size: 9px; font-weight: 700; padding: 8px; text-align: center;
+            transform: translateY(100%); transition: 0.4s ease; z-index: 10;
+        }
+        .product-card:hover .ghost-talk { transform: translateY(0); }
+
+        /* IMAGE AREA */
+        .first-box .img-area { height: 260px !important; }
+        .standard-box .img-area { height: 160px; }
+        .img-area { width: 100%; position: relative; background: #f3f3f3; overflow: hidden; }
+        .img-area img { width: 100%; height: 100%; object-fit: cover; display: block; transition: 0.5s; }
+        .product-card:hover img { transform: scale(1.1); }
+
+        /* DETAILS AREA */
+        .details-area { padding: 8px; display: flex; flex-direction: column; gap: 2px; }
+        .p-name { font-size: 10px; color: #555; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0 !important; letter-spacing: 0.2px; }
+        .p-price { font-size: 15px; font-weight: 800; color: var(--dark-chocolate); margin-bottom: 4px; display: block; line-height: 1; }
+
+        .info-box-compact { background: var(--dark-chocolate); border: 1.2px solid var(--neon-gold); border-radius: 9px; padding: 6px; width: 100%; display: flex; flex-direction: column; gap: 3px; }
+        .row-item { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+        .trust-bold { display: flex; align-items: center; gap: 3px; font-size: 8.5px; font-weight: 800; color: #fff; }
+        .years-bold { font-size: 7.5px; color: #fff; font-weight: 800; background: rgba(255,255,255,0.1); padding: 1px 4px; border-radius: 3px; }
+        .loc-bold { display: flex; align-items: center; gap: 3px; font-size: 8px; color: #ddd; font-weight: 700; }
+        .stars-group { display: flex; align-items: center; gap: 2px; }
+        .stars-mini { display: flex; gap: 0.5px; color: #ff9900; font-size: 7px; }
+        .review-count { color: #aaa; font-size: 7px; font-weight: 600; }
+        .verified-icon { color: var(--verified-blue); font-size: 9px; }
+        .loc-icon { color: #ff4d4d; font-size: 8px; }
+
     </style>
 </head>
 <body>
@@ -91,20 +126,15 @@
             <div class="ad-card"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Premium <br> Cotton Hub</span></div>
             <div class="ad-card" style="border-color: #00BAFF;"><i class="fa-solid fa-bolt-lightning" style="color:#00BAFF;"></i><span>Flash Sales <br> Live Now</span></div>
             <div class="ad-card"><i class="fa-solid fa-crown"></i><span>Royal <br> Vendor Space</span></div>
-            <div class="ad-card"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Premium <br> Cotton Hub</span></div>
-            <div class="ad-card"><i class="fa-solid fa-crown"></i><span>Royal <br> Vendor Space</span></div>
         </div>
     </div>
 
-    <div class="main-container" id="product-grid">
-    </div>
-    
+    <div class="main-container" id="product-grid"></div>
     
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
 <script>
-// 1. Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
   authDomain: "global-market-admin.firebaseapp.com",
@@ -114,78 +144,89 @@ const firebaseConfig = {
   appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
 };
 
-// Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// SCRIPT NA LODA KAYA (Wanda aka gyara)
-async function uploadTestData() {
-    const testProducts = [
-        { name: "Super Wax Elite", price: 15500, category: "atamfa", img: "https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=800", location: "Kano, NG", reviews: "120" },
-        { name: "Sukur Silk Luxury", price: 18000, category: "atamfa", img: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=800", location: "Kaduna, NG", reviews: "85" }
-    ];
-    for (const p of testProducts) { await db.collection('products').add(p); }
-    alert("Kaya sun hau! Refresh shafin yanzu.");
-}
+// Kalaman Talla
+const shouts = [
+    "Wlh wannan kalar tafi tafiya!",
+    "Zan rage maka ₦500 idan ka siya!",
+    "Free Delivery zuwa Kano yau!",
+    "Original ne, idan ya fita kala dawo dashi.",
+    "Mutum 10 suna kallon wannan yanzu!"
+];
 
 async function fetchRealProducts() {
     const grid = document.querySelector('.main-container');
     grid.innerHTML = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
 
     try {
-        // Neman dukkan kaya ba tare da category ba don gwaji
         let snapshot = await db.collection('products').get();
-
-        if (snapshot.empty) {
-            alert("Database din empty yake! Ka tabbata akwai 'products' collection a Firebase.");
-            grid.innerHTML = "<p style='text-align:center; width:100%; padding:20px;'>Babu komai a Database.</p>";
-            return;
-        }
+        if (snapshot.empty) return;
 
         let count = 0;
         snapshot.forEach(doc => {
             const p = doc.data();
             const colId = count % 2 === 0 ? 'col1' : 'col2';
             const column = document.getElementById(colId);
-            const cardClass = count === 0 ? "first-box" : "standard-box";
+            const cardClass = count % 2 === 0 ? "first-box" : "standard-box";
+            const randomShout = shouts[Math.floor(Math.random() * shouts.length)];
             
             const cardHTML = `
-                <div class="product-card ${cardClass}">
-                    <div class="img-area" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">
+                <div class="product-card ${cardClass}" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">
+                    <div class="img-area">
+                        <div class="hot-tag">HOT ITEM</div>
+                        
+                        <div class="live-dot-container">
+                            <div class="green-pulse"></div>
+                            <span style="color:white; font-size:7px; font-weight:800;">LIVE</span>
+                        </div>
+
+                        <div class="ghost-talk">
+                           <i class="fa-solid fa-bullhorn" style="font-size:12px; margin-bottom:4px;"></i><br>
+                           "${randomShout}"
+                        </div>
+
                         <img src="${p.img}" onerror="this.src='https://via.placeholder.com/300'">
                     </div>
                     <div class="details-area">
                         <p class="p-name">${p.name.toUpperCase()}</p>
-                        <div class="price-row">
-                            <span class="p-price">₦${Number(p.price).toLocaleString()}</span>
-                            <div class="stars-box">
-                                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                                <span class="review-count">(${p.reviews || '0'})</span>
+                        <span class="p-price">₦${Number(p.price).toLocaleString()}</span>
+                        
+                        <div class="info-box-compact">
+                            <div class="row-item">
+                                <div class="trust-bold">
+                                    <i class="fa-solid fa-circle-check verified-icon"></i>
+                                    TrustID Verified
+                                </div>
+                                <span class="years-bold">3+ YEARS</span>
+                            </div>
+                            <div class="row-item">
+                                <div class="loc-bold">
+                                    <i class="fa-solid fa-location-dot loc-icon"></i>
+                                    ${p.location || 'Kano, Nigeria'}
+                                </div>
+                                <div class="stars-group">
+                                    <div class="stars-mini">
+                                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                    </div>
+                                    <span class="review-count">(${p.reviews || '150'})</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="trust-section">
-                            <div class="trust-line"><i class="fa-solid fa-circle-check verified-icon"></i>TrustID Verified</div>
-                            <div class="loc-line"><i class="fa-solid fa-location-dot text-red-600"></i>${p.location || 'Kano'}</div>
-                        </div>
-                        <button class="btn-buy" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')">VIEW PRODUCT</button>
                     </div>
                 </div>`;
             column.insertAdjacentHTML('beforeend', cardHTML);
             count++;
         });
-    } catch (e) { 
-        alert("Matsalar Firebase: " + e.message);
-    }
+    } catch (e) { console.error(e); }
 }
 
 document.addEventListener('DOMContentLoaded', fetchRealProducts);
-
 function goToProduct(name, price, img) {
-    const productDetails = { name: name, price: price, img: img };
-    localStorage.setItem('selectedProduct', JSON.stringify(productDetails));
+    localStorage.setItem('selectedProduct', JSON.stringify({name, price, img}));
     window.location.href = 'products-page.html';
 }
-            </script>
-    
+</script>
 </body>
 </html>
