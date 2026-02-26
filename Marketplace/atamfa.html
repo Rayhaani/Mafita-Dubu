@@ -99,42 +99,40 @@
         .img-area img { width: 100%; height: 100%; object-fit: cover; display: block; transition: 0.5s; }
         .product-card:hover img { transform: scale(1.1); }
 
+        /* GYARAN DETAILS AREA */
         .details-area { 
-    padding: 8px; 
-    display: flex; 
-    flex-direction: column; 
-    /* Wannan tsayin zai tabbatar akwatunan sun zama girma daya */
-    min-height: 125px; 
-    position: relative;
-}
+            padding: 10px; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 135px; /* Tsayin da zai jera komai cif */
+            position: relative;
+        }
 
-.p-name { 
-    font-size: 11px; 
-    color: #444; 
-    font-weight: 700; 
-    display: -webkit-box;
-    -webkit-line-clamp: 2; 
-    -webkit-box-orient: vertical;  
-    overflow: hidden; 
-    margin: 0 0 4px 0 !important; 
-    line-height: 1.2;
-    text-transform: capitalize;
-    text-align: left;
-    /* Zai hana raba kalmomi marar kyau */
-    word-break: normal; 
-    overflow-wrap: anywhere;
-}
+        .p-name { 
+            font-size: 11px; 
+            color: #444; 
+            font-weight: 700; 
+            display: -webkit-box;
+            -webkit-line-clamp: 2; 
+            -webkit-box-orient: vertical;  
+            overflow: hidden; 
+            margin: 0 !important; 
+            line-height: 1.2;
+            text-transform: capitalize;
+            text-align: left;
+            word-break: normal; 
+            overflow-wrap: anywhere;
+        }
 
-/* Wannan sabon code din zai tilasta wa farashi da info su manne a kasa */
-.price-and-info {
-    margin-top: auto; 
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
+        /* Wannan zai tilasta wa farashi da info su manne a kasa */
+        .price-and-info {
+            margin-top: auto; 
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
         
-        
-        .p-price { font-size: 15px; font-weight: 800; color: var(--dark-chocolate); margin-bottom: 4px; display: block; line-height: 1; }
+        .p-price { font-size: 15px; font-weight: 800; color: var(--dark-chocolate); display: block; line-height: 1; }
         .info-box-compact { background: var(--dark-chocolate); border: 1.2px solid var(--neon-gold); border-radius: 9px; padding: 6px; width: 100%; display: flex; flex-direction: column; gap: 3px; }
         .row-item { display: flex; align-items: center; justify-content: space-between; width: 100%; }
         .trust-bold { display: flex; align-items: center; gap: 3px; font-size: 8.5px; font-weight: 800; color: #fff; }
@@ -183,12 +181,10 @@ const shouts = [
     "Mutum 10 suna kallon wannan yanzu!"
 ];
  
-// WANNAN SHINE REAL-TIME LISTENER 
 function startLiveUpdates() {
     const grid = document.getElementById('product-grid');
 
     db.collection('products').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
-        // Shafi zai share kansa ya sake jera sabon kaya duk sanda aka samu canji
         grid.innerHTML = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
         
         let count = 0;
@@ -197,7 +193,6 @@ function startLiveUpdates() {
             const colId = count % 2 === 0 ? 'col1' : 'col2';
             const column = document.getElementById(colId);
 
-            // ZIG-ZAG LOGIC
             let cardClass = "";
             let rowIndex = Math.floor(count / 2);
 
@@ -225,17 +220,20 @@ function startLiveUpdates() {
                     </div>
                     <div class="details-area">
                         <p class="p-name">${p.name.toLowerCase()}</p>
-                        <span class="p-price">₦${Number(p.price).toLocaleString()}</span>
-                        <div class="info-box-compact">
-                            <div class="row-item">
-                                <div class="trust-bold"><i class="fa-solid fa-circle-check verified-icon"></i> TrustID Verified</div>
-                                <span class="years-bold">3+ YEARS</span>
-                            </div>
-                            <div class="row-item">
-                                <div class="loc-bold"><i class="fa-solid fa-location-dot loc-icon"></i> ${p.location || 'Kano'}</div>
-                                <div class="stars-group">
-                                    <div class="stars-mini"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                                    <span class="review-count">(${p.reviews || '150'})</span>
+                        
+                        <div class="price-and-info">
+                            <span class="p-price">₦${Number(p.price).toLocaleString()}</span>
+                            <div class="info-box-compact">
+                                <div class="row-item">
+                                    <div class="trust-bold"><i class="fa-solid fa-circle-check verified-icon"></i> TrustID Verified</div>
+                                    <span class="years-bold">3+ YEARS</span>
+                                </div>
+                                <div class="row-item">
+                                    <div class="loc-bold"><i class="fa-solid fa-location-dot loc-icon"></i> ${p.location || 'Kano'}</div>
+                                    <div class="stars-group">
+                                        <div class="stars-mini"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                                        <span class="review-count">(${p.reviews || '150'})</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
