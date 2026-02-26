@@ -44,20 +44,38 @@
         .ad-card i { font-size: 2rem; color: var(--neon-gold); margin-bottom: 8px; }
         .ad-card span { font-size: 0.7rem; color: var(--dark-chocolate); font-weight: 800; text-align: center; text-transform: uppercase; }
 
+        /* GYARAN EQUAL SPACING (10px) KAMAR YADDA YAKE A HOTONKA */
         .main-container { 
-            display: flex; gap: 10px; padding: 10px; align-items: flex-start; 
-            position: relative; background: var(--dark-chocolate);
-            overflow: hidden; border-radius: 25px 25px 0 0;
+            display: flex; 
+            gap: 10px; 
+            padding: 10px; /* Na mayar da shi 10px don ya zama EQUAL da kowane gefe */
+            align-items: flex-start; 
+            position: relative;
+            background: var(--dark-chocolate);
+            overflow: hidden;
+            border-radius: 25px 25px 0 0;
         }
 
         .main-container::before {
-            content: ""; position: absolute; top: -100%; left: -100%; width: 300%; height: 300%;
-            background: radial-gradient(circle at center, rgba(255, 223, 0, 0.4) 0%, rgba(212, 175, 55, 0.2) 30%, transparent 60%);
-            animation: serpent-crawl 15s ease-in-out infinite; z-index: 0; pointer-events: none;
+            content: "";
+            position: absolute;
+            top: -100%; left: -100%; width: 300%; height: 300%;
+            background: radial-gradient(circle at center, 
+                rgba(255, 223, 0, 0.4) 0%, 
+                rgba(212, 175, 55, 0.2) 30%, 
+                transparent 60%),
+                linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%);
+            background-size: 500px 500px;
+            animation: serpent-crawl 15s ease-in-out infinite;
+            z-index: 0;
+            pointer-events: none;
+            filter: blur(4px);
         }
+
         @keyframes serpent-crawl {
             0% { transform: translate(-15%, -15%) rotate(0deg); }
-            50% { transform: translate(10%, 15%) rotate(2deg); }
+            33% { transform: translate(10%, 5%) rotate(2deg); }
+            66% { transform: translate(-5%, 15%) rotate(-2deg); }
             100% { transform: translate(-15%, -15%) rotate(0deg); }
         }
 
@@ -69,7 +87,6 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); position: relative; z-index: 10;
         }
 
-        /* GYARAN HOT DA LIVE TAGS */
         .hot-tag {
             position: absolute; top: 8px; left: 8px;
             background: #FF3131; color: white;
