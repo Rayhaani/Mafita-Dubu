@@ -99,26 +99,28 @@
         .img-area img { width: 100%; height: 100%; object-fit: cover; display: block; transition: 0.5s; }
         .product-card:hover img { transform: scale(1.1); }
 
-        .details-area { padding: 8px; display: flex; flex-direction: column; gap: 2px; }
-        
-        .p-name { 
+        .details-area { 
+    padding: 8px; 
+    display: flex; 
+    flex-direction: column; 
+    height: 110px; /* Mun ba wa bangaren bayanan tsayayyen tsayi */
+    justify-content: space-between; /* Wannan zai tura farashi can kasa, suna kuma a sama */
+}
+
+.p-name { 
     font-size: 11px; 
     color: #444; 
     font-weight: 700; 
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Maximum layi biyu */
+    -webkit-line-clamp: 2; 
     -webkit-box-orient: vertical;  
     overflow: hidden; 
     margin: 0 !important; 
     line-height: 1.2;
     text-transform: capitalize;
-
-    /* WANNAN SHINE GYARAN DA ZAI GYARA ALIGNMENT */
-    min-height: 2.4em; /* Zai tursasa filin ya dauki layi biyu koda sunan gajere ne */
     text-align: left;
-    word-break: normal; /* Mun daina raba kalmomi a tsakiya */
-    overflow-wrap: break-word; /* Zai raba kalma ne kawai idan ta fi girman box din gaba daya */
-        }
+    word-break: normal; /* Mun cire gutsura kalmomi */
+}
         
         
         .p-price { font-size: 15px; font-weight: 800; color: var(--dark-chocolate); margin-bottom: 4px; display: block; line-height: 1; }
