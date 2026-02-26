@@ -103,8 +103,9 @@
     padding: 8px; 
     display: flex; 
     flex-direction: column; 
-    height: 110px; /* Mun ba wa bangaren bayanan tsayayyen tsayi */
-    justify-content: space-between; /* Wannan zai tura farashi can kasa, suna kuma a sama */
+    /* Wannan tsayin zai tabbatar akwatunan sun zama girma daya */
+    min-height: 125px; 
+    position: relative;
 }
 
 .p-name { 
@@ -115,11 +116,21 @@
     -webkit-line-clamp: 2; 
     -webkit-box-orient: vertical;  
     overflow: hidden; 
-    margin: 0 !important; 
+    margin: 0 0 4px 0 !important; 
     line-height: 1.2;
     text-transform: capitalize;
     text-align: left;
-    word-break: normal; /* Mun cire gutsura kalmomi */
+    /* Zai hana raba kalmomi marar kyau */
+    word-break: normal; 
+    overflow-wrap: anywhere;
+}
+
+/* Wannan sabon code din zai tilasta wa farashi da info su manne a kasa */
+.price-and-info {
+    margin-top: auto; 
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
         
         
