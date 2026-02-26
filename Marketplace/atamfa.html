@@ -102,7 +102,7 @@
         .details-area { padding: 8px; display: flex; flex-direction: column; gap: 2px; }
         
         .p-name { 
-    font-size: 11px; /* Mun bar shi a yadda kake so */
+    font-size: 11px; 
     color: #444; 
     font-weight: 700; 
     display: -webkit-box;
@@ -110,12 +110,19 @@
     -webkit-box-orient: vertical;  
     overflow: hidden; 
     margin: 0 !important; 
-    line-height: 1.1; 
+    line-height: 1.1;
     text-transform: capitalize;
-    word-break: break-word;
+
+    /* WANNAN SHINE SMART LOGIC DIN */
+    word-break: break-word; /* Zai karye a tsakanin kalma idan ta yi girma */
+    hyphens: auto; /* Zai sanya alamar "-" idan ya raba kalma domin cike sarari */
     text-align: left;
-    letter-spacing: -0.2px; 
+    
+    /* Muna kara "Tightness" kadan domin kowane suna ya zauna daram */
+    letter-spacing: -0.3px; 
+    word-spacing: -0.5px;
         }
+        
         
        
         .p-price { font-size: 15px; font-weight: 800; color: var(--dark-chocolate); margin-bottom: 4px; display: block; line-height: 1; }
