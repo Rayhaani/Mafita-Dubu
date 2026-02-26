@@ -94,7 +94,7 @@
         .product-card:hover .ghost-talk { transform: translateY(0); }
 
         .first-box .img-area { height: 260px !important; }
-        .standard-box .img-area { height: 160px; }
+        .standard-box .img-area { height: 212px; } /* Mun saita wannan ma'aunin daidai */
         .img-area { width: 100%; position: relative; background: #f3f3f3; overflow: hidden; }
         .img-area img { width: 100%; height: 100%; object-fit: cover; display: block; transition: 0.5s; }
         .product-card:hover img { transform: scale(1.1); }
@@ -157,7 +157,8 @@ async function fetchRealProducts() {
     grid.innerHTML = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
 
     try {
-        let snapshot = await db.collection('products').get();
+        // Muna dauko kaya gwargwadon lokacin da aka saka su
+        let snapshot = await db.collection('products').orderBy('timestamp', 'desc').get();
         if (snapshot.empty) {
             console.log("Database fanko ne.");
             return;
@@ -168,49 +169,47 @@ async function fetchRealProducts() {
             const p = doc.data();
             const colId = count % 2 === 0 ? 'col1' : 'col2';
             const column = document.getElementById(colId);
-            const cardClass = count % 2 === 0 ? "first-box" : "standard-box";
+
+            // ZIG-ZAG LOGIC
+            let cardClass = "";
+            let rowIndex = Math.floor(count / 2);
+
+            if (rowIndex % 2 === 0) {
+                // Row mara saura (Layi na 1, 3, 5...): Hagu ne Dogo
+                cardClass = (count % 2 === 0) ? "first-box" : "standard-box";
+            } else {
+                // Row mai saura (Layi na 2, 4, 6...): Dama ne Dogo
+                cardClass = (count % 2 === 0) ? "standard-box" : "first-box";
+            }
             
-            // Amfani da "shout" daga database idan akwai, idan babu a dauki random
             const displayShout = p.shout || shouts[Math.floor(Math.random() * shouts.length)];
             
             const cardHTML = `
                 <div class="product-card ${cardClass}" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">
                     <div class="img-area">
                         <div class="hot-tag">HOT ITEM</div>
-                        
                         <div class="live-dot-container">
                             <div class="green-pulse"></div>
                             <span style="color:white; font-size:7px; font-weight:800;">LIVE</span>
                         </div>
-
                         <div class="ghost-talk">
                            <i class="fa-solid fa-bullhorn" style="font-size:12px; margin-bottom:4px;"></i><br>
                            "${displayShout}"
                         </div>
-
                         <img src="${p.img}" onerror="this.src='https://via.placeholder.com/300'">
                     </div>
                     <div class="details-area">
                         <p class="p-name">${p.name.toUpperCase()}</p>
                         <span class="p-price">₦${Number(p.price).toLocaleString()}</span>
-                        
                         <div class="info-box-compact">
                             <div class="row-item">
-                                <div class="trust-bold">
-                                    <i class="fa-solid fa-circle-check verified-icon"></i>
-                                    TrustID Verified
-                                </div>
+                                <div class="trust-bold"><i class="fa-solid fa-circle-check verified-icon"></i> TrustID Verified</div>
                                 <span class="years-bold">3+ YEARS</span>
                             </div>
                             <div class="row-item">
-                                <div class="loc-bold">
-                                    <i class="fa-solid fa-location-dot loc-icon"></i>
-                                    ${p.location || 'Kano, Nigeria'}
-                                </div>
+                                <div class="loc-bold"><i class="fa-solid fa-location-dot loc-icon"></i> ${p.location || 'Kano, Nigeria'}</div>
                                 <div class="stars-group">
-                                    <div class="stars-mini">
-                                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                    </div>
+                                    <div class="stars-mini"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                                     <span class="review-count">(${p.reviews || '150'})</span>
                                 </div>
                             </div>
