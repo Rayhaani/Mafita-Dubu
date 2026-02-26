@@ -99,13 +99,13 @@
         .img-area img { width: 100%; height: 100%; object-fit: cover; display: block; transition: 0.5s; }
         .product-card:hover img { transform: scale(1.1); }
 
-        /* GYARAN DETAILS AREA */
+        /* GYARAN DETAILS AREA NA KARSHE */
         .details-area { 
             padding: 10px; 
             display: flex; 
             flex-direction: column; 
-            min-height: 135px; /* Tsayin da zai jera komai cif */
-            position: relative;
+            height: 145px; /* Tsayi daya don komai ya jera cif */
+            position: relative; /* Domin absolute content ya manne a kasa */
         }
 
         .p-name { 
@@ -120,16 +120,17 @@
             line-height: 1.2;
             text-transform: capitalize;
             text-align: left;
-            word-break: normal; 
-            overflow-wrap: anywhere;
         }
 
-        /* Wannan zai tilasta wa farashi da info su manne a kasa */
-        .price-and-info {
-            margin-top: auto; 
+        /* Wannan zai tilasta wa Price da TrustID su koma kasa su jera */
+        .bottom-fixed-content {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
         }
         
         .p-price { font-size: 15px; font-weight: 800; color: var(--dark-chocolate); display: block; line-height: 1; }
@@ -221,7 +222,7 @@ function startLiveUpdates() {
                     <div class="details-area">
                         <p class="p-name">${p.name.toLowerCase()}</p>
                         
-                        <div class="price-and-info">
+                        <div class="bottom-fixed-content">
                             <span class="p-price">₦${Number(p.price).toLocaleString()}</span>
                             <div class="info-box-compact">
                                 <div class="row-item">
