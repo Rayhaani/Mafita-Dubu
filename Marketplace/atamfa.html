@@ -113,18 +113,15 @@
     line-height: 1.1;
     text-transform: capitalize;
 
-    /* WANNAN SHINE SMART LOGIC DIN */
-    word-break: break-word; /* Zai karye a tsakanin kalma idan ta yi girma */
-    hyphens: auto; /* Zai sanya alamar "-" idan ya raba kalma domin cike sarari */
-    text-align: left;
+    /* WANNAN SHINE ZAI MAGANCE SPACE DIN */
+    text-align: justify;
+    text-justify: inter-word; /* Zai gyara tazarar tsakanin kalmomi kadan domin su cika layi */
+    word-break: break-all; /* Idan kalma ta ki shiga, zai karya ta dole domin ya cika fili */
     
-    /* Muna kara "Tightness" kadan domin kowane suna ya zauna daram */
-    letter-spacing: -0.3px; 
-    word-spacing: -0.5px;
+    letter-spacing: -0.2px;
         }
         
         
-       
         .p-price { font-size: 15px; font-weight: 800; color: var(--dark-chocolate); margin-bottom: 4px; display: block; line-height: 1; }
         .info-box-compact { background: var(--dark-chocolate); border: 1.2px solid var(--neon-gold); border-radius: 9px; padding: 6px; width: 100%; display: flex; flex-direction: column; gap: 3px; }
         .row-item { display: flex; align-items: center; justify-content: space-between; width: 100%; }
