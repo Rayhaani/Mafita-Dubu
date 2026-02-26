@@ -94,7 +94,7 @@
         .product-card:hover .ghost-talk { transform: translateY(0); }
 
         .first-box .img-area { height: 260px !important; }
-        .standard-box .img-area { height: 212px; } /* Mun saita wannan ma'aunin daidai */
+        .standard-box .img-area { height: 212px; }
         .img-area { width: 100%; position: relative; background: #f3f3f3; overflow: hidden; }
         .img-area img { width: 100%; height: 100%; object-fit: cover; display: block; transition: 0.5s; }
         .product-card:hover img { transform: scale(1.1); }
@@ -113,7 +113,6 @@
         .review-count { color: #aaa; font-size: 7px; font-weight: 600; }
         .verified-icon { color: var(--verified-blue); font-size: 9px; }
         .loc-icon { color: #ff4d4d; font-size: 8px; }
-
     </style>
 </head>
 <body>
@@ -152,18 +151,14 @@ const shouts = [
     "Mutum 10 suna kallon wannan yanzu!"
 ];
  
-async function fetchRealProducts() {
+// WANNAN SHINE REAL-TIME LISTENER 
+function startLiveUpdates() {
     const grid = document.getElementById('product-grid');
-    grid.innerHTML = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
 
-    try {
-        // Muna dauko kaya gwargwadon lokacin da aka saka su
-        let snapshot = await db.collection('products').orderBy('timestamp', 'desc').get();
-        if (snapshot.empty) {
-            console.log("Database fanko ne.");
-            return;
-        }
-
+    db.collection('products').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
+        // Shafi zai share kansa ya sake jera sabon kaya duk sanda aka samu canji
+        grid.innerHTML = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
+        
         let count = 0;
         snapshot.forEach(doc => {
             const p = doc.data();
@@ -175,10 +170,8 @@ async function fetchRealProducts() {
             let rowIndex = Math.floor(count / 2);
 
             if (rowIndex % 2 === 0) {
-                // Row mara saura (Layi na 1, 3, 5...): Hagu ne Dogo
                 cardClass = (count % 2 === 0) ? "first-box" : "standard-box";
             } else {
-                // Row mai saura (Layi na 2, 4, 6...): Dama ne Dogo
                 cardClass = (count % 2 === 0) ? "standard-box" : "first-box";
             }
             
@@ -207,7 +200,7 @@ async function fetchRealProducts() {
                                 <span class="years-bold">3+ YEARS</span>
                             </div>
                             <div class="row-item">
-                                <div class="loc-bold"><i class="fa-solid fa-location-dot loc-icon"></i> ${p.location || 'Kano, Nigeria'}</div>
+                                <div class="loc-bold"><i class="fa-solid fa-location-dot loc-icon"></i> ${p.location || 'Kano'}</div>
                                 <div class="stars-group">
                                     <div class="stars-mini"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                                     <span class="review-count">(${p.reviews || '150'})</span>
@@ -219,10 +212,12 @@ async function fetchRealProducts() {
             column.insertAdjacentHTML('beforeend', cardHTML);
             count++;
         });
-    } catch (e) { console.error("Error fetching products: ", e); }
+    }, (error) => {
+        console.error("Kuskure wajen kawo kaya: ", error);
+    });
 }
 
-document.addEventListener('DOMContentLoaded', fetchRealProducts);
+document.addEventListener('DOMContentLoaded', startLiveUpdates);
 
 function goToProduct(name, price, img) {
     localStorage.setItem('selectedProduct', JSON.stringify({name, price, img}));
