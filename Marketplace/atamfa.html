@@ -158,7 +158,7 @@ async function fetchRealProducts() {
 
     try {
         // Muna dauko kaya gwargwadon lokacin da aka saka su
-        let snapshot = await db.collection('products').orderBy('timestamp', 'desc').get();
+        let snapshot = await db.collection('products').get();
         if (snapshot.empty) {
             console.log("Database fanko ne.");
             return;
