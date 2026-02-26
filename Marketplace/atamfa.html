@@ -106,19 +106,18 @@
     color: #444; 
     font-weight: 700; 
     display: -webkit-box;
-    -webkit-line-clamp: 2; 
+    -webkit-line-clamp: 2; /* Maximum layi biyu */
     -webkit-box-orient: vertical;  
     overflow: hidden; 
     margin: 0 !important; 
-    line-height: 1.1;
+    line-height: 1.2;
     text-transform: capitalize;
 
-    /* WANNAN SHINE ZAI MAGANCE SPACE DIN */
-    text-align: justify;
-    text-justify: inter-word; /* Zai gyara tazarar tsakanin kalmomi kadan domin su cika layi */
-    word-break: break-all; /* Idan kalma ta ki shiga, zai karya ta dole domin ya cika fili */
-    
-    letter-spacing: -0.2px;
+    /* WANNAN SHINE GYARAN DA ZAI GYARA ALIGNMENT */
+    min-height: 2.4em; /* Zai tursasa filin ya dauki layi biyu koda sunan gajere ne */
+    text-align: left;
+    word-break: normal; /* Mun daina raba kalmomi a tsakiya */
+    overflow-wrap: break-word; /* Zai raba kalma ne kawai idan ta fi girman box din gaba daya */
         }
         
         
