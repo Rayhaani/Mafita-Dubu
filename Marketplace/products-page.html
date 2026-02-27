@@ -215,6 +215,36 @@ async function findProductInNetwork(productName) {
     }
 }
 
+    // Function din da zai tura kaya zuwa Central Firebase Store
+function syncCurrentProductToFirebase(productData) {
+    // Tabbatar muna da ID na musamman ga kowane kaya
+    const productId = productData.id || "product_" + Date.now();
+    const vendorId = "vendor_001"; // ID dinka na Wolay Store
+    
+    const productRef = firebase.database().ref('vendors/' + vendorId + '/products/' + productId);
+
+    productRef.set({
+        name: productData.name,
+        price: productData.price,
+        image: productData.image || productData.img, // Ya danganta da sunan da kake amfani dashi
+        category: "Atamfa",
+        status: "available",
+        lastSeen: new Date().toISOString()
+    }).then(() => {
+        console.log("Sales Boy: Na riga na kai bayanan wannan atamfar zuwa babban rumbu!");
+    }).catch((error) => {
+        console.error("Kuskure wajen tura kaya:", error);
+    });
+}
+
+// Kira wannan function din da zarar an bude shafin da bayanan kaya
+// Misali: idan kana amfani da localStorage wajen dauko bayanan kaya
+const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
+
+if (selectedProduct) {
+    syncCurrentProductToFirebase(selectedProduct);
+                   }
+    
     
 </script>
 </body>
