@@ -184,6 +184,37 @@ document.addEventListener('DOMContentLoaded', function() {
         stackImgs.forEach(img => img.src = product.img);
     }
 });
+
+    
+    // Wannan ita ce dabarar "Central Scan"
+async function findProductInNetwork(productName) {
+    const databaseRef = firebase.database().ref('vendors');
+    
+    try {
+        const snapshot = await databaseRef.once('value');
+        const allVendors = snapshot.val();
+        let suggestions = [];
+
+        for (let vendorId in allVendors) {
+            let vendor = allVendors[vendorId];
+            // Duba ko wannan vendor din yana da irin kayan da ake nema
+            let match = vendor.products.find(p => p.name.toLowerCase().includes(productName.toLowerCase()));
+            
+            if (match) {
+                suggestions.push({
+                    vendorName: vendor.name,
+                    product: match,
+                    link: `https://afita-dubu.vercel.app/shop/${vendorId}?product=${match.id}`
+                });
+            }
+        }
+        return suggestions;
+    } catch (error) {
+        console.error("Network Error:", error);
+        return [];
+    }
+}
+
     
 </script>
 </body>
