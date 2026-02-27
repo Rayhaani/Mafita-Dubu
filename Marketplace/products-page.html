@@ -213,6 +213,24 @@ async function findProductInNetwork(productName) {
         console.error("Network Error:", error);
         return [];
     }
+
+    async function recommendFromNetwork(searchQuery) {
+    // 1. Kira dabarar bincike dake cikin code din farko
+    const results = await findProductInNetwork(searchQuery);
+    
+    // 2. Idan an samu kaya a wani shagon
+    if (results.length > 0) {
+        const bestMatch = results[0]; // Dauko shago na farko da aka samu
+        
+        speak(`Gaskiya bani da wannan kalar yanzu, amma abokinmu na shagon ${bestMatch.vendorName} yana da shi. Kana so na kai ka can?`);
+        
+        // Zaka iya nuna button na "A'a" ko "Eh, mu je"
+        showRecommendationButton(bestMatch.link);
+    } else {
+        speak("Gaskiya wannan kalar babu ita a kusa yanzu, amma zan cigaba da duba maka.");
+    }
+    }
+    
 }
 
     // Function din da zai tura kaya zuwa Central Firebase Store
@@ -244,6 +262,24 @@ const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
 if (selectedProduct) {
     syncCurrentProductToFirebase(selectedProduct);
                    }
+
+    
+    // Wannan zai nuna wasu kayan daga shagonka (vendor_001)
+function suggestInternalProducts() {
+    const dbRef = firebase.database().ref('vendors/vendor_001/products');
+    
+    dbRef.limitToFirst(3).once('value', (snapshot) => {
+        const products = snapshot.val();
+        if (products) {
+            speak("Muna da wasu kalar ma a shagonmu, ko kana so ka gani?");
+            // Anan zaka iya fitar da hotunan kayan a gefen Sales Boy
+            console.log("Sales Boy is suggesting internal products:", products);
+        }
+    });
+}
+
+// Zaka iya saita lokaci, misali bayan sakan 10 customer yana kallon kaya daya
+setTimeout(suggestInternalProducts, 10000);
     
     
 </script>
