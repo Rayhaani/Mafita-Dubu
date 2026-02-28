@@ -334,6 +334,36 @@ setTimeout(injectSalesBoyNow, 500);
     
 
     
+    // 1. Wadannan sune zasu hana Neural Stitch bada error
+function speak(text) { console.log("AI Says: " + text); }
+function scan() { console.log("Scanning started..."); }
+
+// 2. Wannan zai tilasta Sales Boy ya fito
+function forceInjectSalesBoy() {
+    if (document.getElementById('sales-boy-container')) return;
+
+    const div = document.createElement('div');
+    div.id = 'sales-boy-container';
+    // Muna amfani da sabon link na hoton da yake aiki
+    div.innerHTML = `<img src="https://www.pngarts.com/files/3/Man-With-Suit-PNG-High-Quality-Image.png" id="ai-person">`;
+    document.body.appendChild(div);
+
+    const img = document.getElementById('ai-person');
+    let scale = 1;
+    let growing = true;
+    setInterval(() => {
+        if(!img) return;
+        scale = growing ? scale + 0.002 : scale - 0.002;
+        if(scale >= 1.05) growing = false;
+        if(scale <= 1) growing = true;
+        img.style.transform = `scale(${scale})`;
+    }, 50);
+}
+
+// Kira shi bayan sakan 1
+setTimeout(forceInjectSalesBoy, 1000);
+    
+    
 </script>
 </body>
               </html>
