@@ -43,21 +43,25 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .section-title { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 5px; text-transform: uppercase; margin: 40px 20px 20px 20px; display: block; }
 
-#sales-boy-container {
+    #sales-boy-container {
     position: fixed;
-    bottom: 10px;
-    right: 10px;
+    bottom: 15px;
+    right: 15px;
     width: 100px;
-    z-index: 9999999;
-    pointer-events: none;
+    z-index: 999999;
+    display: block !important;
 }
 #ai-person {
     width: 100%;
     height: auto;
-    filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.5));
+    filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.6));
+    animation: breathe 3s ease-in-out infinite;
 }
-    
-
+@keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+                    }
+            
 </style>
 </head>
 <body>
@@ -157,74 +161,54 @@
     </div>
 </div>
 
+    <div id="sales-boy-container">
+    <img src="https://www.pngarts.com/files/3/Man-With-Suit-PNG-High-Quality-Image.png" id="ai-person">
+    </div>
+
+    
 <script>
  
-  // 1. Hana Error
-window.onerror = () => true;
-
-// 2. Load Bayanan Kaya (Atamfa)
-function loadProductData() {
+  document.addEventListener('DOMContentLoaded', function() {
+    // Dauko bayanan kaya daga localStorage
     const data = localStorage.getItem('selectedProduct');
+    
     if (data) {
         const product = JSON.parse(data);
+        
+        // Saka hoton Atamfar a babban Slider
         const mainImg = document.getElementById('dynamic-img');
         if(mainImg) mainImg.src = product.img;
         
-        document.querySelector('h1').innerHTML = product.name;
-        document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
-        
+        // Saka hoton a Visual Proof
         const croppedImg = document.querySelector('.cropped-view img');
         if(croppedImg) croppedImg.src = product.img;
         
+        // Saka sunan Atamfar da Farashi
+        document.querySelector('h1').innerText = product.name;
+        document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
+        
+        // Saka hotuna a cikin "See All" stack
         const stackImgs = document.querySelectorAll('#tripleStack img');
         stackImgs.forEach(img => img.src = product.img);
     }
-}
+});
 
-// 3. Saka Sales Boy (Hanyar da ba ta bata hoto)
-function addSalesBoy() {
-    if (document.getElementById('sales-boy-container')) return;
-    
-    const container = document.createElement('div');
-    container.id = 'sales-boy-container';
-    
-    const img = document.createElement('img');
-    img.id = 'ai-person';
-    img.src = "https://www.pngarts.com/files/3/Man-With-Suit-PNG-High-Quality-Image.png";
-    
-    container.appendChild(img);
-    document.body.appendChild(container);
-
-    // Motsin numfashi
-    let scale = 1, growing = true;
-    setInterval(() => {
-        scale = growing ? scale + 0.002 : scale - 0.002;
-        if(scale >= 1.05) growing = false;
-        if(scale <= 1) growing = true;
-        img.style.transform = `scale(${scale})`;
-    }, 50);
-}
-
-// 4. Kira ayyukan da zarar an bude shafi
-window.onload = () => {
-    loadProductData();
-    addSalesBoy();
-};
-
-// 5. Viewer Functions
+// Viewer Functions (Domin buda hoto)
 function openFS(imgs) {
     const s = document.getElementById('fsSlider');
-    s.innerHTML = imgs.map(i => `<img src="${i}">`).join('');
-    document.getElementById('fullscreen-viewer').style.display = 'block';
+    if(s) {
+        s.innerHTML = imgs.map(i => `<img src="${i}">`).join('');
+        document.getElementById('fullscreen-viewer').style.display = 'block';
+    }
 }
 function closeFS() { document.getElementById('fullscreen-viewer').style.display = 'none'; }
 function showStack() {
     document.getElementById('croppedView').style.display = 'none';
     document.getElementById('seeAllBox').style.display = 'none';
     document.getElementById('tripleStack').style.display = 'block';
-}
-    
-  
+                            }
+                          
+
     
 </script>
 </body>
