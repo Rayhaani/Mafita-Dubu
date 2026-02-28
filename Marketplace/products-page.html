@@ -363,6 +363,32 @@ function forceInjectSalesBoy() {
 // Kira shi bayan sakan 1
 setTimeout(forceInjectSalesBoy, 1000);
     
+
+    // 1. Hana Error daga Neural Stitch
+function speak(text) { console.log("AI: " + text); }
+function scan() { console.log("Scanning..."); }
+
+// 2. Saka Sales Boy ta karfin tsiya
+(function() {
+    const salesBoy = document.createElement('div');
+    salesBoy.innerHTML = `
+        <div id="sales-boy-container" style="position:fixed; bottom:20px; right:20px; width:110px; z-index:999999; pointer-events:auto;">
+            <img src="https://www.pngarts.com/files/3/Man-With-Suit-PNG-High-Quality-Image.png" id="ai-person" style="width:100%; height:auto; filter:drop-shadow(0 0 10px #00f2ff);">
+        </div>
+    `;
+    document.body.appendChild(salesBoy);
+
+    // Motsin numfashi
+    let scale = 1, growing = true;
+    setInterval(() => {
+        const img = document.getElementById('ai-person');
+        if(!img) return;
+        scale = growing ? scale + 0.002 : scale - 0.002;
+        if(scale >= 1.05) growing = false;
+        if(scale <= 1) growing = true;
+        img.style.transform = `scale(${scale})`;
+    }, 50);
+})();
     
 </script>
 </body>
