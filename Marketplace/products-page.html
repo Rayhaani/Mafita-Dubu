@@ -44,31 +44,20 @@
     .section-title { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 5px; text-transform: uppercase; margin: 40px 20px 20px 20px; display: block; }
 
 
- // 1. Saka Sales Boy a hankali ba tare da ya goge sauran code ba
-const salesContainer = document.createElement('div');
-salesContainer.id = 'sales-boy-container';
-salesContainer.innerHTML = `<img src="https://i.ibb.co/LzNfXmB/ai-sales-boy.png" id="ai-person" alt="Sales Boy">`;
-document.body.appendChild(salesContainer);
-
-// 2. Jira hoto ya gama loda kafin a sanya motsi
-window.onload = function() {
-    const img = document.getElementById('ai-person');
-    if(img) {
-        let scale = 1;
-        let growing = true;
-        setInterval(() => {
-            if (growing) {
-                scale += 0.002;
-                if (scale >= 1.05) growing = false;
-            } else {
-                scale -= 0.002;
-                if (scale <= 1) growing = true;
-            }
-            img.style.transform = `scale(${scale})`;
-        }, 50);
-    }
-};
-                
+#sales-boy-container {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 120px;
+    z-index: 99999;
+    pointer-events: none;
+    transition: transform 0.5s ease;
+}
+#ai-person {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.5));
+                }
     
 
 </style>
@@ -311,14 +300,19 @@ function suggestInternalProducts() {
 // Zaka iya saita lokaci, misali bayan sakan 10 customer yana kallon kaya daya
 setTimeout(suggestInternalProducts, 10000);
 
-    
-// A goge tsohon, a saka wannan a madadin sa:
-const salesContainer = document.createElement('div');
-salesContainer.id = 'sales-boy-container';
-salesContainer.innerHTML = `<img src="https://i.ibb.co/LzNfXmB/ai-sales-boy.png" id="ai-person" style="width:100%; height:auto;">`;
-document.body.appendChild(salesContainer);
+   // 1. Wannan zai tabbatar Sales Boy ya fito koda shafi bai gama loda ba
+function injectSalesBoy() {
+    const checkExist = document.getElementById('sales-boy-container');
+    if (!checkExist) {
+        const div = document.createElement('div');
+        div.id = 'sales-boy-container';
+        div.innerHTML = `<img src="https://i.ibb.co/LzNfXmB/ai-sales-boy.png" id="ai-person">`;
+        document.body.appendChild(div);
+        startBreathing();
+    }
+}
 
-// Motsin numfashi
+// 2. Motsin numfashi
 function startBreathing() {
     const img = document.getElementById('ai-person');
     if (img) {
@@ -326,10 +320,10 @@ function startBreathing() {
         let growing = true;
         setInterval(() => {
             if (growing) {
-                scale += 0.003;
-                if (scale >= 1.08) growing = false;
+                scale += 0.002;
+                if (scale >= 1.06) growing = false;
             } else {
-                scale -= 0.003;
+                scale -= 0.002;
                 if (scale <= 1) growing = true;
             }
             img.style.transform = `scale(${scale})`;
@@ -337,10 +331,10 @@ function startBreathing() {
     }
 }
 
-// Kira function din bayan sakan 1 domin komai ya gama loda wa
-setTimeout(startBreathing, 1000);
-    
-      
+// Kira function din
+injectSalesBoy();
+                
+
     
 </script>
 </body>
