@@ -43,32 +43,70 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .section-title { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 5px; text-transform: uppercase; margin: 40px 20px 20px 20px; display: block; }
 
-     #sales-boy-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 150px; /* Mun kara girma domin a ga fuskarsa sosai */
-    height: 150px;
-    background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop') no-repeat center; /* Hoton mutum na gaske */
-    background-size: cover;
-    border-radius: 20px; /* Siffar murabba'i mai lankwasa (kamar kiran video) */
-    border: 2px solid rgba(0, 255, 204, 0.8);
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 255, 204, 0.2);
-    z-index: 10000;
-    overflow: hidden;
-    transition: all 0.4s ease-out;
-}
-
-/* Saka masa "Glass Overlay" domin ya yi kama da futuristic screen */
-#sales-boy-container::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(rgba(0, 255, 204, 0.1), transparent);
-    pointer-events: none;
-                }
-                   
-
+    /* HOLOGRAPHIC DNA CORE DESIGN */
+    #sales-boy-container {
+        position: fixed;
+        bottom: 25px;
+        right: 15px;
+        width: 120px;
+        height: 120px;
+        z-index: 10000;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(circle, rgba(0, 242, 255, 0.1) 0%, transparent 70%);
+    }
+    .dna-strand {
+        position: absolute;
+        width: 40px;
+        height: 80px;
+        border-left: 3px solid #00f2ff;
+        border-radius: 50%;
+        animation: rotateDNA 2s linear infinite;
+        filter: drop-shadow(0 0 10px #00f2ff);
+    }
+    .dna-strand:nth-child(2) { border-left: 3px solid #ff00f2; animation-delay: -1s; }
+    @keyframes rotateDNA {
+        0% { transform: rotateY(0deg) skewY(10deg); opacity: 0.3; }
+        50% { opacity: 1; }
+        100% { transform: rotateY(360deg) skewY(10deg); opacity: 0.3; }
+    }
+    .core-glow {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: 0 0 30px #00f2ff, 0 0 60px #ff00f2;
+        z-index: 5;
+    }
+    .particle {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background: #00f2ff;
+        border-radius: 50%;
+        animation: floatParticle 3s infinite linear;
+    }
+    @keyframes floatParticle {
+        0% { transform: translateY(0) scale(1); opacity: 0; }
+        50% { opacity: 0.8; }
+        100% { transform: translateY(-50px) scale(0); opacity: 0; }
+    }
+    .ai-label-elite {
+        position: absolute;
+        bottom: -15px;
+        font-size: 8px;
+        font-weight: 900;
+        color: #fff;
+        text-shadow: 0 0 5px #00f2ff;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
+    .is-talking .dna-strand { animation-duration: 0.5s; border-width: 5px; }
+    .is-talking .core-glow { animation: pulseCore 0.3s infinite alternate; }
+    @keyframes pulseCore { 0% { transform: scale(1); } 100% { transform: scale(2); background: #ff00f2; } }
 </style>
 </head>
 <body>
@@ -85,7 +123,6 @@
     </div>
   </div>
     
-
     <div class="floating-card">
         <div class="flex justify-between items-start">
             <div><h1 class="text-2xl font-bold mb-2">Signature Ice Fiber<br>Elite Edition</h1><div class="price-tag">₦7,671</div></div>
@@ -169,7 +206,25 @@
 </div>
 
 <script>
- document.body.innerHTML += '<div id="sales-boy-container"></div>';   
+// Create DNA Hologram AI Core
+const salesBoy = document.createElement('div');
+salesBoy.id = 'sales-boy-container';
+salesBoy.innerHTML = `
+    <div class="dna-strand"></div>
+    <div class="dna-strand"></div>
+    <div class="core-glow"></div>
+    <div class="ai-label-elite">Infinity AI</div>
+`;
+// Add floating particles
+for(let i=0; i<8; i++){
+    let p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDelay = Math.random() * 2 + 's';
+    salesBoy.appendChild(p);
+}
+document.body.appendChild(salesBoy);
+
 function openFS(imgs) {
     const s = document.getElementById('fsSlider');
     s.innerHTML = imgs.map(i => `<img src="${i}">`).join('');
@@ -186,151 +241,62 @@ function showStack() {
     document.getElementById('tripleStack').style.display = 'block';
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    // 1. Dauko bayanan daga localStorage
+function speakAI(text) {
+    window.speechSynthesis.cancel();
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = 'en-GB';
+    speech.rate = 0.9;
+    speech.pitch = 0.6;
+    speech.onstart = () => salesBoy.classList.add('is-talking');
+    speech.onend = () => salesBoy.classList.remove('is-talking');
+    window.speechSynthesis.speak(speech);
+}
+
+window.onload = () => {
     const data = localStorage.getItem('selectedProduct');
-    
+    let msg = "Welcome to Infinity Luxury. Neural Link established.";
     if (data) {
         const product = JSON.parse(data);
-        
-        // 2. Saka hoton Atamfar a babban Slider
+        msg = `Welcome to Infinity Luxury. System online. I see you are interested in our ${product.name}. An elite selection.`;
+    }
+    setTimeout(() => { speakAI(msg); }, 1500);
+};
+
+salesBoy.onclick = () => {
+    speakAI("Neural link stable. How can I assist you with this luxury selection today?");
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    const data = localStorage.getItem('selectedProduct');
+    if (data) {
+        const product = JSON.parse(data);
         const mainImg = document.getElementById('dynamic-img');
         if(mainImg) mainImg.src = product.img;
-        
-        // 3. Saka hoton a Cropped View (Visual Proof)
         const croppedImg = document.querySelector('.cropped-view img');
         if(croppedImg) croppedImg.src = product.img;
-        
-        // 4. Saka sunan Atamfar
         document.querySelector('h1').innerText = product.name;
-        
-        // 5. Saka farashin Atamfar
         document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
-        
-        // 6. Gyara hotunan dake cikin "See All" stack
         const stackImgs = document.querySelectorAll('#tripleStack img');
         stackImgs.forEach(img => img.src = product.img);
     }
 });
 
-    
-    // Wannan ita ce dabarar "Central Scan"
+// Original logic preserved
 async function findProductInNetwork(productName) {
     const databaseRef = firebase.database().ref('vendors');
-    
     try {
         const snapshot = await databaseRef.once('value');
         const allVendors = snapshot.val();
         let suggestions = [];
-
         for (let vendorId in allVendors) {
             let vendor = allVendors[vendorId];
-            // Duba ko wannan vendor din yana da irin kayan da ake nema
             let match = vendor.products.find(p => p.name.toLowerCase().includes(productName.toLowerCase()));
-            
-            if (match) {
-                suggestions.push({
-                    vendorName: vendor.name,
-                    product: match,
-                    link: `https://afita-dubu.vercel.app/shop/${vendorId}?product=${match.id}`
-                });
-            }
+            if (match) suggestions.push({ vendorName: vendor.name, product: match, link: `https://afita-dubu.vercel.app/shop/${vendorId}?product=${match.id}` });
         }
         return suggestions;
-    } catch (error) {
-        console.error("Network Error:", error);
-        return [];
-    }
-
-    async function recommendFromNetwork(searchQuery) {
-    // 1. Kira dabarar bincike dake cikin code din farko
-    const results = await findProductInNetwork(searchQuery);
-    
-    // 2. Idan an samu kaya a wani shagon
-    if (results.length > 0) {
-        const bestMatch = results[0]; // Dauko shago na farko da aka samu
-        
-        speak(`Gaskiya bani da wannan kalar yanzu, amma abokinmu na shagon ${bestMatch.vendorName} yana da shi. Kana so na kai ka can?`);
-        
-        // Zaka iya nuna button na "A'a" ko "Eh, mu je"
-        showRecommendationButton(bestMatch.link);
-    } else {
-        speak("Gaskiya wannan kalar babu ita a kusa yanzu, amma zan cigaba da duba maka.");
-    }
-    }
-    
+    } catch (error) { return []; }
 }
-
-    // Function din da zai tura kaya zuwa Central Firebase Store
-function syncCurrentProductToFirebase(productData) {
-   
-    // Tabbatar muna da ID na musamman ga kowane kaya
-    const productId = productData.id || "product_" + Date.now();
-    const vendorId = "vendor_001"; // ID dinka na Wolay Store
-    
-    const productRef = firebase.database().ref('vendors/' + vendorId + '/products/' + productId);
-
-    productRef.set({
-        name: productData.name,
-        price: productData.price,
-        image: productData.image || productData.img, // Ya danganta da sunan da kake amfani dashi
-        category: "Atamfa",
-        status: "available",
-        lastSeen: new Date().toISOString()
-    }).then(() => {
-        console.log("Sales Boy: Na riga na kai bayanan wannan atamfar zuwa babban rumbu!");
-    }).catch((error) => {
-        console.error("Kuskure wajen tura kaya:", error);
-    });
-}
-
-const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
-
-if (selectedProduct) {
-    syncCurrentProductToFirebase(selectedProduct);
-                   }
-
-    
-    // Wannan zai nuna wasu kayan daga shagonka (vendor_001)
-function suggestInternalProducts() {
-    const dbRef = firebase.database().ref('vendors/vendor_001/products');
-    
-    dbRef.limitToFirst(3).once('value', (snapshot) => {
-        const products = snapshot.val();
-        if (products) {
-            speak("Muna da wasu kalar ma a shagonmu, ko kana so ka gani?");
-            // Anan zaka iya fitar da hotunan kayan a gefen Sales Boy
-            console.log("Sales Boy is suggesting internal products:", products);
-        }
-    });
-}
-
-// Zaka iya saita lokaci, misali bayan sakan 10 customer yana kallon kaya daya
-setTimeout(suggestInternalProducts, 10000);
-
-
-    const salesBoy = document.getElementById('sales-boy-container');
-
-// 1. Motsi na Rayuwa (Idle Animation)
-function breathingEffect() {
-    let val = 0;
-    setInterval(() => {
-        val += 0.05;
-        const scale = 1 + Math.sin(val) * 0.02; // Zai rika girma da raguwa kadan kamar yana numfashi
-        const rotate = Math.cos(val) * 1; // Zai rika karkata kadan
-        salesBoy.style.transform = `scale(${scale}) rotate(${rotate}deg)`;
-    }, 50);
-}
-breathingEffect();
-
-// 2. Bin Customer (Smart Following)
-window.addEventListener('scroll', () => {
-    const offset = window.scrollY * 0.1;
-    // Zai rika yawo kadan sama da kasa yayin da kake scroll
-    salesBoy.style.bottom = `${20 + Math.sin(offset / 10) * 15}px`;
-});
-    
-    
 </script>
 </body>
-                                                                                                                                   </html>
+                    </html>
+                    
