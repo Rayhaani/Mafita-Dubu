@@ -263,6 +263,7 @@ async function findProductInNetwork(productName) {
 
     // Function din da zai tura kaya zuwa Central Firebase Store
 function syncCurrentProductToFirebase(productData) {
+   
     // Tabbatar muna da ID na musamman ga kowane kaya
     const productId = productData.id || "product_" + Date.now();
     const vendorId = "vendor_001"; // ID dinka na Wolay Store
@@ -307,7 +308,8 @@ function suggestInternalProducts() {
 // Zaka iya saita lokaci, misali bayan sakan 10 customer yana kallon kaya daya
 setTimeout(suggestInternalProducts, 10000);
 
-const salesBoy = document.getElementById('sales-boy-container');
+
+    const salesBoy = document.getElementById('sales-boy-container');
 
 // 1. Motsi na Rayuwa (Idle Animation)
 function breathingEffect() {
