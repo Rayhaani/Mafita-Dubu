@@ -47,21 +47,26 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 120px; /* Mun kara girman sa */
-    height: 120px;
-    background: url('https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4') no-repeat center;
+    width: 150px; /* Mun kara girma domin a ga fuskarsa sosai */
+    height: 150px;
+    background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop') no-repeat center; /* Hoton mutum na gaske */
     background-size: cover;
-    border-radius: 50%;
-    border: 3px solid #00ffcc;
-    box-shadow: 0 0 25px rgba(0, 255, 204, 0.8);
+    border-radius: 20px; /* Siffar murabba'i mai lankwasa (kamar kiran video) */
+    border: 2px solid rgba(0, 255, 204, 0.8);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 255, 204, 0.2);
     z-index: 10000;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Motsi mai santsi */
+    overflow: hidden;
+    transition: all 0.4s ease-out;
 }
 
-/* Idon Sales Boy (Zai rika bin taba fuska) */
-.sales-boy-eye {
-    /* Za mu iya kara wannan idan muna son asalin kwayar ido ta rika juyawa */
-}
+/* Saka masa "Glass Overlay" domin ya yi kama da futuristic screen */
+#sales-boy-container::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(0, 255, 204, 0.1), transparent);
+    pointer-events: none;
+    }
     
 
 </style>
@@ -307,24 +312,25 @@ setTimeout(suggestInternalProducts, 10000);
     
 const salesBoy = document.getElementById('sales-boy-container');
 
-// 1. Logic na Bin Scrolling (Kasa da Sama)
-window.addEventListener('scroll', () => {
-    // Zamu dan yi masa "Delay" kadan domin ya yi kama da mutum ne yake biyo ka
-    const scrollValue = window.scrollY;
-    salesBoy.style.transform = `translateY(${Math.sin(scrollValue / 50) * 10}px)`; 
-    
-    // Idan aka yi saurin gudu, shi ma zai dan yi sauri
-    salesBoy.style.bottom = "30px"; 
-});
+// 1. Motsi na Rayuwa (Idle Animation)
+function breathingEffect() {
+    let val = 0;
+    setInterval(() => {
+        val += 0.05;
+        const scale = 1 + Math.sin(val) * 0.02; // Zai rika girma da raguwa kadan kamar yana numfashi
+        const rotate = Math.cos(val) * 1; // Zai rika karkata kadan
+        salesBoy.style.transform = `scale(${scale}) rotate(${rotate}deg)`;
+    }, 50);
+}
+breathingEffect();
 
-// 2. Logic na Bin Mouse/Touch (Hagu da Dama)
-document.addEventListener('mousemove', (e) => {
-    const x = (window.innerWidth - e.pageX) / 30;
-    const y = (window.innerHeight - e.pageY) / 30;
-    
-    // Wannan zai sa Sales Boy din ya rika kallon inda kake taba shafin
-    salesBoy.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+// 2. Bin Customer (Smart Following)
+window.addEventListener('scroll', () => {
+    const offset = window.scrollY * 0.1;
+    // Zai rika yawo kadan sama da kasa yayin da kake scroll
+    salesBoy.style.bottom = `${20 + Math.sin(offset / 10) * 15}px`;
 });
+    
     
     
 </script>
