@@ -43,26 +43,32 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .section-title { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 5px; text-transform: uppercase; margin: 40px 20px 20px 20px; display: block; }
 
-#sales-boy-container {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    width: 100px; /* Mun rage girman sa domin kar ya cika wuri */
-    height: auto;
-    z-index: 10000;
-    pointer-events: auto;
-    filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.3)); /* Dan haske kadan a jikinsa */
-    transition: all 0.5s ease;
-}
 
-#sales-boy-container img {
-    width: 100%;
-    height: auto;
-    /* Wannan zai cire duk wani border ko frame */
-    border: none;
-    border-radius: 0; 
-                }
-    
+ // 1. Saka Sales Boy a hankali ba tare da ya goge sauran code ba
+const salesContainer = document.createElement('div');
+salesContainer.id = 'sales-boy-container';
+salesContainer.innerHTML = `<img src="https://i.ibb.co/LzNfXmB/ai-sales-boy.png" id="ai-person" alt="Sales Boy">`;
+document.body.appendChild(salesContainer);
+
+// 2. Jira hoto ya gama loda kafin a sanya motsi
+window.onload = function() {
+    const img = document.getElementById('ai-person');
+    if(img) {
+        let scale = 1;
+        let growing = true;
+        setInterval(() => {
+            if (growing) {
+                scale += 0.002;
+                if (scale >= 1.05) growing = false;
+            } else {
+                scale -= 0.002;
+                if (scale <= 1) growing = true;
+            }
+            img.style.transform = `scale(${scale})`;
+        }, 50);
+    }
+};
+                
     
 
 </style>
@@ -165,7 +171,7 @@
 </div>
 
 <script>
-    document.body.innerHTML += '<div id="sales-boy-container"></div>';
+    
 function openFS(imgs) {
     const s = document.getElementById('fsSlider');
     s.innerHTML = imgs.map(i => `<img src="${i}">`).join('');
