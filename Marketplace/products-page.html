@@ -1,150 +1,336 @@
 <!DOCTYPE html>
 <html lang="ha">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Infinity Luxury | Final Fixed Build</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { margin: 0; background: #080808; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Infinity Luxury | Final Fixed Build</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+    body { margin: 0; background: #080808; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    .content-layer { position: relative; z-index: 10; width: 100%; }
 
-        /* Babban Hoton Sama */
-        .hero-container { width: 100%; height: 115vw; position: relative; overflow: hidden; background: #111; }
-        #dynamic-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+    /* FULL PAGE VIEWER - NO BORDERS */
+    #fullscreen-viewer { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: black; z-index: 2000; }
+    .fs-slider { display: flex; width: 100%; height: 100%; overflow-x: scroll; scroll-snap-type: x mandatory; }
+    .fs-slider img { min-width: 100vw; width: 100vw; height: 100vh; object-fit: cover; scroll-snap-align: start; }
+    .close-fs { position: absolute; top: 20px; right: 20px; font-size: 35px; z-index: 2001; }
 
-        /* Katin Bayani */
-        .floating-card { 
-            background: rgba(20, 20, 20, 0.7); 
-            backdrop-filter: blur(25px); 
-            margin: -40px 15px 20px 15px; 
-            padding: 30px 20px; 
-            border-radius: 35px; 
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-            position: relative; 
-            z-index: 10;
-        }
-        .price-tag { 
-            font-size: 38px; 
-            font-weight: 900; 
-            background: linear-gradient(to right, #fff, #aaa); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-        }
+    .hero-container { width: 100%; height: 115vw; position: relative; overflow: hidden; }
+    .hero-slider { display: flex; width: 100%; height: 100%; overflow-x: scroll; scroll-snap-type: x mandatory; }
+    .hero-slider img { min-width: 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
 
-        /* AI Module */
-        .ai-module { 
-            background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(0,0,0,0.9)); 
-            border: 1px solid rgba(0, 242, 255, 0.2); 
-            padding: 20px; 
-            border-radius: 24px; 
-            margin-top: 20px; 
-            position: relative; 
-            overflow: hidden; 
-        }
-        .scan-line { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 2px; 
-            background: #00f2ff; 
-            box-shadow: 0 0 15px #00f2ff; 
-            animation: scanMove 4s infinite linear; 
-        }
-        @keyframes scanMove { 0% { top: 0% } 100% { top: 100% } }
+    .floating-card { background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(25px); margin: -40px 15px 20px 15px; padding: 30px 20px; border-radius: 35px; border: 1px solid rgba(255, 255, 255, 0.08); }
+    .price-tag { font-size: 38px; font-weight: 900; background: linear-gradient(to right, #fff, #aaa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* SALES BOY - GLOW & POSITION FIX */
-        #sales-boy-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 85px;
-            z-index: 999999 !important;
-            pointer-events: none;
-        }
-        #ai-person {
-            width: 100%;
-            height: auto;
-            border-radius: 15px;
-            border: 2px solid #00f2ff;
-            background: #111;
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.7);
-            animation: breathe 3s ease-in-out infinite;
-        }
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.08); opacity: 1; }
-        }
+    .ai-module { background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(0,0,0,0.9)); border: 1px solid rgba(0, 242, 255, 0.2); padding: 20px; border-radius: 24px; margin-top: 20px; position: relative; overflow: hidden; }
+    .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: #00f2ff; box-shadow: 0 0 15px #00f2ff; animation: scanMove 4s infinite linear; }
+    @keyframes scanMove { 0% { top: 0% } 100% { top: 100% } }
 
-        .section-title { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 5px; text-transform: uppercase; margin: 40px 20px 10px 20px; display: block; }
-    </style>
+    .spec-box { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; height: 55px; background: rgba(255,255,255,0.03); border-radius: 18px; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; }
+    .color-dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; }
+    .color-dot.active { border-color: white; }
+    #size-dropdown { display: none; background: #111; border-radius: 20px; margin: 10px 15px; padding: 15px; border: 1px solid rgba(255,255,255,0.1); }
+
+    .proof-section { position: relative; width: 100%; margin-top: 20px; }
+    .cropped-view { width: 100%; height: 180px; overflow: hidden; position: relative; border-radius: 25px 25px 0 0; }
+    .cropped-view img { width: 100%; position: absolute; top: 0; object-fit: cover; }
+    .see-all-overlay { position: absolute; bottom: 10px; left: 0; width: 100%; text-align: center; z-index: 20; }
+    .hidden-stack { display: none; }
+    .triple-stack img { width: 100%; border-radius: 25px; margin-bottom: 10px; height: 100vw; object-fit: cover; }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .section-title { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 5px; text-transform: uppercase; margin: 40px 20px 20px 20px; display: block; }
+
+     #sales-boy-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 150px; /* Mun kara girma domin a ga fuskarsa sosai */
+    height: 150px;
+    background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop') no-repeat center; /* Hoton mutum na gaske */
+    background-size: cover;
+    border-radius: 20px; /* Siffar murabba'i mai lankwasa (kamar kiran video) */
+    border: 2px solid rgba(0, 255, 204, 0.8);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 255, 204, 0.2);
+    z-index: 10000;
+    overflow: hidden;
+    transition: all 0.4s ease-out;
+}
+
+/* Saka masa "Glass Overlay" domin ya yi kama da futuristic screen */
+#sales-boy-container::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(0, 255, 204, 0.1), transparent);
+    pointer-events: none;
+                }
+                   
+
+</style>
 </head>
 <body>
 
+<div id="fullscreen-viewer">
+    <span class="close-fs" onclick="closeFS()">&times;</span>
+    <div class="fs-slider no-scrollbar" id="fsSlider"></div>
+</div>
+
 <div class="content-layer">
-    <div class="hero-container">
-        <img src="https://www.pngarts.com/files/3/Man-With-Suit-PNG-High-Quality-Image.png" id="dynamic-img">
+  <div class="hero-container">
+    <div class="hero-slider no-scrollbar" id="main-slider">
+        <img src="" id="dynamic-img" onclick="openFS([this.src])">
     </div>
+  </div>
+    
 
     <div class="floating-card">
-        <h1 id="product-name" class="text-2xl font-bold mb-2">Executive Brocade Wax</h1>
-        <div class="price-tag" id="main-price">₦18,500</div>
-        
+        <div class="flex justify-between items-start">
+            <div><h1 class="text-2xl font-bold mb-2">Signature Ice Fiber<br>Elite Edition</h1><div class="price-tag">₦7,671</div></div>
+            <div class="bg-white/10 px-3 py-1 rounded-full text-[10px] font-bold">-69%</div>
+        </div>
+        <div class="flex justify-between items-center mt-6">
+            <div class="text-sm text-gray-400">145 sold | Sold by <span class="bg-white text-purple-700 px-2 rounded-full font-black text-[8px]">WOLAY</span> <i class="fa-solid fa-chevron-right text-[8px]"></i></div>
+            <div class="text-[#ff9500] font-bold flex items-center gap-1 bg-[#ff95001a] px-3 py-1.5 rounded-lg">5.0 <div class="flex text-[8px] gap-0.5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
+        </div>
+
         <div class="ai-module">
             <div class="scan-line"></div>
             <div class="flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-microchip text-cyan-400"></i>
-                    <div>
-                        <h3 class="text-xs font-bold text-white uppercase">Neural Stitch V.2</h3>
-                        <p class="text-[9px] text-gray-500">READY TO SCAN</p>
-                    </div>
-                </div>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-cyan-400/10 rounded-full flex items-center justify-center border border-cyan-400/30"><i class="fa-solid fa-microchip text-cyan-400"></i></div><div><h3 class="text-xs font-bold text-white uppercase">Neural Stitch V.2</h3><p class="text-[9px] text-gray-500">READY TO SCAN</p></div></div>
                 <button class="text-[10px] border border-cyan-400/50 px-4 py-2 rounded-lg">SCAN</button>
+            </div>
+        </div>
+    </div>
+
+    <span class="section-title">Specifications</span>
+    <div class="px-5 space-y-3">
+        <div class="spec-box" onclick="this.nextElementSibling.style.display = 'none'">
+            <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Colorway</span>
+            <div class="flex gap-2">
+                <div class="color-dot bg-blue-600 active" onclick="event.stopPropagation(); this.parentElement.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active')); this.classList.add('active')"></div>
+                <div class="color-dot bg-pink-500" onclick="event.stopPropagation(); this.parentElement.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active')); this.classList.add('active')"></div>
+                <div class="color-dot bg-green-700" onclick="event.stopPropagation(); this.parentElement.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active')); this.classList.add('active')"></div>
+            </div>
+        </div>
+
+        <div class="spec-box" onclick="let d=document.getElementById('size-dropdown'); d.style.display=d.style.display==='block'?'none':'block'">
+            <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Size</span>
+            <div class="flex gap-4 items-center"><span class="text-xs font-bold text-gray-400">S</span><span class="text-xs font-bold">M</span><i class="fa-solid fa-chevron-down text-[10px]"></i></div>
+        </div>
+        <div id="size-dropdown">
+            <div class="grid grid-cols-5 gap-2 text-[10px] text-center font-bold">
+                <div class="p-2 border border-white/10 rounded">L</div><div class="p-2 border border-white/10 rounded">XL</div><div class="p-2 border border-white/10 rounded">2XL</div><div class="p-2 border border-white/10 rounded">3XL</div><div class="p-2 border border-white/10 rounded">4XL</div>
+            </div>
+        </div>
+
+        <div class="spec-box"><span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Quantity</span>
+            <div class="flex gap-5 items-center"><button class="text-2xl text-gray-500" onclick="let q=this.nextElementSibling; if(parseInt(q.innerText)>1) q.innerText=parseInt(q.innerText)-1">-</button><span class="font-bold">1</span><button class="text-2xl" onclick="let q=this.previousElementSibling; q.innerText=parseInt(q.innerText)+1">+</button></div>
+        </div>
+    </div>
+
+    <span class="section-title">Verified Reviews</span>
+    <div class="px-5">
+        <div class="p-6 bg-white/5 rounded-[30px] border border-white/5">
+            <p class="text-sm italic text-gray-300">"The material is incredibly soft. It feels like a second skin. 10/10 recommended."</p>
+            <div class="mt-4 flex items-center gap-3">
+                <div class="w-8 h-8 bg-gray-700 rounded-full"></div>
+                <span class="text-[10px] font-bold text-gray-500 uppercase">Amina M. — Abuja</span>
             </div>
         </div>
     </div>
 
     <span class="section-title">Visual Proof</span>
     <div class="px-5">
-        <div id="proof-container" style="width: 100%; height: 200px; background: #111; border-radius: 25px; overflow: hidden; border: 1px solid #333;">
-            <img src="" id="proof-img" style="width: 100%; height: 100%; object-fit: cover;">
+        <div class="proof-section">
+            <div class="cropped-view" id="croppedView" onclick="openFS(['https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200','https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=1200','https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200'])">
+                <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200">
+            </div>
+            <div class="see-all-overlay" id="seeAllBox">
+                <span class="text-[10px] font-bold cursor-pointer bg-black/40 px-4 py-1 rounded-full" onclick="showStack()">See all <i class="fa-solid fa-chevron-down"></i></span>
+            </div>
+            <div class="hidden-stack triple-stack" id="tripleStack">
+                <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200" onclick="openFS(['https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200','https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=1200','https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200'])">
+                <img src="https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=1200" onclick="openFS(['https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200','https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=1200','https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200'])">
+                <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200" onclick="openFS(['https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200','https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=1200','https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200'])">
+            </div>
+        </div>
+
+        <div class="mt-8 border-t border-white/5 pt-4 mb-24">
+            <div class="flex gap-6 overflow-x-auto no-scrollbar"><span class="text-xs font-black border-b-2 border-white pb-2">Recommended</span><span class="text-xs text-gray-500 pb-2">Men's Underwear</span></div>
+            <div class="grid grid-cols-2 gap-3 mt-4">
+                <div class="bg-white/5 aspect-square rounded-2xl relative"><div class="absolute bottom-2 right-2 bg-green-500 rounded-full p-1"><i class="fa-solid fa-cart-shopping text-[8px]"></i></div></div>
+                <div class="bg-white/5 aspect-square rounded-2xl relative"><div class="absolute bottom-2 right-2 bg-green-500 rounded-full p-1"><i class="fa-solid fa-cart-shopping text-[8px]"></i></div></div>
+            </div>
         </div>
     </div>
 </div>
 
-<div id="sales-boy-container">
-    <img src="https://www.pngarts.com/files/3/Man-With-Suit-PNG-High-Quality-Image.png" id="ai-person">
-</div>
-
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // 1. Bayanan Atamfa na Asali (Fallback)
-    const defaultProduct = {
-        name: "Executive Brocade Wax",
-        price: "18500",
-        img: "https://www.shutterstock.com/shutterstock/photos/2171120031/display_1500/stock-photo-textile-fashion-african-print-fabric-bright-colors-and-ornate-designs-suitable-for-clothing-2171120031.jpg"
-    };
+ document.body.innerHTML += '<div id="sales-boy-container"></div>';   
+function openFS(imgs) {
+    const s = document.getElementById('fsSlider');
+    s.innerHTML = imgs.map(i => `<img src="${i}">`).join('');
+    document.getElementById('fullscreen-viewer').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+function closeFS() {
+    document.getElementById('fullscreen-viewer').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+function showStack() {
+    document.getElementById('croppedView').style.display = 'none';
+    document.getElementById('seeAllBox').style.display = 'none';
+    document.getElementById('tripleStack').style.display = 'block';
+}
 
-    // 2. Duba ko akwai sabon kaya a localStorage
-    let product = defaultProduct;
-    const storedData = localStorage.getItem('selectedProduct');
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Dauko bayanan daga localStorage
+    const data = localStorage.getItem('selectedProduct');
     
-    if (storedData) {
-        try {
-            const parsed = JSON.parse(storedData);
-            if(parsed.img && parsed.img !== "") product = parsed;
-        } catch(e) { console.error("Error loading data"); }
+    if (data) {
+        const product = JSON.parse(data);
+        
+        // 2. Saka hoton Atamfar a babban Slider
+        const mainImg = document.getElementById('dynamic-img');
+        if(mainImg) mainImg.src = product.img;
+        
+        // 3. Saka hoton a Cropped View (Visual Proof)
+        const croppedImg = document.querySelector('.cropped-view img');
+        if(croppedImg) croppedImg.src = product.img;
+        
+        // 4. Saka sunan Atamfar
+        document.querySelector('h1').innerText = product.name;
+        
+        // 5. Saka farashin Atamfar
+        document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
+        
+        // 6. Gyara hotunan dake cikin "See All" stack
+        const stackImgs = document.querySelectorAll('#tripleStack img');
+        stackImgs.forEach(img => img.src = product.img);
+    }
+});
+
+    
+    // Wannan ita ce dabarar "Central Scan"
+async function findProductInNetwork(productName) {
+    const databaseRef = firebase.database().ref('vendors');
+    
+    try {
+        const snapshot = await databaseRef.once('value');
+        const allVendors = snapshot.val();
+        let suggestions = [];
+
+        for (let vendorId in allVendors) {
+            let vendor = allVendors[vendorId];
+            // Duba ko wannan vendor din yana da irin kayan da ake nema
+            let match = vendor.products.find(p => p.name.toLowerCase().includes(productName.toLowerCase()));
+            
+            if (match) {
+                suggestions.push({
+                    vendorName: vendor.name,
+                    product: match,
+                    link: `https://afita-dubu.vercel.app/shop/${vendorId}?product=${match.id}`
+                });
+            }
+        }
+        return suggestions;
+    } catch (error) {
+        console.error("Network Error:", error);
+        return [];
     }
 
-    // 3. Saka bayanan a shafi
-    document.getElementById('dynamic-img').src = product.img;
-    document.getElementById('proof-img').src = product.img;
-    document.getElementById('product-name').innerText = product.name;
-    document.getElementById('main-price').innerText = "₦" + Number(product.price).toLocaleString();
+    async function recommendFromNetwork(searchQuery) {
+    // 1. Kira dabarar bincike dake cikin code din farko
+    const results = await findProductInNetwork(searchQuery);
+    
+    // 2. Idan an samu kaya a wani shagon
+    if (results.length > 0) {
+        const bestMatch = results[0]; // Dauko shago na farko da aka samu
+        
+        speak(`Gaskiya bani da wannan kalar yanzu, amma abokinmu na shagon ${bestMatch.vendorName} yana da shi. Kana so na kai ka can?`);
+        
+        // Zaka iya nuna button na "A'a" ko "Eh, mu je"
+        showRecommendationButton(bestMatch.link);
+    } else {
+        speak("Gaskiya wannan kalar babu ita a kusa yanzu, amma zan cigaba da duba maka.");
+    }
+    }
+    
+}
+
+    // Function din da zai tura kaya zuwa Central Firebase Store
+function syncCurrentProductToFirebase(productData) {
+   
+    // Tabbatar muna da ID na musamman ga kowane kaya
+    const productId = productData.id || "product_" + Date.now();
+    const vendorId = "vendor_001"; // ID dinka na Wolay Store
+    
+    const productRef = firebase.database().ref('vendors/' + vendorId + '/products/' + productId);
+
+    productRef.set({
+        name: productData.name,
+        price: productData.price,
+        image: productData.image || productData.img, // Ya danganta da sunan da kake amfani dashi
+        category: "Atamfa",
+        status: "available",
+        lastSeen: new Date().toISOString()
+    }).then(() => {
+        console.log("Sales Boy: Na riga na kai bayanan wannan atamfar zuwa babban rumbu!");
+    }).catch((error) => {
+        console.error("Kuskure wajen tura kaya:", error);
+    });
+}
+
+const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
+
+if (selectedProduct) {
+    syncCurrentProductToFirebase(selectedProduct);
+                   }
+
+    
+    // Wannan zai nuna wasu kayan daga shagonka (vendor_001)
+function suggestInternalProducts() {
+    const dbRef = firebase.database().ref('vendors/vendor_001/products');
+    
+    dbRef.limitToFirst(3).once('value', (snapshot) => {
+        const products = snapshot.val();
+        if (products) {
+            speak("Muna da wasu kalar ma a shagonmu, ko kana so ka gani?");
+            // Anan zaka iya fitar da hotunan kayan a gefen Sales Boy
+            console.log("Sales Boy is suggesting internal products:", products);
+        }
+    });
+}
+
+// Zaka iya saita lokaci, misali bayan sakan 10 customer yana kallon kaya daya
+setTimeout(suggestInternalProducts, 10000);
+
+
+    const salesBoy = document.getElementById('sales-boy-container');
+
+// 1. Motsi na Rayuwa (Idle Animation)
+function breathingEffect() {
+    let val = 0;
+    setInterval(() => {
+        val += 0.05;
+        const scale = 1 + Math.sin(val) * 0.02; // Zai rika girma da raguwa kadan kamar yana numfashi
+        const rotate = Math.cos(val) * 1; // Zai rika karkata kadan
+        salesBoy.style.transform = `scale(${scale}) rotate(${rotate}deg)`;
+    }, 50);
+}
+breathingEffect();
+
+// 2. Bin Customer (Smart Following)
+window.addEventListener('scroll', () => {
+    const offset = window.scrollY * 0.1;
+    // Zai rika yawo kadan sama da kasa yayin da kake scroll
+    salesBoy.style.bottom = `${20 + Math.sin(offset / 10) * 15}px`;
 });
+    
+    
 </script>
 </body>
-</html>
+                                                                                                                                   </html>
