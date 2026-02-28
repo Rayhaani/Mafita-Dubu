@@ -312,31 +312,33 @@ function suggestInternalProducts() {
 setTimeout(suggestInternalProducts, 10000);
 
     
-// Kirkirar Sales Boy ba tare da frame ba
-const salesBoyDiv = document.createElement('div');
-salesBoyDiv.id = 'sales-boy-container';
-// Saka hoton mutumin daka zaba (Gwara PNG mai kyau ba tare da background ba)
-salesBoyDiv.innerHTML = `<img src="https://i.ibb.co/LzNfXmB/ai-sales-boy.png" id="ai-person">`;
-document.body.appendChild(salesBoyDiv);
+// A goge tsohon, a saka wannan a madadin sa:
+const salesContainer = document.createElement('div');
+salesContainer.id = 'sales-boy-container';
+salesContainer.innerHTML = `<img src="https://i.ibb.co/LzNfXmB/ai-sales-boy.png" id="ai-person" style="width:100%; height:auto;">`;
+document.body.appendChild(salesContainer);
 
-// Motsin numfashi (Breathing)
+// Motsin numfashi
 function startBreathing() {
     const img = document.getElementById('ai-person');
-    let scale = 1;
-    let growing = true;
-    
-    setInterval(() => {
-        if (growing) {
-            scale += 0.002;
-            if (scale >= 1.05) growing = false;
-        } else {
-            scale -= 0.002;
-            if (scale <= 1) growing = true;
-        }
-        img.style.transform = `scale(${scale})`;
-    }, 50);
+    if (img) {
+        let scale = 1;
+        let growing = true;
+        setInterval(() => {
+            if (growing) {
+                scale += 0.003;
+                if (scale >= 1.08) growing = false;
+            } else {
+                scale -= 0.003;
+                if (scale <= 1) growing = true;
+            }
+            img.style.transform = `scale(${scale})`;
+        }, 50);
+    }
 }
-startBreathing();
+
+// Kira function din bayan sakan 1 domin komai ya gama loda wa
+setTimeout(startBreathing, 1000);
     
       
     
