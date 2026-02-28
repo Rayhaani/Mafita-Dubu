@@ -43,26 +43,23 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .section-title { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 5px; text-transform: uppercase; margin: 40px 20px 20px 20px; display: block; }
 
-    #sales-boy-container {
+#sales-boy-container {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 120px;
+    width: 100px; /* Mun rage girman kadan don ya yi daidai da waya */
     height: auto;
-    z-index: 2147483647; /* Lamba mafi girma a coding domin ya fito fili */
+    z-index: 999999 !important;
     pointer-events: auto;
     display: block !important;
 }
-
 #ai-person {
     width: 100%;
     height: auto;
-    border-radius: 20px;
-    border: 2px solid #00f2ff;
-    box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
-                  }
-                      
-                   
+    border-radius: 15px;
+    filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.5));
+                       }
+                                                     
 
 </style>
 </head>
@@ -302,24 +299,23 @@ function suggestInternalProducts() {
 // Zaka iya saita lokaci, misali bayan sakan 10 customer yana kallon kaya daya
 setTimeout(suggestInternalProducts, 10000);
 
-
-   // 1. Kirkirar "Empty Functions" domin gudun Error
+    
+    // 1. Dole mu saka wadannan don gudun Error
 function speak(text) { console.log("AI Says: " + text); }
-function showRecommendationButton(link) { console.log("Link: " + link); }
 
-// 2. Wannan shi ne zai fito da hoton yanzu-yanzu
-function forceInjectSalesBoy() {
-    // Idan an riga an saka shi, kar a sake
+// 2. Wannan shi ne babban aikin
+function injectSalesBoyNow() {
+    // Idan akwai shi riga, mu bar shi
     if (document.getElementById('sales-boy-container')) return;
 
     const div = document.createElement('div');
     div.id = 'sales-boy-container';
-    // Mun canza hoton zuwa wani link mai karfi (Avatar)
-    div.innerHTML = `<img src="https://i.ibb.co/LzNfXmB/ai-sales-boy.png" id="ai-person" onerror="this.src='https://www.pngarts.com/files/3/Man-With-Suit-PNG-High-Quality-Image.png'">`;
+    // Mun saka hoton mutum mai suit (Professional Look)
+    div.innerHTML = `<img src="https://www.pngarts.com/files/3/Man-With-Suit-PNG-High-Quality-Image.png" id="ai-person">`;
     
     document.body.appendChild(div);
 
-    // Motsin numfashi
+    // Motsin numfashi (Breathing effect)
     const img = document.getElementById('ai-person');
     let scale = 1;
     let growing = true;
@@ -332,11 +328,11 @@ function forceInjectSalesBoy() {
     }, 50);
 }
 
-// Kira shi ta hanyoyi biyu domin tabbatarwa
-window.onload = forceInjectSalesBoy;
-setTimeout(forceInjectSalesBoy, 500);
+// Kira shi ta kowane hali
+window.onload = injectSalesBoyNow;
+setTimeout(injectSalesBoyNow, 500);
     
-    
+
     
 </script>
 </body>
