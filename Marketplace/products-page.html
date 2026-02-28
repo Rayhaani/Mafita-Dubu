@@ -303,28 +303,38 @@ function suggestInternalProducts() {
 setTimeout(suggestInternalProducts, 10000);
 
 
-   // Wannan zai saka hoton kai tsaye bayan komai ya loda
-window.addEventListener('load', function() {
-    const salesBoyHTML = `
-        <div id="sales-boy-container">
-            <img src="https://www.pngarts.com/files/3/Man-With-Suit-PNG-High-Quality-Image.png" id="ai-person">
-        </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', salesBoyHTML);
+   // 1. Kirkirar "Empty Functions" domin gudun Error
+function speak(text) { console.log("AI Says: " + text); }
+function showRecommendationButton(link) { console.log("Link: " + link); }
+
+// 2. Wannan shi ne zai fito da hoton yanzu-yanzu
+function forceInjectSalesBoy() {
+    // Idan an riga an saka shi, kar a sake
+    if (document.getElementById('sales-boy-container')) return;
+
+    const div = document.createElement('div');
+    div.id = 'sales-boy-container';
+    // Mun canza hoton zuwa wani link mai karfi (Avatar)
+    div.innerHTML = `<img src="https://i.ibb.co/LzNfXmB/ai-sales-boy.png" id="ai-person" onerror="this.src='https://www.pngarts.com/files/3/Man-With-Suit-PNG-High-Quality-Image.png'">`;
     
+    document.body.appendChild(div);
+
     // Motsin numfashi
     const img = document.getElementById('ai-person');
-    if(img) {
-        let scale = 1;
-        let growing = true;
-        setInterval(() => {
-            scale = growing ? scale + 0.002 : scale - 0.002;
-            if(scale >= 1.05) growing = false;
-            if(scale <= 1) growing = true;
-            img.style.transform = `scale(${scale})`;
-        }, 50);
-    }
-});
+    let scale = 1;
+    let growing = true;
+    setInterval(() => {
+        if(!img) return;
+        scale = growing ? scale + 0.002 : scale - 0.002;
+        if(scale >= 1.05) growing = false;
+        if(scale <= 1) growing = true;
+        img.style.transform = `scale(${scale})`;
+    }, 50);
+}
+
+// Kira shi ta hanyoyi biyu domin tabbatarwa
+window.onload = forceInjectSalesBoy;
+setTimeout(forceInjectSalesBoy, 500);
     
     
     
