@@ -43,31 +43,22 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .section-title { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 5px; text-transform: uppercase; margin: 40px 20px 20px 20px; display: block; }
 
-     #sales-boy-container {
+    #sales-boy-container {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 150px; /* Mun kara girma domin a ga fuskarsa sosai */
-    height: 150px;
-    background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop') no-repeat center; /* Hoton mutum na gaske */
-    background-size: cover;
-    border-radius: 20px; /* Siffar murabba'i mai lankwasa (kamar kiran video) */
-    border: 2px solid rgba(0, 255, 204, 0.8);
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 255, 204, 0.2);
-    z-index: 10000;
-    overflow: hidden;
-    transition: all 0.4s ease-out;
+    bottom: 10px;
+    right: 10px;
+    width: 120px;
+    z-index: 9999999;
+    pointer-events: none; /* Domin kada ya hana ka taba hotunan dake bayansa */
 }
 
-/* Saka masa "Glass Overlay" domin ya yi kama da futuristic screen */
-#sales-boy-container::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(rgba(0, 255, 204, 0.1), transparent);
-    pointer-events: none;
-                }
-                   
+#ai-person {
+    width: 100%;
+    height: auto;
+    /* Wannan zai sa shi ya fito radau ba tare da wani border ba */
+    filter: drop-shadow(0 0 8px rgba(0, 242, 255, 0.4));
+    transition: transform 0.1s ease-out;
+                                                          }            
 
 </style>
 </head>
@@ -169,166 +160,62 @@
 </div>
 
 <script>
- document.body.innerHTML += '<div id="sales-boy-container"></div>';   
+ 
+    // 1. Hana tsayawar shafi
+window.onerror = () => true;
+
+// 2. Dabarar da ta yi aiki (Force Injection)
+document.body.innerHTML += `
+    <div id="sales-boy-container">
+        <img src="https://www.pngarts.com/files/3/Man-With-Suit-PNG-High-Quality-Image.png" id="ai-person">
+    </div>
+`;
+
+// 3. Gyara Slider da Bayanan Kaya bayan anyi innerHTML
+function refreshData() {
+    const data = localStorage.getItem('selectedProduct');
+    if (data) {
+        const product = JSON.parse(data);
+        if(document.getElementById('dynamic-img')) document.getElementById('dynamic-img').src = product.img;
+        document.querySelector('h1').innerText = product.name;
+        document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
+        
+        // Gyara Visual Proof
+        const croppedImg = document.querySelector('.cropped-view img');
+        if(croppedImg) croppedImg.src = product.img;
+        const stackImgs = document.querySelectorAll('#tripleStack img');
+        stackImgs.forEach(img => img.src = product.img);
+    }
+}
+
+// 4. Motsin Numfashi
+let scale = 1, growing = true;
+setInterval(() => {
+    const img = document.getElementById('ai-person');
+    if(img) {
+        scale = growing ? scale + 0.001 : scale - 0.001;
+        if(scale >= 1.04) growing = false;
+        if(scale <= 1) growing = true;
+        img.style.transform = `scale(${scale})`;
+    }
+}, 60);
+
+// Kira ayyukan
+refreshData();
+
+// Viewer Functions
 function openFS(imgs) {
     const s = document.getElementById('fsSlider');
     s.innerHTML = imgs.map(i => `<img src="${i}">`).join('');
     document.getElementById('fullscreen-viewer').style.display = 'block';
-    document.body.style.overflow = 'hidden';
 }
-function closeFS() {
-    document.getElementById('fullscreen-viewer').style.display = 'none';
-    document.body.style.overflow = 'auto';
-}
+function closeFS() { document.getElementById('fullscreen-viewer').style.display = 'none'; }
 function showStack() {
     document.getElementById('croppedView').style.display = 'none';
     document.getElementById('seeAllBox').style.display = 'none';
     document.getElementById('tripleStack').style.display = 'block';
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    // 1. Dauko bayanan daga localStorage
-    const data = localStorage.getItem('selectedProduct');
     
-    if (data) {
-        const product = JSON.parse(data);
-        
-        // 2. Saka hoton Atamfar a babban Slider
-        const mainImg = document.getElementById('dynamic-img');
-        if(mainImg) mainImg.src = product.img;
-        
-        // 3. Saka hoton a Cropped View (Visual Proof)
-        const croppedImg = document.querySelector('.cropped-view img');
-        if(croppedImg) croppedImg.src = product.img;
-        
-        // 4. Saka sunan Atamfar
-        document.querySelector('h1').innerText = product.name;
-        
-        // 5. Saka farashin Atamfar
-        document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
-        
-        // 6. Gyara hotunan dake cikin "See All" stack
-        const stackImgs = document.querySelectorAll('#tripleStack img');
-        stackImgs.forEach(img => img.src = product.img);
-    }
-});
-
-    
-    // Wannan ita ce dabarar "Central Scan"
-async function findProductInNetwork(productName) {
-    const databaseRef = firebase.database().ref('vendors');
-    
-    try {
-        const snapshot = await databaseRef.once('value');
-        const allVendors = snapshot.val();
-        let suggestions = [];
-
-        for (let vendorId in allVendors) {
-            let vendor = allVendors[vendorId];
-            // Duba ko wannan vendor din yana da irin kayan da ake nema
-            let match = vendor.products.find(p => p.name.toLowerCase().includes(productName.toLowerCase()));
-            
-            if (match) {
-                suggestions.push({
-                    vendorName: vendor.name,
-                    product: match,
-                    link: `https://afita-dubu.vercel.app/shop/${vendorId}?product=${match.id}`
-                });
-            }
-        }
-        return suggestions;
-    } catch (error) {
-        console.error("Network Error:", error);
-        return [];
-    }
-
-    async function recommendFromNetwork(searchQuery) {
-    // 1. Kira dabarar bincike dake cikin code din farko
-    const results = await findProductInNetwork(searchQuery);
-    
-    // 2. Idan an samu kaya a wani shagon
-    if (results.length > 0) {
-        const bestMatch = results[0]; // Dauko shago na farko da aka samu
-        
-        speak(`Gaskiya bani da wannan kalar yanzu, amma abokinmu na shagon ${bestMatch.vendorName} yana da shi. Kana so na kai ka can?`);
-        
-        // Zaka iya nuna button na "A'a" ko "Eh, mu je"
-        showRecommendationButton(bestMatch.link);
-    } else {
-        speak("Gaskiya wannan kalar babu ita a kusa yanzu, amma zan cigaba da duba maka.");
-    }
-    }
-    
-}
-
-    // Function din da zai tura kaya zuwa Central Firebase Store
-function syncCurrentProductToFirebase(productData) {
-   
-    // Tabbatar muna da ID na musamman ga kowane kaya
-    const productId = productData.id || "product_" + Date.now();
-    const vendorId = "vendor_001"; // ID dinka na Wolay Store
-    
-    const productRef = firebase.database().ref('vendors/' + vendorId + '/products/' + productId);
-
-    productRef.set({
-        name: productData.name,
-        price: productData.price,
-        image: productData.image || productData.img, // Ya danganta da sunan da kake amfani dashi
-        category: "Atamfa",
-        status: "available",
-        lastSeen: new Date().toISOString()
-    }).then(() => {
-        console.log("Sales Boy: Na riga na kai bayanan wannan atamfar zuwa babban rumbu!");
-    }).catch((error) => {
-        console.error("Kuskure wajen tura kaya:", error);
-    });
-}
-
-const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
-
-if (selectedProduct) {
-    syncCurrentProductToFirebase(selectedProduct);
-                   }
-
-    
-    // Wannan zai nuna wasu kayan daga shagonka (vendor_001)
-function suggestInternalProducts() {
-    const dbRef = firebase.database().ref('vendors/vendor_001/products');
-    
-    dbRef.limitToFirst(3).once('value', (snapshot) => {
-        const products = snapshot.val();
-        if (products) {
-            speak("Muna da wasu kalar ma a shagonmu, ko kana so ka gani?");
-            // Anan zaka iya fitar da hotunan kayan a gefen Sales Boy
-            console.log("Sales Boy is suggesting internal products:", products);
-        }
-    });
-}
-
-// Zaka iya saita lokaci, misali bayan sakan 10 customer yana kallon kaya daya
-setTimeout(suggestInternalProducts, 10000);
-
-
-    const salesBoy = document.getElementById('sales-boy-container');
-
-// 1. Motsi na Rayuwa (Idle Animation)
-function breathingEffect() {
-    let val = 0;
-    setInterval(() => {
-        val += 0.05;
-        const scale = 1 + Math.sin(val) * 0.02; // Zai rika girma da raguwa kadan kamar yana numfashi
-        const rotate = Math.cos(val) * 1; // Zai rika karkata kadan
-        salesBoy.style.transform = `scale(${scale}) rotate(${rotate}deg)`;
-    }, 50);
-}
-breathingEffect();
-
-// 2. Bin Customer (Smart Following)
-window.addEventListener('scroll', () => {
-    const offset = window.scrollY * 0.1;
-    // Zai rika yawo kadan sama da kasa yayin da kake scroll
-    salesBoy.style.bottom = `${20 + Math.sin(offset / 10) * 15}px`;
-});
     
     
 </script>
