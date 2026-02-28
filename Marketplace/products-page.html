@@ -43,22 +43,23 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .section-title { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 5px; text-transform: uppercase; margin: 40px 20px 20px 20px; display: block; }
 
-
 #sales-boy-container {
     position: fixed;
-    bottom: 10px;
-    right: 10px;
-    width: 120px;
-    z-index: 99999;
-    pointer-events: none;
-    transition: transform 0.5s ease;
+    bottom: 20px;
+    right: 20px;
+    width: 110px;
+    height: auto;
+    z-index: 999999; /* Mun kara girman lamba domin ya fito saman kowane abu */
+    pointer-events: auto;
 }
 #ai-person {
     width: 100%;
     height: auto;
-    filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.5));
+    display: block;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
                 }
-    
+                        
+
 
 </style>
 </head>
@@ -274,8 +275,6 @@ function syncCurrentProductToFirebase(productData) {
     });
 }
 
-// Kira wannan function din da zarar an bude shafin da bayanan kaya
-// Misali: idan kana amfani da localStorage wajen dauko bayanan kaya
 const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
 
 if (selectedProduct) {
@@ -300,41 +299,35 @@ function suggestInternalProducts() {
 // Zaka iya saita lokaci, misali bayan sakan 10 customer yana kallon kaya daya
 setTimeout(suggestInternalProducts, 10000);
 
-   // 1. Wannan zai tabbatar Sales Boy ya fito koda shafi bai gama loda ba
-function injectSalesBoy() {
-    const checkExist = document.getElementById('sales-boy-container');
-    if (!checkExist) {
-        const div = document.createElement('div');
-        div.id = 'sales-boy-container';
-        div.innerHTML = `<img src="https://i.ibb.co/LzNfXmB/ai-sales-boy.png" id="ai-person">`;
-        document.body.appendChild(div);
-        startBreathing();
-    }
-}
+    function injectSalesBoy() {
+    // 1. Cire idan akwai wani tsoho
+    const old = document.getElementById('sales-boy-container');
+    if(old) old.remove();
 
-// 2. Motsin numfashi
-function startBreathing() {
+    // 2. Kirkira sabo
+    const div = document.createElement('div');
+    div.id = 'sales-boy-container';
+    // Na saka maka hoton AI Professional Model (Black Suit) mai matukar kwarjini
+    div.innerHTML = `<img src="https://www.pngarts.com/files/3/Man-With-Suit-PNG-High-Quality-Image.png" id="ai-person">`;
+    document.body.appendChild(div);
+
+    // 3. Saka masa motsi
+    let scale = 1;
+    let growing = true;
     const img = document.getElementById('ai-person');
-    if (img) {
-        let scale = 1;
-        let growing = true;
-        setInterval(() => {
-            if (growing) {
-                scale += 0.002;
-                if (scale >= 1.06) growing = false;
-            } else {
-                scale -= 0.002;
-                if (scale <= 1) growing = true;
-            }
-            img.style.transform = `scale(${scale})`;
-        }, 50);
-    }
+    
+    setInterval(() => {
+        if(!img) return;
+        scale = growing ? scale + 0.002 : scale - 0.002;
+        if(scale >= 1.05) growing = false;
+        if(scale <= 1) growing = true;
+        img.style.transform = `scale(${scale})`;
+    }, 50);
 }
 
-// Kira function din
-injectSalesBoy();
-                
-
+// Kira shi bayan sakan 1
+setTimeout(injectSalesBoy, 1000);
+    
     
 </script>
 </body>
