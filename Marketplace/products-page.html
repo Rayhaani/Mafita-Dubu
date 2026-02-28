@@ -42,6 +42,28 @@
 
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .section-title { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 5px; text-transform: uppercase; margin: 40px 20px 20px 20px; display: block; }
+
+#sales-boy-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 120px; /* Mun kara girman sa */
+    height: 120px;
+    background: url('https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4') no-repeat center;
+    background-size: cover;
+    border-radius: 50%;
+    border: 3px solid #00ffcc;
+    box-shadow: 0 0 25px rgba(0, 255, 204, 0.8);
+    z-index: 10000;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Motsi mai santsi */
+}
+
+/* Idon Sales Boy (Zai rika bin taba fuska) */
+.sales-boy-eye {
+    /* Za mu iya kara wannan idan muna son asalin kwayar ido ta rika juyawa */
+}
+    
+
 </style>
 </head>
 <body>
@@ -142,6 +164,7 @@
 </div>
 
 <script>
+    document.body.innerHTML += '<div id="sales-boy-container"></div>';
 function openFS(imgs) {
     const s = document.getElementById('fsSlider');
     s.innerHTML = imgs.map(i => `<img src="${i}">`).join('');
@@ -280,26 +303,6 @@ function suggestInternalProducts() {
 
 // Zaka iya saita lokaci, misali bayan sakan 10 customer yana kallon kaya daya
 setTimeout(suggestInternalProducts, 10000);
-
-#sales-boy-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 120px; /* Mun kara girman sa */
-    height: 120px;
-    background: url('https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4') no-repeat center;
-    background-size: cover;
-    border-radius: 50%;
-    border: 3px solid #00ffcc;
-    box-shadow: 0 0 25px rgba(0, 255, 204, 0.8);
-    z-index: 10000;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Motsi mai santsi */
-}
-
-/* Idon Sales Boy (Zai rika bin taba fuska) */
-.sales-boy-eye {
-    /* Za mu iya kara wannan idan muna son asalin kwayar ido ta rika juyawa */
-        }
 
     
 const salesBoy = document.getElementById('sales-boy-container');
