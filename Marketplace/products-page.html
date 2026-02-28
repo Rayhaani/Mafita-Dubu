@@ -43,23 +43,31 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .section-title { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 5px; text-transform: uppercase; margin: 40px 20px 20px 20px; display: block; }
 
-#sales-boy-container {
+     #sales-boy-container {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 110px;
-    height: auto;
-    z-index: 999999; /* Mun kara girman lamba domin ya fito saman kowane abu */
-    pointer-events: auto;
+    width: 150px; /* Mun kara girma domin a ga fuskarsa sosai */
+    height: 150px;
+    background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop') no-repeat center; /* Hoton mutum na gaske */
+    background-size: cover;
+    border-radius: 20px; /* Siffar murabba'i mai lankwasa (kamar kiran video) */
+    border: 2px solid rgba(0, 255, 204, 0.8);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 255, 204, 0.2);
+    z-index: 10000;
+    overflow: hidden;
+    transition: all 0.4s ease-out;
 }
-#ai-person {
-    width: 100%;
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
-                }
-                        
 
+/* Saka masa "Glass Overlay" domin ya yi kama da futuristic screen */
+#sales-boy-container::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(0, 255, 204, 0.1), transparent);
+    pointer-events: none;
+                }
+                   
 
 </style>
 </head>
@@ -299,34 +307,26 @@ function suggestInternalProducts() {
 // Zaka iya saita lokaci, misali bayan sakan 10 customer yana kallon kaya daya
 setTimeout(suggestInternalProducts, 10000);
 
-    function injectSalesBoy() {
-    // 1. Cire idan akwai wani tsoho
-    const old = document.getElementById('sales-boy-container');
-    if(old) old.remove();
+const salesBoy = document.getElementById('sales-boy-container');
 
-    // 2. Kirkira sabo
-    const div = document.createElement('div');
-    div.id = 'sales-boy-container';
-    // Na saka maka hoton AI Professional Model (Black Suit) mai matukar kwarjini
-    div.innerHTML = `<img src="https://www.pngarts.com/files/3/Man-With-Suit-PNG-High-Quality-Image.png" id="ai-person">`;
-    document.body.appendChild(div);
-
-    // 3. Saka masa motsi
-    let scale = 1;
-    let growing = true;
-    const img = document.getElementById('ai-person');
-    
+// 1. Motsi na Rayuwa (Idle Animation)
+function breathingEffect() {
+    let val = 0;
     setInterval(() => {
-        if(!img) return;
-        scale = growing ? scale + 0.002 : scale - 0.002;
-        if(scale >= 1.05) growing = false;
-        if(scale <= 1) growing = true;
-        img.style.transform = `scale(${scale})`;
+        val += 0.05;
+        const scale = 1 + Math.sin(val) * 0.02; // Zai rika girma da raguwa kadan kamar yana numfashi
+        const rotate = Math.cos(val) * 1; // Zai rika karkata kadan
+        salesBoy.style.transform = `scale(${scale}) rotate(${rotate}deg)`;
     }, 50);
 }
+breathingEffect();
 
-// Kira shi bayan sakan 1
-setTimeout(injectSalesBoy, 1000);
+// 2. Bin Customer (Smart Following)
+window.addEventListener('scroll', () => {
+    const offset = window.scrollY * 0.1;
+    // Zai rika yawo kadan sama da kasa yayin da kake scroll
+    salesBoy.style.bottom = `${20 + Math.sin(offset / 10) * 15}px`;
+});
     
     
 </script>
