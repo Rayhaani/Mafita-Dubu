@@ -333,7 +333,7 @@ function switchHologram() {
 }
 setInterval(switchHologram, 8000); // Switches every full rotation
 
-// DATA SYNC
+    // DATA SYNC
 document.addEventListener('DOMContentLoaded', function() {
     const data = localStorage.getItem('selectedProduct');
     if (data) {
@@ -342,4 +342,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.cropped-view img').src = product.img;
         document.querySelector('h1').innerHTML = product.name;
         document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
-        document.qu
+        document.querySelectorAll('.stack-img').forEach(img => img.src = product.img);
+        document.querySelectorAll('.holo-img').forEach(img => img.src = product.img);
+    }
+});
+</script>
+</body>
+</html>
