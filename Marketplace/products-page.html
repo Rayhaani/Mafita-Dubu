@@ -21,20 +21,20 @@
     .hero-slider { display: flex; width: 100%; height: 100%; overflow-x: scroll; scroll-snap-type: x mandatory; }
     .hero-slider img { min-width: 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
 
-    /* --- HOLOGRAM ADDED EXACTLY --- */
+    /* --- HOLOGRAM (FIXED POSITION & NO SPACE) --- */
     .hologram-stage {
         perspective: 1000px;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 250px;
-        margin-top: -30px;
+        height: 180px; /* Reduced height to eliminate space */
+        margin-top: -90px; /* Moves hologram up into the hero image area */
         position: relative;
         z-index: 50;
     }
     .virtual-card {
-        width: 180px;
-        height: 240px;
+        width: 150px;
+        height: 200px;
         position: relative;
         transform-style: preserve-3d;
         animation: floatAndRotate 8s infinite linear;
@@ -44,13 +44,13 @@
         width: 100%;
         height: 100%;
         backface-visibility: hidden;
-        border-radius: 20px;
+        border-radius: 15px;
         border: 2px solid rgba(0, 242, 255, 0.5);
         overflow: hidden;
         box-shadow: 0 0 30px rgba(0, 242, 255, 0.3);
     }
     .card-back { transform: rotateY(180deg); }
-    .card-face img { width: 100%; height: 100%; object-fit: cover; }
+    .card-face img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.5s; }
     @keyframes floatAndRotate {
         0% { transform: translateY(0) rotateY(0deg); }
         50% { transform: translateY(-15px) rotateY(180deg); }
@@ -270,13 +270,11 @@ const chatWindow = document.getElementById('chat-window');
 const chatInput = document.getElementById('chat-input');
 const chatMessages = document.getElementById('chat-messages');
 
-// TOGGLE CHAT & REACTION
+// TOGGLE CHAT
 salesBoy.onclick = () => {
     const isVisible = chatWindow.style.display === 'flex';
     chatWindow.style.display = isVisible ? 'none' : 'flex';
-    if(!isVisible) {
-        speakAI("Neural link stable. How can I assist you today?");
-    }
+    if(!isVisible) speakAI("Neural link stable. How can I assist you today?");
 };
 
 function speakAI(text) {
@@ -314,7 +312,28 @@ function showStack() {
     document.getElementById('tripleStack').style.display = 'block';
 }
 
-// DATA SYNC & HOLOGRAM SYNC
+// --- VENDOR COLLECTION FOR AUTO-CHANGE ---
+const vendorCollection = [
+    "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=500", 
+    "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500",
+    "https://images.unsplash.com/photo-1594932224828-b4b059b6f6f9?w=500"
+];
+let currentHoloIdx = 0;
+
+function switchHologram() {
+    const holoImgs = document.querySelectorAll('.holo-img');
+    currentHoloIdx = (currentHoloIdx + 1) % vendorCollection.length;
+    holoImgs.forEach(img => {
+        img.style.opacity = '0';
+        setTimeout(() => {
+            img.src = vendorCollection[currentHoloIdx];
+            img.style.opacity = '1';
+        }, 500);
+    });
+}
+setInterval(switchHologram, 8000); // Switches every full rotation
+
+// DATA SYNC
 document.addEventListener('DOMContentLoaded', function() {
     const data = localStorage.getItem('selectedProduct');
     if (data) {
@@ -323,13 +342,4 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.cropped-view img').src = product.img;
         document.querySelector('h1').innerHTML = product.name;
         document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
-        document.querySelectorAll('.stack-img').forEach(img => img.src = product.img);
-        
-        // Update Hologram Images
-        document.querySelectorAll('.holo-img').forEach(img => img.src = product.img);
-    }
-});
-</script>
-</body>
-    </html>
-                
+        document.qu
