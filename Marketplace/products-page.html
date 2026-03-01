@@ -80,19 +80,15 @@
     @keyframes pulseCore { 0% { transform: scale(1); } 100% { transform: scale(2); background: #ff00f2; } }
 
     /* --- COMPACT FUTURISTIC CHAT WINDOW --- */
+
 #chat-window {
     display: none; position: fixed; bottom: 145px; right: 20px; 
-    width: 280px; height: 380px; background: #050a15;
-    border-radius: 20px; z-index: 10001; flex-direction: column; 
-    border: 2px solid transparent;
-    background-image: linear-gradient(#050a15, #050a15), 
-                      linear-gradient(var(--angle, 0deg), #00f2ff, #ff00f2);
-    background-origin: border-box; background-clip: content-box, border-box;
-    box-shadow: 0 0 30px rgba(0, 242, 255, 0.3);
-    animation: rotateBorder 3s linear infinite;
+    width: 290px; height: 360px; background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+    border-radius: 35px 35px 5px 35px; z-index: 10001; flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.8);
 }
-@property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
-@keyframes rotateBorder { to { --angle: 360deg; } }
     
     
     }
