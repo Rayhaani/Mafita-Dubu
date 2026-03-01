@@ -342,4 +342,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.cropped-view img').src = product.img;
         document.querySelector('h1').innerHTML = product.name;
         document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
-        document.qu
+        document.querySelectorAll('.stack-img').forEach(img => img.src = product.img);
+        document.querySelectorAll('.holo-img').forEach(img => img.src = product.img);
+    }
+});
+</script>
+</body>
+</html>
