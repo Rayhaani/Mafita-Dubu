@@ -1,204 +1,345 @@
 <!DOCTYPE html>
 <html lang="ha">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infinity Luxury Final Build</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;600&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Infinity Luxury | Final Fixed Build</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+    body { margin: 0; background: #181616; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    .content-layer { position: relative; z-index: 10; width: 100%; }
 
-        body {
-            background: #E3DAC9; 
-            font-family: 'Outfit', sans-serif;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-        }
+    /* FULL PAGE VIEWER - NO BORDERS */
+    #fullscreen-viewer { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: black; z-index: 2000; }
+    .fs-slider { display: flex; width: 100%; height: 100%; overflow-x: scroll; scroll-snap-type: x mandatory; }
+    .fs-slider img { min-width: 100vw; width: 100vw; height: 100vh; object-fit: cover; scroll-snap-align: start; }
+    .close-fs { position: absolute; top: 20px; right: 20px; font-size: 35px; z-index: 2001; }
 
-        /* SLIDER SECTION */
-        .slim-slider {
-            height: 110px;
-            background: #E3DAC9;
-            overflow: hidden;
-            position: relative;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-        }
+    .hero-container { width: 100%; height: 115vw; position: relative; overflow: hidden; }
+    .hero-slider { display: flex; width: 100%; height: 100%; overflow-x: scroll; scroll-snap-type: x mandatory; }
+    .hero-slider img { min-width: 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
 
-        .slide-track {
-            display: flex;
-            width: calc(160px * 10);
-            animation: scroll 20s linear infinite;
-            height: 100%;
-            align-items: center;
-        }
+    /* --- HOLOGRAM (FIXED POSITION & NO SPACE) --- */
+    .hologram-stage {
+        perspective: 1000px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 180px; /* Reduced height to eliminate space */
+        margin-top: -90px; /* Moves hologram up into the hero image area */
+        position: relative;
+        z-index: 50;
+    }
+    .virtual-card {
+        width: 150px;
+        height: 200px;
+        position: relative;
+        transform-style: preserve-3d;
+        animation: floatAndRotate 8s infinite linear;
+    }
+    .card-face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 15px;
+        border: 2px solid rgba(0, 242, 255, 0.5);
+        overflow: hidden;
+        box-shadow: 0 0 30px rgba(0, 242, 255, 0.3);
+    }
+    .card-back { transform: rotateY(180deg); }
+    .card-face img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.5s; }
+    @keyframes floatAndRotate {
+        0% { transform: translateY(0) rotateY(0deg); }
+        50% { transform: translateY(-15px) rotateY(180deg); }
+        100% { transform: translateY(0) rotateY(360deg); }
+    }
 
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-160px * 5)); }
-        }
+    .floating-card { background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(25px); margin: -40px 15px 20px 15px; padding: 30px 20px; border-radius: 35px; border: 1px solid rgba(255, 255, 255, 0.08); }
+    .price-tag { font-size: 38px; font-weight: 900; background: linear-gradient(to right, #fff, #aaa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        .slide-card {
-            width: 140px; height: 85px; margin: 0 10px;
-            border-radius: 12px; overflow: hidden; flex-shrink: 0;
-            cursor: pointer; border: 1px solid rgba(212, 175, 55, 0.4);
-        }
+    .ai-module { background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(0,0,0,0.9)); border: 1px solid rgba(0, 242, 255, 0.2); padding: 20px; border-radius: 24px; margin-top: 20px; position: relative; overflow: hidden; }
+    .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: #00f2ff; box-shadow: 0 0 15px #00f2ff; animation: scanMove 4s infinite linear; }
+    @keyframes scanMove { 0% { top: 0% } 100% { top: 100% } }
 
-        .slide-card img { width: 100%; height: 100%; object-fit: cover; }
+    .spec-box { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; height: 55px; background: rgba(255,255,255,0.03); border-radius: 18px; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; }
+    .color-dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; }
+    .color-dot.active { border-color: white; }
+    #size-dropdown { display: none; background: #111; border-radius: 20px; margin: 10px 15px; padding: 15px; border: 1px solid rgba(255,255,255,0.1); }
 
-        /* CHAT BUBBLES */
-        .chat-space { flex: 1; padding: 15px; overflow-y: auto; scrollbar-width: none; }
+    .proof-section { position: relative; width: 100%; margin-top: 20px; }
+    .cropped-view { width: 100%; height: 180px; overflow: hidden; position: relative; border-radius: 25px 25px 0 0; }
+    .cropped-view img { width: 100%; position: absolute; top: 0; object-fit: cover; }
+    .see-all-overlay { position: absolute; bottom: 10px; left: 0; width: 100%; text-align: center; z-index: 20; }
+    .hidden-stack { display: none; }
+    .triple-stack img { width: 100%; border-radius: 25px; margin-bottom: 10px; height: 100vw; object-fit: cover; }
 
-        .bubble {
-            max-width: 82%; padding: 11px 15px; margin-bottom: 12px;
-            font-size: 14.5px; line-height: 1.4; position: relative;
-        }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .section-title { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 5px; text-transform: uppercase; margin: 40px 20px 20px 20px; display: block; }
 
-        .v-bubble { 
-            background: #1A0F0D; color: #D4AF37; 
-            border-radius: 4px 18px 18px 18px; border-left: 5px solid #FFD700;
-        }
+    /* --- DNA CORE DESIGN (UNTOUCHED) --- */
+    #sales-boy-container {
+        position: fixed; bottom: 25px; right: 15px; width: 120px; height: 120px; z-index: 10000; cursor: pointer;
+        display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(0, 242, 255, 0.1) 0%, transparent 70%);
+    }
+    .dna-strand {
+        position: absolute; width: 40px; height: 80px; border-left: 3px solid #00f2ff; border-radius: 50%;
+        animation: rotateDNA 2s linear infinite; filter: drop-shadow(0 0 10px #00f2ff);
+    }
+    .dna-strand:nth-child(2) { border-left: 3px solid #ff00f2; animation-delay: -1s; }
+    @keyframes rotateDNA {
+        0% { transform: rotateY(0deg) skewY(10deg); opacity: 0.3; }
+        50% { opacity: 1; }
+        100% { transform: rotateY(360deg) skewY(10deg); opacity: 0.3; }
+    }
+    .core-glow {
+        position: absolute; width: 20px; height: 20px; background: #fff; border-radius: 50%;
+        box-shadow: 0 0 30px #00f2ff, 0 0 60px #ff00f2; z-index: 5;
+    }
+    .particle {
+        position: absolute; width: 3px; height: 3px; background: #00f2ff; border-radius: 50%;
+        animation: floatParticle 3s infinite linear;
+    }
+    @keyframes floatParticle {
+        0% { transform: translateY(0) scale(1); opacity: 0; }
+        50% { opacity: 0.8; }
+        100% { transform: translateY(-50px) scale(0); opacity: 0; }
+    }
+    .ai-label-elite {
+        position: absolute; bottom: -15px; font-size: 8px; font-weight: 900; color: #fff;
+        text-shadow: 0 0 5px #00f2ff; letter-spacing: 3px; text-transform: uppercase;
+    }
+    .is-talking .dna-strand { animation-duration: 0.5s; border-width: 5px; }
+    .is-talking .core-glow { animation: pulseCore 0.3s infinite alternate; }
+    @keyframes pulseCore { 0% { transform: scale(1); } 100% { transform: scale(2); background: #ff00f2; } }
 
-        .u-bubble { 
-            background: #FFFFFF; color: #333; 
-            border-radius: 18px 18px 4px 18px; margin-left: auto;
-            border-right: 5px solid #D4AF37; 
-            border-top: 1px solid #EAEAEA; border-bottom: 1px solid #EAEAEA; border-left: 1px solid #EAEAEA;
-        }
-
-        .tag-box {
-            background: rgba(212, 175, 55, 0.1);
-            border-radius: 8px; padding: 5px; margin-bottom: 5px;
-            display: flex; align-items: center; gap: 8px; border-left: 3px solid #D4AF37;
-        }
-
-        /* TRUTH GATE - ADJUSTED BUTTONS */
-        #truth-gate {
-            display: none; position: fixed; inset: 0; background: #fff; z-index: 5000;
-            flex-direction: column; animation: slideUp 0.4s ease-out;
-        }
-
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-        .gate-half { flex: 1; position: relative; margin: 12px; border-radius: 35px; overflow: hidden; }
-
-        .back-icon {
-            position: absolute; bottom: 15px; left: 15px; 
-            width: 45px; height: 45px; background: white; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1); color: #B8860B; cursor: pointer;
-        }
-
-        .alert-btn {
-            position: absolute; bottom: 15px; right: 15px; 
-            background: #E11D48; color: white; padding: 12px 24px;
-            border-radius: 18px; font-weight: 800; font-size: 11px;
-            letter-spacing: 0.5px; box-shadow: 0 10px 25px rgba(225, 29, 72, 0.3);
-        }
-
-        /* GYARA: Na maido asalin padding dinka amma na kara 10px a kasa kawai */
-        .bottom-nav { padding: 10px 15px 35px; display: flex; align-items: flex-end; gap: 10px; }
-
-        .gold-trigger {
-            width: 55px; height: 55px; background: linear-gradient(135deg, #FFD700, #B8860B);
-            border-radius: 18px; display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 20px; cursor: pointer; flex-shrink: 0;
-            position: relative;
-        }
-
-        .gold-trigger::after {
-            content: ''; position: absolute; inset: -5px; border: 2px solid #FFD700;
-            border-radius: 22px; animation: pulseGlow 2s infinite;
-        }
-
-        @keyframes pulseGlow {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(1.4); opacity: 0; }
-        }
-
-        .input-pill {
-            flex: 1; min-height: 55px; background: white; 
-            border-radius: 18px; padding: 10px 18px; display: flex; align-items: flex-end;
-        }
-
-        #userInput { width: 100%; background: transparent; border: none; outline: none; resize: none; max-height: 120px; }
-    </style>
+    /* --- COMPACT FUTURISTIC CHAT WINDOW --- */
+    #chat-window {
+        display: none; position: fixed; bottom: 145px; right: 20px; 
+        width: 280px; height: 350px; background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(15px); border-radius: 25px; z-index: 10001;
+        flex-direction: column; border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+    @keyframes chatEntrance { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    #chat-header { padding: 12px 18px; background: rgba(0, 242, 255, 0.08); border-bottom: 1px solid rgba(0, 242, 255, 0.2); display: flex; justify-content: space-between; align-items: center; }
+    .online-indicator { width: 6px; height: 6px; background: #00f2ff; border-radius: 50%; box-shadow: 0 0 8px #00f2ff; animation: blink 1.5s infinite; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    #chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+    .msg-ai { align-self: flex-start; max-width: 90%; font-size: 12px; color: #b0fbff; background: rgba(0, 242, 255, 0.05); padding: 10px 14px; border-radius: 18px 18px 18px 4px; border: 1px solid rgba(0, 242, 255, 0.1); }
+    .msg-user { align-self: flex-end; max-width: 85%; font-size: 12px; color: #fff; background: linear-gradient(135deg, #0066cc, #00ccff); padding: 8px 14px; border-radius: 18px 18px 4px 18px; font-weight: 500; }
+    #chat-input-area { padding: 12px 15px; background: rgba(0,0,0,0.2); }
+    .pill-wrapper { display: flex; align-items: center; background: rgba(255, 255, 255, 0.03); border: 2px solid #fff; border-radius: 50px; padding: 3px 5px; transition: 0.3s; }
+    .pill-wrapper:focus-within { border-color: #00f2ff; box-shadow: 0 0 12px rgba(0, 242, 255, 0.3); }
+    #chat-input { flex: 1; background: transparent; border: none; padding: 6px 10px; color: white; font-size: 12px; outline: none; }
+    #send-btn { width: 30px; height: 30px; background: #00f2ff; border-radius: 50%; color: #000; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; }
+</style>
 </head>
 <body>
 
-    <div id="truth-gate">
-        <div class="gate-half" style="border: 1px solid #eee;">
-            <img src="https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=800" class="w-full h-full object-cover">
-            <div class="absolute top-6 left-6 bg-white/90 px-5 py-2 rounded-2xl text-[10px] font-black tracking-widest text-amber-800">THE PROMISE</div>
+<div id="fullscreen-viewer">
+    <span class="close-fs" onclick="closeFS()">&times;</span>
+    <div class="fs-slider no-scrollbar" id="fsSlider"></div>
+</div>
+
+<div class="content-layer">
+  <div class="hero-container">
+    <div class="hero-slider no-scrollbar" id="main-slider">
+        <img src="" id="dynamic-img" onclick="openFS([this.src])">
+    </div>
+  </div>
+
+    <div class="hologram-stage">
+        <div class="virtual-card">
+            <div class="card-face card-front"><img src="" class="holo-img"></div>
+            <div class="card-face card-back"><img src="" class="holo-img"></div>
         </div>
-        
-        <div class="gate-half bg-gray-50 flex flex-col items-center justify-center border-t-8 border-amber-500">
-            <div class="absolute top-6 left-6 bg-black text-white px-5 py-2 rounded-2xl text-[10px] font-black tracking-widest">THE REALITY</div>
-            
-            <div class="text-center">
-                <i class="fa-solid fa-expand text-gray-200 text-6xl mb-4 opacity-50"></i>
-                <h2 class="text-gray-300 font-black italic text-xl animate-pulse tracking-tighter">SCANNING LIVE FEED...</h2>
+    </div>
+    
+    <div class="floating-card">
+        <div class="flex justify-between items-start">
+            <div><h1 class="text-2xl font-bold mb-2">Signature Ice Fiber<br>Elite Edition</h1><div class="price-tag">₦7,671</div></div>
+            <div class="bg-white/10 px-3 py-1 rounded-full text-[10px] font-bold">-69%</div>
+        </div>
+        <div class="flex justify-between items-center mt-6">
+            <div class="text-sm text-gray-400">145 sold | Sold by <span class="bg-white text-purple-700 px-2 rounded-full font-black text-[8px]">WOLAY</span> <i class="fa-solid fa-chevron-right text-[8px]"></i></div>
+            <div class="text-[#ff9500] font-bold flex items-center gap-1 bg-[#ff95001a] px-3 py-1.5 rounded-lg">5.0 <div class="flex text-[8px] gap-0.5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
+        </div>
+
+        <div class="ai-module">
+            <div class="scan-line"></div>
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-cyan-400/10 rounded-full flex items-center justify-center border border-cyan-400/30"><i class="fa-solid fa-microchip text-cyan-400"></i></div><div><h3 class="text-xs font-bold text-white uppercase">Neural Stitch V.2</h3><p class="text-[9px] text-gray-500">READY TO SCAN</p></div></div>
+                <button class="text-[10px] border border-cyan-400/50 px-4 py-2 rounded-lg" onclick="speakAI('Initiating stitch analysis...')">SCAN</button>
             </div>
-            
-            <div onclick="closeCamera()" class="back-icon"><i class="fa-solid fa-arrow-left"></i></div>
-            <button onclick="alert('Evidence Captured! Sending to Support...')" class="alert-btn uppercase">Report Discrepancy</button>
         </div>
     </div>
 
-    <section class="slim-slider">
-        <div class="slide-track">
-            <div class="slide-card" onclick="pick('Luxury Wax', 'https://images.unsplash.com/photo-1582733075929-5867493b3a7d?w=100')"><img src="https://images.unsplash.com/photo-1582733075929-5867493b3a7d?w=300"></div>
-            <div class="slide-card" onclick="pick('Royal Silk', 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=100')"><img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=300"></div>
-            <div class="slide-card" onclick="pick('Gold Turban', 'https://images.unsplash.com/photo-1605518216938-7c31b7b14ad0?w=100')"><img src="https://images.unsplash.com/photo-1605518216938-7c31b7b14ad0?w=300"></div>
-            <div class="slide-card" onclick="pick('Luxury Wax', 'https://images.unsplash.com/photo-1582733075929-5867493b3a7d?w=100')"><img src="https://images.unsplash.com/photo-1582733075929-5867493b3a7d?w=300"></div>
+    <span class="section-title">Specifications</span>
+    <div class="px-5 space-y-3">
+        <div class="spec-box" onclick="this.nextElementSibling.style.display = 'none'">
+            <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Colorway</span>
+            <div class="flex gap-2">
+                <div class="color-dot bg-blue-600 active" onclick="event.stopPropagation(); this.parentElement.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active')); this.classList.add('active')"></div>
+                <div class="color-dot bg-pink-500" onclick="event.stopPropagation(); this.parentElement.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active')); this.classList.add('active')"></div>
+                <div class="color-dot bg-green-700" onclick="event.stopPropagation(); this.parentElement.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active')); this.classList.add('active')"></div>
+            </div>
         </div>
-    </section>
 
-    <main class="chat-space" id="chat">
-        <div class="bubble v-bubble">
-            Sannu abokina! Ina fatan kayan sun iso lafiya.
+        <div class="spec-box" onclick="let d=document.getElementById('size-dropdown'); d.style.display=d.style.display==='block'?'none':'block'">
+            <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Size</span>
+            <div class="flex gap-4 items-center"><span class="text-xs font-bold text-gray-400">S</span><span class="text-xs font-bold">M</span><i class="fa-solid fa-chevron-down text-[10px]"></i></div>
         </div>
-    </main>
-
-    <footer class="bottom-nav">
-        <div onclick="openCamera()" class="gold-trigger"><i class="fa-solid fa-camera"></i></div>
-        <div class="input-pill">
-            <textarea id="userInput" placeholder="Rubuta sakonku a nan..." rows="1" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
-            <button onclick="sendMessage()" class="text-black text-xl ml-2 mb-1"><i class="fa-solid fa-paper-plane"></i></button>
+        <div id="size-dropdown">
+            <div class="grid grid-cols-5 gap-2 text-[10px] text-center font-bold">
+                <div class="p-2 border border-white/10 rounded">L</div><div class="p-2 border border-white/10 rounded">XL</div><div class="p-2 border border-white/10 rounded">2XL</div><div class="p-2 border border-white/10 rounded">3XL</div><div class="p-2 border border-white/10 rounded">4XL</div>
+            </div>
         </div>
-    </footer>
 
-    <script>
-        function openCamera() { document.getElementById('truth-gate').style.display = 'flex'; }
-        function closeCamera() { document.getElementById('truth-gate').style.display = 'none'; }
+        <div class="spec-box"><span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Quantity</span>
+            <div class="flex gap-5 items-center"><button class="text-2xl text-gray-500" onclick="let q=this.nextElementSibling; if(parseInt(q.innerText)>1) q.innerText=parseInt(q.innerText)-1">-</button><span class="font-bold">1</span><button class="text-2xl" onclick="let q=this.previousElementSibling; q.innerText=parseInt(q.innerText)+1">+</button></div>
+        </div>
+    </div>
 
-        function sendMessage() {
-            let input = document.getElementById('userInput');
-            if(input.value.trim() !== "") {
-                let chat = document.getElementById('chat');
-                chat.innerHTML += `<div class="bubble u-bubble">${input.value.replace(/\n/g, '<br>')}</div>`;
-                input.value = "";
-                input.style.height = 'auto';
-                chat.scrollTop = chat.scrollHeight;
-            }
-        }
+    <span class="section-title">Verified Reviews</span>
+    <div class="px-5">
+        <div class="p-6 bg-white/5 rounded-[30px] border border-white/5">
+            <p class="text-sm italic text-gray-300">"The material is incredibly soft. It feels like a second skin. 10/10 recommended."</p>
+            <div class="mt-4 flex items-center gap-3">
+                <div class="w-8 h-8 bg-gray-700 rounded-full"></div>
+                <span class="text-[10px] font-bold text-gray-500 uppercase">Amina M. — Abuja</span>
+            </div>
+        </div>
+    </div>
 
-        function pick(name, img) {
-            let chat = document.getElementById('chat');
-            chat.innerHTML += `
-                <div class="bubble u-bubble">
-                    <div class="tag-box">
-                        <img src="${img}" style="width:40px; height:40px; border-radius:6px; object-fit:cover;">
-                        <span class="text-[11px] font-bold text-amber-700">${name}</span>
-                    </div>
-                    Ina son wannan kayan, ina buƙatar ƙarin bayani akansa.
-                </div>`;
-            chat.scrollTop = chat.scrollHeight;
-        }
-    </script>
-</body>
-    </html>
-    
+    <span class="section-title">Visual Proof</span>
+    <div class="px-5">
+        <div class="proof-section">
+            <div class="cropped-view" id="croppedView" onclick="openFS(['https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200'])">
+                <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200">
+            </div>
+            <div class="see-all-overlay" id="seeAllBox">
+                <span class="text-[10px] font-bold cursor-pointer bg-black/40 px-4 py-1 rounded-full" onclick="showStack()">See all <i class="fa-solid fa-chevron-down"></i></span>
+            </div>
+            <div class="hidden-stack triple-stack" id="tripleStack">
+                <img src="" class="stack-img">
+                <img src="" class="stack-img">
+                <img src="" class="stack-img">
+            </div>
+        </div>
+        <div class="mt-8 border-t border-white/5 pt-4 mb-24">
+            <div class="flex gap-6 overflow-x-auto no-scrollbar"><span class="text-xs font-black border-b-2 border-white pb-2">Recommended</span><span class="text-xs text-gray-500 pb-2">Men's Underwear</span></div>
+            <div class="grid grid-cols-2 gap-3 mt-4">
+                <div class="bg-white/5 aspect-square rounded-2xl relative"><div class="absolute bottom-2 right-2 bg-green-500 rounded-full p-1"><i class="fa-solid fa-cart-shopping text-[8px]"></i></div></div>
+                <div class="bg-white/5 aspect-square rounded-2xl relative"><div class="absolute bottom-2 right-2 bg-green-500 rounded-full p-1"><i class="fa-solid fa-cart-shopping text-[8px]"></i></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="chat-window">
+    <div id="chat-header">
+        <span class="text-[9px] font-bold tracking-[3px] text-cyan-400">INFINITY AI</span>
+        <div class="online-indicator"></div>
+    </div>
+    <div id="chat-messages" class="no-scrollbar">
+        <div class="msg-ai">Neural link active. ⚡</div>
+    </div>
+    <div id="chat-input-area">
+        <div class="pill-wrapper">
+            <input type="text" id="chat-input" placeholder="Rubuta sakon ka...">
+            <div id="send-btn"><i class="fa-solid fa-paper-plane"></i></div>
+        </div>
+    </div>
+</div>
+
+<script>
+// DNA CORE SCRIPT
+const salesBoy = document.createElement('div');
+salesBoy.id = 'sales-boy-container';
+salesBoy.innerHTML = `<div class="dna-strand"></div><div class="dna-strand"></div><div class="core-glow"></div><div class="ai-label-elite">Infinity AI</div>`;
+for(let i=0; i<8; i++){
+    let p = document.createElement('div');
+    p.className = 'particle'; p.style.left = Math.random() * 100 + '%'; p.style.animationDelay = Math.random() * 2 + 's';
+    salesBoy.appendChild(p);
+}
+document.body.appendChild(salesBoy);
+
+const chatWindow = document.getElementById('chat-window');
+const chatInput = document.getElementById('chat-input');
+const chatMessages = document.getElementById('chat-messages');
+
+// TOGGLE CHAT
+salesBoy.onclick = () => {
+    const isVisible = chatWindow.style.display === 'flex';
+    chatWindow.style.display = isVisible ? 'none' : 'flex';
+    if(!isVisible) speakAI("Neural link stable. How can I assist you today?");
+};
+
+function speakAI(text) {
+    window.speechSynthesis.cancel();
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = 'en-GB'; speech.rate = 0.9;
+    speech.onstart = () => salesBoy.classList.add('is-talking');
+    speech.onend = () => salesBoy.classList.remove('is-talking');
+    window.speechSynthesis.speak(speech);
+}
+
+// SEND LOGIC
+document.getElementById('send-btn').onclick = sendMessage;
+chatInput.onkeypress = (e) => { if(e.key === 'Enter') sendMessage(); };
+function sendMessage() {
+    const val = chatInput.value.trim();
+    if(!val) return;
+    const uDiv = document.createElement('div');
+    uDiv.className = 'msg-user'; uDiv.innerText = val;
+    chatMessages.appendChild(uDiv);
+    chatInput.value = '';
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// UI FUNCTIONS
+function openFS(imgs) {
+    const s = document.getElementById('fsSlider');
+    s.innerHTML = imgs.map(i => `<img src="${i}">`).join('');
+    document.getElementById('fullscreen-viewer').style.display = 'block';
+}
+function closeFS() { document.getElementById('fullscreen-viewer').style.display = 'none'; }
+function showStack() {
+    document.getElementById('croppedView').style.display = 'none';
+    document.getElementById('seeAllBox').style.display = 'none';
+    document.getElementById('tripleStack').style.display = 'block';
+}
+
+// --- VENDOR COLLECTION FOR AUTO-CHANGE ---
+const vendorCollection = [
+    "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=500", 
+    "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500",
+    "https://images.unsplash.com/photo-1594932224828-b4b059b6f6f9?w=500"
+];
+let currentHoloIdx = 0;
+
+function switchHologram() {
+    const holoImgs = document.querySelectorAll('.holo-img');
+    currentHoloIdx = (currentHoloIdx + 1) % vendorCollection.length;
+    holoImgs.forEach(img => {
+        img.style.opacity = '0';
+        setTimeout(() => {
+            img.src = vendorCollection[currentHoloIdx];
+            img.style.opacity = '1';
+        }, 500);
+    });
+}
+setInterval(switchHologram, 8000); // Switches every full rotation
+
+// DATA SYNC
+document.addEventListener('DOMContentLoaded', function() {
+    const data = localStorage.getItem('selectedProduct');
+    if (data) {
+        const product = JSON.parse(data);
+        document.getElementById('dynamic-img').src = product.img;
+        document.querySelector('.cropped-view img').src = product.img;
+        document.querySelector('h1').innerHTML = product.name;
+        document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
+        document.qu
