@@ -43,28 +43,14 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .section-title { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 5px; text-transform: uppercase; margin: 40px 20px 20px 20px; display: block; }
 
-    /* HOLOGRAPHIC DNA CORE DESIGN */
+    /* --- DNA CORE DESIGN (UNTOUCHED) --- */
     #sales-boy-container {
-        position: fixed;
-        bottom: 25px;
-        right: 15px;
-        width: 120px;
-        height: 120px;
-        z-index: 10000;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: radial-gradient(circle, rgba(0, 242, 255, 0.1) 0%, transparent 70%);
+        position: fixed; bottom: 25px; right: 15px; width: 120px; height: 120px; z-index: 10000; cursor: pointer;
+        display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(0, 242, 255, 0.1) 0%, transparent 70%);
     }
     .dna-strand {
-        position: absolute;
-        width: 40px;
-        height: 80px;
-        border-left: 3px solid #00f2ff;
-        border-radius: 50%;
-        animation: rotateDNA 2s linear infinite;
-        filter: drop-shadow(0 0 10px #00f2ff);
+        position: absolute; width: 40px; height: 80px; border-left: 3px solid #00f2ff; border-radius: 50%;
+        animation: rotateDNA 2s linear infinite; filter: drop-shadow(0 0 10px #00f2ff);
     }
     .dna-strand:nth-child(2) { border-left: 3px solid #ff00f2; animation-delay: -1s; }
     @keyframes rotateDNA {
@@ -73,20 +59,11 @@
         100% { transform: rotateY(360deg) skewY(10deg); opacity: 0.3; }
     }
     .core-glow {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        background: #fff;
-        border-radius: 50%;
-        box-shadow: 0 0 30px #00f2ff, 0 0 60px #ff00f2;
-        z-index: 5;
+        position: absolute; width: 20px; height: 20px; background: #fff; border-radius: 50%;
+        box-shadow: 0 0 30px #00f2ff, 0 0 60px #ff00f2; z-index: 5;
     }
     .particle {
-        position: absolute;
-        width: 3px;
-        height: 3px;
-        background: #00f2ff;
-        border-radius: 50%;
+        position: absolute; width: 3px; height: 3px; background: #00f2ff; border-radius: 50%;
         animation: floatParticle 3s infinite linear;
     }
     @keyframes floatParticle {
@@ -95,18 +72,36 @@
         100% { transform: translateY(-50px) scale(0); opacity: 0; }
     }
     .ai-label-elite {
-        position: absolute;
-        bottom: -15px;
-        font-size: 8px;
-        font-weight: 900;
-        color: #fff;
-        text-shadow: 0 0 5px #00f2ff;
-        letter-spacing: 3px;
-        text-transform: uppercase;
+        position: absolute; bottom: -15px; font-size: 8px; font-weight: 900; color: #fff;
+        text-shadow: 0 0 5px #00f2ff; letter-spacing: 3px; text-transform: uppercase;
     }
     .is-talking .dna-strand { animation-duration: 0.5s; border-width: 5px; }
     .is-talking .core-glow { animation: pulseCore 0.3s infinite alternate; }
     @keyframes pulseCore { 0% { transform: scale(1); } 100% { transform: scale(2); background: #ff00f2; } }
+
+    /* --- COMPACT FUTURISTIC CHAT WINDOW --- */
+    #chat-window {
+        display: none; position: fixed; bottom: 145px; right: 20px; 
+        width: 280px; height: 350px;
+        background: linear-gradient(165deg, rgba(10, 15, 25, 0.96), rgba(0, 5, 10, 0.98));
+        backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(0, 242, 255, 0.5); border-radius: 25px; z-index: 10001;
+        flex-direction: column; overflow: hidden;
+        box-shadow: 0 0 30px rgba(0, 242, 255, 0.15);
+        animation: chatEntrance 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    }
+    @keyframes chatEntrance { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    #chat-header { padding: 12px 18px; background: rgba(0, 242, 255, 0.08); border-bottom: 1px solid rgba(0, 242, 255, 0.2); display: flex; justify-content: space-between; align-items: center; }
+    .online-indicator { width: 6px; height: 6px; background: #00f2ff; border-radius: 50%; box-shadow: 0 0 8px #00f2ff; animation: blink 1.5s infinite; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    #chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+    .msg-ai { align-self: flex-start; max-width: 90%; font-size: 12px; color: #b0fbff; background: rgba(0, 242, 255, 0.05); padding: 10px 14px; border-radius: 18px 18px 18px 4px; border: 1px solid rgba(0, 242, 255, 0.1); }
+    .msg-user { align-self: flex-end; max-width: 85%; font-size: 12px; color: #fff; background: linear-gradient(135deg, #0066cc, #00ccff); padding: 8px 14px; border-radius: 18px 18px 4px 18px; font-weight: 500; }
+    #chat-input-area { padding: 12px 15px; background: rgba(0,0,0,0.2); }
+    .pill-wrapper { display: flex; align-items: center; background: rgba(255, 255, 255, 0.03); border: 2px solid #fff; border-radius: 50px; padding: 3px 5px; transition: 0.3s; }
+    .pill-wrapper:focus-within { border-color: #00f2ff; box-shadow: 0 0 12px rgba(0, 242, 255, 0.3); }
+    #chat-input { flex: 1; background: transparent; border: none; padding: 6px 10px; color: white; font-size: 12px; outline: none; }
+    #send-btn { width: 30px; height: 30px; background: #00f2ff; border-radius: 50%; color: #000; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; }
 </style>
 </head>
 <body>
@@ -182,19 +177,18 @@
     <span class="section-title">Visual Proof</span>
     <div class="px-5">
         <div class="proof-section">
-            <div class="cropped-view" id="croppedView" onclick="openFS(['https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200','https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=1200','https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200'])">
+            <div class="cropped-view" id="croppedView" onclick="openFS(['https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200'])">
                 <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200">
             </div>
             <div class="see-all-overlay" id="seeAllBox">
                 <span class="text-[10px] font-bold cursor-pointer bg-black/40 px-4 py-1 rounded-full" onclick="showStack()">See all <i class="fa-solid fa-chevron-down"></i></span>
             </div>
             <div class="hidden-stack triple-stack" id="tripleStack">
-                <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200" onclick="openFS(['https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200','https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=1200','https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200'])">
-                <img src="https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=1200" onclick="openFS(['https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200','https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=1200','https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200'])">
-                <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200" onclick="openFS(['https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200','https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=1200','https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200'])">
+                <img src="" class="stack-img">
+                <img src="" class="stack-img">
+                <img src="" class="stack-img">
             </div>
         </div>
-
         <div class="mt-8 border-t border-white/5 pt-4 mb-24">
             <div class="flex gap-6 overflow-x-auto no-scrollbar"><span class="text-xs font-black border-b-2 border-white pb-2">Recommended</span><span class="text-xs text-gray-500 pb-2">Men's Underwear</span></div>
             <div class="grid grid-cols-2 gap-3 mt-4">
@@ -205,98 +199,94 @@
     </div>
 </div>
 
+<div id="chat-window">
+    <div id="chat-header">
+        <span class="text-[9px] font-bold tracking-[3px] text-cyan-400">INFINITY AI</span>
+        <div class="online-indicator"></div>
+    </div>
+    <div id="chat-messages" class="no-scrollbar">
+        <div class="msg-ai">Neural link active. ⚡</div>
+    </div>
+    <div id="chat-input-area">
+        <div class="pill-wrapper">
+            <input type="text" id="chat-input" placeholder="Rubuta sakon ka...">
+            <div id="send-btn"><i class="fa-solid fa-paper-plane"></i></div>
+        </div>
+    </div>
+</div>
+
 <script>
-// Create DNA Hologram AI Core
+// DNA CORE SCRIPT
 const salesBoy = document.createElement('div');
 salesBoy.id = 'sales-boy-container';
-salesBoy.innerHTML = `
-    <div class="dna-strand"></div>
-    <div class="dna-strand"></div>
-    <div class="core-glow"></div>
-    <div class="ai-label-elite">Infinity AI</div>
-`;
-// Add floating particles
+salesBoy.innerHTML = `<div class="dna-strand"></div><div class="dna-strand"></div><div class="core-glow"></div><div class="ai-label-elite">Infinity AI</div>`;
 for(let i=0; i<8; i++){
     let p = document.createElement('div');
-    p.className = 'particle';
-    p.style.left = Math.random() * 100 + '%';
-    p.style.animationDelay = Math.random() * 2 + 's';
+    p.className = 'particle'; p.style.left = Math.random() * 100 + '%'; p.style.animationDelay = Math.random() * 2 + 's';
     salesBoy.appendChild(p);
 }
 document.body.appendChild(salesBoy);
 
+const chatWindow = document.getElementById('chat-window');
+const chatInput = document.getElementById('chat-input');
+const chatMessages = document.getElementById('chat-messages');
+
+// TOGGLE CHAT & REACTION
+salesBoy.onclick = () => {
+    const isVisible = chatWindow.style.display === 'flex';
+    chatWindow.style.display = isVisible ? 'none' : 'flex';
+    if(!isVisible) {
+        speakAI("Neural link stable. How can I assist you today?");
+    }
+};
+
+function speakAI(text) {
+    window.speechSynthesis.cancel();
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = 'en-GB'; speech.rate = 0.9;
+    speech.onstart = () => salesBoy.classList.add('is-talking');
+    speech.onend = () => salesBoy.classList.remove('is-talking');
+    window.speechSynthesis.speak(speech);
+}
+
+// SEND LOGIC
+document.getElementById('send-btn').onclick = sendMessage;
+chatInput.onkeypress = (e) => { if(e.key === 'Enter') sendMessage(); };
+function sendMessage() {
+    const val = chatInput.value.trim();
+    if(!val) return;
+    const uDiv = document.createElement('div');
+    uDiv.className = 'msg-user'; uDiv.innerText = val;
+    chatMessages.appendChild(uDiv);
+    chatInput.value = '';
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// UI FUNCTIONS
 function openFS(imgs) {
     const s = document.getElementById('fsSlider');
     s.innerHTML = imgs.map(i => `<img src="${i}">`).join('');
     document.getElementById('fullscreen-viewer').style.display = 'block';
-    document.body.style.overflow = 'hidden';
 }
-function closeFS() {
-    document.getElementById('fullscreen-viewer').style.display = 'none';
-    document.body.style.overflow = 'auto';
-}
+function closeFS() { document.getElementById('fullscreen-viewer').style.display = 'none'; }
 function showStack() {
     document.getElementById('croppedView').style.display = 'none';
     document.getElementById('seeAllBox').style.display = 'none';
     document.getElementById('tripleStack').style.display = 'block';
 }
 
-function speakAI(text) {
-    window.speechSynthesis.cancel();
-    const speech = new SpeechSynthesisUtterance(text);
-    speech.lang = 'en-GB';
-    speech.rate = 0.9;
-    speech.pitch = 0.6;
-    speech.onstart = () => salesBoy.classList.add('is-talking');
-    speech.onend = () => salesBoy.classList.remove('is-talking');
-    window.speechSynthesis.speak(speech);
-}
-
-window.onload = () => {
-    const data = localStorage.getItem('selectedProduct');
-    let msg = "Welcome to Infinity Luxury. Neural Link established.";
-    if (data) {
-        const product = JSON.parse(data);
-        msg = `Welcome to Infinity Luxury. System online. I see you are interested in our ${product.name}. An elite selection.`;
-    }
-    setTimeout(() => { speakAI(msg); }, 1500);
-};
-
-salesBoy.onclick = () => {
-    speakAI("Neural link stable. How can I assist you with this luxury selection today?");
-};
-
+// DATA SYNC
 document.addEventListener('DOMContentLoaded', function() {
     const data = localStorage.getItem('selectedProduct');
     if (data) {
         const product = JSON.parse(data);
-        const mainImg = document.getElementById('dynamic-img');
-        if(mainImg) mainImg.src = product.img;
-        const croppedImg = document.querySelector('.cropped-view img');
-        if(croppedImg) croppedImg.src = product.img;
-        document.querySelector('h1').innerText = product.name;
+        document.getElementById('dynamic-img').src = product.img;
+        document.querySelector('.cropped-view img').src = product.img;
+        document.querySelector('h1').innerHTML = product.name;
         document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
-        const stackImgs = document.querySelectorAll('#tripleStack img');
-        stackImgs.forEach(img => img.src = product.img);
+        document.querySelectorAll('.stack-img').forEach(img => img.src = product.img);
     }
 });
-
-// Original logic preserved
-async function findProductInNetwork(productName) {
-    const databaseRef = firebase.database().ref('vendors');
-    try {
-        const snapshot = await databaseRef.once('value');
-        const allVendors = snapshot.val();
-        let suggestions = [];
-        for (let vendorId in allVendors) {
-            let vendor = allVendors[vendorId];
-            let match = vendor.products.find(p => p.name.toLowerCase().includes(productName.toLowerCase()));
-            if (match) suggestions.push({ vendorName: vendor.name, product: match, link: `https://afita-dubu.vercel.app/shop/${vendorId}?product=${match.id}` });
-        }
-        return suggestions;
-    } catch (error) { return []; }
-}
 </script>
 </body>
-                    </html>
-                    
+</html>
