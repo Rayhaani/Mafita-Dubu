@@ -83,11 +83,15 @@
 
 #chat-window {
     display: none; position: fixed; bottom: 145px; right: 20px; 
-    width: 290px; height: 360px; background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-    border-radius: 35px 35px 5px 35px; z-index: 10001; flex-direction: column;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+    width: 280px; height: 350px; background: #0a0a0a;
+    border-radius: 25px; z-index: 10001; flex-direction: column;
+    border: 1px solid rgba(255, 0, 242, 0.5);
+    box-shadow: 0 0 20px rgba(255, 0, 242, 0.2);
+    animation: neuralPulse 4s infinite alternate;
+}
+@keyframes neuralPulse { 
+    from { box-shadow: 0 0 10px rgba(255, 0, 242, 0.2); }
+    to { box-shadow: 0 0 35px rgba(255, 0, 242, 0.6); }
 }
     
     
