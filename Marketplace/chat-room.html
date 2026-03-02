@@ -17,31 +17,55 @@
             position: fixed; width: 100%;
         }
 
-        /* SLIDER */
         .slim-slider {
             height: 110px; background: #E3DAC9; overflow: hidden;
             position: relative; border-bottom: 1px solid rgba(212, 175, 55, 0.2); flex-shrink: 0;
         }
         .slide-track { display: flex; width: max-content; animation: scroll 40s linear infinite; height: 100%; align-items: center; }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .slide-card { width: 140px; height: 85px; margin: 0 10px; border-radius: 12px; overflow: hidden; flex-shrink: 0; border: 1px solid rgba(212, 175, 55, 0.4); }
+        
+        .slide-card { 
+            width: 140px; height: 85px; margin: 0 10px; border-radius: 12px; overflow: hidden; flex-shrink: 0; 
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            background: #FDF5E6;
+        }
         .slide-card img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* CHAT AREA */
         .chat-space { flex: 1; padding: 15px; overflow-y: auto; scrollbar-width: none; padding-bottom: 140px; }
         .bubble { max-width: 82%; padding: 11px 15px; margin-bottom: 12px; font-size: 14.5px; line-height: 1.4; position: relative; }
         .v-bubble { background: #1A0F0D; color: #D4AF37; border-radius: 4px 18px 18px 18px; border-left: 5px solid #FFD700; }
         .u-bubble { background: #FFFFFF; color: #333; border-radius: 18px 18px 4px 18px; margin-left: auto; border: 1px solid #EAEAEA; }
 
-        /* TRUTH GATE */
         #truth-gate { display: none; position: fixed; inset: 0; background: #fff; z-index: 5000; flex-direction: column; }
         .gate-half { flex: 1; position: relative; margin: 12px; border-radius: 35px; overflow: hidden; }
-        .alert-btn { position: absolute; bottom: 25px; right: 15px; background: #E11D48; color: white; padding: 12px 24px; border-radius: 18px; font-weight: 800; font-size: 11px; text-transform: uppercase; box-shadow: 0 10px 25px rgba(225, 29, 72, 0.3); cursor: pointer; border:none; }
 
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #E3DAC9; padding: 10px 15px 30px; display: flex; align-items: flex-end; gap: 10px; z-index: 1000; }
-        .gold-trigger { width: 55px; height: 55px; background: linear-gradient(135deg, #FFD700, #B8860B); border-radius: 18px; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; }
-        .input-pill { flex: 1; min-height: 55px; background: white; border-radius: 18px; padding: 10px 18px; display: flex; align-items: flex-end; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        #userInput { width: 100%; background: transparent; border: none; outline: none; resize: none; max-height: 120px; font-size: 16px; }
+        /* GYARAN TYPING BAR HEIGHT */
+        .bottom-nav { 
+            position: fixed; bottom: 0; left: 0; right: 0; 
+            background: #E3DAC9; padding: 10px 10px 30px; 
+            display: flex; align-items: center; gap: 8px; z-index: 1000; 
+        }
+        
+        .input-container {
+            flex: 1; background: white; border-radius: 30px;
+            display: flex; align-items: center; padding: 0 15px;
+            height: 50px; /* Ya yi daidai da icon din gefe */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .icon-btn { color: #888; font-size: 18px; cursor: pointer; padding: 5px; }
+
+        #userInput {
+            flex: 1; background: transparent; border: none; outline: none;
+            padding: 5px; font-size: 16px; font-family: 'Outfit', sans-serif;
+            resize: none; height: 24px;
+        }
+
+        .action-circle {
+            width: 50px; height: 50px; background: #1A0F0D; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: #D4AF37; font-size: 20px; flex-shrink: 0; cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -53,13 +77,13 @@
         <div class="gate-half bg-gray-50 flex flex-col items-center justify-center border-t-8 border-amber-500">
             <h2 class="text-gray-300 font-black italic text-xl animate-pulse">SCANNING...</h2>
             <div onclick="closeCamera()" class="absolute bottom-6 left-6 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg text-amber-600"><i class="fa-solid fa-arrow-left"></i></div>
-            <button onclick="alert('Evidence Captured!')" class="alert-btn">Report Discrepancy</button>
+            <button onclick="alert('Evidence Captured!')" style="background:#E11D48; color:white; padding:12px; border-radius:15px; font-size:11px;">Report Discrepancy</button>
         </div>
     </div>
 
     <section class="slim-slider">
         <div class="slide-track" id="product-slider">
-            <div class="text-[10px] p-5 text-amber-900">Neman kaya daga Wolay Store...</div>
+            <div class="text-[10px] p-5 text-amber-900">Neman kaya...</div>
         </div>
     </section>
 
@@ -68,91 +92,94 @@
     </main>
 
     <footer class="bottom-nav">
-        <div onclick="openCamera()" class="gold-trigger"><i class="fa-solid fa-camera"></i></div>
-        <div class="input-pill">
-            <textarea id="userInput" placeholder="Rubuta sakonku a nan..." rows="1" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
-            <button onclick="sendMessage()" class="text-black text-xl ml-2 mb-1"><i class="fa-solid fa-paper-plane"></i></button>
+        <div class="input-container">
+            <label for="file-upload" class="icon-btn"><i class="fa-regular fa-image"></i></label>
+            <input id="file-upload" type="file" accept="image/*" style="display:none;" onchange="handleImage(this)">
+            
+            <textarea id="userInput" rows="1" oninput="toggleButtons(this)"></textarea>
+            
+            <div class="icon-btn" onclick="openCamera()"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        </div>
+        
+        <div id="actionBtn" class="action-circle" onclick="handleAction()">
+            <i id="actionIcon" class="fa-solid fa-microphone"></i>
         </div>
     </footer>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, onValue, child, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
+    <script>
         const firebaseConfig = {
             apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
             authDomain: "global-market-admin.firebaseapp.com",
-            databaseURL: "https://global-market-admin-default-rtdb.firebaseio.com",
             projectId: "global-market-admin",
             storageBucket: "global-market-admin.firebasestorage.app",
             appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+        const db = firebase.firestore();
 
-        // GYARA: Mun inganta yadda yake kiran folder din 'Wolay Store'
-        function loadProducts() {
+        async function loadFirestoreProducts() {
             const track = document.getElementById('product-slider');
-            // Muna kiran asalin hanyar yadda take a Screenshot dinka
-            const productsRef = ref(db, 'vendors/vendor_001/Wolay Store');
-
-            onValue(productsRef, (snapshot) => {
-                const data = snapshot.val();
-                
-                if (data) {
-                    // Idan "Wolay Store" kanta String ce fanko (kamar yadda yake a hoton Firebase), wannan zai kare code din daga tsayawa
-                    if (typeof data !== 'object') {
-                        track.innerHTML = '<div class="text-[10px] p-5">Folder tana nan amma babu kaya a ciki.</div>';
-                        return;
-                    }
-
-                    const productList = Object.values(data).filter(p => p && p.img);
-                    
-                    if(productList.length > 0) {
-                        const doubleList = [...productList, ...productList];
-                        track.innerHTML = doubleList.map(p => `
-                            <div class="slide-card" onclick="pick('${p.name || 'Product'}', '${p.img}')">
-                                <img src="${p.img}" onerror="this.src='https://via.placeholder.com/140x85?text=Hoto+Baya+Aiki'">
-                            </div>
-                        `).join('');
-                    } else {
-                        track.innerHTML = '<div class="text-[10px] p-5">Babu hotuna a cikin Wolay Store.</div>';
-                    }
-                } else {
-                    track.innerHTML = '<div class="text-[10px] p-5">Ba a samu Wolay Store a Database ba.</div>';
+            try {
+                const snapshot = await db.collection('products').get();
+                const productList = [];
+                snapshot.forEach(doc => { if (doc.data().img) productList.push(doc.data()); });
+                if (productList.length > 0) {
+                    const doubleList = [...productList, ...productList];
+                    track.innerHTML = doubleList.map(p => `
+                        <div class="slide-card" onclick="pick('${p.name || 'Luxury'}', '${p.img}')">
+                            <img src="${p.img}">
+                        </div>
+                    `).join('');
                 }
-            }, (error) => {
-                console.error(error);
-                track.innerHTML = '<div class="text-[10px] p-5">Matsalar Database: ' + error.message + '</div>';
-            });
+            } catch (err) {}
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            loadChatHistory();
-            loadProducts();
-        });
+        function toggleButtons(el) {
+            const icon = document.getElementById('actionIcon');
+            if (el.value.trim() !== "") {
+                icon.className = "fa-solid fa-paper-plane";
+            } else {
+                icon.className = "fa-solid fa-microphone";
+            }
+        }
 
-        // Saka wadannan a 'window' domin sauran script din ya gansu
-        window.sendMessage = function() {
+        function handleAction() {
+            const icon = document.getElementById('actionIcon');
+            if (icon.classList.contains('fa-paper-plane')) { sendMessage(); }
+        }
+
+        function sendMessage() {
             let input = document.getElementById('userInput');
             if(input.value.trim() !== "") {
-                let text = input.value.replace(/\n/g, '<br>');
+                let text = input.value;
                 document.getElementById('chat').innerHTML += `<div class="bubble u-bubble">${text}</div>`;
                 saveChat('text', text);
-                input.value = ""; 
+                input.value = ""; toggleButtons(input);
                 document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
             }
-        };
+        }
 
-        window.pick = function(name, img) {
-            document.getElementById('chat').innerHTML += `<div class="bubble u-bubble"><div class="tag-box" style="background: rgba(212, 175, 55, 0.1); border-radius: 8px; padding: 5px; margin-bottom: 5px; display: flex; align-items: center; gap: 8px; border-left: 3px solid #D4AF37;"><img src="${img}" style="width:40px;height:40px;border-radius:6px;object-fit:cover;"><span class="text-[11px] font-bold text-amber-700">${name}</span></div>Ina son wannan kayan...</div>`;
+        function handleImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('chat').innerHTML += `<div class="bubble u-bubble"><img src="${e.target.result}" style="border-radius:10px; max-width:200px;"></div>`;
+                    saveChat('image', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function pick(name, img) {
+            document.getElementById('chat').innerHTML += `<div class="bubble u-bubble"><div style="background:rgba(212,175,55,0.1);padding:5px;border-radius:8px;display:flex;align-items:center;gap:8px;border-left:3px solid #D4AF37;margin-bottom:5px;"><img src="${img}" style="width:40px;height:40px;border-radius:6px;object-fit:cover;"><span style="font-size:11px;font-weight:bold;color:#B8860B;">${name}</span></div>Ina son wannan...</div>`;
             saveChat('pick', name, img);
             document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
-        };
-    </script>
+        }
 
-    <script>
         function openCamera() { document.getElementById('truth-gate').style.display = 'flex'; }
         function closeCamera() { document.getElementById('truth-gate').style.display = 'none'; }
         
@@ -162,18 +189,17 @@
             localStorage.setItem('infinity_chat', JSON.stringify(history));
         }
 
-        function loadChatHistory() {
+        document.addEventListener('DOMContentLoaded', () => {
             let history = JSON.parse(localStorage.getItem('infinity_chat')) || [];
             let chat = document.getElementById('chat');
             history.forEach(msg => {
-                if(msg.type === 'text') {
-                    chat.innerHTML += `<div class="bubble u-bubble">${msg.content}</div>`;
-                } else if(msg.type === 'pick') {
-                    chat.innerHTML += `<div class="bubble u-bubble"><div class="tag-box" style="background: rgba(212, 175, 55, 0.1); border-radius: 8px; padding: 5px; margin-bottom: 5px; display: flex; align-items: center; gap: 8px; border-left: 3px solid #D4AF37;"><img src="${msg.extra}" style="width:40px;height:40px;border-radius:6px;object-fit:cover;"><span class="text-[11px] font-bold text-amber-700">${msg.content}</span></div>Ina son wannan...</div>`;
-                }
+                if(msg.type === 'text') chat.innerHTML += `<div class="bubble u-bubble">${msg.content}</div>`;
+                else if(msg.type === 'image') chat.innerHTML += `<div class="bubble u-bubble"><img src="${msg.content}" style="border-radius:10px; max-width:200px;"></div>`;
+                else if(msg.type === 'pick') chat.innerHTML += `<div class="bubble u-bubble"><div style="background:rgba(212,175,55,0.1);padding:5px;border-radius:8px;display:flex;align-items:center;gap:8px;border-left:3px solid #D4AF37;margin-bottom:5px;"><img src="${msg.extra}" style="width:40px;height:40px;border-radius:6px;object-fit:cover;"><span style="font-size:11px;font-weight:bold;color:#B8860B;">${msg.content}</span></div>Ina son wannan...</div>`;
             });
             chat.scrollTop = chat.scrollHeight;
-        }
+            loadFirestoreProducts();
+        });
     </script>
 </body>
 </html>
