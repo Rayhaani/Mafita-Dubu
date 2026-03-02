@@ -12,143 +12,35 @@
         body {
             background: #E3DAC9; 
             font-family: 'Outfit', sans-serif;
-            /* GYARA 1: Yin amfani da dvh don magance matsalar shigewa kasa */
-            height: 100vh;
-            height: 100dvh; 
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-            position: fixed; /* Yana hana shafin gaba daya yin lilo (scrolling) */
-            width: 100%;
+            height: 100dvh; overflow: hidden;
+            display: flex; flex-direction: column; margin: 0;
+            position: fixed; width: 100%;
         }
 
-        /* SLIDER SECTION */
+        /* SLIDER */
         .slim-slider {
-            height: 110px;
-            background: #E3DAC9;
-            overflow: hidden;
-            position: relative;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            flex-shrink: 0;
+            height: 110px; background: #E3DAC9; overflow: hidden;
+            position: relative; border-bottom: 1px solid rgba(212, 175, 55, 0.2); flex-shrink: 0;
         }
-
-        .slide-track {
-            display: flex;
-            width: calc(160px * 10);
-            animation: scroll 20s linear infinite;
-            height: 100%;
-            align-items: center;
-        }
-
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-160px * 5)); }
-        }
-
-        .slide-card {
-            width: 140px; height: 85px; margin: 0 10px;
-            border-radius: 12px; overflow: hidden; flex-shrink: 0;
-            cursor: pointer; border: 1px solid rgba(212, 175, 55, 0.4);
-        }
-
+        .slide-track { display: flex; width: max-content; animation: scroll 40s linear infinite; height: 100%; align-items: center; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .slide-card { width: 140px; height: 85px; margin: 0 10px; border-radius: 12px; overflow: hidden; flex-shrink: 0; border: 1px solid rgba(212, 175, 55, 0.4); }
         .slide-card img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* CHAT BUBBLES */
-        .chat-space { 
-            flex: 1; 
-            padding: 15px; 
-            overflow-y: auto; 
-            scrollbar-width: none;
-            /* GYARA 2: Barin sarari a kasa domin buttons kada su rufe sako na karshe */
-            padding-bottom: 100px; 
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .bubble {
-            max-width: 82%; padding: 11px 15px; margin-bottom: 12px;
-            font-size: 14.5px; line-height: 1.4; position: relative;
-        }
-
-        .v-bubble { 
-            background: #1A0F0D; color: #D4AF37; 
-            border-radius: 4px 18px 18px 18px; border-left: 5px solid #FFD700;
-        }
-
-        .u-bubble { 
-            background: #FFFFFF; color: #333; 
-            border-radius: 18px 18px 4px 18px; margin-left: auto;
-            border-right: 5px solid #D4AF37; 
-            border-top: 1px solid #EAEAEA; border-bottom: 1px solid #EAEAEA; border-left: 1px solid #EAEAEA;
-        }
-
-        .tag-box {
-            background: rgba(212, 175, 55, 0.1);
-            border-radius: 8px; padding: 5px; margin-bottom: 5px;
-            display: flex; align-items: center; gap: 8px; border-left: 3px solid #D4AF37;
-        }
+        /* CHAT AREA */
+        .chat-space { flex: 1; padding: 15px; overflow-y: auto; scrollbar-width: none; padding-bottom: 140px; }
+        .bubble { max-width: 82%; padding: 11px 15px; margin-bottom: 12px; font-size: 14.5px; line-height: 1.4; position: relative; }
+        .v-bubble { background: #1A0F0D; color: #D4AF37; border-radius: 4px 18px 18px 18px; border-left: 5px solid #FFD700; }
+        .u-bubble { background: #FFFFFF; color: #333; border-radius: 18px 18px 4px 18px; margin-left: auto; border: 1px solid #EAEAEA; }
 
         /* TRUTH GATE */
-        #truth-gate {
-            display: none; position: fixed; inset: 0; background: #fff; z-index: 5000;
-            flex-direction: column; animation: slideUp 0.4s ease-out;
-        }
-
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
+        #truth-gate { display: none; position: fixed; inset: 0; background: #fff; z-index: 5000; flex-direction: column; }
         .gate-half { flex: 1; position: relative; margin: 12px; border-radius: 35px; overflow: hidden; }
+        .alert-btn { position: absolute; bottom: 25px; right: 15px; background: #E11D48; color: white; padding: 12px 24px; border-radius: 18px; font-weight: 800; font-size: 11px; text-transform: uppercase; box-shadow: 0 10px 25px rgba(225, 29, 72, 0.3); cursor: pointer; border:none; }
 
-        .back-icon {
-            position: absolute; bottom: 25px; left: 15px; 
-            width: 45px; height: 45px; background: white; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1); color: #B8860B; cursor: pointer;
-        }
-
-        .alert-btn {
-            position: absolute; bottom: 25px; right: 15px; 
-            background: #E11D48; color: white; padding: 12px 24px;
-            border-radius: 18px; font-weight: 800; font-size: 11px;
-            letter-spacing: 0.5px; box-shadow: 0 10px 25px rgba(225, 29, 72, 0.3);
-        }
-
-        /* GYARA 3: Sanya Bottom Nav ya zama Fixed a kasa */
-        .bottom-nav { 
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #E3DAC9;
-            padding: 10px 15px 30px; 
-            display: flex; 
-            align-items: flex-end; 
-            gap: 10px; 
-            z-index: 1000;
-        }
-
-        .gold-trigger {
-            width: 55px; height: 55px; background: linear-gradient(135deg, #FFD700, #B8860B);
-            border-radius: 18px; display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 20px; cursor: pointer; flex-shrink: 0;
-            position: relative;
-        }
-
-        .gold-trigger::after {
-            content: ''; position: absolute; inset: -5px; border: 2px solid #FFD700;
-            border-radius: 22px; animation: pulseGlow 2s infinite;
-        }
-
-        @keyframes pulseGlow {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(1.4); opacity: 0; }
-        }
-
-        .input-pill {
-            flex: 1; min-height: 55px; background: white; 
-            border-radius: 18px; padding: 10px 18px; display: flex; align-items: flex-end;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #E3DAC9; padding: 10px 15px 30px; display: flex; align-items: flex-end; gap: 10px; z-index: 1000; }
+        .gold-trigger { width: 55px; height: 55px; background: linear-gradient(135deg, #FFD700, #B8860B); border-radius: 18px; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; }
+        .input-pill { flex: 1; min-height: 55px; background: white; border-radius: 18px; padding: 10px 18px; display: flex; align-items: flex-end; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         #userInput { width: 100%; background: transparent; border: none; outline: none; resize: none; max-height: 120px; font-size: 16px; }
     </style>
 </head>
@@ -157,36 +49,23 @@
     <div id="truth-gate">
         <div class="gate-half" style="border: 1px solid #eee;">
             <img src="https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=800" class="w-full h-full object-cover">
-            <div class="absolute top-6 left-6 bg-white/90 px-5 py-2 rounded-2xl text-[10px] font-black tracking-widest text-amber-800">THE PROMISE</div>
         </div>
-        
         <div class="gate-half bg-gray-50 flex flex-col items-center justify-center border-t-8 border-amber-500">
-            <div class="absolute top-6 left-6 bg-black text-white px-5 py-2 rounded-2xl text-[10px] font-black tracking-widest">THE REALITY</div>
-            
-            <div class="text-center">
-                <i class="fa-solid fa-expand text-gray-200 text-6xl mb-4 opacity-50"></i>
-                <h2 class="text-gray-300 font-black italic text-xl animate-pulse tracking-tighter">SCANNING LIVE FEED...</h2>
-            </div>
-            
-            <div onclick="closeCamera()" class="back-icon"><i class="fa-solid fa-arrow-left"></i></div>
-            <button onclick="alert('Evidence Captured! Sending to Support...')" class="alert-btn uppercase">Report Discrepancy</button>
+            <h2 class="text-gray-300 font-black italic text-xl animate-pulse">SCANNING...</h2>
+            <div onclick="closeCamera()" class="absolute bottom-6 left-6 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg text-amber-600"><i class="fa-solid fa-arrow-left"></i></div>
+            <button onclick="alert('Evidence Captured!')" class="alert-btn">Report Discrepancy</button>
         </div>
     </div>
 
     <section class="slim-slider">
-        <div class="slide-track">
-            <div class="slide-card" onclick="pick('Luxury Wax', 'https://images.unsplash.com/photo-1582733075929-5867493b3a7d?w=100')"><img src="https://images.unsplash.com/photo-1582733075929-5867493b3a7d?w=300"></div>
-            <div class="slide-card" onclick="pick('Royal Silk', 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=100')"><img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=300"></div>
-            <div class="slide-card" onclick="pick('Gold Turban', 'https://images.unsplash.com/photo-1605518216938-7c31b7b14ad0?w=100')"><img src="https://images.unsplash.com/photo-1605518216938-7c31b7b14ad0?w=300"></div>
-            <div class="slide-card" onclick="pick('Luxury Wax', 'https://images.unsplash.com/photo-1582733075929-5867493b3a7d?w=100')"><img src="https://images.unsplash.com/photo-1582733075929-5867493b3a7d?w=300"></div>
+        <div class="slide-track" id="product-slider">
+            <div class="text-[10px] p-5">Loading Products from Wolay Store...</div>
         </div>
     </section>
 
     <main class="chat-space" id="chat">
-        <div class="bubble v-bubble">
-            Sannu abokina! Ina fatan kayan sun iso lafiya.
-        </div>
-    </main>
+        <div class="bubble v-bubble">Sannu abokina! Ina fatan kayan sun iso lafiya.</div>
+        </main>
 
     <footer class="bottom-nav">
         <div onclick="openCamera()" class="gold-trigger"><i class="fa-solid fa-camera"></i></div>
@@ -196,33 +75,81 @@
         </div>
     </footer>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
+            authDomain: "global-market-admin.firebaseapp.com",
+            databaseURL: "https://global-market-admin-default-rtdb.firebaseio.com",
+            projectId: "global-market-admin",
+            storageBucket: "global-market-admin.firebasestorage.app",
+            appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // GYARA: Mun hada shi da 'vendors/vendor_001/Wolay Store' kai-tsaye
+        function loadProducts() {
+            const track = document.getElementById('product-slider');
+            const productsRef = ref(db, 'vendors/vendor_001/Wolay Store');
+
+            onValue(productsRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    // Muna duba idan kowani item yana da 'img' kafin mu nuna
+                    const productList = Object.values(data).filter(p => p.img);
+                    if(productList.length > 0) {
+                        const doubleList = [...productList, ...productList];
+                        track.innerHTML = doubleList.map(p => `
+                            <div class="slide-card" onclick="pick('${p.name || 'Product'}', '${p.img}')">
+                                <img src="${p.img}">
+                            </div>
+                        `).join('');
+                    } else {
+                        track.innerHTML = '<div class="text-[10px] p-5">Babu hotuna a Wolay Store.</div>';
+                    }
+                }
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadChatHistory();
+            loadProducts();
+        });
+    </script>
+
     <script>
         function openCamera() { document.getElementById('truth-gate').style.display = 'flex'; }
         function closeCamera() { document.getElementById('truth-gate').style.display = 'none'; }
-
+        function saveChat(type, content, extra = null) {
+            let history = JSON.parse(localStorage.getItem('infinity_chat')) || [];
+            history.push({ type, content, extra });
+            localStorage.setItem('infinity_chat', JSON.stringify(history));
+        }
+        function loadChatHistory() {
+            let history = JSON.parse(localStorage.getItem('infinity_chat')) || [];
+            let chat = document.getElementById('chat');
+            history.forEach(msg => {
+                if(msg.type === 'text') chat.innerHTML += `<div class="bubble u-bubble">${msg.content}</div>`;
+                else if(msg.type === 'pick') chat.innerHTML += `<div class="bubble u-bubble"><div class="tag-box"><img src="${msg.extra}" style="width:40px;height:40px;border-radius:6px;object-fit:cover;"><span class="text-[11px] font-bold text-amber-700">${msg.content}</span></div>Ina son wannan...</div>`;
+            });
+        }
         function sendMessage() {
             let input = document.getElementById('userInput');
             if(input.value.trim() !== "") {
-                let chat = document.getElementById('chat');
-                chat.innerHTML += `<div class="bubble u-bubble">${input.value.replace(/\n/g, '<br>')}</div>`;
-                input.value = "";
-                input.style.height = 'auto';
-                chat.scrollTop = chat.scrollHeight;
+                let text = input.value.replace(/\n/g, '<br>');
+                document.getElementById('chat').innerHTML += `<div class="bubble u-bubble">${text}</div>`;
+                saveChat('text', text);
+                input.value = ""; document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
             }
         }
-
         function pick(name, img) {
-            let chat = document.getElementById('chat');
-            chat.innerHTML += `
-                <div class="bubble u-bubble">
-                    <div class="tag-box">
-                        <img src="${img}" style="width:40px; height:40px; border-radius:6px; object-fit:cover;">
-                        <span class="text-[11px] font-bold text-amber-700">${name}</span>
-                    </div>
-                    Ina son wannan kayan, ina buƙatar ƙarin bayani akansa.
-                </div>`;
-            chat.scrollTop = chat.scrollHeight;
+            document.getElementById('chat').innerHTML += `<div class="bubble u-bubble"><div class="tag-box"><img src="${img}" style="width:40px;height:40px;border-radius:6px;object-fit:cover;"><span class="text-[11px] font-bold text-amber-700">${name}</span></div>Ina son wannan kayan...</div>`;
+            saveChat('pick', name, img);
         }
     </script>
 </body>
-        </html>
+                                          </html>
