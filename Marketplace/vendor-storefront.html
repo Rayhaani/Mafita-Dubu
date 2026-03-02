@@ -55,7 +55,6 @@
         .stat-value { font-weight: 800; font-size: 18px; color: #D4AF37; }
         .stat-label { font-size: 12px; color: #888; text-transform: uppercase; }
 
-        /* HIGHLIGHTS SECTION */
         .highlights-container {
             display: flex;
             justify-content: flex-start;
@@ -118,7 +117,7 @@
         .grid-item:nth-child(6n+1) { grid-row: span 2; } 
         .grid-item:nth-child(6n+4) { grid-row: span 2; grid-column: 2; }
 
-        .grid-item img {
+        .grid-item img, .grid-item video {
             width: 100%; height: 100%;
             object-fit: cover;
         }
@@ -133,7 +132,7 @@
             z-index: 10;
         }
 
-        /* FULL SCREEN MODAL CSS (Cire bakin fili 100%) */
+        /* FULL SCREEN MODAL (COVERING EVERYTHING) */
         #full-modal {
             display: none;
             position: fixed;
@@ -145,7 +144,7 @@
         }
         #modal-content img, #modal-content video {
             width: 100%; height: 100%;
-            object-fit: cover; /* Wannan ne zai sa hoton ya cika screen */
+            object-fit: cover; /* No black spaces */
         }
         .close-btn {
             position: absolute; top: 20px; right: 20px;
@@ -210,7 +209,8 @@
     <script>
         const products = [
             { img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500", price: "45,000" },
-            { img: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=500", price: "22,500" },
+            // WANNAN BOX DIN NA BIYU SHINE VIDEO NA GWAJI:
+            { img: "https://www.w3schools.com/html/mov_bbb.mp4", price: "22,500", isVideo: true },
             { img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500", price: "18,000" },
             { img: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=500", price: "32,000" },
             { img: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=500", price: "27,000" },
@@ -226,7 +226,7 @@
         const grid = document.getElementById('vendor-grid');
         grid.innerHTML = products.map(p => `
             <div class="grid-item" onclick="openFull('${p.img}', ${p.isVideo || false})">
-                <img src="${p.img}" loading="lazy">
+                ${p.isVideo ? `<video src="${p.img}" muted loop autoplay class="w-full h-full object-cover"></video>` : `<img src="${p.img}" loading="lazy">`}
                 <div class="price-style-1">₦${p.price}</div>
             </div>
         `).join('');
@@ -236,6 +236,7 @@
             const content = document.getElementById('modal-content');
             modal.style.display = 'flex';
             if (isVideo) {
+                // An saka 'controls' kuma babu 'muted' domin a ji sauti
                 content.innerHTML = `<video src="${src}" autoplay loop playsinline controls class="w-full h-full object-cover"></video>`;
             } else {
                 content.innerHTML = `<img src="${src}" class="w-full h-full object-cover">`;
@@ -249,4 +250,4 @@
         }
     </script>
 </body>
-    </html>
+            </html>
