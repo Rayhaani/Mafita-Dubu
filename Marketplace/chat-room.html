@@ -59,13 +59,13 @@
 
     <section class="slim-slider">
         <div class="slide-track" id="product-slider">
-            <div class="text-[10px] p-5">Loading Products from Wolay Store...</div>
+            <div class="text-[10px] p-5 text-amber-900">Neman kaya daga Wolay Store...</div>
         </div>
     </section>
 
     <main class="chat-space" id="chat">
         <div class="bubble v-bubble">Sannu abokina! Ina fatan kayan sun iso lafiya.</div>
-        </main>
+    </main>
 
     <footer class="bottom-nav">
         <div onclick="openCamera()" class="gold-trigger"><i class="fa-solid fa-camera"></i></div>
@@ -77,7 +77,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, onValue, child, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
@@ -91,27 +91,40 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // GYARA: Mun hada shi da 'vendors/vendor_001/Wolay Store' kai-tsaye
+        // GYARA: Mun inganta yadda yake kiran folder din 'Wolay Store'
         function loadProducts() {
             const track = document.getElementById('product-slider');
+            // Muna kiran asalin hanyar yadda take a Screenshot dinka
             const productsRef = ref(db, 'vendors/vendor_001/Wolay Store');
 
             onValue(productsRef, (snapshot) => {
                 const data = snapshot.val();
+                
                 if (data) {
-                    // Muna duba idan kowani item yana da 'img' kafin mu nuna
-                    const productList = Object.values(data).filter(p => p.img);
+                    // Idan "Wolay Store" kanta String ce fanko (kamar yadda yake a hoton Firebase), wannan zai kare code din daga tsayawa
+                    if (typeof data !== 'object') {
+                        track.innerHTML = '<div class="text-[10px] p-5">Folder tana nan amma babu kaya a ciki.</div>';
+                        return;
+                    }
+
+                    const productList = Object.values(data).filter(p => p && p.img);
+                    
                     if(productList.length > 0) {
                         const doubleList = [...productList, ...productList];
                         track.innerHTML = doubleList.map(p => `
                             <div class="slide-card" onclick="pick('${p.name || 'Product'}', '${p.img}')">
-                                <img src="${p.img}">
+                                <img src="${p.img}" onerror="this.src='https://via.placeholder.com/140x85?text=Hoto+Baya+Aiki'">
                             </div>
                         `).join('');
                     } else {
-                        track.innerHTML = '<div class="text-[10px] p-5">Babu hotuna a Wolay Store.</div>';
+                        track.innerHTML = '<div class="text-[10px] p-5">Babu hotuna a cikin Wolay Store.</div>';
                     }
+                } else {
+                    track.innerHTML = '<div class="text-[10px] p-5">Ba a samu Wolay Store a Database ba.</div>';
                 }
+            }, (error) => {
+                console.error(error);
+                track.innerHTML = '<div class="text-[10px] p-5">Matsalar Database: ' + error.message + '</div>';
             });
         }
 
@@ -119,37 +132,48 @@
             loadChatHistory();
             loadProducts();
         });
-    </script>
 
-    <script>
-        function openCamera() { document.getElementById('truth-gate').style.display = 'flex'; }
-        function closeCamera() { document.getElementById('truth-gate').style.display = 'none'; }
-        function saveChat(type, content, extra = null) {
-            let history = JSON.parse(localStorage.getItem('infinity_chat')) || [];
-            history.push({ type, content, extra });
-            localStorage.setItem('infinity_chat', JSON.stringify(history));
-        }
-        function loadChatHistory() {
-            let history = JSON.parse(localStorage.getItem('infinity_chat')) || [];
-            let chat = document.getElementById('chat');
-            history.forEach(msg => {
-                if(msg.type === 'text') chat.innerHTML += `<div class="bubble u-bubble">${msg.content}</div>`;
-                else if(msg.type === 'pick') chat.innerHTML += `<div class="bubble u-bubble"><div class="tag-box"><img src="${msg.extra}" style="width:40px;height:40px;border-radius:6px;object-fit:cover;"><span class="text-[11px] font-bold text-amber-700">${msg.content}</span></div>Ina son wannan...</div>`;
-            });
-        }
-        function sendMessage() {
+        // Saka wadannan a 'window' domin sauran script din ya gansu
+        window.sendMessage = function() {
             let input = document.getElementById('userInput');
             if(input.value.trim() !== "") {
                 let text = input.value.replace(/\n/g, '<br>');
                 document.getElementById('chat').innerHTML += `<div class="bubble u-bubble">${text}</div>`;
                 saveChat('text', text);
-                input.value = ""; document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+                input.value = ""; 
+                document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
             }
-        }
-        function pick(name, img) {
-            document.getElementById('chat').innerHTML += `<div class="bubble u-bubble"><div class="tag-box"><img src="${img}" style="width:40px;height:40px;border-radius:6px;object-fit:cover;"><span class="text-[11px] font-bold text-amber-700">${name}</span></div>Ina son wannan kayan...</div>`;
+        };
+
+        window.pick = function(name, img) {
+            document.getElementById('chat').innerHTML += `<div class="bubble u-bubble"><div class="tag-box" style="background: rgba(212, 175, 55, 0.1); border-radius: 8px; padding: 5px; margin-bottom: 5px; display: flex; align-items: center; gap: 8px; border-left: 3px solid #D4AF37;"><img src="${img}" style="width:40px;height:40px;border-radius:6px;object-fit:cover;"><span class="text-[11px] font-bold text-amber-700">${name}</span></div>Ina son wannan kayan...</div>`;
             saveChat('pick', name, img);
+            document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+        };
+    </script>
+
+    <script>
+        function openCamera() { document.getElementById('truth-gate').style.display = 'flex'; }
+        function closeCamera() { document.getElementById('truth-gate').style.display = 'none'; }
+        
+        function saveChat(type, content, extra = null) {
+            let history = JSON.parse(localStorage.getItem('infinity_chat')) || [];
+            history.push({ type, content, extra });
+            localStorage.setItem('infinity_chat', JSON.stringify(history));
+        }
+
+        function loadChatHistory() {
+            let history = JSON.parse(localStorage.getItem('infinity_chat')) || [];
+            let chat = document.getElementById('chat');
+            history.forEach(msg => {
+                if(msg.type === 'text') {
+                    chat.innerHTML += `<div class="bubble u-bubble">${msg.content}</div>`;
+                } else if(msg.type === 'pick') {
+                    chat.innerHTML += `<div class="bubble u-bubble"><div class="tag-box" style="background: rgba(212, 175, 55, 0.1); border-radius: 8px; padding: 5px; margin-bottom: 5px; display: flex; align-items: center; gap: 8px; border-left: 3px solid #D4AF37;"><img src="${msg.extra}" style="width:40px;height:40px;border-radius:6px;object-fit:cover;"><span class="text-[11px] font-bold text-amber-700">${msg.content}</span></div>Ina son wannan...</div>`;
+                }
+            });
+            chat.scrollTop = chat.scrollHeight;
         }
     </script>
 </body>
-                                          </html>
+</html>
