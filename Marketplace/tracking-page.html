@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wolay | Track Your Order</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap');
+        
+        body { background-color: #fdf5f2; color: #5d4037; font-family: 'Quicksand', sans-serif; min-height: 100vh; padding: 20px; }
+        
+        .track-card {
+            background: #ffffff;
+            border-radius: 35px;
+            padding: 30px;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 15px 15px 40px #e4ddd9;
+        }
+
+        /* Timeline Styles */
+        .timeline { position: relative; margin-top: 30px; padding-left: 40px; }
+        .timeline::before {
+            content: '';
+            position: absolute; left: 15px; top: 5px; height: 90%;
+            width: 2px; background: #eee;
+        }
+
+        .step { position: relative; margin-bottom: 35px; }
+        .step-icon {
+            position: absolute; left: -34px; top: 0;
+            width: 20px; height: 20px; border-radius: 50%;
+            background: #fff; border: 3px solid #eee; z-index: 2;
+        }
+        .step.active .step-icon { background: #ff8a65; border-color: #ff8a65; box-shadow: 0 0 10px rgba(255, 138, 101, 0.5); }
+        .step.completed .step-icon { background: #22c55e; border-color: #22c55e; }
+        
+        .step-title { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+        .step-desc { font-size: 11px; color: #888; line-height: 1.4; }
+        .step-time { font-size: 10px; color: #bcaaa4; font-weight: 600; text-transform: uppercase; margin-top: 4px; display: block; }
+
+        .driver-info {
+            background: #f8fafc; border-radius: 20px; padding: 15px;
+            margin-top: 20px; display: flex; align-items: center; gap: 12px;
+            border: 1px dashed #cbd5e1;
+        }
+        .btn-call {
+            background: #22c55e; color: white; padding: 8px 15px;
+            border-radius: 12px; font-size: 12px; font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="track-card">
+        <div class="flex justify-between items-start mb-6">
+            <div>
+                <h2 class="text-xl font-bold">Track Order</h2>
+                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">ID: WOL-83920-X</p>
+            </div>
+            <div class="bg-orange-50 p-3 rounded-2xl">
+                <i class="fa-solid fa-truck-fast text-orange-400"></i>
+            </div>
+        </div>
+
+        <div class="bg-gray-50 rounded-2xl p-4 mb-6 flex items-center gap-4">
+            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center border border-gray-100">
+                <i class="fa-solid fa-box-open text-gray-300"></i>
+            </div>
+            <div>
+                <p class="text-xs font-bold">3 items from Gadget Hub</p>
+                <p class="text-[10px] text-green-500 font-semibold italic">Arriving in 2-4 days</p>
+            </div>
+        </div>
+
+        <div class="timeline">
+            <div class="step completed">
+                <div class="step-icon"></div>
+                <h3 class="step-title">Order Placed</h3>
+                <p class="step-desc">Payment confirmed and secured via Wolay Escrow.</p>
+                <span class="step-time">Mar 04, 2024 • 10:15 AM</span>
+            </div>
+
+            <div class="step completed">
+                <div class="step-icon"></div>
+                <h3 class="step-title">Processing</h3>
+                <p class="step-desc">Vendor has packed your items and is heading to the park.</p>
+                <span class="step-time">Mar 04, 2024 • 02:30 PM</span>
+            </div>
+
+            <div class="step active">
+                <div class="step-icon"></div>
+                <h3 class="step-title">In Transit</h3>
+                <p class="step-desc">Your order is on the way to Kano Municipal via GIG Logistics.</p>
+                
+                <div class="driver-info">
+                    <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-user-tie text-gray-500"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-[10px] font-bold">Musa (Driver)</p>
+                        <p class="text-[9px] text-gray-500">GIG-8392-KANO</p>
+                    </div>
+                    <a href="tel:08000000000" class="btn-call"><i class="fa-solid fa-phone mr-1"></i> Call</a>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-icon"></div>
+                <h3 class="step-title">Delivered</h3>
+                <p class="step-desc">Waiting for you to confirm receipt of the item.</p>
+            </div>
+        </div>
+
+        <button onclick="window.history.back()" class="w-100 mt-4 text-center w-full text-xs font-bold text-gray-400 hover:text-orange-400 transition">
+            <i class="fa-solid fa-arrow-left mr-1"></i> Back to Orders
+        </button>
+    </div>
+
+</body>
+              </html>
+              
