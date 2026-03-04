@@ -309,93 +309,116 @@
     </div>
     </div>
 
-<div id="carpet" style="position: fixed; top: 100px; left: 50%; transform: translateX(-50%); width: 280px; height: 0; background: rgba(24, 22, 22, 0.95); border: 1px solid rgba(0, 242, 255, 0.3); border-radius: 25px; overflow: hidden; z-index: 9999; backdrop-filter: blur(20px); transition: height 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
-    <div id="carpet-content" style="padding: 25px; text-align: center;">
-        <h3 style="font-size: 10px; letter-spacing: 3px; color: #00f2ff; text-transform: uppercase; margin-bottom: 20px; font-weight: 900;">Select Size</h3>
-        
-        <div style="display: grid; grid-template-cols: 1fr; gap: 10px;">
-            <div onclick="selectSize('M', this)" class="carpet-opt">MEDIUM</div>
-            <div onclick="selectSize('L', this)" class="carpet-opt">LARGE</div>
-            <div onclick="selectSize('XL', this)" class="carpet-opt">EXTRA LARGE</div>
-            <div onclick="selectSize('2XL', this)" class="carpet-opt">DOUBLE XL</div>
+<div id="selection-overlay" class="luxury-overlay">
+    <div class="luxury-content">
+        <div class="drag-handle"></div>
+        <h2 class="luxury-title">Select Your Size</h2>
+        <div class="luxury-grid">
+            <button onclick="selectEliteSize('M', this)" class="luxury-btn">M</button>
+            <button onclick="selectEliteSize('L', this)" class="luxury-btn">L</button>
+            <button onclick="selectEliteSize('XL', this)" class="luxury-btn">XL</button>
+            <button onclick="selectEliteSize('2XL', this)" class="luxury-btn">2XL</button>
         </div>
-
-        <button id="final-order-btn" disabled style="margin-top: 25px; width: 100%; padding: 12px; border-radius: 15px; background: rgba(255,255,255,0.05); color: #555; font-size: 10px; font-weight: 900; border: 1px solid rgba(255,255,255,0.1); text-transform: uppercase;">
-            Confirm Selection
-        </button>
+        <button id="luxury-confirm" disabled onclick="goToCheckout()">Proceed to Checkout</button>
     </div>
 </div>
-    
-    
-
+       
 <style>
-    .carpet-opt {
-        padding: 12px;
-        border-radius: 12px;
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.05);
-        color: #888;
-        font-size: 11px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: 0.3s;
+   .luxury-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    display: none;
+    z-index: 10000;
+    align-items: flex-end;
+}
+
+.luxury-content {
+    width: 100%;
+    background: #181616;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 40px 40px 0 0;
+    padding: 30px;
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+.drag-handle {
+    width: 40px; height: 4px; background: #333;
+    border-radius: 10px; margin: 0 auto 25px;
+}
+
+.luxury-title {
+    color: white; text-align: center; font-weight: 900;
+    letter-spacing: 2px; text-transform: uppercase; font-size: 12px; margin-bottom: 30px;
+}
+
+.luxury-grid {
+    display: flex; justify-content: center; gap: 15px; margin-bottom: 40px;
+}
+
+.luxury-btn {
+    width: 60px; height: 60px; border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #666; font-weight: bold; transition: 0.3s;
+}
+
+.luxury-btn.active {
+    border-color: #00f2ff; color: #00f2ff; background: rgba(0, 242, 255, 0.05);
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+}
+
+#luxury-confirm {
+    width: 100%; padding: 18px; border-radius: 20px;
+    background: #333; color: #555; font-weight: 900;
+    text-transform: uppercase; letter-spacing: 2px; font-size: 11px;
+}
+
+#luxury-confirm.active {
+    background: white; color: black; cursor: pointer;
     }
-    .carpet-opt:hover, .carpet-opt.selected {
-        background: rgba(0, 242, 255, 0.1);
-        border-color: #00f2ff;
-        color: #00f2ff;
-        transform: scale(1.02);
-    }
-    #carpet::after {
-        content: ""; position: absolute; bottom: -20px; left: 0; width: 100%; height: 40px;
-        background: radial-gradient(circle, #00f2ff33, transparent); filter: blur(10px);
-    }
-</style>
+    
  
 <script>
-let selectedSize = null;
-let carpet = document.getElementById("carpet");
-let maxHeight = 380; // Tsawon da zai kai idan ya bude
-let currentHeight = 0;
-let lastScroll = window.scrollY;
+let currentEliteSize = null;
 
 function checkSelection() {
-    if (!selectedSize) {
-        // Bude Carpet din
-        currentHeight = 380;
-        carpet.style.height = currentHeight + "px";
-        speakAI("Please select your elite size to proceed.");
+    const overlay = document.getElementById('selection-overlay');
+    if (!currentEliteSize) {
+        overlay.style.display = 'flex';
     } else {
         window.location.href = 'checkout.html';
     }
 }
 
-function selectSize(size, el) {
-    selectedSize = size;
-    document.querySelectorAll('.carpet-opt').forEach(opt => opt.classList.remove('selected'));
-    el.classList.add('selected');
+function selectEliteSize(size, el) {
+    currentEliteSize = size;
+    document.querySelectorAll('.luxury-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
     
-    const btn = document.getElementById('final-order-btn');
-    btn.disabled = false;
-    btn.style.background = '#00f2ff';
-    btn.style.color = '#000';
-    btn.style.borderColor = '#00f2ff';
-    btn.innerHTML = `PROCEED WITH ${size} <i class="fa-solid fa-arrow-right ml-2"></i>`;
-    btn.onclick = () => window.location.href = 'checkout.html';
+    const confirmBtn = document.getElementById('luxury-confirm');
+    confirmBtn.classList.add('active');
+    confirmBtn.disabled = false;
+    confirmBtn.innerHTML = `Confirm ${size} & Checkout`;
 }
 
-// Wannan zai rinka boye carpet din kadan-kadan idan ana scroll
-window.addEventListener("scroll", ()=>{
-    if(currentHeight > 0) {
-        let currentScroll = window.scrollY;
-        let diff = currentScroll - lastScroll;
-        currentHeight -= Math.abs(diff) * 0.8; 
-        if(currentHeight < 0) currentHeight = 0;
-        carpet.style.height = currentHeight + "px";
-        lastScroll = currentScroll;
+function goToCheckout() {
+    window.location.href = 'checkout.html';
+}
+
+// Rufe overlay idan an taba baki
+window.onclick = function(event) {
+    const overlay = document.getElementById('selection-overlay');
+    if (event.target == overlay) {
+        overlay.style.display = 'none';
     }
-});
-</script>
+    }
+    
     
 <script>
 // DNA CORE SCRIPT
