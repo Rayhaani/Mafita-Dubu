@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wolay | Velvet Soft Checkout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&family=Playfair+Display:ital@1&display=swap');
+
+        body {
+            background-color: #fdf5f2;
+            color: #5d4037;
+            font-family: 'Quicksand', sans-serif;
+            margin: 0; min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .peach-card {
+            background: #fdf5f2;
+            border-radius: 40px;
+            box-shadow: 20px 20px 60px #d7d0ce, -20px -20px 60px #ffffff;
+            width: 100%; max-width: 400px;
+            padding: 35px;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .shipping-header {
+            background: #fff;
+            border-radius: 30px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 10px 10px 20px #e4ddd9;
+            position: relative;
+        }
+        .shipping-label {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #bcaaa4;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .pin-icon {
+            background: #000;
+            color: #fff;
+            width: 35px;
+            height: 45px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .inventory-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 10px 5px;
+            margin-bottom: 20px;
+        }
+        .inventory-scroll::-webkit-scrollbar { display: none; }
+        
+        .item-card-mini {
+            min-width: 100px;
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 5px 5px 10px #e4ddd9;
+            border: 1px solid #eee;
+        }
+        .item-img {
+            width: 100%;
+            height: 80px;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .item-price-bar {
+            background: #757575;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            text-align: center;
+            padding: 4px 0;
+        }
+
+        .delivery-section {
+            background: #121210;
+            border-radius: 25px;
+            padding: 20px;
+            margin-top: 10px;
+        }
+        .delivery-option {
+            background: #1e1e1c;
+            border-radius: 18px;
+            padding: 15px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+        .delivery-option.active {
+            border-color: #d4af37;
+        }
+        .delivery-option i { color: #fff; font-size: 18px; width: 30px; }
+        .option-title { color: #fff; font-weight: 700; font-size: 13px; }
+        .option-desc { color: #888; font-size: 9px; }
+        .option-price { color: #fff; font-weight: 800; font-size: 13px; }
+
+        .payment-header {
+            background: #fff;
+            border-radius: 30px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 10px 10px 20px #e4ddd9;
+        }
+        .payment-label {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #bcaaa4;
+            margin-bottom: 15px;
+            display: block;
+            text-transform: uppercase;
+        }
+        .pay-row {
+            background: #f8f8f8;
+            border-radius: 20px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
+        .pay-row.active {
+            background: #fff;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        }
+        .pay-info { display: flex; align-items: center; gap: 15px; }
+        .pay-info i { color: #333; font-size: 16px; }
+        
+        /* Gyaran Small Letters don biyan bukatarka */
+        .pay-info span { font-weight: 700; font-size: 14px; color: #1a1a1a; text-transform: capitalize; }
+        
+        .radio-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .pay-row.active .radio-circle {
+            border-color: #000;
+            border-width: 5px;
+        }
+
+        .price-badge {
+            background: #5d4037;
+            color: #fff;
+            padding: 20px;
+            border-radius: 25px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .btn-peach {
+            background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%);
+            color: white;
+            width: 100%;
+            padding: 18px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 16px;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(255, 138, 101, 0.3);
+        }
+
+        .escrow-text { font-family: 'Playfair Display', serif; font-style: italic; color: #ff8a65; }
+    </style>
+</head>
+<body class="p-4">
+
+    <div class="peach-card">
+        
+        <div class="shipping-header">
+            <span class="shipping-label uppercase text-center">Shipping To</span>
+            <div class="flex items-center">
+                <div class="pin-icon"><i class="fa-solid fa-location-pin text-sm"></i></div>
+                <div>
+                    <h3 class="font-bold text-sm">Aliyu Abdulkadir</h3>
+                    <p class="text-[10px] text-gray-500 leading-tight mt-1">Designers Street NNDC Quarters KMC, Kano Municipal, Nigeria</p>
+                    <p class="text-[10px] font-bold mt-2 text-gray-700">+234 803 464 0591</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="inventory-scroll">
+            <div class="item-card-mini">
+                <div class="item-img"><i class="fa-regular fa-image text-gray-300 text-xl"></i></div>
+                <div class="item-price-bar">₦18,939</div>
+            </div>
+            <div class="item-card-mini">
+                <div class="item-img"><i class="fa-regular fa-image text-gray-300 text-xl"></i></div>
+                <div class="item-price-bar">₦1,950</div>
+            </div>
+            <div class="item-card-mini">
+                <div class="item-img"><i class="fa-regular fa-image text-gray-300 text-xl"></i></div>
+                <div class="item-price-bar">₦12,353</div>
+            </div>
+        </div>
+
+        <div class="delivery-section">
+            <p class="text-[9px] font-bold uppercase tracking-widest text-gray-500 mb-3 ml-1">Select Delivery Method</p>
+            
+            <div class="delivery-option active" onclick="updatePeach(2500, this)">
+                <div class="flex items-center"><i class="fa-solid fa-bus"></i><div class="ml-2"><p class="option-title">Standard (Park Delivery)</p><p class="option-desc">Pick it up at the nearest motor park</p></div></div>
+                <span class="option-price">₦2,500</span>
+            </div>
+
+            <div class="delivery-option" onclick="updatePeach(5500, this)">
+                <div class="flex items-center"><i class="fa-solid fa-truck-fast"></i><div class="ml-2"><p class="option-title">Doorstep (Speedaf/GIGL)</p><p class="option-desc">Directly to your home address</p></div></div>
+                <span class="option-price">₦5,500</span>
+            </div>
+
+            <div class="delivery-option" onclick="updatePeach(0, this)">
+                <div class="flex items-center"><i class="fa-solid fa-handshake"></i><div class="ml-2"><p class="option-title">Self-Arranged</p><p class="option-desc">Coordinate pickup with vendor</p></div></div>
+                <span class="option-price">FREE</span>
+            </div>
+        </div>
+
+        <div class="payment-header">
+            <span class="payment-label">Payment Node</span>
+            
+            <div class="pay-row active" onclick="selectPay(this)">
+                <div class="pay-info">
+                    <i class="fa-solid fa-credit-card"></i>
+                    <span>Card payment</span>
+                </div>
+                <div class="radio-circle"></div>
+            </div>
+
+            <div class="pay-row" onclick="selectPay(this)">
+                <div class="pay-info">
+                    <i class="fa-solid fa-building-columns"></i>
+                    <span>Bank transfer</span>
+                </div>
+                <div class="radio-circle"></div>
+            </div>
+
+            <div class="pay-row" onclick="selectPay(this)">
+                <div class="pay-info">
+                    <i class="fa-solid fa-hashtag"></i>
+                    <span>Ussd payment</span>
+                </div>
+                <div class="radio-circle"></div>
+            </div>
+
+            <div class="pay-row" onclick="selectPay(this)">
+                <div class="pay-info">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span>Wallet payment</span>
+                </div>
+                <div class="radio-circle"></div>
+            </div>
+        </div>
+
+        <div class="mt-8 px-2 space-y-2">
+            <div class="flex justify-between text-xs font-semibold"><span class="text-gray-400">Buyer Protection</span><span>₦<span id="escrow-val">0</span></span></div>
+            <div class="flex justify-between text-xs font-semibold"><span class="text-gray-400">System Charge</span><span>₦<span id="gate-val">0</span></span></div>
+        </div>
+
+        <div class="price-badge">
+            <p class="text-[10px] uppercase font-bold tracking-widest opacity-60">Total to Pay</p>
+            <p class="text-3xl font-bold">₦<span id="total-val">0</span></p>
+        </div>
+
+        <button class="btn-peach" onclick="startPeach()">Pay Securely</button>
+
+        <div class="mt-6 text-center"><p class="text-[11px]"><i class="fa-solid fa-heart text-orange-300"></i> Protected by <span class="escrow-text">Wolay Escrow</span></p></div>
+    </div>
+
+    <script>
+        let base = 45000;
+        let delivery = 2500;
+
+        function refreshPeach() {
+            const esc = Math.round(base * 0.025);
+            const gate = Math.round((base * 0.015) + 100);
+            const total = base + delivery + esc + gate;
+            document.getElementById('escrow-val').innerText = esc.toLocaleString();
+            document.getElementById('gate-val').innerText = gate.toLocaleString();
+            document.getElementById('total-val').innerText = total.toLocaleString();
+        }
+
+        function updatePeach(cost, el) {
+            delivery = cost;
+            document.querySelectorAll('.delivery-option').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            refreshPeach();
+        }
+
+        function selectPay(el) {
+            document.querySelectorAll('.pay-row').forEach(r => r.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function startPeach() {
+            const btn = document.querySelector('.btn-peach');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Securing...';
+            setTimeout(() => { alert("Safe Escrow Link Created. Redirecting..."); btn.innerHTML = 'Pay Securely'; }, 1500);
+        }
+
+        refreshPeach();
+    </script>
+</body>
+  </html>
+  
