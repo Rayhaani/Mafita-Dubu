@@ -314,10 +314,11 @@
     <span class="dock-label">Order Now</span>
 </div>
 
-<div id="selection-sheet" class="fixed inset-0 bg-black/40 z-50 hidden flex-items-end">
-    <div class="bg-white w-full rounded-t-[40px] p-8 animate-slide-up">
+<div id="selection-sheet" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 10001; align-items: flex-end;" onclick="closeSheet(event)">
+    <div class="sheet-content bg-white w-full rounded-t-[40px] p-8" style="transform: translateY(100%); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
         <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
-        <h3 class="text-lg font-extrabold text-slate-800 mb-4">Muna bukatar sanin size dinka</h3>
+        <h3 class="text-lg font-extrabold text-slate-800 mb-2">Zabi Size dinka</h3>
+        <p class="text-xs text-gray-500 mb-6">Muna bukatar sanin girmanka kafin mu wuce Checkout.</p>
         
         <div class="flex gap-3 mb-8">
             <button onclick="selectSize('M', this)" class="size-btn">M</button>
@@ -331,50 +332,73 @@
         </button>
     </div>
 </div>
+    
 
 <style>
+    /* Wannan shi ne sabon style din Selection Sheet */
     .size-btn {
-        width: 50px; height: 50px; border-radius: 15px; border: 2px solid #f1f5f9;
-        font-weight: 800; color: #64748b; transition: 0.3s;
+        width: 55px; 
+        height: 55px; 
+        border-radius: 18px; 
+        border: 2px solid #f1f5f9;
+        font-weight: 800; 
+        color: #64748b; 
+        transition: 0.3s;
     }
-    .size-btn.selected { border-color: #ff8a65; background: #fff7ed; color: #ff8a65; transform: scale(1.1); }
-    
-    @keyframes slide-up {
-        from { transform: translateY(100%); }
-        to { transform: translateY(0); }
+    .size-btn.selected { 
+        border-color: #00f2ff; 
+        background: #f0fdff; 
+        color: #0088cc; 
+        transform: scale(1.1); 
+        box-shadow: 0 10px 20px rgba(0, 242, 255, 0.1); 
     }
-    .animate-slide-up { animation: slide-up 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .sheet-active .sheet-content { 
+        transform: translateY(0) !important; 
+    }
 </style>
-
-<script>
-    let selectedSize = null;
-
-    function checkSelection() {
-        if (!selectedSize) {
-            document.getElementById('selection-sheet').classList.remove('hidden');
-            document.getElementById('selection-sheet').style.display = 'flex';
-            document.getElementById('selection-sheet').style.alignItems = 'flex-end';
-        } else {
-            window.location.href = 'checkout.html';
-        }
-    }
-
-    function selectSize(size, el) {
-        selectedSize = size;
-        // Cire tsohon selection
-        document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
-        // Saka sabon selection
-        el.classList.add('selected');
-        
-        // Kunna babban button
-        const btn = document.getElementById('final-order-btn');
-        btn.disabled = false;
-        btn.style.background = '#1e293b';
-        btn.innerHTML = 'Proceed to Checkout <i class="fa-solid fa-arrow-right ml-2"></i>';
-        btn.onclick = () => window.location.href = 'checkout.html';
-    }
-    </script>
     
+<script>
+let selectedSize = null;
+
+function checkSelection() {
+    const sheet = document.getElementById('selection-sheet');
+    if (!selectedSize) {
+        sheet.style.display = 'flex';
+        // Dan jinkiri kadan don animation din ya fito
+        setTimeout(() => {
+            sheet.classList.add('sheet-active');
+        }, 10);
+    } else {
+        window.location.href = 'checkout.html';
+    }
+}
+
+function selectSize(size, el) {
+    selectedSize = size;
+    // Cire tsohon selection
+    document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
+    // Saka sabon selection
+    el.classList.add('selected');
+    
+    // Kunna babban button
+    const btn = document.getElementById('final-order-btn');
+    btn.disabled = false;
+    btn.style.background = '#181616'; // Launinka na baki
+    btn.innerHTML = 'Proceed to Checkout <i class="fa-solid fa-arrow-right ml-2"></i>';
+    btn.onclick = () => window.location.href = 'checkout.html';
+}
+
+// Function na rufe overlay idan an danna gefe
+function closeSheet(event) {
+    const sheet = document.getElementById('selection-sheet');
+    if (event.target.id === 'selection-sheet') {
+        sheet.classList.remove('sheet-active');
+        setTimeout(() => {
+            sheet.style.display = 'none';
+        }, 400);
+    }
+}
+</script>
     
 <script>
 // DNA CORE SCRIPT
