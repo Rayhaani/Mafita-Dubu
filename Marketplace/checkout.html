@@ -178,15 +178,44 @@
         }
 
         const payBtn = document.getElementById('pay-button');
-        const popup = document.getElementById('secure-popup');
+const popup = document.getElementById('secure-popup');
 
-        payBtn.addEventListener('click', function() {
-            payBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Securing...';
-            setTimeout(() => {
-                popup.style.display = 'flex';
-                payBtn.innerHTML = 'Pay Securely';
-            }, 1000);
-        });
+payBtn.addEventListener('click', function() {
+    // 1. Loading state (Customer zai ga ana dubawa)
+    payBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Securing...';
+    payBtn.style.opacity = "0.7";
+    payBtn.disabled = true;
+
+    setTimeout(() => {
+        // 2. Nuna Security Popup na sakan 3
+        popup.style.display = 'flex';
+        
+        setTimeout(() => {
+            // 3. Canza Popup din zuwa "Success" maimakon Security
+            const popupContent = document.querySelector('.premium-card');
+            popupContent.innerHTML = `
+                <div class="neon-shield" style="background: #22c55e; width: 60px; height: 60px; margin: 0 auto 15px; border-radius: 20px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-check text-white text-2xl"></i>
+                </div>
+                <h2 class="premium-title" style="font-size: 22px;">Order Successful!</h2>
+                <p class="premium-text" style="font-size: 13px; margin: 10px 0;">Your payment for <b>WOL-83920-X</b> has been secured via Wolay Escrow.</p>
+                
+                <button onclick="goToTracking()" class="btn-peach" style="background: #22c55e; box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3); border-radius: 15px; padding: 15px; cursor: pointer;">
+                    <i class="fa-solid fa-location-crosshairs mr-2"></i> Track My Order
+                </button>
+                
+                <p style="font-size: 10px; color: #94a3b8; margin-top: 15px;">You will receive an SMS confirmation shortly.</p>
+            `;
+        }, 3000); // Bayan sakan 3 na tsaro
+    }, 1000);
+});
+
+// Wannan function din ne zai kai mu shafin tracking
+function goToTracking() {
+    // Tabbatar sunan file din tracking dinka ya kasance 'tracking.html'
+    window.location.href = "tracking.html"; 
+            }
+        
 
         refreshPeach();
     </script>
