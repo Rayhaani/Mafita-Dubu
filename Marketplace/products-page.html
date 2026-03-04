@@ -344,41 +344,34 @@
     
  
 <script>
-let currentEliteSize = null;
+    let selectedSize = null;
 
-function checkSelection() {
-    const overlay = document.getElementById('selection-overlay');
-    if (!currentEliteSize) {
-        overlay.style.display = 'flex';
-    } else {
-        window.location.href = 'checkout.html';
+    function checkSelection() {
+        if (!selectedSize) {
+            document.getElementById('selection-sheet').classList.remove('hidden');
+            document.getElementById('selection-sheet').style.display = 'flex';
+            document.getElementById('selection-sheet').style.alignItems = 'flex-end';
+        } else {
+            window.location.href = 'checkout.html';
+        }
     }
-}
 
-function selectEliteSize(size, el) {
-    currentEliteSize = size;
-    document.querySelectorAll('.luxury-btn').forEach(b => b.classList.remove('active'));
-    el.classList.add('active');
-    
-    const confirmBtn = document.getElementById('luxury-confirm');
-    confirmBtn.classList.add('active');
-    confirmBtn.disabled = false;
-    confirmBtn.innerHTML = `Confirm ${size} & Checkout`;
-}
-
-function goToCheckout() {
-    window.location.href = 'checkout.html';
-}
-
-// Rufe overlay idan an taba baki
-window.onclick = function(event) {
-    const overlay = document.getElementById('selection-overlay');
-    if (event.target == overlay) {
-        overlay.style.display = 'none';
+    function selectSize(size, el) {
+        selectedSize = size;
+        // Cire tsohon selection
+        document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
+        // Saka sabon selection
+        el.classList.add('selected');
+        
+        // Kunna babban button
+        const btn = document.getElementById('final-order-btn');
+        btn.disabled = false;
+        btn.style.background = '#1e293b';
+        btn.innerHTML = 'Proceed to Checkout <i class="fa-solid fa-arrow-right ml-2"></i>';
+        btn.onclick = () => window.location.href = 'checkout.html';
     }
-    }
-    
-    
+    </script>
+
 <script>
 // DNA CORE SCRIPT
 const salesBoy = document.createElement('div');
