@@ -309,79 +309,38 @@
     </div>
     </div>
 
-<div id="selection-overlay" class="luxury-overlay">
-    <div class="luxury-content">
-        <div class="drag-handle"></div>
-        <h2 class="luxury-title">Select Your Size</h2>
-        <div class="luxury-grid">
-            <button onclick="selectEliteSize('M', this)" class="luxury-btn">M</button>
-            <button onclick="selectEliteSize('L', this)" class="luxury-btn">L</button>
-            <button onclick="selectEliteSize('XL', this)" class="luxury-btn">XL</button>
-            <button onclick="selectEliteSize('2XL', this)" class="luxury-btn">2XL</button>
+<div id="selection-sheet" class="fixed inset-0 bg-black/40 z-50 hidden flex-items-end">
+    <div class="bg-white w-full rounded-t-[40px] p-8 animate-slide-up">
+        <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
+        <h3 class="text-lg font-extrabold text-slate-800 mb-4">Muna bukatar sanin size dinka</h3>
+        
+        <div class="flex gap-3 mb-8">
+            <button onclick="selectSize('M', this)" class="size-btn">M</button>
+            <button onclick="selectSize('L', this)" class="size-btn">L</button>
+            <button onclick="selectSize('XL', this)" class="size-btn">XL</button>
+            <button onclick="selectSize('2XL', this)" class="size-btn">2XL</button>
         </div>
-        <button id="luxury-confirm" disabled onclick="goToCheckout()">Proceed to Checkout</button>
+
+        <button id="final-order-btn" disabled class="w-full py-4 bg-gray-300 text-white rounded-2xl font-black uppercase tracking-widest transition-all">
+            Zabi Size Tukuna
+        </button>
     </div>
 </div>
-       
-<style>
-   .luxury-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
-    display: none;
-    z-index: 10000;
-    align-items: flex-end;
-}
 
-.luxury-content {
-    width: 100%;
-    background: #181616;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 40px 40px 0 0;
-    padding: 30px;
-    animation: slideUp 0.5s ease-out;
-}
-
-@keyframes slideUp {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
-}
-
-.drag-handle {
-    width: 40px; height: 4px; background: #333;
-    border-radius: 10px; margin: 0 auto 25px;
-}
-
-.luxury-title {
-    color: white; text-align: center; font-weight: 900;
-    letter-spacing: 2px; text-transform: uppercase; font-size: 12px; margin-bottom: 30px;
-}
-
-.luxury-grid {
-    display: flex; justify-content: center; gap: 15px; margin-bottom: 40px;
-}
-
-.luxury-btn {
-    width: 60px; height: 60px; border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #666; font-weight: bold; transition: 0.3s;
-}
-
-.luxury-btn.active {
-    border-color: #00f2ff; color: #00f2ff; background: rgba(0, 242, 255, 0.05);
-    box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
-}
-
-#luxury-confirm {
-    width: 100%; padding: 18px; border-radius: 20px;
-    background: #333; color: #555; font-weight: 900;
-    text-transform: uppercase; letter-spacing: 2px; font-size: 11px;
-}
-
-#luxury-confirm.active {
-    background: white; color: black; cursor: pointer;
+    
+  <style>
+    .size-btn {
+        width: 50px; height: 50px; border-radius: 15px; border: 2px solid #f1f5f9;
+        font-weight: 800; color: #64748b; transition: 0.3s;
     }
+    .size-btn.selected { border-color: #ff8a65; background: #fff7ed; color: #ff8a65; transform: scale(1.1); }
+    
+    @keyframes slide-up {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+    }
+    .animate-slide-up { animation: slide-up 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+</style> 
     
  
 <script>
