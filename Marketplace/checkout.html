@@ -189,7 +189,20 @@
         }
 
         .escrow-text { font-family: 'Playfair Display', serif; font-style: italic; color: #ff8a65; }
+   
+    #secure-popup {
+    display: none; /* A boye yake */
+    position: fixed; 
+    inset: 0; 
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px); 
+    align-items: center; 
+    justify-content: center; 
+    z-index: 10000;
+}
+  
     </style>
+    
 </head>
 <body class="p-4">
 
@@ -324,6 +337,24 @@
         }
 
         refreshPeach();
+
+        <button id="pay-button">Pay Securely</button>
+       <script>
+    const payBtn = document.getElementById('pay-button');
+    const popup = document.getElementById('secure-popup');
+
+    payBtn.addEventListener('click', function(e) {
+        e.preventDefault(); // Kare shafin daga yin refresh
+        popup.style.display = 'flex'; // Nuna Pop-up din yanzu
+        
+        // Bayan sakan 3 (3000ms), zaka iya tura shi zuwa banki
+        setTimeout(() => {
+            // Saka link din bankin anan idan kana so
+            // window.location.href = "processing_page.html";
+        }, 3000);
+    });
+</script>
+    
     </script>
 </body>
   </html>
