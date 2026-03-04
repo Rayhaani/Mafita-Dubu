@@ -309,68 +309,120 @@
     </div>
     </div>
 
-<div id="selection-sheet" class="fixed inset-0 bg-black/40 z-50 hidden flex-items-end">
-    <div class="bg-white w-full rounded-t-[40px] p-8 animate-slide-up">
-        <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
-        <h3 class="text-lg font-extrabold text-slate-800 mb-4">Muna bukatar sanin size dinka</h3>
-        
-        <div class="flex gap-3 mb-8">
-            <button onclick="selectSize('M', this)" class="size-btn">M</button>
-            <button onclick="selectSize('L', this)" class="size-btn">L</button>
-            <button onclick="selectSize('XL', this)" class="size-btn">XL</button>
-            <button onclick="selectSize('2XL', this)" class="size-btn">2XL</button>
+<div id="neural-interface" class="neural-container">
+    <div class="neural-bg-blur"></div>
+    <div class="neural-core">
+        <h2 class="neural-title">SYSTEM SCAN: SELECT SIZE</h2>
+        <div class="orb-wrapper">
+            <div class="neural-orb" onclick="confirmNeural('S', this)"><span>S</span></div>
+            <div class="neural-orb" onclick="confirmNeural('M', this)"><span>M</span></div>
+            <div class="neural-orb" onclick="confirmNeural('L', this)"><span>L</span></div>
+            <div class="neural-orb" onclick="confirmNeural('XL', this)"><span>XL</span></div>
         </div>
-
-        <button id="final-order-btn" disabled class="w-full py-4 bg-gray-300 text-white rounded-2xl font-black uppercase tracking-widest transition-all">
-            Zabi Size Tukuna
+        <div id="neural-status" class="status-text">WAITING FOR INPUT...</div>
+        <button id="neural-proceed" class="neural-btn-hidden" onclick="location.href='checkout.html'">
+            INITIALIZE CHECKOUT <i class="fa-solid fa-microchip"></i>
         </button>
     </div>
 </div>
-
+    
     
   <style>
-    .size-btn {
-        width: 50px; height: 50px; border-radius: 15px; border: 2px solid #f1f5f9;
-        font-weight: 800; color: #64748b; transition: 0.3s;
-    }
-    .size-btn.selected { border-color: #ff8a65; background: #fff7ed; color: #ff8a65; transform: scale(1.1); }
-    
-    @keyframes slide-up {
-        from { transform: translateY(100%); }
-        to { transform: translateY(0); }
-    }
-    .animate-slide-up { animation: slide-up 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-</style> 
+    .neural-container {
+    position: fixed; inset: 0; z-index: 20000;
+    display: none; align-items: center; justify-content: center;
+    overflow: hidden;
+}
+
+.neural-bg-blur {
+    position: absolute; inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(25px);
+    opacity: 0; transition: 0.5s;
+}
+
+.neural-core {
+    position: relative; z-index: 10; text-align: center;
+    width: 100%; max-width: 400px;
+}
+
+.neural-title {
+    font-family: 'Orbitron', sans-serif; font-size: 10px;
+    letter-spacing: 5px; color: #00f2ff; margin-bottom: 50px;
+    text-shadow: 0 0 10px #00f2ff;
+}
+
+.orb-wrapper {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 25px;
+}
+
+.neural-orb {
+    width: 70px; height: 70px; border-radius: 50%;
+    border: 1px solid rgba(0, 242, 255, 0.3);
+    background: radial-gradient(circle, rgba(0, 242, 255, 0.1), transparent);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
+}
+
+.neural-orb span { font-weight: 900; color: white; font-size: 16px; }
+
+.neural-orb:hover, .neural-orb.active {
+    transform: scale(1.3);
+    border-color: #00f2ff;
+    box-shadow: 0 0 30px #00f2ff;
+    background: #00f2ff;
+}
+.neural-orb.active span { color: black; }
+
+.status-text {
+    margin-top: 50px; font-size: 8px; letter-spacing: 3px;
+    color: #444; text-transform: uppercase;
+}
+
+.neural-btn-hidden {
+    margin-top: 30px; padding: 15px 40px; border-radius: 50px;
+    background: transparent; border: 1px solid #00f2ff;
+    color: #00f2ff; font-weight: 900; font-size: 10px;
+    letter-spacing: 2px; opacity: 0; transform: translateY(20px);
+    transition: 0.5s;
+}
+
+.neural-btn-hidden.visible { opacity: 1; transform: translateY(0); background: rgba(0, 242, 255, 0.1); }
+      
     
  
 <script>
-    let selectedSize = null;
+    let neuralSize = null;
 
-    function checkSelection() {
-        if (!selectedSize) {
-            document.getElementById('selection-sheet').classList.remove('hidden');
-            document.getElementById('selection-sheet').style.display = 'flex';
-            document.getElementById('selection-sheet').style.alignItems = 'flex-end';
-        } else {
-            window.location.href = 'checkout.html';
-        }
-    }
+function checkSelection() {
+    const ui = document.getElementById('neural-interface');
+    const blur = ui.querySelector('.neural-bg-blur');
+    
+    ui.style.display = 'flex';
+    setTimeout(() => {
+        blur.style.opacity = '1';
+        if(typeof speakAI === "function") speakAI("Neural link established. Identify your size requirements.");
+    }, 10);
+}
 
-    function selectSize(size, el) {
-        selectedSize = size;
-        // Cire tsohon selection
-        document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
-        // Saka sabon selection
-        el.classList.add('selected');
-        
-        // Kunna babban button
-        const btn = document.getElementById('final-order-btn');
-        btn.disabled = false;
-        btn.style.background = '#1e293b';
-        btn.innerHTML = 'Proceed to Checkout <i class="fa-solid fa-arrow-right ml-2"></i>';
-        btn.onclick = () => window.location.href = 'checkout.html';
-    }
-    </script>
+function confirmNeural(size, el) {
+    neuralSize = size;
+    document.querySelectorAll('.neural-orb').forEach(o => o.classList.remove('active'));
+    el.classList.add('active');
+    
+    document.getElementById('neural-status').innerText = "SIZE " + size + " VERIFIED";
+    document.getElementById('neural-status').style.color = "#00f2ff";
+    
+    const btn = document.getElementById('neural-proceed');
+    btn.classList.add('visible');
+}
+
+// Rufe interface idan an danna bango
+document.querySelector('.neural-bg-blur').onclick = () => {
+    document.getElementById('neural-interface').style.display = 'none';
+};
+      
 
 <script>
 // DNA CORE SCRIPT
