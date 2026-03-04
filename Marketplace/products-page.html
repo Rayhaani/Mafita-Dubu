@@ -308,6 +308,73 @@
         <span class="dock-label">Buy</span>
     </div>
     </div>
+
+<div class="dock-item" onclick="checkSelection()" style="cursor: pointer;">
+    <div class="dock-icon-box"><i class="fa-solid fa-cart-shopping"></i></div>
+    <span class="dock-label">Order</span>
+</div>
+
+<div id="selection-sheet" class="fixed inset-0 bg-black/40 z-50 hidden flex-items-end">
+    <div class="bg-white w-full rounded-t-[40px] p-8 animate-slide-up">
+        <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
+        <h3 class="text-lg font-extrabold text-slate-800 mb-4">Muna bukatar sanin size dinka</h3>
+        
+        <div class="flex gap-3 mb-8">
+            <button onclick="selectSize('M', this)" class="size-btn">M</button>
+            <button onclick="selectSize('L', this)" class="size-btn">L</button>
+            <button onclick="selectSize('XL', this)" class="size-btn">XL</button>
+            <button onclick="selectSize('2XL', this)" class="size-btn">2XL</button>
+        </div>
+
+        <button id="final-order-btn" disabled class="w-full py-4 bg-gray-300 text-white rounded-2xl font-black uppercase tracking-widest transition-all">
+            Zabi Size Tukuna
+        </button>
+    </div>
+</div>
+
+<style>
+    .size-btn {
+        width: 50px; height: 50px; border-radius: 15px; border: 2px solid #f1f5f9;
+        font-weight: 800; color: #64748b; transition: 0.3s;
+    }
+    .size-btn.selected { border-color: #ff8a65; background: #fff7ed; color: #ff8a65; transform: scale(1.1); }
+    
+    @keyframes slide-up {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+    }
+    .animate-slide-up { animation: slide-up 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+</style>
+
+<script>
+    let selectedSize = null;
+
+    function checkSelection() {
+        if (!selectedSize) {
+            document.getElementById('selection-sheet').classList.remove('hidden');
+            document.getElementById('selection-sheet').style.display = 'flex';
+            document.getElementById('selection-sheet').style.alignItems = 'flex-end';
+        } else {
+            window.location.href = 'checkout.html';
+        }
+    }
+
+    function selectSize(size, el) {
+        selectedSize = size;
+        // Cire tsohon selection
+        document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
+        // Saka sabon selection
+        el.classList.add('selected');
+        
+        // Kunna babban button
+        const btn = document.getElementById('final-order-btn');
+        btn.disabled = false;
+        btn.style.background = '#1e293b';
+        btn.innerHTML = 'Proceed to Checkout <i class="fa-solid fa-arrow-right ml-2"></i>';
+        btn.onclick = () => window.location.href = 'checkout.html';
+    }
+    </script>
+    
     
 <script>
 // DNA CORE SCRIPT
