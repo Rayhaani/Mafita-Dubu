@@ -159,7 +159,7 @@
     .dock-icon-box { color: #888; font-size: 16px; }
     .dock-icon-box.active { color: #00f2ff; }
     .dock-label { font-size: 7px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #666; }
-
+ 
 </style>
 </head>
 <body>
@@ -309,23 +309,94 @@
     </div>
     </div>
 
-<div class="dock-item" onclick="checkSelection()" style="cursor: pointer;">
-    <div class="dock-icon-box"><i class="fa-solid fa-cart-shopping"></i></div>
-    <span class="dock-label">Order Now</span>
+<div id="carpet" style="position: fixed; top: 100px; left: 50%; transform: translateX(-50%); width: 280px; height: 0; background: rgba(24, 22, 22, 0.95); border: 1px solid rgba(0, 242, 255, 0.3); border-radius: 25px; overflow: hidden; z-index: 9999; backdrop-filter: blur(20px); transition: height 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+    <div id="carpet-content" style="padding: 25px; text-align: center;">
+        <h3 style="font-size: 10px; letter-spacing: 3px; color: #00f2ff; text-transform: uppercase; margin-bottom: 20px; font-weight: 900;">Select Size</h3>
+        
+        <div style="display: grid; grid-template-cols: 1fr; gap: 10px;">
+            <div onclick="selectSize('M', this)" class="carpet-opt">MEDIUM</div>
+            <div onclick="selectSize('L', this)" class="carpet-opt">LARGE</div>
+            <div onclick="selectSize('XL', this)" class="carpet-opt">EXTRA LARGE</div>
+            <div onclick="selectSize('2XL', this)" class="carpet-opt">DOUBLE XL</div>
+        </div>
+
+        <button id="final-order-btn" disabled style="margin-top: 25px; width: 100%; padding: 12px; border-radius: 15px; background: rgba(255,255,255,0.05); color: #555; font-size: 10px; font-weight: 900; border: 1px solid rgba(255,255,255,0.1); text-transform: uppercase;">
+            Confirm Selection
+        </button>
+    </div>
 </div>
-
-
+    
     
 
 <style>
-
-
-    
+    .carpet-opt {
+        padding: 12px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.05);
+        color: #888;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .carpet-opt:hover, .carpet-opt.selected {
+        background: rgba(0, 242, 255, 0.1);
+        border-color: #00f2ff;
+        color: #00f2ff;
+        transform: scale(1.02);
+    }
+    #carpet::after {
+        content: ""; position: absolute; bottom: -20px; left: 0; width: 100%; height: 40px;
+        background: radial-gradient(circle, #00f2ff33, transparent); filter: blur(10px);
+    }
+</style>
+ 
 <script>
+let selectedSize = null;
+let carpet = document.getElementById("carpet");
+let maxHeight = 380; // Tsawon da zai kai idan ya bude
+let currentHeight = 0;
+let lastScroll = window.scrollY;
 
+function checkSelection() {
+    if (!selectedSize) {
+        // Bude Carpet din
+        currentHeight = 380;
+        carpet.style.height = currentHeight + "px";
+        speakAI("Please select your elite size to proceed.");
+    } else {
+        window.location.href = 'checkout.html';
+    }
+}
 
+function selectSize(size, el) {
+    selectedSize = size;
+    document.querySelectorAll('.carpet-opt').forEach(opt => opt.classList.remove('selected'));
+    el.classList.add('selected');
+    
+    const btn = document.getElementById('final-order-btn');
+    btn.disabled = false;
+    btn.style.background = '#00f2ff';
+    btn.style.color = '#000';
+    btn.style.borderColor = '#00f2ff';
+    btn.innerHTML = `PROCEED WITH ${size} <i class="fa-solid fa-arrow-right ml-2"></i>`;
+    btn.onclick = () => window.location.href = 'checkout.html';
+}
 
-
+// Wannan zai rinka boye carpet din kadan-kadan idan ana scroll
+window.addEventListener("scroll", ()=>{
+    if(currentHeight > 0) {
+        let currentScroll = window.scrollY;
+        let diff = currentScroll - lastScroll;
+        currentHeight -= Math.abs(diff) * 0.8; 
+        if(currentHeight < 0) currentHeight = 0;
+        carpet.style.height = currentHeight + "px";
+        lastScroll = currentScroll;
+    }
+});
+</script>
+    
 <script>
 // DNA CORE SCRIPT
 const salesBoy = document.createElement('div');
@@ -417,90 +488,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.stack-img').forEach(img => img.src = product.img);
         document.querySelectorAll('.holo-img').forEach(img => img.src = product.img);
     }
-});
-
-  
-    <style>
-    #carpet {
-        position: fixed; top: 110px; left: 50%; transform: translateX(-50%);
-        width: 290px; height: 0; background: rgba(10, 10, 10, 0.98);
-        border: 1px solid rgba(0, 242, 255, 0.4); border-radius: 30px;
-        overflow: hidden; z-index: 10005; backdrop-filter: blur(25px);
-        transition: height 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-        box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 20px rgba(0, 242, 255, 0.1);
-    }
-    .carpet-opt {
-        padding: 15px; margin-bottom: 8px; border-radius: 15px;
-        background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
-        color: #777; font-size: 11px; font-weight: 800; cursor: pointer;
-        transition: 0.3s; text-align: center; letter-spacing: 1px;
-    }
-    .carpet-opt:hover, .carpet-opt.selected {
-        background: rgba(0, 242, 255, 0.1); border-color: #00f2ff;
-        color: #00f2ff; transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 242, 255, 0.1);
-    }
-    #carpet-confirm {
-        margin-top: 20px; width: 100%; padding: 15px; border-radius: 18px;
-        background: #222; color: #444; font-size: 10px; font-weight: 900;
-        border: 1px solid rgba(255,255,255,0.05); text-transform: uppercase;
-        letter-spacing: 2px; transition: 0.4s;
-    }
-    #carpet-confirm.ready {
-        background: #00f2ff; color: #000; box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
-        cursor: pointer;
-    }
-</style>
-
-<div id="carpet">
-    <div style="padding: 25px;">
-        <div style="width: 40px; height: 2px; background: rgba(0, 242, 255, 0.3); margin: 0 auto 20px;"></div>
-        <h3 style="font-size: 9px; letter-spacing: 4px; color: #555; text-transform: uppercase; text-align: center; margin-bottom: 25px;">Elite Size Selection</h3>
-        
-        <div id="size-options">
-            <div onclick="masterSelectSize('M', this)" class="carpet-opt">MEDIUM (M)</div>
-            <div onclick="masterSelectSize('L', this)" class="carpet-opt">LARGE (L)</div>
-            <div onclick="masterSelectSize('XL', this)" class="carpet-opt">EXTRA LARGE (XL)</div>
-            <div onclick="masterSelectSize('2XL', this)" class="carpet-opt">DOUBLE XL (2XL)</div>
-        </div>
-
-        <button id="carpet-confirm" disabled>Confirm Selection</button>
-    </div>
-</div>
-
-<script>
-let globalSelectedSize = null;
-let carpetEl = document.getElementById("carpet");
-
-// Wannan zai maye gurbin kowane checkSelection na baya
-function checkSelection() {
-    if (!globalSelectedSize) {
-        carpetEl.style.height = "400px";
-        if(typeof speakAI === "function") speakAI("Please choose your size.");
-    } else {
-        window.location.href = 'checkout.html';
-    }
-}
-
-function masterSelectSize(size, el) {
-    globalSelectedSize = size;
-    document.querySelectorAll('.carpet-opt').forEach(opt => opt.classList.remove('selected'));
-    el.classList.add('selected');
-    
-    const btn = document.getElementById('carpet-confirm');
-    btn.disabled = false;
-    btn.classList.add('ready');
-    btn.innerHTML = `PROCEED WITH ${size} <i class="fa-solid fa-chevron-right ml-2"></i>`;
-    btn.onclick = () => window.location.href = 'checkout.html';
-}
-
-// Rufe Carpet idan ana scroll
-window.addEventListener("scroll", () => {
-    if (parseInt(carpetEl.style.height) > 0) {
-        carpetEl.style.height = "0px";
-    }
-});
-</script>
-    
+}); 
+</script> 
 </body>
 </html>
