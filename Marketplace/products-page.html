@@ -382,10 +382,11 @@
 }
 
 @keyframes salesBoyDisplay {
-    from { transform: rotateY(0deg); }
-    to { transform: rotateY(360deg); }
+    0% { transform: rotateX(0deg) rotateY(0deg); }
+    33% { transform: rotateX(15deg) rotateY(-15deg); }
+    66% { transform: rotateX(-15deg) rotateY(15deg); }
+    100% { transform: rotateX(0deg) rotateY(0deg); }
 }
-/* Shawarar kwararre: Idan ka zabi wannan, ka sanya 'linear' maimakon 'ease-in-out' a animation property */
     
 /* CHECKOUT BOXES STYLE */
 .magic-grid { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
