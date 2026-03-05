@@ -309,39 +309,38 @@
     </div>
     </div>
 
-<div id="selection-container" style="position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 350px; z-index: 10001; display: none; flex-direction: column; gap: 10px;">
-    <div style="background: rgba(17, 17, 17, 0.9); backdrop-filter: blur(15px); border: 1px solid #00f2ff; border-radius: 20px; padding: 20px; text-align: center; box-shadow: 0 -10px 30px rgba(0,0,0,0.5);">
-        <p style="font-size: 10px; color: #00f2ff; letter-spacing: 3px; margin-bottom: 15px; font-weight: 900;">SELECT SIZE</p>
-        <div style="display: flex; justify-content: space-around; gap: 8px;">
-            <button onclick="pickSize('M', this)" class="futuristic-btn">M</button>
-            <button onclick="pickSize('L', this)" class="futuristic-btn">L</button>
-            <button onclick="pickSize('XL', this)" class="futuristic-btn">XL</button>
-            <button onclick="pickSize('2XL', this)" class="futuristic-btn">2XL</button>
+<div id="selection-sheet" class="fixed inset-0 bg-black/40 z-50 hidden flex-items-end">
+    <div class="bg-white w-full rounded-t-[40px] p-8 animate-slide-up">
+        <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
+        <h3 class="text-lg font-extrabold text-slate-800 mb-4">Muna bukatar sanin size dinka</h3>
+        
+        <div class="flex gap-3 mb-8">
+            <button onclick="selectSize('M', this)" class="size-btn">M</button>
+            <button onclick="selectSize('L', this)" class="size-btn">L</button>
+            <button onclick="selectSize('XL', this)" class="size-btn">XL</button>
+            <button onclick="selectSize('2XL', this)" class="size-btn">2XL</button>
         </div>
+
+        <button id="final-order-btn" disabled class="w-full py-4 bg-gray-300 text-white rounded-2xl font-black uppercase tracking-widest transition-all">
+            Zabi Size Tukuna
+        </button>
     </div>
 </div>
 
-<style>
-    .futuristic-btn {
-        width: 55px; height: 50px; background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
-        color: white; font-weight: 900; transition: 0.3s;
-    }
-    .futuristic-btn.active {
-        background: #00f2ff; color: black; border-color: #00f2ff;
-        box-shadow: 0 0 15px #00f2ff;
-    }
 
-<style>
-    .nano-card {
-        height: 60px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1);
-        border-radius:15px; color:white; font-weight:900; transition:0.3s;
+   <style>
+    .size-btn {
+        width: 50px; height: 50px; border-radius: 15px; border: 2px solid #f1f5f9;
+        font-weight: 800; color: #64748b; transition: 0.3s;
     }
-    .nano-card.active {
-        background:#00f2ff; color:black; border-color:#00f2ff; box-shadow:0 0 15px #00f2ff; transform:scale(1.1);
-    }
-</style>
+    .size-btn.selected { border-color: #ff8a65; background: #fff7ed; color: #ff8a65; transform: scale(1.1); }
     
+    @keyframes slide-up {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+    }
+    .animate-slide-up { animation: slide-up 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+</style> 
   <style>
     .spec-glass {
     position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
@@ -392,40 +391,34 @@
       }
     
  
-<script>
-  let mySelectedSize = null;
+ <script>
+    let selectedSize = null;
 
-function checkSelection() {
-    const container = document.getElementById('selection-container');
-    
-    if (!mySelectedSize) {
-        // Idan babu size, nuna musu wannan karamin card din a kasan allo
-        container.style.display = (container.style.display === 'flex') ? 'none' : 'flex';
-    } else {
-        // Idan an riga an zaba, wuce Checkout
-        window.location.href = 'checkout.html';
+    function checkSelection() {
+        if (!selectedSize) {
+            document.getElementById('selection-sheet').classList.remove('hidden');
+            document.getElementById('selection-sheet').style.display = 'flex';
+            document.getElementById('selection-sheet').style.alignItems = 'flex-end';
+        } else {
+            window.location.href = 'checkout.html';
+        }
     }
-}
 
-function pickSize(size, el) {
-    mySelectedSize = size;
-    // Cire kalar kowa
-    document.querySelectorAll('.futuristic-btn').forEach(btn => btn.classList.remove('active'));
-    // Saka wa wannan
-    el.classList.add('active');
-    
-    // Canza sunan babban button din dake dock din (Ina tsammanin span din dake ciki)
-    const orderLabel = document.querySelector('.dock-item[onclick="checkSelection()"] .dock-label');
-    if(orderLabel) {
-        orderLabel.innerText = "CONFIRM " + size;
-        orderLabel.style.color = "#00f2ff";
+    function selectSize(size, el) {
+        selectedSize = size;
+        // Cire tsohon selection
+        document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
+        // Saka sabon selection
+        el.classList.add('selected');
+        
+        // Kunna babban button
+        const btn = document.getElementById('final-order-btn');
+        btn.disabled = false;
+        btn.style.background = '#1e293b';
+        btn.innerHTML = 'Proceed to Checkout <i class="fa-solid fa-arrow-right ml-2"></i>';
+        btn.onclick = () => window.location.href = 'checkout.html';
     }
-    
-    // Boye karamin card din bayan an zaba don a danna babban button
-    setTimeout(() => {
-        document.getElementById('selection-container').style.display = 'none';
-    }, 500);
-      }
+    </script> 
 
 <script>
 // DNA CORE SCRIPT
