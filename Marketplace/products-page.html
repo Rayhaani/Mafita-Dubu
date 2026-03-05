@@ -308,46 +308,49 @@
     <span class="dock-label">Order Now</span>
     </div>
     </div>     
-<div id="infinity-overlay" class="inf-overlay">
+
+  <div id="infinity-overlay" class="inf-overlay">
     <div class="glass-backdrop" onclick="closeInf()"></div>
     
-    <div id="inf-card" class="inf-card-pure">
+    <div id="inf-card" class="inf-card-transparent">
         
-        <div class="atamfa-floating-stage">
-            <img src="" id="magic-atamfa-display" class="pure-atamfa-engine" alt="">
-        </div>
-
-        <div class="inf-title-area">
-            <span class="inf-subtitle">EXQUISITE SELECTION</span>
-            <h2 class="inf-main-title">Zabi kalar da kake so</h2>
-        </div>
-
-        <div class="magic-grid-container">
-            <div class="item-card-mini-magic" onclick="infSelect('Green', this)">
-                <div class="item-img-box">
-                    <img src="" class="auto-thumb-grab" style="width:100%; height:100%; object-fit:cover;">
-                </div>
-                <div class="item-label-bar">GREEN</div>
-            </div>
-            <div class="item-card-mini-magic" onclick="infSelect('Purple', this)">
-                <div class="item-img-box">
-                    <img src="" class="auto-thumb-grab" style="width:100%; height:100%; object-fit:cover;">
-                </div>
-                <div class="item-label-bar">PURPLE</div>
-            </div>
-            <div class="item-card-mini-magic" onclick="infSelect('Milk', this)">
-                <div class="item-img-box">
-                    <img src="" class="auto-thumb-grab" style="width:100%; height:100%; object-fit:cover;">
-                </div>
-                <div class="item-label-bar">MILK</div>
+        <div class="atamfa-stage-pure">
+            <div class="image-mask-wrapper">
+                <img src="" id="magic-atamfa-display" class="floating-atamfa-logic" alt="">
             </div>
         </div>
 
-        <button id="inf-action-btn" disabled onclick="infProceed()" class="pay-secure-btn-magic">
-            <span id="btn-label-text">Zabi kala domin ci gaba</span>
+        <div class="inf-text-content">
+            <span class="inf-badge">AUTHENTIC CHOICE</span>
+            <h2 class="inf-title-text">Zabi kalar da kake so</h2>
+        </div>
+
+        <div class="colors-grid-pure">
+            <div class="color-node" onclick="infSelect('Green', this)">
+                <div class="node-img-wrap">
+                    <img src="" class="grabbed-img" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="node-name">GREEN</div>
+            </div>
+            <div class="color-node" onclick="infSelect('Purple', this)">
+                <div class="node-img-wrap">
+                    <img src="" class="grabbed-img" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="node-name">PURPLE</div>
+            </div>
+            <div class="color-node" onclick="infSelect('Milk', this)">
+                <div class="node-img-wrap">
+                    <img src="" class="grabbed-img" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="node-name">MILK</div>
+            </div>
+        </div>
+
+        <button id="inf-proceed-btn" disabled onclick="infProceed()" class="main-action-btn">
+            Zabi kala domin ci gaba
         </button>
 
-        <p class="inf-dismiss-text" onclick="closeInf()">DISMISS</p>
+        <p class="dismiss-label" onclick="closeInf()">DISMISS</p>
     </div>
 </div>
 
@@ -355,108 +358,109 @@
 .inf-overlay {
     position: fixed !important; inset: 0 !important; z-index: 999999 !important;
     display: none; align-items: center; justify-content: center;
-    font-family: 'Quicksand', sans-serif;
-}
-.glass-backdrop { 
-    position: absolute; inset: 0; background: rgba(0,0,0,0.9); 
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(15px);
 }
 
-.inf-card-pure { position: relative; width: 95%; max-width: 400px; text-align: center; }
+.inf-card-transparent { width: 95%; max-width: 420px; text-align: center; }
 
-/* STAGE: Wurin shawagi */
-.atamfa-floating-stage { 
-    height: 300px; width: 100%; display: flex; align-items: center; justify-content: center; 
-    perspective: 1500px; margin-bottom: -20px; 
+/* THE STAGE: Babu Box, Babu Iyakoki */
+.atamfa-stage-pure { 
+    height: 320px; width: 100%; display: flex; align-items: center; justify-content: center;
+    perspective: 1000px; 
 }
 
-/* PURE ATAMFA: Wannan zai cire background din hoton ya bar atamfar kadai */
-.pure-atamfa-engine { 
+/* WANNAN SHINE SIRRIN CIRE BACKGROUND DIN */
+.image-mask-wrapper {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+}
+
+.floating-atamfa-logic { 
     max-width: 90%; max-height: 90%; 
-    opacity: 0; transform: scale(0.5); display: none;
-    /* MAGIC TRICK: Wannan zai sa farin background din hoton ya bace */
-    mix-blend-mode: screen; 
-    filter: contrast(110%) brightness(110%);
-    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: none; opacity: 0;
+    /* CSS Trick: Wannan zai cire background fari na hoton ya bar atamfar */
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+    mix-blend-mode: multiply; /* Wannan zai narkar da farin cikin duhun shafin */
+    transition: all 0.6s ease;
 }
 
-.pure-atamfa-engine.active { 
-    opacity: 1; transform: scale(1); display: block;
-    animation: salesBoyMagic 8s infinite ease-in-out;
+.floating-atamfa-logic.active { 
+    display: block; opacity: 1;
+    animation: salesBoySwing 8s infinite ease-in-out;
 }
 
-@keyframes salesBoyMagic {
-    0% { transform: rotateY(-20deg) rotateX(10deg) translateY(0) scale(1); }
-    25% { transform: rotateY(20deg) rotateX(-5deg) translateY(-15px) scale(1.05); }
-    50% { transform: rotateY(-10deg) rotateZ(5deg) translateY(10px) scale(1); }
-    75% { transform: rotateY(15deg) rotateX(10deg) translateY(-15px) scale(1.05); }
-    100% { transform: rotateY(-20deg) rotateX(10deg) translateY(0) scale(1); }
+@keyframes salesBoySwing {
+    0% { transform: rotateY(-15deg) rotateX(5deg) scale(1); }
+    50% { transform: rotateY(15deg) rotateX(-5deg) scale(1.08) translateY(-10px); }
+    100% { transform: rotateY(-15deg) rotateX(5deg) scale(1); }
 }
 
-/* BOXES STYLE */
-.magic-grid-container { display: flex; justify-content: center; gap: 10px; margin: 25px 0; }
-.item-card-mini-magic { 
-    min-width: 100px; background: #fff; border-radius: 12px; overflow: hidden;
-    border: 3px solid transparent; transition: 0.3s;
+/* KALA BOXES */
+.colors-grid-pure { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
+.color-node { 
+    width: 105px; background: #fff; border-radius: 12px; overflow: hidden;
+    border: 3px solid transparent; cursor: pointer; transition: 0.3s;
 }
-.item-card-mini-magic.active-node { border-color: #ff7043; transform: scale(1.05); }
-.item-label-bar { background: #333; color: #fff; font-size: 11px; font-weight: 800; padding: 5px 0; }
-.item-card-mini-magic.active-node .item-label-bar { background: #ff7043; }
+.color-node.selected { border-color: #ff7043; transform: scale(1.05); }
+.node-img-wrap { height: 80px; background: #eee; }
+.node-name { background: #444; color: #fff; font-size: 10px; font-weight: 800; padding: 5px 0; }
+.color-node.selected .node-name { background: #ff7043; }
 
-.inf-main-title { color: white; font-weight: 800; font-size: 26px; margin: 10px 0; }
-.pay-secure-btn-magic { 
+/* TEXT & BUTTON */
+.inf-title-text { color: #fff; font-size: 24px; font-weight: 800; margin: 5px 0 20px 0; }
+.main-action-btn { 
     width: 90%; height: 55px; border-radius: 50px; border: none; 
-    background: #ff7043; color: white; font-weight: 800; font-size: 18px;
-    box-shadow: 0 10px 20px rgba(255, 112, 67, 0.4);
+    background: #ff7043; color: #fff; font-size: 16px; font-weight: 800;
+    opacity: 0.5; transition: 0.4s;
 }
+.main-action-btn.ready { opacity: 1; cursor: pointer; box-shadow: 0 10px 25px rgba(255, 112, 67, 0.4); }
+.dismiss-label { color: rgba(255,255,255,0.4); margin-top: 20px; font-size: 12px; cursor: pointer; }
 </style>
 
 <script>
-// Logic din yana nan yadda yake, kawai na daidaita yadda zai kalli sabbin Classes din
-function findProductImage() {
-    const images = document.querySelectorAll('img');
-    let mainSrc = "";
+function getPageImage() {
+    const imgs = document.querySelectorAll('img');
+    let targetSrc = "";
     let maxArea = 0;
-    images.forEach(img => {
+    imgs.forEach(img => {
         if (img.width * img.height > maxArea && !img.closest('.inf-overlay')) {
             maxArea = img.width * img.height;
-            mainSrc = img.src;
+            targetSrc = img.src;
         }
     });
-    return mainSrc;
+    return targetSrc;
 }
 
 function checkSelection() {
-    const overlay = document.getElementById('infinity-overlay');
-    const mainImg = findProductImage();
+    const mainImg = getPageImage();
     if(mainImg) {
-        document.querySelectorAll('.auto-thumb-grab').forEach(img => img.src = mainImg);
+        document.querySelectorAll('.grabbed-img').forEach(i => i.src = mainImg);
     }
-    overlay.style.display = 'flex';
+    document.getElementById('infinity-overlay').style.display = 'flex';
 }
 
 function infSelect(color, el) {
-    document.querySelectorAll('.item-card-mini-magic').forEach(n => n.classList.remove('active-node'));
-    el.classList.add('active-node');
+    document.querySelectorAll('.color-node').forEach(n => n.classList.remove('selected'));
+    el.classList.add('selected');
+    
     const displayImg = document.getElementById('magic-atamfa-display');
-    const currentMainImg = findProductImage();
+    const pageSrc = getPageImage();
+    
     displayImg.classList.remove('active');
     setTimeout(() => {
-        if(currentMainImg) {
-            displayImg.src = currentMainImg;
-            displayImg.classList.add('active');
-        }
-    }, 100);
-    const btn = document.getElementById('inf-action-btn');
-    btn.disabled = false; 
-    btn.style.opacity = "1";
+        displayImg.src = pageSrc;
+        displayImg.classList.add('active');
+    }, 50);
+    
+    const btn = document.getElementById('inf-proceed-btn');
+    btn.disabled = false;
+    btn.classList.add('ready');
 }
 
 function closeInf() {
     document.getElementById('infinity-overlay').style.display = 'none';
 }
-</script>
-    
+</script>  
+     
     
 <script>
 // DNA CORE SCRIPT
