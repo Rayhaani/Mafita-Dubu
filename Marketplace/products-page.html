@@ -309,18 +309,17 @@
     </div>
     </div>     
 
- <div class="main-page-magic-stage" style="width: 100%; height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; perspective: 1200px; margin-bottom: 10px;">
+<div id="main-rotation-area" style="width: 100%; height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; perspective: 1200px; margin: 15px 0; overflow: hidden;">
     <div class="floating-wrap">
-        <img src="" id="main-atamfa-float" class="atamfa-float-engine" style="display: none;">
+        <img src="" id="main-atamfa-float" class="atamfa-float-engine" style="display: none; max-height: 220px; width: auto; object-fit: contain;">
     </div>
-    <div id="selected-color-label-main" style="color: #ff7043; font-weight: 800; margin-top: 10px; text-transform: uppercase; background: transparent;"></div>
+    <div id="selected-color-label-main" style="color: #ff7043; font-weight: 800; margin-top: 10px; text-transform: uppercase; background: transparent; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 2px;"></div>
 </div>
 
 <div id="infinity-overlay" class="inf-overlay">
     <div class="glass-backdrop" onclick="closeInf()"></div>
     
     <div id="inf-card" class="inf-card style-5">
-        
         <div class="atamfa-magic-stage">
             <img src="" id="magic-atamfa-display" class="atamfa-float-engine" alt="">
         </div>
@@ -331,25 +330,16 @@
         </div>
 
         <div class="inventory-scroll magic-grid">
-            <div class="item-card-mini magic-node" onclick="autoSelect(this, 0)">
-                <div class="item-img">
-                    <img class="thumb-node" style="width:100%; height:100%; object-fit:cover; display:none;">
-                    <i class="fa-regular fa-image thumb-placeholder text-gray-300 text-xl"></i>
-                </div>
+            <div class="item-card-mini auto-box" onclick="autoSelect(this)">
+                <div class="item-img"><img class="target-thumb" style="width:100%; height:100%; object-fit:cover; display:none;"></div>
                 <div class="item-price-bar">GREEN</div>
             </div>
-            <div class="item-card-mini magic-node" onclick="autoSelect(this, 1)">
-                <div class="item-img">
-                    <img class="thumb-node" style="width:100%; height:100%; object-fit:cover; display:none;">
-                    <i class="fa-regular fa-image thumb-placeholder text-gray-300 text-xl"></i>
-                </div>
+            <div class="item-card-mini auto-box" onclick="autoSelect(this)">
+                <div class="item-img"><img class="target-thumb" style="width:100%; height:100%; object-fit:cover; display:none;"></div>
                 <div class="item-price-bar">PURPLE</div>
             </div>
-            <div class="item-card-mini magic-node" onclick="autoSelect(this, 2)">
-                <div class="item-img">
-                    <img class="thumb-node" style="width:100%; height:100%; object-fit:cover; display:none;">
-                    <i class="fa-regular fa-image thumb-placeholder text-gray-300 text-xl"></i>
-                </div>
+            <div class="item-card-mini auto-box" onclick="autoSelect(this)">
+                <div class="item-img"><img class="target-thumb" style="width:100%; height:100%; object-fit:cover; display:none;"></div>
                 <div class="item-price-bar">MILK</div>
             </div>
         </div>
@@ -357,32 +347,20 @@
         <button id="inf-action" disabled onclick="infProceed()" class="pay-secure-btn">
             <span id="btn-label">Zabi kala domin ci gaba</span>
         </button>
-
         <p class="inf-close" onclick="closeInf()">DISMISS</p>
     </div>
 </div>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Plus+Jakarta+Sans:wght@800&display=swap');
+/* --- ANIMATION & CORE STYLES --- */
+.inf-overlay { position: fixed; inset: 0; z-index: 999999; display: none; align-items: center; justify-content: center; }
+.glass-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); }
+.inf-card.style-5 { position: relative; width: 90%; max-width: 400px; text-align: center; background: none; }
 
-/* --- ASALIN STYLE DIN KA (Ban taba komai ba) --- */
-.inf-overlay {
-    position: fixed; inset: 0; z-index: 99999;
-    display: none; align-items: center; justify-content: center;
-    font-family: 'Quicksand', sans-serif;
-}
-.glass-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
-.inf-card.style-5 { position: relative; width: 90%; max-width: 400px; background: none; text-align: center; }
-
-.atamfa-magic-stage { 
-    height: 250px; width: 100%; display: flex; align-items: center; justify-content: center; 
-    perspective: 1200px; margin-bottom: 5px; 
-}
 .atamfa-float-engine { 
-    max-width: 85%; max-height: 90%; 
     opacity: 0; transform: scale(0.6) rotateY(45deg);
     transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
-    filter: drop-shadow(0 20px 50px rgba(0,0,0,0.8));
+    filter: drop-shadow(0 25px 60px rgba(0,0,0,0.8));
 }
 .atamfa-float-engine.active { 
     opacity: 1; transform: scale(1) rotateY(0deg); 
@@ -391,121 +369,82 @@
 }
 
 @keyframes salesBoyDisplay {
-    0% { transform: rotateY(-15deg) rotateX(5deg) translateY(0); }
-    25% { transform: rotateY(15deg) rotateX(-5deg) translateY(-10px); }
-    50% { transform: rotateY(-10deg) rotateZ(2deg) translateY(0); }
-    75% { transform: rotateY(10deg) rotateX(5deg) translateY(-10px); }
-    100% { transform: rotateY(-15deg) rotateX(5deg) translateY(0); }
+    0%, 100% { transform: rotateY(-15deg) translateY(0); }
+    50% { transform: rotateY(15deg) translateY(-20px); }
 }
 
-.magic-grid { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
-.item-card-mini { 
-    min-width: 95px; background: #fff; border-radius: 15px; 
-    overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
-    border: 2px solid transparent; cursor: pointer; transition: 0.3s;
-}
-.item-img { width: 100%; height: 80px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; }
+.magic-grid { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
+.item-card-mini { min-width: 90px; background: #fff; border-radius: 12px; overflow: hidden; border: 2px solid transparent; cursor: pointer; transition: 0.3s; }
+.item-img { height: 80px; background: #222; display: flex; align-items: center; justify-content: center; }
+.item-price-bar { background: transparent !important; color: #888; font-size: 10px; font-weight: 800; text-align: center; padding: 6px 0; }
 
-/* GYARAN TRANSPARENCY A NAN */
-.item-price-bar { background: transparent !important; color: #757575; font-size: 10px; font-weight: 800; text-align: center; padding: 6px 0; letter-spacing: 1px; }
+.item-card-mini.active-node { border-color: #ff7043 !important; transform: translateY(-5px); }
+.item-card-mini.active-node .item-price-bar { color: #ff7043; }
 
-.item-card-mini.active-node { border-color: #ff7043 !important; transform: translateY(-10px); }
-.item-card-mini.active-node .item-price-bar { background: transparent !important; color: #ff7043; }
-
-.inf-subtitle { font-size: 10px; font-weight: 800; color: #ff8a65; letter-spacing: 3px; display: block; margin-bottom: 8px; }
-.inf-main-title { font-size: 24px; font-weight: 800; color: white; margin: 0; }
-
-.pay-secure-btn { 
-    width: 90%; height: 55px; border-radius: 20px; border: none; 
-    background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); 
-    font-weight: 700; font-size: 16px; transition: 0.4s; margin-top: 15px;
-}
-.pay-secure-btn.active { 
-    background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%); color: white; cursor: pointer;
-    box-shadow: 0 15px 30px rgba(255, 112, 67, 0.4);
-}
-
-.inf-close { margin-top: 25px; color: rgba(255,255,255,0.3); font-size: 11px; font-weight: 700; cursor: pointer; letter-spacing: 1px; }
+.pay-secure-btn { width: 90%; height: 55px; border-radius: 18px; border: none; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); font-weight: 700; margin-top: 15px; }
+.pay-secure-btn.active { background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%); color: white; cursor: pointer; }
+.inf-close { margin-top: 25px; color: rgba(255,255,255,0.3); font-size: 11px; cursor: pointer; }
+.inf-main-title { color: white; font-weight: 800; font-size: 22px; }
+.inf-subtitle { color: #ff8a65; font-size: 10px; letter-spacing: 2px; font-weight: 800; }
 </style>
 
 <script>
-let selectedColor = null;
+// Wannan Script din zai kwaso hotunan da kansa
+function syncGallery() {
+    // Yana neman hotuna a gallery dinka na sama
+    const sourceImages = document.querySelectorAll('.product-details-page img, .swiper-slide img, img[alt*="Brocade"]');
+    const miniThumbs = document.querySelectorAll('.target-thumb');
 
-// AUTO-DETECT LOGIC: Wannan zai dauko hotunan babban gallery din shafinka
-window.addEventListener('DOMContentLoaded', () => {
-    // Zai nemi duk wani hoto dake cikin babban product area (misali .product-images ko hoto mafi girma)
-    const galleryImages = document.querySelectorAll('main img, .product-images img, .swiper-slide img');
-    const miniThumbs = document.querySelectorAll('.thumb-node');
-    const placeholders = document.querySelectorAll('.thumb-placeholder');
-
-    if (galleryImages.length > 0) {
-        miniThumbs.forEach((img, index) => {
-            if (galleryImages[index]) {
-                img.src = galleryImages[index].src;
-                img.style.display = 'block';
-                if(placeholders[index]) placeholders[index].style.display = 'none';
+    if (sourceImages.length > 0) {
+        miniThumbs.forEach((boxImg, i) => {
+            // Idan akwai hoto a gallery, saka shi a kananan boxes din
+            if (sourceImages[i]) {
+                boxImg.src = sourceImages[i].src;
+                boxImg.style.display = 'block';
             }
         });
     }
-});
-
-function checkSelection() {
-    const overlay = document.getElementById('infinity-overlay');
-    overlay.style.display = 'flex';
-    setTimeout(() => overlay.classList.add('active'), 10);
 }
 
-// Wannan function din zai kula da jujjuyawar hotunan biyun lokaci guda
-function autoSelect(el, index) {
-    const thumbImg = el.querySelector('.thumb-node');
-    if (!thumbImg || !thumbImg.src) return;
+// Kira aiki lokacin da page ya gama loading
+window.addEventListener('load', syncGallery);
 
-    const imgPath = thumbImg.src;
+function checkSelection() {
+    document.getElementById('infinity-overlay').style.display = 'flex';
+}
+
+function autoSelect(el) {
+    const imgPath = el.querySelector('.target-thumb').src;
     const colorName = el.querySelector('.item-price-bar').innerText;
-    selectedColor = colorName;
 
     document.querySelectorAll('.item-card-mini').forEach(n => n.classList.remove('active-node'));
     el.classList.add('active-node');
-    
-    // 1. DISPLAY A POP-UP
-    const popImg = document.getElementById('magic-atamfa-display');
-    popImg.classList.remove('active');
-    
-    // 2. DISPLAY A MAIN PAGE (SAMAN SHAFIN)
-    const mainImg = document.getElementById('main-atamfa-float');
+
+    // Update Hoton dake juyawa (Popup & Main Page)
+    const popDisplay = document.getElementById('magic-atamfa-display');
+    const mainDisplay = document.getElementById('main-atamfa-float');
     const mainLabel = document.getElementById('selected-color-label-main');
 
-    setTimeout(() => {
-        // Saka hoto a popup
-        popImg.src = imgPath;
-        popImg.classList.add('active');
-
-        // Saka hoto a saman page
-        if(mainImg) {
-            mainImg.src = imgPath;
-            mainImg.classList.add('active');
-            if(mainLabel) mainLabel.innerText = colorName;
+    [popDisplay, mainDisplay].forEach(img => {
+        if(img) {
+            img.classList.remove('active');
+            setTimeout(() => { img.src = imgPath; img.classList.add('active'); }, 50);
         }
-    }, 100);
-    
+    });
+
+    if(mainLabel) mainLabel.innerText = colorName;
+
     const btn = document.getElementById('inf-action');
-    btn.disabled = false; 
-    btn.classList.add('active');
+    btn.disabled = false; btn.classList.add('active');
     document.getElementById('btn-label').innerText = 'Proceed to checkout';
 }
 
-function closeInf() {
-    const overlay = document.getElementById('infinity-overlay');
-    overlay.classList.remove('active');
-    setTimeout(() => {
-        overlay.style.display = 'none';
-        document.getElementById('magic-atamfa-display').classList.remove('active');
-    }, 600);
-}
+function closeInf() { document.getElementById('infinity-overlay').style.display = 'none'; }
+function infProceed() { window.location.href = 'checkout.html'; }
+</script>
+ 
 
-function infProceed() { window.location.href = 'checkout.html?color=' + selectedColor; }
-    </script>
-    
+        
     
         
 <script>
