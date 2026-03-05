@@ -307,141 +307,132 @@
     <div class="dock-icon-box"><i class="fa-solid fa-cart-shopping"></i></div>
     <span class="dock-label">Order Now</span>
     </div>
-    </div>
-
-<div id="infinity-overlay" class="inf-overlay">
+    </div>     
+ <div id="infinity-overlay" class="inf-overlay">
     <div class="glass-backdrop" onclick="closeInf()"></div>
     
-    <div id="inf-card" class="inf-card style-5">
+    <div id="inf-card" class="inf-card ghost-refined">
         
         <div class="inf-header">
             <div class="inf-product-chip">
-                <div class="chip-circle"></div>
+                <div class="chip-image-container">
+                    <img src="https://afita-dubu.vercel.app/api/placeholder/80/80" alt="Atamfa Preview" class="atamfa-thumb">
+                </div>
                 <div class="inf-status-dot"></div>
             </div>
             <div class="inf-title-area">
-                <span class="inf-subtitle">NEURAL LINK ACTIVE</span>
-                <h2 class="inf-main-title">Identify Dimension</h2>
+                <span class="inf-subtitle">AUTHENTIC SELECTION</span>
+                <h2 class="inf-main-title">Select Color</h2>
             </div>
         </div>
 
-        <div class="inf-matrix">
-            <button onclick="infSelect('M', this)" class="inf-node">M</button>
-            <button onclick="infSelect('L', this)" class="inf-node">L</button>
-            <button onclick="infSelect('XL', this)" class="inf-node">XL</button>
-            <button onclick="infSelect('2XL', this)" class="inf-node">2XL</button>
+        <div class="inf-matrix color-grid">
+            <button onclick="infSelect('Color 1', this)" class="inf-node">1</button>
+            <button onclick="infSelect('Color 2', this)" class="inf-node">2</button>
+            <button onclick="infSelect('Color 3', this)" class="inf-node">3</button>
+            <button onclick="infSelect('Color 4', this)" class="inf-node">4</button>
         </div>
 
-        <button id="inf-action" disabled onclick="infProceed()" class="inf-btn">
-            <span id="btn-label">Awaiting Input</span>
-            <svg class="inf-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <button id="inf-action" disabled onclick="infProceed()" class="pay-secure-btn">
+            <span id="btn-label">Choose color to proceed</span>
         </button>
 
-        <p class="inf-close" onclick="closeInf()">Dismiss Interface</p>
+        <p class="inf-close" onclick="closeInf()">Dismiss</p>
     </div>
 </div>
 
 <style>
-/* CORE SETUP (Ba a taba nan) */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Inter:wght@400;900&display=swap');
+/* FONT & CORE SETUP */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
 
 .inf-overlay {
     position: fixed; inset: 0; z-index: 99999;
     display: none; align-items: center; justify-content: center;
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
-.glass-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); }
-.inf-card { position: relative; width: 92%; max-width: 340px; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); opacity: 0; }
-.inf-overlay.active .inf-card { opacity: 1; transform: scale(1) translateY(0); }
+.glass-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); }
 
-/* =========================================
-   GA STYLES DIN GUDA 12 ANAN
-   ========================================= */
+/* STYLE 5: REFINED GHOST */
+.inf-card.ghost-refined { 
+    position: relative; width: 92%; max-width: 320px; 
+    background: none; border: none; text-align: center;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); opacity: 0; transform: scale(0.9);
+}
+.inf-overlay.active .inf-card { opacity: 1; transform: scale(1); }
 
-/* STYLE 1: FINTECH SLIM (Minimalist White) */
-.style-1 { background: white; border-radius: 35px; padding: 30px; transform: scale(0.9) translateY(40px); }
-.style-1 .inf-main-title { color: #1e293b; }
+/* GYARAN BOX DIN HOTO */
+.inf-product-chip { margin: 0 auto 20px; width: 85px; position: relative; }
+.chip-image-container { 
+    width: 85px; height: 85px; background: rgba(255,255,255,0.1); 
+    border-radius: 22px; border: 1px solid rgba(255,255,255,0.2); 
+    overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+.atamfa-thumb { width: 100%; height: 100%; object-fit: cover; }
+.inf-status-dot { position: absolute; top: 2px; right: 2px; width: 12px; height: 12px; background: #10b981; border-radius: 50%; border: 2px solid white; z-index: 5; }
 
-/* STYLE 2: CYBER NEON (Dark + Cyan Glow) */
-.style-2 { background: #0a0a0a; border: 1px solid #00f2ff; border-radius: 25px; padding: 30px; box-shadow: 0 0 30px rgba(0,242,255,0.2); }
-.style-2 * { color: white !important; }
+/* RUBUTU */
+.inf-subtitle { font-size: 9px; font-weight: 800; color: #ff8a65; letter-spacing: 2px; display: block; margin-bottom: 5px; }
+.inf-main-title { font-size: 20px; font-weight: 800; color: white; margin: 0 0 25px 0; }
 
-/* STYLE 3: LIQUID MORPH (Soft Blue) */
-.style-3 { background: linear-gradient(135deg, #f0f7ff, #ffffff); border-radius: 50px; padding: 35px; border: 2px solid white; }
+/* GYARAN BOXES NA COLOR (Slim & Attractive) */
+.color-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 30px; }
+.inf-node { 
+    height: 42px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); 
+    background: rgba(255,255,255,0.05); color: white; font-weight: 700; 
+    cursor: pointer; transition: 0.3s; 
+}
+.inf-node.selected { 
+    background: white; color: black; transform: translateY(-3px); 
+    box-shadow: 0 8px 15px rgba(255,255,255,0.2); 
+}
 
-/* STYLE 4: HOLOGRAPHIC (Glass) */
-.style-4 { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.4); border-radius: 30px; backdrop-filter: blur(30px); padding: 30px; }
-.style-4 * { color: white; }
+/* PAY SECURELY BUTTON (Orange Style) */
+.pay-secure-btn { 
+    width: 85%; margin: 0 auto; height: 50px; border-radius: 18px; border: none; 
+    background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); 
+    font-weight: 600; font-size: 15px; transition: 0.4s; 
+}
+.pay-secure-btn.active { 
+    background: #ff7043; /* Orange color daga hoton ka */
+    color: white; cursor: pointer; 
+    box-shadow: 0 10px 25px rgba(255, 112, 67, 0.4);
+}
 
-/* STYLE 5: THE GHOST (No Background) */
-.style-5 { background: none; border: none; padding: 30px; text-align: center; }
-.style-5 .inf-node { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
-
-/* STYLE 6: TOP ZURO (Zuro daga sama) */
-.style-6 { transform: translateY(-100vh); background: white; border-radius: 0 0 40px 40px; width: 100%; max-width: 100%; top: 0; position: absolute; }
-.inf-overlay.active .style-6 { transform: translateY(0); }
-
-/* STYLE 7: EDGE DRAWER (Side Panel) */
-.style-7 { position: absolute; right: 0; height: 100vh; width: 300px; background: white; border-radius: 40px 0 0 40px; transform: translateX(100%); }
-.inf-overlay.active .style-7 { transform: translateX(0); }
-
-/* STYLE 8: BOLD BLACK (Luxury Dark) */
-.style-8 { background: black; border-radius: 20px; padding: 40px; }
-.style-8 .inf-node { border-radius: 0; background: #111; color: white; }
-
-/* STYLE 9: FLOATING ORB (Small & Round) */
-.style-9 { width: 280px; background: white; border-radius: 100%; padding: 50px; aspect-ratio: 1; display: flex; flex-direction: column; justify-content: center; }
-
-/* STYLE 10: BRUTALIST (Sharp Edges) */
-.style-10 { background: #f0f0f0; border: 4px solid black; border-radius: 0; box-shadow: 10px 10px 0 black; }
-
-/* STYLE 11: SOFT GRADIENT (Sunset) */
-.style-11 { background: linear-gradient(to bottom, #fff, #fff1eb); border-radius: 40px; }
-
-/* STYLE 12: NEUMORPHIC (Soft Shadows) */
-.style-12 { background: #e0e0e0; border-radius: 50px; box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff; }
-
-/* SHARED COMPONENTS */
-.inf-header { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; }
-.inf-product-chip { width: 45px; height: 45px; background: #f1f5f9; border-radius: 14px; position: relative; }
-.inf-status-dot { position: absolute; top: -2px; right: -2px; width: 10px; height: 10px; background: #10b981; border-radius: 50%; border: 2px solid white; }
-.inf-subtitle { font-size: 8px; font-weight: 800; color: #6366f1; letter-spacing: 2px; }
-.inf-main-title { font-size: 18px; font-weight: 800; margin: 0; }
-.inf-matrix { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 25px; }
-.inf-node { height: 50px; border-radius: 14px; border: 1px solid #f1f5f9; background: #f8fafc; font-weight: 700; cursor: pointer; transition: 0.3s; }
-.inf-node.selected { background: #000; color: #fff; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-.inf-btn { width: 100%; height: 55px; border-radius: 16px; border: none; background: #f1f5f9; color: #94a3b8; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.4s; }
-.inf-btn.active { background: #000; color: #fff; cursor: pointer; }
-.inf-arrow { opacity: 0; transition: 0.3s; }
-.inf-btn.active .inf-arrow { opacity: 1; transform: translateX(5px); }
-.inf-close { text-align: center; font-size: 10px; color: #94a3b8; font-weight: 700; margin-top: 20px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+.inf-close { margin-top: 25px; color: rgba(255,255,255,0.4); font-size: 11px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
 </style>
 
 <script>
-let selectedSize = null;
+let selectedColor = null;
+
 function checkSelection() {
     const overlay = document.getElementById('infinity-overlay');
     overlay.style.display = 'flex';
     setTimeout(() => overlay.classList.add('active'), 10);
 }
-function infSelect(size, el) {
-    selectedSize = size;
+
+function infSelect(color, el) {
+    selectedColor = color;
     document.querySelectorAll('.inf-node').forEach(n => n.classList.remove('selected'));
     el.classList.add('selected');
+    
     const btn = document.getElementById('inf-action');
-    btn.disabled = false; btn.classList.add('active');
-    document.getElementById('btn-label').innerText = 'PROCEED TO CHECKOUT';
+    btn.disabled = false; 
+    btn.classList.add('active');
+    // Rubutu irin na hotonka (Capital start, then small letters)
+    document.getElementById('btn-label').innerText = 'Proceed to checkout';
 }
+
 function closeInf() {
     const overlay = document.getElementById('infinity-overlay');
     overlay.classList.remove('active');
     setTimeout(() => overlay.style.display = 'none', 600);
 }
-function infProceed() { window.location.href = 'checkout.html'; }
+
+function infProceed() { 
+    window.location.href = 'checkout.html'; 
+}
 </script>
 
-        
- 
     
 <script>
 // DNA CORE SCRIPT
