@@ -309,23 +309,29 @@
     </div>
     </div>
 
-<div id="nano-overlay" style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(0,0,0,0.6); backdrop-filter:blur(5px); align-items:center; justify-content:center;">
-    <div style="background:#111; border:1px solid #00f2ff; border-radius:30px; padding:30px; width:90%; max-width:350px; text-align:center; box-shadow: 0 0 30px rgba(0,242,255,0.2);">
-        <h3 style="font-family:'Orbitron',sans-serif; color:#00f2ff; font-size:10px; letter-spacing:4px; margin-bottom:25px;">SELECT NEURAL SIZE</h3>
-        
-        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-bottom:30px;">
-            <button onclick="selectNanoSize('M', this)" class="nano-card">M</button>
-            <button onclick="selectNanoSize('L', this)" class="nano-card">L</button>
-            <button onclick="selectNanoSize('XL', this)" class="nano-card">XL</button>
-            <button onclick="selectNanoSize('2XL', this)" class="nano-card">2XL</button>
+<div id="selection-container" style="position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 350px; z-index: 10001; display: none; flex-direction: column; gap: 10px;">
+    <div style="background: rgba(17, 17, 17, 0.9); backdrop-filter: blur(15px); border: 1px solid #00f2ff; border-radius: 20px; padding: 20px; text-align: center; box-shadow: 0 -10px 30px rgba(0,0,0,0.5);">
+        <p style="font-size: 10px; color: #00f2ff; letter-spacing: 3px; margin-bottom: 15px; font-weight: 900;">SELECT SIZE</p>
+        <div style="display: flex; justify-content: space-around; gap: 8px;">
+            <button onclick="pickSize('M', this)" class="futuristic-btn">M</button>
+            <button onclick="pickSize('L', this)" class="futuristic-btn">L</button>
+            <button onclick="pickSize('XL', this)" class="futuristic-btn">XL</button>
+            <button onclick="pickSize('2XL', this)" class="futuristic-btn">2XL</button>
         </div>
-
-        <button id="nano-confirm" disabled onclick="location.href='checkout.html'" style="width:100%; padding:15px; background:#222; color:#555; border:1px solid #333; border-radius:15px; font-size:10px; font-weight:900; letter-spacing:2px; transition:0.3s;">
-            INITIALIZE CHECKOUT
-        </button>
-        <p onclick="closeNano()" style="color:#444; font-size:9px; margin-top:20px; cursor:pointer;">[ CANCEL SCAN ]</p>
     </div>
 </div>
+
+<style>
+    .futuristic-btn {
+        width: 55px; height: 50px; background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+        color: white; font-weight: 900; transition: 0.3s;
+    }
+    .futuristic-btn.active {
+        background: #00f2ff; color: black; border-color: #00f2ff;
+        box-shadow: 0 0 15px #00f2ff;
+    }
+</style>
 
 <style>
     .nano-card {
@@ -388,36 +394,39 @@
     
  
 <script>
-  let currentNanoSize = null;
+  let mySelectedSize = null;
 
 function checkSelection() {
-    const overlay = document.getElementById('nano-overlay');
-    if (!currentNanoSize) {
-        overlay.style.display = 'flex'; // Wannan zai nuna shi
-        if(typeof speakAI === "function") speakAI("System ready. Please select your size.");
+    const container = document.getElementById('selection-container');
+    
+    if (!mySelectedSize) {
+        // Idan babu size, nuna musu wannan karamin card din a kasan allo
+        container.style.display = (container.style.display === 'flex') ? 'none' : 'flex';
     } else {
+        // Idan an riga an zaba, wuce Checkout
         window.location.href = 'checkout.html';
     }
 }
 
-function selectNanoSize(size, el) {
-    currentNanoSize = size;
-    document.querySelectorAll('.nano-card').forEach(btn => btn.classList.remove('active'));
+function pickSize(size, el) {
+    mySelectedSize = size;
+    // Cire kalar kowa
+    document.querySelectorAll('.futuristic-btn').forEach(btn => btn.classList.remove('active'));
+    // Saka wa wannan
     el.classList.add('active');
     
-    const confirmBtn = document.getElementById('nano-confirm');
-    confirmBtn.disabled = false;
-    confirmBtn.style.background = '#00f2ff';
-    confirmBtn.style.color = '#000';
-    confirmBtn.style.borderColor = '#00f2ff';
-    confirmBtn.style.boxShadow = '0 0 20px rgba(0,242,255,0.4)';
-    confirmBtn.innerHTML = 'PROCEED WITH ' + size;
-}
-
-function closeNano() {
-    document.getElementById('nano-overlay').style.display = 'none';
-      } 
-      
+    // Canza sunan babban button din dake dock din (Ina tsammanin span din dake ciki)
+    const orderLabel = document.querySelector('.dock-item[onclick="checkSelection()"] .dock-label');
+    if(orderLabel) {
+        orderLabel.innerText = "CONFIRM " + size;
+        orderLabel.style.color = "#00f2ff";
+    }
+    
+    // Boye karamin card din bayan an zaba don a danna babban button
+    setTimeout(() => {
+        document.getElementById('selection-container').style.display = 'none';
+    }, 500);
+      }
 
 <script>
 // DNA CORE SCRIPT
