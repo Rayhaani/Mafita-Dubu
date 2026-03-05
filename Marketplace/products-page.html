@@ -414,27 +414,28 @@ backdrop-filter: blur(5px);
 
 .item-img { 
     width: 100%; 
-    height: 100px; /* Na kara tsawon kadan domin ya fito da kyau */
+    height: 100px; 
     background: #f5f5f5; 
     display: flex; 
     align-items: center; 
     justify-content: center; 
 }
 
-/* GYARA: Cire background din rubutu ya koma kan hoto */
+/* GYARA: Sunan kalar ya koma kalar exquisite selection kuma small letters */
 .item-price-bar { 
     position: absolute; 
     bottom: 0; 
     width: 100%;
-    background: transparent; /* An cire tsohon background din */
-    color: white; 
-    font-size: 11px; 
-    font-weight: 800; 
+    background: transparent; 
+    color: #ff8a65; /* Kalar exquisite selection */
+    font-size: 13px; /* Iri daya da na proceed to checkout */
+    font-weight: 600; 
     text-align: center; 
     padding: 10px 0; 
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 8px rgba(0,0,0,1); /* Domin rubutun ya haska sosai */
-    pointer-events: none; /* Domin kar ya hana tabawa (click) */
+    letter-spacing: 0.5px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,1); 
+    pointer-events: none; 
+    text-transform: capitalize; /* Small letters tare da Capital a farko */
 }
 
 /* SELECTED STATE */
@@ -443,8 +444,17 @@ backdrop-filter: blur(5px);
     transform: translateY(-10px); 
 }
 
+/* GYARA: Exquisite selection ya koma small letters */
+.inf-subtitle { 
+    font-size: 13px; 
+    font-weight: 500; 
+    color: #ff8a65; 
+    letter-spacing: 1px; 
+    display: block; 
+    margin-bottom: 8px; 
+    text-transform: capitalize; /* Small letters tare da Capital a farko */
+}
 
-.inf-subtitle { font-size: 10px; font-weight: 800; color: #ff8a65; letter-spacing: 3px; display: block; margin-bottom: 8px; }
 .inf-main-title { font-size: 24px; font-weight: 800; color: white; margin: 0; }
 
 .pay-secure-btn { 
@@ -452,13 +462,22 @@ backdrop-filter: blur(5px);
     background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); 
     font-weight: 700; font-size: 16px; transition: 0.4s; margin-top: 15px;
 }
+
 .pay-secure-btn.active { 
     background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%); color: white; cursor: pointer;
     box-shadow: 0 15px 30px rgba(255, 112, 67, 0.4);
 }
 
-.inf-close { margin-top: 25px; color: rgba(255,255,255,0.3); font-size: 11px; font-weight: 700; cursor: pointer; letter-spacing: 1px; }
-</style>
+/* GYARA: Dismiss ya koma small letters */
+.inf-close { 
+    margin-top: 25px; 
+    color: rgba(255,255,255,0.5); 
+    font-size: 13px; 
+    font-weight: 500; 
+    cursor: pointer; 
+    letter-spacing: 0.5px; 
+    text-transform: capitalize; /* Small letters tare da Capital a farko */
+          }
 
 <script>
 let selectedColor = null;
