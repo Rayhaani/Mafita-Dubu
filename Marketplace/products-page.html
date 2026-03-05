@@ -316,131 +316,159 @@
     <div id="selected-color-name" class="floating-color-label"></div>
 </div>
 
+<div id="infinity-overlay" class="inf-overlay">
+    <div class="glass-backdrop" onclick="closeInf()"></div>
+    
+    <div id="inf-card" class="inf-card-style">
+        <div class="atamfa-magic-stage">
+            <img src="" id="magic-atamfa-display" class="atamfa-float-engine-popup" alt="">
+        </div>
+
+        <div class="inf-title-area">
+            <span class="inf-subtitle">EXQUISITE SELECTION</span>
+            <h2 class="inf-main-title">Zabi kalar da kake so</h2>
+        </div>
+
+        <div class="magic-grid">
+            <div class="item-card-mini" onclick="infSelect('Green', this, 'link-na-hoto-1.png')">
+                <div class="item-img"><i class="fa-regular fa-image"></i></div>
+                <div class="item-price-bar">GREEN</div>
+            </div>
+            <div class="item-card-mini" onclick="infSelect('Purple', this, 'link-na-hoto-2.png')">
+                <div class="item-img"><i class="fa-regular fa-image"></i></div>
+                <div class="item-price-bar">PURPLE</div>
+            </div>
+            <div class="item-card-mini" onclick="infSelect('Milk', this, 'link-na-hoto-3.png')">
+                <div class="item-img"><i class="fa-regular fa-image"></i></div>
+                <div class="item-price-bar">MILK</div>
+            </div>
+        </div>
+
+        <button id="inf-action" disabled onclick="infProceed()" class="pay-secure-btn">
+            <span id="btn-label">Zabi kala domin ci gaba</span>
+        </button>
+
+        <p class="inf-close" onclick="closeInf()">DISMISS</p>
+    </div>
+</div>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Plus+Jakarta+Sans:wght@800&display=swap');
 
-/* Main Page Stage Design */
+/* --- MAIN PAGE DISPLAY --- */
 .main-page-magic-stage {
-    width: 100%;
-    height: 220px; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    perspective: 1200px;
-    margin: 15px 0;
-    overflow: visible;
+    width: 100%; height: 220px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; perspective: 1200px; margin: 15px 0;
 }
+.floating-wrap { width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; }
 
-.floating-wrap {
-    width: 180px; 
-    height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Floating Card Engine */
-.atamfa-float-engine { 
-    max-width: 100%;
-    max-height: 100%;
-    opacity: 0;
+/* --- FLOATING ENGINES --- */
+.atamfa-float-engine, .atamfa-float-engine-popup { 
+    max-width: 100%; max-height: 100%; opacity: 0;
     transform: scale(0.6) rotateY(45deg);
     transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-    filter: drop-shadow(0 15px 35px rgba(0,0,0,0.2));
+    filter: drop-shadow(0 15px 35px rgba(0,0,0,0.3));
     border-radius: 12px;
 }
-
-.atamfa-float-engine.active { 
-    opacity: 1;
-    transform: scale(1) rotateY(0deg); 
+.atamfa-float-engine.active, .atamfa-float-engine-popup.active { 
+    opacity: 1; transform: scale(1) rotateY(0deg); 
     animation: salesBoyDisplay 6s infinite ease-in-out;
 }
 
-/* Transparent Label for Color Name */
+/* --- TRANSPARENT LABEL --- */
 .floating-color-label {
-    margin-top: 8px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 800;
-    font-size: 14px;
-    color: #ff7043; 
-    background: transparent !important; /* Dole ya zama transparent */
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    margin-top: 8px; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800; color: #ff7043; background: transparent !important;
+    text-transform: uppercase; letter-spacing: 2px;
 }
 
-/* Animation Logic */
+/* --- POP-UP STYLES --- */
+.inf-overlay {
+    position: fixed; inset: 0; z-index: 99999; display: none;
+    align-items: center; justify-content: center; background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    font-family: 'Quicksand', sans-serif;
+}
+.glass-backdrop { position: absolute; inset: 0; cursor: pointer; }
+.inf-card-style { position: relative; width: 90%; max-width: 400px; text-align: center; z-index: 10; }
+
+.magic-grid { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
+.item-card-mini { width: 95px; background: #fff; border-radius: 12px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
+.item-card-mini.active-node { border-color: #ff7043; transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+.item-img { height: 70px; display: flex; align-items: center; justify-content: center; background: #f9f9f9; color: #ccc; }
+.item-price-bar { background: #666; color: #fff; font-size: 10px; padding: 5px; font-weight: 700; }
+.item-card-mini.active-node .item-price-bar { background: #ff7043; }
+
+.pay-secure-btn { width: 90%; height: 50px; border-radius: 15px; border: none; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); font-weight: 700; }
+.pay-secure-btn.active { background: #ff7043; color: #fff; cursor: pointer; box-shadow: 0 10px 20px rgba(255,112,67,0.3); }
+
+.inf-close { margin-top: 20px; color: #999; font-size: 11px; cursor: pointer; font-weight: 700; }
+
 @keyframes salesBoyDisplay {
     0% { transform: rotateY(-15deg) rotateX(5deg) translateY(0); }
-    25% { transform: rotateY(15deg) rotateX(-5deg) translateY(-10px); }
-    50% { transform: rotateY(-10deg) rotateZ(2deg) translateY(0); }
-    75% { transform: rotateY(10deg) rotateX(5deg) translateY(-10px); }
+    50% { transform: rotateY(15deg) rotateX(-5deg) translateY(-10px); }
     100% { transform: rotateY(-15deg) rotateX(5deg) translateY(0); }
 }
 </style>
 
-
 <script>
 let selectedColor = null;
 
-function infSelect(colorName, el, imgPath) {
-    // 1. Ajiye kalar da aka zaba
-    selectedColor = colorName;
-    
-    // 2. Gyara kalar kananan hotunan zabi (Mini Cards)
-    document.querySelectorAll('.item-card-mini').forEach(n => n.classList.remove('active-node'));
-    el.classList.add('active-node');
-    
-    // 3. Logic na canza hoton dake shawagi (Main Page Float)
-    const mainFloatImg = document.getElementById('main-atamfa-float');
-    const colorLabel = document.getElementById('selected-color-name');
-    
-    if(mainFloatImg) {
-        mainFloatImg.classList.remove('active'); // Kashe animation din tsohon hoton
-        
-        setTimeout(() => {
-            mainFloatImg.src = imgPath;
-            mainFloatImg.classList.add('active'); // Kunna animation na sabon hoton
-            if(colorLabel) colorLabel.innerText = colorName;
-        }, 100);
-    }
-    
-    // 4. Logic na Pop-up (idan har yanzu kana amfani dashi)
-    const displayImgPopup = document.getElementById('magic-atamfa-display');
-    if(displayImgPopup) {
-        displayImgPopup.classList.remove('active');
-        setTimeout(() => {
-            displayImgPopup.src = imgPath;
-            displayImgPopup.classList.add('active');
-        }, 100);
-    }
-
-    // 5. Enable Checkout Button
-    const btn = document.getElementById('inf-action');
-    if(btn) {
-        btn.disabled = false; 
-        btn.classList.add('active');
-        const btnLabel = document.getElementById('btn-label');
-        if(btnLabel) btnLabel.innerText = 'Proceed to checkout';
+// WANNAN FUNCTION DIN SHINE "ORDER NOW" BUTTON ZAI KIRA
+function openOrderPopup() {
+    const overlay = document.getElementById('infinity-overlay');
+    if(overlay) {
+        overlay.style.display = 'flex';
     }
 }
 
 function closeInf() {
-    const overlay = document.getElementById('infinity-overlay');
-    if(overlay) {
-        overlay.classList.remove('active');
+    document.getElementById('infinity-overlay').style.display = 'none';
+}
+
+function infSelect(colorName, el, imgPath) {
+    selectedColor = colorName;
+    document.querySelectorAll('.item-card-mini').forEach(n => n.classList.remove('active-node'));
+    el.classList.add('active-node');
+    
+    // Canza hoto a Main Page Float
+    const mainFloatImg = document.getElementById('main-atamfa-float');
+    const colorLabel = document.getElementById('selected-color-name');
+    if(mainFloatImg) {
+        mainFloatImg.classList.remove('active');
         setTimeout(() => {
-            overlay.style.display = 'none';
-        }, 600);
+            mainFloatImg.src = imgPath;
+            mainFloatImg.classList.add('active');
+            if(colorLabel) colorLabel.innerText = colorName;
+        }, 100);
+    }
+
+    // Canza hoto a Pop-up Float
+    const popupImg = document.getElementById('magic-atamfa-display');
+    if(popupImg) {
+        popupImg.classList.remove('active');
+        setTimeout(() => {
+            popupImg.src = imgPath;
+            popupImg.classList.add('active');
+        }, 100);
+    }
+
+    // Kunna Checkout Button
+    const btn = document.getElementById('inf-action');
+    if(btn) {
+        btn.disabled = false;
+        btn.classList.add('active');
+        document.getElementById('btn-label').innerText = 'Proceed to checkout';
     }
 }
 
 function infProceed() { 
-    window.location.href = 'checkout.html?color=' + selectedColor; 
+    if(selectedColor) {
+        window.location.href = 'checkout.html?color=' + selectedColor; 
+    }
 }
 </script>
-
+    
         
 <script>
 // DNA CORE SCRIPT
