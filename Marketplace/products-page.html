@@ -424,6 +424,27 @@ let selectedColor = null;
 
 function checkSelection() {
     const overlay = document.getElementById('infinity-overlay');
+    
+    // Wannan zai nemo hotunan "Visual Proof" dake shafinka
+    const sourceImages = document.querySelectorAll('.stack-img'); 
+    const miniBoxes = document.querySelectorAll('.item-card-mini');
+
+    miniBoxes.forEach((box, index) => {
+        if (sourceImages[index]) {
+            const imgUrl = sourceImages[index].src;
+            const imgContainer = box.querySelector('.item-img');
+            
+            // Saka hoton shafin a cikin box din pop-up
+            imgContainer.innerHTML = `<img src="${imgUrl}" style="width:100%; height:100%; object-fit:cover;">`;
+            
+            // Sanya kowane box ya nuna hotonsa idan an danna
+            const colorName = box.querySelector('.item-price-bar').innerText;
+            box.onclick = function() {
+                infSelect(colorName, box, imgUrl);
+            };
+        }
+    });
+
     overlay.style.display = 'flex';
     setTimeout(() => overlay.classList.add('active'), 10);
 }
@@ -433,7 +454,7 @@ function infSelect(colorName, el, imgPath) {
     document.querySelectorAll('.item-card-mini').forEach(n => n.classList.remove('active-node'));
     el.classList.add('active-node');
     
-    // DISPLAY LOGIC
+    // Nuna hoton a sama yana jujjuyawa "cikin kasaita"
     const displayImg = document.getElementById('magic-atamfa-display');
     displayImg.classList.remove('active');
     
@@ -441,6 +462,10 @@ function infSelect(colorName, el, imgPath) {
         displayImg.src = imgPath;
         displayImg.classList.add('active');
     }, 100);
+
+    // Wannan zai sa Hologram din saman shafinka ma ya koma kalar da aka zaba
+    const holoImgs = document.querySelectorAll('.holo-img');
+    holoImgs.forEach(img => { img.src = imgPath; });
     
     const btn = document.getElementById('inf-action');
     btn.disabled = false; 
@@ -459,7 +484,7 @@ function closeInf() {
 
 function infProceed() { window.location.href = 'checkout.html'; }
 </script>
-        
+    
 <script>
 // DNA CORE SCRIPT
 const salesBoy = document.createElement('div');
