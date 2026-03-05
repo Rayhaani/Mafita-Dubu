@@ -309,11 +309,11 @@
     </div>
     </div>     
 
-<div class="unique-main-display-stage">
-    <div class="unique-float-wrapper">
-        <img src="" id="main-page-floating-img" class="unique-atamfa-logic" alt="">
+ <div class="main-page-magic-stage" style="width: 100%; height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; perspective: 1200px; margin-bottom: 10px;">
+    <div class="floating-wrap">
+        <img src="" id="main-atamfa-float" class="atamfa-float-engine" style="display: none;">
     </div>
-    <div id="main-page-color-text" class="unique-label-transparent"></div>
+    <div id="selected-color-label-main" style="color: #ff7043; font-weight: 800; margin-top: 10px; text-transform: uppercase; background: transparent;"></div>
 </div>
 
 <div id="infinity-overlay" class="inf-overlay">
@@ -322,7 +322,7 @@
     <div id="inf-card" class="inf-card style-5">
         
         <div class="atamfa-magic-stage">
-            <img src="" id="magic-atamfa-display" class="unique-atamfa-logic" alt="">
+            <img src="" id="magic-atamfa-display" class="atamfa-float-engine" alt="">
         </div>
 
         <div class="inf-title-area">
@@ -331,21 +331,24 @@
         </div>
 
         <div class="inventory-scroll magic-grid">
-            <div class="item-card-mini magic-node" onclick="infSelect('Green', this, 'link-na-atamfa-green.png')">
+            <div class="item-card-mini magic-node" onclick="autoSelect(this, 0)">
                 <div class="item-img">
-                    <i class="fa-regular fa-image text-gray-300 text-xl"></i>
+                    <img class="thumb-node" style="width:100%; height:100%; object-fit:cover; display:none;">
+                    <i class="fa-regular fa-image thumb-placeholder text-gray-300 text-xl"></i>
                 </div>
                 <div class="item-price-bar">GREEN</div>
             </div>
-            <div class="item-card-mini magic-node" onclick="infSelect('Purple', this, 'link-na-atamfa-purple.png')">
+            <div class="item-card-mini magic-node" onclick="autoSelect(this, 1)">
                 <div class="item-img">
-                    <i class="fa-regular fa-image text-gray-300 text-xl"></i>
+                    <img class="thumb-node" style="width:100%; height:100%; object-fit:cover; display:none;">
+                    <i class="fa-regular fa-image thumb-placeholder text-gray-300 text-xl"></i>
                 </div>
                 <div class="item-price-bar">PURPLE</div>
             </div>
-            <div class="item-card-mini magic-node" onclick="infSelect('Milk', this, 'link-na-atamfa-milk.png')">
+            <div class="item-card-mini magic-node" onclick="autoSelect(this, 2)">
                 <div class="item-img">
-                    <i class="fa-regular fa-image text-gray-300 text-xl"></i>
+                    <img class="thumb-node" style="width:100%; height:100%; object-fit:cover; display:none;">
+                    <i class="fa-regular fa-image thumb-placeholder text-gray-300 text-xl"></i>
                 </div>
                 <div class="item-price-bar">MILK</div>
             </div>
@@ -362,74 +365,32 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Plus+Jakarta+Sans:wght@800&display=swap');
 
-/* --- PREVENT CONFLICT: Wannan zai gyara hotunan shafin da suka bace --- */
-.unique-main-display-stage {
-    width: 100%; 
-    height: 250px; 
-    display: flex; 
-    flex-direction: column;
-    align-items: center; 
-    justify-content: center; 
-    perspective: 1200px; 
-    margin: 20px 0;
-}
-
-.unique-float-wrapper { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; }
-
-/* --- UNIQUE ANIMATION ENGINE (Ba zai taba asalin hotunan shafinka ba) --- */
-.unique-atamfa-logic { 
-    max-width: 85% !important; 
-    max-height: 90% !important; 
-    opacity: 0; 
-    transform: scale(0.6) rotateY(45deg);
-    transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
-    filter: drop-shadow(0 20px 50px rgba(0,0,0,0.4));
-    display: none; /* Ba zai fito ba sai an zaba */
-}
-
-.unique-atamfa-logic.active { 
-    display: block;
-    opacity: 1; 
-    transform: scale(1) rotateY(0deg); 
-    animation: salesBoyDisplayUnique 6s infinite ease-in-out;
-}
-
-/* --- TRANSPARENT LABEL GYARA --- */
-.item-price-bar { 
-    background: transparent !important; 
-    color: #757575; 
-    font-size: 10px; 
-    font-weight: 800; 
-    text-align: center; 
-    padding: 6px 0; 
-}
-
-.item-card-mini.active-node .item-price-bar { 
-    background: transparent !important; 
-    color: #ff7043; 
-}
-
-.unique-label-transparent {
-    margin-top: 10px; 
-    color: #ff7043; 
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 800; 
-    text-transform: uppercase; 
-    letter-spacing: 2px;
-}
-
-/* --- ASALIN POP-UP STYLES --- */
+/* --- ASALIN STYLE DIN KA (Ban taba komai ba) --- */
 .inf-overlay {
-    position: fixed; inset: 0; z-index: 999999;
+    position: fixed; inset: 0; z-index: 99999;
     display: none; align-items: center; justify-content: center;
     font-family: 'Quicksand', sans-serif;
 }
 .glass-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
-.inf-card.style-5 { position: relative; width: 90%; max-width: 400px; text-align: center; }
+.inf-card.style-5 { position: relative; width: 90%; max-width: 400px; background: none; text-align: center; }
 
-.atamfa-magic-stage { height: 250px; width: 100%; display: flex; align-items: center; justify-content: center; perspective: 1200px; }
+.atamfa-magic-stage { 
+    height: 250px; width: 100%; display: flex; align-items: center; justify-content: center; 
+    perspective: 1200px; margin-bottom: 5px; 
+}
+.atamfa-float-engine { 
+    max-width: 85%; max-height: 90%; 
+    opacity: 0; transform: scale(0.6) rotateY(45deg);
+    transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+    filter: drop-shadow(0 20px 50px rgba(0,0,0,0.8));
+}
+.atamfa-float-engine.active { 
+    opacity: 1; transform: scale(1) rotateY(0deg); 
+    animation: salesBoyDisplay 6s infinite ease-in-out;
+    display: block !important;
+}
 
-@keyframes salesBoyDisplayUnique {
+@keyframes salesBoyDisplay {
     0% { transform: rotateY(-15deg) rotateX(5deg) translateY(0); }
     25% { transform: rotateY(15deg) rotateX(-5deg) translateY(-10px); }
     50% { transform: rotateY(-10deg) rotateZ(2deg) translateY(0); }
@@ -438,46 +399,92 @@
 }
 
 .magic-grid { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
-.item-card-mini { min-width: 95px; background: #fff; border-radius: 15px; overflow: hidden; border: 2px solid transparent; cursor: pointer; transition: 0.3s; }
-.item-card-mini.active-node { border-color: #ff7043; transform: translateY(-10px); }
+.item-card-mini { 
+    min-width: 95px; background: #fff; border-radius: 15px; 
+    overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
+    border: 2px solid transparent; cursor: pointer; transition: 0.3s;
+}
 .item-img { width: 100%; height: 80px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; }
 
-.pay-secure-btn { width: 90%; height: 55px; border-radius: 20px; border: none; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); font-weight: 700; margin-top: 15px; }
-.pay-secure-btn.active { background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%); color: white; cursor: pointer; }
-.inf-close { margin-top: 25px; color: rgba(255,255,255,0.3); font-size: 11px; cursor: pointer; }
+/* GYARAN TRANSPARENCY A NAN */
+.item-price-bar { background: transparent !important; color: #757575; font-size: 10px; font-weight: 800; text-align: center; padding: 6px 0; letter-spacing: 1px; }
+
+.item-card-mini.active-node { border-color: #ff7043 !important; transform: translateY(-10px); }
+.item-card-mini.active-node .item-price-bar { background: transparent !important; color: #ff7043; }
+
+.inf-subtitle { font-size: 10px; font-weight: 800; color: #ff8a65; letter-spacing: 3px; display: block; margin-bottom: 8px; }
+.inf-main-title { font-size: 24px; font-weight: 800; color: white; margin: 0; }
+
+.pay-secure-btn { 
+    width: 90%; height: 55px; border-radius: 20px; border: none; 
+    background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); 
+    font-weight: 700; font-size: 16px; transition: 0.4s; margin-top: 15px;
+}
+.pay-secure-btn.active { 
+    background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%); color: white; cursor: pointer;
+    box-shadow: 0 15px 30px rgba(255, 112, 67, 0.4);
+}
+
+.inf-close { margin-top: 25px; color: rgba(255,255,255,0.3); font-size: 11px; font-weight: 700; cursor: pointer; letter-spacing: 1px; }
 </style>
 
 <script>
 let selectedColor = null;
 
+// AUTO-DETECT LOGIC: Wannan zai dauko hotunan babban gallery din shafinka
+window.addEventListener('DOMContentLoaded', () => {
+    // Zai nemi duk wani hoto dake cikin babban product area (misali .product-images ko hoto mafi girma)
+    const galleryImages = document.querySelectorAll('main img, .product-images img, .swiper-slide img');
+    const miniThumbs = document.querySelectorAll('.thumb-node');
+    const placeholders = document.querySelectorAll('.thumb-placeholder');
+
+    if (galleryImages.length > 0) {
+        miniThumbs.forEach((img, index) => {
+            if (galleryImages[index]) {
+                img.src = galleryImages[index].src;
+                img.style.display = 'block';
+                if(placeholders[index]) placeholders[index].style.display = 'none';
+            }
+        });
+    }
+});
+
 function checkSelection() {
     const overlay = document.getElementById('infinity-overlay');
     overlay.style.display = 'flex';
+    setTimeout(() => overlay.classList.add('active'), 10);
 }
 
-function infSelect(colorName, el, imgPath) {
+// Wannan function din zai kula da jujjuyawar hotunan biyun lokaci guda
+function autoSelect(el, index) {
+    const thumbImg = el.querySelector('.thumb-node');
+    if (!thumbImg || !thumbImg.src) return;
+
+    const imgPath = thumbImg.src;
+    const colorName = el.querySelector('.item-price-bar').innerText;
     selectedColor = colorName;
+
     document.querySelectorAll('.item-card-mini').forEach(n => n.classList.remove('active-node'));
     el.classList.add('active-node');
     
-    // 1. Gyara Hoton Pop-up
-    const displayImgPopup = document.getElementById('magic-atamfa-display');
-    displayImgPopup.classList.remove('active');
+    // 1. DISPLAY A POP-UP
+    const popImg = document.getElementById('magic-atamfa-display');
+    popImg.classList.remove('active');
     
-    // 2. Gyara Hoton Main Page
-    const displayImgMain = document.getElementById('main-page-floating-img');
-    const labelMain = document.getElementById('main-page-color-text');
+    // 2. DISPLAY A MAIN PAGE (SAMAN SHAFIN)
+    const mainImg = document.getElementById('main-atamfa-float');
+    const mainLabel = document.getElementById('selected-color-label-main');
 
     setTimeout(() => {
         // Saka hoto a popup
-        displayImgPopup.src = imgPath;
-        displayImgPopup.classList.add('active');
-        
-        // Saka hoto a babban shafi
-        if(displayImgMain) {
-            displayImgMain.src = imgPath;
-            displayImgMain.classList.add('active');
-            if(labelMain) labelMain.innerText = colorName;
+        popImg.src = imgPath;
+        popImg.classList.add('active');
+
+        // Saka hoto a saman page
+        if(mainImg) {
+            mainImg.src = imgPath;
+            mainImg.classList.add('active');
+            if(mainLabel) mainLabel.innerText = colorName;
         }
     }, 100);
     
@@ -488,11 +495,17 @@ function infSelect(colorName, el, imgPath) {
 }
 
 function closeInf() {
-    document.getElementById('infinity-overlay').style.display = 'none';
+    const overlay = document.getElementById('infinity-overlay');
+    overlay.classList.remove('active');
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        document.getElementById('magic-atamfa-display').classList.remove('active');
+    }, 600);
 }
 
-function infProceed() { window.location.href = 'checkout.html'; }
-                </script>
+function infProceed() { window.location.href = 'checkout.html?color=' + selectedColor; }
+    </script>
+    
     
         
 <script>
