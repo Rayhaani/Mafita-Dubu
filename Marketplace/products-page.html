@@ -309,48 +309,45 @@
     </div>
     </div>
 
-
-   <div id="selection-sheet" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4">
-    <div class="absolute inset-0 bg-black/60 backdrop-blur-xl transition-opacity duration-500"></div>
+<div id="selection-sheet" class="master-overlay">
+    <div class="glass-backdrop" onclick="closeSelection()"></div>
     
-    <div id="selection-card" class="relative w-full max-w-[400px] overflow-hidden rounded-[40px] border border-white/20 bg-black/40 p-8 shadow-2xl opacity-0 scale-90 transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]">
+    <div id="selection-card" class="ultra-card">
         
-        <div class="absolute -top-24 -left-24 h-48 w-48 rounded-full bg-cyan-500/20 blur-[80px] animate-pulse"></div>
-        <div class="absolute -bottom-24 -right-24 h-48 w-48 rounded-full bg-purple-500/20 blur-[80px] animate-pulse"></div>
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
 
-        <div class="relative z-10 text-center">
-            <div class="mb-6 flex justify-center">
-                <div class="h-1 w-12 rounded-full bg-white/20"></div>
-            </div>
+        <div class="card-content">
+            <div class="handle-bar"></div>
             
-            <h3 class="mb-2 font-['Orbitron'] text-xs font-black uppercase tracking-[0.3em] text-cyan-400">System Analysis</h3>
-            <h2 class="mb-8 text-2xl font-black tracking-tight text-white">SELECT YOUR DIMENSION</h2>
+            <h3 class="system-tag">SYSTEM ANALYSIS</h3>
+            <h2 class="main-title">SELECT DIMENSION</h2>
             
-            <div class="grid grid-cols-2 gap-4 mb-8">
+            <div class="size-grid">
                 <button onclick="selectSize('M', this)" class="futuro-btn">
-                    <span class="relative z-10">M</span>
+                    <span>M</span>
                     <div class="btn-glow"></div>
                 </button>
                 <button onclick="selectSize('L', this)" class="futuro-btn">
-                    <span class="relative z-10">L</span>
+                    <span>L</span>
                     <div class="btn-glow"></div>
                 </button>
                 <button onclick="selectSize('XL', this)" class="futuro-btn">
-                    <span class="relative z-10">XL</span>
+                    <span>XL</span>
                     <div class="btn-glow"></div>
                 </button>
                 <button onclick="selectSize('2XL', this)" class="futuro-btn">
-                    <span class="relative z-10">2XL</span>
+                    <span>2XL</span>
                     <div class="btn-glow"></div>
                 </button>
             </div>
 
-            <button id="final-order-btn" disabled class="group relative w-full overflow-hidden rounded-2xl bg-white/5 py-5 font-black uppercase tracking-[0.2em] text-white/40 transition-all duration-500 border border-white/10">
-                <div id="btn-loader" class="absolute inset-0 -translate-x-full bg-gradient-to-r from-cyan-500 to-blue-600 transition-transform duration-700"></div>
-                <span class="relative z-10 text-[10px]">Initialize Protocol</span>
+            <button id="final-order-btn" disabled class="protocol-btn">
+                <div id="btn-loader"></div>
+                <span class="btn-text">Initialize Protocol</span>
             </button>
             
-            <p onclick="closeSelection()" class="mt-6 cursor-pointer text-[10px] font-bold uppercase tracking-widest text-white/30 hover:text-white transition-colors">Aborts Session [X]</p>
+            <p onclick="closeSelection()" class="abort-link">Aborts Session [X]</p>
         </div>
     </div>
 </div>
@@ -358,53 +355,147 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
 
-    .futuro-btn {
-        position: relative;
-        height: 70px;
-        overflow: hidden;
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        background: rgba(255, 255, 255, 0.03);
-        font-family: 'Orbitron', sans-serif;
-        font-size: 1.2rem;
-        color: rgba(255, 255, 255, 0.4);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Babban Container */
+    .master-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        z-index: 10000;
+        display: none; /* Za a canza shi zuwa flex a JS */
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
     }
 
-    .futuro-btn:hover {
-        border-color: rgba(255, 255, 255, 0.3);
-        background: rgba(255, 255, 255, 0.08);
-        transform: translateY(-2px);
+    .glass-backdrop {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+    }
+
+    .ultra-card {
+        position: relative;
+        width: 100%;
+        max-width: 400px;
+        background: rgba(15, 15, 15, 0.95);
+        border: 1px solid rgba(0, 242, 255, 0.3);
+        border-radius: 40px;
+        padding: 40px 30px;
+        overflow: hidden;
+        transform: scale(0.8);
+        opacity: 0;
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 30px rgba(0, 242, 255, 0.1);
+    }
+
+    .master-overlay.active .ultra-card {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    /* Glow Effects */
+    .glow-orb {
+        position: absolute;
+        width: 150px; height: 150px;
+        border-radius: 50%;
+        filter: blur(60px);
+        z-index: 0;
+        opacity: 0.4;
+    }
+    .orb-1 { top: -50px; left: -50px; background: #00f2ff; }
+    .orb-2 { bottom: -50px; right: -50px; background: #7000ff; }
+
+    .card-content { position: relative; z-index: 10; text-align: center; }
+    .handle-bar { width: 40px; height: 2px; background: rgba(255,255,255,0.1); margin: 0 auto 20px; }
+
+    .system-tag {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 10px;
+        letter-spacing: 4px;
+        color: #00f2ff;
+        margin-bottom: 10px;
+    }
+
+    .main-title {
+        color: white;
+        font-size: 22px;
+        font-weight: 900;
+        margin-bottom: 30px;
+        letter-spacing: -0.5px;
+    }
+
+    /* Size Grid */
+    .size-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .futuro-btn {
+        position: relative;
+        height: 65px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        color: rgba(255, 255, 255, 0.4);
+        font-family: 'Orbitron', sans-serif;
+        font-size: 18px;
+        cursor: pointer;
+        transition: 0.3s;
+        overflow: hidden;
     }
 
     .futuro-btn.selected {
-        border-color: #06b6d4;
-        background: rgba(6, 182, 212, 0.1);
+        border-color: #00f2ff;
+        background: rgba(0, 242, 255, 0.1);
         color: #fff;
-        box-shadow: 0 0 25px rgba(6, 182, 212, 0.3);
+        box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
     }
 
     .btn-glow {
         position: absolute;
         inset: 0;
-        background: radial-gradient(circle at center, rgba(6, 182, 212, 0.4) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(0, 242, 255, 0.3) 0%, transparent 70%);
         opacity: 0;
-        transition: opacity 0.4s;
+        transition: 0.3s;
+    }
+    .futuro-btn.selected .btn-glow { opacity: 1; }
+
+    /* Final Button */
+    .protocol-btn {
+        position: relative;
+        width: 100%;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        color: rgba(255, 255, 255, 0.2);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 11px;
+        overflow: hidden;
+        transition: 0.4s;
     }
 
-    .futuro-btn.selected .btn-glow {
-        opacity: 1;
+    .protocol-btn.active {
+        background: #00f2ff;
+        color: #000;
+        border-color: #00f2ff;
+        box-shadow: 0 10px 30px rgba(0, 242, 255, 0.3);
     }
 
-    #final-order-btn.active {
-        color: #fff;
-        border-color: transparent;
-        box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
-        transform: scale(1.02);
-    }
-
-    #final-order-btn.active #btn-loader {
-        transform: translateX(0);
+    .abort-link {
+        margin-top: 25px;
+        font-size: 9px;
+        color: rgba(255,255,255,0.3);
+        letter-spacing: 2px;
+        cursor: pointer;
+        font-weight: bold;
     }
 </style>
 
@@ -412,17 +503,15 @@
     let selectedSize = null;
 
     function checkSelection() {
-        const sheet = document.getElementById('selection-sheet');
-        const card = document.getElementById('selection-card');
+        const overlay = document.getElementById('selection-sheet');
         
         if (!selectedSize) {
-            sheet.classList.remove('hidden');
-            sheet.classList.add('flex');
+            // Nuna Overlay din
+            overlay.style.display = 'flex';
             
-            // Animation Trigger
+            // Jira kadan don animation din ya fito
             setTimeout(() => {
-                card.classList.remove('opacity-0', 'scale-90');
-                card.classList.add('opacity-100', 'scale-100');
+                overlay.classList.add('active');
             }, 10);
         } else {
             window.location.href = 'checkout.html';
@@ -432,37 +521,34 @@
     function selectSize(size, el) {
         selectedSize = size;
         
-        // Cire tsohon selection tare da haptic effect na CSS
+        // Cire tsohon selection
         document.querySelectorAll('.futuro-btn').forEach(btn => btn.classList.remove('selected'));
         el.classList.add('selected');
         
-        // Kunna babban button cikin salo na futuristic
+        // Kunna babban button
         const btn = document.getElementById('final-order-btn');
         btn.disabled = false;
         btn.classList.add('active');
-        btn.querySelector('span').innerHTML = 'CONFIRM ORDER: ' + size + ' <i class="fa-solid fa-bolt ml-2 text-cyan-300"></i>';
+        btn.querySelector('.btn-text').innerText = 'CONFIRM ' + size + ' PROTOCOL';
         
         btn.onclick = () => {
-            btn.querySelector('span').innerHTML = 'SYNCHRONIZING...';
+            btn.querySelector('.btn-text').innerText = 'SYNCHRONIZING...';
             setTimeout(() => {
                 window.location.href = 'checkout.html';
-            }, 800);
+            }, 600);
         };
     }
 
     function closeSelection() {
-        const sheet = document.getElementById('selection-sheet');
-        const card = document.getElementById('selection-card');
-        
-        card.classList.add('opacity-0', 'scale-90');
-        card.classList.remove('opacity-100', 'scale-100');
+        const overlay = document.getElementById('selection-sheet');
+        overlay.classList.remove('active');
         
         setTimeout(() => {
-            sheet.classList.add('hidden');
-            sheet.classList.remove('flex');
-        }, 400);
+            overlay.style.display = 'none';
+        }, 500);
     }
 </script>
+   
     
 <script>
 // DNA CORE SCRIPT
