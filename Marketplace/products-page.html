@@ -397,19 +397,52 @@ backdrop-filter: blur(5px);
 }
     
 
-    /* CHECKOUT BOXES STYLE */
+/* CHECKOUT BOXES STYLE */
 .magic-grid { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
+
 .item-card-mini { 
-    min-width: 95px; background: #fff; border-radius: 15px; 
-    overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
-    border: 2px solid transparent; cursor: pointer; transition: 0.3s;
+    position: relative; /* Wannan yana da mahimmanci */
+    min-width: 95px; 
+    background: #fff; 
+    border-radius: 15px; 
+    overflow: hidden; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
+    border: 2px solid transparent; 
+    cursor: pointer; 
+    transition: 0.3s;
 }
-.item-img { width: 100%; height: 80px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; }
-.item-price-bar { background: #757575; color: white; font-size: 10px; font-weight: 800; text-align: center; padding: 6px 0; letter-spacing: 1px; }
+
+.item-img { 
+    width: 100%; 
+    height: 100px; /* Na kara tsawon kadan domin ya fito da kyau */
+    background: #f5f5f5; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+/* GYARA: Cire background din rubutu ya koma kan hoto */
+.item-price-bar { 
+    position: absolute; 
+    bottom: 0; 
+    width: 100%;
+    background: transparent; /* An cire tsohon background din */
+    color: white; 
+    font-size: 11px; 
+    font-weight: 800; 
+    text-align: center; 
+    padding: 10px 0; 
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,1); /* Domin rubutun ya haska sosai */
+    pointer-events: none; /* Domin kar ya hana tabawa (click) */
+}
 
 /* SELECTED STATE */
-.item-card-mini.active-node { border-color: #ff7043; transform: translateY(-10px); }
-.item-card-mini.active-node .item-price-bar { background: #ff7043; }
+.item-card-mini.active-node { 
+    border-color: #ff7043; 
+    transform: translateY(-10px); 
+}
+
 
 .inf-subtitle { font-size: 10px; font-weight: 800; color: #ff8a65; letter-spacing: 3px; display: block; margin-bottom: 8px; }
 .inf-main-title { font-size: 24px; font-weight: 800; color: white; margin: 0; }
