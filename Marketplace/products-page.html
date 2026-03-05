@@ -401,7 +401,7 @@ backdrop-filter: blur(5px);
 .magic-grid { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
 
 .item-card-mini { 
-    position: relative; /* Wannan yana da mahimmanci */
+    position: relative; 
     min-width: 95px; 
     background: #fff; 
     border-radius: 15px; 
@@ -421,21 +421,25 @@ backdrop-filter: blur(5px);
     justify-content: center; 
 }
 
-/* GYARA: Sunan kalar ya koma kalar exquisite selection kuma small letters */
+/* GYARA: Sunan kalar ya koma small letters (Capital a farko) da kalar exquisite */
 .item-price-bar { 
     position: absolute; 
     bottom: 0; 
     width: 100%;
     background: transparent; 
-    color: #ff8a65; /* Kalar exquisite selection */
-    font-size: 13px; /* Iri daya da na proceed to checkout */
+    color: #ff8a65; 
+    font-size: 13px; 
     font-weight: 600; 
     text-align: center; 
     padding: 10px 0; 
     letter-spacing: 0.5px;
     text-shadow: 2px 2px 8px rgba(0,0,0,1); 
     pointer-events: none; 
-    text-transform: capitalize; /* Small letters tare da Capital a farko */
+    text-transform: lowercase; /* Maida komai kankanana */
+    display: block;
+}
+.item-price-bar::first-letter {
+    text-transform: uppercase; /* Maida harafin farko kawai babba */
 }
 
 /* SELECTED STATE */
@@ -444,7 +448,7 @@ backdrop-filter: blur(5px);
     transform: translateY(-10px); 
 }
 
-/* GYARA: Exquisite selection ya koma small letters */
+/* GYARA: Exquisite selection ya koma small letters (Capital a farko) */
 .inf-subtitle { 
     font-size: 13px; 
     font-weight: 500; 
@@ -452,7 +456,10 @@ backdrop-filter: blur(5px);
     letter-spacing: 1px; 
     display: block; 
     margin-bottom: 8px; 
-    text-transform: capitalize; /* Small letters tare da Capital a farko */
+    text-transform: lowercase;
+}
+.inf-subtitle::first-letter {
+    text-transform: uppercase;
 }
 
 .inf-main-title { font-size: 24px; font-weight: 800; color: white; margin: 0; }
@@ -468,7 +475,7 @@ backdrop-filter: blur(5px);
     box-shadow: 0 15px 30px rgba(255, 112, 67, 0.4);
 }
 
-/* GYARA: Dismiss ya koma small letters */
+/* GYARA: Dismiss ya koma small letters (Capital a farko) */
 .inf-close { 
     margin-top: 25px; 
     color: rgba(255,255,255,0.5); 
@@ -476,8 +483,11 @@ backdrop-filter: blur(5px);
     font-weight: 500; 
     cursor: pointer; 
     letter-spacing: 0.5px; 
-    text-transform: capitalize; /* Small letters tare da Capital a farko */
-          }
+    text-transform: lowercase;
+}
+.inf-close::first-letter {
+    text-transform: uppercase;
+                                    }
 </style>
 <script>
 let selectedColor = null;
