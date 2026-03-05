@@ -309,27 +309,33 @@
     </div>
     </div>
 
-<div id="spec-overlay" class="spec-glass">
-    <div class="spec-wrap">
-        <div class="glitch-line"></div>
-        <h4 class="spec-header">NEURAL SIZE SYNC</h4>
+<div id="nano-overlay" style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(0,0,0,0.6); backdrop-filter:blur(5px); align-items:center; justify-content:center;">
+    <div style="background:#111; border:1px solid #00f2ff; border-radius:30px; padding:30px; width:90%; max-width:350px; text-align:center; box-shadow: 0 0 30px rgba(0,242,255,0.2);">
+        <h3 style="font-family:'Orbitron',sans-serif; color:#00f2ff; font-size:10px; letter-spacing:4px; margin-bottom:25px;">SELECT NEURAL SIZE</h3>
         
-        <div class="spec-options">
-            <div class="spec-hex" onclick="selectHex('M', this)"><span>M</span></div>
-            <div class="spec-hex" onclick="selectHex('L', this)"><span>L</span></div>
-            <div class="spec-hex" onclick="selectHex('XL', this)"><span>XL</span></div>
-            <div class="spec-hex" onclick="selectHex('2XL', this)"><span>2XL</span></div>
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-bottom:30px;">
+            <button onclick="selectNanoSize('M', this)" class="nano-card">M</button>
+            <button onclick="selectNanoSize('L', this)" class="nano-card">L</button>
+            <button onclick="selectNanoSize('XL', this)" class="nano-card">XL</button>
+            <button onclick="selectNanoSize('2XL', this)" class="nano-card">2XL</button>
         </div>
 
-        <div id="spec-footer" class="spec-hidden">
-            <p class="ready-text">CORE READY</p>
-            <button class="checkout-pulse" onclick="location.href='checkout.html'">
-                FINALIZE ORDER <i class="fa-solid fa-bolt-lightning"></i>
-            </button>
-        </div>
-        <button class="close-spec" onclick="closeSpecs()">CLOSE [X]</button>
+        <button id="nano-confirm" disabled onclick="location.href='checkout.html'" style="width:100%; padding:15px; background:#222; color:#555; border:1px solid #333; border-radius:15px; font-size:10px; font-weight:900; letter-spacing:2px; transition:0.3s;">
+            INITIALIZE CHECKOUT
+        </button>
+        <p onclick="closeNano()" style="color:#444; font-size:9px; margin-top:20px; cursor:pointer;">[ CANCEL SCAN ]</p>
     </div>
 </div>
+
+<style>
+    .nano-card {
+        height: 60px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1);
+        border-radius:15px; color:white; font-weight:900; transition:0.3s;
+    }
+    .nano-card.active {
+        background:#00f2ff; color:black; border-color:#00f2ff; box-shadow:0 0 15px #00f2ff; transform:scale(1.1);
+    }
+</style>
     
   <style>
     .spec-glass {
@@ -382,20 +388,34 @@
     
  
 <script>
-   function checkSelection() {
-    document.getElementById('spec-overlay').classList.add('active');
-    if(typeof speakAI === "function") speakAI("Establishing neural connection. Select your elite size.");
+  let currentNanoSize = null;
+
+function checkSelection() {
+    const overlay = document.getElementById('nano-overlay');
+    if (!currentNanoSize) {
+        overlay.style.display = 'flex'; // Wannan zai nuna shi
+        if(typeof speakAI === "function") speakAI("System ready. Please select your size.");
+    } else {
+        window.location.href = 'checkout.html';
+    }
 }
 
-function selectHex(size, el) {
-    document.querySelectorAll('.spec-hex').forEach(h => h.classList.remove('active'));
+function selectNanoSize(size, el) {
+    currentNanoSize = size;
+    document.querySelectorAll('.nano-card').forEach(btn => btn.classList.remove('active'));
     el.classList.add('active');
     
-    document.getElementById('spec-footer').classList.add('show');
+    const confirmBtn = document.getElementById('nano-confirm');
+    confirmBtn.disabled = false;
+    confirmBtn.style.background = '#00f2ff';
+    confirmBtn.style.color = '#000';
+    confirmBtn.style.borderColor = '#00f2ff';
+    confirmBtn.style.boxShadow = '0 0 20px rgba(0,242,255,0.4)';
+    confirmBtn.innerHTML = 'PROCEED WITH ' + size;
 }
 
-function closeSpecs() {
-    document.getElementById('spec-overlay').classList.remove('active');
+function closeNano() {
+    document.getElementById('nano-overlay').style.display = 'none';
       } 
       
 
