@@ -382,10 +382,8 @@
 }
 
 @keyframes salesBoyDisplay {
-    0% { transform: rotateX(0deg) rotateY(0deg); }
-    33% { transform: rotateX(15deg) rotateY(-15deg); }
-    66% { transform: rotateX(-15deg) rotateY(15deg); }
-    100% { transform: rotateX(0deg) rotateY(0deg); }
+    0%, 100% { transform: scale(1) rotateZ(0deg); }
+    50% { transform: scale(1.05) rotateZ(3deg) rotateY(20deg); }
 }
     
 /* CHECKOUT BOXES STYLE */
