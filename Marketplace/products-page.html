@@ -308,14 +308,13 @@
     <span class="dock-label">Order Now</span>
     </div>
     </div>     
- 
 <div id="infinity-overlay" class="inf-overlay">
     <div class="glass-backdrop" onclick="closeInf()"></div>
     
-    <div id="inf-card" class="inf-card-magic">
+    <div id="inf-card" class="inf-card-pure">
         
-        <div class="atamfa-magic-stage">
-            <img src="" id="magic-atamfa-display" class="atamfa-float-engine" alt="Preview">
+        <div class="atamfa-floating-stage">
+            <img src="" id="magic-atamfa-display" class="pure-atamfa-engine" alt="">
         </div>
 
         <div class="inf-title-area">
@@ -326,24 +325,19 @@
         <div class="magic-grid-container">
             <div class="item-card-mini-magic" onclick="infSelect('Green', this)">
                 <div class="item-img-box">
-                    <img src="" class="auto-thumb-grab" style="width:100%; height:100%; object-fit:cover; display:none;">
-                    <i class="fa-regular fa-image placeholder-icon"></i>
+                    <img src="" class="auto-thumb-grab" style="width:100%; height:100%; object-fit:cover;">
                 </div>
                 <div class="item-label-bar">GREEN</div>
             </div>
-
             <div class="item-card-mini-magic" onclick="infSelect('Purple', this)">
                 <div class="item-img-box">
-                    <img src="" class="auto-thumb-grab" style="width:100%; height:100%; object-fit:cover; display:none;">
-                    <i class="fa-regular fa-image placeholder-icon"></i>
+                    <img src="" class="auto-thumb-grab" style="width:100%; height:100%; object-fit:cover;">
                 </div>
                 <div class="item-label-bar">PURPLE</div>
             </div>
-
             <div class="item-card-mini-magic" onclick="infSelect('Milk', this)">
                 <div class="item-img-box">
-                    <img src="" class="auto-thumb-grab" style="width:100%; height:100%; object-fit:cover; display:none;">
-                    <i class="fa-regular fa-image placeholder-icon"></i>
+                    <img src="" class="auto-thumb-grab" style="width:100%; height:100%; object-fit:cover;">
                 </div>
                 <div class="item-label-bar">MILK</div>
             </div>
@@ -358,96 +352,72 @@
 </div>
 
 <style>
-/* FONT & OVERLAY */
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Plus+Jakarta+Sans:wght@800&display=swap');
-
 .inf-overlay {
     position: fixed !important; inset: 0 !important; z-index: 999999 !important;
     display: none; align-items: center; justify-content: center;
     font-family: 'Quicksand', sans-serif;
 }
 .glass-backdrop { 
-    position: absolute; inset: 0; 
-    background: rgba(0,0,0,0.85); 
-    backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); 
+    position: absolute; inset: 0; background: rgba(0,0,0,0.9); 
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
 }
 
-.inf-card-magic { 
-    position: relative; width: 92%; max-width: 400px; 
-    background: transparent; text-align: center; z-index: 10;
+.inf-card-pure { position: relative; width: 95%; max-width: 400px; text-align: center; }
+
+/* STAGE: Wurin shawagi */
+.atamfa-floating-stage { 
+    height: 300px; width: 100%; display: flex; align-items: center; justify-content: center; 
+    perspective: 1500px; margin-bottom: -20px; 
 }
 
-/* THE MAGIC STAGE (No Box, Just Floating) */
-.atamfa-magic-stage { 
-    height: 250px; width: 100%; display: flex; align-items: center; justify-content: center; 
-    perspective: 1200px; margin-bottom: 10px; 
-}
-.atamfa-float-engine { 
-    max-width: 85% !important; max-height: 90% !important; 
+/* PURE ATAMFA: Wannan zai cire background din hoton ya bar atamfar kadai */
+.pure-atamfa-engine { 
+    max-width: 90%; max-height: 90%; 
     opacity: 0; transform: scale(0.5); display: none;
-    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-    filter: drop-shadow(0 30px 60px rgba(0,0,0,0.9));
+    /* MAGIC TRICK: Wannan zai sa farin background din hoton ya bace */
+    mix-blend-mode: screen; 
+    filter: contrast(110%) brightness(110%);
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.atamfa-float-engine.active { 
+
+.pure-atamfa-engine.active { 
     opacity: 1; transform: scale(1); display: block;
-    animation: salesBoyMagic 6s infinite ease-in-out;
+    animation: salesBoyMagic 8s infinite ease-in-out;
 }
 
 @keyframes salesBoyMagic {
-    0%, 100% { transform: rotateY(-15deg) rotateX(5deg) translateY(0); }
-    50% { transform: rotateY(15deg) rotateX(-5deg) translateY(-20px); }
+    0% { transform: rotateY(-20deg) rotateX(10deg) translateY(0) scale(1); }
+    25% { transform: rotateY(20deg) rotateX(-5deg) translateY(-15px) scale(1.05); }
+    50% { transform: rotateY(-10deg) rotateZ(5deg) translateY(10px) scale(1); }
+    75% { transform: rotateY(15deg) rotateX(10deg) translateY(-15px) scale(1.05); }
+    100% { transform: rotateY(-20deg) rotateX(10deg) translateY(0) scale(1); }
 }
 
 /* BOXES STYLE */
-.magic-grid-container { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
+.magic-grid-container { display: flex; justify-content: center; gap: 10px; margin: 25px 0; }
 .item-card-mini-magic { 
-    min-width: 95px; background: #fff; border-radius: 15px; 
-    overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.4); 
-    border: 2px solid transparent; cursor: pointer; transition: 0.3s;
+    min-width: 100px; background: #fff; border-radius: 12px; overflow: hidden;
+    border: 3px solid transparent; transition: 0.3s;
 }
-.item-img-box { 
-    width: 100%; height: 80px; background: #f0f0f0; 
-    display: flex; align-items: center; justify-content: center; 
-}
-.placeholder-icon { color: #ccc; font-size: 20px; }
-.item-label-bar { 
-    background: #666; color: white; font-size: 10px; 
-    font-weight: 800; text-align: center; padding: 6px 0; 
-}
-
-.item-card-mini-magic.active-node { border-color: #ff7043; transform: translateY(-8px); }
+.item-card-mini-magic.active-node { border-color: #ff7043; transform: scale(1.05); }
+.item-label-bar { background: #333; color: #fff; font-size: 11px; font-weight: 800; padding: 5px 0; }
 .item-card-mini-magic.active-node .item-label-bar { background: #ff7043; }
 
-/* TITLES */
-.inf-subtitle { font-size: 10px; font-weight: 800; color: #ff8a65; letter-spacing: 3px; display: block; margin-bottom: 5px; }
-.inf-main-title { font-size: 24px; font-weight: 800; color: white; margin: 0 0 15px 0; }
-
-/* BUTTON */
+.inf-main-title { color: white; font-weight: 800; font-size: 26px; margin: 10px 0; }
 .pay-secure-btn-magic { 
-    width: 90%; height: 55px; border-radius: 20px; border: none; 
-    background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); 
-    font-weight: 700; font-size: 16px; transition: 0.4s;
+    width: 90%; height: 55px; border-radius: 50px; border: none; 
+    background: #ff7043; color: white; font-weight: 800; font-size: 18px;
+    box-shadow: 0 10px 20px rgba(255, 112, 67, 0.4);
 }
-.pay-secure-btn-magic.active { 
-    background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%); 
-    color: white; cursor: pointer;
-    box-shadow: 0 15px 30px rgba(255, 112, 67, 0.4);
-}
-
-.inf-dismiss-text { margin-top: 25px; color: rgba(255,255,255,0.4); font-size: 11px; font-weight: 700; cursor: pointer; }
 </style>
 
 <script>
-let selectedColorName = null;
-
-// Function din daukowa babban hoton shafin
+// Logic din yana nan yadda yake, kawai na daidaita yadda zai kalli sabbin Classes din
 function findProductImage() {
     const images = document.querySelectorAll('img');
     let mainSrc = "";
     let maxArea = 0;
-
     images.forEach(img => {
-        // Idan hoton ya fi 200px (hakan na nufin ba icon bane)
         if (img.width * img.height > maxArea && !img.closest('.inf-overlay')) {
             maxArea = img.width * img.height;
             mainSrc = img.src;
@@ -459,54 +429,31 @@ function findProductImage() {
 function checkSelection() {
     const overlay = document.getElementById('infinity-overlay');
     const mainImg = findProductImage();
-
     if(mainImg) {
-        document.querySelectorAll('.auto-thumb-grab').forEach(img => {
-            img.src = mainImg;
-            img.style.display = 'block';
-        });
-        document.querySelectorAll('.placeholder-icon').forEach(icon => icon.style.display = 'none');
+        document.querySelectorAll('.auto-thumb-grab').forEach(img => img.src = mainImg);
     }
-
     overlay.style.display = 'flex';
-    setTimeout(() => overlay.classList.add('active'), 10);
 }
 
 function infSelect(color, el) {
-    selectedColorName = color;
     document.querySelectorAll('.item-card-mini-magic').forEach(n => n.classList.remove('active-node'));
     el.classList.add('active-node');
-    
     const displayImg = document.getElementById('magic-atamfa-display');
     const currentMainImg = findProductImage();
-    
     displayImg.classList.remove('active');
-    
     setTimeout(() => {
         if(currentMainImg) {
             displayImg.src = currentMainImg;
             displayImg.classList.add('active');
         }
     }, 100);
-    
     const btn = document.getElementById('inf-action-btn');
     btn.disabled = false; 
-    btn.classList.add('active');
-    document.getElementById('btn-label-text').innerText = 'Proceed to checkout';
+    btn.style.opacity = "1";
 }
 
 function closeInf() {
-    const overlay = document.getElementById('infinity-overlay');
-    overlay.classList.remove('active');
-    setTimeout(() => {
-        overlay.style.display = 'none';
-        document.getElementById('magic-atamfa-display').classList.remove('active');
-    }, 600);
-}
-
-function infProceed() { 
-    // Zaka iya tura kalar da aka zaba zuwa checkout
-    window.location.href = 'checkout.html?color=' + selectedColorName; 
+    document.getElementById('infinity-overlay').style.display = 'none';
 }
 </script>
     
