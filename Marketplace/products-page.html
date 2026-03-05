@@ -309,11 +309,11 @@
     </div>
     </div>     
 
-    <div class="main-page-magic-stage">
-    <div class="floating-wrap">
-        <img src="" id="main-atamfa-float" class="atamfa-float-engine" alt="">
+<div class="unique-main-display-stage">
+    <div class="unique-float-wrapper">
+        <img src="" id="main-page-floating-img" class="unique-atamfa-logic" alt="">
     </div>
-    <div id="selected-color-label-main" class="main-label-transparent"></div>
+    <div id="main-page-color-text" class="unique-label-transparent"></div>
 </div>
 
 <div id="infinity-overlay" class="inf-overlay">
@@ -322,7 +322,7 @@
     <div id="inf-card" class="inf-card style-5">
         
         <div class="atamfa-magic-stage">
-            <img src="" id="magic-atamfa-display" class="atamfa-float-engine" alt="">
+            <img src="" id="magic-atamfa-display" class="unique-atamfa-logic" alt="">
         </div>
 
         <div class="inf-title-area">
@@ -362,55 +362,74 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Plus+Jakarta+Sans:wght@800&display=swap');
 
-/* --- POP-UP STYLES (ASALIN CODE DINKA) --- */
-.inf-overlay {
-    position: fixed; inset: 0; z-index: 99999;
-    display: none; align-items: center; justify-content: center;
-    font-family: 'Quicksand', sans-serif;
-}
-.glass-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
-.inf-card.style-5 { position: relative; width: 90%; max-width: 400px; background: none; text-align: center; }
-
-.atamfa-magic-stage { 
-    height: 250px; width: 100%; display: flex; align-items: center; justify-content: center; 
-    perspective: 1200px; margin-bottom: 5px; 
+/* --- PREVENT CONFLICT: Wannan zai gyara hotunan shafin da suka bace --- */
+.unique-main-display-stage {
+    width: 100%; 
+    height: 250px; 
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    perspective: 1200px; 
+    margin: 20px 0;
 }
 
-/* --- Juyawar Atamfa (Popup & Main Page) --- */
-.atamfa-float-engine { 
-    max-width: 85%; max-height: 90%; 
-    opacity: 0; transform: scale(0.6) rotateY(45deg);
+.unique-float-wrapper { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; }
+
+/* --- UNIQUE ANIMATION ENGINE (Ba zai taba asalin hotunan shafinka ba) --- */
+.unique-atamfa-logic { 
+    max-width: 85% !important; 
+    max-height: 90% !important; 
+    opacity: 0; 
+    transform: scale(0.6) rotateY(45deg);
     transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
-    filter: drop-shadow(0 20px 50px rgba(0,0,0,0.8));
-}
-.atamfa-float-engine.active { 
-    opacity: 1; transform: scale(1) rotateY(0deg); 
-    animation: salesBoyDisplay 6s infinite ease-in-out;
+    filter: drop-shadow(0 20px 50px rgba(0,0,0,0.4));
+    display: none; /* Ba zai fito ba sai an zaba */
 }
 
-/* --- MAIN PAGE STAGE STYLES --- */
-.main-page-magic-stage {
-    width: 100%; height: 250px; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; perspective: 1200px; margin: 15px 0;
+.unique-atamfa-logic.active { 
+    display: block;
+    opacity: 1; 
+    transform: scale(1) rotateY(0deg); 
+    animation: salesBoyDisplayUnique 6s infinite ease-in-out;
 }
-.floating-wrap { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; }
 
 /* --- TRANSPARENT LABEL GYARA --- */
 .item-price-bar { 
-    background: transparent !important; /* Cire background fari ko grey */
-    color: #757575; font-size: 10px; font-weight: 800; text-align: center; padding: 6px 0; letter-spacing: 1px;
+    background: transparent !important; 
+    color: #757575; 
+    font-size: 10px; 
+    font-weight: 800; 
+    text-align: center; 
+    padding: 6px 0; 
 }
+
 .item-card-mini.active-node .item-price-bar { 
     background: transparent !important; 
     color: #ff7043; 
 }
-.main-label-transparent {
-    margin-top: 10px; color: #ff7043; font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+
+.unique-label-transparent {
+    margin-top: 10px; 
+    color: #ff7043; 
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800; 
+    text-transform: uppercase; 
+    letter-spacing: 2px;
 }
 
-/* --- ASALIN ANIMATION DINKA --- */
-@keyframes salesBoyDisplay {
+/* --- ASALIN POP-UP STYLES --- */
+.inf-overlay {
+    position: fixed; inset: 0; z-index: 999999;
+    display: none; align-items: center; justify-content: center;
+    font-family: 'Quicksand', sans-serif;
+}
+.glass-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
+.inf-card.style-5 { position: relative; width: 90%; max-width: 400px; text-align: center; }
+
+.atamfa-magic-stage { height: 250px; width: 100%; display: flex; align-items: center; justify-content: center; perspective: 1200px; }
+
+@keyframes salesBoyDisplayUnique {
     0% { transform: rotateY(-15deg) rotateX(5deg) translateY(0); }
     25% { transform: rotateY(15deg) rotateX(-5deg) translateY(-10px); }
     50% { transform: rotateY(-10deg) rotateZ(2deg) translateY(0); }
@@ -418,38 +437,24 @@
     100% { transform: rotateY(-15deg) rotateX(5deg) translateY(0); }
 }
 
-/* --- MINI CARDS & BUTTON (ASALIN CODE DINKA) --- */
 .magic-grid { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
-.item-card-mini { 
-    min-width: 95px; background: #fff; border-radius: 15px; 
-    overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
-    border: 2px solid transparent; cursor: pointer; transition: 0.3s;
-}
-.item-img { width: 100%; height: 80px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; }
+.item-card-mini { min-width: 95px; background: #fff; border-radius: 15px; overflow: hidden; border: 2px solid transparent; cursor: pointer; transition: 0.3s; }
 .item-card-mini.active-node { border-color: #ff7043; transform: translateY(-10px); }
+.item-img { width: 100%; height: 80px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; }
 
-.pay-secure-btn { 
-    width: 90%; height: 55px; border-radius: 20px; border: none; 
-    background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); 
-    font-weight: 700; font-size: 16px; transition: 0.4s; margin-top: 15px;
-}
-.pay-secure-btn.active { 
-    background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%); color: white; cursor: pointer;
-}
-.inf-close { margin-top: 25px; color: rgba(255,255,255,0.3); font-size: 11px; font-weight: 700; cursor: pointer; }
+.pay-secure-btn { width: 90%; height: 55px; border-radius: 20px; border: none; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); font-weight: 700; margin-top: 15px; }
+.pay-secure-btn.active { background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%); color: white; cursor: pointer; }
+.inf-close { margin-top: 25px; color: rgba(255,255,255,0.3); font-size: 11px; cursor: pointer; }
 </style>
 
 <script>
 let selectedColor = null;
 
-// Function na bude Pop-up
 function checkSelection() {
     const overlay = document.getElementById('infinity-overlay');
     overlay.style.display = 'flex';
-    setTimeout(() => overlay.classList.add('active'), 10);
 }
 
-// Function na zaben kala (Wannan ne zai canza hoton duka biyun)
 function infSelect(colorName, el, imgPath) {
     selectedColor = colorName;
     document.querySelectorAll('.item-card-mini').forEach(n => n.classList.remove('active-node'));
@@ -460,9 +465,8 @@ function infSelect(colorName, el, imgPath) {
     displayImgPopup.classList.remove('active');
     
     // 2. Gyara Hoton Main Page
-    const displayImgMain = document.getElementById('main-atamfa-float');
-    const labelMain = document.getElementById('selected-color-label-main');
-    if(displayImgMain) displayImgMain.classList.remove('active');
+    const displayImgMain = document.getElementById('main-page-floating-img');
+    const labelMain = document.getElementById('main-page-color-text');
 
     setTimeout(() => {
         // Saka hoto a popup
@@ -484,16 +488,11 @@ function infSelect(colorName, el, imgPath) {
 }
 
 function closeInf() {
-    const overlay = document.getElementById('infinity-overlay');
-    overlay.classList.remove('active');
-    setTimeout(() => {
-        overlay.style.display = 'none';
-        document.getElementById('magic-atamfa-display').classList.remove('active');
-    }, 600);
+    document.getElementById('infinity-overlay').style.display = 'none';
 }
 
 function infProceed() { window.location.href = 'checkout.html'; }
-</script>
+                </script>
     
         
 <script>
