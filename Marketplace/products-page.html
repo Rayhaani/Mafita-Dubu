@@ -309,119 +309,94 @@
     </div>
     </div>
 
-<div id="neural-interface" class="neural-container">
-    <div class="neural-bg-blur"></div>
-    <div class="neural-core">
-        <h2 class="neural-title">SYSTEM SCAN: SELECT SIZE</h2>
-        <div class="orb-wrapper">
-            <div class="neural-orb" onclick="confirmNeural('S', this)"><span>S</span></div>
-            <div class="neural-orb" onclick="confirmNeural('M', this)"><span>M</span></div>
-            <div class="neural-orb" onclick="confirmNeural('L', this)"><span>L</span></div>
-            <div class="neural-orb" onclick="confirmNeural('XL', this)"><span>XL</span></div>
+<div id="spec-overlay" class="spec-glass">
+    <div class="spec-wrap">
+        <div class="glitch-line"></div>
+        <h4 class="spec-header">NEURAL SIZE SYNC</h4>
+        
+        <div class="spec-options">
+            <div class="spec-hex" onclick="selectHex('M', this)"><span>M</span></div>
+            <div class="spec-hex" onclick="selectHex('L', this)"><span>L</span></div>
+            <div class="spec-hex" onclick="selectHex('XL', this)"><span>XL</span></div>
+            <div class="spec-hex" onclick="selectHex('2XL', this)"><span>2XL</span></div>
         </div>
-        <div id="neural-status" class="status-text">WAITING FOR INPUT...</div>
-        <button id="neural-proceed" class="neural-btn-hidden" onclick="location.href='checkout.html'">
-            INITIALIZE CHECKOUT <i class="fa-solid fa-microchip"></i>
-        </button>
+
+        <div id="spec-footer" class="spec-hidden">
+            <p class="ready-text">CORE READY</p>
+            <button class="checkout-pulse" onclick="location.href='checkout.html'">
+                FINALIZE ORDER <i class="fa-solid fa-bolt-lightning"></i>
+            </button>
+        </div>
+        <button class="close-spec" onclick="closeSpecs()">CLOSE [X]</button>
     </div>
 </div>
     
-    
   <style>
-    .neural-container {
-    position: fixed; inset: 0; z-index: 20000;
-    display: none; align-items: center; justify-content: center;
-    overflow: hidden;
-}
-
-.neural-bg-blur {
-    position: absolute; inset: 0;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(25px);
-    opacity: 0; transition: 0.5s;
-}
-
-.neural-core {
-    position: relative; z-index: 10; text-align: center;
-    width: 100%; max-width: 400px;
-}
-
-.neural-title {
-    font-family: 'Orbitron', sans-serif; font-size: 10px;
-    letter-spacing: 5px; color: #00f2ff; margin-bottom: 50px;
-    text-shadow: 0 0 10px #00f2ff;
-}
-
-.orb-wrapper {
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 25px;
-}
-
-.neural-orb {
-    width: 70px; height: 70px; border-radius: 50%;
-    border: 1px solid rgba(0, 242, 255, 0.3);
-    background: radial-gradient(circle, rgba(0, 242, 255, 0.1), transparent);
+    .spec-glass {
+    position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+    background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(15px);
+    border-left: 1px solid rgba(0, 242, 255, 0.2); z-index: 10000;
+    transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
 }
 
-.neural-orb span { font-weight: 900; color: white; font-size: 16px; }
+.spec-glass.active { right: 0; }
 
-.neural-orb:hover, .neural-orb.active {
-    transform: scale(1.3);
-    border-color: #00f2ff;
-    box-shadow: 0 0 30px #00f2ff;
-    background: #00f2ff;
-}
-.neural-orb.active span { color: black; }
+.spec-wrap { width: 100%; padding: 40px 20px; text-align: center; }
 
-.status-text {
-    margin-top: 50px; font-size: 8px; letter-spacing: 3px;
-    color: #444; text-transform: uppercase;
+.spec-header {
+    font-size: 9px; letter-spacing: 5px; color: #00f2ff;
+    margin-bottom: 50px; font-weight: 900;
 }
 
-.neural-btn-hidden {
-    margin-top: 30px; padding: 15px 40px; border-radius: 50px;
-    background: transparent; border: 1px solid #00f2ff;
-    color: #00f2ff; font-weight: 900; font-size: 10px;
-    letter-spacing: 2px; opacity: 0; transform: translateY(20px);
-    transition: 0.5s;
+.spec-options {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 60px;
 }
 
-.neural-btn-hidden.visible { opacity: 1; transform: translateY(0); background: rgba(0, 242, 255, 0.1); }
-      
+.spec-hex {
+    height: 60px; border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 900; cursor: pointer;
+    background: rgba(255,255,255,0.02); transition: 0.4s;
+    border-radius: 10px;
+}
+
+.spec-hex:hover, .spec-hex.active {
+    background: #00f2ff; color: #000; border-color: #00f2ff;
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+}
+
+.spec-hidden { opacity: 0; transform: translateY(20px); transition: 0.5s; }
+.spec-hidden.show { opacity: 1; transform: translateY(0); }
+
+.checkout-pulse {
+    width: 100%; padding: 15px; background: white; color: black;
+    font-size: 10px; font-weight: 900; border-radius: 5px;
+    margin-top: 15px; letter-spacing: 2px;
+}
+
+.close-spec {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    color: #444; font-size: 8px; font-weight: 900; background: none; border: none;
+      }
     
  
 <script>
-    let neuralSize = null;
-
-function checkSelection() {
-    const ui = document.getElementById('neural-interface');
-    const blur = ui.querySelector('.neural-bg-blur');
-    
-    ui.style.display = 'flex';
-    setTimeout(() => {
-        blur.style.opacity = '1';
-        if(typeof speakAI === "function") speakAI("Neural link established. Identify your size requirements.");
-    }, 10);
+   function checkSelection() {
+    document.getElementById('spec-overlay').classList.add('active');
+    if(typeof speakAI === "function") speakAI("Establishing neural connection. Select your elite size.");
 }
 
-function confirmNeural(size, el) {
-    neuralSize = size;
-    document.querySelectorAll('.neural-orb').forEach(o => o.classList.remove('active'));
+function selectHex(size, el) {
+    document.querySelectorAll('.spec-hex').forEach(h => h.classList.remove('active'));
     el.classList.add('active');
     
-    document.getElementById('neural-status').innerText = "SIZE " + size + " VERIFIED";
-    document.getElementById('neural-status').style.color = "#00f2ff";
-    
-    const btn = document.getElementById('neural-proceed');
-    btn.classList.add('visible');
+    document.getElementById('spec-footer').classList.add('show');
 }
 
-// Rufe interface idan an danna bango
-document.querySelector('.neural-bg-blur').onclick = () => {
-    document.getElementById('neural-interface').style.display = 'none';
-};
+function closeSpecs() {
+    document.getElementById('spec-overlay').classList.remove('active');
+      } 
       
 
 <script>
