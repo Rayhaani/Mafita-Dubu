@@ -311,46 +311,121 @@
 
   
 <div id="selection-sheet" class="fixed inset-0 bg-black/40 z-50 hidden flex-items-end">
-    <div class="bg-white w-full rounded-t-[40px] p-8 animate-slide-up">
-        <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
-        <h3 class="text-lg font-extrabold text-slate-800 mb-4">Muna bukatar sanin size dinka</h3>
-        
-        <div class="flex gap-3 mb-8">
-            <button onclick="selectSize('M', this)" class="size-btn">M</button>
-            <button onclick="selectSize('L', this)" class="size-btn">L</button>
-            <button onclick="selectSize('XL', this)" class="size-btn">XL</button>
-            <button onclick="selectSize('2XL', this)" class="size-btn">2XL</button>
-        </div>
 
-        <button id="final-order-btn" disabled class="w-full py-4 bg-gray-300 text-white rounded-2xl font-black uppercase tracking-widest transition-all">
-            Zabi Size Tukuna
-        </button>
+   <div id="selection-sheet" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-xl transition-opacity duration-500"></div>
+    
+    <div id="selection-card" class="relative w-full max-w-[400px] overflow-hidden rounded-[40px] border border-white/20 bg-black/40 p-8 shadow-2xl opacity-0 scale-90 transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]">
+        
+        <div class="absolute -top-24 -left-24 h-48 w-48 rounded-full bg-cyan-500/20 blur-[80px] animate-pulse"></div>
+        <div class="absolute -bottom-24 -right-24 h-48 w-48 rounded-full bg-purple-500/20 blur-[80px] animate-pulse"></div>
+
+        <div class="relative z-10 text-center">
+            <div class="mb-6 flex justify-center">
+                <div class="h-1 w-12 rounded-full bg-white/20"></div>
+            </div>
+            
+            <h3 class="mb-2 font-['Orbitron'] text-xs font-black uppercase tracking-[0.3em] text-cyan-400">System Analysis</h3>
+            <h2 class="mb-8 text-2xl font-black tracking-tight text-white">SELECT YOUR DIMENSION</h2>
+            
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <button onclick="selectSize('M', this)" class="futuro-btn">
+                    <span class="relative z-10">M</span>
+                    <div class="btn-glow"></div>
+                </button>
+                <button onclick="selectSize('L', this)" class="futuro-btn">
+                    <span class="relative z-10">L</span>
+                    <div class="btn-glow"></div>
+                </button>
+                <button onclick="selectSize('XL', this)" class="futuro-btn">
+                    <span class="relative z-10">XL</span>
+                    <div class="btn-glow"></div>
+                </button>
+                <button onclick="selectSize('2XL', this)" class="futuro-btn">
+                    <span class="relative z-10">2XL</span>
+                    <div class="btn-glow"></div>
+                </button>
+            </div>
+
+            <button id="final-order-btn" disabled class="group relative w-full overflow-hidden rounded-2xl bg-white/5 py-5 font-black uppercase tracking-[0.2em] text-white/40 transition-all duration-500 border border-white/10">
+                <div id="btn-loader" class="absolute inset-0 -translate-x-full bg-gradient-to-r from-cyan-500 to-blue-600 transition-transform duration-700"></div>
+                <span class="relative z-10 text-[10px]">Initialize Protocol</span>
+            </button>
+            
+            <p onclick="closeSelection()" class="mt-6 cursor-pointer text-[10px] font-bold uppercase tracking-widest text-white/30 hover:text-white transition-colors">Aborts Session [X]</p>
+        </div>
     </div>
 </div>
 
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
 
-   <style>
-    .size-btn {
-        width: 50px; height: 50px; border-radius: 15px; border: 2px solid #f1f5f9;
-        font-weight: 800; color: #64748b; transition: 0.3s;
+    .futuro-btn {
+        position: relative;
+        height: 70px;
+        overflow: hidden;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.03);
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.2rem;
+        color: rgba(255, 255, 255, 0.4);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .size-btn.selected { border-color: #ff8a65; background: #fff7ed; color: #ff8a65; transform: scale(1.1); }
-    
-    @keyframes slide-up {
-        from { transform: translateY(100%); }
-        to { transform: translateY(0); }
+
+    .futuro-btn:hover {
+        border-color: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-2px);
     }
-    .animate-slide-up { animation: slide-up 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-</style> 
-  
- <script>
+
+    .futuro-btn.selected {
+        border-color: #06b6d4;
+        background: rgba(6, 182, 212, 0.1);
+        color: #fff;
+        box-shadow: 0 0 25px rgba(6, 182, 212, 0.3);
+    }
+
+    .btn-glow {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at center, rgba(6, 182, 212, 0.4) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.4s;
+    }
+
+    .futuro-btn.selected .btn-glow {
+        opacity: 1;
+    }
+
+    #final-order-btn.active {
+        color: #fff;
+        border-color: transparent;
+        box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
+        transform: scale(1.02);
+    }
+
+    #final-order-btn.active #btn-loader {
+        transform: translateX(0);
+    }
+</style>
+
+<script>
     let selectedSize = null;
 
     function checkSelection() {
+        const sheet = document.getElementById('selection-sheet');
+        const card = document.getElementById('selection-card');
+        
         if (!selectedSize) {
-            document.getElementById('selection-sheet').classList.remove('hidden');
-            document.getElementById('selection-sheet').style.display = 'flex';
-            document.getElementById('selection-sheet').style.alignItems = 'flex-end';
+            sheet.classList.remove('hidden');
+            sheet.classList.add('flex');
+            
+            // Animation Trigger
+            setTimeout(() => {
+                card.classList.remove('opacity-0', 'scale-90');
+                card.classList.add('opacity-100', 'scale-100');
+            }, 10);
         } else {
             window.location.href = 'checkout.html';
         }
@@ -358,20 +433,39 @@
 
     function selectSize(size, el) {
         selectedSize = size;
-        // Cire tsohon selection
-        document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
-        // Saka sabon selection
+        
+        // Cire tsohon selection tare da haptic effect na CSS
+        document.querySelectorAll('.futuro-btn').forEach(btn => btn.classList.remove('selected'));
         el.classList.add('selected');
         
-        // Kunna babban button
+        // Kunna babban button cikin salo na futuristic
         const btn = document.getElementById('final-order-btn');
         btn.disabled = false;
-        btn.style.background = '#1e293b';
-        btn.innerHTML = 'Proceed to Checkout <i class="fa-solid fa-arrow-right ml-2"></i>';
-        btn.onclick = () => window.location.href = 'checkout.html';
+        btn.classList.add('active');
+        btn.querySelector('span').innerHTML = 'CONFIRM ORDER: ' + size + ' <i class="fa-solid fa-bolt ml-2 text-cyan-300"></i>';
+        
+        btn.onclick = () => {
+            btn.querySelector('span').innerHTML = 'SYNCHRONIZING...';
+            setTimeout(() => {
+                window.location.href = 'checkout.html';
+            }, 800);
+        };
     }
-    </script> 
 
+    function closeSelection() {
+        const sheet = document.getElementById('selection-sheet');
+        const card = document.getElementById('selection-card');
+        
+        card.classList.add('opacity-0', 'scale-90');
+        card.classList.remove('opacity-100', 'scale-100');
+        
+        setTimeout(() => {
+            sheet.classList.add('hidden');
+            sheet.classList.remove('flex');
+        }, 400);
+    }
+</script>
+    
 <script>
 // DNA CORE SCRIPT
 const salesBoy = document.createElement('div');
