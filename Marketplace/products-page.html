@@ -309,160 +309,137 @@
     </div>
     </div>
 
-
-   <div id="selection-sheet" class="master-overlay">
-    <div class="glass-backdrop" onclick="closeSelection()"></div>
-    
-    <div id="selection-card" class="smart-popup">
-        <button class="close-x" onclick="closeSelection()">×</button>
-
-        <div class="popup-inner">
-            <div class="product-preview-grid">
-                <div class="preview-box main-box">
-                    <img src="hoton-kayanka-1.jpg" alt="Preview 1" id="main-preview">
-                </div>
-                <div class="preview-side">
-                    <div class="preview-box mini-box"><img src="hoton-kayanka-2.jpg" alt="Preview 2"></div>
-                    <div class="preview-box mini-box"><img src="hoton-kayanka-3.jpg" alt="Preview 3"></div>
-                </div>
+<div id="infinity-overlay" class="inf-overlay">
+    <div id="inf-card" class="inf-card style-1"> <div class="inf-header">
+            <div class="inf-product-chip">
+                <img src="https://via.placeholder.com/40" class="inf-thumb" id="p1">
+                <img src="https://via.placeholder.com/40" class="inf-thumb" id="p2">
+                <div class="inf-status-dot"></div>
             </div>
-
-            <div class="text-content">
-                <h3 class="smart-tag">PREMIUM SELECTION</h3>
-                <h2 class="smart-title">Zaɓi Girman Da Ya Dace</h2>
+            <div class="inf-title-area">
+                <span class="inf-subtitle">NEURAL SELECTION</span>
+                <h2 class="inf-main-title">Identify Dimension</h2>
             </div>
-            
-            <div class="size-options-row">
-                <button onclick="selectSize('M', this)" class="smart-size-btn">M</button>
-                <button onclick="selectSize('L', this)" class="smart-size-btn">L</button>
-                <button onclick="selectSize('XL', this)" class="smart-size-btn">XL</button>
-                <button onclick="selectSize('2XL', this)" class="smart-size-btn">2XL</button>
-            </div>
-
-            <button id="final-order-btn" disabled class="smart-action-btn">
-                <span>Zabi Size Domin Ci Gaba</span>
-            </button>
         </div>
+
+        <div class="inf-matrix">
+            <button onclick="infSelect('M', this)" class="inf-node"><span>M</span></button>
+            <button onclick="infSelect('L', this)" class="inf-node"><span>L</span></button>
+            <button onclick="infSelect('XL', this)" class="inf-node"><span>XL</span></button>
+            <button onclick="infSelect('2XL', this)" class="inf-node"><span>2XL</span></button>
+        </div>
+
+        <button id="inf-action" disabled onclick="infProceed()" class="inf-btn">
+            <span id="btn-label">Awaiting Input</span>
+            <svg class="inf-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+
+        <p class="inf-close" onclick="closeInf()">Dismiss Interface</p>
     </div>
 </div>
 
 <style>
-    .master-overlay {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        z-index: 10000; display: none; align-items: flex-end; justify-content: center;
-    }
+/* SMART FONTS & CORE SETUP */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
 
-    .glass-backdrop {
-        position: absolute; inset: 0;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(8px);
-    }
+.inf-overlay {
+    position: fixed; inset: 0; z-index: 99999;
+    background: rgba(255, 255, 255, 0.01);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    display: none; align-items: center; justify-content: center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
 
-    .smart-popup {
-        position: relative; width: 100%; max-width: 500px;
-        background: #ffffff; border-radius: 30px 30px 0 0;
-        padding: 30px 20px 40px;
-        transform: translateY(100%);
-        transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-        box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
-    }
+.inf-card {
+    width: 90%; max-width: 340px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 32px; padding: 24px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.1);
+    transform: scale(0.9) translateY(20px); opacity: 0;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
 
-    .master-overlay.active .smart-popup { transform: translateY(0); }
+.inf-overlay.active .inf-card { transform: scale(1) translateY(0); opacity: 1; }
 
-    .close-x {
-        position: absolute; top: 15px; right: 20px; border: none;
-        background: #f0f0f0; width: 30px; height: 30px; border-radius: 50%;
-        font-size: 20px; font-weight: bold; cursor: pointer; z-index: 10;
-    }
+/* 12 STYLES CONCEPTS (Selection of the top 3 high-end ones) */
+/* Style 1: Minimalist FinTech (Kamar hoton Track Order dinka) */
+.inf-card.style-1 { background: white; border: none; }
 
-    /* Product Boxes (Temu Style) */
-    .product-preview-grid {
-        display: flex; gap: 10px; margin-bottom: 25px; height: 160px;
-    }
+/* Style 2: Cyber Glass (Glow effects) */
+.inf-card.style-2 { background: rgba(10, 10, 10, 0.9); border: 1px solid #00f2ff; }
+.inf-card.style-2 * { color: white; }
 
-    .preview-box {
-        background: #f8f8f8; border-radius: 15px; overflow: hidden;
-        border: 1px solid #eee;
-    }
+/* Style 3: Liquid Morph (Floating orbs) */
+.inf-card.style-3 { border-radius: 50px; background: linear-gradient(135deg, #fff, #f0f4ff); }
 
-    .preview-box img { width: 100%; height: 100%; object-fit: cover; }
+/* SLIM COMPONENTS */
+.inf-header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+.inf-product-chip { position: relative; display: flex; }
+.inf-thumb { width: 44px; height: 44px; border-radius: 14px; border: 2px solid white; object-fit: cover; }
+#p2 { margin-left: -20px; z-index: 1; }
 
-    .main-box { flex: 2; }
-    .preview-side { flex: 1; display: flex; flex-direction: column; gap: 10px; }
-    .mini-box { flex: 1; }
+.inf-status-dot { 
+    position: absolute; top: -2px; right: -2px; width: 10px; height: 10px; 
+    background: #10b981; border-radius: 50%; border: 2px solid white; z-index: 2;
+}
 
-    .smart-tag {
-        color: #ff4500; font-size: 11px; font-weight: 800;
-        letter-spacing: 1px; margin-bottom: 5px;
-    }
+.inf-subtitle { font-size: 9px; font-weight: 800; color: #6366f1; letter-spacing: 2px; text-transform: uppercase; }
+.inf-main-title { font-size: 18px; font-weight: 800; color: #1e293b; margin: 0; }
 
-    .smart-title {
-        color: #1a1a1a; font-size: 19px; font-weight: 800;
-        margin-bottom: 25px; font-family: sans-serif;
-    }
+.inf-matrix { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; }
+.inf-node {
+    height: 54px; border-radius: 16px; border: 1px solid #f1f5f9;
+    background: #f8fafc; color: #64748b; font-weight: 700; transition: 0.3s;
+}
 
-    .size-options-row {
-        display: flex; justify-content: space-between; gap: 10px; margin-bottom: 30px;
-    }
+.inf-node.selected { 
+    background: #1e293b; color: white; border-color: #1e293b;
+    box-shadow: 0 10px 20px rgba(30, 41, 59, 0.2); transform: translateY(-3px);
+}
 
-    .smart-size-btn {
-        flex: 1; height: 55px; border-radius: 12px;
-        border: 2px solid #f0f0f0; background: #fff;
-        font-weight: 700; color: #333; transition: 0.2s; cursor: pointer;
-    }
+.inf-btn {
+    width: 100%; height: 58px; border-radius: 18px; border: none;
+    background: #f1f5f9; color: #94a3b8; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: 0.4s;
+}
 
-    .smart-size-btn.selected {
-        border-color: #000; background: #fdfdfd; transform: scale(1.05);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
+.inf-btn.active { background: #000; color: #fff; cursor: pointer; }
+.inf-arrow { width: 18px; stroke: currentColor; stroke-width: 3; fill: none; opacity: 0; transition: 0.3s; }
+.inf-btn.active .inf-arrow { opacity: 1; transform: translateX(5px); }
 
-    .smart-action-btn {
-        width: 100%; padding: 18px; border-radius: 15px;
-        border: none; background: #e0e0e0; color: #999;
-        font-weight: 800; text-transform: uppercase; font-size: 13px;
-        transition: 0.3s;
-    }
-
-    .smart-action-btn.active {
-        background: #000; color: #fff; cursor: pointer;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
+.inf-close { text-align: center; font-size: 11px; color: #94a3b8; font-weight: 700; margin-top: 20px; cursor: pointer; }
 </style>
 
 <script>
-    let currentSelectedSize = null;
+let selectedInfSize = null;
 
-    function checkSelection() {
-        const overlay = document.getElementById('selection-sheet');
-        overlay.style.display = 'flex';
-        setTimeout(() => {
-            overlay.classList.add('active');
-        }, 10);
-    }
+function checkSelection() {
+    const overlay = document.getElementById('infinity-overlay');
+    overlay.style.display = 'flex';
+    setTimeout(() => overlay.classList.add('active'), 10);
+}
 
-    function selectSize(size, el) {
-        currentSelectedSize = size;
-        document.querySelectorAll('.smart-size-btn').forEach(b => b.classList.remove('selected'));
-        el.classList.add('selected');
-        
-        const btn = document.getElementById('final-order-btn');
-        btn.disabled = false;
-        btn.classList.add('active');
-        btn.querySelector('span').innerText = 'CI GABA DA ZAƁIN (' + size + ')';
-        
-        btn.onclick = () => {
-            window.location.href = 'checkout.html';
-        };
-    }
+function infSelect(size, el) {
+    selectedInfSize = size;
+    document.querySelectorAll('.inf-node').forEach(n => n.classList.remove('selected'));
+    el.classList.add('selected');
+    
+    const btn = document.getElementById('inf-action');
+    btn.disabled = false;
+    btn.classList.add('active');
+    document.getElementById('btn-label').innerText = 'PROCEED TO CHECKOUT';
+}
 
-    function closeSelection() {
-        const overlay = document.getElementById('selection-sheet');
-        overlay.classList.remove('active');
-        setTimeout(() => {
-            overlay.style.display = 'none';
-        }, 500);
-    }
-</script>         
+function closeInf() {
+    const overlay = document.getElementById('infinity-overlay');
+    overlay.classList.remove('active');
+    setTimeout(() => overlay.style.display = 'none', 600);
+}
+</script>
+
+      
    
     
 <script>
