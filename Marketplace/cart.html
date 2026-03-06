@@ -12,6 +12,7 @@
             --zenith-silver: #e0e0e0;
             --bg-deep: #050505;
             --glass: rgba(255, 255, 255, 0.07);
+            --primary-orange: #ff7043;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', sans-serif; }
@@ -32,77 +33,90 @@
             background: rgba(10, 10, 10, 0.7);
             backdrop-filter: blur(25px);
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 20px;
-            z-index: 3000;
-            border-radius: 25px;
+            padding: 0 20px; z-index: 3000; border-radius: 25px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
 
         .cart-left { 
-            position: relative;
-            font-weight: 700; font-size: 13px; color: #fff;
-            background: rgba(255, 204, 51, 0.1);
-            padding: 12px 20px; border-radius: 18px;
+            position: relative; font-weight: 700; font-size: 13px; color: #fff;
+            background: rgba(255, 204, 51, 0.1); padding: 12px 20px; border-radius: 18px;
             border-left: 4px solid var(--zenith-gold);
         }
         .cart-left span { color: var(--zenith-gold); font-size: 18px; margin-left: 5px; }
 
-        .header-right-toggle { display: flex; align-items: center; gap: 12px; }
-        .all-label { font-size: 12px; font-weight: 700; letter-spacing: 2px; color: var(--zenith-silver); opacity: 0.8; }
-
         .zenith-main-trigger {
-            width: 45px; height: 45px;
-            background: #111;
-            border-radius: 50%;
+            width: 45px; height: 45px; background: #111; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.4s;
-            border: 1px solid #333;
-            color: #fff;
+            cursor: pointer; transition: 0.4s; border: 1px solid #333; color: #fff;
         }
         .zenith-main-trigger.active { background: var(--zenith-gold); color: #000; border-color: #fff; }
 
-        /* --- CONTAINER & CARDS --- */
+        /* --- FLOAT CARDS --- */
         .zenith-container { padding: 15px 20px; }
-        
-        .zenith-card {
-            background: var(--glass); 
-            backdrop-filter: blur(25px); 
-            border-radius: 35px;
+
+        .float-card {
+            background: rgba(255, 255, 255, 0.04);
             margin-bottom: 20px;
-            padding: 12px 20px;
-            display: flex; 
-            align-items: center; 
-            gap: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1); 
+            padding: 15px;
+            border-radius: 24px;
+            display: flex;
+            gap: 15px;
             position: relative;
-            transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: float 4s ease-in-out infinite;
+            transition: 0.5s;
         }
 
-        .zenith-card.selected { border-color: var(--zenith-gold); background: rgba(255, 204, 51, 0.05); transform: translateY(-5px) scale(1.01); }
-        
-        .sphere-wrapper { 
-            width: 90px; 
-            height: 90px; 
-            position: relative; 
-            flex-shrink: 0; 
-            border-radius: 50%; 
-            padding: 4px; 
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2)); 
-            overflow: hidden;
+        .float-card.selected { border-color: var(--zenith-gold); background: rgba(255, 204, 51, 0.05); }
+
+        /* Makunnin dake kai (Trigger) */
+        .zenith-trigger { 
+            position: absolute; top: -8px; right: 15px; width: 35px; height: 35px; 
+            background: #111; border-radius: 50%; display: flex; align-items: center; 
+            justify-content: center; border: 1px solid #333; cursor: pointer; z-index: 10; 
+            transition: 0.4s; color: #fff; font-size: 12px;
         }
-        .img-sphere { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-        
-        .zenith-trigger { position: absolute; top: -8px; right: 15px; width: 40px; height: 40px; background: #111; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid #333; cursor: pointer; z-index: 10; }
         .selected .zenith-trigger { background: var(--zenith-gold); color: #000; border-color: #fff; }
-        
-        .info-zenith { flex: 1; }
-        .name { font-size: 13px; font-weight: 700; color: var(--zenith-silver); margin-bottom: 2px; }
-        .price { font-size: 20px; font-weight: 300; }
-        
-        .controls { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
-        .qty-zenith { display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.05); padding: 3px 15px; border-radius: 20px; }
-        .qty-zenith button { background: none; border: none; color: #fff; font-size: 16px; cursor: pointer; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .img-box { position: relative; flex-shrink: 0; }
+        .product-img {
+            width: 90px; height: 110px;
+            border-radius: 18px;
+            object-fit: cover;
+        }
+
+        .stock-tag {
+            position: absolute; top: -10px; left: -5px;
+            background: var(--primary-orange);
+            font-size: 8px; font-weight: 700;
+            padding: 3px 8px; border-radius: 20px;
+            z-index: 5;
+        }
+
+        .info-box { flex: 1; }
+        .title { font-size: 14px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; opacity: 0.9; }
+
+        .price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
+        .now { font-size: 18px; font-weight: 700; color: #fff; }
+        .old { font-size: 11px; text-decoration: line-through; color: rgba(255,255,255,0.4); }
+
+        .card-footer { display: flex; justify-content: space-between; align-items: center; }
+        .qty-control {
+            display: flex; align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px; padding: 4px;
+        }
+        .qty-control button {
+            width: 28px; height: 28px; border: none; background: transparent;
+            color: #fff; font-size: 16px; cursor: pointer;
+        }
+        .qty-control span { padding: 0 10px; font-weight: 700; font-size: 14px; }
 
         /* --- FOOTER --- */
         .zenith-footer-integrated {
@@ -113,10 +127,8 @@
         @keyframes supernovaRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         
         .total-section { position: relative; z-index: 1; padding-left: 25px; flex: 1; }
-        .total-section small { color: var(--zenith-gold); font-size: 9px; letter-spacing: 2px; font-weight: 700; }
         .total-section b { display: block; font-size: 22px; color: #fff; }
-        
-        .checkout-zenith-btn { position: relative; z-index: 1; background: var(--zenith-gold); color: #000; border: none; height: 100%; padding: 0 35px; border-radius: 20px; font-weight: 900; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .checkout-zenith-btn { position: relative; z-index: 1; background: var(--zenith-gold); color: #000; border: none; height: 100%; padding: 0 35px; border-radius: 20px; font-weight: 900; font-size: 13px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -124,7 +136,6 @@
     <div class="zenith-header-new">
         <div class="cart-left">CART <span>( <b id="count-top">6</b> )</span></div>
         <div class="header-right-toggle">
-            <span class="all-label">ALL</span>
             <div class="zenith-main-trigger active" id="main-toggle" onclick="toggleAll()">
                 <i class="fa-solid fa-bolt"></i>
             </div>
@@ -132,80 +143,83 @@
     </div>
 
     <div class="zenith-container">
-        <div class="zenith-card selected" data-price="43938">
+        <div class="float-card selected" data-price="43938">
             <div class="zenith-trigger" onclick="toggleZenith(this)"><i class="fa-solid fa-bolt"></i></div>
-            <div class="sphere-wrapper"><img src="https://i.postimg.cc/HngghH85/IMG-20260306-WA0103.jpg" class="img-sphere"></div>
-            <div class="info-zenith">
-                <div class="name">SUPREME GOLD WAX</div>
-                <div class="price">₦43,938</div>
-                <div class="controls">
-                    <div class="qty-zenith"><button onclick="qty(this,-1)">-</button><span class="val">1</span><button onclick="qty(this,1)">+</button></div>
-                    <i class="fa-solid fa-circle-nodes" style="opacity: 0.2; cursor: pointer;" onclick="del(this)"></i>
+            <div class="img-box">
+                <img src="https://i.postimg.cc/HngghH85/IMG-20260306-WA0103.jpg" class="product-img">
+                <div class="stock-tag">ONLY 1 LEFT</div>
+            </div>
+            <div class="info-box">
+                <h2 class="title">SUPREME GOLD WAX</h2>
+                <div class="price-row"><span class="now">₦43,938</span><span class="old">₦96k</span></div>
+                <div class="card-footer">
+                    <div class="qty-control"><button onclick="qty(this, -1)">-</button><span class="val">1</span><button onclick="qty(this, 1)">+</button></div>
+                    <i class="fa-solid fa-circle-nodes" style="opacity: 0.3; cursor: pointer;" onclick="del(this)"></i>
                 </div>
             </div>
         </div>
 
-        <div class="zenith-card selected" data-price="43938">
+        <div class="float-card selected" data-price="43938">
             <div class="zenith-trigger" onclick="toggleZenith(this)"><i class="fa-solid fa-bolt"></i></div>
-            <div class="sphere-wrapper"><img src="https://i.postimg.cc/FzDBVQjw/IMG-20260306-WA0102.jpg" class="img-sphere"></div>
-            <div class="info-zenith">
-                <div class="name">CLASSIC MAROON</div>
-                <div class="price">₦43,938</div>
-                <div class="controls">
-                    <div class="qty-zenith"><button onclick="qty(this,-1)">-</button><span class="val">1</span><button onclick="qty(this,1)">+</button></div>
-                    <i class="fa-solid fa-circle-nodes" style="opacity: 0.2; cursor: pointer;" onclick="del(this)"></i>
+            <div class="img-box"><img src="https://i.postimg.cc/FzDBVQjw/IMG-20260306-WA0102.jpg" class="product-img"></div>
+            <div class="info-box">
+                <h2 class="title">CLASSIC MAROON WAX</h2>
+                <div class="price-row"><span class="now">₦43,938</span><span class="old">₦85k</span></div>
+                <div class="card-footer">
+                    <div class="qty-control"><button onclick="qty(this, -1)">-</button><span class="val">1</span><button onclick="qty(this, 1)">+</button></div>
+                    <i class="fa-solid fa-circle-nodes" style="opacity: 0.3; cursor: pointer;" onclick="del(this)"></i>
                 </div>
             </div>
         </div>
 
-        <div class="zenith-card selected" data-price="43938">
+        <div class="float-card selected" data-price="43938">
             <div class="zenith-trigger" onclick="toggleZenith(this)"><i class="fa-solid fa-bolt"></i></div>
-            <div class="sphere-wrapper"><img src="https://i.postimg.cc/ZKsQ94Yf/IMG-20260306-WA0101.jpg" class="img-sphere"></div>
-            <div class="info-zenith">
-                <div class="name">ROYAL INDIGO WAX</div>
-                <div class="price">₦43,938</div>
-                <div class="controls">
-                    <div class="qty-zenith"><button onclick="qty(this,-1)">-</button><span class="val">1</span><button onclick="qty(this,1)">+</button></div>
-                    <i class="fa-solid fa-circle-nodes" style="opacity: 0.2; cursor: pointer;" onclick="del(this)"></i>
+            <div class="img-box"><img src="https://i.postimg.cc/ZKsQ94Yf/IMG-20260306-WA0101.jpg" class="product-img"></div>
+            <div class="info-box">
+                <h2 class="title">ROYAL INDIGO WAX</h2>
+                <div class="price-row"><span class="now">₦43,938</span><span class="old">₦88k</span></div>
+                <div class="card-footer">
+                    <div class="qty-control"><button onclick="qty(this, -1)">-</button><span class="val">1</span><button onclick="qty(this, 1)">+</button></div>
+                    <i class="fa-solid fa-circle-nodes" style="opacity: 0.3; cursor: pointer;" onclick="del(this)"></i>
                 </div>
             </div>
         </div>
 
-        <div class="zenith-card selected" data-price="43938">
+        <div class="float-card selected" data-price="43938">
             <div class="zenith-trigger" onclick="toggleZenith(this)"><i class="fa-solid fa-bolt"></i></div>
-            <div class="sphere-wrapper"><img src="https://i.postimg.cc/gJpt904P/IMG-20260306-WA0100.jpg" class="img-sphere"></div>
-            <div class="info-zenith">
-                <div class="name">VINTAGE PATTERN</div>
-                <div class="price">₦43,938</div>
-                <div class="controls">
-                    <div class="qty-zenith"><button onclick="qty(this,-1)">-</button><span class="val">1</span><button onclick="qty(this,1)">+</button></div>
-                    <i class="fa-solid fa-circle-nodes" style="opacity: 0.2; cursor: pointer;" onclick="del(this)"></i>
+            <div class="img-box"><img src="https://i.postimg.cc/gJpt904P/IMG-20260306-WA0100.jpg" class="product-img"></div>
+            <div class="info-box">
+                <h2 class="title">VINTAGE PATTERN WAX</h2>
+                <div class="price-row"><span class="now">₦43,938</span><span class="old">₦90k</span></div>
+                <div class="card-footer">
+                    <div class="qty-control"><button onclick="qty(this, -1)">-</button><span class="val">1</span><button onclick="qty(this, 1)">+</button></div>
+                    <i class="fa-solid fa-circle-nodes" style="opacity: 0.3; cursor: pointer;" onclick="del(this)"></i>
                 </div>
             </div>
         </div>
 
-        <div class="zenith-card selected" data-price="43938">
+        <div class="float-card selected" data-price="43938">
             <div class="zenith-trigger" onclick="toggleZenith(this)"><i class="fa-solid fa-bolt"></i></div>
-            <div class="sphere-wrapper"><img src="https://i.postimg.cc/RhsgnLm0/IMG-20260306-WA0099.jpg" class="img-sphere"></div>
-            <div class="info-zenith">
-                <div class="name">PREMIUM EMERALD</div>
-                <div class="price">₦43,938</div>
-                <div class="controls">
-                    <div class="qty-zenith"><button onclick="qty(this,-1)">-</button><span class="val">1</span><button onclick="qty(this,1)">+</button></div>
-                    <i class="fa-solid fa-circle-nodes" style="opacity: 0.2; cursor: pointer;" onclick="del(this)"></i>
+            <div class="img-box"><img src="https://i.postimg.cc/RhsgnLm0/IMG-20260306-WA0099.jpg" class="product-img"></div>
+            <div class="info-box">
+                <h2 class="title">PREMIUM EMERALD WAX</h2>
+                <div class="price-row"><span class="now">₦43,938</span><span class="old">₦92k</span></div>
+                <div class="card-footer">
+                    <div class="qty-control"><button onclick="qty(this, -1)">-</button><span class="val">1</span><button onclick="qty(this, 1)">+</button></div>
+                    <i class="fa-solid fa-circle-nodes" style="opacity: 0.3; cursor: pointer;" onclick="del(this)"></i>
                 </div>
             </div>
         </div>
 
-        <div class="zenith-card selected" data-price="43938">
+        <div class="float-card selected" data-price="43938">
             <div class="zenith-trigger" onclick="toggleZenith(this)"><i class="fa-solid fa-bolt"></i></div>
-            <div class="sphere-wrapper"><img src="https://i.postimg.cc/nhQ3CmwP/IMG-20260306-WA0098.jpg" class="img-sphere"></div>
-            <div class="info-zenith">
-                <div class="name">MIDNIGHT PURPLE</div>
-                <div class="price">₦43,938</div>
-                <div class="controls">
-                    <div class="qty-zenith"><button onclick="qty(this,-1)">-</button><span class="val">1</span><button onclick="qty(this,1)">+</button></div>
-                    <i class="fa-solid fa-circle-nodes" style="opacity: 0.2; cursor: pointer;" onclick="del(this)"></i>
+            <div class="img-box"><img src="https://i.postimg.cc/nhQ3CmwP/IMG-20260306-WA0098.jpg" class="product-img"></div>
+            <div class="info-box">
+                <h2 class="title">MIDNIGHT PURPLE WAX</h2>
+                <div class="price-row"><span class="now">₦43,938</span><span class="old">₦89k</span></div>
+                <div class="card-footer">
+                    <div class="qty-control"><button onclick="qty(this, -1)">-</button><span class="val">1</span><button onclick="qty(this, 1)">+</button></div>
+                    <i class="fa-solid fa-circle-nodes" style="opacity: 0.3; cursor: pointer;" onclick="del(this)"></i>
                 </div>
             </div>
         </div>
@@ -213,31 +227,26 @@
 
     <div class="zenith-footer-integrated">
         <div class="total-section">
-            <small>PAYABLE</small>
-            <b id="total">₦263,628</b>
+            <small style="color:var(--zenith-gold); font-size:9px; font-weight:700;">PAYABLE</small>
+            <b id="total">₦0</b>
         </div>
-        <button class="checkout-zenith-btn">CHECKOUT (<span id="btn-count">6</span>)</button>
+        <button class="checkout-zenith-btn">CHECKOUT (<span id="btn-count">0</span>)</button>
     </div>
 
     <script>
         function toggleAll() {
             const mainToggle = document.getElementById('main-toggle');
             const isActive = mainToggle.classList.toggle('active');
-            document.querySelectorAll('.zenith-card').forEach(card => {
-                if (isActive) card.classList.add('selected');
+            document.querySelectorAll('.float-card').forEach(card => {
+                if(isActive) card.classList.add('selected');
                 else card.classList.remove('selected');
             });
             update();
         }
 
         function toggleZenith(el) {
-            const card = el.closest('.zenith-card');
+            const card = el.closest('.float-card');
             card.classList.toggle('selected');
-            const total = document.querySelectorAll('.zenith-card').length;
-            const selected = document.querySelectorAll('.zenith-card.selected').length;
-            const mainToggle = document.getElementById('main-toggle');
-            if (selected === total) mainToggle.classList.add('active');
-            else mainToggle.classList.remove('active');
             update();
         }
 
@@ -247,28 +256,36 @@
             if(v >= 1) { s.innerText = v; update(); }
         }
 
-        // --- NAN KAWAI NA SAKA ---
         function del(i) {
-            const card = i.closest('.zenith-card');
-            card.style.transform = 'scale(0)';
+            const card = i.closest('.float-card');
+            card.style.transform = 'scale(0.5)';
             card.style.opacity = '0';
-            setTimeout(() => { 
-                card.remove(); 
-                update(); 
-            }, 400);
+            setTimeout(() => { card.remove(); update(); }, 400);
         }
 
         function update() {
             let t = 0; let count = 0;
-            document.querySelectorAll('.zenith-card.selected').forEach(card => {
+            const allCards = document.querySelectorAll('.float-card');
+            const selectedCards = document.querySelectorAll('.float-card.selected');
+            
+            selectedCards.forEach(card => {
                 t += parseInt(card.dataset.price) * parseInt(card.querySelector('.val').innerText);
                 count++;
             });
+
             document.getElementById('total').innerText = "₦" + t.toLocaleString();
             document.getElementById('btn-count').innerText = count;
             document.getElementById('count-top').innerText = count;
+
+            // Gyara toggle switch na sama
+            const mainToggle = document.getElementById('main-toggle');
+            if (allCards.length > 0 && selectedCards.length === allCards.length) {
+                mainToggle.classList.add('active');
+            } else {
+                mainToggle.classList.remove('active');
+            }
         }
         update();
     </script>
 </body>
-  </html>
+    </html>
