@@ -492,22 +492,36 @@ backdrop-filter: blur(5px);
 <script>
 let selectedColor = null;
 
+// Wannan shi ne sabon function din da zai gudu idan an danna "Order Now"
 function checkSelection() {
-    const overlay = document.getElementById('infinity-overlay');
+    // 1. Nemo yawan kaya (Quantity). Default zai zama 1 idan babu komai.
+    const qtyInput = document.getElementById('quantity-input');
+    const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
+
+    // 2. Duba ko mutum ya riga ya zabi kala (In case yana da active class)
+    const preSelectedColor = document.querySelector('.stack-img.active'); 
     
-    // Wannan zai nemo hotunan "Visual Proof" dake shafinka
-    const sourceImages = document.querySelectorAll('.stack-img'); 
+    // 3. Duba adadin hotuna (kaloli) nawa ne a shafin
+    const sourceImages = document.querySelectorAll('.stack-img');
+
+    // DOKAR FARKO: Idan kaya daya ne kawai, ko kuma mutum ya riga ya zabi kala
+    if (sourceImages.length === 1 || preSelectedColor) {
+        const finalImg = preSelectedColor ? preSelectedColor.src : sourceImages[0].src;
+        // Wucewa Checkout kai tsaye
+        window.location.href = `checkout.html?qty=${quantity}&img=${encodeURIComponent(finalImg)}`;
+        return;
+    }
+
+    // DOKA TA BIYU: Idan kaloli sun fi daya kuma bai zaba ba, sai a bude Pop-up
+    const overlay = document.getElementById('infinity-overlay');
     const miniBoxes = document.querySelectorAll('.item-card-mini');
 
     miniBoxes.forEach((box, index) => {
         if (sourceImages[index]) {
             const imgUrl = sourceImages[index].src;
             const imgContainer = box.querySelector('.item-img');
-            
-            // Saka hoton shafin a cikin box din pop-up
             imgContainer.innerHTML = `<img src="${imgUrl}" style="width:100%; height:100%; object-fit:cover;">`;
             
-            // Sanya kowane box ya nuna hotonsa idan an danna
             const colorName = box.querySelector('.item-price-bar').innerText;
             box.onclick = function() {
                 infSelect(colorName, box, imgUrl);
@@ -518,6 +532,7 @@ function checkSelection() {
     overlay.style.display = 'flex';
     setTimeout(() => overlay.classList.add('active'), 10);
 }
+    
 
 function infSelect(colorName, el, imgPath) {
     selectedColor = colorName;
