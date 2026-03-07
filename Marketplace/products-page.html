@@ -294,11 +294,11 @@
     </div>
 </div>
 
-<div class="zenith-footer-integrated">
+  <div class="zenith-footer-integrated">
     <div class="dock-left-group">
-        <div class="dock-item" onclick="openInfo()">
+        <div class="dock-item" onclick="addToCartFunction()">
             <div class="dock-icon-box"><i class="fa-solid fa-cart-plus"></i></div>
-            <span class="dock-label">Details</span>
+            <span class="dock-label">Cart</span>
         </div>
         
         <div class="dock-item chat-vendor-style" onclick="openChat()">
@@ -307,11 +307,11 @@
         </div>
     </div>
 
-    <button class="primary-cta-btn" onclick="openInfo()">
+    <div class="primary-cta-btn primary-btn" onclick="checkSelection()" style="cursor: pointer;">
         <i class="fa-solid fa-bag-shopping"></i>
         <span>Place Order</span>
-    </button>
-</div>
+    </div>
+  </div>
     
          
 <div id="infinity-overlay" class="inf-overlay">
@@ -359,7 +359,7 @@
 
 <style>
 
-/* --- ZENITH ANIMATED DOCK BAR (EXACT SHAPE) --- */
+/* --- GYARARREN ZENITH DOCK CSS --- */
 .zenith-footer-integrated {
     position: fixed; 
     bottom: 25px; 
@@ -367,7 +367,7 @@
     width: 90%; 
     height: 75px; 
     background: #000; 
-    border-radius: 25px; /* Na mayar da shi yadda yake a hoto */
+    border-radius: 25px; 
     display: flex; 
     align-items: center; 
     justify-content: space-between;
@@ -392,7 +392,7 @@
     position: absolute; 
     inset: 2px; 
     background: #080808; 
-    border-radius: 23px; /* Domin ya bi jikin na saman */
+    border-radius: 23px; 
     z-index: 0; 
 }
 
@@ -407,7 +407,8 @@
     display: flex; 
     align-items: center; 
     gap: 25px; 
-    padding-left: 20px;
+    padding-left: 15px;
+    flex: 1.5; /* Don ya bar sarari ga babban button din */
 }
 
 .dock-item { 
@@ -423,26 +424,27 @@
 .chat-vendor-style .dock-icon-box i, 
 .chat-vendor-style .dock-label { color: #00e5ff !important; }
 
-/* Place Order Button */
-.primary-cta-btn {
+/* WANNAN SHINE GYARAN DA ZAI SA 'primary-btn' DINKA YAYI AIKI */
+.primary-cta-btn.primary-btn {
     position: relative;
     z-index: 1;
     background: #ff7043; 
-    height: 100%; /* Domin ya cika gefen dama kamar yadda kake so */
-    padding: 0 30px;
+    height: 100%; 
+    padding: 0 25px;
     border-radius: 20px;
     display: flex; 
     align-items: center; 
     justify-content: center;
     gap: 8px; 
     border: none; 
-    cursor: pointer; 
+    cursor: pointer;
+    flex: 2; /* Ya fi girma kadan yadda kake so */
     box-shadow: 0 4px 15px rgba(255, 112, 67, 0.3);
 }
-.primary-cta-btn span { color: #fff; font-weight: 800; font-size: 13px; text-transform: uppercase; }
-.primary-cta-btn i { color: #fff; font-size: 16px; }
+
+.primary-cta-btn.primary-btn span { color: #fff; font-weight: 800; font-size: 13px; text-transform: uppercase; }
+.primary-cta-btn.primary-btn i { color: #fff; font-size: 16px; }
     
- 
     
 </style>
 <script>
