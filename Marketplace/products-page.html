@@ -294,23 +294,25 @@
     </div>
 </div>
 
-  <div class="glass-dock-container" style="display: flex; align-items: center; padding: 10px;">
-    
+<div class="glass-dock-container">
     <div class="dock-item" onclick="addToCartFunction()">
-        <div class="dock-icon-box"><i class="fa-solid fa-cart-plus"></i></div>
+        <div class="dock-icon-box">
+            <i class="fa-solid fa-cart-plus"></i>
+        </div>
         <span class="dock-label">Add to Cart</span>
     </div>
-
-    <div class="dock-item" onclick="openChat()">
-        <div class="dock-icon-box"><i class="fa-solid fa-comments"></i></div>
-        <span class="dock-label">Chat</span>
+        
+    <div class="dock-item" onclick="location.href='chat-room.html'">
+        <div class="dock-icon-box active"><i class="fa-solid fa-comments"></i></div>
+        <span class="dock-label" style="color:#00f2ff;">Chat Vendor</span>
     </div>
-
-    <div class="dock-item primary-btn" onclick="checkSelection()" style="cursor: pointer;">
-        <div class="dock-icon-box"><i class="fa-solid fa-bag-shopping"></i></div>
-        <span class="dock-label">Place Order</span>
+    <div class="dock-item" onclick="checkSelection()" style="cursor: pointer;">
+    <div class="dock-icon-box">
+        <i class="fa-solid fa-bag-shopping"></i>
     </div>
-  </div>
+    <span class="dock-label">Place Order</span>
+    </div> 
+</div>
     
 
 <div id="infinity-overlay" class="inf-overlay">
