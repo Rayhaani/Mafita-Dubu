@@ -295,27 +295,27 @@
 </div>
 
 
-<div class="glass-dock-container">
+<div class="glass-dock-container" style="display: flex !important; align-items: center !important; justify-content: space-between !important; padding: 0 25px !important; width: 92% !important; height: 70px !important;">
     
-    <div class="dock-item" onclick="addToCartFunction()">
-        <div class="dock-icon-box"><i class="fa-solid fa-cart-plus"></i></div>
-        <span class="dock-label">Cart</span>
+    <div style="display: flex !important; align-items: center !important; gap: 40px !important;">
+        <div class="dock-item" onclick="addToCartFunction()" style="display: flex !important; flex-direction: column !important; align-items: center !important; cursor: pointer !important;">
+            <div class="dock-icon-box"><i class="fa-solid fa-cart-plus"></i></div>
+            <span class="dock-label">Cart</span>
+        </div>
+
+        <div class="dock-item chat-vendor-style" onclick="openChat()" style="display: flex !important; flex-direction: column !important; align-items: center !important; cursor: pointer !important;">
+            <div class="dock-icon-box"><i class="fa-solid fa-comments"></i></div>
+            <span class="dock-label" style="color: #00e5ff !important;">Chat</span>
+        </div>
     </div>
 
-    <div class="dock-item chat-vendor-style" onclick="openChat()">
-        <div class="dock-icon-box"><i class="fa-solid fa-comments"></i></div>
-        <span class="dock-label">Chat</span>
-    </div>
-
-    <div class="primary-cta-btn" onclick="checkSelection()">
+    <div class="primary-cta-btn" onclick="checkSelection()" style="width: 150px !important; height: 52px !important; display: flex !important; align-items: center !important; justify-content: center !important; cursor: pointer !important; flex: none !important;">
         <i class="fa-solid fa-bag-shopping"></i>
-        <span>Place Order</span>
+        <span style="margin-left: 8px !important;">Place Order</span>
     </div>
-
 </div>
     
     
- 
 <div id="infinity-overlay" class="inf-overlay">
     <div class="glass-backdrop" onclick="closeInf()"></div>
     
@@ -361,64 +361,35 @@
 
 <style>
 
-/* --- ASALIN DESIGN DINKA: SARARI KAWAI NA GYARA --- */
+
+/* --- TSARIN DA ZAI TSARE EXQUISITE SELECTION --- */
 .glass-dock-container {
-    position: fixed; 
-    bottom: 25px; /* Ya dan matsa sama kadan */
-    left: 50%; 
-    transform: translateX(-50%);
-    width: 92%; /* Fadin da ka bayar a farko */
-    height: 70px; 
-    background: rgba(15, 15, 15, 0.85);
-    backdrop-filter: blur(15px); 
-    -webkit-backdrop-filter: blur(15px);
-    border-radius: 100px; 
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; /* Wannan ne zai jasu gefe da gefe */
-    padding: 0 25px; /* Sararin gefe da gefe na ciki */
-    z-index: 9999;
+    position: fixed !important;
+    bottom: 25px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: rgba(15, 15, 15, 0.85) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border-radius: 100px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    z-index: 9999 !important;
 }
 
-.dock-item {
-    display: flex; 
-    flex-direction: column; 
-    align-items: center;
-    justify-content: center; 
-    cursor: pointer;
-}
-
-/* Tura Chat ya dan matsa hagu kusa da Cart */
-.dock-item.chat-vendor-style {
-    margin-right: auto; 
-    margin-left: 30px; 
-}
-
-.dock-icon-box { font-size: 18px; color: #fff; margin-bottom: 2px; }
+.dock-icon-box { font-size: 18px; color: #fff; }
 .dock-label { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; }
 
-.chat-vendor-style .dock-icon-box i, 
-.chat-vendor-style .dock-label { color: #00e5ff !important; }
-
-/* PLACE ORDER: Asalin girman sa na code dinka */
 .primary-cta-btn {
-    flex: none; 
-    width: 150px; /* Fadin da zai sa ya matsa gefe daya */
-    background: #ff7043; 
-    height: 52px; 
-    border-radius: 50px;
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    gap: 8px; 
-    border: none; 
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(255, 112, 67, 0.3);
+    background: #ff7043 !important;
+    border-radius: 50px !important;
+    box-shadow: 0 4px 15px rgba(255, 112, 67, 0.3) !important;
 }
 
 .primary-cta-btn span { color: #fff; font-weight: 800; font-size: 13px; text-transform: uppercase; }
 .primary-cta-btn i { color: #fff; font-size: 16px; }
+
+/* Wannan zai tabbatar atamfofinka basu hargitse ba */
+.inf-overlay { z-index: 100000 !important; }
     
 
 </style>
