@@ -355,62 +355,46 @@
 
 <style>
 
-
-/* --- AFITA-DOCK-FINAL: GYARAN DA BA ZAI HARGRITSA BA --- */
-.afita-dock-container { 
-    position: fixed !important; 
-    bottom: 35px !important; /* Na dada matsawa sama */
-    left: 50% !important; 
-    transform: translateX(-50%) !important; 
-    width: 92% !important; 
-    height: 60px !important; 
-    display: flex !important; 
-    align-items: center !important; 
-    justify-content: space-between !important; 
-    padding: 0 15px !important; 
-    z-index: 9000 !important; 
-    background: rgba(15, 15, 15, 0.98) !important; 
+/* --- GYARARRAN VORTEX DOCK (EQUAL SPACING & SLIM BUTTON) --- */
+.vortex-dock { 
+    position: fixed !important; bottom: 15px !important; left: 50% !important; 
+    transform: translateX(-50%) !important; width: 90% !important; 
+    height: 60px !important; display: flex !important; align-items: center !important; 
+    justify-content: space-evenly !important; /* Wannan zai raba sararin daidai */
+    padding: 0 5px !important; 
+    z-index: 9000 !important; font-family: 'Quicksand', sans-serif !important;
+    background: rgba(10, 10, 10, 0.96) !important; 
     border-radius: 15px !important; 
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
 }
 
-.afita-left-icons {
-    display: flex !important;
-    gap: 30px !important; /* Na kara tura Cart hagu */
-    align-items: center !important;
-    flex: 1 !important;
-}
-
-.afita-nav-item { 
-    display: flex !important; 
-    flex-direction: column !important; 
+.v-item { 
+    display: flex !important; flex-direction: column !important; 
     align-items: center !important; 
-    cursor: pointer !important;
-    min-width: 45px !important;
+    flex: none !important; /* Mun cire stretching din */
+    width: 60px !important; /* Mun takaita fadin kowane icon */
+    cursor: pointer !important; 
 }
 
-.afita-nav-item i { font-size: 18px !important; color: #fff !important; margin-bottom: 2px !important; }
-.afita-nav-label { font-size: 8.5px !important; font-weight: 700 !important; color: #aaa !important; text-transform: uppercase !important; }
-.afita-chat-neon i, .afita-chat-neon span { color: #00f2ff !important; }
+.v-item i { font-size: 17px !important; color: #fff !important; }
+.v-text { font-size: 8px !important; font-weight: 700 !important; color: #aaa !important; margin-top: 3px !important; text-transform: uppercase !important; }
+.v-chat-color i, .v-chat-color .v-text { color: #00f2ff !important; }
 
-/* SLIM & FUNCTIONAL BUTTON */
-.afita-order-btn { 
+/* SHAPED & COMPACT BUTTON */
+.v-btn-order { 
+    flex: none !important; /* Button din ba zai kara fadi ba */
+    width: 130px !important; /* Mun sanya masa takaitaccen fadi (Fixed Width) */
     background: #ff7043 !important; 
-    width: 115px !important; /* Rage fadi yadda kace */
-    height: 42px !important; 
+    height: 40px !important; 
     border-radius: 10px !important; 
-    border: none !important; 
-    display: flex !important; 
-    align-items: center !important; 
-    justify-content: center !important; 
-    gap: 8px !important; 
-    box-shadow: 0 5px 15px rgba(255, 112, 67, 0.4) !important; 
-    cursor: pointer !important;
-    z-index: 9005 !important;
+    border: none !important; display: flex !important; 
+    align-items: center !important; justify-content: center !important; 
+    gap: 6px !important; box-shadow: 0 4px 12px rgba(255, 112, 67, 0.3) !important; 
+    cursor: pointer !important; 
 }
-.afita-order-btn span { color: #fff !important; font-weight: 800 !important; font-size: 11px !important; text-transform: uppercase !important; }
-.afita-order-btn i { color: #fff !important; font-size: 14px !important; }
+.v-btn-order span { color: #fff !important; font-weight: 800 !important; font-size: 11px !important; }
+.v-btn-order i { color: #fff !important; font-size: 13px !important; }
     
 </style>
 <script>
