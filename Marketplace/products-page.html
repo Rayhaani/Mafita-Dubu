@@ -425,7 +425,39 @@
 .nd-dock-container.style-12 .nd-primary-btn { border-radius: 100px; height: 54px; box-shadow: 0 0 30px rgba(255,112,67,0.6); }
 .nd-dock-container.style-12 .nd-item { background: #000; border-radius: 50%; max-width: 48px; height: 48px; margin-right: 8px; border: 1px solid #333; }
     
+/* WANNAN ZAI GYARA DOCK DIN KADAI */
+.nd-dock-container {
+    position: fixed !important; 
+    bottom: 15px !important; 
+    left: 50% !important; 
+    transform: translateX(-50%) !important;
+    width: 92% !important; 
+    height: 60px !important; 
+    background: rgba(15, 15, 15, 0.95) !important; 
+    backdrop-filter: blur(15px);
+    border-radius: 100px !important; 
+    display: flex !important; 
+    align-items: center !important; 
+    z-index: 9999 !important; /* Don kar ya danne selection page */
+    border: 1px solid rgba(255, 112, 67, 0.3) !important;
+}
 
+/* GYARAN BUTTON KAWAI */
+.nd-primary-btn {
+    background: #ff7043 !important; 
+    height: 48px !important; 
+    border-radius: 50px !important;
+    box-shadow: 0 4px 15px rgba(255, 112, 67, 0.4) !important;
+}
+
+/* GYARAN LABELS DIN */
+.nd-label { color: #aaa !important; font-size: 9px !important; }
+.nd-item i { color: #fff !important; font-size: 18px !important; }
+
+/* MAIDA SELECTION PAGE DAIDAI */
+.inf-overlay { z-index: 100000 !important; }
+.inf-card.style-5 { margin-top: 0 !important; background: none !important; }
+                          
 
 </style>
 <script>
@@ -603,7 +635,10 @@ document.addEventListener('DOMContentLoaded', function() {
 }); 
 </script> 
 
-    <div class="nd-dock-container style-1"> 
+    <div class="nd-dock-container"> 
+    ...
+    </div>
+    
     <div class="nd-item" onclick="openModal()">
         <i class="fa-solid fa-cart-plus"></i>
         <span class="nd-label">Cart</span>
