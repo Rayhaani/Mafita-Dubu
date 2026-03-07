@@ -297,16 +297,14 @@
 
 <div class="glass-dock-container">
     
-    <div style="display: flex; align-items: center;">
-        <div class="dock-item" onclick="addToCartFunction()">
-            <div class="dock-icon-box"><i class="fa-solid fa-cart-plus"></i></div>
-            <span class="dock-label">Cart</span>
-        </div>
+    <div class="dock-item" onclick="addToCartFunction()">
+        <div class="dock-icon-box"><i class="fa-solid fa-cart-plus"></i></div>
+        <span class="dock-label">Cart</span>
+    </div>
 
-        <div class="dock-item chat-vendor-style" onclick="openChat()">
-            <div class="dock-icon-box"><i class="fa-solid fa-comments"></i></div>
-            <span class="dock-label">Chat</span>
-        </div>
+    <div class="dock-item chat-vendor-style" onclick="openChat()">
+        <div class="dock-icon-box"><i class="fa-solid fa-comments"></i></div>
+        <span class="dock-label">Chat</span>
     </div>
 
     <div class="primary-cta-btn" onclick="checkSelection()">
@@ -315,6 +313,7 @@
     </div>
 
 </div>
+    
     
  
 <div id="infinity-overlay" class="inf-overlay">
@@ -362,61 +361,64 @@
 
 <style>
 
-/* --- ASALIN DESIGN DINKA: GYARAN SARARI KAWAI --- */
+/* --- ASALIN DESIGN DINKA: SARARI KAWAI NA GYARA --- */
 .glass-dock-container {
-    position: fixed !important; 
-    bottom: 25px !important; /* Na kara dagawa kadan daga kasa */
-    left: 50% !important; 
-    transform: translateX(-50%) !important;
-    width: 94% !important; /* Na kara fadi kadan amma bai kai gefe ba */
-    height: 70px !important; 
-    background: rgba(15, 15, 15, 0.85) !important;
-    backdrop-filter: blur(15px) !important; 
-    -webkit-backdrop-filter: blur(15px) !important;
-    border-radius: 100px !important; 
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    display: flex !important; 
-    align-items: center !important; 
-    justify-content: space-between !important; /* Tura icons gefe, button gefe */
-    padding: 0 20px !important; /* Sarari daga jikin bango na ciki */
-    z-index: 9999 !important;
+    position: fixed; 
+    bottom: 25px; /* Ya dan matsa sama kadan */
+    left: 50%; 
+    transform: translateX(-50%);
+    width: 92%; /* Fadin da ka bayar a farko */
+    height: 70px; 
+    background: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 100px; 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; /* Wannan ne zai jasu gefe da gefe */
+    padding: 0 25px; /* Sararin gefe da gefe na ciki */
+    z-index: 9999;
 }
 
 .dock-item {
-    display: flex !important; 
-    flex-direction: column !important; 
-    align-items: center !important;
-    justify-content: center !important; 
-    flex: none !important; /* Kare shi daga mikewa (stretching) */
-    cursor: pointer !important;
-    margin-right: 15px !important; /* Sarari tsakanin Cart da Chat */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center; 
+    cursor: pointer;
 }
 
-.dock-icon-box { font-size: 18px !important; color: #fff !important; margin-bottom: 2px !important; }
-.dock-label { font-size: 10px !important; font-weight: 700 !important; color: #aaa !important; text-transform: uppercase !important; }
+/* Tura Chat ya dan matsa hagu kusa da Cart */
+.dock-item.chat-vendor-style {
+    margin-right: auto; 
+    margin-left: 30px; 
+}
 
-/* CHAT VENDOR: Kalar cyan dinka */
+.dock-icon-box { font-size: 18px; color: #fff; margin-bottom: 2px; }
+.dock-label { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; }
+
 .chat-vendor-style .dock-icon-box i, 
 .chat-vendor-style .dock-label { color: #00e5ff !important; }
 
-/* PLACE ORDER: Asalin fadin sa amma siriri professional */
+/* PLACE ORDER: Asalin girman sa na code dinka */
 .primary-cta-btn {
-    flex: none !important; 
-    width: 140px !important; /* Fadin da zai zauna professional */
-    background: #ff7043 !important; 
-    height: 52px !important; 
-    border-radius: 50px !important;
-    display: flex !important; 
-    align-items: center !important; 
-    justify-content: center !important;
-    gap: 8px !important; 
-    border: none !important; 
-    cursor: pointer !important;
-    box-shadow: 0 4px 15px rgba(255, 112, 67, 0.3) !important;
+    flex: none; 
+    width: 150px; /* Fadin da zai sa ya matsa gefe daya */
+    background: #ff7043; 
+    height: 52px; 
+    border-radius: 50px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    gap: 8px; 
+    border: none; 
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 112, 67, 0.3);
 }
 
-.primary-cta-btn span { color: #fff !important; font-weight: 800 !important; font-size: 13px !important; text-transform: uppercase !important; }
-.primary-cta-btn i { color: #fff !important; font-size: 16px !important; }
+.primary-cta-btn span { color: #fff; font-weight: 800; font-size: 13px; text-transform: uppercase; }
+.primary-cta-btn i { color: #fff; font-size: 16px; }
     
 
 </style>
