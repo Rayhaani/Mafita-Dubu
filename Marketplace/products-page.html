@@ -294,19 +294,15 @@
     </div>
 </div>
 
-<div class="vortex-dock">
-    <div class="v-left-side">
-        <div class="v-item" onclick="addToCartFunction()">
-            <i class="fa-solid fa-cart-plus"></i>
-            <span class="v-text">Cart</span>
-        </div>
-        <div class="v-item v-chat-color" onclick="location.href='chat-room.html'">
-            <i class="fa-solid fa-comments"></i>
-            <span class="v-text">Chat</span>
-        </div>
+<div class="vortex-dock style-12"> <div class="v-item" onclick="addToCartFunction()">
+        <i class="fa-solid fa-cart-plus"></i>
+        <span class="v-text">Add to Cart</span>
     </div>
-
-    <button type="button" class="v-btn-order" onclick="checkSelection()">
+    <div class="v-item v-chat-color" onclick="location.href='chat-room.html'">
+        <i class="fa-solid fa-comments"></i>
+        <span class="v-text">Chat Vendor</span>
+    </div>
+    <button class="v-btn-order" onclick="checkSelection()">
         <i class="fa-solid fa-bolt"></i>
         <span>PLACE ORDER</span>
     </button>
