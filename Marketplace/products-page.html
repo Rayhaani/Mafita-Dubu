@@ -482,9 +482,20 @@
 /* --- SABON GYARAN DOCK BAR DINKA YA FARA DAGA NAN --- */
 
 .zenith-footer-integrated {
-            position: fixed; bottom: 25px; left: 5%; width: 90%; height: 80px; background: #000; border-radius: 25px; display: flex; align-items: center; padding: 5px; z-index: 2000; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .zenith-footer-integrated::before { content: ''; position: absolute; width: 150%; height: 150%; background: conic-gradient(from 0deg, transparent, var(--zenith-gold), transparent, #fff, transparent); animation: supernovaRotate 3s linear infinite; z-index: -1; }
+    position: fixed; 
+    bottom: 25px; 
+    left: 1%;           /* Ka rage wannan daga 5% zuwa 1% */
+    width: 98% !important; /* Wannan zai baka babban fadi */
+    height: 80px; 
+    background: #000; 
+    border-radius: 0;   /* Tunda ka ce kana son squared corners */
+    display: flex; 
+    align-items: center; 
+    padding: 5px; 
+    z-index: 2000; 
+    overflow: hidden; 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
     
 
 .dock-item {
