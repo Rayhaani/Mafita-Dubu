@@ -521,44 +521,23 @@
 .primary-cta-btn span { color: #fff; font-weight: 800; font-size: 13px; text-transform: uppercase; }
 .primary-cta-btn i { color: #fff; font-size: 16px; }
 
-
-  /* 1. Yellow Neon Glow (Cart) */
-@keyframes neonYellow {
-    0%, 100% { filter: drop-shadow(0 0 0px transparent); transform: scale(1); }
-    50% { filter: drop-shadow(0 0 15px #ffcc33); transform: scale(1.05); color: #ffcc33; }
+/* 1. Add to Cart Icon (Yellow/Gold) */
+.dock-left-group .dock-item:nth-child(1) i, 
+.dock-left-group .dock-item:nth-child(1) .dock-label {
+    color: #ffcc33 !important;
 }
 
-/* 2. Cyan Neon Glow (Chat) */
-@keyframes neonCyan {
-    0%, 100% { filter: drop-shadow(0 0 0px transparent); transform: scale(1); }
-    50% { filter: drop-shadow(0 0 15px #00e5ff); transform: scale(1.05); color: #00e5ff; }
+/* 2. Chat Vendor Icon (Cyan/Blue) */
+.dock-left-group .dock-item:nth-child(2) i, 
+.dock-left-group .dock-item:nth-child(2) .dock-label {
+    color: #00e5ff !important;
 }
 
-/* 3. Orange Pulse Glow (Place Order) */
-@keyframes neonOrange {
-    0%, 100% { box-shadow: 0 4px 15px rgba(255, 112, 67, 0.3); transform: scale(1); }
-    50% { box-shadow: 0 0 25px #ff7043, 0 0 50px #ff7043; transform: scale(1.02); }
-}
-
-/* --- AIKATARWA --- */
-
-/* Cart Icon da Rubutu */
-.dock-left-group .dock-item:nth-child(1) {
-    animation: neonYellow 4s infinite;
-    animation-delay: 0s;
-}
-
-/* Chat Icon da Rubutu */
-.dock-left-group .dock-item:nth-child(2) {
-    animation: neonCyan 4s infinite;
-    animation-delay: 1.5s;
-}
-
-/* Babban Button */
-.primary-btn {
-    animation: neonOrange 4s infinite;
-    animation-delay: 3s;
-}
+/* 3. Place Order Icon (White - tunda background din Orange ne) */
+.primary-btn i, .primary-btn span {
+    color: #ffffff !important;
+    }
+    
     
     
 </style>
