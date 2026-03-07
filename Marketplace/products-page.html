@@ -294,15 +294,12 @@
     </div>
 </div>
 
-
-    <div class="zenith-footer-integrated">
-    
+<div class="zenith-footer-integrated">
     <div class="dock-left-group">
         <div class="dock-item" onclick="addToCartFunction()">
             <div class="dock-icon-box"><i class="fa-solid fa-cart-plus"></i></div>
-            <span class="dock-label">Add to Cart</span>
+            <span class="dock-label">Cart</span>
         </div>
-
         <div class="dock-item chat-vendor-style" onclick="openChat()">
             <div class="dock-icon-box"><i class="fa-solid fa-comments"></i></div>
             <span class="dock-label">Chat</span>
@@ -313,11 +310,9 @@
         <i class="fa-solid fa-bag-shopping"></i>
         <span>Place Order</span>
     </button>
-
 </div>
     
-    
-        
+         
 <div id="infinity-overlay" class="inf-overlay">
     <div class="glass-backdrop" onclick="closeInf()"></div>
     
@@ -363,7 +358,7 @@
 
 <style>
 
-/* --- ZENITH ANIMATED DOCK BAR --- */
+/* --- ZENITH ANIMATED DOCK BAR (EXACT SHAPE) --- */
 .zenith-footer-integrated {
     position: fixed; 
     bottom: 25px; 
@@ -371,17 +366,16 @@
     width: 90%; 
     height: 75px; 
     background: #000; 
-    border-radius: 100px; /* Ya zama oval kamar dock */
+    border-radius: 25px; /* Na mayar da shi yadda yake a hoto */
     display: flex; 
     align-items: center; 
     justify-content: space-between;
-    padding: 0 10px; 
+    padding: 5px; 
     z-index: 9999; 
     overflow: hidden; 
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Wannan shine mai juya kalar gold din a jikin border */
 .zenith-footer-integrated::before { 
     content: ''; 
     position: absolute; 
@@ -397,7 +391,7 @@
     position: absolute; 
     inset: 2px; 
     background: #080808; 
-    border-radius: 100px; 
+    border-radius: 23px; /* Domin ya bi jikin na saman */
     z-index: 0; 
 }
 
@@ -406,14 +400,13 @@
     to { transform: rotate(360deg); } 
 }
 
-/* Tsarin Icons na ciki */
 .dock-left-group { 
     position: relative; 
     z-index: 1; 
     display: flex; 
     align-items: center; 
-    gap: 20px; 
-    padding-left: 15px;
+    gap: 25px; 
+    padding-left: 20px;
 }
 
 .dock-item { 
@@ -426,31 +419,30 @@
 .dock-icon-box { font-size: 18px; color: #fff; margin-bottom: 2px; }
 .dock-label { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; }
 
-/* Chat Color (Cyan) */
 .chat-vendor-style .dock-icon-box i, 
 .chat-vendor-style .dock-label { color: #00e5ff !important; }
 
-/* Babban Button (Place Order) */
+/* Place Order Button */
 .primary-cta-btn {
     position: relative;
     z-index: 1;
     background: #ff7043; 
-    height: 55px; 
-    border-radius: 50px;
+    height: 100%; /* Domin ya cika gefen dama kamar yadda kake so */
+    padding: 0 30px;
+    border-radius: 20px;
     display: flex; 
     align-items: center; 
     justify-content: center;
     gap: 8px; 
     border: none; 
     cursor: pointer; 
-    padding: 0 25px;
     box-shadow: 0 4px 15px rgba(255, 112, 67, 0.3);
 }
 .primary-cta-btn span { color: #fff; font-weight: 800; font-size: 13px; text-transform: uppercase; }
 .primary-cta-btn i { color: #fff; font-size: 16px; }
     
+ 
     
-
 </style>
 <script>
 let selectedColor = null;
