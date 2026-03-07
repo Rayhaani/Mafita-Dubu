@@ -522,21 +522,23 @@
 .primary-cta-btn i { color: #fff; font-size: 16px; }
 
 /* 1. Add to Cart Icon (Yellow/Gold) */
-.dock-left-group .dock-item:nth-child(1) i, 
-.dock-left-group .dock-item:nth-child(1) .dock-label {
+div[onclick="addToCartFunction()"] i, 
+div[onclick="addToCartFunction()"] .dock-label {
     color: #ffcc33 !important;
 }
 
-/* 2. Chat Vendor Icon (Cyan/Blue) */
-.dock-left-group .dock-item:nth-child(2) i, 
-.dock-left-group .dock-item:nth-child(2) .dock-label {
+/* 2. Chat Icon (Cyan/Blue) */
+div[onclick="openChat()"] i, 
+div[onclick="openChat()"] .dock-label {
     color: #00e5ff !important;
 }
 
-/* 3. Place Order Icon (White - tunda background din Orange ne) */
-.primary-btn i, .primary-btn span {
+/* 3. Place Order (White Text & Icon) */
+.primary-btn i, 
+.primary-btn .dock-label {
     color: #ffffff !important;
     }
+    
     
     
     
