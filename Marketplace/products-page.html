@@ -354,7 +354,7 @@
 </div>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Plus+Jakarta+Sans:wght@800&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Plus+Jakarta+Sans:wght@800&display=swap');
 
 /* --- 1. ASALIN TSARIN SELECTION PAGE --- */
 .inf-overlay { position: fixed; inset: 0; z-index: 99999; display: none; align-items: center; justify-content: center; font-family: 'Quicksand', sans-serif; }
@@ -374,36 +374,38 @@
 .pay-secure-btn.active { background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%); color: white; cursor: pointer; }
 .inf-close { margin-top: 25px; color: rgba(255,255,255,0.5); font-size: 13px; cursor: pointer; }
 
-/* --- 2. GYARARRAN VORTEX DOCK (STYLE 12 ONLY) --- */
+/* --- 2. GYARARRAN VORTEX DOCK (SHAPED & SLIM) --- */
 .vortex-dock { 
     position: fixed !important; bottom: 15px !important; left: 50% !important; 
-    transform: translateX(-50%) !important; width: 94% !important; 
-    height: 62px !important; display: flex !important; align-items: center !important; 
-    justify-content: space-between !important; padding: 0 12px !important; 
+    transform: translateX(-50%) !important; width: 90% !important; 
+    height: 60px !important; display: flex !important; align-items: center !important; 
+    justify-content: space-around !important; padding: 0 10px !important; 
     z-index: 9000 !important; font-family: 'Quicksand', sans-serif !important;
-    background: rgba(10, 10, 10, 0.95) !important; 
-    border-radius: 18px !important; 
+    background: rgba(10, 10, 10, 0.96) !important; 
+    border-radius: 15px !important; 
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
 }
 
-.v-item { display: flex !important; flex-direction: column !important; align-items: center !important; flex: 1 !important; cursor: pointer !important; }
-.v-item i { font-size: 18px !important; color: #fff !important; }
-.v-text { font-size: 9px !important; font-weight: 700 !important; color: #aaa !important; margin-top: 3px !important; text-transform: uppercase !important; }
+.v-item { display: flex !important; flex-direction: column !important; align-items: center !important; flex: 0.6 !important; cursor: pointer !important; }
+.v-item i { font-size: 17px !important; color: #fff !important; }
+.v-text { font-size: 8px !important; font-weight: 700 !important; color: #aaa !important; margin-top: 3px !important; text-transform: uppercase !important; }
 .v-chat-color i, .v-chat-color .v-text { color: #00f2ff !important; }
 
-/* NORMAL BUTTON STYLE */
+/* SLIM NORMAL BUTTON */
 .v-btn-order { 
-    flex: 2 !important; background: #ff7043 !important; 
-    height: 46px !important; border-radius: 12px !important; 
+    flex: 1.4 !important; /* Na rage fadin nan sosai */
+    background: #ff7043 !important; 
+    height: 42px !important; /* Na rage tsayin sa kadan */
+    border-radius: 10px !important; 
     border: none !important; display: flex !important; 
     align-items: center !important; justify-content: center !important; 
-    gap: 8px !important; box-shadow: 0 4px 15px rgba(255, 112, 67, 0.3) !important; 
+    gap: 6px !important; box-shadow: 0 4px 12px rgba(255, 112, 67, 0.3) !important; 
     cursor: pointer !important; 
 }
-.v-btn-order span { color: #fff !important; font-weight: 800 !important; font-size: 12px !important; }
-.v-btn-order i { color: #fff !important; }
-                                                     
+.v-btn-order span { color: #fff !important; font-weight: 800 !important; font-size: 11px !important; }
+.v-btn-order i { color: #fff !important; font-size: 14px !important; }
+                     
 </style>
 <script>
 let selectedColor = null;
