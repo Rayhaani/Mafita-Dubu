@@ -523,41 +523,50 @@
 
 
     
-    /* --- WANNAN SHINE ANIMATION DIN KAWAI --- */
-@keyframes futuristicGlow {
+  /* --- STAGGERED MULTI-COLOR GLOW ANIMATION --- */
+
+/* 1. Animation na Add to Cart (Yellow/Gold) */
+@keyframes cartGlow {
     0%, 100% { color: #fff; text-shadow: none; transform: scale(1); }
-    15% { color: #ffcc33; text-shadow: 0 0 15px #ffcc33, 0 0 25px #ffcc33; transform: scale(1.1); }
-    30% { color: #fff; text-shadow: none; transform: scale(1); }
+    20% { color: #ffcc33; text-shadow: 0 0 15px #ffcc33, 0 0 25px #ffcc33; transform: scale(1.1); }
+    40% { color: #fff; text-shadow: none; transform: scale(1); }
 }
 
-/* Saka kiran animation din a karkashin icons da rubutunka */
-.dock-item .dock-icon-box i, 
-.dock-item .dock-label {
-    animation: futuristicGlow 6s infinite;
-    display: inline-block;
+/* 2. Animation na Chat Vendor (Cyan/Blue) */
+@keyframes chatGlow {
+    0%, 100% { color: #fff; text-shadow: none; transform: scale(1); }
+    20% { color: #00e5ff; text-shadow: 0 0 15px #00e5ff, 0 0 25px #00e5ff; transform: scale(1.1); }
+    40% { color: #fff; text-shadow: none; transform: scale(1); }
 }
 
-/* Saita lokacin da kowanne zai fara (Sequential) */
-.dock-left-group .dock-item:nth-child(1) i,
-.dock-left-group .dock-item:nth-child(1) .dock-label {
-    animation-delay: 0s; /* Add to Cart */
-}
-
-.dock-left-group .dock-item:nth-child(2) i,
-.dock-left-group .dock-item:nth-child(2) .dock-label {
-    animation-delay: 2s; /* Chat Vendor */
-}
-
-/* Animation din babban button na Place Order */
-@keyframes primaryButtonGlow {
+/* 3. Animation na Place Order (Orange Glow) */
+@keyframes orderGlow {
     0%, 100% { box-shadow: 0 4px 15px rgba(255, 112, 67, 0.3); transform: scale(1); }
     50% { box-shadow: 0 0 25px #ff7043, 0 0 45px #ff7043; transform: scale(1.03); }
 }
 
-.primary-btn, .primary-cta-btn {
-    animation: primaryButtonGlow 6s infinite;
-    animation-delay: 4s; /* Shi ne na karshe a jerin */
+/* --- AIKATAR DA HASKEN (APPLICATION) --- */
+
+/* Saita Add to Cart (Na daya) */
+.dock-left-group .dock-item:nth-child(1) i,
+.dock-left-group .dock-item:nth-child(1) .dock-label {
+    animation: cartGlow 6s infinite;
+    animation-delay: 0s;
 }
+
+/* Saita Chat Vendor (Na biyu) */
+.dock-left-group .dock-item:nth-child(2) i,
+.dock-left-group .dock-item:nth-child(2) .dock-label {
+    animation: chatGlow 6s infinite;
+    animation-delay: 2s; /* Zai jira na farko ya gama */
+}
+
+/* Saita Place Order (Na karshe) */
+.primary-btn, .primary-cta-btn {
+    animation: orderGlow 6s infinite;
+    animation-delay: 4s; /* Zai jira na biyu ya gama */
+    }
+         
     
     
 </style>
