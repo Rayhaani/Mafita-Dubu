@@ -294,15 +294,28 @@
     </div>
 </div>
 
-<div class="zenith-footer-integrated">
-    <div class="total-section">
-        <small>PAYABLE</small>
-        <b id="total">₦263,628</b>
+
+    <div class="zenith-footer-integrated">
+    
+    <div class="dock-left-group">
+        <div class="dock-item" onclick="addToCartFunction()">
+            <div class="dock-icon-box"><i class="fa-solid fa-cart-plus"></i></div>
+            <span class="dock-label">Add to Cart</span>
+        </div>
+
+        <div class="dock-item chat-vendor-style" onclick="openChat()">
+            <div class="dock-icon-box"><i class="fa-solid fa-comments"></i></div>
+            <span class="dock-label">Chat</span>
+        </div>
     </div>
-    <button class="checkout-zenith-btn" onclick="goToCheckout()">
-        CHECKOUT (<span id="btn-count">6</span>)
+
+    <button class="primary-cta-btn" onclick="checkSelection()">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span>Place Order</span>
     </button>
+
 </div>
+    
     
         
 <div id="infinity-overlay" class="inf-overlay">
@@ -350,23 +363,25 @@
 
 <style>
 
-/* --- WANNAN SHINE EXACT BUTTON BAR DIN DA KA TEMA --- */
+/* --- ZENITH ANIMATED DOCK BAR --- */
 .zenith-footer-integrated {
     position: fixed; 
     bottom: 25px; 
     left: 5%; 
     width: 90%; 
-    height: 80px; 
+    height: 75px; 
     background: #000; 
-    border-radius: 25px; 
+    border-radius: 100px; /* Ya zama oval kamar dock */
     display: flex; 
     align-items: center; 
-    padding: 5px; 
-    z-index: 2000; 
+    justify-content: space-between;
+    padding: 0 10px; 
+    z-index: 9999; 
     overflow: hidden; 
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Wannan shine mai juya kalar gold din a jikin border */
 .zenith-footer-integrated::before { 
     content: ''; 
     position: absolute; 
@@ -382,7 +397,7 @@
     position: absolute; 
     inset: 2px; 
     background: #080808; 
-    border-radius: 23px; 
+    border-radius: 100px; 
     z-index: 0; 
 }
 
@@ -391,40 +406,49 @@
     to { transform: rotate(360deg); } 
 }
 
-.total-section { 
+/* Tsarin Icons na ciki */
+.dock-left-group { 
     position: relative; 
     z-index: 1; 
-    padding-left: 25px; 
-    flex: 1; 
-    text-align: left;
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
+    padding-left: 15px;
 }
 
-.total-section small {
-    color: #ffcc33; 
-    font-size: 9px; 
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.total-section b { 
-    display: block; 
-    font-size: 22px; 
-    color: #fff; 
-}
-
-.checkout-zenith-btn { 
-    position: relative; 
-    z-index: 1; 
-    background: #ffcc33; 
-    color: #000; 
-    border: none; 
-    height: 100%; 
-    padding: 0 35px; 
-    border-radius: 20px; 
-    font-weight: 900; 
-    font-size: 13px; 
+.dock-item { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
     cursor: pointer; 
-    }
+}
+
+.dock-icon-box { font-size: 18px; color: #fff; margin-bottom: 2px; }
+.dock-label { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; }
+
+/* Chat Color (Cyan) */
+.chat-vendor-style .dock-icon-box i, 
+.chat-vendor-style .dock-label { color: #00e5ff !important; }
+
+/* Babban Button (Place Order) */
+.primary-cta-btn {
+    position: relative;
+    z-index: 1;
+    background: #ff7043; 
+    height: 55px; 
+    border-radius: 50px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    gap: 8px; 
+    border: none; 
+    cursor: pointer; 
+    padding: 0 25px;
+    box-shadow: 0 4px 15px rgba(255, 112, 67, 0.3);
+}
+.primary-cta-btn span { color: #fff; font-weight: 800; font-size: 13px; text-transform: uppercase; }
+.primary-cta-btn i { color: #fff; font-size: 16px; }
+    
     
 
 </style>
