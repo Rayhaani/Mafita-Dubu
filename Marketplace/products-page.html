@@ -357,128 +357,75 @@
 </div>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Plus+Jakarta+Sans:wght@800&display=swap');
-
-/* =========================================
-   1. CORE POPUP & OVERLAY (GYARAN PLACE ORDER)
-   ========================================= */
-.inf-overlay {
-    position: fixed; inset: 0; z-index: 200000; 
-    display: none; align-items: center; justify-content: center;
-    font-family: 'Quicksand', sans-serif;
-    background: rgba(0,0,0,0.92); backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-}
-
-.inf-card.style-5 { 
-    position: relative; width: 90%; max-width: 400px; 
-    text-align: center; z-index: 200001; margin-top: -40px; 
-}
-
-.atamfa-magic-stage { 
-    height: 250px; width: 100%; display: flex; align-items: center; 
-    justify-content: center; perspective: 1200px; margin-bottom: 5px; 
-}
-
-.atamfa-float-engine { 
-    max-width: 85%; max-height: 90%; opacity: 0; 
-    transform: scale(0.6) rotateY(45deg); transition: all 1s ease;
-    filter: drop-shadow(0 20px 50px rgba(0,0,0,0.8));
-    border-radius: 20px; border: 2px solid rgba(255, 255, 255, 0.1); 
-}
-
-.atamfa-float-engine.active { opacity: 1; transform: scale(1) rotateY(0deg); animation: salesBoyDisplay 6s infinite ease-in-out; }
-
-@keyframes salesBoyDisplay {
-    0% { transform: rotateY(90deg); opacity: 0; }
-    20%, 80% { transform: rotateY(0deg); opacity: 1; }
-    100% { transform: rotateY(-90deg); opacity: 0; }
-}
-
-.magic-grid { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
-.item-card-mini { 
-    position: relative; min-width: 95px; background: #fff; 
-    border-radius: 15px; overflow: hidden; border: 2px solid transparent; 
-    cursor: pointer; transition: 0.3s; 
-}
-.item-card-mini.active-node { border-color: #ff7043; transform: translateY(-10px); }
-
-.item-price-bar { 
-    position: absolute; bottom: 0; width: 100%; color: #ff8a65; 
-    font-size: 13px; font-weight: 600; text-align: center; padding: 10px 0; 
-    text-shadow: 2px 2px 8px rgba(0,0,0,1); text-transform: lowercase; 
-}
-.item-price-bar::first-letter { text-transform: uppercase; }
-
-.pay-secure-btn { 
-    width: 90%; height: 55px; border-radius: 20px; border: none; 
-    background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); 
-    font-weight: 700; font-size: 16px; margin-top: 15px;
-}
-.pay-secure-btn.active { 
-    background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%); 
-    color: white; cursor: pointer; box-shadow: 0 15px 30px rgba(255, 112, 67, 0.4); 
-}
-
-.inf-close { margin-top: 25px; color: rgba(255,255,255,0.5); font-size: 13px; cursor: pointer; text-transform: capitalize; }
-
-/* =========================================
-   2. FUTURISTIC DOCK BAR (STYLES 1 - 12)
-   ========================================= */
-.dock-2060 {
+/* --- BASE STRUCTURE (Ba zai taba sauran shafinka ba) --- */
+.nd-dock-container {
     position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%);
-    width: 92%; height: 58px; display: flex; align-items: center; 
-    justify-content: space-between; padding: 0 10px; z-index: 100000;
+    width: 92%; height: 60px; display: flex; align-items: center; 
+    justify-content: space-between; padding: 0 10px; z-index: 9999;
+    font-family: 'Quicksand', sans-serif; transition: all 0.4s ease;
 }
-.f-item { display: flex; flex-direction: column; align-items: center; flex: 1; cursor: pointer; }
-.f-icon { font-size: 18px; color: #fff; }
-.f-label { font-size: 8px; font-weight: 700; color: #888; margin-top: 3px; text-transform: uppercase; }
-.chat-vendor .f-icon, .chat-vendor .f-label { color: #00f2ff !important; }
+.nd-item { display: flex; flex-direction: column; align-items: center; flex: 1; cursor: pointer; }
+.nd-item i { font-size: 18px; color: #fff; }
+.nd-label { font-size: 8px; font-weight: 700; color: #aaa; margin-top: 3px; text-transform: uppercase; }
+.nd-chat-glow i, .nd-chat-glow .nd-label { color: #00f2ff !important; }
 
-.f-primary-btn {
-    flex: 2.2; background: #ff7043; height: 46px; border-radius: 40px;
+.nd-primary-btn {
+    flex: 2.2; background: #ff7043 !important; height: 48px; border-radius: 40px;
     border: none; display: flex; align-items: center; justify-content: center;
     gap: 8px; cursor: pointer; position: relative; overflow: hidden;
     box-shadow: 0 5px 15px rgba(255, 112, 67, 0.3);
 }
-.f-primary-btn span { color: #fff; font-weight: 800; font-size: 11px; }
-.f-primary-btn i { color: #fff; font-size: 14px; }
+.nd-primary-btn span { color: #fff !important; font-weight: 800; font-size: 11px; }
+.nd-primary-btn i { color: #fff !important; }
 
 /* ANIMATIONS */
-@keyframes iconPulse { 0%, 100% { filter: drop-shadow(0 0 2px #ff7043); transform: scale(1); } 50% { filter: drop-shadow(0 0 12px #ff7043); transform: scale(1.1); } }
-@keyframes sweep { 0% { left: -110%; } 100% { left: 110%; } }
-@keyframes neonBorder { 0% { border-color: #ff7043; } 50% { border-color: #ffca28; } 100% { border-color: #ff7043; } }
+@keyframes ndPulse { 0%, 100% { filter: drop-shadow(0 0 2px #ff7043); } 50% { filter: drop-shadow(0 0 12px #ff7043); } }
+@keyframes ndSweep { 0% { left: -110%; } 100% { left: 110%; } }
 
-/* ALL 12 STYLES */
-.style-1 { background: rgba(10,10,10,0.85); backdrop-filter: blur(20px); border-radius: 40px; border: 1px solid rgba(255,112,67,0.3); }
-.style-1 i { animation: iconPulse 2s infinite; }
+/* --- THE 12 FUTURISTIC STYLES --- */
 
-.style-2 { background: #000; border-radius: 15px; border: 2px solid #ff7043; animation: neonBorder 3s infinite; }
+/* Style 1: Zenith Glass */
+.nd-dock-container.style-1 { background: rgba(10,10,10,0.85); backdrop-filter: blur(20px); border-radius: 40px; border: 1px solid rgba(255,112,67,0.3); }
+.nd-dock-container.style-1 i { animation: ndPulse 2s infinite; }
 
-.style-3 { background: rgba(255,255,255,0.05); border-radius: 20px; backdrop-filter: blur(15px); }
+/* Style 2: Cyber Neon */
+.nd-dock-container.style-2 { background: #000; border-radius: 12px; border: 2px solid #ff7043; box-shadow: 0 0 15px rgba(255,112,67,0.4); }
 
-.style-4 { background: #080808; border-radius: 50px; }
-.style-4 .f-primary-btn::after { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); animation: sweep 3s infinite; }
+/* Style 3: Floating Ghost */
+.nd-dock-container.style-3 { background: rgba(255,255,255,0.08); border-radius: 20px; backdrop-filter: blur(15px); width: 85%; }
 
-.style-5 { background: #111; border-radius: 0; border-top: 3px solid #ff7043; }
+/* Style 4: Plasma Sweep (Layin Walkiya) */
+.nd-dock-container.style-4 { background: #080808; border-radius: 50px; border: 1px solid #333; }
+.nd-dock-container.style-4 .nd-primary-btn::after { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); animation: ndSweep 3s infinite; }
 
-.style-6 { background: linear-gradient(to right, #000, #1a1a1a); border-radius: 100px; }
+/* Style 5: Minimalist Tech */
+.nd-dock-container.style-5 { background: #111; border-radius: 0; border-top: 3px solid #ff7043; width: 100%; bottom: 0; }
 
-.style-7 { background: rgba(255,112,67,0.1); border-radius: 40px; border: 1px dashed #ff7043; }
+/* Style 6: Carbon Fiber */
+.nd-dock-container.style-6 { background: linear-gradient(145deg, #1a1a1a, #000); border-radius: 100px; box-shadow: 5px 5px 15px #000; }
 
-.style-8 { height: 45px; background: #000; border-radius: 50px; width: 80%; }
-.style-8 .f-label { display: none; }
+/* Style 7: Aurora Glow */
+.nd-dock-container.style-7 { background: rgba(0,0,0,0.8); border-radius: 40px; box-shadow: inset 0 0 20px rgba(255,112,67,0.3); }
 
-.style-9 { background: #000; box-shadow: 0 -10px 20px rgba(255,112,67,0.2); border-radius: 30px 30px 0 0; }
+/* Style 8: Ultra Slim Stealth */
+.nd-dock-container.style-8 { height: 48px; background: #000; border-radius: 50px; width: 80%; }
+.nd-dock-container.style-8 .nd-label { display: none; }
 
-.style-10 { background: rgba(0,0,0,0.7); border: 1px solid #444; border-radius: 15px; }
+/* Style 9: Gravity Pulse */
+.nd-dock-container.style-9 { background: #000; border-radius: 30px 30px 0 0; width: 100%; bottom: 0; box-shadow: 0 -10px 25px rgba(255,112,67,0.2); }
 
-.style-11 { background: #000; border-left: 5px solid #ff7043; border-radius: 0; }
+/* Style 10: Frosted Future */
+.nd-dock-container.style-10 { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; }
 
-.style-12 { background: none; }
-.style-12 .f-primary-btn { border-radius: 100px; height: 50px; box-shadow: 0 0 25px rgba(255,112,67,0.6); }
-.style-12 .f-item { background: #000; border-radius: 50%; max-width: 45px; height: 45px; margin-right: 10px; border: 1px solid #333; }
-        
+/* Style 11: Matrix Edge */
+.nd-dock-container.style-11 { background: #000; border-left: 6px solid #ff7043; border-radius: 4px; }
+
+/* Style 12: Pure Zenith (Babban Button) */
+.nd-dock-container.style-12 { background: none; }
+.nd-dock-container.style-12 .nd-primary-btn { border-radius: 100px; height: 54px; box-shadow: 0 0 30px rgba(255,112,67,0.6); }
+.nd-dock-container.style-12 .nd-item { background: #000; border-radius: 50%; max-width: 48px; height: 48px; margin-right: 8px; border: 1px solid #333; }
+    
+
 
 </style>
 <script>
@@ -656,21 +603,23 @@ document.addEventListener('DOMContentLoaded', function() {
 }); 
 </script> 
 
-    <div class="dock-2060 style-1"> <div class="f-item" onclick="openModal()">
-        <div class="f-icon"><i class="fa-solid fa-cart-plus"></i></div>
-        <span class="f-label">Add to Cart</span>
+    <div class="nd-dock-container style-1"> 
+    <div class="nd-item" onclick="openModal()">
+        <i class="fa-solid fa-cart-plus"></i>
+        <span class="nd-label">Cart</span>
     </div>
 
-    <div class="f-item chat-vendor" onclick="location.href='chat-room.html'">
-        <div class="f-icon"><i class="fa-solid fa-comments"></i></div>
-        <span class="f-label">Chat</span>
+    <div class="nd-item nd-chat-glow" onclick="location.href='chat-room.html'">
+        <i class="fa-solid fa-comments"></i>
+        <span class="nd-label">Chat</span>
     </div>
 
-    <button class="f-primary-btn" onclick="checkSelection()">
+    <button class="nd-primary-btn" onclick="checkSelection()">
         <i class="fa-solid fa-bolt"></i>
         <span>PLACE ORDER</span>
     </button>
     </div>
+    
     
 </body>
 </html>
