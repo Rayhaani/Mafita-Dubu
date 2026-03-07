@@ -300,14 +300,14 @@
             <div class="dock-icon-box"><i class="fa-solid fa-cart-plus"></i></div>
             <span class="dock-label">Cart</span>
         </div>
-        
+
         <div class="dock-item chat-vendor-style" onclick="openChat()">
             <div class="dock-icon-box"><i class="fa-solid fa-comments"></i></div>
             <span class="dock-label">Chat</span>
         </div>
     </div>
 
-    <div class="primary-cta-btn primary-btn" onclick="checkSelection()" style="cursor: pointer;">
+    <div class="primary-btn" onclick="checkSelection()">
         <i class="fa-solid fa-bag-shopping"></i>
         <span>Place Order</span>
     </div>
@@ -359,93 +359,67 @@
 
 <style>
 
- /* --- GYARARREN ZENITH DOCK CSS --- */
+ 
+ /* --- GYARARREN ZENITH BAR (ANTI-HARGITSEWA) --- */
 .zenith-footer-integrated {
     position: fixed; 
-    bottom: 25px; 
+    bottom: 20px; 
     left: 5%; 
     width: 90%; 
-    height: 75px; 
+    height: 70px; 
     background: #000; 
     border-radius: 25px; 
     display: flex; 
     align-items: center; 
     justify-content: space-between;
     padding: 5px; 
-    z-index: 9999; 
+    z-index: 10000; /* Ya fito fili amma baya hargitsa grid */
     overflow: hidden; 
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Wannan shine mai juya kalar gold din */
 .zenith-footer-integrated::before { 
-    content: ''; 
-    position: absolute; 
-    width: 150%; 
-    height: 150%; 
+    content: ''; position: absolute; width: 150%; height: 150%; 
     background: conic-gradient(from 0deg, transparent, #ffcc33, transparent, #fff, transparent); 
-    animation: supernovaRotate 3s linear infinite; 
-    z-index: -1; 
+    animation: supernovaRotate 3s linear infinite; z-index: -1; 
 }
 
 .zenith-footer-integrated::after { 
-    content: ''; 
-    position: absolute; 
-    inset: 2px; 
-    background: #080808; 
-    border-radius: 23px; 
-    z-index: 0; 
+    content: ''; position: absolute; inset: 2px; background: #080808; 
+    border-radius: 23px; z-index: 0; 
 }
 
-@keyframes supernovaRotate { 
-    from { transform: rotate(0deg); } 
-    to { transform: rotate(360deg); } 
-}
+@keyframes supernovaRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
+/* Bangaren Hagu (Icons) */
 .dock-left-group { 
-    position: relative; 
-    z-index: 1; 
-    display: flex; 
-    align-items: center; 
-    gap: 25px; 
-    padding-left: 15px;
-    flex: 1.5; /* Don ya bar sarari ga babban button din */
+    position: relative; z-index: 2; 
+    display: flex; align-items: center; 
+    gap: 15px; padding-left: 15px;
+    flex-shrink: 0; /* Kar ya yarda ya dunkule */
 }
 
-.dock-item { 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    cursor: pointer; 
-}
-
+.dock-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; min-width: 50px; }
 .dock-icon-box { font-size: 18px; color: #fff; margin-bottom: 2px; }
-.dock-label { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; }
+.dock-label { font-size: 9px; font-weight: 700; color: #aaa; text-transform: uppercase; }
 
-.chat-vendor-style .dock-icon-box i, 
-.chat-vendor-style .dock-label { color: #00e5ff !important; }
+/* Chat Color (Cyan) */
+.chat-vendor-style .dock-icon-box i, .chat-vendor-style .dock-label { color: #00e5ff !important; }
 
-/* WANNAN SHINE GYARAN DA ZAI SA 'primary-btn' DINKA YAYI AIKI */
-.primary-cta-btn.primary-btn {
-    position: relative;
-    z-index: 1;
-    background: #ff7043; 
-    height: 100%; 
-    padding: 0 25px;
-    border-radius: 20px;
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    gap: 8px; 
-    border: none; 
-    cursor: pointer;
-    flex: 2; /* Ya fi girma kadan yadda kake so */
+/* Babban Button (Place Order) - EXACT STYLE */
+.primary-btn {
+    position: relative; z-index: 2;
+    background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%); 
+    height: 100%; border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; border: none; cursor: pointer;
+    flex-grow: 1; margin-left: 10px;
     box-shadow: 0 4px 15px rgba(255, 112, 67, 0.3);
 }
-
-.primary-cta-btn.primary-btn span { color: #fff; font-weight: 800; font-size: 13px; text-transform: uppercase; }
-.primary-cta-btn.primary-btn i { color: #fff; font-size: 16px; }
-    
-
+.primary-btn span { color: #fff; font-weight: 800; font-size: 12px; text-transform: uppercase; white-space: nowrap; }
+.primary-btn i { color: #fff; font-size: 14px; }
+         
     
 </style>
 <script>
