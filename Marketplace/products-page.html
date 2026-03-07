@@ -294,22 +294,21 @@
     </div>
 </div>
 
-<div class="vortex-dock style-1"> 
-    <div class="v-item" onclick="addToCartFunction()">
+<div class="vortex-dock style-4"> <div class="v-item" onclick="addToCartFunction()">
         <i class="fa-solid fa-cart-plus"></i>
-        <span class="v-label">Cart</span>
+        <span class="v-text">Add to Cart</span>
     </div>
-        
-    <div class="v-item v-chat" onclick="location.href='chat-room.html'">
+    <div class="v-item v-chat-color" onclick="location.href='chat-room.html'">
         <i class="fa-solid fa-comments"></i>
-        <span class="v-label">Chat</span>
+        <span class="v-text">Chat Vendor</span>
     </div>
-
-    <button class="v-main-btn" onclick="checkSelection()">
+    <button class="v-btn-order" onclick="checkSelection()">
         <i class="fa-solid fa-bolt"></i>
-        <span>Place Order</span>
+        <span>PLACE ORDER</span>
     </button>
 </div>
+    
+    
     
 <div id="infinity-overlay" class="inf-overlay">
     <div class="glass-backdrop" onclick="closeInf()"></div>
@@ -355,77 +354,55 @@
 </div>
 
 <style>
- /* --- BASE ENGINE (STRICTLY FOR DOCK) --- */
-.vortex-dock {
-    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-    width: 92%; height: 65px; display: flex; align-items: center; 
-    justify-content: space-between; padding: 0 12px; 
-    z-index: 9000; /* Kasa da Selection Page dinka mai 99999 */
-    font-family: 'Quicksand', sans-serif; transition: 0.4s all;
-}
+ @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Plus+Jakarta+Sans:wght@800&display=swap');
 
-.v-item { display: flex; flex-direction: column; align-items: center; flex: 1; cursor: pointer; }
-.v-item i { font-size: 18px; color: #fff; margin-bottom: 2px; }
-.v-label { font-size: 9px; font-weight: 700; color: #aaa; text-transform: uppercase; }
-.v-chat i, .v-chat .v-label { color: #00f2ff !important; }
+/* --- 1. ASALIN TSARIN SELECTION PAGE (Ba a taba komai ba) --- */
+.inf-overlay { position: fixed; inset: 0; z-index: 99999; display: none; align-items: center; justify-content: center; font-family: 'Quicksand', sans-serif; }
+.glass-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
+.inf-card.style-5 { position: relative; width: 90%; max-width: 400px; background: none; text-align: center; }
+.atamfa-magic-stage { height: 250px; width: 100%; display: flex; align-items: center; justify-content: center; perspective: 1200px; margin-bottom: 5px; }
+.atamfa-float-engine { max-width: 85%; max-height: 90%; opacity: 0; transform: scale(0.6) rotateY(45deg); transition: all 1s cubic-bezier(0.23, 1, 0.32, 1); filter: drop-shadow(0 20px 50px rgba(0,0,0,0.8)); border-radius: 20px; }
+.atamfa-float-engine.active { opacity: 1; transform: scale(1) rotateY(0deg); animation: salesBoyDisplay 6s infinite ease-in-out; }
+@keyframes salesBoyDisplay { 0% { transform: rotateY(90deg); opacity: 0; } 20%, 80% { transform: rotateY(0deg); opacity: 1; } 100% { transform: rotateY(-90deg); opacity: 0; } }
+.magic-grid { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
+.item-card-mini { position: relative; min-width: 95px; background: #fff; border-radius: 15px; overflow: hidden; border: 2px solid transparent; cursor: pointer; transition: 0.3s; }
+.item-img { width: 100%; height: 100px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; }
+.item-price-bar { position: absolute; bottom: 0; width: 100%; color: #ff8a65; font-size: 13px; font-weight: 600; text-align: center; padding: 10px 0; text-shadow: 2px 2px 8px rgba(0,0,0,1); }
+.item-card-mini.active-node { border-color: #ff7043; transform: translateY(-10px); }
+.inf-main-title { font-size: 24px; font-weight: 800; color: white; margin: 0; }
+.pay-secure-btn { width: 90%; height: 55px; border-radius: 20px; border: none; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); font-weight: 700; transition: 0.4s; margin-top: 15px; }
+.pay-secure-btn.active { background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%); color: white; cursor: pointer; }
+.inf-close { margin-top: 25px; color: rgba(255,255,255,0.5); font-size: 13px; cursor: pointer; }
 
-.v-main-btn {
-    flex: 2.2; background: #ff7043 !important; height: 50px; border-radius: 50px;
-    border: none; display: flex; align-items: center; justify-content: center;
-    gap: 8px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 112, 67, 0.4);
-}
-.v-main-btn span { color: #fff !important; font-weight: 800; font-size: 12px; }
-.v-main-btn i { color: #fff !important; }
+/* --- 2. VORTEX DOCK ENGINE (Styles 1-12) --- */
+.vortex-dock { position: fixed !important; bottom: 20px !important; left: 50% !important; transform: translateX(-50%) !important; width: 92% !important; height: 65px !important; display: flex !important; align-items: center !important; justify-content: space-between !important; padding: 0 10px !important; z-index: 9000 !important; font-family: 'Quicksand', sans-serif !important; }
+.v-item { display: flex !important; flex-direction: column !important; align-items: center !important; flex: 1 !important; cursor: pointer !important; }
+.v-item i { font-size: 18px !important; color: #fff !important; }
+.v-text { font-size: 9px !important; font-weight: 700 !important; color: #aaa !important; margin-top: 3px !important; text-transform: uppercase !important; }
+.v-chat-color i, .v-chat-color .v-text { color: #00f2ff !important; }
+.v-btn-order { flex: 2.2 !important; background: #ff7043 !important; height: 50px !important; border-radius: 50px !important; border: none !important; display: flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; box-shadow: 0 4px 15px rgba(255, 112, 67, 0.4) !important; cursor: pointer !important; position: relative !important; overflow: hidden !important; }
+.v-btn-order span { color: #fff !important; font-weight: 800 !important; font-size: 12px !important; }
+.v-btn-order i { color: #fff !important; }
 
-/* --- 12 UNIQUE STYLES --- */
-
-/* Style 1: Glass Phantom */
-.vortex-dock.style-1 { background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(15px); border-radius: 100px; border: 1px solid rgba(255,255,255,0.1); }
-
-/* Style 2: Cyber Border (Neon) */
-.vortex-dock.style-2 { background: #000; border: 2px solid #ff7043; border-radius: 15px; }
-
-/* Style 3: Floating Island */
-.vortex-dock.style-3 { width: 85%; background: rgba(255,255,255,0.05); border-radius: 25px; backdrop-filter: blur(20px); }
-
-/* Style 4: Glossy Sweep (Walkiya) */
-.vortex-dock.style-4 { background: #0a0a0a; border-radius: 50px; overflow: hidden; }
-.vortex-dock.style-4 .v-main-btn::after {
-    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    animation: vSweep 3s infinite;
-}
+/* Styles list */
+.vortex-dock.style-1 { background: rgba(15, 15, 15, 0.9) !important; backdrop-filter: blur(15px) !important; border-radius: 100px !important; border: 1px solid rgba(255,255,255,0.1) !important; }
+.vortex-dock.style-2 { background: #000 !important; border: 2px solid #ff7043 !important; border-radius: 15px !important; }
+.vortex-dock.style-3 { background: rgba(255,255,255,0.05) !important; border-radius: 30px !important; width: 85% !important; backdrop-filter: blur(10px) !important; }
+.vortex-dock.style-4 { background: #080808 !important; border-radius: 50px !important; }
+.vortex-dock.style-4 .v-btn-order::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: vSweep 3s infinite; }
 @keyframes vSweep { 0% { left: -100%; } 100% { left: 100%; } }
-
-/* Style 5: Dark Minimalist */
-.vortex-dock.style-5 { background: #000; height: 55px; border-radius: 0; bottom: 0; width: 100%; border-top: 2px solid #ff7043; }
-
-/* Style 6: Stealth Shadow */
-.vortex-dock.style-6 { background: #1a1a1a; box-shadow: 0 -10px 30px rgba(0,0,0,0.8); border-radius: 30px 30px 0 0; }
-
-/* Style 7: Bio-Orange Glow */
-.vortex-dock.style-7 { background: #000; border-radius: 40px; box-shadow: 0 0 20px rgba(255, 112, 67, 0.2); }
-
-/* Style 8: Ultra Slim */
-.vortex-dock.style-8 { height: 48px; width: 80%; background: #000; border-radius: 100px; }
-.vortex-dock.style-8 .v-label { display: none; }
-
-/* Style 9: Split Tech */
-.vortex-dock.style-9 { background: none; }
-.vortex-dock.style-9 .v-item { background: #000; border-radius: 50%; height: 50px; max-width: 50px; margin-right: 5px; }
-.vortex-dock.style-9 .v-main-btn { border-radius: 100px; }
-
-/* Style 10: Frosted Glass */
-.vortex-dock.style-10 { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; }
-
-/* Style 11: Matrix Glitch */
-.vortex-dock.style-11 { background: #000; border-left: 5px solid #ff7043; border-radius: 5px; }
-
-/* Style 12: Zenith (Floating Pro) */
-.vortex-dock.style-12 { background: rgba(0,0,0,0.9); height: 70px; width: 95%; border-radius: 20px; }
-.vortex-dock.style-12 .v-main-btn { height: 55px; font-size: 14px; }
-                       
-
+.vortex-dock.style-5 { background: #000 !important; border-radius: 0 !important; bottom: 0 !important; width: 100% !important; border-top: 3px solid #ff7043 !important; }
+.vortex-dock.style-6 { background: linear-gradient(145deg, #111, #000) !important; border-radius: 25px !important; box-shadow: 5px 5px 15px #000 !important; }
+.vortex-dock.style-7 { background: #000 !important; border-radius: 50px !important; box-shadow: inset 0 0 15px rgba(255,112,67,0.3) !important; }
+.vortex-dock.style-8 { height: 48px !important; background: #000 !important; border-radius: 100px !important; width: 80% !important; }
+.vortex-dock.style-8 .v-text { display: none !important; }
+.vortex-dock.style-9 { background: none !important; }
+.vortex-dock.style-9 .v-item { background: #000 !important; border-radius: 50% !important; max-width: 50px !important; height: 50px !important; margin-right: 5px !important; }
+.vortex-dock.style-10 { background: rgba(255,255,255,0.03) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 20px !important; }
+.vortex-dock.style-11 { background: #000 !important; border-left: 6px solid #ff7043 !important; border-radius: 5px !important; }
+.vortex-dock.style-12 { background: rgba(0,0,0,0.9) !important; height: 72px !important; border-radius: 20px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important; }
+                      
+    
 </style>
 <script>
 let selectedColor = null;
