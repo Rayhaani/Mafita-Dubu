@@ -294,23 +294,23 @@
     </div>
 </div>
 
-<div class="glass-dock-container" style="display: flex; align-items: center; padding: 10px;">
-    
+<div class="dock-left-group">
     <div class="dock-item" onclick="addToCartFunction()">
         <div class="dock-icon-box"><i class="fa-solid fa-cart-plus"></i></div>
-        <span class="dock-label">Add to Cart</span>
+        <span class="dock-label">Cart</span>
     </div>
 
-    <div class="dock-item" onclick="openChat()">
+    <div class="dock-item chat-vendor-style" onclick="openChat()">
         <div class="dock-icon-box"><i class="fa-solid fa-comments"></i></div>
         <span class="dock-label">Chat</span>
     </div>
-
-    <div class="dock-item primary-btn" onclick="checkSelection()" style="cursor: pointer;">
-        <div class="dock-icon-box"><i class="fa-solid fa-bag-shopping"></i></div>
-        <span class="dock-label">Place Order</span>
-    </div>
 </div>
+
+<div class="primary-btn" onclick="checkSelection()" style="cursor: pointer;">
+    <i class="fa-solid fa-bag-shopping"></i>
+    <span>Place Order</span>
+</div>
+    
     
          
 <div id="infinity-overlay" class="inf-overlay">
@@ -520,6 +520,45 @@
 
 .primary-cta-btn span { color: #fff; font-weight: 800; font-size: 13px; text-transform: uppercase; }
 .primary-cta-btn i { color: #fff; font-size: 16px; }
+
+
+    
+    /* --- WANNAN SHINE ANIMATION DIN KAWAI --- */
+@keyframes futuristicGlow {
+    0%, 100% { color: #fff; text-shadow: none; transform: scale(1); }
+    15% { color: #ffcc33; text-shadow: 0 0 15px #ffcc33, 0 0 25px #ffcc33; transform: scale(1.1); }
+    30% { color: #fff; text-shadow: none; transform: scale(1); }
+}
+
+/* Saka kiran animation din a karkashin icons da rubutunka */
+.dock-item .dock-icon-box i, 
+.dock-item .dock-label {
+    animation: futuristicGlow 6s infinite;
+    display: inline-block;
+}
+
+/* Saita lokacin da kowanne zai fara (Sequential) */
+.dock-left-group .dock-item:nth-child(1) i,
+.dock-left-group .dock-item:nth-child(1) .dock-label {
+    animation-delay: 0s; /* Add to Cart */
+}
+
+.dock-left-group .dock-item:nth-child(2) i,
+.dock-left-group .dock-item:nth-child(2) .dock-label {
+    animation-delay: 2s; /* Chat Vendor */
+}
+
+/* Animation din babban button na Place Order */
+@keyframes primaryButtonGlow {
+    0%, 100% { box-shadow: 0 4px 15px rgba(255, 112, 67, 0.3); transform: scale(1); }
+    50% { box-shadow: 0 0 25px #ff7043, 0 0 45px #ff7043; transform: scale(1.03); }
+}
+
+.primary-btn, .primary-cta-btn {
+    animation: primaryButtonGlow 6s infinite;
+    animation-delay: 4s; /* Shi ne na karshe a jerin */
+}
+    
     
 </style>
 <script>
