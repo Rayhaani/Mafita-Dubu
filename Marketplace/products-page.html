@@ -481,23 +481,10 @@
 
 /* --- SABON GYARAN DOCK BAR DINKA YA FARA DAGA NAN --- */
 
-.glass-dock-container {
-    position: fixed; 
-    bottom: 20px; 
-    left: 1%;   /* Ya matsa kusa da baki na hagu */
-    right: 1%;  /* Ya matsa kusa da baki na dama */
-    width: auto; /* Shi kansa zai buɗe ya cika sararin */
-    height: 70px; 
-    background: rgba(15, 15, 15, 0.85);
-    backdrop-filter: blur(15px); 
-    border-radius: 0; 
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between;
-    padding: 0 10px; 
-    z-index: 9999;
-}
+.zenith-footer-integrated {
+            position: fixed; bottom: 25px; left: 5%; width: 90%; height: 80px; background: #000; border-radius: 25px; display: flex; align-items: center; padding: 5px; z-index: 2000; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .zenith-footer-integrated::before { content: ''; position: absolute; width: 150%; height: 150%; background: conic-gradient(from 0deg, transparent, var(--zenith-gold), transparent, #fff, transparent); animation: supernovaRotate 3s linear infinite; z-index: -1; }
     
 
 .dock-item {
