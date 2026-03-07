@@ -353,32 +353,30 @@
 </div>
 
 <style>
-/* --- VORTEX DOCK: POSITIONED & FIXED --- */
+/* --- VORTEX DOCK: SHAPED & FIXED (CLEAN) --- */
 .vortex-dock { 
     position: fixed !important; 
-    bottom: 30px !important; /* Na kara dagawa sama daga 15px */
+    bottom: 30px !important; 
     left: 50% !important; 
     transform: translateX(-50%) !important; 
-    width: 94% !important; 
+    width: 90% !important; 
     height: 60px !important; 
     display: flex !important; 
     align-items: center !important; 
-    justify-content: space-between !important; /* Don tura abubuwa gefe da gefe */
+    justify-content: space-between !important; 
     padding: 0 15px !important; 
-    z-index: 9000 !important; 
-    background: rgba(10, 10, 10, 0.96) !important; 
+    z-index: 9000 !important; /* Kasa da Selection Page mai 99999 */
+    background: rgba(10, 10, 10, 0.98) !important; 
     border-radius: 15px !important; 
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
-    pointer-events: auto !important; /* Tabbatar button yana danna wa */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8) !important;
 }
 
-/* TURA ADD TO CART HAGU SOSAI */
+/* TURA ADD TO CART HAGU */
 .v-left-side {
     display: flex !important;
-    gap: 25px !important; /* Sarari tsakanin Cart da Chat */
-    flex: 1 !important;
-    justify-content: flex-start !important;
+    gap: 20px !important; 
+    align-items: center !important;
 }
 
 .v-item { 
@@ -386,17 +384,18 @@
     flex-direction: column !important; 
     align-items: center !important; 
     cursor: pointer !important;
-    min-width: 50px !important;
+    min-width: 45px !important;
+    background: none !important; /* Mun cire duk wani background dake hargitsa gurin */
 }
 
-.v-item i { font-size: 17px !important; color: #fff !important; }
+.v-item i { font-size: 16px !important; color: #fff !important; }
 .v-text { font-size: 8px !important; font-weight: 700 !important; color: #aaa !important; margin-top: 3px !important; text-transform: uppercase !important; }
 .v-chat-color i, .v-chat-color .v-text { color: #00f2ff !important; }
 
-/* COMPACT BUTTON (PLACE ORDER) */
+/* COMPACT BUTTON (PLACE ORDER) - FIXED FUNCTION */
 .v-btn-order { 
     background: #ff7043 !important; 
-    width: 120px !important; /* Karamin fadi kamar yadda kace */
+    width: 110px !important; /* Mun kara rage fadin yadda kake so */
     height: 40px !important; 
     border-radius: 10px !important; 
     border: none !important; 
@@ -406,11 +405,11 @@
     gap: 6px !important; 
     box-shadow: 0 4px 12px rgba(255, 112, 67, 0.3) !important; 
     cursor: pointer !important;
-    pointer-events: auto !important;
-    -webkit-appearance: none;
+    position: relative !important;
+    z-index: 9001 !important;
 }
-.v-btn-order span { color: #fff !important; font-weight: 800 !important; font-size: 11px !important; }
-.v-btn-order i { color: #fff !important; font-size: 13px !important; }
+.v-btn-order span { color: #fff !important; font-weight: 800 !important; font-size: 10px !important; }
+.v-btn-order i { color: #fff !important; font-size: 12px !important; }
     
 </style>
 <script>
