@@ -294,31 +294,22 @@
     </div>
 </div>
 
-<div class="zenith-footer-integrated">
-        
-        <div class="dock-item" onclick="addToCartFunction()" style="position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; justify-content:center; width:90px; cursor:pointer;">
-            <div class="dock-icon-box" style="width:35px;height:35px;border-radius:12px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;margin-bottom:3px;">
-                <i class="fa-solid fa-cart-plus"></i>
-            </div>
-            <span class="dock-label" style="font-size:10px;">Add to Cart</span>
-        </div>
+<div class="glass-dock-container" style="display: flex; align-items: center; padding: 10px;">
+    
+    <div class="dock-item" onclick="addToCartFunction()">
+        <div class="dock-icon-box"><i class="fa-solid fa-cart-plus"></i></div>
+        <span class="dock-label">Add to Cart</span>
+    </div>
 
-        <div class="dock-item" onclick="openChat()" style="position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; justify-content:center; width:80px; cursor:pointer;">
-            <div class="dock-icon-box" style="width:35px;height:35px;border-radius:12px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;margin-bottom:3px;">
-                <i class="fa-solid fa-comments"></i>
-            </div>
-            <span class="dock-label" style="font-size:10px;">Chat</span>
-        </div>
+    <div class="dock-item" onclick="openChat()">
+        <div class="dock-icon-box"><i class="fa-solid fa-comments"></i></div>
+        <span class="dock-label">Chat</span>
+    </div>
 
-        <div class="total-section">
-            <small style="color:var(--zenith-gold); font-size:9px; font-weight:700;">PAYABLE</small>
-            <b id="total">₦0</b>
-        </div>
-
-        <button class="checkout-zenith-btn primary-btn" onclick="checkSelection()">
-            PLACE ORDER (<span id="btn-count">0</span>)
-        </button>
-
+    <div class="dock-item primary-btn" onclick="checkSelection()" style="cursor: pointer;">
+        <div class="dock-icon-box"><i class="fa-solid fa-bag-shopping"></i></div>
+        <span class="dock-label">Place Order</span>
+    </div>
 </div>
     
          
@@ -366,59 +357,37 @@
 </div>
 
 <style>
-
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Plus+Jakarta+Sans:wght@800&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Plus+Jakarta+Sans:wght@800&display=swap');
 
 .inf-overlay {
     position: fixed; inset: 0; z-index: 99999;
     display: none; align-items: center; justify-content: center;
     font-family: 'Quicksand', sans-serif;
 }
+.glass-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
 
-.glass-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
+.inf-card.style-5 { position: relative; width: 90%; max-width: 400px; background: none; text-align: center; }
+
+/* MAGIC STAGE: Babu Box, Atamfa kawai a sarari */
+.atamfa-magic-stage { 
+    height: 250px; width: 100%; display: flex; align-items: center; justify-content: center; 
+    perspective: 1200px; margin-bottom: 5px; 
 }
 
-.inf-card.style-5 {
-    position: relative;
-    width: 90%;
-    max-width: 400px;
-    background: none;
-    text-align: center;
-}
-
-/* MAGIC STAGE */
-
-.atamfa-magic-stage {
-    height: 250px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    perspective: 1200px;
-    margin-bottom: 5px;
-}
-
-.atamfa-float-engine {
-    max-width: 85%;
-    max-height: 90%;
-    opacity: 0;
-    transform: scale(0.6) rotateY(45deg);
+.atamfa-float-engine { 
+    max-width: 85%; max-height: 90%; 
+    opacity: 0; transform: scale(0.6) rotateY(45deg);
     transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
     filter: drop-shadow(0 20px 50px rgba(0,0,0,0.8));
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(255,255,255,0.2), inset 0 0 15px rgba(255,255,255,0.1);
     backdrop-filter: blur(5px);
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.1); 
 }
 
-.atamfa-float-engine.active {
-    opacity: 1;
-    transform: scale(1) rotateY(0deg);
+.atamfa-float-engine.active { 
+    opacity: 1; 
+    transform: scale(1) rotateY(0deg); 
     animation: salesBoyDisplay 6s infinite ease-in-out;
 }
 
@@ -428,199 +397,121 @@
     100% { transform: rotateY(-90deg); opacity: 0; }
 }
 
-/* CHECKOUT BOXES */
+/* CHECKOUT BOXES STYLE */
+.magic-grid { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
 
-.magic-grid {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin: 20px 0;
-}
-
-.item-card-mini {
-    position: relative;
-    min-width: 95px;
-    background: #fff;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    border: 2px solid transparent;
-    cursor: pointer;
+.item-card-mini { 
+    position: relative; 
+    min-width: 95px; 
+    background: #fff; 
+    border-radius: 15px; 
+    overflow: hidden; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
+    border: 2px solid transparent; 
+    cursor: pointer; 
     transition: 0.3s;
 }
 
-.item-img {
-    width: 100%;
-    height: 100px;
-    background: #f5f5f5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.item-img { 
+    width: 100%; 
+    height: 100px; 
+    background: #f5f5f5; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
 }
 
-.item-price-bar {
-    position: absolute;
-    bottom: 0;
+.item-price-bar { 
+    position: absolute; 
+    bottom: 0; 
     width: 100%;
-    background: transparent;
-    color: #ff8a65;
-    font-size: 13px;
-    font-weight: 600;
-    text-align: center;
-    padding: 10px 0;
+    background: transparent; 
+    color: #ff8a65; 
+    font-size: 13px; 
+    font-weight: 600; 
+    text-align: center; 
+    padding: 10px 0; 
     letter-spacing: 0.5px;
-    text-shadow: 2px 2px 8px rgba(0,0,0,1);
-    pointer-events: none;
-    text-transform: lowercase;
+    text-shadow: 2px 2px 8px rgba(0,0,0,1); 
+    pointer-events: none; 
+    text-transform: lowercase; 
     display: block;
 }
-
 .item-price-bar::first-letter { text-transform: uppercase; }
 
-.item-card-mini.active-node {
-    border-color: #ff7043;
-    transform: translateY(-10px);
+.item-card-mini.active-node { 
+    border-color: #ff7043; 
+    transform: translateY(-10px); 
 }
 
-.inf-subtitle {
-    font-size: 13px;
-    font-weight: 500;
-    color: #ff8a65;
-    letter-spacing: 1px;
-    display: block;
-    margin-bottom: 8px;
+.inf-subtitle { 
+    font-size: 13px; 
+    font-weight: 500; 
+    color: #ff8a65; 
+    letter-spacing: 1px; 
+    display: block; 
+    margin-bottom: 8px; 
     text-transform: lowercase;
 }
-
 .inf-subtitle::first-letter { text-transform: uppercase; }
 
-.inf-main-title {
-    font-size: 24px;
-    font-weight: 800;
-    color: white;
-    margin: 0;
+.inf-main-title { font-size: 24px; font-weight: 800; color: white; margin: 0; }
+
+.pay-secure-btn { 
+    width: 90%; height: 55px; border-radius: 20px; border: none; 
+    background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); 
+    font-weight: 700; font-size: 16px; transition: 0.4s; margin-top: 15px;
 }
 
-.pay-secure-btn {
-    width: 90%;
-    height: 55px;
-    border-radius: 20px;
-    border: none;
-    background: rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.3);
-    font-weight: 700;
-    font-size: 16px;
-    transition: 0.4s;
-    margin-top: 15px;
+.pay-secure-btn.active { 
+    background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%); color: white; cursor: pointer;
+    box-shadow: 0 15px 30px rgba(255, 112, 67, 0.4);
 }
 
-.pay-secure-btn.active {
-    background: linear-gradient(135deg,#ff8a65 0%,#ff7043 100%);
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 15px 30px rgba(255,112,67,0.4);
-}
-
-.inf-close {
-    margin-top: 25px;
-    color: rgba(255,255,255,0.5);
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    letter-spacing: 0.5px;
+.inf-close { 
+    margin-top: 25px; 
+    color: rgba(255,255,255,0.5); 
+    font-size: 13px; 
+    font-weight: 500; 
+    cursor: pointer; 
+    letter-spacing: 0.5px; 
     text-transform: lowercase;
 }
-
 .inf-close::first-letter { text-transform: uppercase; }
 
-/* DOCK BAR */
+/* --- SABON GYARAN DOCK BAR DINKA YA FARA DAGA NAN --- */
 
 .glass-dock-container {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 92%;
-    height: 70px;
-    background: rgba(15,15,15,0.85);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-radius: 100px;
-    border: 1px solid rgba(255,255,255,0.1);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 12px;
-    z-index: 9999;
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    width: 92%; height: 70px; background: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+    border-radius: 100px; border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 10px; z-index: 9999;
 }
 
-/* GYARAN LAYOUT */
-
-.dock-item{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    flex:1;
-    cursor:pointer;
-    gap:3px;
+.dock-item {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; flex: 1; cursor: pointer;
 }
 
-.dock-icon-box{
-    width:36px;
-    height:36px;
-    border-radius:12px;
-    background:rgba(255,255,255,0.05);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:16px;
-    color:#fff;
+.dock-icon-box { font-size: 18px; color: #fff; margin-bottom: 2px; }
+.dock-label { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; }
+
+/* CHAT VENDOR: Kalar cyan dinka ta nan */
+.chat-vendor-style .dock-icon-box i, 
+.chat-vendor-style .dock-label { color: #00e5ff !important; }
+
+/* PLACE ORDER: Babban Button mai Bio-Orange */
+.primary-cta-btn {
+    flex: 2; background: #ff7043; height: 52px; border-radius: 50px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; margin-left: 5px; border: none; cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 112, 67, 0.3);
 }
 
-.dock-label{
-    font-size:10px;
-    font-weight:700;
-    color:#aaa;
-    text-transform:uppercase;
-}
-
-/* CHAT COLOR */
-
-.chat-vendor-style .dock-icon-box i,
-.chat-vendor-style .dock-label{
-    color:#00e5ff !important;
-}
-
-/* PLACE ORDER BUTTON */
-
-.primary-cta-btn{
-    flex:2;
-    background:#ff7043;
-    height:52px;
-    border-radius:50px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    margin-left:6px;
-    border:none;
-    cursor:pointer;
-    box-shadow:0 4px 15px rgba(255,112,67,0.3);
-}
-
-.primary-cta-btn span{
-    color:#fff;
-    font-weight:800;
-    font-size:13px;
-    text-transform:uppercase;
-}
-
-.primary-cta-btn i{
-    color:#fff;
-    font-size:16px;
-    }
-    
+.primary-cta-btn span { color: #fff; font-weight: 800; font-size: 13px; text-transform: uppercase; }
+.primary-cta-btn i { color: #fff; font-size: 16px; }
     
 </style>
 <script>
