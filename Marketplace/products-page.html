@@ -294,21 +294,24 @@
     </div>
 </div>
 
-<div class="vortex-dock style-12"> <div class="v-item" onclick="addToCartFunction()">
-        <i class="fa-solid fa-cart-plus"></i>
-        <span class="v-text">Add to Cart</span>
+<div class="vortex-dock">
+    <div class="v-left-side">
+        <div class="v-item" onclick="addToCartFunction()">
+            <i class="fa-solid fa-cart-plus"></i>
+            <span class="v-text">Cart</span>
+        </div>
+        <div class="v-item v-chat-color" onclick="location.href='chat-room.html'">
+            <i class="fa-solid fa-comments"></i>
+            <span class="v-text">Chat</span>
+        </div>
     </div>
-    <div class="v-item v-chat-color" onclick="location.href='chat-room.html'">
-        <i class="fa-solid fa-comments"></i>
-        <span class="v-text">Chat Vendor</span>
-    </div>
-    <button class="v-btn-order" onclick="checkSelection()">
+
+    <button type="button" class="v-btn-order" onclick="checkSelection()">
         <i class="fa-solid fa-bolt"></i>
         <span>PLACE ORDER</span>
     </button>
 </div>
-    
-    
+     
     
 <div id="infinity-overlay" class="inf-overlay">
     <div class="glass-backdrop" onclick="closeInf()"></div>
@@ -354,43 +357,61 @@
 </div>
 
 <style>
-/* --- GYARARRAN VORTEX DOCK (EQUAL SPACING & SLIM BUTTON) --- */
+/* --- VORTEX DOCK: POSITIONED & FIXED --- */
 .vortex-dock { 
-    position: fixed !important; bottom: 15px !important; left: 50% !important; 
-    transform: translateX(-50%) !important; width: 90% !important; 
-    height: 60px !important; display: flex !important; align-items: center !important; 
-    justify-content: space-evenly !important; /* Wannan zai raba sararin daidai */
-    padding: 0 5px !important; 
-    z-index: 9000 !important; font-family: 'Quicksand', sans-serif !important;
+    position: fixed !important; 
+    bottom: 30px !important; /* Na kara dagawa sama daga 15px */
+    left: 50% !important; 
+    transform: translateX(-50%) !important; 
+    width: 94% !important; 
+    height: 60px !important; 
+    display: flex !important; 
+    align-items: center !important; 
+    justify-content: space-between !important; /* Don tura abubuwa gefe da gefe */
+    padding: 0 15px !important; 
+    z-index: 9000 !important; 
     background: rgba(10, 10, 10, 0.96) !important; 
     border-radius: 15px !important; 
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
+    pointer-events: auto !important; /* Tabbatar button yana danna wa */
+}
+
+/* TURA ADD TO CART HAGU SOSAI */
+.v-left-side {
+    display: flex !important;
+    gap: 25px !important; /* Sarari tsakanin Cart da Chat */
+    flex: 1 !important;
+    justify-content: flex-start !important;
 }
 
 .v-item { 
-    display: flex !important; flex-direction: column !important; 
+    display: flex !important; 
+    flex-direction: column !important; 
     align-items: center !important; 
-    flex: none !important; /* Mun cire stretching din */
-    width: 60px !important; /* Mun takaita fadin kowane icon */
-    cursor: pointer !important; 
+    cursor: pointer !important;
+    min-width: 50px !important;
 }
 
 .v-item i { font-size: 17px !important; color: #fff !important; }
 .v-text { font-size: 8px !important; font-weight: 700 !important; color: #aaa !important; margin-top: 3px !important; text-transform: uppercase !important; }
 .v-chat-color i, .v-chat-color .v-text { color: #00f2ff !important; }
 
-/* SHAPED & COMPACT BUTTON */
+/* COMPACT BUTTON (PLACE ORDER) */
 .v-btn-order { 
-    flex: none !important; /* Button din ba zai kara fadi ba */
-    width: 130px !important; /* Mun sanya masa takaitaccen fadi (Fixed Width) */
     background: #ff7043 !important; 
+    width: 120px !important; /* Karamin fadi kamar yadda kace */
     height: 40px !important; 
     border-radius: 10px !important; 
-    border: none !important; display: flex !important; 
-    align-items: center !important; justify-content: center !important; 
-    gap: 6px !important; box-shadow: 0 4px 12px rgba(255, 112, 67, 0.3) !important; 
-    cursor: pointer !important; 
+    border: none !important; 
+    display: flex !important; 
+    align-items: center !important; 
+    justify-content: center !important; 
+    gap: 6px !important; 
+    box-shadow: 0 4px 12px rgba(255, 112, 67, 0.3) !important; 
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    -webkit-appearance: none;
 }
 .v-btn-order span { color: #fff !important; font-weight: 800 !important; font-size: 11px !important; }
 .v-btn-order i { color: #fff !important; font-size: 13px !important; }
