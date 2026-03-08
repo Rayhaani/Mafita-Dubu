@@ -133,56 +133,56 @@
     </div>
 
     <script>
-        let popTimer;
+    let popTimer;
 
-        function openModal() {
-            const modal = document.getElementById('cart-modal');
-            const prog = document.getElementById('progress');
-            const num = document.getElementById('num');
-            modal.classList.add('active');
-            
-            clearInterval(popTimer);
-            let time = 5;
-            prog.style.strokeDashoffset = 88;
-            
-            const runTimer = () => {
-                num.innerText = time + 's';
-                prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
-                if(time < 0) { clearInterval(popTimer); closeModal(); }
-                time--;
-            };
-            runTimer();
-            popTimer = setInterval(runTimer, 1000);
-        }
+    function openModal() {
+        const modal = document.getElementById('cart-modal');
+        const prog = document.getElementById('progress');
+        const num = document.getElementById('num');
+        modal.classList.add('active');
+        
+        clearInterval(popTimer);
+        let time = 5;
+        prog.style.strokeDashoffset = 88;
+        
+        const runTimer = () => {
+            num.innerText = time + 's';
+            prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
+            if(time <= 0) { 
+                clearInterval(popTimer); 
+                closeModal(); 
+            }
+            time--;
+        };
+        runTimer();
+        popTimer = setInterval(runTimer, 1000);
+    }
 
-        function closeModal() {
-    clearInterval(popTimer);
-    document.getElementById('cart-modal').classList.remove('active');
-    
-    setTimeout(() => {
-        const bar = document.getElementById('dynamic-bar');
-        if (bar) {
-            // Mun sanya onclick a kowane button domin su yi aiki
-            bar.innerHTML = `
-                <button class="btn-dual btn-white" onclick="window.location.href='cart.html'">
-                    GO TO CART
-                </button>
-                
-                <div class="price-section">
-                    <small>14 ITEMS</small>
-                    <b>₦187,400</b>
-                </div>
-                
-                <button class="btn-dual btn-orange" onclick="window.location.href='checkout.html'">
-                    CHECKOUT
-                </button>
-            `;
-            
-            // Kara dan kyan gani ga bar din
-            bar.style.padding = "0 15px";
-        }
-    }, 400);
-        }
+    // WANNAN SHINE GYARAN DA ZAI SA BUTTONS DIN SUYI AIKI
+    function closeModal() {
+        clearInterval(popTimer);
+        document.getElementById('cart-modal').classList.remove('active');
+        
+        setTimeout(() => {
+            const bar = document.getElementById('dynamic-bar');
+            if (bar) {
+                bar.innerHTML = `
+                    <button class="btn-dual btn-white" onclick="window.location.href='cart.html'">GO TO CART</button>
+                    <div class="price-section">
+                        <small>14 ITEMS</small>
+                        <b>₦187,400</b>
+                    </div>
+                    <button class="btn-dual btn-orange" onclick="window.location.href='checkout.html'">CHECKOUT</button>
+                `;
+                // Tabbatar bar din yana da kyan gani
+                bar.style.display = "flex";
+                bar.style.justifyContent = "space-between";
+                bar.style.alignItems = "center";
+            }
+        }, 400);
+    }
+</script>
+        
         
     </script>
 </body>
