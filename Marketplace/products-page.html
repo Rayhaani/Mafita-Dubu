@@ -710,15 +710,63 @@ document.addEventListener('DOMContentLoaded', function() {
     window.location.href = 'chat-room.html';
     }
 
+let popTimer;
+
+// Wannan shine babban aikin da zai duba zaben kala
 function addToCartFunction() {
     const selectedColor = document.querySelector('.color-dot.active');
+    const hasColorOptions = document.querySelectorAll('.color-dot').length > 0;
 
-    if (!selectedColor) {
+    if (hasColorOptions && !selectedColor) {
+        // Idan bai zaba ba, bude Overlay din "Zabi kalar da kake so"
         document.getElementById('infinity-overlay').style.display = 'flex';
     } else {
-        alert("An saka a kwando!");
+        // Idan ya zaba, bude kyakkyawan Popup dinka mai Timer
+        openModal();
     }
-            }
+}
+
+// Wannan shine zai bude kyakkyawan Popup dinka mai Added to Cart
+function openModal() {
+    const modal = document.getElementById('cart-modal');
+    const prog = document.getElementById('progress');
+    const num = document.getElementById('num');
+    modal.classList.add('active');
+    
+    clearInterval(popTimer);
+    let time = 5;
+    prog.style.strokeDashoffset = 88;
+    
+    const runTimer = () => {
+        num.innerText = time + 's';
+        prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
+        if(time <= 0) { clearInterval(popTimer); closeModal(); }
+        time--;
+    };
+    runTimer();
+    popTimer = setInterval(runTimer, 1000);
+}
+
+// Wannan shine zai rufe Popup din
+function closeModal() {
+    clearInterval(popTimer);
+    document.getElementById('cart-modal').classList.remove('active');
+    
+    setTimeout(() => {
+        const bar = document.getElementById('dynamic-bar');
+        if(bar) {
+            bar.innerHTML = `
+                <button class="btn-dual btn-white">GO TO CART</button>
+                <div class="price-section">
+                    <small>14 ITEMS</small>
+                    <b>₦187,400</b>
+                </div>
+                <button class="btn-dual btn-orange">CHECKOUT</button>
+            `;
+        }
+    }, 400);
+    }
+                                                                      
     
 
 </script> 
