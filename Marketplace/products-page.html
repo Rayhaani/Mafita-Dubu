@@ -752,8 +752,9 @@ function infProceed() { window.location.href = 'checkout.html'; }
 // DNA CORE SCRIPT
 const salesBoy = document.createElement('div');
 salesBoy.id = 'sales-boy-container';
-salesBoy.innerHTML = `<div class="dna-strand"></div><div class="dna-strand"></div><div class="core-glow"></div><div class="ai-label-elite">Infinity AI</div>`;
-for(let i=0; i<8; i++){
+salesBoy.innerHTML = `<div class="dna-strand"></div><div class="dna-strand"></div><div class="core-glow"></div><div class="ai-label-elite"></div>`;
+    
+    for(let i=0; i<8; i++){
     let p = document.createElement('div');
     p.className = 'particle'; p.style.left = Math.random() * 100 + '%'; p.style.animationDelay = Math.random() * 2 + 's';
     salesBoy.appendChild(p);
