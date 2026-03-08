@@ -710,55 +710,51 @@ document.addEventListener('DOMContentLoaded', function() {
     window.location.href = 'chat-room.html';
     }
 
- let popTimer;
+ 
+// 1. Ma'ajin lokaci (Global Variable)
+var popTimer;
 
+// 2. Babban aikin duba zabi
 function addToCartFunction() {
-    // 1. Duba idan an zabi kala (active dot)
     const selectedColor = document.querySelector('.color-dot.active');
-    
-    // 2. Duba idan akwai zabin kala
     const hasColorOptions = document.querySelectorAll('.color-dot').length > 0;
 
     if (hasColorOptions && !selectedColor) {
-        // IDAN BAI ZABA BA: Bude Overlay na zaben kala
-        document.getElementById('infinity-overlay').style.display = 'flex';
+        // Idan bai zaba ba, bude Overlay na zaben atamfa
+        const overlay = document.getElementById('infinity-overlay');
+        if(overlay) overlay.style.display = 'flex';
     } else {
-        // IDAN YA ZABA: Bude kyakkyawan Popup dinka (Added to Cart)
-        openModal(); 
+        // Idan ya zaba, bude kyakkyawan Popup dinka mai timer
+        runAddedToCartPopup();
     }
 }
 
-function openModal() {
+// 3. Aikin bude Popup dinka na asali (Added to Cart)
+function runAddedToCartPopup() {
     const modal = document.getElementById('cart-modal');
     const prog = document.getElementById('progress');
     const num = document.getElementById('num');
 
-    // Wannan shine zai fito da popup din
-    modal.classList.add('active');
-    
-    // Tsarin Timer dinka na sakan 5
-    clearInterval(popTimer);
-    let time = 5;
-    prog.style.strokeDashoffset = 88;
-    
-    const runTimer = () => {
-        num.innerText = time + 's';
-        prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
-        if(time <= 0) { 
-            clearInterval(popTimer); 
-            closeModal(); 
-        }
-        time--;
-    };
-    runTimer();
-    popTimer = setInterval(runTimer, 1000);
-}
-
-function closeModal() {
-    clearInterval(popTimer);
-    document.getElementById('cart-modal').classList.remove('active');
+    if (modal) {
+        modal.classList.add('active'); // Bude pop-up din
+        
+        clearInterval(popTimer);
+        let time = 5;
+        if(prog) prog.style.strokeDashoffset = 88;
+        
+        popTimer = setInterval(function() {
+            if(num) num.innerText = time + 's';
+            if(prog) prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
+            
+            if(time <= 0) {
+                clearInterval(popTimer);
+                modal.classList.remove('active'); // Rufe pop-up din
+            }
+            time--;
+        }, 1000);
     }
-                          
+        }
+                
     
 
 </script> 
