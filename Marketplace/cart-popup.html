@@ -88,11 +88,12 @@
             </script>
         </div>
 
-        <div class="footer">
-            <button id="final-checkout-trigger" class="btn-orange" style="width: 100%; height: 55px; border-radius: 50px; border: none; font-weight: 800; font-size: 15px; cursor: pointer;">
-                Check out these items (14)
-            </button>
-        </div>
+     <div class="footer">
+    <a href="checkout.html" style="text-decoration: none;">
+        <button class="btn-orange" style="width: 100%; height: 55px; border-radius: 50px; border: none; font-weight: 800; font-size: 15px; cursor: pointer;">
+            Check out these items (14)
+        </button>
+    </a>
     </div>
 
     <div class="bar-container">
@@ -104,55 +105,46 @@
         </div>
     </div>
 
-    <script>
-        let popTimer;
+      <script>
+    let popTimer;
 
-        function openModal() {
-            const modal = document.getElementById('cart-modal');
-            const prog = document.getElementById('progress');
-            const num = document.getElementById('num');
-            modal.classList.add('active');
-            
-            clearInterval(popTimer);
-            let time = 5;
-            prog.style.strokeDashoffset = 88;
-            
-            const runTimer = () => {
-                num.innerText = time + 's';
-                prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
-                if(time <= 0) { 
-                    clearInterval(popTimer); 
-                    handleTimerEnd(); 
-                }
-                time--;
-            };
-            runTimer();
-            popTimer = setInterval(runTimer, 1000);
-        }
-
-        function handleTimerEnd() {
-            document.getElementById('cart-modal').classList.remove('active');
-            setTimeout(() => {
-                const bar = document.getElementById('dynamic-bar');
-                if (bar) {
-                    bar.innerHTML = `
-                        <button class="btn-dual btn-white" onclick="window.location.href='cart.html'">GO TO CART</button>
-                        <div class="price-section">
-                            <small>14 ITEMS</small>
-                            <b>₦187,400</b>
-                        </div>
-                        <button class="btn-dual btn-orange" onclick="window.location.href='checkout.html'">CHECKOUT</button>
-                    `;
-                }
-            }, 400);
-        }
-
-        // Tabbatar an danna button din checkout
-        document.addEventListener('click', function(e) {
-            if(e.target && e.target.id == 'final-checkout-trigger'){
-                window.location.href = 'checkout.html';
+    function openModal() {
+        const modal = document.getElementById('cart-modal');
+        const prog = document.getElementById('progress');
+        const num = document.getElementById('num');
+        modal.classList.add('active');
+        
+        clearInterval(popTimer);
+        let time = 5;
+        prog.style.strokeDashoffset = 88;
+        
+        const runTimer = () => {
+            num.innerText = time + 's';
+            prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
+            if(time <= 0) { 
+                clearInterval(popTimer); 
+                document.getElementById('cart-modal').classList.remove('active');
+                updateBar();
             }
-        });
+            time--;
+        };
+        runTimer();
+        popTimer = setInterval(runTimer, 1000);
+    }
+
+    function updateBar() {
+        const bar = document.getElementById('dynamic-bar');
+        if (bar) {
+            bar.innerHTML = `
+                <button class="btn-dual btn-white" onclick="window.location.href='cart.html'">GO TO CART</button>
+                <div class="price-section">
+                    <small>14 ITEMS</small>
+                    <b>₦187,400</b>
+                </div>
+                <button class="btn-dual btn-orange" onclick="window.location.href='checkout.html'">CHECKOUT</button>
+            `;
+        }
+    }
     </script>
 </body>
     </html>
