@@ -17,10 +17,12 @@
         }
         .aura-img { width: 80px; height: 100px; border-radius: 15px; object-fit: cover; background: #222; }
 
+        /* POP-UP MODAL */
         #cart-modal {
             position: fixed; bottom: -100%; left: 0; width: 100%; height: 85%;
             background: #ffffff; border-radius: 30px 30px 0 0; z-index: 10000;
             display: flex; flex-direction: column; transition: 0.5s ease-in-out;
+            overflow: hidden; /* Don gyara footer */
         }
         #cart-modal.active { bottom: 0; }
 
@@ -41,7 +43,14 @@
         .stock-label { margin-top: -12px; background: var(--bio-orange); color: #fff; font-size: 9px; padding: 2px 8px; border-radius: 10px; font-weight: 700; z-index: 2; }
         .price-label { margin-top: 8px; color: #000; font-weight: 800; font-size: 12px; }
 
-        .footer { padding: 20px; border-top: 1px solid #eee; background: white; }
+        /* GYARAN FOOTER: Yanzu yana cikin Modal kuma yana saman komai */
+        .footer { 
+            padding: 20px; 
+            border-top: 1px solid #eee; 
+            background: white; 
+            position: relative; 
+            z-index: 10001; /* Layer mafi girma */
+        }
 
         .bar-container { position: fixed; bottom: 20px; width: 100%; display: flex; justify-content: center; z-index: 5000; }
         .zenith-slim-bar { width: 92%; height: 65px; background: #0b0b0b; border-radius: 100px; border: 1px solid #3d341f; display: flex; align-items: center; justify-content: space-between; padding: 0 10px; }
@@ -51,6 +60,9 @@
         .price-section { text-align: center; }
         .price-section small { color: #ffcc33; font-size: 9px; font-weight: 800; display: block; }
         .price-section b { color: #fff; font-size: 17px; font-weight: 700; }
+        
+        /* Tilasta Link ya yi aiki */
+        #final-link { display: block !important; pointer-events: auto !important; }
     </style>
 </head>
 <body>
@@ -88,15 +100,14 @@
             </script>
         </div>
 
-<div class="footer" style="padding: 20px; border-top: 1px solid #eee; background: white;">
-    <a href="checkout.html" style="text-decoration: none; display: block; width: 100%;">
-        <button type="button" class="btn-orange" style="width: 100%; height: 55px; border-radius: 50px; border: none; font-weight: 800; font-size: 15px; cursor: pointer; background: #ff5e00; color: #fff;">
-            Check out these items (14)
-        </button>
-    </a>
-</div>
-
-    <div class="bar-container">
+        <div class="footer">
+            <a href="checkout.html" id="final-link" style="text-decoration: none;">
+                <button type="button" class="btn-orange" style="width: 100%; height: 55px; border-radius: 50px; border: none; font-weight: 800; font-size: 15px; cursor: pointer; background: #ff5e00; color: #fff;">
+                    Check out these items (14)
+                </button>
+            </a>
+        </div>
+    </div> <div class="bar-container">
         <div class="zenith-slim-bar" id="dynamic-bar">
             <div style="padding-left: 20px;">
                 <b style="font-size: 20px; color: #fff;">₦43,938</b>
@@ -105,7 +116,7 @@
         </div>
     </div>
 
-      <script>
+    <script>
     let popTimer;
 
     function openModal() {
@@ -147,5 +158,4 @@
     }
     </script>
 </body>
-    </html>
-    
+</html>
