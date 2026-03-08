@@ -118,9 +118,9 @@
         </div>
 
         <div class="footer">
-           <button class="btn-orange" style="width: 100%; height: 55px; border-radius: 50px; border: none; font-weight: 800; font-size: 15px;" onclick="window.location.href='checkout.html'">
+         <button class="btn-orange" style="width: 100%; height: 55px; border-radius: 50px; border: none; font-weight: 800; font-size: 15px;" onclick="window.location.href='checkout.html'">
     Check out these items (14)
-           </button>
+         </button>
     </div>
 
     <div class="bar-container">
@@ -151,8 +151,8 @@
             
             if(time <= 0) { 
                 clearInterval(popTimer); 
-                // Idan lokaci ya cika, modal zai rufe, sannan bar ya rikide
-                closeAndTransform(); 
+                // Idan lokaci ya cika, mu rufe modal mu canza bar kawai
+                handleTimerEnd(); 
             }
             time--;
         };
@@ -160,8 +160,7 @@
         popTimer = setInterval(runTimer, 1000);
     }
 
-    // Wannan ita ce zata kula da canza bar din kawai idan lokaci ya cika
-    function closeAndTransform() {
+    function handleTimerEnd() {
         document.getElementById('cart-modal').classList.remove('active');
         
         setTimeout(() => {
