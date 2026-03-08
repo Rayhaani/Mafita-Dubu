@@ -866,44 +866,11 @@ function openChat() {
 
 let popTimer;
 
-// A. DATA SYNC (Maido da hotunan Atamfa)
-document.addEventListener('DOMContentLoaded', function() {
-    const data = localStorage.getItem('selectedProduct');
-    if (data) {
-        const product = JSON.parse(data);
-        document.getElementById('dynamic-img').src = product.img;
-        document.querySelector('.cropped-view img').src = product.img;
-        document.querySelector('h1').innerHTML = product.name;
-        document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
-        document.querySelectorAll('.stack-img').forEach(img => img.src = product.img);
-        document.querySelectorAll('.holo-img').forEach(img => img.src = product.img);
-    }
-});
-
-// B. CHAT FUNCTION
-function openChat() { window.location.href = 'chat-room.html'; }
-
-// C. ADD TO CART (Zaben kala ko Modal dinka)
-function addToCartFunction() {
-    const selectedColor = document.querySelector('.color-dot.active');
-    const hasColorOptions = document.querySelectorAll('.color-dot').length > 0;
-
-    if (hasColorOptions && !selectedColor) {
-        const overlay = document.getElementById('infinity-overlay');
-        if(overlay) {
-            overlay.style.display = 'flex';
-            setTimeout(() => overlay.classList.add('active'), 10);
-        }
-    } else {
-        openModal(); // Kiran modal dinka na asali
-    }
-}
-
-// D. MODAL FUNCTIONS (Daga Code dinka na asali)
 function openModal() {
     const modal = document.getElementById('cart-modal');
     const prog = document.getElementById('progress');
     const num = document.getElementById('num');
+    
     modal.classList.add('active');
     
     clearInterval(popTimer);
@@ -911,19 +878,46 @@ function openModal() {
     prog.style.strokeDashoffset = 88;
     
     const runTimer = () => {
-        num.innerText = time + 's';
-        prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
-        if(time < 0) { clearInterval(popTimer); closeModal(); }
-        time--;
+        if (time >= 0) {
+            num.innerText = time + 's';
+            prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
+            time--;
+        } else {
+            clearInterval(popTimer);
+            // 1. Rufe modal din
+            modal.classList.remove('active');
+            
+            // 2. Canza button bar din bayan sakan 5 sun cika
+            changeBottomBar(); 
+        }
     };
+    
     runTimer();
     popTimer = setInterval(runTimer, 1000);
 }
 
+function changeBottomBar() {
+    setTimeout(() => {
+        const bar = document.getElementById('dynamic-bar');
+        if (bar) {
+            bar.innerHTML = `
+                <button class="btn-dual btn-white">GO TO CART</button>
+                <div class="price-section">
+                    <small style="color: #ffcc33; font-size: 9px; font-weight: 800; display: block;">14 ITEMS</small>
+                    <b style="color: #fff; font-size: 17px; font-weight: 700;">₦187,400</b>
+                </div>
+                <button class="btn-dual btn-orange">CHECKOUT</button>
+            `;
+        }
+    }, 400); // Dan jinkiri kadan don modal din ya gama sauka kasa
+}
+
+// Wannan kawai na rufe modal ne idan an danna button din jikinsa
 function closeModal() {
     clearInterval(popTimer);
     document.getElementById('cart-modal').classList.remove('active');
-}
+    }
+    
     
 </script>
  
