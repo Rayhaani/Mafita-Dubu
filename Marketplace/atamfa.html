@@ -6,165 +6,82 @@
     <title>MD | Atamfa Elite Market</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Quicksand:wght@500;700&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
 
     <style>
-        :root {
-            --milk-bg: #E8E1D5; 
-            --dark-chocolate: #1A0F0D; 
-            --neon-gold: #D4AF37;
-            --verified-blue: #00BAFF;
-        }
-
-        body { 
-            background-color: var(--milk-bg); 
-            font-family: 'Inter', sans-serif; 
-            margin: 0; 
-            overflow-x: hidden;
-        }
-
-        .ads-wrapper { 
-            width: 100%; 
-            overflow: hidden; 
-            padding: 10px 0; 
-            background: var(--milk-bg);
-        }
-        .ads-track { 
-            display: flex; gap: 12px; padding-left: 15px; width: max-content;
-            animation: scroll-ads 45s linear infinite; 
-        }
+        /* ASALIN STYLE DIN KA - BABU ABIN DA NA CANJA */
+        :root { --milk-bg: #E8E1D5; --dark-chocolate: #1A0F0D; --neon-gold: #D4AF37; --verified-blue: #00BAFF; }
+        body { background-color: var(--milk-bg); font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
+        .ads-wrapper { width: 100%; overflow: hidden; padding: 10px 0; background: var(--milk-bg); }
+        .ads-track { display: flex; gap: 12px; padding-left: 15px; width: max-content; animation: scroll-ads 45s linear infinite; }
         @keyframes scroll-ads { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        .ad-card {
-            min-width: 150px; height: 160px;
-            background-color: var(--milk-bg); 
-            border-radius: 20px; border: 1.5px solid var(--neon-gold);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
+        .ad-card { min-width: 150px; height: 160px; background-color: var(--milk-bg); border-radius: 20px; border: 1.5px solid var(--neon-gold); display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .ad-card i { font-size: 2rem; color: var(--neon-gold); margin-bottom: 8px; }
         .ad-card span { font-size: 0.7rem; color: var(--dark-chocolate); font-weight: 800; text-align: center; text-transform: uppercase; }
-
-        .main-container { 
-            display: flex; 
-            gap: 10px; 
-            padding: 10px; 
-            align-items: flex-start; 
-            position: relative;
-            background: var(--dark-chocolate);
-            overflow: hidden;
-            border-radius: 25px 25px 0 0;
-        }
-
-        .main-container::before {
-            content: "";
-            position: absolute;
-            top: -100%; left: -100%; width: 300%; height: 300%;
-            background: radial-gradient(circle at center, 
-                rgba(255, 223, 0, 0.4) 0%, 
-                rgba(212, 175, 55, 0.2) 30%, 
-                transparent 60%),
-                linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%);
-            background-size: 500px 500px;
-            animation: serpent-crawl 15s ease-in-out infinite;
-            z-index: 0;
-            pointer-events: none;
-            filter: blur(4px);
-        }
-
-        @keyframes serpent-crawl {
-            0% { transform: translate(-15%, -15%) rotate(0deg); }
-            33% { transform: translate(10%, 5%) rotate(2deg); }
-            66% { transform: translate(-5%, 15%) rotate(-2deg); }
-            100% { transform: translate(-15%, -15%) rotate(0deg); }
-        }
-
+        .main-container { display: flex; gap: 10px; padding: 10px; align-items: flex-start; position: relative; background: var(--dark-chocolate); overflow: hidden; border-radius: 25px 25px 0 0; }
+        .main-container::before { content: ""; position: absolute; top: -100%; left: -100%; width: 300%; height: 300%; background: radial-gradient(circle at center, rgba(255, 223, 0, 0.4) 0%, rgba(212, 175, 55, 0.2) 30%, transparent 60%), linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%); background-size: 500px 500px; animation: serpent-crawl 15s ease-in-out infinite; z-index: 0; pointer-events: none; filter: blur(4px); }
+        @keyframes serpent-crawl { 0% { transform: translate(-15%, -15%) rotate(0deg); } 33% { transform: translate(10%, 5%) rotate(2deg); } 66% { transform: translate(-5%, 15%) rotate(-2deg); } 100% { transform: translate(-15%, -15%) rotate(0deg); } }
         .column { flex: 1; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 5; }
-
-        .product-card {
-            background: white; border-radius: 14px; overflow: hidden;
-            display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); position: relative; z-index: 10;
-        }
-
-        .hot-tag {
-            position: absolute; top: 8px; left: 8px;
-            background: #FF3131; color: white;
-            font-size: 7px; font-weight: 900; padding: 2px 6px;
-            border-radius: 4px; z-index: 5; box-shadow: 0 0 10px rgba(255,49,49,0.5);
-        }
-
-        .live-dot-container {
-            position: absolute; top: 8px; right: 8px;
-            background: rgba(0,0,0,0.4); padding: 3px 6px;
-            border-radius: 20px; display: flex; align-items: center; gap: 4px; z-index: 5;
-        }
-        .green-pulse {
-            width: 6px; height: 6px; background: #39FF14; border-radius: 50%;
-            position: relative;
-        }
-        .green-pulse::after {
-            content: ""; position: absolute; width: 100%; height: 100%;
-            background: #39FF14; border-radius: 50%; animation: pulse-ring 1.5s infinite;
-        }
+        .product-card { background: white; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); position: relative; z-index: 10; }
+        .hot-tag { position: absolute; top: 8px; left: 8px; background: #FF3131; color: white; font-size: 7px; font-weight: 900; padding: 2px 6px; border-radius: 4px; z-index: 5; box-shadow: 0 0 10px rgba(255,49,49,0.5); }
+        .live-dot-container { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.4); padding: 3px 6px; border-radius: 20px; display: flex; align-items: center; gap: 4px; z-index: 5; }
+        .green-pulse { width: 6px; height: 6px; background: #39FF14; border-radius: 50%; position: relative; }
+        .green-pulse::after { content: ""; position: absolute; width: 100%; height: 100%; background: #39FF14; border-radius: 50%; animation: pulse-ring 1.5s infinite; }
         @keyframes pulse-ring { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(3.5); opacity: 0; } }
-
         .img-area { width: 100%; position: relative; background: #f3f3f3; overflow: hidden; }
         .first-box .img-area { height: 260px !important; }
         .standard-box .img-area { height: 212px; }
         .img-area img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
         .details-area { padding: 8px; display: flex; flex-direction: column; gap: 2px; }
-        .p-name { 
-            font-family: 'Inter', sans-serif; font-size: 10.5px; color: #444; font-weight: 700; 
-            display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;  
-            overflow: hidden; margin: 0 !important; line-height: 1.1; 
-            text-transform: capitalize; text-align: left;
-        }
-
-        /* GYARAN CART BOX DA PRICE ROW */
-        .price-row { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            width: 100%; 
-            margin-top: 1px; 
-            margin-bottom: 3px; 
-        }
-
-        .cart-box-temu {
-            width: 24px;
-            height: 24px;
-            border: 1.8px solid #d1d1d1; /* Bolding border */
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--dark-chocolate);
-            font-size: 11px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+        .p-name { font-family: 'Inter', sans-serif; font-size: 10.5px; color: #444; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; margin: 0 !important; line-height: 1.1; text-transform: capitalize; text-align: left; }
+        .price-row { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 1px; margin-bottom: 3px; }
+        .cart-box-temu { width: 24px; height: 24px; border: 1.8px solid #d1d1d1; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--dark-chocolate); font-size: 11px; cursor: pointer; transition: 0.2s; }
         .cart-box-temu:active { transform: scale(0.9); }
-
-        .price-button {
-            background: linear-gradient(135deg, #D4AF37 0%, #F1D592 50%, #D4AF37 100%);
-            color: #1A0F0D; padding: 1.5px 7px; border-radius: 20px;
-            font-weight: 800; font-size: 12px; font-style: italic; 
-            display: inline-flex; align-items: center; justify-content: center;
-        }
-
+        .price-button { background: linear-gradient(135deg, #D4AF37 0%, #F1D592 50%, #D4AF37 100%); color: #1A0F0D; padding: 1.5px 7px; border-radius: 20px; font-weight: 800; font-size: 12px; font-style: italic; display: inline-flex; align-items: center; justify-content: center; }
         .info-box-compact { background: var(--dark-chocolate); border: 1.2px solid var(--neon-gold); border-radius: 9px; padding: 6px; width: 100%; display: flex; flex-direction: column; gap: 3px; }
         .row-item { display: flex; align-items: center; justify-content: space-between; width: 100%; }
         .trust-bold { display: flex; align-items: center; gap: 4px; font-size: 8.5px; font-weight: 800; color: #fff; }
         .verified-icon { color: var(--verified-blue) !important; font-size: 10px !important; }
         .years-bold { font-size: 7.5px; color: #fff; font-weight: 800; background: rgba(255,255,255,0.1); padding: 1px 4px; border-radius: 3px; }
-        
         .loc-bold { display: flex; align-items: center; gap: 3px; font-size: 8px; color: #ddd; font-weight: 700; }
         .loc-icon { color: #ff4d4d !important; font-size: 9px !important; }
-        
         .stars-container { display: flex; align-items: center; gap: 2px; }
         .stars-mini { display: flex; gap: 0.5px; color: #ff9900 !important; font-size: 7.5px !important; }
         .review-count { color: #aaa; font-size: 7px; font-weight: 600; }
+
+        /* OVERLAY DA CART MODAL STYLES (DAGA CODE DINKA) */
+        .inf-overlay { position: fixed; inset: 0; z-index: 99999; display: none; align-items: center; justify-content: center; font-family: 'Quicksand', sans-serif; }
+        .glass-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
+        .inf-card.style-5 { position: relative; width: 90%; max-width: 400px; text-align: center; }
+        .atamfa-magic-stage { height: 250px; width: 100%; display: flex; align-items: center; justify-content: center; perspective: 1200px; margin-bottom: 5px; }
+        .atamfa-float-engine { max-width: 85%; max-height: 90%; opacity: 0; transform: scale(0.6) rotateY(45deg); transition: all 1s cubic-bezier(0.23, 1, 0.32, 1); filter: drop-shadow(0 20px 50px rgba(0,0,0,0.8)); border-radius: 20px; border: 2px solid rgba(255, 255, 255, 0.1); }
+        .atamfa-float-engine.active { opacity: 1; transform: scale(1) rotateY(0deg); animation: salesBoyDisplay 6s infinite ease-in-out; }
+        @keyframes salesBoyDisplay { 0% { transform: rotateY(90deg); opacity: 0; } 20%, 80% { transform: rotateY(0deg); opacity: 1; } 100% { transform: rotateY(-90deg); opacity: 0; } }
+        .magic-grid { display: flex; justify-content: center; gap: 12px; margin: 20px 0; flex-wrap: wrap; }
+        .item-card-mini { position: relative; min-width: 95px; background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 2px solid transparent; cursor: pointer; transition: 0.3s; }
+        .item-img { width: 100%; height: 100px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; }
+        .item-img img { width: 100%; height: 100%; object-fit: cover; }
+        .item-price-bar { position: absolute; bottom: 0; width: 100%; background: transparent; color: #ff8a65; font-size: 13px; font-weight: 600; text-align: center; padding: 10px 0; text-shadow: 2px 2px 8px rgba(0,0,0,1); text-transform: lowercase; }
+        .item-card-mini.active-node { border-color: #ff7043; transform: translateY(-10px); }
+        .pay-secure-btn { width: 90%; height: 55px; border-radius: 20px; border: none; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); font-weight: 700; font-size: 16px; transition: 0.4s; margin-top: 15px; }
+        .pay-secure-btn.active { background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%); color: white; cursor: pointer; box-shadow: 0 15px 30px rgba(255, 112, 67, 0.4); }
+        .inf-close { margin-top: 25px; color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 500; cursor: pointer; }
+
+        #cart-modal { position: fixed; bottom: -100%; left: 0; width: 100%; height: 85%; background: #ffffff; border-radius: 30px 30px 0 0; z-index: 999999; display: flex; flex-direction: column; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 -10px 25px rgba(0,0,0,0.1); }
+        #cart-modal.active { bottom: 0; }
+        .modal-header { padding: 20px; display: flex; justify-content: center; background: white; border-radius: 30px 30px 0 0; }
+        .popup-content-inner { display: flex; align-items: center; gap: 12px; background: #f1f3f4; padding: 10px 20px; border-radius: 50px; }
+        .pop-txt { color: #333; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+        .timer-circle { position: relative; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; }
+        .timer-circle svg { width: 35px; height: 35px; transform: rotate(-90deg); }
+        .timer-circle circle { fill: none; stroke-width: 3; stroke: #e0e0e0; }
+        #progress { stroke: #28a745; stroke-dasharray: 88; stroke-dashoffset: 0; transition: 1s linear; }
+        #num { position: absolute; font-size: 11px; color: #333; font-weight: 800; }
+        .promo-grid { flex: 1; overflow-y: auto; padding: 15px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .promo-item { display: flex; flex-direction: column; align-items: center; }
+        .item-box { width: 100%; aspect-ratio: 1/1.1; background: #f7f7f7; border-radius: 15px; overflow: hidden; border: 1px solid #eee; }
+        .stock-label { background: #ff5e00; color: white; font-size: 10px; padding: 3px 10px; border-radius: 20px; font-weight: 700; margin-top: -12px; z-index: 5; }
+        .btn-checkout { width: 90%; height: 55px; background: #ff5e00; color: white; border: none; border-radius: 50px; font-weight: 800; font-size: 16px; margin: 20px auto; display: block; }
     </style>
 </head>
 <body>
@@ -178,9 +95,34 @@
     </div>
 
     <div class="main-container" id="product-grid"></div>
+
+    <div id="infinity-overlay" class="inf-overlay">
+        <div class="glass-backdrop" onclick="closeInf()"></div>
+        <div id="inf-card" class="inf-card style-5">
+            <div class="atamfa-magic-stage"><img src="" id="magic-atamfa-display" class="atamfa-float-engine"></div>
+            <div class="inf-title-area"><span class="inf-subtitle" style="color:#ff8a65; font-size:13px;">EXQUISITE SELECTION</span><h2 class="inf-main-title" style="color:white; font-weight:800;">Zabi kalar da kake so</h2></div>
+            <div class="inventory-scroll magic-grid" id="popup-color-grid"></div>
+            <button id="inf-action" disabled onclick="infProceed()" class="pay-secure-btn"><span id="btn-label">Zabi kala domin ci gaba</span></button>
+            <p class="inf-close" onclick="closeInf()">DISMISS</p>
+        </div>
+    </div>
+
+    <div id="cart-modal">
+        <div class="modal-header">
+            <div class="popup-content-inner"><div class="pop-txt"><i class="fa-solid fa-circle-check" style="color:#28a745"></i> Added to cart</div><div class="timer-circle"><svg><circle cx="16" cy="16" r="14"></circle><circle id="progress" cx="16" cy="16" r="14"></circle></svg><span id="num">5s</span></div></div>
+        </div>
+        <div class="promo-grid">
+            <script>
+                for(let i=1; i<=6; i++) {
+                    document.write(`<div class="promo-item"><div class="item-box"><img src="https://via.placeholder.com/150"></div><div class="stock-label">${i} left</div><div class="price-label" style="color:black; font-weight:800; font-size:13px; margin-top:5px;">₦57,100</div></div>`);
+                }
+            </script>
+        </div>
+        <button class="btn-checkout" onclick="closeModal()">Check out these items</button>
+    </div>
     
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
 <script>
 const firebaseConfig = {
@@ -195,8 +137,14 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+// TRACK ADS CLONE
 const track = document.getElementById('ads-track');
 track.innerHTML += track.innerHTML; 
+
+// GLOBAL VARIABLES FOR POPUP
+let selectedColor = null;
+let currentPendingProduct = null;
+let popTimer;
 
 function startLiveUpdates() {
     const grid = document.getElementById('product-grid');
@@ -211,34 +159,24 @@ function startLiveUpdates() {
             let cardClass = (rowIndex % 2 === 0) ? (count % 2 === 0 ? "first-box" : "standard-box") : (count % 2 === 0 ? "standard-box" : "first-box");
             
             const rCount = p.reviews || Math.floor(Math.random() * 300) + 50;
+            const colors = p.colors || []; // Daukowa daga Firebase
 
             const cardHTML = `
                 <div class="product-card ${cardClass}">
                     <div class="img-area" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">
                         <div class="hot-tag">HOT ITEM</div>
                         <div class="live-dot-container"><div class="green-pulse"></div><span style="color:white; font-size:7px; font-weight:800;">LIVE</span></div>
-                        <img src="${p.img}" onerror="this.src='https://via.placeholder.com/300'">
+                        <img src="${p.img}">
                     </div>
                     <div class="details-area">
-                        <p class="p-name" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">${p.name.toLowerCase()}</p>
-                        
+                        <p class="p-name" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')">${p.name.toLowerCase()}</p>
                         <div class="price-row">
-                            <div class="cart-box-temu" onclick="window.location.href='cart.html'"><i class="fa-solid fa-cart-shopping"></i></div>
-                            <div class="price-button" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">₦${Number(p.price).toLocaleString()}</div>
+                            <div class="cart-box-temu" onclick='handleCartClick(${JSON.stringify(p)})'><i class="fa-solid fa-cart-shopping"></i></div>
+                            <div class="price-button" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')">₦${Number(p.price).toLocaleString()}</div>
                         </div>
-
                         <div class="info-box-compact">
-                            <div class="row-item">
-                                <div class="trust-bold"><i class="fa-solid fa-circle-check verified-icon"></i> TrustID Verified</div>
-                                <span class="years-bold">3+ YEARS</span>
-                            </div>
-                            <div class="row-item">
-                                <div class="loc-bold"><i class="fa-solid fa-location-dot loc-icon"></i> ${p.location || 'Kano'}</div>
-                                <div class="stars-container">
-                                    <div class="stars-mini"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                                    <span class="review-count">(${rCount})</span>
-                                </div>
-                            </div>
+                            <div class="row-item"><div class="trust-bold"><i class="fa-solid fa-circle-check verified-icon"></i> TrustID Verified</div><span class="years-bold">3+ YEARS</span></div>
+                            <div class="row-item"><div class="loc-bold"><i class="fa-solid fa-location-dot loc-icon"></i> ${p.location || 'Kano'}</div><div class="stars-container"><div class="stars-mini"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><span class="review-count">(${rCount})</span></div></div>
                         </div>
                     </div>
                 </div>`;
@@ -247,12 +185,86 @@ function startLiveUpdates() {
         });
     });
 }
-document.addEventListener('DOMContentLoaded', startLiveUpdates);
 
-function goToProduct(name, price, img) {
-    localStorage.setItem('selectedProduct', JSON.stringify({name, price, img}));
-    window.location.href = 'products-page.html';
+// LOGIC NA CART (SHARADI 1 & 2)
+function handleCartClick(product) {
+    const colors = product.colors || [];
+
+    if (colors.length <= 1) {
+        // Sharadi 1: Kalar daya ce
+        addToLocalStorage(product, colors[0] || 'Standard');
+        openModal();
+    } else {
+        // Sharadi 2: Kaloli sun fi daya
+        currentPendingProduct = product;
+        showExquisitePopup(product);
+    }
 }
+
+function showExquisitePopup(p) {
+    const overlay = document.getElementById('infinity-overlay');
+    const grid = document.getElementById('popup-color-grid');
+    grid.innerHTML = '';
+    
+    p.colors.forEach(color => {
+        const div = document.createElement('div');
+        div.className = 'item-card-mini';
+        div.onclick = function() { infSelect(color, this, p.img); };
+        div.innerHTML = `<div class="item-img"><img src="${p.img}"></div><div class="item-price-bar">${color}</div>`;
+        grid.appendChild(div);
+    });
+
+    overlay.style.display = 'flex';
+}
+
+function infSelect(color, el, img) {
+    selectedColor = color;
+    document.querySelectorAll('.item-card-mini').forEach(n => n.classList.remove('active-node'));
+    el.classList.add('active-node');
+    
+    const displayImg = document.getElementById('magic-atamfa-display');
+    displayImg.classList.remove('active');
+    setTimeout(() => { displayImg.src = img; displayImg.classList.add('active'); }, 100);
+
+    const btn = document.getElementById('inf-action');
+    btn.disabled = false; btn.classList.add('active');
+    document.getElementById('btn-label').innerText = 'Add to Cart';
+}
+
+function infProceed() {
+    if (currentPendingProduct && selectedColor) {
+        addToLocalStorage(currentPendingProduct, selectedColor);
+        closeInf();
+        openModal();
+    }
+}
+
+function addToLocalStorage(p, color) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push({ name: p.name, price: p.price, img: p.img, color: color, qty: 1 });
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function openModal() {
+    const modal = document.getElementById('cart-modal');
+    modal.classList.add('active');
+    let time = 5;
+    const prog = document.getElementById('progress');
+    const num = document.getElementById('num');
+    clearInterval(popTimer);
+    popTimer = setInterval(() => {
+        time--;
+        num.innerText = time + 's';
+        prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
+        if(time <= 0) closeModal();
+    }, 1000);
+}
+
+function closeModal() { clearInterval(popTimer); document.getElementById('cart-modal').classList.remove('active'); }
+function closeInf() { document.getElementById('infinity-overlay').style.display = 'none'; }
+function goToProduct(name, price, img) { localStorage.setItem('selectedProduct', JSON.stringify({name, price, img})); window.location.href = 'products-page.html'; }
+
+document.addEventListener('DOMContentLoaded', startLiveUpdates);
 </script>
 </body>
 </html>
