@@ -709,7 +709,18 @@ document.addEventListener('DOMContentLoaded', function() {
     function openChat() {
     window.location.href = 'chat-room.html';
     }
+
+function addToCartFunction() {
+    const selectedColor = document.querySelector('.color-dot.active');
+
+    if (!selectedColor) {
+        document.getElementById('infinity-overlay').style.display = 'flex';
+    } else {
+        alert("An saka a kwando!");
+    }
+            }
     
+
 </script> 
 </body>
 </html>
