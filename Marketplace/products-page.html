@@ -844,26 +844,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.location.href = 'chat-room.html';
     }
 
- 
-// 1. DATA SYNC (Wannan zai dawo maka da hotunan Atamfar da suka bace)
-document.addEventListener('DOMContentLoaded', function() {
-    const data = localStorage.getItem('selectedProduct');
-    if (data) {
-        const product = JSON.parse(data);
-        document.getElementById('dynamic-img').src = product.img;
-        document.querySelector('.cropped-view img').src = product.img;
-        document.querySelector('h1').innerHTML = product.name;
-        document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
-        document.querySelectorAll('.stack-img').forEach(img => img.src = product.img);
-        document.querySelectorAll('.holo-img').forEach(img => img.src = product.img);
-    }
-});
-
-// 2. CHAT FUNCTION (Wannan zai sa Chat button dinka ya yi aiki)
-function openChat() {
-    window.location.href = 'chat-room.html';
-}
-
 let popTimer;
 
 // A. DATA SYNC
@@ -941,7 +921,9 @@ function closeModal() {
             `;
         }
     }, 400);
-    }
+}
+    
+
     
 </script>
  
