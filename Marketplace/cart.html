@@ -230,7 +230,7 @@
             <small style="color:var(--zenith-gold); font-size:9px; font-weight:700;">PAYABLE</small>
             <b id="total">₦0</b>
         </div>
-        <button class="checkout-zenith-btn" onclick="window.location.href='checkout.html'">
+        <button class="checkout-zenith-btn" onclick="goToCheckout()">
     CHECKOUT (<span id="btn-count">0</span>)
         </button>
     </div>
@@ -288,6 +288,31 @@
             }
         }
         update();
+
+        function goToCheckout() {
+    // Mu duba ko akwai kayan da aka zaba
+    const count = parseInt(document.getElementById('btn-count').innerText);
+
+    if (count > 0) {
+        // Idan akwai kaya, mu tura shi checkout
+        window.location.href = 'checkout.html';
+    } else {
+        // Idan babu, mu nuna masa sako cikin kyan gani
+        alert("Don Allah abokina, zabi kaya akalla daya kafin ka wuce zuwa Checkout! 😊");
+        
+        // Zaka iya kara girgiza footer din don ya lura
+        const footer = document.querySelector('.zenith-footer-integrated');
+        footer.style.animation = 'none';
+        setTimeout(() => {
+            footer.style.border = '2px solid #ff0000';
+            setTimeout(() => { footer.style.border = '1px solid rgba(255, 255, 255, 0.1)'; }, 1000);
+        }, 10);
+    }
+        }
+        
+
+
+        
     </script>
 </body>
     </html>
