@@ -866,7 +866,7 @@ function openChat() {
 
 let popTimer;
 
-// A. DATA SYNC (Maido da hotunan Atamfa)
+// A. DATA SYNC
 document.addEventListener('DOMContentLoaded', function() {
     const data = localStorage.getItem('selectedProduct');
     if (data) {
@@ -883,7 +883,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // B. CHAT FUNCTION
 function openChat() { window.location.href = 'chat-room.html'; }
 
-// C. ADD TO CART (Zaben kala ko Modal dinka)
+// C. ADD TO CART
 function addToCartFunction() {
     const selectedColor = document.querySelector('.color-dot.active');
     const hasColorOptions = document.querySelectorAll('.color-dot').length > 0;
@@ -895,11 +895,11 @@ function addToCartFunction() {
             setTimeout(() => overlay.classList.add('active'), 10);
         }
     } else {
-        openModal(); // Kiran modal dinka na asali
+        openModal(); 
     }
 }
 
-// D. MODAL FUNCTIONS (Daga Code dinka na asali)
+// D. MODAL FUNCTIONS
 function openModal() {
     const modal = document.getElementById('cart-modal');
     const prog = document.getElementById('progress');
@@ -913,7 +913,10 @@ function openModal() {
     const runTimer = () => {
         num.innerText = time + 's';
         prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
-        if(time < 0) { clearInterval(popTimer); closeModal(); }
+        if(time < 0) { 
+            clearInterval(popTimer); 
+            closeModal(); 
+        }
         time--;
     };
     runTimer();
@@ -923,8 +926,23 @@ function openModal() {
 function closeModal() {
     clearInterval(popTimer);
     document.getElementById('cart-modal').classList.remove('active');
-}
-              
+
+    // NAKA NE WANNAN: Nan ne zai canza button din bayan seconds 5 din
+    setTimeout(() => {
+        const bar = document.getElementById('dynamic-bar');
+        if (bar) {
+            bar.innerHTML = `
+                <button class="btn-dual btn-white">GO TO CART</button>
+                <div class="price-section">
+                    <small style="color: #ffcc33; font-size: 9px; font-weight: 800; display: block; text-align:center;">14 ITEMS</small>
+                    <b style="color: #fff; font-size: 17px; font-weight: 700;">₦187,400</b>
+                </div>
+                <button class="btn-dual btn-orange">CHECKOUT</button>
+            `;
+        }
+    }, 400);
+    }
+    
 </script>
  
 </body>
