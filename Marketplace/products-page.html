@@ -357,25 +357,36 @@
 </div>
 
 
- <div id="cart-modal" style="position: fixed; bottom: -100%; left: 0; width: 100%; height: 85%; background: #ffffff; border-radius: 30px 30px 0 0; z-index: 100000; display: flex; flex-direction: column; transition: 0.5s ease-in-out; color: #000;">
-    <div style="padding: 20px; display: flex; justify-content: center; align-items: center; border-bottom: 1px solid #eee;">
-        <div style="background: #f0f0f0; padding: 10px 20px; border-radius: 50px; display: flex; align-items: center; gap: 10px;">
-            <i class="fa-solid fa-circle-check" style="color:#28a745"></i>
-            <span style="font-weight: bold;">Added to cart</span>
-            <span id="num" style="background: #000; color: #fff; padding: 2px 8px; border-radius: 10px; font-size: 10px;">5s</span>
+<div id="cart-modal">
+    <div class="modal-header">
+        <div class="popup-content-inner">
+            <div class="pop-txt"><i class="fa-solid fa-circle-check" style="color:#28a745"></i> Added to cart</div>
+            <div class="timer-circle">
+                <svg><circle cx="16" cy="16" r="14"></circle><circle id="progress" cx="16" cy="16" r="14"></circle></svg>
+                <span id="num">5s</span>
+            </div>
         </div>
     </div>
-    <div style="flex: 1; padding: 20px; text-align: center;">
-        <p style="color: #666; font-size: 14px;">Product successfully added to your infinity bag.</p>
-        </div>
-    <div style="padding: 20px;">
-        <button onclick="document.getElementById('cart-modal').classList.remove('active')" style="width: 100%; height: 55px; background: #ff7043; color: #fff; border: none; border-radius: 20px; font-weight: bold;">CONTINUE SHOPPING</button>
+
+    <div class="promo-grid">
+        <script>
+            for(let i=1; i<=12; i++) {
+                document.write(`
+                    <div class="promo-item">
+                        <div class="item-box"><img src="https://via.placeholder.com/150/f0f0f0/999?text=Item+${i}"></div>
+                        <div class="stock-label">${i} left</div>
+                        <div class="price-label">₦57,100</div>
+                    </div>
+                `);
+            }
+        </script>
+    </div>
+
+    <div class="footer">
+        <button class="btn-orange" style="width: 100%; height: 55px; border-radius: 50px; border: none; font-weight: 800; font-size: 15px;" onclick="closeModal()">Check out these items (14)</button>
     </div>
 </div>
-
-<style>
-    #cart-modal.active { bottom: 0 !important; }
-</style>   
+    
     
 <style>
  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Plus+Jakarta+Sans:wght@800&display=swap');
@@ -751,8 +762,26 @@ function openChat() {
     window.location.href = 'chat-room.html';
 }
 
-// 3. ADD TO CART LOGIC (Wanda zai bude Overlay ko Pop-up dinka)
-var popTimer;
+let popTimer;
+
+// A. DATA SYNC (Maido da hotunan Atamfa)
+document.addEventListener('DOMContentLoaded', function() {
+    const data = localStorage.getItem('selectedProduct');
+    if (data) {
+        const product = JSON.parse(data);
+        document.getElementById('dynamic-img').src = product.img;
+        document.querySelector('.cropped-view img').src = product.img;
+        document.querySelector('h1').innerHTML = product.name;
+        document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
+        document.querySelectorAll('.stack-img').forEach(img => img.src = product.img);
+        document.querySelectorAll('.holo-img').forEach(img => img.src = product.img);
+    }
+});
+
+// B. CHAT FUNCTION
+function openChat() { window.location.href = 'chat-room.html'; }
+
+// C. ADD TO CART (Zaben kala ko Modal dinka)
 function addToCartFunction() {
     const selectedColor = document.querySelector('.color-dot.active');
     const hasColorOptions = document.querySelectorAll('.color-dot').length > 0;
@@ -764,28 +793,35 @@ function addToCartFunction() {
             setTimeout(() => overlay.classList.add('active'), 10);
         }
     } else {
-        openCartSuccessPopup();
+        openModal(); // Kiran modal dinka na asali
     }
 }
 
-// 4. POPUP SUCCESS (Wannan zai bude kyakkyawan pop-up din daka turo)
-function openCartSuccessPopup() {
+// D. MODAL FUNCTIONS (Daga Code dinka na asali)
+function openModal() {
     const modal = document.getElementById('cart-modal');
+    const prog = document.getElementById('progress');
     const num = document.getElementById('num');
-    if (modal) {
-        modal.classList.add('active');
-        clearInterval(popTimer);
-        let time = 5;
-        popTimer = setInterval(function() {
-            if(num) num.innerText = time + 's';
-            if(time <= 0) {
-                clearInterval(popTimer);
-                modal.classList.remove('active');
-            }
-            time--;
-        }, 1000);
-    }
-    }
+    modal.classList.add('active');
+    
+    clearInterval(popTimer);
+    let time = 5;
+    prog.style.strokeDashoffset = 88;
+    
+    const runTimer = () => {
+        num.innerText = time + 's';
+        prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
+        if(time < 0) { clearInterval(popTimer); closeModal(); }
+        time--;
+    };
+    runTimer();
+    popTimer = setInterval(runTimer, 1000);
+}
+
+function closeModal() {
+    clearInterval(popTimer);
+    document.getElementById('cart-modal').classList.remove('active');
+}
     
 </script>
  
