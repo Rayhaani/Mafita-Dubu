@@ -118,7 +118,7 @@
         </div>
 
         <div class="footer">
-         <button class="btn-orange" style="width: 100%; height: 55px; border-radius: 50px; border: none; font-weight: 800; font-size: 15px;" onclick="window.location.href='checkout.html'">
+         <button id="final-checkout-btn" class="btn-orange" style="width: 100%; height: 55px; border-radius: 50px; border: none; font-weight: 800; font-size: 15px; cursor: pointer;">
     Check out these items (14)
          </button>
     </div>
@@ -133,6 +133,7 @@
     </div>
 
     <script>
+   <script>
     let popTimer;
 
     function openModal() {
@@ -148,10 +149,8 @@
         const runTimer = () => {
             num.innerText = time + 's';
             prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
-            
             if(time <= 0) { 
                 clearInterval(popTimer); 
-                // Idan lokaci ya cika, mu rufe modal mu canza bar kawai
                 handleTimerEnd(); 
             }
             time--;
@@ -162,7 +161,6 @@
 
     function handleTimerEnd() {
         document.getElementById('cart-modal').classList.remove('active');
-        
         setTimeout(() => {
             const bar = document.getElementById('dynamic-bar');
             if (bar) {
@@ -177,6 +175,19 @@
             }
         }, 400);
     }
+
+    // WANNAN SHINE MAGANIN MATSALAR:
+    // Muna gaya wa browser ta saurare mu idan an danna wannan button din
+    document.addEventListener('click', function(e) {
+        if(e.target && e.target.id == 'final-checkout-btn'){
+            // Tsayar da kowane irin tsohon aiki (kamar closeModal)
+            e.preventDefault();
+            e.stopPropagation();
+            // Tilasta tafiya checkout.html
+            window.location.href = 'checkout.html';
+        }
+    });         
+
 </script>
         
 </body>
