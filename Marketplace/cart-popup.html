@@ -156,21 +156,34 @@
         }
 
         function closeModal() {
-            clearInterval(popTimer);
-            document.getElementById('cart-modal').classList.remove('active');
+    clearInterval(popTimer);
+    document.getElementById('cart-modal').classList.remove('active');
+    
+    setTimeout(() => {
+        const bar = document.getElementById('dynamic-bar');
+        if (bar) {
+            // Mun sanya onclick a kowane button domin su yi aiki
+            bar.innerHTML = `
+                <button class="btn-dual btn-white" onclick="window.location.href='cart.html'">
+                    GO TO CART
+                </button>
+                
+                <div class="price-section">
+                    <small>14 ITEMS</small>
+                    <b>₦187,400</b>
+                </div>
+                
+                <button class="btn-dual btn-orange" onclick="window.location.href='checkout.html'">
+                    CHECKOUT
+                </button>
+            `;
             
-            setTimeout(() => {
-                const bar = document.getElementById('dynamic-bar');
-                bar.innerHTML = `
-                    <button class="btn-dual btn-white">GO TO CART</button>
-                    <div class="price-section">
-                        <small>14 ITEMS</small>
-                        <b>₦187,400</b>
-                    </div>
-                    <button class="btn-dual btn-orange">CHECKOUT</button>
-                `;
-            }, 400);
+            // Kara dan kyan gani ga bar din
+            bar.style.padding = "0 15px";
         }
+    }, 400);
+        }
+        
     </script>
 </body>
 </html>
