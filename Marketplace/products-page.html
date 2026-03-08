@@ -870,53 +870,48 @@ function openModal() {
     const modal = document.getElementById('cart-modal');
     const prog = document.getElementById('progress');
     const num = document.getElementById('num');
+    const bar = document.getElementById('dynamic-bar'); // Muna bukatar wannan
     
+    // 1. Bude Modal
     modal.classList.add('active');
     
+    // 2. Saita Timer
     clearInterval(popTimer);
     let time = 5;
     prog.style.strokeDashoffset = 88;
     
-    const runTimer = () => {
-        if (time >= 0) {
-            num.innerText = time + 's';
-            prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
-            time--;
-        } else {
+    popTimer = setInterval(function() {
+        num.innerText = time + 's';
+        prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
+        
+        if (time <= 0) {
             clearInterval(popTimer);
-            // 1. Rufe modal din
+            
+            // 3. Rufe Modal idan lokaci ya cika
             modal.classList.remove('active');
             
-            // 2. Canza button bar din bayan sakan 5 sun cika
-            changeBottomBar(); 
+            // 4. Canza Bottom Bar dinka ya rikida
+            setTimeout(() => {
+                bar.innerHTML = `
+                    <button class="btn-dual btn-white">GO TO CART</button>
+                    <div class="price-section">
+                        <small style="color: #ffcc33; font-size: 9px; font-weight: 800; display: block; text-align: center;">14 ITEMS</small>
+                        <b style="color: #fff; font-size: 17px; font-weight: 700;">₦187,400</b>
+                    </div>
+                    <button class="btn-dual btn-orange">CHECKOUT</button>
+                `;
+            }, 400);
         }
-    };
-    
-    runTimer();
-    popTimer = setInterval(runTimer, 1000);
+        time--;
+    }, 1000);
 }
 
-function changeBottomBar() {
-    setTimeout(() => {
-        const bar = document.getElementById('dynamic-bar');
-        if (bar) {
-            bar.innerHTML = `
-                <button class="btn-dual btn-white">GO TO CART</button>
-                <div class="price-section">
-                    <small style="color: #ffcc33; font-size: 9px; font-weight: 800; display: block;">14 ITEMS</small>
-                    <b style="color: #fff; font-size: 17px; font-weight: 700;">₦187,400</b>
-                </div>
-                <button class="btn-dual btn-orange">CHECKOUT</button>
-            `;
-        }
-    }, 400); // Dan jinkiri kadan don modal din ya gama sauka kasa
-}
-
-// Wannan kawai na rufe modal ne idan an danna button din jikinsa
+// Wannan kawai idan kana son rufe shi da kanka
 function closeModal() {
     clearInterval(popTimer);
     document.getElementById('cart-modal').classList.remove('active');
     }
+    
     
     
 </script>
