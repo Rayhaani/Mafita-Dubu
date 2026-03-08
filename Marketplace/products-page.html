@@ -711,52 +711,70 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
  
-// 1. Ma'ajin lokaci (Global Variable)
 var popTimer;
 
-// 2. Babban aikin duba zabi
 function addToCartFunction() {
+    // 1. Duba idan an riga an zabi kala (active dot)
     const selectedColor = document.querySelector('.color-dot.active');
+    
+    // 2. Duba idan akwai dots din kala a shafin
     const hasColorOptions = document.querySelectorAll('.color-dot').length > 0;
 
     if (hasColorOptions && !selectedColor) {
-        // Idan bai zaba ba, bude Overlay na zaben atamfa
+        // Idan bai zaba ba, nuna Overlay din nan na "Zabi kalar da kake so"
         const overlay = document.getElementById('infinity-overlay');
-        if(overlay) overlay.style.display = 'flex';
+        if(overlay) {
+            overlay.style.display = 'flex';
+            setTimeout(() => overlay.classList.add('active'), 10);
+        }
     } else {
-        // Idan ya zaba, bude kyakkyawan Popup dinka mai timer
-        runAddedToCartPopup();
+        // Idan ya zaba, nuna wannan sabon Pop-up din (Added to Cart)
+        openCartSuccessPopup();
     }
 }
 
-// 3. Aikin bude Popup dinka na asali (Added to Cart)
-function runAddedToCartPopup() {
+function openCartSuccessPopup() {
     const modal = document.getElementById('cart-modal');
-    const prog = document.getElementById('progress');
     const num = document.getElementById('num');
 
     if (modal) {
-        modal.classList.add('active'); // Bude pop-up din
+        modal.classList.add('active');
         
         clearInterval(popTimer);
         let time = 5;
-        if(prog) prog.style.strokeDashoffset = 88;
         
         popTimer = setInterval(function() {
             if(num) num.innerText = time + 's';
-            if(prog) prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
-            
             if(time <= 0) {
                 clearInterval(popTimer);
-                modal.classList.remove('active'); // Rufe pop-up din
+                modal.classList.remove('active');
             }
             time--;
         }, 1000);
     }
-        }
-                
+    }
     
 
-</script> 
+
+<div id="cart-modal" style="position: fixed; bottom: -100%; left: 0; width: 100%; height: 85%; background: #ffffff; border-radius: 30px 30px 0 0; z-index: 100000; display: flex; flex-direction: column; transition: 0.5s ease-in-out; color: #000;">
+    <div style="padding: 20px; display: flex; justify-content: center; align-items: center; border-bottom: 1px solid #eee;">
+        <div style="background: #f0f0f0; padding: 10px 20px; border-radius: 50px; display: flex; align-items: center; gap: 10px;">
+            <i class="fa-solid fa-circle-check" style="color:#28a745"></i>
+            <span style="font-weight: bold;">Added to cart</span>
+            <span id="num" style="background: #000; color: #fff; padding: 2px 8px; border-radius: 10px; font-size: 10px;">5s</span>
+        </div>
+    </div>
+    <div style="flex: 1; padding: 20px; text-align: center;">
+        <p style="color: #666; font-size: 14px;">Product successfully added to your infinity bag.</p>
+        </div>
+    <div style="padding: 20px;">
+        <button onclick="document.getElementById('cart-modal').classList.remove('active')" style="width: 100%; height: 55px; background: #ff7043; color: #fff; border: none; border-radius: 20px; font-weight: bold;">CONTINUE SHOPPING</button>
+    </div>
+</div>
+
+<style>
+    #cart-modal.active { bottom: 0 !important; }
+</style>
+    
 </body>
 </html>
