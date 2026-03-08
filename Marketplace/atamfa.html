@@ -44,11 +44,10 @@
         .ad-card i { font-size: 2rem; color: var(--neon-gold); margin-bottom: 8px; }
         .ad-card span { font-size: 0.7rem; color: var(--dark-chocolate); font-weight: 800; text-align: center; text-transform: uppercase; }
 
-        /* GYARAN EQUAL SPACING (10px) KAMAR YADDA YAKE A HOTONKA */
         .main-container { 
             display: flex; 
             gap: 10px; 
-            padding: 10px; /* Na mayar da shi 10px don ya zama EQUAL da kowane gefe */
+            padding: 10px; 
             align-items: flex-start; 
             position: relative;
             background: var(--dark-chocolate);
@@ -122,7 +121,31 @@
             text-transform: capitalize; text-align: left;
         }
 
-        .price-row { display: flex; justify-content: flex-end; width: 100%; margin-top: 1px; margin-bottom: 3px; }
+        /* GYARAN CART BOX DA PRICE ROW */
+        .price-row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            width: 100%; 
+            margin-top: 1px; 
+            margin-bottom: 3px; 
+        }
+
+        .cart-box-temu {
+            width: 24px;
+            height: 24px;
+            border: 1.8px solid #d1d1d1; /* Bolding border */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-chocolate);
+            font-size: 11px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .cart-box-temu:active { transform: scale(0.9); }
+
         .price-button {
             background: linear-gradient(135deg, #D4AF37 0%, #F1D592 50%, #D4AF37 100%);
             color: #1A0F0D; padding: 1.5px 7px; border-radius: 20px;
@@ -190,17 +213,20 @@ function startLiveUpdates() {
             const rCount = p.reviews || Math.floor(Math.random() * 300) + 50;
 
             const cardHTML = `
-                <div class="product-card ${cardClass}" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">
-                    <div class="img-area">
+                <div class="product-card ${cardClass}">
+                    <div class="img-area" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">
                         <div class="hot-tag">HOT ITEM</div>
                         <div class="live-dot-container"><div class="green-pulse"></div><span style="color:white; font-size:7px; font-weight:800;">LIVE</span></div>
                         <img src="${p.img}" onerror="this.src='https://via.placeholder.com/300'">
                     </div>
                     <div class="details-area">
-                        <p class="p-name">${p.name.toLowerCase()}</p>
+                        <p class="p-name" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">${p.name.toLowerCase()}</p>
+                        
                         <div class="price-row">
-                            <div class="price-button">₦${Number(p.price).toLocaleString()}</div>
+                            <div class="cart-box-temu" onclick="window.location.href='cart.html'"><i class="fa-solid fa-cart-shopping"></i></div>
+                            <div class="price-button" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">₦${Number(p.price).toLocaleString()}</div>
                         </div>
+
                         <div class="info-box-compact">
                             <div class="row-item">
                                 <div class="trust-bold"><i class="fa-solid fa-circle-check verified-icon"></i> TrustID Verified</div>
