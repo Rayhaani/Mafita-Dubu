@@ -230,9 +230,11 @@
             <small style="color:var(--zenith-gold); font-size:9px; font-weight:700;">PAYABLE</small>
             <b id="total">₦0</b>
         </div>
-        <button class="checkout-zenith-btn">CHECKOUT (<span id="btn-count">0</span>)</button>
+        <button class="checkout-zenith-btn" onclick="window.location.href='checkout.html'">
+    CHECKOUT (<span id="btn-count">0</span>)
+        </button>
     </div>
-
+        
     <script>
         function toggleAll() {
             const mainToggle = document.getElementById('main-toggle');
