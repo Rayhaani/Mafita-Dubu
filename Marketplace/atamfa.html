@@ -9,14 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Quicksand:wght@500;700&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
 
     <style>
-       :root { 
-    --milk-bg: #E8E1D5; 
-    --dark-chocolate: #1A0F0D; 
-    --neon-gold: #D4AF37; 
-    --verified-blue: #00BAFF; 
-    --universal-gap: 12px; /* Wannan lambar ita ce Master Key dinka */
-       }
-        
+        :root { --milk-bg: #E8E1D5; --dark-chocolate: #1A0F0D; --neon-gold: #D4AF37; --verified-blue: #00BAFF; }
         body { background-color: var(--milk-bg); font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
         
         .ads-wrapper { width: 100%; overflow: hidden; padding: 10px 0; background: var(--milk-bg); }
@@ -27,42 +20,25 @@
         .ad-card span { font-size: 0.7rem; color: var(--dark-chocolate); font-weight: 800; text-align: center; text-transform: uppercase; }
         
         .main-container { 
-    display: flex; 
-    gap: var(--universal-gap); 
-    padding: var(--universal-gap); 
-    padding-bottom: calc(75px + (var(--universal-gap) * 2)) !important; 
-    align-items: flex-start; 
-    position: relative; 
-    background: var(--dark-chocolate); 
-    overflow: hidden; 
-    border-radius: 25px 25px 0 0; 
-    min-height: 100vh;
-}
+            display: flex; 
+            gap: 10px; 
+            padding: 10px; 
+            /* GYARA: Mun kara padding a kasa (120px) domin atamfar karshe ta fito fili */
+            padding-bottom: 120px; 
+            align-items: flex-start; 
+            position: relative; 
+            background: var(--dark-chocolate); 
+            overflow: hidden; 
+            border-radius: 25px 25px 0 0; 
+            min-height: 100vh;
+        }
 
-.main-container::before { 
-    content: ""; 
-    position: absolute; 
-    top: -100%; 
-    left: -100%; 
-    width: 300%; 
-    height: 300%; 
-    background: radial-gradient(circle at center, rgba(255, 223, 0, 0.4) 0%, rgba(212, 175, 55, 0.2) 30%, transparent 60%), linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%); 
-    background-size: 500px 500px; 
-    animation: serpent-crawl 15s ease-in-out infinite; 
-    z-index: 0; 
-    pointer-events: none; 
-    filter: blur(4px); 
-}
-
-@keyframes serpent-crawl { 
-    0% { transform: translate(-15%, -15%) rotate(0deg); } 
-    33% { transform: translate(10%, 5%) rotate(2deg); } 
-    66% { transform: translate(-5%, 15%) rotate(-2deg); } 
-    100% { transform: translate(-15%, -15%) rotate(0deg); } 
-}
+        .main-container::before { content: ""; position: absolute; top: -100%; left: -100%; width: 300%; height: 300%; background: radial-gradient(circle at center, rgba(255, 223, 0, 0.4) 0%, rgba(212, 175, 55, 0.2) 30%, transparent 60%), linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%); background-size: 500px 500px; animation: serpent-crawl 15s ease-in-out infinite; z-index: 0; pointer-events: none; filter: blur(4px); }
+        @keyframes serpent-crawl { 0% { transform: translate(-15%, -15%) rotate(0deg); } 33% { transform: translate(10%, 5%) rotate(2deg); } 66% { transform: translate(-5%, 15%) rotate(-2deg); } 100% { transform: translate(-15%, -15%) rotate(0deg); } }
         
         .column { flex: 1; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 5; }
         
+        /* GYARA: Mun mayar da product-card zuwa block domin link din ya kama ko'ina */
         .product-card { background: white; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); position: relative; z-index: 10; cursor: pointer; text-decoration: none; color: inherit; }
         .product-card:active { transform: scale(0.96); transition: 0.1s; }
         
@@ -95,49 +71,10 @@
         .stars-mini { display: flex; gap: 0.5px; color: #ff9900 !important; font-size: 7.5px !important; }
         .review-count { color: #aaa; font-size: 7px; font-weight: 600; }
 
-        .depth-dock { 
-    position: fixed; 
-    bottom: var(--universal-gap); 
-    left: var(--universal-gap); 
-    right: var(--universal-gap); 
-    height: 75px; 
-    background: var(--milk-bg); 
-    border-radius: 20px; 
-    display: flex; 
-    justify-content: space-around; 
-    align-items: center; 
-    padding: 0 10px; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
-    z-index: 1000; 
-    transition: transform 0.3s ease; 
-}
-
-.depth-item { 
-    position: relative; 
-    width: 50px; 
-    height: 50px; 
-    background: var(--milk-bg); 
-    border-radius: 12px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    cursor: pointer; 
-    box-shadow: 4px 4px 10px rgba(0,0,0,0.1); 
-    color: #777; 
-    transition: 0.2s; 
-}
-
-.depth-item:active { transform: scale(0.85); }
-
-.depth-item.active { 
-    box-shadow: inset 4px 4px 10px rgba(0,0,0,0.15); 
-    color: var(--neon-gold); 
-}
-
-.nav-hidden {
-    transform: translateY(150%);
-}
-        
+        .depth-dock { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 420px; height: 75px; background: var(--milk-bg); border-radius: 20px; display: flex; justify-content: space-around; align-items: center; padding: 0 10px; box-shadow: 20px 20px 60px rgba(0,0,0,0.3); z-index: 1000; }
+        .depth-item { position: relative; width: 50px; height: 50px; background: var(--milk-bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 4px 4px 10px rgba(0,0,0,0.2); color: #777; transition: 0.2s; }
+        .depth-item:active { transform: scale(0.85); }
+        .depth-item.active { box-shadow: inset 4px 4px 10px rgba(0,0,0,0.2); color: var(--neon-gold); }
     </style>
 </head>
 <body>
@@ -164,7 +101,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
 <script>
-// Firebase initialization (Tabbatar ka sa naka cikakken config idan ya fita)
 const firebaseConfig = {
   apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
   authDomain: "global-market-admin.firebaseapp.com",
@@ -177,6 +113,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+const track = document.getElementById('ads-track');
+track.innerHTML += track.innerHTML; 
+
 function renderProducts(products) {
     const grid = document.getElementById('product-grid');
     grid.innerHTML = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
@@ -187,8 +126,9 @@ function renderProducts(products) {
         let rowIndex = Math.floor(count / 2);
         let cardClass = (rowIndex % 2 === 0) ? (count % 2 === 0 ? "first-box" : "standard-box") : (count % 2 === 0 ? "standard-box" : "first-box");
         
+        // GYARA: An sanya atamfar a cikin <a> tag don ta zama link
         const cardHTML = `
-            <a href="products-page.html?name=${encodeURIComponent(p.name)}" class="product-card ${cardClass}">
+            <a href="products-page.html" class="product-card ${cardClass}">
                 <div class="img-area">
                     <div class="hot-tag">HOT ITEM</div>
                     <div class="live-dot-container"><div class="green-pulse"></div><span style="color:white; font-size:7px; font-weight:800;">LIVE</span></div>
@@ -211,9 +151,13 @@ function renderProducts(products) {
 }
 
 function startLiveUpdates() {
+    const cachedData = localStorage.getItem('atamfa_cache');
+    if (cachedData) renderProducts(JSON.parse(cachedData));
+
     db.collection('products').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
         let products = [];
         snapshot.forEach(doc => products.push(doc.data()));
+        localStorage.setItem('atamfa_cache', JSON.stringify(products));
         renderProducts(products);
     });
 }
@@ -226,4 +170,4 @@ function activate(el) {
 document.addEventListener('DOMContentLoaded', startLiveUpdates);
 </script>
 </body>
-</html>
+    </html>
