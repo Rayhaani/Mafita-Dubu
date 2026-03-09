@@ -6,165 +6,138 @@
     <title>MD | Atamfa Elite Market</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Quicksand:wght@500;700&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
 
     <style>
-        :root {
-            --milk-bg: #E8E1D5; 
-            --dark-chocolate: #1A0F0D; 
-            --neon-gold: #D4AF37;
-            --verified-blue: #00BAFF;
-        }
-
-        body { 
-            background-color: var(--milk-bg); 
-            font-family: 'Inter', sans-serif; 
-            margin: 0; 
-            overflow-x: hidden;
-        }
-
-        .ads-wrapper { 
-            width: 100%; 
-            overflow: hidden; 
-            padding: 10px 0; 
-            background: var(--milk-bg);
-        }
-        .ads-track { 
-            display: flex; gap: 12px; padding-left: 15px; width: max-content;
-            animation: scroll-ads 45s linear infinite; 
-        }
+       :root { 
+    --milk-bg: #E8E1D5; 
+    --dark-chocolate: #1A0F0D; 
+    --neon-gold: #D4AF37; 
+    --verified-blue: #00BAFF; 
+    --universal-gap: 12px; /* Wannan lambar ita ce Master Key dinka */
+       }
+        
+        body { background-color: var(--milk-bg); font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
+        
+        .ads-wrapper { width: 100%; overflow: hidden; padding: 10px 0; background: var(--milk-bg); }
+        .ads-track { display: flex; gap: 12px; padding-left: 15px; width: max-content; animation: scroll-ads 45s linear infinite; }
         @keyframes scroll-ads { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        .ad-card {
-            min-width: 150px; height: 160px;
-            background-color: var(--milk-bg); 
-            border-radius: 20px; border: 1.5px solid var(--neon-gold);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
+        .ad-card { min-width: 150px; height: 160px; background-color: var(--milk-bg); border-radius: 20px; border: 1.5px solid var(--neon-gold); display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .ad-card i { font-size: 2rem; color: var(--neon-gold); margin-bottom: 8px; }
         .ad-card span { font-size: 0.7rem; color: var(--dark-chocolate); font-weight: 800; text-align: center; text-transform: uppercase; }
-
+        
         .main-container { 
-            display: flex; 
-            gap: 10px; 
-            padding: 10px; 
-            align-items: flex-start; 
-            position: relative;
-            background: var(--dark-chocolate);
-            overflow: hidden;
-            border-radius: 25px 25px 0 0;
-        }
+    display: flex; 
+    gap: var(--universal-gap); 
+    padding: var(--universal-gap); 
+    padding-bottom: calc(75px + (var(--universal-gap) * 2)) !important; 
+    align-items: flex-start; 
+    position: relative; 
+    background: var(--dark-chocolate); 
+    overflow: hidden; 
+    border-radius: 25px 25px 0 0; 
+    min-height: 100vh;
+}
 
-        .main-container::before {
-            content: "";
-            position: absolute;
-            top: -100%; left: -100%; width: 300%; height: 300%;
-            background: radial-gradient(circle at center, 
-                rgba(255, 223, 0, 0.4) 0%, 
-                rgba(212, 175, 55, 0.2) 30%, 
-                transparent 60%),
-                linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%);
-            background-size: 500px 500px;
-            animation: serpent-crawl 15s ease-in-out infinite;
-            z-index: 0;
-            pointer-events: none;
-            filter: blur(4px);
-        }
+.main-container::before { 
+    content: ""; 
+    position: absolute; 
+    top: -100%; 
+    left: -100%; 
+    width: 300%; 
+    height: 300%; 
+    background: radial-gradient(circle at center, rgba(255, 223, 0, 0.4) 0%, rgba(212, 175, 55, 0.2) 30%, transparent 60%), linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%); 
+    background-size: 500px 500px; 
+    animation: serpent-crawl 15s ease-in-out infinite; 
+    z-index: 0; 
+    pointer-events: none; 
+    filter: blur(4px); 
+}
 
-        @keyframes serpent-crawl {
-            0% { transform: translate(-15%, -15%) rotate(0deg); }
-            33% { transform: translate(10%, 5%) rotate(2deg); }
-            66% { transform: translate(-5%, 15%) rotate(-2deg); }
-            100% { transform: translate(-15%, -15%) rotate(0deg); }
-        }
-
+@keyframes serpent-crawl { 
+    0% { transform: translate(-15%, -15%) rotate(0deg); } 
+    33% { transform: translate(10%, 5%) rotate(2deg); } 
+    66% { transform: translate(-5%, 15%) rotate(-2deg); } 
+    100% { transform: translate(-15%, -15%) rotate(0deg); } 
+}
+        
         .column { flex: 1; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 5; }
-
-        .product-card {
-            background: white; border-radius: 14px; overflow: hidden;
-            display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); position: relative; z-index: 10;
-        }
-
-        .hot-tag {
-            position: absolute; top: 8px; left: 8px;
-            background: #FF3131; color: white;
-            font-size: 7px; font-weight: 900; padding: 2px 6px;
-            border-radius: 4px; z-index: 5; box-shadow: 0 0 10px rgba(255,49,49,0.5);
-        }
-
-        .live-dot-container {
-            position: absolute; top: 8px; right: 8px;
-            background: rgba(0,0,0,0.4); padding: 3px 6px;
-            border-radius: 20px; display: flex; align-items: center; gap: 4px; z-index: 5;
-        }
-        .green-pulse {
-            width: 6px; height: 6px; background: #39FF14; border-radius: 50%;
-            position: relative;
-        }
-        .green-pulse::after {
-            content: ""; position: absolute; width: 100%; height: 100%;
-            background: #39FF14; border-radius: 50%; animation: pulse-ring 1.5s infinite;
-        }
+        
+        .product-card { background: white; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); position: relative; z-index: 10; cursor: pointer; text-decoration: none; color: inherit; }
+        .product-card:active { transform: scale(0.96); transition: 0.1s; }
+        
+        .hot-tag { position: absolute; top: 8px; left: 8px; background: #FF3131; color: white; font-size: 7px; font-weight: 900; padding: 2px 6px; border-radius: 4px; z-index: 5; box-shadow: 0 0 10px rgba(255,49,49,0.5); }
+        .live-dot-container { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.4); padding: 3px 6px; border-radius: 20px; display: flex; align-items: center; gap: 4px; z-index: 5; }
+        .green-pulse { width: 6px; height: 6px; background: #39FF14; border-radius: 50%; position: relative; }
+        .green-pulse::after { content: ""; position: absolute; width: 100%; height: 100%; background: #39FF14; border-radius: 50%; animation: pulse-ring 1.5s infinite; }
         @keyframes pulse-ring { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(3.5); opacity: 0; } }
-
+        
         .img-area { width: 100%; position: relative; background: #f3f3f3; overflow: hidden; }
         .first-box .img-area { height: 260px !important; }
         .standard-box .img-area { height: 212px; }
         .img-area img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
+        
         .details-area { padding: 8px; display: flex; flex-direction: column; gap: 2px; }
-        .p-name { 
-            font-family: 'Inter', sans-serif; font-size: 10.5px; color: #444; font-weight: 700; 
-            display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;  
-            overflow: hidden; margin: 0 !important; line-height: 1.1; 
-            text-transform: capitalize; text-align: left;
-        }
-
-        /* GYARAN CART BOX DA PRICE ROW */
-        .price-row { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            width: 100%; 
-            margin-top: 1px; 
-            margin-bottom: 3px; 
-        }
-
-        .cart-box-temu {
-            width: 24px;
-            height: 24px;
-            border: 1.8px solid #d1d1d1; /* Bolding border */
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--dark-chocolate);
-            font-size: 11px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .cart-box-temu:active { transform: scale(0.9); }
-
-        .price-button {
-            background: linear-gradient(135deg, #D4AF37 0%, #F1D592 50%, #D4AF37 100%);
-            color: #1A0F0D; padding: 1.5px 7px; border-radius: 20px;
-            font-weight: 800; font-size: 12px; font-style: italic; 
-            display: inline-flex; align-items: center; justify-content: center;
-        }
-
+        .p-name { font-family: 'Inter', sans-serif; font-size: 10.5px; color: #444; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; margin: 0 !important; line-height: 1.1; text-transform: capitalize; text-align: left; }
+        .price-row { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 1px; margin-bottom: 3px; }
+        .cart-box-temu { width: 24px; height: 24px; border: 1.8px solid #d1d1d1; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--dark-chocolate); font-size: 11px; cursor: pointer; transition: 0.2s; }
+        .cart-box-temu:active { transform: scale(0.8); background: var(--neon-gold); color: white; border-color: var(--neon-gold); }
+        .price-button { background: linear-gradient(135deg, #D4AF37 0%, #F1D592 50%, #D4AF37 100%); color: #1A0F0D; padding: 1.5px 7px; border-radius: 20px; font-weight: 800; font-size: 12px; font-style: italic; display: inline-flex; align-items: center; justify-content: center; }
+        
         .info-box-compact { background: var(--dark-chocolate); border: 1.2px solid var(--neon-gold); border-radius: 9px; padding: 6px; width: 100%; display: flex; flex-direction: column; gap: 3px; }
         .row-item { display: flex; align-items: center; justify-content: space-between; width: 100%; }
         .trust-bold { display: flex; align-items: center; gap: 4px; font-size: 8.5px; font-weight: 800; color: #fff; }
         .verified-icon { color: var(--verified-blue) !important; font-size: 10px !important; }
         .years-bold { font-size: 7.5px; color: #fff; font-weight: 800; background: rgba(255,255,255,0.1); padding: 1px 4px; border-radius: 3px; }
-        
         .loc-bold { display: flex; align-items: center; gap: 3px; font-size: 8px; color: #ddd; font-weight: 700; }
         .loc-icon { color: #ff4d4d !important; font-size: 9px !important; }
-        
         .stars-container { display: flex; align-items: center; gap: 2px; }
         .stars-mini { display: flex; gap: 0.5px; color: #ff9900 !important; font-size: 7.5px !important; }
         .review-count { color: #aaa; font-size: 7px; font-weight: 600; }
+
+        .depth-dock { 
+    position: fixed; 
+    bottom: var(--universal-gap); 
+    left: var(--universal-gap); 
+    right: var(--universal-gap); 
+    height: 75px; 
+    background: var(--milk-bg); 
+    border-radius: 20px; 
+    display: flex; 
+    justify-content: space-around; 
+    align-items: center; 
+    padding: 0 10px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+    z-index: 1000; 
+    transition: transform 0.3s ease; 
+}
+
+.depth-item { 
+    position: relative; 
+    width: 50px; 
+    height: 50px; 
+    background: var(--milk-bg); 
+    border-radius: 12px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer; 
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.1); 
+    color: #777; 
+    transition: 0.2s; 
+}
+
+.depth-item:active { transform: scale(0.85); }
+
+.depth-item.active { 
+    box-shadow: inset 4px 4px 10px rgba(0,0,0,0.15); 
+    color: var(--neon-gold); 
+}
+
+.nav-hidden {
+    transform: translateY(150%);
+}
+        
     </style>
 </head>
 <body>
@@ -178,9 +151,17 @@
     </div>
 
     <div class="main-container" id="product-grid"></div>
-    
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <nav class="depth-dock">
+        <div class="depth-item active" onclick="activate(this)"><i class="fa-solid fa-house"></i></div>
+        <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-chart-pie"></i></div>
+        <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-basket-shopping"></i></div>
+        <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-paper-plane"></i></div>
+        <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-id-card-clip"></i></div>
+    </nav>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
 <script>
 const firebaseConfig = {
@@ -195,64 +176,59 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-const track = document.getElementById('ads-track');
-track.innerHTML += track.innerHTML; 
-
-function startLiveUpdates() {
+function renderProducts(products) {
     const grid = document.getElementById('product-grid');
-    db.collection('products').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
-        grid.innerHTML = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
-        let count = 0;
-        snapshot.forEach(doc => {
-            const p = doc.data();
-            const colId = count % 2 === 0 ? 'col1' : 'col2';
-            const column = document.getElementById(colId);
-            let rowIndex = Math.floor(count / 2);
-            let cardClass = (rowIndex % 2 === 0) ? (count % 2 === 0 ? "first-box" : "standard-box") : (count % 2 === 0 ? "standard-box" : "first-box");
-            
-            const rCount = p.reviews || Math.floor(Math.random() * 300) + 50;
-
-            const cardHTML = `
-                <div class="product-card ${cardClass}">
-                    <div class="img-area" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">
-                        <div class="hot-tag">HOT ITEM</div>
-                        <div class="live-dot-container"><div class="green-pulse"></div><span style="color:white; font-size:7px; font-weight:800;">LIVE</span></div>
-                        <img src="${p.img}" onerror="this.src='https://via.placeholder.com/300'">
+    grid.innerHTML = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
+    
+    products.forEach((p, count) => {
+        const colId = count % 2 === 0 ? 'col1' : 'col2';
+        const column = document.getElementById(colId);
+        let rowIndex = Math.floor(count / 2);
+        let cardClass = (rowIndex % 2 === 0) ? (count % 2 === 0 ? "first-box" : "standard-box") : (count % 2 === 0 ? "standard-box" : "first-box");
+        
+        // Mun dawo da tsarin onclick domin localStorage dinka ya yi aiki yadda yake a asali
+        const cardHTML = `
+            <div class="product-card ${cardClass}">
+                <div class="img-area" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')">
+                    <div class="hot-tag">HOT ITEM</div>
+                    <div class="live-dot-container"><div class="green-pulse"></div><span style="color:white; font-size:7px; font-weight:800;">LIVE</span></div>
+                    <img src="${p.img}">
+                </div>
+                <div class="details-area">
+                    <p class="p-name" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')">${p.name.toLowerCase()}</p>
+                    <div class="price-row">
+                        <div class="cart-box-temu"><i class="fa-solid fa-cart-shopping"></i></div>
+                        <div class="price-button" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')">₦${Number(p.price).toLocaleString()}</div>
                     </div>
-                    <div class="details-area">
-                        <p class="p-name" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">${p.name.toLowerCase()}</p>
-                        
-                        <div class="price-row">
-                            <div class="cart-box-temu" onclick="window.location.href='cart.html'"><i class="fa-solid fa-cart-shopping"></i></div>
-                            <div class="price-button" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')" style="cursor: pointer;">₦${Number(p.price).toLocaleString()}</div>
-                        </div>
-
-                        <div class="info-box-compact">
-                            <div class="row-item">
-                                <div class="trust-bold"><i class="fa-solid fa-circle-check verified-icon"></i> TrustID Verified</div>
-                                <span class="years-bold">3+ YEARS</span>
-                            </div>
-                            <div class="row-item">
-                                <div class="loc-bold"><i class="fa-solid fa-location-dot loc-icon"></i> ${p.location || 'Kano'}</div>
-                                <div class="stars-container">
-                                    <div class="stars-mini"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                                    <span class="review-count">(${rCount})</span>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="info-box-compact">
+                        <div class="row-item"><div class="trust-bold"><i class="fa-solid fa-circle-check verified-icon"></i> TrustID Verified</div><span class="years-bold">3+ YEARS</span></div>
+                        <div class="row-item"><div class="loc-bold"><i class="fa-solid fa-location-dot loc-icon"></i> ${p.location || 'Kano'}</div><div class="stars-container"><div class="stars-mini"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><span class="review-count">(120)</span></div></div>
                     </div>
-                </div>`;
-            column.insertAdjacentHTML('beforeend', cardHTML);
-            count++;
-        });
+                </div>
+            </div>`;
+        column.insertAdjacentHTML('beforeend', cardHTML);
     });
 }
-document.addEventListener('DOMContentLoaded', startLiveUpdates);
 
 function goToProduct(name, price, img) {
     localStorage.setItem('selectedProduct', JSON.stringify({name, price, img}));
     window.location.href = 'products-page.html';
 }
+
+function startLiveUpdates() {
+    db.collection('products').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
+        let products = [];
+        snapshot.forEach(doc => products.push(doc.data()));
+        renderProducts(products);
+    });
+}
+
+function activate(el) {
+    document.querySelectorAll('.depth-item').forEach(item => item.classList.remove('active'));
+    el.classList.add('active');
+}
+
+document.addEventListener('DOMContentLoaded', startLiveUpdates);
 </script>
 </body>
 </html>
