@@ -217,10 +217,11 @@ function renderProducts(products) {
 function addToCart(event, name, price, img, imgId) {
     event.stopPropagation();
     
-    // 1. Vibration
-    if (navigator.vibrate) navigator.vibrate(50);
+    // GYARA 1: Vibration din ya yi aiki radau
+    if ("vibrate" in navigator) {
+        navigator.vibrate(60); 
+    }
 
-    // 2. Jumping Animation
     const imgElement = document.getElementById(imgId);
     const cartIcon = document.querySelector('.fa-basket-shopping');
     const flyingImg = imgElement.cloneNode();
@@ -231,7 +232,7 @@ function addToCart(event, name, price, img, imgId) {
     Object.assign(flyingImg.style, {
         position: 'fixed', left: rect.left+'px', top: rect.top+'px',
         width: rect.width+'px', height: rect.height+'px',
-        zIndex: '2000', transition: 'all 0.8s ease-in-out',
+        zIndex: '2000', transition: 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
         borderRadius: '50%', opacity: '0.7'
     });
 
@@ -247,9 +248,12 @@ function addToCart(event, name, price, img, imgId) {
 
     setTimeout(() => {
         flyingImg.remove();
+        
+        // GYARA 2: Adana kaya a sabon tsarin cartItems
         let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
         cart.push({name, price, img});
         localStorage.setItem('cartItems', JSON.stringify(cart));
+        
         updateCartBadge();
     }, 800);
 }
