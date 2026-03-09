@@ -217,11 +217,6 @@ function renderProducts(products) {
 function addToCart(event, name, price, img, imgId) {
     event.stopPropagation();
     
-    // GYARA 1: Vibration din ya yi aiki radau
-    if ("vibrate" in navigator) {
-        navigator.vibrate(60); 
-    }
-
     const imgElement = document.getElementById(imgId);
     const cartIcon = document.querySelector('.fa-basket-shopping');
     const flyingImg = imgElement.cloneNode();
@@ -230,32 +225,45 @@ function addToCart(event, name, price, img, imgId) {
     const cartRect = cartIcon.getBoundingClientRect();
 
     Object.assign(flyingImg.style, {
-        position: 'fixed', left: rect.left+'px', top: rect.top+'px',
-        width: rect.width+'px', height: rect.height+'px',
-        zIndex: '2000', transition: 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-        borderRadius: '50%', opacity: '0.7'
+        position: 'fixed',
+        left: rect.left + 'px',
+        top: rect.top + 'px',
+        width: rect.width + 'px',
+        height: rect.height + 'px',
+        zIndex: '2000',
+        transition: 'all 0.9s cubic-bezier(0.5, -0.5, 0.3, 1.5)',
+        borderRadius: '15px',
+        opacity: '1',
+        pointerEvents: 'none',
+        boxShadow: '0 10px 20px rgba(0,0,0,0.3)',
+        transform: 'scale(1) rotate(0deg)'
     });
 
     document.body.appendChild(flyingImg);
 
     setTimeout(() => {
-        flyingImg.style.left = cartRect.left+'px';
-        flyingImg.style.top = cartRect.top+'px';
-        flyingImg.style.width = '20px';
-        flyingImg.style.height = '20px';
-        flyingImg.style.opacity = '0';
-    }, 10);
+        flyingImg.style.left = (cartRect.left - 10) + 'px';
+        flyingImg.style.top = (cartRect.top - 20) + 'px';
+        flyingImg.style.width = '30px';
+        flyingImg.style.height = '30px';
+        flyingImg.style.opacity = '0.5';
+        flyingImg.style.transform = 'scale(0.2) rotate(360deg)'; 
+    }, 20);
 
     setTimeout(() => {
         flyingImg.remove();
         
-        // GYARA 2: Adana kaya a sabon tsarin cartItems
+        // Cart Icon Reaction
+        cartIcon.style.transition = 'transform 0.2s';
+        cartIcon.style.transform = 'scale(1.4)';
+        setTimeout(() => cartIcon.style.transform = 'scale(1)', 200);
+
         let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
         cart.push({name, price, img});
         localStorage.setItem('cartItems', JSON.stringify(cart));
         
         updateCartBadge();
-    }, 800);
+    }, 900);
 }
 
 function updateCartBadge() {
