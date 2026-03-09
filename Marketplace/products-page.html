@@ -866,6 +866,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function openChat() { window.location.href = 'chat-room.html'; }
 
 // C. ADD TO CART
+// 1. GYARAN ADD TO CART (Zai tura kaya cikin cart sannan ya bude modal)
 function addToCartFunction() {
     const selectedColor = document.querySelector('.color-dot.active');
     const hasColorOptions = document.querySelectorAll('.color-dot').length > 0;
@@ -877,25 +878,53 @@ function addToCartFunction() {
             setTimeout(() => overlay.classList.add('active'), 10);
         }
     } else {
+        // --- GYARA 1: TURA KAYA CIKIN STORAGE ---
+        const data = localStorage.getItem('selectedProduct');
+        if (data) {
+            let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+            cart.push(JSON.parse(data));
+            localStorage.setItem('cartItems', JSON.stringify(cart));
+        }
         openModal(); 
     }
 }
 
-// D. MODAL FUNCTIONS
+// 2. GYARAN MODAL (Don boxes su nuna hotunan cart da kuma gyara adadi)
 function openModal() {
     const modal = document.getElementById('cart-modal');
     const prog = document.getElementById('progress');
     const num = document.getElementById('num');
+    
+    // --- GYARA 2: SHIGAR DA HOTUNAN CART CIKIN BOXES ---
+    const cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const promoGrid = document.querySelector('.promo-grid');
+    if (promoGrid && cart.length > 0) {
+        // Zai dauko hotuna 12 na karshe ya jera su
+        promoGrid.innerHTML = cart.slice(-12).reverse().map(item => `
+            <div class="promo-item">
+                <div class="item-box"><img src="${item.img}"></div>
+                <div class="stock-label">In Cart</div>
+                <div class="price-label">₦${Number(item.price).toLocaleString()}</div>
+            </div>
+        `).join('');
+    }
+    
+    // --- GYARA 3: MAYAR DA NAMBAR CHECKOUT ZUWA ADADIN CART ---
+    const checkoutBtn = document.querySelector('.btn-checkout');
+    if (checkoutBtn) {
+        checkoutBtn.innerText = `Check out these items (${cart.length})`;
+    }
+
     modal.classList.add('active');
     
     clearInterval(popTimer);
     let time = 5;
-    prog.style.strokeDashoffset = 88;
+    if(prog) prog.style.strokeDashoffset = 88;
     
     const runTimer = () => {
-        num.innerText = time + 's';
-        prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
-        if(time < 0) { 
+        if(num) num.innerText = time + 's';
+        if(prog) prog.style.strokeDashoffset = 88 - (88 * (5 - time) / 5);
+        if(time <= 0) { 
             clearInterval(popTimer); 
             closeModal(); 
         }
@@ -904,6 +933,7 @@ function openModal() {
     runTimer();
     popTimer = setInterval(runTimer, 1000);
 }
+    
 
 function closeModal() {
     clearInterval(popTimer);
