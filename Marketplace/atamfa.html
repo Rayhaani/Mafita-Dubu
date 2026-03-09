@@ -137,6 +137,10 @@
 .nav-hidden {
     transform: translateY(150%);
 }
+
+#cart-badge {
+    position: absolute; top: -5px; right: -5px; background: #FF3131; color: white; font-size: 10px; font-weight: 800; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; border: 2px solid var(--milk-bg); z-index: 10;
+}
         
     </style>
 </head>
@@ -155,7 +159,7 @@
     <nav class="depth-dock">
         <div class="depth-item active" onclick="activate(this)"><i class="fa-solid fa-house"></i></div>
         <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-chart-pie"></i></div>
-        <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-basket-shopping"></i></div>
+        <div class="depth-item" id="cart-nav-item" onclick="activate(this); window.location.href='cart.html'"><i class="fa-solid fa-basket-shopping"></i><span id="cart-badge">0</span></div>
         <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-paper-plane"></i></div>
         <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-id-card-clip"></i></div>
     </nav>
@@ -186,18 +190,17 @@ function renderProducts(products) {
         let rowIndex = Math.floor(count / 2);
         let cardClass = (rowIndex % 2 === 0) ? (count % 2 === 0 ? "first-box" : "standard-box") : (count % 2 === 0 ? "standard-box" : "first-box");
         
-        // Mun dawo da tsarin onclick domin localStorage dinka ya yi aiki yadda yake a asali
         const cardHTML = `
             <div class="product-card ${cardClass}">
                 <div class="img-area" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')">
                     <div class="hot-tag">HOT ITEM</div>
                     <div class="live-dot-container"><div class="green-pulse"></div><span style="color:white; font-size:7px; font-weight:800;">LIVE</span></div>
-                    <img src="${p.img}">
+                    <img src="${p.img}" id="img-${count}">
                 </div>
                 <div class="details-area">
                     <p class="p-name" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')">${p.name.toLowerCase()}</p>
                     <div class="price-row">
-                        <div class="cart-box-temu"><i class="fa-solid fa-cart-shopping"></i></div>
+                        <div class="cart-box-temu" onclick="addToCart(event, '${p.name}', '${p.price}', '${p.img}', 'img-${count}')"><i class="fa-solid fa-cart-shopping"></i></div>
                         <div class="price-button" onclick="goToProduct('${p.name}', '${p.price}', '${p.img}')">₦${Number(p.price).toLocaleString()}</div>
                     </div>
                     <div class="info-box-compact">
@@ -208,6 +211,54 @@ function renderProducts(products) {
             </div>`;
         column.insertAdjacentHTML('beforeend', cardHTML);
     });
+    updateCartBadge();
+}
+
+function addToCart(event, name, price, img, imgId) {
+    event.stopPropagation();
+    
+    // 1. Vibration
+    if (navigator.vibrate) navigator.vibrate(50);
+
+    // 2. Jumping Animation
+    const imgElement = document.getElementById(imgId);
+    const cartIcon = document.querySelector('.fa-basket-shopping');
+    const flyingImg = imgElement.cloneNode();
+    
+    const rect = imgElement.getBoundingClientRect();
+    const cartRect = cartIcon.getBoundingClientRect();
+
+    Object.assign(flyingImg.style, {
+        position: 'fixed', left: rect.left+'px', top: rect.top+'px',
+        width: rect.width+'px', height: rect.height+'px',
+        zIndex: '2000', transition: 'all 0.8s ease-in-out',
+        borderRadius: '50%', opacity: '0.7'
+    });
+
+    document.body.appendChild(flyingImg);
+
+    setTimeout(() => {
+        flyingImg.style.left = cartRect.left+'px';
+        flyingImg.style.top = cartRect.top+'px';
+        flyingImg.style.width = '20px';
+        flyingImg.style.height = '20px';
+        flyingImg.style.opacity = '0';
+    }, 10);
+
+    setTimeout(() => {
+        flyingImg.remove();
+        let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        cart.push({name, price, img});
+        localStorage.setItem('cartItems', JSON.stringify(cart));
+        updateCartBadge();
+    }, 800);
+}
+
+function updateCartBadge() {
+    let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const badge = document.getElementById('cart-badge');
+    badge.innerText = cart.length;
+    badge.style.display = cart.length > 0 ? 'flex' : 'none';
 }
 
 function goToProduct(name, price, img) {
