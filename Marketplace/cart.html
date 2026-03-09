@@ -3,141 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MD | Shopping Cart</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        :root { 
-            --milk-bg: #E8E1D5; 
-            --dark-chocolate: #1A0F0D; 
-            --neon-gold: #D4AF37; 
-            --universal-gap: 12px; 
+        :root {
+            --zenith-gold: #ffcc33;
+            --zenith-silver: #e0e0e0;
+            --bg-deep: #050505;
+            --glass: rgba(255, 255, 255, 0.07);
+            --primary-orange: #ff7043;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', sans-serif; }
+
+        body {
+            background: var(--bg-deep);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
+            padding-top: 100px;
+            padding-bottom: 160px;
+        }
+
+        /* --- HEADER --- */
+        .zenith-header-new {
+            position: fixed; top: 15px; left: 5%; width: 90%; height: 75px;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(25px);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; z-index: 3000; border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cart-left { 
+            position: relative; font-weight: 700; font-size: 13px; color: #fff;
+            background: rgba(255, 204, 51, 0.1); padding: 12px 20px; border-radius: 18px;
+            border-left: 4px solid var(--zenith-gold);
+        }
+        .cart-left span { color: var(--zenith-gold); font-size: 18px; margin-left: 5px; }
+
+        .zenith-main-trigger {
+            width: 45px; height: 45px; background: #111; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.4s; border: 1px solid #333; color: #fff;
+        }
+        .zenith-main-trigger.active { background: var(--zenith-gold); color: #000; border-color: #fff; }
+
+        /* --- FLOAT CARDS --- */
+        .zenith-container { padding: 15px 20px; }
+
+        .float-card {
+            background: rgba(255, 255, 255, 0.04);
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 24px;
+            display: flex;
+            gap: 15px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: float 4s ease-in-out infinite;
+            transition: 0.5s;
+        }
+
+        .float-card.selected { border-color: var(--zenith-gold); background: rgba(255, 204, 51, 0.05); }
+
+        .zenith-trigger { 
+            position: absolute; top: -8px; right: 15px; width: 35px; height: 35px; 
+            background: #111; border-radius: 50%; display: flex; align-items: center; 
+            justify-content: center; border: 1px solid #333; cursor: pointer; z-index: 10; 
+            transition: 0.4s; color: #fff; font-size: 12px;
+        }
+        .selected .zenith-trigger { background: var(--zenith-gold); color: #000; border-color: #fff; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .img-box { position: relative; flex-shrink: 0; }
+        .product-img {
+            width: 90px; height: 110px;
+            border-radius: 18px;
+            object-fit: cover;
+        }
+
+        .stock-tag {
+            position: absolute; top: -10px; left: -5px;
+            background: var(--primary-orange);
+            font-size: 8px; font-weight: 700;
+            padding: 3px 8px; border-radius: 20px;
+            z-index: 5;
+        }
+
+        .info-box { flex: 1; }
+        .title { font-size: 14px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; opacity: 0.9; }
+
+        .price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
+        .now { font-size: 18px; font-weight: 700; color: #fff; }
+        .old { font-size: 11px; text-decoration: line-through; color: rgba(255,255,255,0.4); }
+
+        .card-footer { display: flex; justify-content: space-between; align-items: center; }
+        .qty-control {
+            display: flex; align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px; padding: 4px;
+        }
+        .qty-control button {
+            width: 28px; height: 28px; border: none; background: transparent;
+            color: #fff; font-size: 16px; cursor: pointer;
+        }
+        .qty-control span { padding: 0 10px; font-weight: 700; font-size: 14px; }
+
+        /* --- FOOTER --- */
+        .zenith-footer-integrated {
+            position: fixed; bottom: 25px; left: 5%; width: 90%; height: 80px; background: #000; border-radius: 25px; display: flex; align-items: center; padding: 5px; z-index: 2000; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .zenith-footer-integrated::before { content: ''; position: absolute; width: 150%; height: 150%; background: conic-gradient(from 0deg, transparent, var(--zenith-gold), transparent, #fff, transparent); animation: supernovaRotate 3s linear infinite; z-index: -1; }
+        .zenith-footer-integrated::after { content: ''; position: absolute; inset: 2px; background: #080808; border-radius: 23px; z-index: 0; }
+        @keyframes supernovaRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         
-        body { background-color: var(--milk-bg); font-family: 'Inter', sans-serif; margin: 0; padding: var(--universal-gap); }
-
-        .cart-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-        .back-btn { width: 40px; height: 40px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; }
-        .cart-title { font-family: 'Plus+Jakarta+Sans', sans-serif; font-size: 20px; font-weight: 800; color: var(--dark-chocolate); }
-
-        /* Wannan shine container din da zamu zuba kayan a ciki */
-        #cart-items-list { display: flex; flex-direction: column; gap: 15px; }
-
-        .cart-item { 
-            background: white; 
-            border-radius: 18px; 
-            padding: 12px; 
-            display: flex; 
-            align-items: center; 
-            gap: 15px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-            border: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
-        .item-img { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; }
-        
-        .item-info { flex: 1; }
-        .item-name { font-weight: 700; font-size: 14px; color: var(--dark-chocolate); text-transform: capitalize; margin-bottom: 4px; }
-        .item-price { font-weight: 800; color: var(--neon-gold); font-size: 16px; }
-
-        .remove-btn { color: #FF3131; font-size: 18px; cursor: pointer; padding: 10px; }
-
-        .checkout-footer { 
-            position: fixed; bottom: 0; left: 0; right: 0; 
-            background: var(--dark-chocolate); 
-            padding: 20px; 
-            border-radius: 25px 25px 0 0; 
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.2); 
-        }
-        
-        .total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .total-label { color: #aaa; font-size: 14px; font-weight: 600; }
-        .total-amount { color: white; font-size: 22px; font-weight: 800; }
-
-        .pay-btn { 
-            background: linear-gradient(135deg, #D4AF37 0%, #F1D592 50%, #D4AF37 100%); 
-            color: var(--dark-chocolate); 
-            width: 100%; 
-            padding: 15px; 
-            border-radius: 15px; 
-            font-weight: 800; 
-            text-align: center; 
-            font-size: 16px; 
-            text-transform: uppercase; 
-            cursor: pointer;
-        }
+        .total-section { position: relative; z-index: 1; padding-left: 25px; flex: 1; }
+        .total-section b { display: block; font-size: 22px; color: #fff; }
+        .checkout-zenith-btn { position: relative; z-index: 1; background: var(--zenith-gold); color: #000; border: none; height: 100%; padding: 0 35px; border-radius: 20px; font-weight: 900; font-size: 13px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="cart-header">
-        <div class="back-btn" onclick="window.history.back()"><i class="fa-solid fa-arrow-left"></i></div>
-        <div class="cart-title">Kwandon Sayayya</div>
+    <div class="zenith-header-new">
+        <div class="cart-left">CART <span>( <b id="count-top">0</b> )</span></div>
+        <div class="header-right-toggle">
+            <div class="zenith-main-trigger active" id="main-toggle" onclick="toggleAll()">
+                <i class="fa-solid fa-bolt"></i>
+            </div>
+        </div>
     </div>
 
-    <div id="cart-items-list">
+    <div class="zenith-container" id="zenith-cart-list">
         </div>
 
-    <div style="height: 180px;"></div> <div class="checkout-footer">
-        <div class="total-row">
-            <span class="total-label">Jimillar Kuɗi</span>
-            <span class="total-amount" id="cart-total">₦0</span>
+    <div class="zenith-footer-integrated">
+        <div class="total-section">
+            <small style="color:var(--zenith-gold); font-size:9px; font-weight:700;">PAYABLE</small>
+            <b id="total">₦0</b>
         </div>
-        <div class="pay-btn">Biya Kuɗi Yanzu</div>
+        <button class="checkout-zenith-btn" onclick="goToCheckout()">
+            CHECKOUT (<span id="btn-count">0</span>)
+        </button>
     </div>
-
+        
     <script>
-        function loadCart() {
-            const listContainer = document.getElementById('cart-items-list');
-            const totalElement = document.getElementById('cart-total');
-            
-            // Dauko kayan daga LocalStorage
+        // GYARA: Load items from LocalStorage
+        function loadCartFromStorage() {
+            const container = document.getElementById('zenith-cart-list');
             let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
-
+            
             if (cart.length === 0) {
-                listContainer.innerHTML = `
-                    <div style="text-align:center; padding: 50px 20px;">
-                        <i class="fa-solid fa-basket-shopping" style="font-size: 50px; color: #ccc; margin-bottom: 15px;"></i>
-                        <p style="color: #888; font-weight: 600;">Kwandonka babu komai a ciki.</p>
-                        <button onclick="window.history.back()" style="margin-top: 20px; color: var(--neon-gold); font-weight: 800;">Koma Kasuwa</button>
-                    </div>`;
-                totalElement.innerText = "₦0";
+                container.innerHTML = `<div style="text-align:center; padding:50px; opacity:0.5;">Ba ka da kaya a kwando.</div>`;
+                update();
                 return;
             }
 
-            let total = 0;
-            listContainer.innerHTML = ''; // Goge komai kafin mu sa sababbi
-
+            container.innerHTML = '';
             cart.forEach((item, index) => {
-                total += Number(item.price);
-                
-                listContainer.innerHTML += `
-                    <div class="cart-item">
-                        <img src="${item.img}" class="item-img">
-                        <div class="item-info">
-                            <div class="item-name">${item.name.toLowerCase()}</div>
-                            <div class="item-price">₦${Number(item.price).toLocaleString()}</div>
+                // Mun yi amfani da tsarin Float Card dinka
+                container.innerHTML += `
+                    <div class="float-card selected" data-price="${item.price}" data-id="${index}">
+                        <div class="zenith-trigger" onclick="toggleZenith(this)"><i class="fa-solid fa-bolt"></i></div>
+                        <div class="img-box">
+                            <img src="${item.img}" class="product-img">
                         </div>
-                        <div class="remove-btn" onclick="removeItem(${index})">
-                            <i class="fa-solid fa-trash-can"></i>
+                        <div class="info-box">
+                            <h2 class="title">${item.name.toUpperCase()}</h2>
+                            <div class="price-row"><span class="now">₦${Number(item.price).toLocaleString()}</span></div>
+                            <div class="card-footer">
+                                <div class="qty-control"><button onclick="qty(this, -1)">-</button><span class="val">1</span><button onclick="qty(this, 1)">+</button></div>
+                                <i class="fa-solid fa-circle-nodes" style="opacity: 0.3; cursor: pointer;" onclick="del(this, ${index})"></i>
+                            </div>
                         </div>
                     </div>`;
             });
-
-            totalElement.innerText = "₦" + total.toLocaleString();
+            update();
         }
 
-        function removeItem(index) {
-            let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
-            cart.splice(index, 1); // Cire abinda aka danna
-            localStorage.setItem('cartItems', JSON.stringify(cart));
-            loadCart(); // Sake loading din page din
+        function toggleAll() {
+            const mainToggle = document.getElementById('main-toggle');
+            const isActive = mainToggle.classList.toggle('active');
+            document.querySelectorAll('.float-card').forEach(card => {
+                if(isActive) card.classList.add('selected');
+                else card.classList.remove('selected');
+            });
+            update();
         }
 
-        // Fara aiki da zaran an bude page
-        document.addEventListener('DOMContentLoaded', loadCart);
+        function toggleZenith(el) {
+            const card = el.closest('.float-card');
+            card.classList.toggle('selected');
+            update();
+        }
+
+        function qty(btn, n) {
+            const s = btn.parentElement.querySelector('.val');
+            let v = parseInt(s.innerText) + n;
+            if(v >= 1) { s.innerText = v; update(); }
+        }
+
+        function del(i, storageIndex) {
+            const card = i.closest('.float-card');
+            card.style.transform = 'scale(0.5)';
+            card.style.opacity = '0';
+            
+            setTimeout(() => { 
+                card.remove(); 
+                // Cire shi daga ainihin storage din
+                let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+                cart.splice(storageIndex, 1);
+                localStorage.setItem('cartItems', JSON.stringify(cart));
+                update(); 
+            }, 400);
+        }
+
+        function update() {
+            let t = 0; let count = 0;
+            const allCards = document.querySelectorAll('.float-card');
+            const selectedCards = document.querySelectorAll('.float-card.selected');
+            
+            selectedCards.forEach(card => {
+                let price = parseInt(card.dataset.price);
+                let quantity = parseInt(card.querySelector('.val').innerText);
+                t += price * quantity;
+                count++;
+            });
+
+            document.getElementById('total').innerText = "₦" + t.toLocaleString();
+            document.getElementById('btn-count').innerText = count;
+            document.getElementById('count-top').innerText = count;
+
+            const mainToggle = document.getElementById('main-toggle');
+            if (allCards.length > 0 && selectedCards.length === allCards.length) {
+                mainToggle.classList.add('active');
+            } else {
+                mainToggle.classList.remove('active');
+            }
+        }
+
+        function goToCheckout() {
+            const count = parseInt(document.getElementById('btn-count').innerText);
+            if (count > 0) {
+                window.location.href = 'checkout.html';
+            } else {
+                alert("Don Allah abokina, zabi kaya akalla daya! 😊");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadCartFromStorage);
     </script>
 </body>
 </html>
