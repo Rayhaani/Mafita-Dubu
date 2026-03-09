@@ -203,27 +203,39 @@ function renderProducts(products) {
         
         // GYARA: An sanya atamfar a cikin <a> tag don ta zama link
         const cardHTML = `
-            <a href="products-page.html" class="product-card ${cardClass}">
-                <div class="img-area">
-                    <div class="hot-tag">HOT ITEM</div>
-                    <div class="live-dot-container"><div class="green-pulse"></div><span style="color:white; font-size:7px; font-weight:800;">LIVE</span></div>
-                    <img src="${p.img}">
+    <a href="products-page.html?name=${encodeURIComponent(p.name)}" class="product-card ${cardClass}">
+        <div class="img-area">
+            <div class="hot-tag">HOT ITEM</div>
+            <div class="live-dot-container"><div class="green-pulse"></div><span style="color:white; font-size:7px; font-weight:800;">LIVE</span></div>
+            <img src="${p.img}">
+        </div>
+        <div class="details-area">
+            <p class="p-name">${p.name.toLowerCase()}</p>
+            <div class="price-row">
+                <div class="cart-box-temu"><i class="fa-solid fa-cart-shopping"></i></div>
+                <div class="price-button">₦${Number(p.price).toLocaleString()}</div>
+            </div>
+            <div class="info-box-compact">
+                <div class="row-item">
+                    <div class="trust-bold"><i class="fa-solid fa-circle-check verified-icon"></i> TrustID Verified</div>
+                    <span class="years-bold">3+ YEARS</span>
                 </div>
-                <div class="details-area">
-                    <p class="p-name">${p.name.toLowerCase()}</p>
-                    <div class="price-row">
-                        <div class="cart-box-temu"><i class="fa-solid fa-cart-shopping"></i></div>
-                        <div class="price-button">₦${Number(p.price).toLocaleString()}</div>
-                    </div>
-                    <div class="info-box-compact">
-                        <div class="row-item"><div class="trust-bold"><i class="fa-solid fa-circle-check verified-icon"></i> TrustID Verified</div><span class="years-bold">3+ YEARS</span></div>
-                        <div class="row-item"><div class="loc-bold"><i class="fa-solid fa-location-dot loc-icon"></i> ${p.location || 'Kano'}</div><div class="stars-container"><div class="stars-mini"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><span class="review-count">(120)</span></div></div>
+                <div class="row-item">
+                    <div class="loc-bold"><i class="fa-solid fa-location-dot loc-icon"></i> ${p.location || 'Kano'}</div>
+                    <div class="stars-container">
+                        <div class="stars-mini">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <span class="review-count">(120)</span>
                     </div>
                 </div>
-            </a>`;
-        column.insertAdjacentHTML('beforeend', cardHTML);
-    });
-}
+            </div>
+        </div>
+    </a>`;
+column.insertAdjacentHTML('beforeend', cardHTML);
+        
 
 function startLiveUpdates() {
     const cachedData = localStorage.getItem('atamfa_cache');
