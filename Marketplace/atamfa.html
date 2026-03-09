@@ -9,15 +9,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Quicksand:wght@500;700&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
 
     <style>
-        :root { 
+       :root { 
     --milk-bg: #E8E1D5; 
     --dark-chocolate: #1A0F0D; 
     --neon-gold: #D4AF37; 
     --verified-blue: #00BAFF; 
-    
-    /* WANNAN SHINE MAGANIN SHIRME: Ka bar shi a 12px domin komai ya zama uniform */
-    --universal-gap: 12px; 
-        }
+    --universal-gap: 12px; /* Wannan lambar ita ce Master Key dinka */
+       }
         
         body { background-color: var(--milk-bg); font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
         
@@ -80,10 +78,55 @@
         .stars-mini { display: flex; gap: 0.5px; color: #ff9900 !important; font-size: 7.5px !important; }
         .review-count { color: #aaa; font-size: 7px; font-weight: 600; }
 
-        .depth-dock { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 420px; height: 75px; background: var(--milk-bg); border-radius: 20px; display: flex; justify-content: space-around; align-items: center; padding: 0 10px; box-shadow: 20px 20px 60px rgba(0,0,0,0.3); z-index: 1000; }
-        .depth-item { position: relative; width: 50px; height: 50px; background: var(--milk-bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 4px 4px 10px rgba(0,0,0,0.2); color: #777; transition: 0.2s; }
-        .depth-item:active { transform: scale(0.85); }
-        .depth-item.active { box-shadow: inset 4px 4px 10px rgba(0,0,0,0.2); color: var(--neon-gold); }
+        .depth-dock { 
+    position: fixed; 
+    /* GYARA: Mun cire 20px da 50% mun sanya variable domin komai ya zama uniform */
+    bottom: var(--universal-gap); 
+    left: var(--universal-gap); 
+    right: var(--universal-gap); 
+    
+    /* GYARA: Mun cire transform da width: 90% domin yanzu zai bi gefen boxes dinka daidai */
+    height: 75px; 
+    background: var(--milk-bg); 
+    border-radius: 20px; 
+    display: flex; 
+    justify-content: space-around; 
+    align-items: center; 
+    padding: 0 10px; 
+    
+    /* Mun rage nauyin inuwar (shadow) kadan domin ta yi kyan gani a waya */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+    z-index: 1000; 
+    transition: transform 0.3s ease; /* Wannan zai taimaka wurin boye bar din */
+}
+
+.depth-item { 
+    position: relative; 
+    width: 50px; 
+    height: 50px; 
+    background: var(--milk-bg); 
+    border-radius: 12px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer; 
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.1); 
+    color: #777; 
+    transition: 0.2s; 
+}
+
+.depth-item:active { transform: scale(0.85); }
+
+.depth-item.active { 
+    box-shadow: inset 4px 4px 10px rgba(0,0,0,0.15); 
+    color: var(--neon-gold); 
+}
+
+/* WANNAN CLASS DIN ZAI BOYE BAR DIN IDAN ANA SCROLLING */
+.nav-hidden {
+    transform: translateY(150%);
+                     }
+        
     </style>
 </head>
 <body>
