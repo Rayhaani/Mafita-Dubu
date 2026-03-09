@@ -28,14 +28,9 @@
         
         .main-container { 
     display: flex; 
-    /* GYARA: Mun maida gap din ya zama universal */
     gap: var(--universal-gap); 
     padding: var(--universal-gap); 
-    
-    /* GYARA: Lissafin da zai saita sararin saman bar ya zama uniform */
-    /* 75px (tsayin bar) + (gap * 2) domin ya bar sarari daya a sama, daya a kasa */
     padding-bottom: calc(75px + (var(--universal-gap) * 2)) !important; 
-    
     align-items: flex-start; 
     position: relative; 
     background: var(--dark-chocolate); 
@@ -68,7 +63,6 @@
         
         .column { flex: 1; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 5; }
         
-        /* GYARA: Mun mayar da product-card zuwa block domin link din ya kama ko'ina */
         .product-card { background: white; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); position: relative; z-index: 10; cursor: pointer; text-decoration: none; color: inherit; }
         .product-card:active { transform: scale(0.96); transition: 0.1s; }
         
@@ -103,12 +97,9 @@
 
         .depth-dock { 
     position: fixed; 
-    /* GYARA: Mun cire 20px da 50% mun sanya variable domin komai ya zama uniform */
     bottom: var(--universal-gap); 
     left: var(--universal-gap); 
     right: var(--universal-gap); 
-    
-    /* GYARA: Mun cire transform da width: 90% domin yanzu zai bi gefen boxes dinka daidai */
     height: 75px; 
     background: var(--milk-bg); 
     border-radius: 20px; 
@@ -116,11 +107,9 @@
     justify-content: space-around; 
     align-items: center; 
     padding: 0 10px; 
-    
-    /* Mun rage nauyin inuwar (shadow) kadan domin ta yi kyan gani a waya */
     box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
     z-index: 1000; 
-    transition: transform 0.3s ease; /* Wannan zai taimaka wurin boye bar din */
+    transition: transform 0.3s ease; 
 }
 
 .depth-item { 
@@ -145,10 +134,9 @@
     color: var(--neon-gold); 
 }
 
-/* WANNAN CLASS DIN ZAI BOYE BAR DIN IDAN ANA SCROLLING */
 .nav-hidden {
     transform: translateY(150%);
-                     }
+}
         
     </style>
 </head>
@@ -176,6 +164,19 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
 <script>
+// Firebase initialization (Tabbatar ka sa naka cikakken config idan ya fita)
+const firebaseConfig = {
+  apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
+  authDomain: "global-market-admin.firebaseapp.com",
+  projectId: "global-market-admin",
+  storageBucket: "global-market-admin.firebasestorage.app",
+  messagingSenderId: "259715265619",
+  appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 function renderProducts(products) {
     const grid = document.getElementById('product-grid');
     grid.innerHTML = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
@@ -186,7 +187,6 @@ function renderProducts(products) {
         let rowIndex = Math.floor(count / 2);
         let cardClass = (rowIndex % 2 === 0) ? (count % 2 === 0 ? "first-box" : "standard-box") : (count % 2 === 0 ? "standard-box" : "first-box");
         
-        // GYARA: Mun maida link din ya zama dynamic domin kowace atamfa ta bude kanta
         const cardHTML = `
             <a href="products-page.html?name=${encodeURIComponent(p.name)}" class="product-card ${cardClass}">
                 <div class="img-area">
@@ -209,8 +209,21 @@ function renderProducts(products) {
         column.insertAdjacentHTML('beforeend', cardHTML);
     });
 }
-    
-    
+
+function startLiveUpdates() {
+    db.collection('products').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
+        let products = [];
+        snapshot.forEach(doc => products.push(doc.data()));
+        renderProducts(products);
+    });
+}
+
+function activate(el) {
+    document.querySelectorAll('.depth-item').forEach(item => item.classList.remove('active'));
+    el.classList.add('active');
+}
+
+document.addEventListener('DOMContentLoaded', startLiveUpdates);
 </script>
 </body>
 </html>
