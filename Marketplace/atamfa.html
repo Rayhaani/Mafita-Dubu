@@ -19,29 +19,24 @@
         .ad-card i { font-size: 2rem; color: var(--neon-gold); margin-bottom: 8px; }
         .ad-card span { font-size: 0.7rem; color: var(--dark-chocolate); font-weight: 800; text-align: center; text-transform: uppercase; }
         
+        /* GYARA: Mun rage min-height domin kar ya nuna fili kafin Firebase ya gama loda hotuna */
         .main-container { 
             display: flex; 
             gap: 10px; 
             padding: 10px; 
-            /* GYARA: Mun kara padding a kasa (120px) domin atamfar karshe ta fito fili */
-            padding-bottom: 120px; 
             align-items: flex-start; 
             position: relative; 
             background: var(--dark-chocolate); 
             overflow: hidden; 
             border-radius: 25px 25px 0 0; 
-            min-height: 100vh;
+            min-height: 100vh; /* Ya mamaye duka screen din */
         }
 
         .main-container::before { content: ""; position: absolute; top: -100%; left: -100%; width: 300%; height: 300%; background: radial-gradient(circle at center, rgba(255, 223, 0, 0.4) 0%, rgba(212, 175, 55, 0.2) 30%, transparent 60%), linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%); background-size: 500px 500px; animation: serpent-crawl 15s ease-in-out infinite; z-index: 0; pointer-events: none; filter: blur(4px); }
         @keyframes serpent-crawl { 0% { transform: translate(-15%, -15%) rotate(0deg); } 33% { transform: translate(10%, 5%) rotate(2deg); } 66% { transform: translate(-5%, 15%) rotate(-2deg); } 100% { transform: translate(-15%, -15%) rotate(0deg); } }
         
         .column { flex: 1; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 5; }
-        
-        /* GYARA: Mun mayar da product-card zuwa block domin link din ya kama ko'ina */
-        .product-card { background: white; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); position: relative; z-index: 10; cursor: pointer; text-decoration: none; color: inherit; }
-        .product-card:active { transform: scale(0.96); transition: 0.1s; }
-        
+        .product-card { background: white; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); position: relative; z-index: 10; }
         .hot-tag { position: absolute; top: 8px; left: 8px; background: #FF3131; color: white; font-size: 7px; font-weight: 900; padding: 2px 6px; border-radius: 4px; z-index: 5; box-shadow: 0 0 10px rgba(255,49,49,0.5); }
         .live-dot-container { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.4); padding: 3px 6px; border-radius: 20px; display: flex; align-items: center; gap: 4px; z-index: 5; }
         .green-pulse { width: 6px; height: 6px; background: #39FF14; border-radius: 50%; position: relative; }
@@ -57,7 +52,7 @@
         .p-name { font-family: 'Inter', sans-serif; font-size: 10.5px; color: #444; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; margin: 0 !important; line-height: 1.1; text-transform: capitalize; text-align: left; }
         .price-row { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 1px; margin-bottom: 3px; }
         .cart-box-temu { width: 24px; height: 24px; border: 1.8px solid #d1d1d1; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--dark-chocolate); font-size: 11px; cursor: pointer; transition: 0.2s; }
-        .cart-box-temu:active { transform: scale(0.8); background: var(--neon-gold); color: white; border-color: var(--neon-gold); }
+        .cart-box-temu:active { transform: scale(0.9); }
         .price-button { background: linear-gradient(135deg, #D4AF37 0%, #F1D592 50%, #D4AF37 100%); color: #1A0F0D; padding: 1.5px 7px; border-radius: 20px; font-weight: 800; font-size: 12px; font-style: italic; display: inline-flex; align-items: center; justify-content: center; }
         
         .info-box-compact { background: var(--dark-chocolate); border: 1.2px solid var(--neon-gold); border-radius: 9px; padding: 6px; width: 100%; display: flex; flex-direction: column; gap: 3px; }
@@ -72,8 +67,7 @@
         .review-count { color: #aaa; font-size: 7px; font-weight: 600; }
 
         .depth-dock { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 420px; height: 75px; background: var(--milk-bg); border-radius: 20px; display: flex; justify-content: space-around; align-items: center; padding: 0 10px; box-shadow: 20px 20px 60px rgba(0,0,0,0.3); z-index: 1000; }
-        .depth-item { position: relative; width: 50px; height: 50px; background: var(--milk-bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 4px 4px 10px rgba(0,0,0,0.2); color: #777; transition: 0.2s; }
-        .depth-item:active { transform: scale(0.85); }
+        .depth-item { position: relative; width: 50px; height: 50px; background: var(--milk-bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 4px 4px 10px rgba(0,0,0,0.2); color: #777; transition: 0.3s; }
         .depth-item.active { box-shadow: inset 4px 4px 10px rgba(0,0,0,0.2); color: var(--neon-gold); }
     </style>
 </head>
@@ -116,49 +110,43 @@ const db = firebase.firestore();
 const track = document.getElementById('ads-track');
 track.innerHTML += track.innerHTML; 
 
-function renderProducts(products) {
-    const grid = document.getElementById('product-grid');
-    grid.innerHTML = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
-    
-    products.forEach((p, count) => {
-        const colId = count % 2 === 0 ? 'col1' : 'col2';
-        const column = document.getElementById(colId);
-        let rowIndex = Math.floor(count / 2);
-        let cardClass = (rowIndex % 2 === 0) ? (count % 2 === 0 ? "first-box" : "standard-box") : (count % 2 === 0 ? "standard-box" : "first-box");
-        
-        // GYARA: An sanya atamfar a cikin <a> tag don ta zama link
-        const cardHTML = `
-            <a href="products-page.html" class="product-card ${cardClass}">
-                <div class="img-area">
-                    <div class="hot-tag">HOT ITEM</div>
-                    <div class="live-dot-container"><div class="green-pulse"></div><span style="color:white; font-size:7px; font-weight:800;">LIVE</span></div>
-                    <img src="${p.img}">
-                </div>
-                <div class="details-area">
-                    <p class="p-name">${p.name.toLowerCase()}</p>
-                    <div class="price-row">
-                        <div class="cart-box-temu"><i class="fa-solid fa-cart-shopping"></i></div>
-                        <div class="price-button">₦${Number(p.price).toLocaleString()}</div>
-                    </div>
-                    <div class="info-box-compact">
-                        <div class="row-item"><div class="trust-bold"><i class="fa-solid fa-circle-check verified-icon"></i> TrustID Verified</div><span class="years-bold">3+ YEARS</span></div>
-                        <div class="row-item"><div class="loc-bold"><i class="fa-solid fa-location-dot loc-icon"></i> ${p.location || 'Kano'}</div><div class="stars-container"><div class="stars-mini"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><span class="review-count">(120)</span></div></div>
-                    </div>
-                </div>
-            </a>`;
-        column.insertAdjacentHTML('beforeend', cardHTML);
-    });
-}
-
 function startLiveUpdates() {
-    const cachedData = localStorage.getItem('atamfa_cache');
-    if (cachedData) renderProducts(JSON.parse(cachedData));
-
+    const grid = document.getElementById('product-grid');
     db.collection('products').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
-        let products = [];
-        snapshot.forEach(doc => products.push(doc.data()));
-        localStorage.setItem('atamfa_cache', JSON.stringify(products));
-        renderProducts(products);
+        // GYARA: Mun cire share grid din tukunna, domin kar ya nuna fili fari
+        let content = '<div class="column" id="col1"></div><div class="column" id="col2"></div>';
+        grid.innerHTML = content;
+        
+        let count = 0;
+        snapshot.forEach(doc => {
+            const p = doc.data();
+            const colId = count % 2 === 0 ? 'col1' : 'col2';
+            const column = document.getElementById(colId);
+            let rowIndex = Math.floor(count / 2);
+            let cardClass = (rowIndex % 2 === 0) ? (count % 2 === 0 ? "first-box" : "standard-box") : (count % 2 === 0 ? "standard-box" : "first-box");
+            
+            const cardHTML = `
+                <div class="product-card ${cardClass}">
+                    <div class="img-area">
+                        <div class="hot-tag">HOT ITEM</div>
+                        <div class="live-dot-container"><div class="green-pulse"></div><span style="color:white; font-size:7px; font-weight:800;">LIVE</span></div>
+                        <img src="${p.img}">
+                    </div>
+                    <div class="details-area">
+                        <p class="p-name">${p.name.toLowerCase()}</p>
+                        <div class="price-row">
+                            <div class="cart-box-temu"><i class="fa-solid fa-cart-shopping"></i></div>
+                            <div class="price-button">₦${Number(p.price).toLocaleString()}</div>
+                        </div>
+                        <div class="info-box-compact">
+                            <div class="row-item"><div class="trust-bold"><i class="fa-solid fa-circle-check verified-icon"></i> TrustID Verified</div><span class="years-bold">3+ YEARS</span></div>
+                            <div class="row-item"><div class="loc-bold"><i class="fa-solid fa-location-dot loc-icon"></i> ${p.location || 'Kano'}</div><div class="stars-container"><div class="stars-mini"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><span class="review-count">(120)</span></div></div>
+                        </div>
+                    </div>
+                </div>`;
+            column.insertAdjacentHTML('beforeend', cardHTML);
+            count++;
+        });
     });
 }
 
@@ -170,4 +158,4 @@ function activate(el) {
 document.addEventListener('DOMContentLoaded', startLiveUpdates);
 </script>
 </body>
-    </html>
+</html>
