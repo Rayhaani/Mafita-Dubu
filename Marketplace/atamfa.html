@@ -27,21 +27,44 @@
         .ad-card span { font-size: 0.7rem; color: var(--dark-chocolate); font-weight: 800; text-align: center; text-transform: uppercase; }
         
         .main-container { 
-            display: flex; 
-            gap: 10px; 
-            padding: 10px; 
-            /* GYARA: Mun kara padding a kasa (120px) domin atamfar karshe ta fito fili */
-            padding-bottom: 120px; 
-            align-items: flex-start; 
-            position: relative; 
-            background: var(--dark-chocolate); 
-            overflow: hidden; 
-            border-radius: 25px 25px 0 0; 
-            min-height: 100vh;
-        }
+    display: flex; 
+    /* GYARA: Mun maida gap din ya zama universal */
+    gap: var(--universal-gap); 
+    padding: var(--universal-gap); 
+    
+    /* GYARA: Lissafin da zai saita sararin saman bar ya zama uniform */
+    /* 75px (tsayin bar) + (gap * 2) domin ya bar sarari daya a sama, daya a kasa */
+    padding-bottom: calc(75px + (var(--universal-gap) * 2)) !important; 
+    
+    align-items: flex-start; 
+    position: relative; 
+    background: var(--dark-chocolate); 
+    overflow: hidden; 
+    border-radius: 25px 25px 0 0; 
+    min-height: 100vh;
+}
 
-        .main-container::before { content: ""; position: absolute; top: -100%; left: -100%; width: 300%; height: 300%; background: radial-gradient(circle at center, rgba(255, 223, 0, 0.4) 0%, rgba(212, 175, 55, 0.2) 30%, transparent 60%), linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%); background-size: 500px 500px; animation: serpent-crawl 15s ease-in-out infinite; z-index: 0; pointer-events: none; filter: blur(4px); }
-        @keyframes serpent-crawl { 0% { transform: translate(-15%, -15%) rotate(0deg); } 33% { transform: translate(10%, 5%) rotate(2deg); } 66% { transform: translate(-5%, 15%) rotate(-2deg); } 100% { transform: translate(-15%, -15%) rotate(0deg); } }
+.main-container::before { 
+    content: ""; 
+    position: absolute; 
+    top: -100%; 
+    left: -100%; 
+    width: 300%; 
+    height: 300%; 
+    background: radial-gradient(circle at center, rgba(255, 223, 0, 0.4) 0%, rgba(212, 175, 55, 0.2) 30%, transparent 60%), linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%); 
+    background-size: 500px 500px; 
+    animation: serpent-crawl 15s ease-in-out infinite; 
+    z-index: 0; 
+    pointer-events: none; 
+    filter: blur(4px); 
+}
+
+@keyframes serpent-crawl { 
+    0% { transform: translate(-15%, -15%) rotate(0deg); } 
+    33% { transform: translate(10%, 5%) rotate(2deg); } 
+    66% { transform: translate(-5%, 15%) rotate(-2deg); } 
+    100% { transform: translate(-15%, -15%) rotate(0deg); } 
+}
         
         .column { flex: 1; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 5; }
         
