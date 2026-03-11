@@ -235,6 +235,17 @@
 .cc-icon-box { width: 45px; height: 45px; border-radius: 15px; background: var(--neu-bg); display: flex; align-items: center; justify-content: center; box-shadow: 4px 4px 8px var(--neu-shadow); font-size: 1.1rem; }
 .cc-label { font-size: 0.5rem; font-weight: 800; color: #666; text-transform: uppercase; margin-top: 5px; }
 
+        .cc-grid { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 10px; 
+    margin-top: 15px; 
+    /* KARA WADANNAN: */
+    justify-items: center; 
+    width: 100%; 
+        }
+        
+
 /* Tsarin Card lokacin da aka taba shi (Selection) */
 .catalog-card.selected { border: 2px solid var(--neu-accent); transform: scale(0.96); box-shadow: inset 4px 4px 8px var(--neu-shadow); }
 .check-orbit { position: absolute; top: 10px; right: 10px; width: 20px; height: 20px; border-radius: 50%; background: white; border: 2px solid #ccc; display: none; z-index: 5; }
@@ -272,7 +283,8 @@
         </div>   
     </div>
 </div>
-    
+
+ 
     <div id="home-page" class="page-content active">
         <div class="neu-card">
             <p class="sub-header">Nexus Soft-Interface</p>
