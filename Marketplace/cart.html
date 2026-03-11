@@ -10,16 +10,16 @@
         :root {
             --zenith-gold: #ffcc33;
             --zenith-silver: #e0e0e0;
-            --milk-bg: #E8E1D5; /* Sabon background dinka */
-            --bg-deep: #1A0F0D; /* Launin duhu na asali don boxes */
-            --glass: rgba(0, 0, 0, 0.85); /* Box background */
+            --milk-bg: #E8E1D5; 
+            --bg-deep: #1A0F0D; 
+            --glass: rgba(0, 0, 0, 0.85); 
             --primary-orange: #ff7043;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', sans-serif; }
 
         body {
-            background: var(--milk-bg); /* Background kawai aka sauya */
+            background: var(--milk-bg); 
             color: #fff;
             min-height: 100vh;
             overflow-x: hidden;
@@ -51,11 +51,11 @@
         }
         .zenith-main-trigger.active { background: var(--zenith-gold); color: #000; border-color: #fff; }
 
-        /* --- FLOAT CARDS (Ba a taba su ba) --- */
+        /* --- FLOAT CARDS --- */
         .zenith-container { padding: 15px 20px; }
 
         .float-card {
-            background: var(--bg-deep); /* Boxes sun bar kalar su ta asali */
+            background: var(--bg-deep); 
             margin-bottom: 20px;
             padding: 15px;
             border-radius: 24px;
@@ -99,7 +99,18 @@
         }
 
         .info-box { flex: 1; }
-        .title { font-size: 14px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; opacity: 0.9; color: #fff; }
+
+        /* GYARAN RUBUTU: Font Type, Size, Weight da Case */
+        .title { 
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            text-transform: capitalize; 
+            margin-bottom: 8px; 
+            line-height: 1.4; 
+            opacity: 0.9; 
+            color: #fff; 
+        }
 
         .price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
         .now { font-size: 18px; font-weight: 700; color: #fff; }
@@ -129,7 +140,6 @@
         .total-section b { display: block; font-size: 22px; color: #fff; }
         .checkout-zenith-btn { position: relative; z-index: 1; background: var(--zenith-gold); color: #000; border: none; height: 100%; padding: 0 35px; border-radius: 20px; font-weight: 900; font-size: 13px; cursor: pointer; }
         
-        /* Rubutun Empty Cart */
         .empty-msg { text-align:center; padding:50px; opacity:0.8; color: var(--bg-deep); font-weight: 700; }
     </style>
 </head>
@@ -169,6 +179,7 @@
 
             container.innerHTML = '';
             cart.forEach((item, index) => {
+                // AN GYARA NAN: Maimakon toUpperCase(), mun bar shi normal domin CSS ta yi Capitalize
                 container.innerHTML += `
                     <div class="float-card selected" data-price="${item.price}" data-id="${index}">
                         <div class="zenith-trigger" onclick="toggleZenith(this)"><i class="fa-solid fa-bolt"></i></div>
@@ -176,7 +187,7 @@
                             <img src="${item.img}" class="product-img">
                         </div>
                         <div class="info-box">
-                            <h2 class="title">${item.name.toUpperCase()}</h2>
+                            <h2 class="title">${item.name.toLowerCase()}</h2>
                             <div class="price-row"><span class="now">₦${Number(item.price).toLocaleString()}</span></div>
                             <div class="card-footer">
                                 <div class="qty-control"><button onclick="qty(this, -1)">-</button><span class="val">1</span><button onclick="qty(this, 1)">+</button></div>
