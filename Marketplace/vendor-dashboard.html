@@ -441,9 +441,9 @@
         
 
             
-        <div class="floating-plus" onclick="alert('Bude shafin dora kaya...')">
-            <i class="fa-solid fa-plus"></i>
-        </div>
+       <div class="floating-plus" onclick="openModal()">
+    <i class="fa-solid fa-plus"></i>
+       </div>
     </div>
 
     <nav class="depth-dock">
@@ -484,6 +484,23 @@
     resetManage();
 
     if (navigator.vibrate) navigator.vibrate(35);
+    }
+    // Function din bude modal
+function openModal() {
+    const modal = document.getElementById('product-modal');
+    if(modal) {
+        modal.style.display = 'block';
+        // Vibrate kadan don jin dadin tabawa
+        if (navigator.vibrate) navigator.vibrate(25);
+    }
+}
+
+// Function din rufe modal
+function closeModal() {
+    const modal = document.getElementById('product-modal');
+    if(modal) {
+        modal.style.display = 'none';
+    }
     }
     
 
