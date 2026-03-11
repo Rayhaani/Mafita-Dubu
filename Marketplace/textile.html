@@ -143,6 +143,10 @@
                 if (item === "Atamfa") {
                     link = "atamfa.html";
                     boxId = 'id="atamfa-preview"';
+                } 
+                // Connecting Laces button to Vendor Dashboard for easy access
+                else if (item === "Laces") {
+                    link = "vendor-dashboard.html";
                 }
 
                 document.write(`
@@ -182,7 +186,6 @@
             if (!previewBox) return;
 
             try {
-                // Dauko hotuna 5 na karshe
                 const snapshot = await db.collection('products')
                     .orderBy('timestamp', 'desc')
                     .limit(5)
@@ -195,10 +198,8 @@
 
                 if (images.length > 0) {
                     let i = 0;
-                    // Saka hoton farko nan take
                     previewBox.style.backgroundImage = `url('${images[0]}')`;
                     
-                    // Fara canzawa kowane sakan 3
                     setInterval(() => {
                         i = (i + 1) % images.length;
                         previewBox.style.backgroundImage = `url('${images[i]}')`;
