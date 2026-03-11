@@ -10,19 +10,19 @@
         :root {
             --zenith-gold: #ffcc33;
             --zenith-silver: #e0e0e0;
-            --bg-deep: #050505;
-            --glass: rgba(255, 255, 255, 0.07);
+            --milk-bg: #E8E1D5; /* Sabon background dinka */
+            --bg-deep: #1A0F0D; /* Launin duhu na asali don boxes */
+            --glass: rgba(0, 0, 0, 0.85); /* Box background */
             --primary-orange: #ff7043;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', sans-serif; }
 
         body {
-            background: var(--bg-deep);
+            background: var(--milk-bg); /* Background kawai aka sauya */
             color: #fff;
             min-height: 100vh;
             overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
             padding-top: 100px;
             padding-bottom: 160px;
         }
@@ -30,7 +30,7 @@
         /* --- HEADER --- */
         .zenith-header-new {
             position: fixed; top: 15px; left: 5%; width: 90%; height: 75px;
-            background: rgba(10, 10, 10, 0.7);
+            background: rgba(10, 10, 10, 0.8);
             backdrop-filter: blur(25px);
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 20px; z-index: 3000; border-radius: 25px;
@@ -51,24 +51,24 @@
         }
         .zenith-main-trigger.active { background: var(--zenith-gold); color: #000; border-color: #fff; }
 
-        /* --- FLOAT CARDS --- */
+        /* --- FLOAT CARDS (Ba a taba su ba) --- */
         .zenith-container { padding: 15px 20px; }
 
         .float-card {
-            background: rgba(255, 255, 255, 0.04);
+            background: var(--bg-deep); /* Boxes sun bar kalar su ta asali */
             margin-bottom: 20px;
             padding: 15px;
             border-radius: 24px;
             display: flex;
             gap: 15px;
             position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             animation: float 4s ease-in-out infinite;
             transition: 0.5s;
         }
 
-        .float-card.selected { border-color: var(--zenith-gold); background: rgba(255, 204, 51, 0.05); }
+        .float-card.selected { border-color: var(--zenith-gold); background: #000; }
 
         .zenith-trigger { 
             position: absolute; top: -8px; right: 15px; width: 35px; height: 35px; 
@@ -99,7 +99,7 @@
         }
 
         .info-box { flex: 1; }
-        .title { font-size: 14px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; opacity: 0.9; }
+        .title { font-size: 14px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; opacity: 0.9; color: #fff; }
 
         .price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
         .now { font-size: 18px; font-weight: 700; color: #fff; }
@@ -108,14 +108,14 @@
         .card-footer { display: flex; justify-content: space-between; align-items: center; }
         .qty-control {
             display: flex; align-items: center;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 12px; padding: 4px;
         }
         .qty-control button {
             width: 28px; height: 28px; border: none; background: transparent;
             color: #fff; font-size: 16px; cursor: pointer;
         }
-        .qty-control span { padding: 0 10px; font-weight: 700; font-size: 14px; }
+        .qty-control span { padding: 0 10px; font-weight: 700; font-size: 14px; color: #fff; }
 
         /* --- FOOTER --- */
         .zenith-footer-integrated {
@@ -128,6 +128,9 @@
         .total-section { position: relative; z-index: 1; padding-left: 25px; flex: 1; }
         .total-section b { display: block; font-size: 22px; color: #fff; }
         .checkout-zenith-btn { position: relative; z-index: 1; background: var(--zenith-gold); color: #000; border: none; height: 100%; padding: 0 35px; border-radius: 20px; font-weight: 900; font-size: 13px; cursor: pointer; }
+        
+        /* Rubutun Empty Cart */
+        .empty-msg { text-align:center; padding:50px; opacity:0.8; color: var(--bg-deep); font-weight: 700; }
     </style>
 </head>
 <body>
@@ -141,8 +144,7 @@
         </div>
     </div>
 
-    <div class="zenith-container" id="zenith-cart-list">
-        </div>
+    <div class="zenith-container" id="zenith-cart-list"></div>
 
     <div class="zenith-footer-integrated">
         <div class="total-section">
@@ -155,20 +157,18 @@
     </div>
         
     <script>
-        // GYARA: Load items from LocalStorage
         function loadCartFromStorage() {
             const container = document.getElementById('zenith-cart-list');
             let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
             
             if (cart.length === 0) {
-                container.innerHTML = `<div style="text-align:center; padding:50px; opacity:0.5;">Ba ka da kaya a kwando.</div>`;
+                container.innerHTML = `<div class="empty-msg">Ba ka da kaya a kwando.</div>`;
                 update();
                 return;
             }
 
             container.innerHTML = '';
             cart.forEach((item, index) => {
-                // Mun yi amfani da tsarin Float Card dinka
                 container.innerHTML += `
                     <div class="float-card selected" data-price="${item.price}" data-id="${index}">
                         <div class="zenith-trigger" onclick="toggleZenith(this)"><i class="fa-solid fa-bolt"></i></div>
@@ -180,7 +180,7 @@
                             <div class="price-row"><span class="now">₦${Number(item.price).toLocaleString()}</span></div>
                             <div class="card-footer">
                                 <div class="qty-control"><button onclick="qty(this, -1)">-</button><span class="val">1</span><button onclick="qty(this, 1)">+</button></div>
-                                <i class="fa-solid fa-circle-nodes" style="opacity: 0.3; cursor: pointer;" onclick="del(this, ${index})"></i>
+                                <i class="fa-solid fa-circle-nodes" style="opacity: 0.5; cursor: pointer;" onclick="del(this, ${index})"></i>
                             </div>
                         </div>
                     </div>`;
@@ -217,11 +217,11 @@
             
             setTimeout(() => { 
                 card.remove(); 
-                // Cire shi daga ainihin storage din
                 let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
                 cart.splice(storageIndex, 1);
                 localStorage.setItem('cartItems', JSON.stringify(cart));
                 update(); 
+                if(cart.length === 0) loadCartFromStorage();
             }, 400);
         }
 
