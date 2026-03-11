@@ -231,10 +231,28 @@
     <span class="cc-label">Bulk Upload</span>
 </div>
         
-.cc-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
-.cc-icon-box { width: 45px; height: 45px; border-radius: 15px; background: var(--neu-bg); display: flex; align-items: center; justify-content: center; box-shadow: 4px 4px 8px var(--neu-shadow); font-size: 1.1rem; }
-.cc-label { font-size: 0.5rem; font-weight: 800; color: #666; text-transform: uppercase; margin-top: 5px; }
+.cc-item { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; /* Wannan zai kawo icon da rubutu tsakiya */
+    justify-content: center; /* Wannan zai tabbatar sun zauna a tsakiyar box din */
+    cursor: pointer; 
+    text-align: center; /* Wannan zai sa rubutun kansa ya zama a tsakiya */
+    width: 100%; 
+}
 
+.cc-label { 
+    font-size: 0.5rem; 
+    font-weight: 800; 
+    color: #666; 
+    text-transform: uppercase; 
+    margin-top: 5px; 
+    width: 100%; /* Tabbatar rubutun ya dauki fadin box din don ya yi centering */
+    display: block;
+}
+
+.cc-icon-box { width: 45px; height: 45px; border-radius: 15px; background: var(--neu-bg); display: flex; align-items: center; justify-content: center; box-shadow: 4px 4px 8px var(--neu-shadow); font-size: 1.1rem; }
+        
         .cc-grid { 
     display: grid; 
     grid-template-columns: repeat(4, 1fr); 
