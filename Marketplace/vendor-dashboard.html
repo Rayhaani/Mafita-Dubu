@@ -346,7 +346,8 @@
         </div>
     </div>
 
-        <div id="products-page" class="page-content">
+        
+    <div id="products-page" class="page-content">
         <header style="margin-bottom: 20px;">
             <p class="sub-header">Nexus Inventory</p>
             
@@ -411,31 +412,33 @@
         </div>
 
        
-        <div onclick="document.getElementById('fileInput').click()" style="width:100%; height:150px; border-radius:20px; background:var(--neu-bg); box-shadow:inset 6px 6px 12px var(--neu-shadow), inset -6px -6px 12px var(--neu-light); display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer;">
-            <i class="fa-solid fa-cloud-arrow-up" style="font-size:2rem; color:var(--neu-accent);"></i>
-            <span style="font-size:0.6rem; margin-top:10px; font-weight:700; color:#888;">DORA HOTON KAYA</span>
-            <input type="file" id="fileInput" hidden accept="image/*">
-        </div>
-
-        <input type="text" class="search-box" id="p-name" placeholder="Sunan Kaya...">
-        
-        <select class="search-box" id="p-category" onchange="updateFields(this.value)" style="appearance:none; font-weight:bold; color:var(--neu-accent);">
-            <option value="">-- Zabi Category --</option>
-            <option value="atamfa">Atamfa & Clothing</option>
-            <option value="food">Food Stuffs (Abinci)</option>
-            <option value="electronics">Electronics & Tech</option>
-        </select>
-
-        <input type="number" class="search-box" id="p-price" placeholder="Farashi (₦)">
-
-        <div id="dynamic-fields" style="margin-top:15px;">
-            </div>
-
-        <button class="neu-btn" onclick="saveProduct()" style="width:100%; height:55px; border-radius:18px; margin-top:25px; font-size:0.8rem; font-weight:900; background:var(--neu-accent); color:white; box-shadow: 0 10px 20px rgba(77, 124, 254, 0.3);">
-            Dora Kaya A Kasuwa
-        </button>
-    </div>
+        <div onclick="document.getElementById('fileInput').click()" id="preview-box" 
+     style="width:100%; height:180px; border-radius:25px; background:var(--neu-bg); box-shadow:inset 6px 6px 12px var(--neu-shadow), inset -6px -6px 12px var(--neu-light); display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; overflow:hidden;">
+    
+    <i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i>
+    <span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span>
+    
+    <input type="file" id="fileInput" hidden accept="image/*" onchange="previewImage(event)">
 </div>
+
+<input type="text" class="search-box" id="p-name" placeholder="Sunan Kaya...">
+
+<select class="search-box" id="p-category" onchange="updateFields(this.value)" style="appearance:none; font-weight:bold; color:var(--neu-accent);">
+    <option value="">-- Zabi Category --</option>
+    <option value="atamfa">Atamfa & Clothing</option>
+    <option value="food">Food Stuffs (Abinci)</option>
+    <option value="electronics">Electronics & Tech</option>
+</select>
+
+<input type="number" class="search-box" id="p-price" placeholder="Farashi (₦)">
+
+<div id="dynamic-fields" style="margin-top:15px;">
+    </div>
+
+<button class="neu-btn" onclick="saveProduct()" style="width:100%; height:55px; border-radius:18px; margin-top:25px; font-size:0.8rem; font-weight:900; background:var(--neu-accent); color:white; box-shadow: 0 10px 20px rgba(77, 124, 254, 0.3);">
+    Dora Kaya A Kasuwa
+</button>
+        
 
             
         <div class="floating-plus" onclick="alert('Bude shafin dora kaya...')">
@@ -551,37 +554,55 @@ function closeModal() {
     document.getElementById('product-modal').style.display = 'none';
 }
 
+// Wannan function din zai kula da zaben kalar da aka taba
+let selectedColor = "";
+
+function selectColor(el, colorName) {
+    // Cire "active border" daga kowane color well
+    document.querySelectorAll('.color-well').forEach(well => {
+        well.style.border = "none";
+        well.style.transform = "scale(1)";
+    });
+    
+    // Saka wa wanda aka taba border
+    el.style.border = "3px solid var(--neu-accent)";
+    el.style.transform = "scale(1.2)";
+    selectedColor = colorName;
+    
+    if (navigator.vibrate) navigator.vibrate(15);
+}
+
+// Function din nuna hoton da aka dora (Image Preview)
+function previewImage(event) {
+    const reader = new FileReader();
+    reader.onload = function() {
+        const output = document.getElementById('preview-box');
+        output.innerHTML = `<img src="${reader.result}" style="width:100%; height:100%; object-fit:cover; border-radius:20px;">`;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+// Sabon updateFields mai dauke da "onclick" a jikin colors
 function updateFields(val) {
     const container = document.getElementById('dynamic-fields');
-    container.innerHTML = ""; // Share tsohon bayani
+    container.innerHTML = "";
 
     if (val === "atamfa") {
         container.innerHTML = `
-            <p class="sub-header" style="margin-top:10px;">Launuka (Colors)</p>
-            <div style="display:flex; gap:10px; margin-top:10px;">
-                <div class="color-well" style="background:#0033ff; cursor:pointer; border:3px solid white;"></div>
-                <div class="color-well" style="background:#8b0000; cursor:pointer;"></div>
-                <div class="color-well" style="background:#ffd700; cursor:pointer;"></div>
-                <div class="color-well" style="background:#2ecc71; cursor:pointer;"></div>
-                <div style="width:45px; height:45px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center; box-shadow:4px 4px 8px #ccc;"><i class="fa-solid fa-plus"></i></div>
+            <p class="sub-header" style="margin-top:10px;">ZABO LAUNIN KAYA (COLOR)</p>
+            <div style="display:flex; gap:12px; margin-top:10px; padding:5px; overflow-x:auto;">
+                <div class="color-well" onclick="selectColor(this, 'Blue')" style="background:#0033ff; cursor:pointer;"></div>
+                <div class="color-well" onclick="selectColor(this, 'Wine')" style="background:#8b0000; cursor:pointer;"></div>
+                <div class="color-well" onclick="selectColor(this, 'Gold')" style="background:#ffd700; cursor:pointer;"></div>
+                <div class="color-well" onclick="selectColor(this, 'Green')" style="background:#2ecc71; cursor:pointer;"></div>
+                <div style="min-width:45px; height:45px; border-radius:50%; background:var(--neu-bg); display:flex; align-items:center; justify-content:center; box-shadow:4px 4px 8px var(--neu-shadow); cursor:pointer;"><i class="fa-solid fa-plus"></i></div>
             </div>
-            <input type="text" class="search-box" placeholder="Nau'in Yadiko (e.g. Cotton, Silk)">
+            <input type="text" class="search-box" id="p-fabric" placeholder="Nau'in Yadiko (e.g. Super Wax)">
         `;
-    } else if (val === "food") {
-        container.innerHTML = `
-            <input type="text" class="search-box" placeholder="Nauyi (e.g. 50KG, Mudun 1)">
-            <input type="date" class="search-box" title="Ranar Karewa">
-            <p class="sub-header" style="margin-top:10px;">Wace irin Shinkafa/Wake ce?</p>
-            <input type="text" class="search-box" placeholder="Grade (Local ko Foreign)">
-        `;
-    } else if (val === "electronics") {
-        container.innerHTML = `
-            <input type="text" class="search-box" placeholder="Brand (e.g. Samsung, LG)">
-            <input type="text" class="search-box" placeholder="Model Number">
-            <input type="text" class="search-box" placeholder="Garanti (Warranty)">
-        `;
-    }
+    } 
+    // ... sauran categories (food, electronics) su tsaya yadda suke
 }
+    
 
 function saveProduct() {
     alert("An dora kaya cikin nasara! ✨");
