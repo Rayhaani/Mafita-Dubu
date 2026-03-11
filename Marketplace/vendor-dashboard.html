@@ -250,27 +250,40 @@
 <div id="command-center">
     <div style="text-align: center;"><span class="cc-pill" id="selected-indicator">0 SELECTED</span></div>
     <div class="cc-grid">
-        <div class="cc-item" onclick="fireAction('Share')"><div class="cc-icon-box" style="color:#25D366;"><i class="fa-brands fa-whatsapp"></i></div><span class="cc-label">Share</span></div>
-        <div class="cc-item" onclick="fireAction('Price')"><div class="cc-icon-box" style="color:var(--neu-accent);"><i class="fa-solid fa-tag"></i></div><span class="cc-label">Price</span></div>
-        <div class="cc-item" onclick="fireAction('Hide')"><div class="cc-icon-box" style="color:#f39c12;"><i class="fa-solid fa-eye-slash"></i></div><span class="cc-label">Hide</span></div>
-        <div class="cc-item" onclick="fireAction('Delete')"><div class="cc-icon-box" style="color:var(--neu-danger);"><i class="fa-solid fa-trash-can"></i></div><span class="cc-label">Delete</span></div>
-        <div class="cc-item" onclick="cloneProduct()">
-    <div class="cc-icon-box" style="color:#e67e22;">
-        <i class="fa-solid fa-copy"></i>
+    <div class="cc-item" onclick="fireAction('Share')">
+        <div class="cc-icon-box" style="color:#25D366;"><i class="fa-brands fa-whatsapp"></i></div>
+        <span class="cc-label">Share</span>
     </div>
-    <span class="cc-label">Clone</span>
-        </div>
-        
-        <div class="cc-item" onclick="openBulkModal()">
-            <div class="cc-icon-box" style="color:#9b59b6;">
-                <i class="fa-solid fa-file-import"></i>
-            </div>
-            <span class="cc-label">Bulk Upload</span>
-        </div>
+    <div class="cc-item" onclick="fireAction('Price')">
+        <div class="cc-icon-box" style="color:var(--neu-accent);"><i class="fa-solid fa-tag"></i></div>
+        <span class="cc-label">Price</span>
     </div>
-</div>
-    
-    
+    <div class="cc-item" onclick="fireAction('Stock')">
+        <div class="cc-icon-box" style="color:#27ae60;"><i class="fa-solid fa-layer-group"></i></div>
+        <span class="cc-label">Stock</span>
+    </div>
+    <div class="cc-item" onclick="fireAction('Hide')">
+        <div class="cc-icon-box" style="color:#f39c12;"><i class="fa-solid fa-eye-slash"></i></div>
+        <span class="cc-label">Hide</span>
+    </div>
+
+    <div class="cc-item" onclick="cloneProduct()">
+        <div class="cc-icon-box" style="color:#e67e22;"><i class="fa-solid fa-copy"></i></div>
+        <span class="cc-label">Clone</span>
+    </div>
+    <div class="cc-item" onclick="openBulkModal()">
+        <div class="cc-icon-box" style="color:#9b59b6;"><i class="fa-solid fa-file-import"></i></div>
+        <span class="cc-label">Bulk upload</span>
+    </div>
+    <div class="cc-item" onclick="fireAction('Report')">
+        <div class="cc-icon-box" style="color:#34495e;"><i class="fa-solid fa-file-pdf"></i></div>
+        <span class="cc-label">Report</span>
+    </div>
+    <div class="cc-item" onclick="fireAction('Delete')">
+        <div class="cc-icon-box" style="color:var(--neu-danger);"><i class="fa-solid fa-trash-can"></i></div>
+        <span class="cc-label">Delete</span>
+    </div>
+    </div>
     
     <div id="home-page" class="page-content active">
         <div class="neu-card">
