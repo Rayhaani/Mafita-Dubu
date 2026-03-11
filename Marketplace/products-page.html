@@ -8,14 +8,43 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-    /* Wannan shi ne kalar background din da kake amfani da shi a sauran shafukan */
+   
+    /* Background din shafin ya zauna a kalar Atamfa */
 body { 
     margin: 0; 
-    background: #E8E1D5; /* Milk-bg kalar Atamfa Page */
-    color: #1A0F0D;     /* Dark text domin ya fito a fili */
+    background: #E8E1D5; /* Milk-bg */
+    color: white; 
     font-family: 'Quicksand', sans-serif; 
     overflow-x: hidden; 
 }
+
+/* Katin zai koma duhu domin Neural Stitch ya fito radau */
+.floating-card { 
+    background: rgba(15, 15, 15, 0.95); /* Deep Dark Glass */
+    backdrop-filter: blur(25px); 
+    margin: -40px 15px 20px 15px; 
+    padding: 30px 20px; 
+    border-radius: 35px; 
+    border: 1px solid rgba(0, 242, 255, 0.2); /* Neon border kadan */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+/* Gyaran rubutu a cikin duhu */
+h1 { 
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.75rem; 
+    font-weight: 700; 
+    text-transform: capitalize;
+    color: #fff;
+}
+
+.price-tag { 
+    font-size: 38px; 
+    font-weight: 900; 
+    color: #00f2ff; /* Kalar Cyan domin yayi match da AI dinka */
+    text-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+}
+    
     
     .content-layer { position: relative; z-index: 10; width: 100%; }
 
