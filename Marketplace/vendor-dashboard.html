@@ -347,51 +347,64 @@
         </div>
     </div>
 
-    <div id="products-page" class="page-content">
+        <div id="products-page" class="page-content">
         <header style="margin-bottom: 20px;">
             <p class="sub-header">Nexus Inventory</p>
-            <h1>My Catalog</h1>
-            <input type="text" class="search-box" style="margin-top:15px;" placeholder="Nemo Atamfa a kanti...">
-       
-            <div onclick="toggleManageMode()" style="background: rgba(77, 124, 254, 0.1); padding: 6px 15px; border-radius: 12px; cursor:pointer;">
-    <span id="manage-text" style="font-size:0.65rem; font-weight:900; color:var(--neu-accent); letter-spacing:1px;">MANAGE</span>
-        </div>
             
-        </header>
-
-        <div class="catalog-grid">
-            <div class="catalog-card">
-                <span class="stock-badge" style="background:#2ecc71;">IN STOCK</span>
-                <div class="catalog-img-box">
-                    <img src="https://i.postimg.cc/RhsgnLm0/IMG-20260306-WA0099.jpg" alt="Atamfa 1">
-                </div>
-                <b style="font-size: 0.75rem; display:block;">Luxury Atamfa</b>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
-                    <span style="font-size: 0.65rem; font-weight:700; color:var(--neu-accent);">₦15,500</span>
-                    <span style="font-size: 0.55rem; color:#888;"><i class="fa-solid fa-eye"></i> 1.2k</span>
-                </div>
-                <div style="display:flex; justify-content:center; align-items:center; margin-top:10px; border-top:1px solid rgba(0,0,0,0.05); padding-top:8px; gap:8px;">
-                    <span style="font-size:0.55rem; color:#888;">Active</span>
-                    <div class="toggle-switch on" onclick="this.classList.toggle('on')"><div class="circle"></div></div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h1 style="margin: 0;">My Catalog</h1>
+                
+                <div onclick="toggleManageMode()" style="background: rgba(77, 124, 254, 0.1); padding: 6px 15px; border-radius: 12px; cursor:pointer;">
+                    <span id="manage-text" style="font-size:0.65rem; font-weight:900; color:var(--neu-accent); letter-spacing:1px;">MANAGE</span>
                 </div>
             </div>
-
-            <div class="catalog-card">
-                <span class="stock-badge" style="background:var(--neu-danger);">LOW: 04</span>
-                <div class="catalog-img-box">
-                    <img src="https://i.postimg.cc/nhQ3CmwP/IMG-20260306-WA0098.jpg" alt="Atamfa 2">
-                </div>
-                <b style="font-size: 0.75rem; display:block;">Wine Galaxy</b>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
-                    <span style="font-size: 0.65rem; font-weight:700; color:var(--neu-accent);">₦12,000</span>
-                    <span style="font-size: 0.55rem; color:#888;"><i class="fa-solid fa-eye"></i> 850</span>
-                </div>
-                <div style="display:flex; justify-content:center; align-items:center; margin-top:10px; border-top:1px solid rgba(0,0,0,0.05); padding-top:8px; gap:8px;">
-                    <span style="font-size:0.55rem; color:#888;">Active</span>
-                    <div class="toggle-switch on" onclick="this.classList.toggle('on')"><div class="circle"></div></div>
-                </div>
+            
+            <input type="text" class="search-box" style="margin-top:15px;" placeholder="Nemo Atamfa a kanti...">
+        </header>
+            
+<div class="catalog-grid" id="catalog-grid-main">
+    
+    <div class="catalog-card" onclick="handleCardTap(this)">
+        <div class="check-orbit"></div> 
+        <span class="stock-badge" style="background:#2ecc71;">IN STOCK</span>
+        <div class="catalog-img-box">
+            <img src="https://i.postimg.cc/RhsgnLm0/IMG-20260306-WA0099.jpg" alt="Atamfa 1">
+        </div>
+        <b style="font-size: 0.75rem; display:block;">Luxury Atamfa</b>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+            <span style="font-size: 0.65rem; font-weight:700; color:var(--neu-accent);">₦15,500</span>
+            <span style="font-size: 0.55rem; color:#888;"><i class="fa-solid fa-eye"></i> 1.2k</span>
+        </div>
+        <div style="display:flex; justify-content:center; align-items:center; margin-top:10px; border-top:1px solid rgba(0,0,0,0.05); padding-top:8px; gap:8px;">
+            <span style="font-size:0.55rem; color:#888;">Active</span>
+            <div class="toggle-switch on" onclick="event.stopPropagation(); this.classList.toggle('on')">
+                <div class="circle"></div>
             </div>
         </div>
+    </div>
+
+    <div class="catalog-card" onclick="handleCardTap(this)">
+        <div class="check-orbit"></div>
+        <span class="stock-badge" style="background:var(--neu-danger);">LOW: 04</span>
+        <div class="catalog-img-box">
+            <img src="https://i.postimg.cc/nhQ3CmwP/IMG-20260306-WA0098.jpg" alt="Atamfa 2">
+        </div>
+        <b style="font-size: 0.75rem; display:block;">Wine Galaxy</b>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+            <span style="font-size: 0.65rem; font-weight:700; color:var(--neu-accent);">₦12,000</span>
+            <span style="font-size: 0.55rem; color:#888;"><i class="fa-solid fa-eye"></i> 850</span>
+        </div>
+        <div style="display:flex; justify-content:center; align-items:center; margin-top:10px; border-top:1px solid rgba(0,0,0,0.05); padding-top:8px; gap:8px;">
+            <span style="font-size:0.55rem; color:#888;">Active</span>
+            <div class="toggle-switch on" onclick="event.stopPropagation(); this.classList.toggle('on')">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+            
+        
 
         <div class="floating-plus" onclick="alert('Bude shafin dora kaya...')">
             <i class="fa-solid fa-plus"></i>
@@ -423,17 +436,21 @@
 
 <script>
     function navTo(el, pageId) {
-        document.querySelectorAll('.depth-item').forEach(item => {
-            item.classList.remove('active');
-        });
-        el.classList.add('active');
+    document.querySelectorAll('.depth-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    el.classList.add('active');
 
-        document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
-        const target = document.getElementById(pageId);
-        if(target) target.classList.add('active');
+    document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById(pageId);
+    if(target) target.classList.add('active');
 
-        if (navigator.vibrate) navigator.vibrate(35);
+    // Wannan zai kashe manage mode idan ka bar shafin products
+    resetManage();
+
+    if (navigator.vibrate) navigator.vibrate(35);
     }
+    
 
     function press() {
         const icon = document.getElementById('sync-icon');
