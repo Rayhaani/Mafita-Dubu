@@ -2,180 +2,405 @@
 <html lang="ha">
 <head>
     <meta charset="UTF-8">
-    <title>Mafita Dubu | Elite Vendor Terminal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nexus D09 | Neumorphic Elite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;700&family=JetBrains+Mono:wght@800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Plus+Jakarta+Sans:wght@400;800&display=swap" rel="stylesheet">
-    
     <style>
-        body { 
-            background: radial-gradient(circle at top right, #0a0f1d, #020617); 
-            color: white; 
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            min-height: 100vh;
+        :root {
+            --neu-bg: #e0e5ec;
+            --neu-light: #ffffff;
+            --neu-shadow: #a3b1c6;
+            --neu-accent: #4d7cfe;
+            --neu-danger: #ff4d4d;
+            --accent-gold: #D4AF37;
         }
 
-        .alphabet-font { font-family: 'Satisfy', cursive; color: #D4AF37; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
 
-        /* Futuristic Glass Card */
-        .elite-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        body {
+            background-color: var(--neu-bg);
+            color: #444;
+            font-family: 'Quicksand', sans-serif;
+            padding: 25px;
+            padding-bottom: 100px; /* Sarari don kar Buttons su rufe rubutu */
+        }
+
+        /* --- NEUMORPHIC SHELL (UNTOUCHED) --- */
+        .neu-card {
+            background: var(--neu-bg);
             border-radius: 30px;
-            transition: all 0.5s ease;
+            padding: 25px;
+            box-shadow: 9px 9px 16px var(--neu-shadow), 
+                       -9px -9px 16px var(--neu-light);
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        header h1 { font-weight: 700; font-size: 1.4rem; color: #333; letter-spacing: -1px; }
+        .sub-header { font-size: 0.6rem; letter-spacing: 2px; color: #888; text-transform: uppercase; margin-bottom: 10px; }
+
+        .sync-container {
+            display: flex; flex-direction: column; align-items: center; margin-top: 20px;
+        }
+
+        .neu-btn {
+            width: 100px; height: 100px; border-radius: 50%;
+            background: var(--neu-bg); border: none;
+            box-shadow: 8px 8px 15px var(--neu-shadow), 
+                       -8px -8px 15px var(--neu-light);
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; transition: 0.2s;
+            color: var(--neu-accent); font-size: 1.5rem;
+        }
+
+        .neu-btn:active {
+            box-shadow: inset 8px 8px 15px var(--neu-shadow), 
+                        inset -8px -8px 15px var(--neu-light);
+            transform: scale(0.98);
+        }
+
+        .inventory-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px; border-radius: 20px; margin-bottom: 20px;
+            background: var(--neu-bg);
+            box-shadow: 5px 5px 10px var(--neu-shadow), 
+                       -5px -5px 10px var(--neu-light);
+        }
+
+        .color-well {
+            width: 45px; height: 45px; border-radius: 50%;
+            box-shadow: inset 4px 4px 8px rgba(0,0,0,0.2), 
+                        inset -4px -4px 8px rgba(255,255,255,0.7);
+        }
+
+        .stock-bubble {
+            padding: 10px 15px; border-radius: 15px;
+            background: var(--neu-bg);
+            box-shadow: inset 3px 3px 6px var(--neu-shadow), 
+                        inset -3px -3px 6px var(--neu-light);
+            font-family: 'JetBrains Mono'; font-weight: 800; color: var(--neu-accent);
+        }
+
+        .neu-alert {
+            background: var(--neu-bg);
+            padding: 20px; border-radius: 25px;
+            box-shadow: 6px 6px 12px var(--neu-shadow), 
+                       -6px -6px 12px var(--neu-light);
+            border-left: 5px solid var(--neu-danger);
+            margin-top: 30px;
+        }
+
+        .neu-alert b { color: var(--neu-danger); font-size: 0.8rem; letter-spacing: 1px; }
+
+        /* --- MODULAR EXTENSIONS (UNTOUCHED) --- */
+        .search-box {
+            width: 100%; border: none; padding: 15px 20px; border-radius: 20px;
+            background: var(--neu-bg); margin-top: 20px;
+            box-shadow: inset 6px 6px 12px var(--neu-shadow), inset -6px -6px 12px var(--neu-light);
+            font-family: 'Quicksand'; outline: none; color: #666;
+        }
+        .filter-chip-container { display: flex; gap: 10px; overflow-x: auto; padding: 10px 5px; margin-bottom: 20px; }
+        .filter-chip {
+            padding: 8px 15px; border-radius: 12px; background: var(--neu-bg);
+            box-shadow: 4px 4px 8px var(--neu-shadow), -4px -4px 8px var(--neu-light);
+            font-size: 0.65rem; font-weight: 700; white-space: nowrap; cursor: pointer;
+        }
+        .pipeline-card { display: flex; justify-content: space-around; text-align: center; margin-top: 20px; }
+        .pipeline-item b { display: block; font-size: 1.1rem; color: var(--neu-accent); }
+        .pipeline-item span { font-size: 0.55rem; color: #888; text-transform: uppercase; }
+
+        .kpi-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .kpi-widget { 
+            background: var(--neu-bg); padding: 15px; border-radius: 20px;
+            box-shadow: 5px 5px 10px var(--neu-shadow), -5px -5px 10px var(--neu-light);
+            text-align: center;
+        }
+        .kpi-value { font-family: 'JetBrains Mono'; font-weight: 800; font-size: 1.1rem; display: block; }
+        .kpi-label { font-size: 0.5rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- 3D DOCK WITHOUT BACKGROUND --- */
+        .depth-dock {
+            position: fixed;
+            bottom: 0; /* Kai shi har kasa gaba daya */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 85px;
+            background: transparent; /* Cire background bar duka */
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 10px;
+            z-index: 10000;
+        }
+
+        .depth-item {
             position: relative;
-            overflow: hidden;
+            width: 55px;
+            height: 55px;
+            background: var(--neu-bg);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 6px 6px 12px var(--neu-shadow), -6px -6px 12px var(--neu-light);
+            color: #777;
         }
 
-        .elite-card:hover {
-            border-color: #D4AF37;
-            background: rgba(212, 175, 55, 0.03);
-            transform: scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(212, 175, 55, 0.1);
+        .depth-item.active {
+            box-shadow: inset 6px 6px 12px var(--neu-shadow), inset -6px -6px 12px var(--neu-light);
+            color: var(--accent-gold);
+            transform: scale(0.95);
         }
 
-        /* Neon Glow Text */
-        .neon-text {
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-        }
-
-        /* Animated Progress Bar */
-        .progress-bar {
-            height: 6px;
-            border-radius: 10px;
-            background: linear-gradient(90deg, #D4AF37, #fde047);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-        }
-
-        /* Glowing Star */
-        .star-glow { color: #fbbf24; filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.6)); }
-
-        .btn-gold {
-            background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
-            color: black;
-            font-weight: 800;
+        .depth-label {
+            position: absolute;
+            top: -35px;
+            background: #1A0F0D;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 8px;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(10px);
             transition: 0.3s;
+            pointer-events: none;
         }
 
-        .btn-gold:hover {
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
-            transform: translateY(-2px);
+        .depth-item.active .depth-label { opacity: 1; transform: translateY(0); }
+
+        /* --- CATALOG SPECIFIC STYLES --- */
+        .page-content { display: none; animation: fadeIn 0.3s ease; }
+        .page-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .catalog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .catalog-card {
+            background: var(--neu-bg); border-radius: 22px; padding: 12px;
+            box-shadow: 6px 6px 12px var(--neu-shadow), -6px -6px 12px var(--neu-light);
+            text-align: center; position: relative;
+        }
+        .stock-badge {
+            position: absolute; top: 8px; left: 8px; font-size: 0.5rem; padding: 3px 7px;
+            border-radius: 10px; font-weight: 800; color: white; z-index: 10;
+        }
+        .catalog-img-box {
+            width: 100%; aspect-ratio: 1; background: #d1d9e6; border-radius: 15px;
+            margin-bottom: 10px; overflow: hidden;
+            box-shadow: inset 4px 4px 8px var(--neu-shadow), inset -4px -4px 8px var(--neu-light);
+        }
+        .catalog-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .toggle-switch {
+            width: 26px; height: 14px; background: #ccc; border-radius: 10px;
+            position: relative; transition: 0.3s; cursor: pointer; display: inline-block;
+        }
+        .toggle-switch.on { background: var(--neu-accent); }
+        .toggle-switch .circle {
+            width: 10px; height: 10px; background: white; border-radius: 50%;
+            position: absolute; top: 2px; left: 2px; transition: 0.3s;
+        }
+        .toggle-switch.on .circle { left: 14px; }
+        .floating-plus {
+            position: fixed; right: 25px; bottom: 100px; width: 55px; height: 55px;
+            background: var(--neu-accent); color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 8px 20px rgba(77, 124, 254, 0.4); z-index: 99; cursor: pointer;
         }
     </style>
 </head>
-<body class="p-6">
+<body>
 
-    <div class="max-w-7xl mx-auto">
-        <header class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-            <div class="relative">
-                <h1 class="text-6xl alphabet-font neon-text">Vendor Center</h1>
-                <p class="text-[10px] tracking-[0.5em] text-gray-500 font-bold uppercase mt-2">The Global Elite Marketplace</p>
+    <div id="home-page" class="page-content active">
+        <div class="neu-card">
+            <p class="sub-header">Nexus Soft-Interface</p>
+            <h1>Inventory Control</h1>
+            <div class="sync-container">
+                <button class="neu-btn" onclick="press()">
+                    <span id="sync-icon">⚡</span>
+                </button>
+                <p style="margin-top: 15px; font-size: 0.7rem; color: #888; font-weight: 700;">72H VERIFY STATUS: OK</p>
             </div>
-            
-            <div class="flex gap-4">
-                <div class="elite-card px-8 py-4 flex items-center gap-4">
-                    <div class="text-right">
-                        <p class="text-[10px] text-gray-500 font-bold uppercase">Reputation</p>
-                        <div class="flex gap-1">
-                            <i class="fa-solid fa-star star-glow"></i>
-                            <i class="fa-solid fa-star star-glow"></i>
-                            <i class="fa-solid fa-star star-glow"></i>
-                            <i class="fa-solid fa-star star-glow"></i>
-                            <i class="fa-solid fa-star-half-stroke star-glow"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-12">
-            
-            <div class="md:col-span-8 elite-card p-10 flex justify-between items-center bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]">
-                <div>
-                    <span class="text-xs font-bold text-[#D4AF37] tracking-widest uppercase mb-4 block">Available Liquidity</span>
-                    <h2 class="text-6xl font-black tracking-tighter">₦<span id="balance">450,000</span><span class="text-2xl text-gray-600">.00</span></h2>
-                    <div class="mt-8 flex gap-6">
-                        <button class="btn-gold px-8 py-3 rounded-2xl text-xs">Pita da Kudi</button>
-                        <button class="text-xs font-bold text-gray-400 border-b border-gray-800 pb-1">Historical Data</button>
-                    </div>
-                </div>
-                <div class="hidden md:block">
-                    <i class="fa-solid fa-building-columns text-9xl opacity-5"></i>
-                </div>
-            </div>
-
-            <div class="md:col-span-4 elite-card p-10 flex flex-col justify-between">
-                <div>
-                    <p class="text-[10px] font-bold text-gray-500 uppercase">Successful Deliveries</p>
-                    <h3 class="text-5xl font-black mt-2">1,208</h3>
-                </div>
-                <div class="mt-4">
-                    <div class="flex justify-between text-[10px] font-bold mb-2">
-                        <span>Target: 2,000</span>
-                        <span class="text-[#D4AF37]">60%</span>
-                    </div>
-                    <div class="w-full bg-white/5 rounded-full overflow-hidden">
-                        <div class="progress-bar" style="width: 60%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="md:col-span-12 elite-card p-1">
-                <div class="bg-black/40 rounded-[28px] p-8 grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    <div class="space-y-6">
-                        <div class="border-2 border-dashed border-white/10 rounded-[40px] h-64 flex flex-col items-center justify-center hover:border-[#D4AF37] transition cursor-pointer group">
-                            <i class="fa-solid fa-plus text-4xl text-gray-800 group-hover:text-[#D4AF37] mb-2"></i>
-                            <p class="text-[10px] font-bold uppercase tracking-widest text-gray-600">Saka Hoton Kaya</p>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <input type="text" placeholder="Sunan Kaya" class="bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-[#D4AF37] text-sm font-bold">
-                            <select class="bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-[#D4AF37] text-sm font-bold text-gray-400">
-                                <option>Category</option>
-                                <option>Fashion</option>
-                                <option>Electronics</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col justify-between">
-                        <div class="space-y-6">
-                            <div class="flex justify-between items-center">
-                                <span class="text-xs font-bold uppercase tracking-widest text-gray-500">Your Price</span>
-                                <input type="number" placeholder="₦ 0.00" class="bg-transparent text-right text-3xl font-black outline-none border-b border-white/5 focus:border-[#D4AF37] w-1/2">
-                            </div>
-                            <div class="p-6 bg-[#D4AF37]/5 rounded-3xl border border-[#D4AF37]/10">
-                                <div class="flex justify-between text-[10px] font-bold mb-2">
-                                    <span class="text-gray-400">MAFITADUBU SERVICE FEE (5%)</span>
-                                    <span class="text-red-500">+ ₦500.00</span>
-                                </div>
-                                <div class="flex justify-between items-end">
-                                    <span class="text-xs font-black uppercase tracking-tighter">Market Display Price</span>
-                                    <span class="text-3xl font-black text-[#D4AF37]">₦10,500.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn-gold w-full py-5 rounded-[2rem] mt-6">Publish to World Market</button>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
-        <div class="elite-card p-8 border-l-8 border-blue-600">
-            <div class="flex items-center gap-6">
-                <div class="w-16 h-16 bg-blue-600/20 rounded-full flex items-center justify-center text-blue-500 text-2xl">
-                    <i class="fa-solid fa-shield-halved"></i>
-                </div>
+        <div class="kpi-row">
+            <div class="kpi-widget">
+                <span class="kpi-value" style="color: #2ecc71;">4.8 ★</span>
+                <span class="kpi-label">Seller Rating</span>
+            </div>
+            <div class="kpi-widget">
+                <span class="kpi-value" style="color: var(--neu-danger);">0%</span>
+                <span class="kpi-label">Cancel Rate</span>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 15px; padding-left: 10px;">
+            <p class="sub-header">Active Atamfa Stock</p>
+        </div>
+
+        <div class="inventory-item">
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <div class="color-well" style="background: #0033ff;"></div>
                 <div>
-                    <h4 class="text-lg font-black uppercase tracking-tighter">Amana Security Shield Active</h4>
-                    <p class="text-xs text-gray-500 max-w-2xl mt-1 leading-relaxed">Duk wata ma'amala da kake yi tana karkashin kariya. Kudin ka yana nan a adana har sai an tabbatar da gamsuwar mamba.</p>
+                    <b style="font-size: 0.9rem;">Royal Blue</b>
+                    <p style="font-size: 0.6rem; color: #999;">GALAXY_SERIES_01</p>
                 </div>
+            </div>
+            <div class="stock-bubble">12</div>
+        </div>
+
+        <div class="inventory-item">
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <div class="color-well" style="background: #8b0000;"></div>
+                <div>
+                    <b style="font-size: 0.9rem;">Wine Red</b>
+                    <p style="font-size: 0.6rem; color: #999;">GALAXY_SERIES_02</p>
+                </div>
+            </div>
+            <div class="stock-bubble" style="color: var(--neu-danger);">04</div>
+        </div>
+
+        <div class="neu-alert">
+            <b>SYSTEM_NOTIFICATION</b>
+            <p style="font-size: 0.85rem; color: #666; margin-top: 8px;">
+                An siyar da <b>Royal Blue</b> guda 1. <br> Stock update: <b>11</b> units remaining in physical shelf.
+            </p>
+        </div>
+
+        <div style="padding-bottom: 50px;">
+            <input type="text" class="search-box" placeholder="Search Atamfa variant (Jumia Omnibar)...">
+            <div class="filter-chip-container">
+                <div class="filter-chip" style="color: var(--neu-accent);">All Stock</div>
+                <div class="filter-chip">In Transit</div>
+                <div class="filter-chip">Returns</div>
+                <div class="filter-chip">Reserved</div>
+            </div>
+
+            <div class="neu-card">
+                <p class="sub-header">Pending Orders (Breakdown)</p>
+                <div class="pipeline-card">
+                    <div class="pipeline-item"><b>02</b><span style="color:var(--neu-danger)">>48H</span></div>
+                    <div class="pipeline-item"><b>03</b><span>24H</span></div>
+                    <div class="pipeline-item"><b>08</b><span>Recent</span></div>
+                </div>
+            </div>
+
+            <div class="neu-card">
+                <p class="sub-header">Logistics & Logistics</p>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                    <span style="font-size: 0.75rem;">Shipped Orders</span>
+                    <b style="font-family: 'JetBrains Mono'; color: var(--neu-accent);">24</b>
+                </div>
+                <hr style="border: 0; border-top: 1px dashed #ccc; margin: 10px 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.75rem;">Return Deliveries</span>
+                    <b style="font-family: 'JetBrains Mono'; color: var(--neu-danger);">01</b>
+                </div>
+            </div>
+
+            <div class="neu-card" style="border: 1px solid rgba(77, 124, 254, 0.2);">
+                <p class="sub-header">Jumia Announcements</p>
+                <p style="font-size: 0.75rem; font-weight: 700;">📢 Ramadan Flash Sale</p>
+                <p style="font-size: 0.6rem; color: #888;">Join the upcoming campaign to boost Atamfa sales by 40%.</p>
             </div>
         </div>
     </div>
 
+    <div id="products-page" class="page-content">
+        <header style="margin-bottom: 20px;">
+            <p class="sub-header">Nexus Inventory</p>
+            <h1>My Catalog</h1>
+            <input type="text" class="search-box" style="margin-top:15px;" placeholder="Nemo Atamfa a kanti...">
+        </header>
+
+        <div class="catalog-grid">
+            <div class="catalog-card">
+                <span class="stock-badge" style="background:#2ecc71;">IN STOCK</span>
+                <div class="catalog-img-box">
+                    <img src="https://i.postimg.cc/RhsgnLm0/IMG-20260306-WA0099.jpg" alt="Atamfa 1">
+                </div>
+                <b style="font-size: 0.75rem; display:block;">Luxury Atamfa</b>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+                    <span style="font-size: 0.65rem; font-weight:700; color:var(--neu-accent);">₦15,500</span>
+                    <span style="font-size: 0.55rem; color:#888;"><i class="fa-solid fa-eye"></i> 1.2k</span>
+                </div>
+                <div style="display:flex; justify-content:center; align-items:center; margin-top:10px; border-top:1px solid rgba(0,0,0,0.05); padding-top:8px; gap:8px;">
+                    <span style="font-size:0.55rem; color:#888;">Active</span>
+                    <div class="toggle-switch on" onclick="this.classList.toggle('on')"><div class="circle"></div></div>
+                </div>
+            </div>
+
+            <div class="catalog-card">
+                <span class="stock-badge" style="background:var(--neu-danger);">LOW: 04</span>
+                <div class="catalog-img-box">
+                    <img src="https://i.postimg.cc/nhQ3CmwP/IMG-20260306-WA0098.jpg" alt="Atamfa 2">
+                </div>
+                <b style="font-size: 0.75rem; display:block;">Wine Galaxy</b>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+                    <span style="font-size: 0.65rem; font-weight:700; color:var(--neu-accent);">₦12,000</span>
+                    <span style="font-size: 0.55rem; color:#888;"><i class="fa-solid fa-eye"></i> 850</span>
+                </div>
+                <div style="display:flex; justify-content:center; align-items:center; margin-top:10px; border-top:1px solid rgba(0,0,0,0.05); padding-top:8px; gap:8px;">
+                    <span style="font-size:0.55rem; color:#888;">Active</span>
+                    <div class="toggle-switch on" onclick="this.classList.toggle('on')"><div class="circle"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="floating-plus" onclick="alert('Bude shafin dora kaya...')">
+            <i class="fa-solid fa-plus"></i>
+        </div>
+    </div>
+
+    <nav class="depth-dock">
+        <div class="depth-item active" onclick="navTo(this, 'home-page')">
+            <span class="depth-label">Home</span>
+            <i class="fa-solid fa-house"></i>
+        </div>
+        <div class="depth-item" onclick="navTo(this, 'transactions-page')">
+            <span class="depth-label">Transactions</span>
+            <i class="fa-solid fa-receipt"></i>
+        </div>
+        <div class="depth-item" onclick="navTo(this, 'products-page')">
+            <span class="depth-label">Products</span>
+            <i class="fa-solid fa-box-open"></i>
+        </div>
+        <div class="depth-item" onclick="navTo(this, 'orders-page')">
+            <span class="depth-label">Orders</span>
+            <i class="fa-solid fa-truck-fast"></i>
+        </div>
+        <div class="depth-item" onclick="navTo(this, 'profile-page')">
+            <span class="depth-label">Profile</span>
+            <i class="fa-solid fa-circle-user"></i>
+        </div>
+    </nav>
+
+<script>
+    function navTo(el, pageId) {
+        document.querySelectorAll('.depth-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        el.classList.add('active');
+
+        document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+        const target = document.getElementById(pageId);
+        if(target) target.classList.add('active');
+
+        if (navigator.vibrate) navigator.vibrate(35);
+    }
+
+    function press() {
+        const icon = document.getElementById('sync-icon');
+        icon.innerText = "⌛";
+        setTimeout(() => {
+            alert("Jumia-Sync: Data Updated.");
+            icon.innerText = "⚡";
+        }, 800);
+    }
+</script>
 </body>
-                                  </html>
+</html>
