@@ -254,6 +254,12 @@
         <div class="cc-item" onclick="fireAction('Price')"><div class="cc-icon-box" style="color:var(--neu-accent);"><i class="fa-solid fa-tag"></i></div><span class="cc-label">Price</span></div>
         <div class="cc-item" onclick="fireAction('Hide')"><div class="cc-icon-box" style="color:#f39c12;"><i class="fa-solid fa-eye-slash"></i></div><span class="cc-label">Hide</span></div>
         <div class="cc-item" onclick="fireAction('Delete')"><div class="cc-icon-box" style="color:var(--neu-danger);"><i class="fa-solid fa-trash-can"></i></div><span class="cc-label">Delete</span></div>
+        <div class="cc-item" onclick="cloneProduct()">
+    <div class="cc-icon-box" style="color:#e67e22;">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+    <span class="cc-label">Clone</span>
+        </div>
         
         <div class="cc-item" onclick="openBulkModal()">
             <div class="cc-icon-box" style="color:#9b59b6;">
@@ -678,6 +684,39 @@ document.getElementById('bulkFile')?.addEventListener('change', function(e) {
     closeBulkModal();
 });
     
+   function cloneProduct() {
+    // Nemo kayan da aka taba (selected)
+    const selectedCards = document.querySelectorAll('.catalog-card.selected');
+    
+    if (selectedCards.length !== 1) {
+        alert("Don Allah zabi kaya guda daya kacal da kake son yi wa 'Clone'.");
+        return;
+    }
+
+    const sourceCard = selectedCards[0];
+    
+    // Dauko bayanan daga katin (Suna da Farashi)
+    const name = sourceCard.querySelector('b').innerText;
+    const priceText = sourceCard.querySelector('span[style*="color:var(--neu-accent)"]').innerText;
+    const price = priceText.replace('₦', '').replace(',', '');
+
+    // Bude Modal din "Sabuwar Kaya"
+    openModal();
+
+    // Cika fom din automatically
+    document.getElementById('p-name').value = name + " (Copy)";
+    document.getElementById('p-price').value = price;
+    
+    // Tabbatar an dawo da shi kan "Atamfa" tunda cloning muke
+    const catSelect = document.getElementById('p-category');
+    catSelect.value = "atamfa";
+    updateFields("atamfa"); // Kira wannan don launuka su fito
+
+    // Rufe command center
+    resetManage();
+    
+    if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
+   }
     
 </script>
 </body>
