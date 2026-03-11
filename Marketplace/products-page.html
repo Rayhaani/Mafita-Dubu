@@ -38,12 +38,31 @@ h1 {
     color: #fff;
 }
 
+/* Sauya wannan a wajen .price-tag dinka */
 .price-tag { 
     font-size: 38px; 
     font-weight: 900; 
-    color: #00f2ff; /* Kalar Cyan domin yayi match da AI dinka */
-    text-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+    color: #00f2ff; /* Kalar Cyan */
+    font-family: 'Quicksand', sans-serif;
+    text-shadow: 0 0 10px rgba(0, 242, 255, 0.6), 0 0 20px rgba(0, 242, 255, 0.2);
+    letter-spacing: -1px;
+    position: relative;
+    display: inline-block;
 }
+
+/* Wannan zai kara wani dan haske (Aura) a karkashin kudin */
+.price-tag::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    height: 15px;
+    background: rgba(0, 242, 255, 0.15);
+    filter: blur(15px);
+    z-index: -1;
+}
+    
     
     
     .content-layer { position: relative; z-index: 10; width: 100%; }
