@@ -250,7 +250,6 @@
     </div>
 </div>
     
-
     
     <div id="home-page" class="page-content active">
         <div class="neu-card">
@@ -404,8 +403,41 @@
 
 </div>
             
-        
+<div id="product-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(224,229,236,0.8); z-index:20000; backdrop-filter:blur(15px); overflow-y: auto;">
+    <div class="neu-card" style="width:92%; margin: 30px auto; padding: 20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2 style="font-size:1.1rem; color:var(--neu-accent);">Sabuwar Kaya</h2>
+            <i class="fa-solid fa-circle-xmark" onclick="closeModal()" style="font-size:1.5rem; color:var(--neu-danger); cursor:pointer;"></i>
+        </div>
 
+       
+        <div onclick="document.getElementById('fileInput').click()" style="width:100%; height:150px; border-radius:20px; background:var(--neu-bg); box-shadow:inset 6px 6px 12px var(--neu-shadow), inset -6px -6px 12px var(--neu-light); display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer;">
+            <i class="fa-solid fa-cloud-arrow-up" style="font-size:2rem; color:var(--neu-accent);"></i>
+            <span style="font-size:0.6rem; margin-top:10px; font-weight:700; color:#888;">DORA HOTON KAYA</span>
+            <input type="file" id="fileInput" hidden accept="image/*">
+        </div>
+
+        <input type="text" class="search-box" id="p-name" placeholder="Sunan Kaya...">
+        
+        <select class="search-box" id="p-category" onchange="updateFields(this.value)" style="appearance:none; font-weight:bold; color:var(--neu-accent);">
+            <option value="">-- Zabi Category --</option>
+            <option value="atamfa">Atamfa & Clothing</option>
+            <option value="food">Food Stuffs (Abinci)</option>
+            <option value="electronics">Electronics & Tech</option>
+        </select>
+
+        <input type="number" class="search-box" id="p-price" placeholder="Farashi (₦)">
+
+        <div id="dynamic-fields" style="margin-top:15px;">
+            </div>
+
+        <button class="neu-btn" onclick="saveProduct()" style="width:100%; height:55px; border-radius:18px; margin-top:25px; font-size:0.8rem; font-weight:900; background:var(--neu-accent); color:white; box-shadow: 0 10px 20px rgba(77, 124, 254, 0.3);">
+            Dora Kaya A Kasuwa
+        </button>
+    </div>
+</div>
+
+            
         <div class="floating-plus" onclick="alert('Bude shafin dora kaya...')">
             <i class="fa-solid fa-plus"></i>
         </div>
@@ -511,7 +543,51 @@ function fireAction(action) {
     resetManage();
         }
         
+function openModal() {
+    document.getElementById('product-modal').style.display = 'block';
+}
 
+function closeModal() {
+    document.getElementById('product-modal').style.display = 'none';
+}
+
+function updateFields(val) {
+    const container = document.getElementById('dynamic-fields');
+    container.innerHTML = ""; // Share tsohon bayani
+
+    if (val === "atamfa") {
+        container.innerHTML = `
+            <p class="sub-header" style="margin-top:10px;">Launuka (Colors)</p>
+            <div style="display:flex; gap:10px; margin-top:10px;">
+                <div class="color-well" style="background:#0033ff; cursor:pointer; border:3px solid white;"></div>
+                <div class="color-well" style="background:#8b0000; cursor:pointer;"></div>
+                <div class="color-well" style="background:#ffd700; cursor:pointer;"></div>
+                <div class="color-well" style="background:#2ecc71; cursor:pointer;"></div>
+                <div style="width:45px; height:45px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center; box-shadow:4px 4px 8px #ccc;"><i class="fa-solid fa-plus"></i></div>
+            </div>
+            <input type="text" class="search-box" placeholder="Nau'in Yadiko (e.g. Cotton, Silk)">
+        `;
+    } else if (val === "food") {
+        container.innerHTML = `
+            <input type="text" class="search-box" placeholder="Nauyi (e.g. 50KG, Mudun 1)">
+            <input type="date" class="search-box" title="Ranar Karewa">
+            <p class="sub-header" style="margin-top:10px;">Wace irin Shinkafa/Wake ce?</p>
+            <input type="text" class="search-box" placeholder="Grade (Local ko Foreign)">
+        `;
+    } else if (val === "electronics") {
+        container.innerHTML = `
+            <input type="text" class="search-box" placeholder="Brand (e.g. Samsung, LG)">
+            <input type="text" class="search-box" placeholder="Model Number">
+            <input type="text" class="search-box" placeholder="Garanti (Warranty)">
+        `;
+    }
+}
+
+function saveProduct() {
+    alert("An dora kaya cikin nasara! ✨");
+    closeModal();
+}
+    
     
 </script>
 </body>
