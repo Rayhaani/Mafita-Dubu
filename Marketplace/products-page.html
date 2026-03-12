@@ -1173,14 +1173,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const data = localStorage.getItem('selectedProduct');
     if (data) {
         const product = JSON.parse(data);
+        
+        // 1. Hoton Saman Shafi (Hero Image)
         document.getElementById('dynamic-img').src = product.img;
-        document.querySelector('.cropped-view img').src = product.img;
+        
+        // 2. Sunan Kayan da Farashi
         document.querySelector('h1').innerHTML = product.name;
         document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
+
+        // 3. Bangaren Visual Proof (Wannan zai dauko hoton saman shafin)
+        const visualProofImg = document.querySelector('.visual-proof img');
+        if (visualProofImg) {
+            visualProofImg.src = product.img;
+        }
+
+        // 4. Sauran kananan hotuna (Thumbnails, Holo effects, da sauransu)
+        document.querySelector('.cropped-view img').src = product.img;
         document.querySelectorAll('.stack-img').forEach(img => img.src = product.img);
         document.querySelectorAll('.holo-img').forEach(img => img.src = product.img);
     }
-}); 
+});
+    
 
     function openChat() {
     window.location.href = 'chat-room.html';
