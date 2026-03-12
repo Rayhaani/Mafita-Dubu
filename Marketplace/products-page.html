@@ -565,20 +565,25 @@ h1 {
         
         
 <span class="section-title">Visual Proof</span>
-    <div class="px-5">
-        <div class="proof-section">
-            <div class="cropped-view" id="croppedView" onclick="openFS(['https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200'])">
-                <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200">
-            </div>
-            <div class="see-all-overlay" id="seeAllBox">
-                <span class="text-[10px] font-bold cursor-pointer bg-black/40 px-4 py-1 rounded-full" onclick="showStack()">See all <i class="fa-solid fa-chevron-down"></i></span>
-            </div>
-            <div class="hidden-stack triple-stack" id="tripleStack">
-                <img src="" class="stack-img">
-                <img src="" class="stack-img">
-                <img src="" class="stack-img">
-            </div>
+
+<div class="proof-section">
+    <div class="cropped-view" id="croppedView" onclick="showStack()">
+        <img id="visual-main-img" src="" alt="Main Proof">
+        <div class="see-all-overlay" id="seeAllBox">
+            <span class="text-[10px] font-bold cursor-pointer bg-black/40 px-4 py-1 rounded-full">
+                See all <i class="fa-solid fa-chevron-down"></i>
+            </span>
         </div>
+    </div>
+
+    <div class="hidden-stack triple-stack" id="tripleStack" style="display: none;">
+        <img src="" class="stack-img w-full block mb-1">
+        <img src="" class="stack-img w-full block mb-1">
+        <img src="" class="stack-img w-full block mb-1">
+    </div>
+</div>
+        
+        
         <div class="mt-8 border-t border-white/5 pt-4 mb-24">
             <div class="flex gap-6 overflow-x-auto no-scrollbar"><span class="text-xs font-black border-b-2 border-white pb-2">Recommended</span><span class="text-xs text-gray-500 pb-2">Men's Underwear</span></div>
             <div class="grid grid-cols-2 gap-3 mt-4">
@@ -590,9 +595,6 @@ h1 {
     </div>
 
         
-
-    
-     
 
 <div id="chat-window">
     <div id="chat-header">
