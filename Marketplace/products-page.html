@@ -138,11 +138,55 @@ h1 {
     .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: #00f2ff; box-shadow: 0 0 15px #00f2ff; animation: scanMove 4s infinite linear; }
     @keyframes scanMove { 0% { top: 0% } 100% { top: 100% } }
 
-    .spec-box { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; height: 55px; background: rgba(255,255,255,0.03); border-radius: 18px; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; }
-    .color-dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; }
-    .color-dot.active { border-color: white; }
-    #size-dropdown { display: none; background: #111; border-radius: 20px; margin: 10px 15px; padding: 15px; border: 1px solid rgba(255,255,255,0.1); }
+    /* SABON SPECS BOX (MILK COLOR) */
+.specs-box {
+    background: #F2EDE4 !important; 
+    margin: 20px 15px;
+    padding: 30px 25px;
+    border-radius: 45px; 
+    border: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+}
 
+.specs-label {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1A0F0D;
+    text-transform: capitalize;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.length-btn {
+    font-family: 'Quicksand', sans-serif;
+    padding: 10px 22px;
+    background: #FFFFFF;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #1A0F0D;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    cursor: pointer;
+}
+
+.length-btn.active {
+    background: #1A0F0D;
+    color: #FFFFFF;
+}
+
+.q-control {
+    background: #1A0F0D;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px 22px;
+    border-radius: 25px;
+}
+    
     .proof-section { position: relative; width: 100%; margin-top: 20px; }
     .cropped-view { width: 100%; height: 180px; overflow: hidden; position: relative; border-radius: 25px 25px 0 0; }
     .cropped-view img { width: 100%; position: absolute; top: 0; object-fit: cover; }
@@ -348,20 +392,39 @@ h1 {
             </div>
         </div>
 
-        <div class="spec-box" onclick="let d=document.getElementById('size-dropdown'); d.style.display=d.style.display==='block'?'none':'block'">
-            <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Size</span>
-            <div class="flex gap-4 items-center"><span class="text-xs font-bold text-gray-400">S</span><span class="text-xs font-bold">M</span><i class="fa-solid fa-chevron-down text-[10px]"></i></div>
+      <div class="specs-box-container" style="background: #F2EDE4; border-radius: 45px; padding: 30px 25px; margin: 20px 15px; font-family: 'Quicksand', sans-serif;">
+    
+    <div style="margin-bottom: 35px;">
+        <span style="font-size: 14px; font-weight: 700; color: #1A0F0D; text-transform: capitalize; display: block; margin-bottom: 15px;">Colorway</span>
+        <div style="display: flex; gap: 15px;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: #2563eb; border: 3px solid white; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></div>
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: #db2777; border: 3px solid white; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></div>
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: #16a34a; border: 3px solid white; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></div>
         </div>
-        <div id="size-dropdown">
-            <div class="grid grid-cols-5 gap-2 text-[10px] text-center font-bold">
-                <div class="p-2 border border-white/10 rounded">L</div><div class="p-2 border border-white/10 rounded">XL</div><div class="p-2 border border-white/10 rounded">2XL</div><div class="p-2 border border-white/10 rounded">3XL</div><div class="p-2 border border-white/10 rounded">4XL</div>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+        
+        <div>
+            <span style="font-size: 14px; font-weight: 700; color: #1A0F0D; text-transform: capitalize; display: block; margin-bottom: 15px;">Length</span>
+            <div style="display: flex; gap: 10px;">
+                <button style="padding: 12px 20px; background: white; border-radius: 18px; border: none; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 14px; color: #1A0F0D; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">4 Yards</button>
+                <button style="padding: 12px 20px; background: #1A0F0D; border-radius: 18px; border: none; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 14px; color: white; box-shadow: 0 8px 15px rgba(0,0,0,0.15);">6 Yards</button>
             </div>
         </div>
 
-        <div class="spec-box"><span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Quantity</span>
-            <div class="flex gap-5 items-center"><button class="text-2xl text-gray-500" onclick="let q=this.nextElementSibling; if(parseInt(q.innerText)>1) q.innerText=parseInt(q.innerText)-1">-</button><span class="font-bold">1</span><button class="text-2xl" onclick="let q=this.previousElementSibling; q.innerText=parseInt(q.innerText)+1">+</button></div>
+        <div style="text-align: right;">
+            <span style="font-size: 14px; font-weight: 700; color: #1A0F0D; text-transform: capitalize; display: block; margin-bottom: 15px; margin-right: 15px;">Quantity</span>
+            <div style="display: flex; align-items: center; justify-content: center; background: #1A0F0D; color: white; padding: 10px 22px; border-radius: 30px; gap: 18px; min-width: 110px;">
+                <button style="background: none; border: none; color: white; font-size: 22px; font-weight: bold; cursor: pointer;">-</button>
+                <span style="font-weight: 700; font-size: 18px;">1</span>
+                <button style="background: none; border: none; color: white; font-size: 22px; font-weight: bold; cursor: pointer;">+</button>
+            </div>
         </div>
+        
     </div>
+      </div>
+        
 
     <span class="section-title">Verified Reviews</span>
     <div class="px-5">
