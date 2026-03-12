@@ -400,6 +400,36 @@ h1 {
     font-size: 12px;
     }
     
+    .see-all-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px; /* Rage tsayin gradient din */
+    background: linear-gradient(to bottom, transparent, #F2EDE4 90%);
+    display: flex;
+    align-items: flex-end; /* Tura shi can kasa */
+    justify-content: center;
+    padding-bottom: 10px; /* Kar ya daki bakin frame din */
+    z-index: 10;
+}
+
+/* Tabbatar stack images suna jere a kasa */
+.hidden-stack {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.hidden-stack.active {
+    display: flex !important;
+}
+
+.stack-img {
+    width: 100%;
+    border-radius: 20px;
+    }
     
 </style>
 </head>
@@ -537,16 +567,21 @@ h1 {
    <span class="section-title" style="font-family: 'Quicksand'; font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-left: 15px; display: block; margin-top: 20px;">Visual Proof</span>
 
 <div class="px-5">
-    <div class="proof-section" style="margin-top: 10px;">
-        <div class="cropped-view" id="croppedView" onclick="openFS(['https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200'])">
-            <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200" style="width: 100%; border-radius: 25px; display: block;">
+    <div id="proofContainer" style="position: relative; border-radius: 25px; overflow: hidden; margin-top: 10px;">
+        <div class="cropped-view" id="croppedView">
+            <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200" style="width: 100%; display: block;">
         </div>
 
-        <div class="see-all-overlay">
-            <span onclick="showStack()" class="font-bold cursor-pointer">
-                See all <i class="fa-solid fa-chevron-down" style="font-size: 10px; margin-left: 5px;"></i>
+        <div id="overlayBox" class="see-all-overlay">
+            <span onclick="toggleStack()" style="background: white; padding: 8px 20px; border-radius: 25px; font-size: 12px; font-weight: 800; color: #1A0F0D; box-shadow: 0 4px 15px rgba(0,0,0,0.1); cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+                See all <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i>
             </span>
         </div>
+    </div>
+
+    <div id="tripleStack" style="display: none; flex-direction: column; gap: 12px; margin-top: 15px;">
+        <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200" style="width: 100%; border-radius: 25px;">
+        <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200" style="width: 100%; border-radius: 25px;">
     </div>
 
     <div class="mt-8 border-t border-black/5 pt-4 mb-24">
@@ -569,7 +604,6 @@ h1 {
     </div>
 </div>
         
-
 
 <div id="chat-window">
     <div id="chat-header">
@@ -1094,11 +1128,21 @@ function openFS(imgs) {
     document.getElementById('fullscreen-viewer').style.display = 'block';
 }
 function closeFS() { document.getElementById('fullscreen-viewer').style.display = 'none'; }
-function showStack() {
-    document.getElementById('croppedView').style.display = 'none';
-    document.getElementById('seeAllBox').style.display = 'none';
-    document.getElementById('tripleStack').style.display = 'block';
-}
+function toggleStack() {
+    const stack = document.getElementById('tripleStack');
+    const overlay = document.getElementById('overlayBox');
+    const container = document.getElementById('proofContainer');
+    
+    // Nuna sauran hotunan a jere
+    stack.style.display = 'flex';
+    
+    // Boye wannan See all din da hasken sa
+    overlay.style.display = 'none';
+    
+    // Cire "overflow hidden" domin duka hotunan su fito
+    container.style.overflow = 'visible';
+    }
+    
 
 // --- VENDOR COLLECTION FOR AUTO-CHANGE ---
 const vendorCollection = [
