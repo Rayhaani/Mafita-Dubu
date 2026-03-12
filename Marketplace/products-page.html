@@ -469,23 +469,30 @@ h1 {
 </div>
 
 
-        <div class="specs-box" style="background: #F2EDE4; border-radius: 35px; padding: 25px; margin: 20px 15px;">
-    <h3 style="font-family: 'Quicksand'; font-weight: 800; font-size: 15px; margin-bottom: 15px;">Rate this fabric</h3>
-    
-    <div class="star-input" id="star-box" style="margin-bottom: 15px;">
-        <span onclick="rate(1)">★</span><span onclick="rate(2)">★</span><span onclick="rate(3)">★</span><span onclick="rate(4)">★</span><span onclick="rate(5)">★</span>
+        <div id="review-section-pro" style="background: #F2EDE4; border-radius: 25px; padding: 15px; margin: 10px 15px; font-family: 'Quicksand', sans-serif;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <span style="font-weight: 800; font-size: 13px; color: #1A0F0D;">Rate this fabric</span>
+        <div class="star-input" id="star-box" style="display: flex; gap: 3px;">
+            <span onclick="rate(1)" style="font-size: 20px; cursor: pointer; color: #e0e0e0;">★</span>
+            <span onclick="rate(2)" style="font-size: 20px; cursor: pointer; color: #e0e0e0;">★</span>
+            <span onclick="rate(3)" style="font-size: 20px; cursor: pointer; color: #e0e0e0;">★</span>
+            <span onclick="rate(4)" style="font-size: 20px; cursor: pointer; color: #e0e0e0;">★</span>
+            <span onclick="rate(5)" style="font-size: 20px; cursor: pointer; color: #e0e0e0;">★</span>
+        </div>
     </div>
 
-    <textarea id="review-text" placeholder="Describe your experience..." 
-              style="width: 100%; background: white; border: none; padding: 15px; border-radius: 20px; font-family: 'Quicksand'; min-height: 100px; margin-bottom: 15px; font-size: 14px;"></textarea>
+    <textarea id="review-text" placeholder="Write a short review..." 
+              style="width: 100%; background: rgba(255,255,255,0.9); border: 1px solid rgba(0,0,0,0.05); padding: 10px; border-radius: 15px; font-family: 'Quicksand'; height: 60px; font-size: 13px; color: #1A0F0D; outline: none; margin-bottom: 10px;"></textarea>
 
-    <button id="submit-review" onclick="postReview()" class="submit-btn-disabled" disabled 
-            style="width: 100%; color: white; border: none; padding: 15px; border-radius: 20px; font-weight: 800; font-family: 'Quicksand'; transition: 0.3s;">
-        Post Review
+    <button id="submit-review" onclick="postReview()" disabled 
+            style="width: 100%; background: #ccc; color: white; border: none; padding: 10px; border-radius: 15px; font-weight: 800; font-family: 'Quicksand'; font-size: 13px; transition: 0.3s; cursor: not-allowed;">
+        Submit Review
     </button>
 </div>
 
-<div id="reviews-feed"></div>
+<div id="reviews-feed" style="max-height: 400px; overflow-y: auto; padding-bottom: 20px;">
+</div>
+        
         
     
     <span class="section-title">Visual Proof</span>
@@ -1208,7 +1215,6 @@ function closeModal() {
             
 
 let selectedStars = 0;
-// Fetching auto (Ga gwaji, mun saka sunanka)
 let currentUser = { name: "Sadiq Developer" };
 
 function rate(n) {
@@ -1218,47 +1224,45 @@ function rate(n) {
         s.style.color = index < n ? '#FFB800' : '#e0e0e0';
     });
     
-    // Kunna button idan an zaba tauraro
+    // Aktibat din button
     const btn = document.getElementById('submit-review');
     btn.disabled = false;
     btn.style.background = '#1A0F0D';
-    btn.style.opacity = '1';
     btn.style.cursor = 'pointer';
 }
 
 function postReview() {
     const text = document.getElementById('review-text').value;
-    if(!text) {
-        alert("Don Allah rubuta ra'ayinka!");
-        return;
-    }
+    if(!text) return;
 
     const feed = document.getElementById('reviews-feed');
     const now = new Date();
-    const dateStr = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    const dateStr = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 
     const reviewHTML = `
-        <div style="background: #FFFFFF; border-radius: 28px; padding: 20px; margin: 15px; border: 1px solid rgba(0,0,0,0.03); box-shadow: 0 10px 25px rgba(0,0,0,0.02); font-family: 'Quicksand';">
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-                <div style="width: 40px; height: 40px; border-radius: 50%; background: #eee; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #888;">${currentUser.name[0]}</div>
-                <div>
-                    <h4 style="font-size: 14px; font-weight: 800; margin: 0; color: #1A0F0D;">${currentUser.name}</h4>
-                    <div style="color: #FFB800; font-size: 10px;">${"★".repeat(selectedStars)}</div>
+        <div style="background: white; border-radius: 20px; padding: 15px; margin: 10px 15px; border: 1px solid rgba(0,0,0,0.02); box-shadow: 0 4px 10px rgba(0,0,0,0.01); font-family: 'Quicksand';">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 50%; background: #eee; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; color: #888;">${currentUser.name[0]}</div>
+                <div style="flex-grow: 1;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h4 style="font-size: 12px; font-weight: 800; margin: 0; color: #1A0F0D;">${currentUser.name}</h4>
+                        <span style="font-size: 10px; color: #bbb;">${dateStr}</span>
+                    </div>
+                    <div style="color: #FFB800; font-size: 8px;">${"★".repeat(selectedStars)}</div>
                 </div>
-                <span style="margin-left: auto; font-size: 11px; color: #999;">${dateStr}</span>
             </div>
-            <p style="font-size: 13px; color: #444; line-height: 1.5; margin-left: 52px; font-style: italic;">"${text}"</p>
+            <p style="font-size: 12px; color: #555; line-height: 1.4; margin-left: 42px;">${text}</p>
             
-            <div style="background: #F8F5F0; border-left: 4px solid #1A0F0D; margin-top: 15px; padding: 12px 15px; border-radius: 15px; font-size: 12px; margin-left: 52px;">
-                <p style="font-weight: 800; margin-bottom: 4px; color: #1A0F0D;">KanoMart Official Reply:</p>
-                <p style="margin: 0; color: #666;">Nagode da wannan kyakkyawan sharhi, muna farin ciki da kika ji dadin atamfar mu!</p>
+            <div style="background: #F8F5F0; border-left: 3px solid #1A0F0D; margin: 10px 0 0 42px; padding: 8px 12px; border-radius: 10px; font-size: 11px;">
+                <span style="font-weight: 800; color: #1A0F0D; display: block;">KanoMart Reply:</span>
+                <span style="color: #777;">Mun gode kwarai da wannan kyakkyawan sharhi!</span>
             </div>
         </div>
     `;
 
     feed.insertAdjacentHTML('afterbegin', reviewHTML);
     
-    // Resetting form
+    // Reset
     document.getElementById('review-text').value = "";
     selectedStars = 0;
     rate(0);
