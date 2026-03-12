@@ -567,22 +567,27 @@ h1 {
 <span class="section-title" style="margin-left: 20px;">Visual Proof</span>
 
 <div class="proof-section w-full">
-    <div id="croppedView" class="w-full relative" onclick="showStack()">
-        <img id="visual-main-img" src="" class="w-full object-cover" style="height: 110vw; display: block;">
-        <div class="see-all-overlay absolute bottom-6 left-0 w-full text-center">
-            <span class="text-[10px] font-bold cursor-pointer bg-white/90 text-black px-6 py-2 rounded-full shadow-lg">
-                See all <i class="fa-solid fa-chevron-down ml-1"></i>
-            </span>
+    <div id="croppedView" class="w-full relative overflow-hidden" style="height: 70vw; cursor: pointer;" onclick="showStack()">
+        
+        <img id="visual-main-img" src="" class="w-full object-cover" style="height: 100%; display: block; object-position: top;">
+        
+        <div class="absolute inset-0" style="background: linear-gradient(to bottom, transparent 60%, #e6e2d3 100%);"></div>
+        
+        <div class="absolute bottom-2 left-0 w-full text-center">
+            <div class="flex flex-col items-center gap-1">
+                <span class="text-[12px] font-medium text-gray-600">See all</span>
+                <i class="fa-solid fa-chevron-down text-[10px] text-gray-500"></i>
+            </div>
         </div>
     </div>
 
     <div id="tripleStack" style="display: none;" class="w-full">
-        <img src="" class="stack-img w-full block">
-        <img src="" class="stack-img w-full block">
-        <img src="" class="stack-img w-full block">
-        <img src="" class="stack-img w-full block">
+        <img src="" class="stack-img w-full block mb-2">
+        <img src="" class="stack-img w-full block mb-2">
+        <img src="" class="stack-img w-full block mb-2">
     </div>
 </div>
+        
         
         
         
@@ -1107,33 +1112,27 @@ document.addEventListener('DOMContentLoaded', function() {
     if (data) {
         const product = JSON.parse(data);
         
-        // Sanya hoto a babban Visual Proof na farko
+        // Sanya hoto a bangaren Visual Proof
         const visualMain = document.getElementById('visual-main-img');
         if(visualMain) visualMain.src = product.img;
 
-        // Sanya hoto a dukkan jerin dake boye (Stack Images)
         document.querySelectorAll('.stack-img').forEach(img => {
             img.src = product.img;
         });
 
-        // Tabbatar sauran sassan shafinka ma sun samu hoton
+        // Tabbatar hoton hero da hologram suma sun hau
         document.getElementById('dynamic-img').src = product.img;
         document.querySelectorAll('.holo-img').forEach(img => img.src = product.img);
     }
 });
 
-// Function din da zai nuna hotuna a jere
 function showStack() {
-    // 1. Boye hoton farko mai "See all"
     document.getElementById('croppedView').style.display = 'none';
-    
-    // 2. Nuna jerin hotunan a bayyane
-    const stack = document.getElementById('tripleStack');
-    stack.style.display = 'block';
-    
-    // 3. Scroll zuwa farkon hotunan domin su fito radau
-    stack.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('tripleStack').style.display = 'block';
 }
+    
+
+
     
     
 // UI FUNCTIONS
