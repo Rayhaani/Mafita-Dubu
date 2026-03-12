@@ -564,29 +564,30 @@ h1 {
 </div>
         
         
-<div id="visual-proof-section" style="width: 100%; margin-top: 20px; font-family: 'Quicksand', sans-serif;">
-    <span style="font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-left: 15px; color: #1A0F0D;">Visual Proof</span>
-    
-    <div id="proof-container" style="width: 100%; margin-top: 15px;">
-        <img src="HOTO_NA_1.jpg" style="width: 100%; display: block;">
-
-        <div id="see-all-trigger" style="width: 100%; background: #F2EDE4; padding: 20px 0; display: flex; justify-content: center;">
-            <div onclick="expandVisualProof()" style="background: white; padding: 10px 30px; border-radius: 30px; font-size: 13px; font-weight: 800; color: #1A0F0D; box-shadow: 0 4px 12px rgba(0,0,0,0.08); cursor: pointer; display: flex; align-items: center; gap: 8px;">
-                See all <i class="fa-solid fa-chevron-down"></i>
+<span class="section-title">Visual Proof</span>
+    <div class="px-5">
+        <div class="proof-section">
+            <div class="cropped-view" id="croppedView" onclick="openFS(['https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200'])">
+                <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200">
+            </div>
+            <div class="see-all-overlay" id="seeAllBox">
+                <span class="text-[10px] font-bold cursor-pointer bg-black/40 px-4 py-1 rounded-full" onclick="showStack()">See all <i class="fa-solid fa-chevron-down"></i></span>
+            </div>
+            <div class="hidden-stack triple-stack" id="tripleStack">
+                <img src="" class="stack-img">
+                <img src="" class="stack-img">
+                <img src="" class="stack-img">
             </div>
         </div>
-
-        <div id="extra-proofs" style="display: none; width: 100%;">
-            <img src="HOTO_NA_2.jpg" style="width: 100%; display: block;">
-            <img src="HOTO_NA_3.jpg" style="width: 100%; display: block;">
-            <div style="position: relative; width: 100%;">
-                <img src="HOTO_NA_4.jpg" style="width: 100%; display: block;">
-                <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; background: linear-gradient(to bottom, transparent, #F2EDE4 90%);"></div>
+        <div class="mt-8 border-t border-white/5 pt-4 mb-24">
+            <div class="flex gap-6 overflow-x-auto no-scrollbar"><span class="text-xs font-black border-b-2 border-white pb-2">Recommended</span><span class="text-xs text-gray-500 pb-2">Men's Underwear</span></div>
+            <div class="grid grid-cols-2 gap-3 mt-4">
+                <div class="bg-white/5 aspect-square rounded-2xl relative"><div class="absolute bottom-2 right-2 bg-green-500 rounded-full p-1"><i class="fa-solid fa-cart-shopping text-[8px]"></i></div></div>
+                <div class="bg-white/5 aspect-square rounded-2xl relative"><div class="absolute bottom-2 right-2 bg-green-500 rounded-full p-1"><i class="fa-solid fa-cart-shopping text-[8px]"></i></div></div>
             </div>
         </div>
     </div>
-</div>
-
+    </div>
 
         
 
