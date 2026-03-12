@@ -1112,18 +1112,26 @@ function speakAI(text) {
 }
 
 // SEND LOGIC
-document.getElementById('send-btn').onclick = sendMessage;
-chatInput.onkeypress = (e) => { if(e.key === 'Enter') sendMessage(); };
-function sendMessage() {
-    const val = chatInput.value.trim();
-    if(!val) return;
-    const uDiv = document.createElement('div');
-    uDiv.className = 'msg-user'; uDiv.innerText = val;
-    chatMessages.appendChild(uDiv);
-    chatInput.value = '';
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
+document.addEventListener('DOMContentLoaded', function() {
+    const data = localStorage.getItem('selectedProduct');
+    if (data) {
+        const product = JSON.parse(data);
+        
+        // 1. Hoton Saman Shafi (Hero Image)
+        document.getElementById('dynamic-img').src = product.img;
+        
+        // 2. Visual Proof (Wannan layin ne zai gyara matsalar hoton Unsplash din)
+        document.querySelector('.cropped-view img').src = product.img;
+        
+        // 3. Sauran sassan (Hologram, Stack, Farashi)
+        document.querySelector('h1').innerHTML = product.name;
+        document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
+        
+        document.querySelectorAll('.stack-img').forEach(img => img.src = product.img);
+        document.querySelectorAll('.holo-img').forEach(img => img.src = product.img);
+    }
+});
+    
 // UI FUNCTIONS
 function openFS(imgs) {
     const s = document.getElementById('fsSlider');
