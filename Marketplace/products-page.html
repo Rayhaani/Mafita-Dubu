@@ -324,6 +324,49 @@ h1 {
     color: #1A0F0D !important;
 }
 
+    /* Futuristic Review Box */
+.review-card-pro {
+    background: #FFFFFF;
+    border-radius: 28px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(0,0,0,0.03);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.02);
+}
+
+.star-input span {
+    font-size: 28px;
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.star-input span.selected {
+    color: #FFB800;
+    text-shadow: 0 0 10px rgba(255, 184, 0, 0.4);
+}
+
+/* Vendor Reply Box */
+.vendor-reply {
+    background: #F8F5F0; /* Dan milk mai duhu */
+    border-left: 4px solid #1A0F0D;
+    margin-top: 15px;
+    padding: 12px 15px;
+    border-radius: 15px;
+    font-size: 12px;
+}
+
+.submit-btn-disabled {
+    background: #ccc !important;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.submit-btn-active {
+    background: #1A0F0D !important;
+    cursor: pointer;
+    opacity: 1;
+}
     
 </style>
 </head>
@@ -425,32 +468,24 @@ h1 {
     </div>
 </div>
 
-    <div style="margin: 30px 15px 15px 15px; font-family: 'Quicksand', sans-serif;">
-    <h2 style="font-size: 16px; font-weight: 800; color: #1A0F0D; text-transform: uppercase; letter-spacing: 2px;">Verified Reviews</h2>
-    <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
-        <span style="font-size: 32px; font-weight: 800; color: #1A0F0D;">5.0</span>
-        <div>
-            <div style="color: #FFB800; font-size: 14px;">★★★★★</div>
-            <span id="review-count-header" style="font-size: 12px; color: #666;">Based on 145 reviews</span>
-        </div>
-    </div>
-</div>
 
-<div id="review-form" style="background: #F2EDE4; border-radius: 25px; padding: 20px; margin: 15px; font-family: 'Quicksand', sans-serif;">
-    <span style="font-size: 13px; font-weight: 700; color: #1A0F0D; display: block; margin-bottom: 10px;">Write a Review</span>
-    <input id="user-name" type="text" placeholder="Your Name" style="width: 100%; padding: 10px; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 10px; font-family: 'Quicksand';">
-    <textarea id="user-comment" placeholder="Tell us about the fabric..." style="width: 100%; padding: 10px; border-radius: 12px; border: 1px solid #ddd; height: 80px; font-family: 'Quicksand';"></textarea>
+        <div class="specs-box" style="background: #F2EDE4; border-radius: 35px; padding: 25px; margin: 20px 15px;">
+    <h3 style="font-family: 'Quicksand'; font-weight: 800; font-size: 15px; margin-bottom: 15px;">Rate this fabric</h3>
     
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-        <div id="star-rating" style="color: #FFB800; cursor: pointer; font-size: 20px;">
-            <span onclick="setRating(1)">★</span><span onclick="setRating(2)">★</span><span onclick="setRating(3)">★</span><span onclick="setRating(4)">★</span><span onclick="setRating(5)">★</span>
-        </div>
-        <button onclick="submitReview()" style="background: #1A0F0D; color: white; border: none; padding: 8px 20px; border-radius: 15px; font-weight: 700; cursor: pointer;">Submit</button>
+    <div class="star-input" id="star-box" style="margin-bottom: 15px;">
+        <span onclick="rate(1)">★</span><span onclick="rate(2)">★</span><span onclick="rate(3)">★</span><span onclick="rate(4)">★</span><span onclick="rate(5)">★</span>
     </div>
+
+    <textarea id="review-text" placeholder="Describe your experience..." 
+              style="width: 100%; background: white; border: none; padding: 15px; border-radius: 20px; font-family: 'Quicksand'; min-height: 100px; margin-bottom: 15px; font-size: 14px;"></textarea>
+
+    <button id="submit-review" onclick="postReview()" class="submit-btn-disabled" disabled 
+            style="width: 100%; color: white; border: none; padding: 15px; border-radius: 20px; font-weight: 800; font-family: 'Quicksand'; transition: 0.3s;">
+        Post Review
+    </button>
 </div>
 
-<div id="reviews-container">
-</div>
+<div id="reviews-feed"></div>
         
     
     <span class="section-title">Visual Proof</span>
@@ -1171,53 +1206,67 @@ function closeModal() {
     }, 400);
     }
             
-let currentRating = 5;
-let totalReviews = 145;
 
-function setRating(n) {
-    currentRating = n;
-    // Wannan zai iya canza kalar taurarin idan an danna
+let selectedStars = 0;
+// Fetching auto (Ga gwaji, mun saka sunanka)
+let currentUser = { name: "Sadiq Developer" };
+
+function rate(n) {
+    selectedStars = n;
+    const stars = document.querySelectorAll('#star-box span');
+    stars.forEach((s, index) => {
+        s.style.color = index < n ? '#FFB800' : '#e0e0e0';
+    });
+    
+    // Kunna button idan an zaba tauraro
+    const btn = document.getElementById('submit-review');
+    btn.disabled = false;
+    btn.style.background = '#1A0F0D';
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
 }
 
-function submitReview() {
-    const name = document.getElementById('user-name').value;
-    const comment = document.getElementById('user-comment').value;
-    const container = document.getElementById('reviews-container');
-    
-    if(name === "" || comment === "") {
-        alert("Don Allah cika dukkan gurbi!");
+function postReview() {
+    const text = document.getElementById('review-text').value;
+    if(!text) {
+        alert("Don Allah rubuta ra'ayinka!");
         return;
     }
 
-    // 1. Increment Counter
-    totalReviews++;
-    document.getElementById('review-count-header').innerText = `Based on ${totalReviews} reviews`;
+    const feed = document.getElementById('reviews-feed');
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 
-    // 2. Get Today's Date
-    const today = new Date();
-    const dateString = today.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-
-    // 3. Create Review HTML
     const reviewHTML = `
-        <div style="background: white; border-radius: 20px; padding: 20px; margin: 15px; font-family: 'Quicksand', sans-serif; box-shadow: 0 5px 15px rgba(0,0,0,0.02);">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                <span style="font-weight: 800; font-size: 14px; color: #1A0F0D;">${name.toUpperCase()}</span>
-                <span style="font-size: 11px; color: #999;">${dateString}</span>
+        <div style="background: #FFFFFF; border-radius: 28px; padding: 20px; margin: 15px; border: 1px solid rgba(0,0,0,0.03); box-shadow: 0 10px 25px rgba(0,0,0,0.02); font-family: 'Quicksand';">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: #eee; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #888;">${currentUser.name[0]}</div>
+                <div>
+                    <h4 style="font-size: 14px; font-weight: 800; margin: 0; color: #1A0F0D;">${currentUser.name}</h4>
+                    <div style="color: #FFB800; font-size: 10px;">${"★".repeat(selectedStars)}</div>
+                </div>
+                <span style="margin-left: auto; font-size: 11px; color: #999;">${dateStr}</span>
             </div>
-            <div style="color: #FFB800; font-size: 12px; margin-bottom: 8px;">${"★".repeat(currentRating)}</div>
-            <p style="font-size: 13px; color: #555; line-height: 1.6; font-style: italic;">"${comment}"</p>
-            <div style="margin-top: 10px; font-size: 10px; color: #27ae60; font-weight: 800;">✓ VERIFIED PURCHASE</div>
+            <p style="font-size: 13px; color: #444; line-height: 1.5; margin-left: 52px; font-style: italic;">"${text}"</p>
+            
+            <div style="background: #F8F5F0; border-left: 4px solid #1A0F0D; margin-top: 15px; padding: 12px 15px; border-radius: 15px; font-size: 12px; margin-left: 52px;">
+                <p style="font-weight: 800; margin-bottom: 4px; color: #1A0F0D;">KanoMart Official Reply:</p>
+                <p style="margin: 0; color: #666;">Nagode da wannan kyakkyawan sharhi, muna farin ciki da kika ji dadin atamfar mu!</p>
+            </div>
         </div>
     `;
 
-    // 4. Add to Top of List
-    container.insertAdjacentHTML('afterbegin', reviewHTML);
-
-    // 5. Clear Form
-    document.getElementById('user-name').value = "";
-    document.getElementById('user-comment').value = "";
-    alert("Review dinka ya isa, nagode!");
+    feed.insertAdjacentHTML('afterbegin', reviewHTML);
+    
+    // Resetting form
+    document.getElementById('review-text').value = "";
+    selectedStars = 0;
+    rate(0);
+    const btn = document.getElementById('submit-review');
+    btn.disabled = true;
+    btn.style.background = '#ccc';
     }
+    
     
     
 </script>
