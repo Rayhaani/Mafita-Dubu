@@ -564,24 +564,26 @@ h1 {
 </div>
         
         
-<span class="section-title">Visual Proof</span>
+<span class="section-title" style="margin-left: 20px;">Visual Proof</span>
 
-<div class="proof-section">
-    <div class="cropped-view" id="croppedView" onclick="showStack()">
-        <img id="visual-main-img" src="" alt="Main Proof">
-        <div class="see-all-overlay" id="seeAllBox">
-            <span class="text-[10px] font-bold cursor-pointer bg-black/40 px-4 py-1 rounded-full">
-                See all <i class="fa-solid fa-chevron-down"></i>
+<div class="proof-section w-full">
+    <div id="croppedView" class="w-full relative" onclick="showStack()">
+        <img id="visual-main-img" src="" class="w-full object-cover" style="height: 110vw; display: block;">
+        <div class="see-all-overlay absolute bottom-6 left-0 w-full text-center">
+            <span class="text-[10px] font-bold cursor-pointer bg-white/90 text-black px-6 py-2 rounded-full shadow-lg">
+                See all <i class="fa-solid fa-chevron-down ml-1"></i>
             </span>
         </div>
     </div>
 
-    <div class="hidden-stack triple-stack" id="tripleStack" style="display: none;">
-        <img src="" class="stack-img w-full block mb-1">
-        <img src="" class="stack-img w-full block mb-1">
-        <img src="" class="stack-img w-full block mb-1">
+    <div id="tripleStack" style="display: none;" class="w-full">
+        <img src="" class="stack-img w-full block">
+        <img src="" class="stack-img w-full block">
+        <img src="" class="stack-img w-full block">
+        <img src="" class="stack-img w-full block">
     </div>
 </div>
+        
         
         
         <div class="mt-8 border-t border-white/5 pt-4 mb-24">
@@ -1105,20 +1107,34 @@ document.addEventListener('DOMContentLoaded', function() {
     if (data) {
         const product = JSON.parse(data);
         
-        // 1. Hoton Saman Shafi (Hero Image)
+        // Sanya hoto a babban Visual Proof na farko
+        const visualMain = document.getElementById('visual-main-img');
+        if(visualMain) visualMain.src = product.img;
+
+        // Sanya hoto a dukkan jerin dake boye (Stack Images)
+        document.querySelectorAll('.stack-img').forEach(img => {
+            img.src = product.img;
+        });
+
+        // Tabbatar sauran sassan shafinka ma sun samu hoton
         document.getElementById('dynamic-img').src = product.img;
-        
-        // 2. Visual Proof (Wannan layin ne zai gyara matsalar hoton Unsplash din)
-        document.querySelector('.cropped-view img').src = product.img;
-        
-        // 3. Sauran sassan (Hologram, Stack, Farashi)
-        document.querySelector('h1').innerHTML = product.name;
-        document.querySelector('.price-tag').innerText = "₦" + Number(product.price).toLocaleString();
-        
-        document.querySelectorAll('.stack-img').forEach(img => img.src = product.img);
         document.querySelectorAll('.holo-img').forEach(img => img.src = product.img);
     }
 });
+
+// Function din da zai nuna hotuna a jere
+function showStack() {
+    // 1. Boye hoton farko mai "See all"
+    document.getElementById('croppedView').style.display = 'none';
+    
+    // 2. Nuna jerin hotunan a bayyane
+    const stack = document.getElementById('tripleStack');
+    stack.style.display = 'block';
+    
+    // 3. Scroll zuwa farkon hotunan domin su fito radau
+    stack.scrollIntoView({ behavior: 'smooth' });
+}
+    
     
 // UI FUNCTIONS
 function openFS(imgs) {
