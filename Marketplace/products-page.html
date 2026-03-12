@@ -425,18 +425,34 @@ h1 {
     </div>
 </div>
 
-        
-    <span class="section-title">Verified Reviews</span>
-    <div class="px-5">
-        <div class="p-6 bg-white/5 rounded-[30px] border border-white/5">
-            <p class="text-sm italic text-gray-300">"The material is incredibly soft. It feels like a second skin. 10/10 recommended."</p>
-            <div class="mt-4 flex items-center gap-3">
-                <div class="w-8 h-8 bg-gray-700 rounded-full"></div>
-                <span class="text-[10px] font-bold text-gray-500 uppercase">Amina M. — Abuja</span>
-            </div>
+    <div style="margin: 30px 15px 15px 15px; font-family: 'Quicksand', sans-serif;">
+    <h2 style="font-size: 16px; font-weight: 800; color: #1A0F0D; text-transform: uppercase; letter-spacing: 2px;">Verified Reviews</h2>
+    <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+        <span style="font-size: 32px; font-weight: 800; color: #1A0F0D;">5.0</span>
+        <div>
+            <div style="color: #FFB800; font-size: 14px;">★★★★★</div>
+            <span id="review-count-header" style="font-size: 12px; color: #666;">Based on 145 reviews</span>
         </div>
     </div>
+</div>
 
+<div id="review-form" style="background: #F2EDE4; border-radius: 25px; padding: 20px; margin: 15px; font-family: 'Quicksand', sans-serif;">
+    <span style="font-size: 13px; font-weight: 700; color: #1A0F0D; display: block; margin-bottom: 10px;">Write a Review</span>
+    <input id="user-name" type="text" placeholder="Your Name" style="width: 100%; padding: 10px; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 10px; font-family: 'Quicksand';">
+    <textarea id="user-comment" placeholder="Tell us about the fabric..." style="width: 100%; padding: 10px; border-radius: 12px; border: 1px solid #ddd; height: 80px; font-family: 'Quicksand';"></textarea>
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+        <div id="star-rating" style="color: #FFB800; cursor: pointer; font-size: 20px;">
+            <span onclick="setRating(1)">★</span><span onclick="setRating(2)">★</span><span onclick="setRating(3)">★</span><span onclick="setRating(4)">★</span><span onclick="setRating(5)">★</span>
+        </div>
+        <button onclick="submitReview()" style="background: #1A0F0D; color: white; border: none; padding: 8px 20px; border-radius: 15px; font-weight: 700; cursor: pointer;">Submit</button>
+    </div>
+</div>
+
+<div id="reviews-container">
+</div>
+        
+    
     <span class="section-title">Visual Proof</span>
     <div class="px-5">
         <div class="proof-section">
@@ -1155,9 +1171,55 @@ function closeModal() {
     }, 400);
     }
             
+let currentRating = 5;
+let totalReviews = 145;
 
+function setRating(n) {
+    currentRating = n;
+    // Wannan zai iya canza kalar taurarin idan an danna
+}
+
+function submitReview() {
+    const name = document.getElementById('user-name').value;
+    const comment = document.getElementById('user-comment').value;
+    const container = document.getElementById('reviews-container');
+    
+    if(name === "" || comment === "") {
+        alert("Don Allah cika dukkan gurbi!");
+        return;
+    }
+
+    // 1. Increment Counter
+    totalReviews++;
+    document.getElementById('review-count-header').innerText = `Based on ${totalReviews} reviews`;
+
+    // 2. Get Today's Date
+    const today = new Date();
+    const dateString = today.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+    // 3. Create Review HTML
+    const reviewHTML = `
+        <div style="background: white; border-radius: 20px; padding: 20px; margin: 15px; font-family: 'Quicksand', sans-serif; box-shadow: 0 5px 15px rgba(0,0,0,0.02);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span style="font-weight: 800; font-size: 14px; color: #1A0F0D;">${name.toUpperCase()}</span>
+                <span style="font-size: 11px; color: #999;">${dateString}</span>
+            </div>
+            <div style="color: #FFB800; font-size: 12px; margin-bottom: 8px;">${"★".repeat(currentRating)}</div>
+            <p style="font-size: 13px; color: #555; line-height: 1.6; font-style: italic;">"${comment}"</p>
+            <div style="margin-top: 10px; font-size: 10px; color: #27ae60; font-weight: 800;">✓ VERIFIED PURCHASE</div>
+        </div>
+    `;
+
+    // 4. Add to Top of List
+    container.insertAdjacentHTML('afterbegin', reviewHTML);
+
+    // 5. Clear Form
+    document.getElementById('user-name').value = "";
+    document.getElementById('user-comment').value = "";
+    alert("Review dinka ya isa, nagode!");
+    }
+    
     
 </script>
- 
 </body>
 </html>
