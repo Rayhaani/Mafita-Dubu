@@ -564,41 +564,26 @@ h1 {
 </div>
         
         
-   <span class="section-title" style="font-family: 'Quicksand'; font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-left: 15px; display: block; margin-top: 20px;">Visual Proof</span>
-
-<div class="px-5">
-    <div id="proofContainer" style="position: relative; border-radius: 25px; overflow: hidden; margin-top: 10px;">
-        <div class="cropped-view" id="croppedView">
-            <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200" style="width: 100%; display: block;">
+<div style="margin-top: 25px; font-family: 'Quicksand', sans-serif;">
+    <span style="font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-left: 20px; color: #1A0F0D;">Visual Proof</span>
+    
+    <div id="visual-proof-container" style="width: 100%; margin-top: 15px;">
+        <div style="width: 100%; overflow: hidden;">
+            <img src="HOTO_NA_1.jpg" style="width: 100%; display: block; border: none;">
         </div>
 
-        <div id="overlayBox" class="see-all-overlay">
-            <span onclick="toggleStack()" style="background: white; padding: 8px 20px; border-radius: 25px; font-size: 12px; font-weight: 800; color: #1A0F0D; box-shadow: 0 4px 15px rgba(0,0,0,0.1); cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
-                See all <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i>
-            </span>
-        </div>
-    </div>
-
-    <div id="tripleStack" style="display: none; flex-direction: column; gap: 12px; margin-top: 15px;">
-        <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200" style="width: 100%; border-radius: 25px;">
-        <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200" style="width: 100%; border-radius: 25px;">
-    </div>
-
-    <div class="mt-8 border-t border-black/5 pt-4 mb-24">
-        <div class="flex gap-6 overflow-x-auto no-scrollbar">
-            <span class="text-xs font-black border-b-2 border-black pb-2 text-[#1A0F0D]">Recommended</span>
-            <span class="text-xs text-gray-500 pb-2">Men's Underwear</span>
-        </div>
-        <div class="grid grid-cols-2 gap-3 mt-4">
-            <div class="bg-white aspect-square rounded-2xl relative shadow-sm">
-                <div class="absolute bottom-2 right-2 bg-[#27ae60] rounded-full p-1.5 shadow-md">
-                    <i class="fa-solid fa-cart-shopping text-white text-[10px]"></i>
-                </div>
+        <div id="extra-images" style="display: none; width: 100%;">
+            <img src="HOTO_NA_2.jpg" style="width: 100%; display: block; border: none;">
+            <img src="HOTO_NA_3.jpg" style="width: 100%; display: block; border: none;">
+            <div style="position: relative; width: 100%;">
+                <img src="HOTO_NA_4.jpg" style="width: 100%; display: block; border: none;">
+                <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; background: linear-gradient(to bottom, transparent, #F2EDE4);"></div>
             </div>
-            <div class="bg-white aspect-square rounded-2xl relative shadow-sm">
-                <div class="absolute bottom-2 right-2 bg-[#27ae60] rounded-full p-1.5 shadow-md">
-                    <i class="fa-solid fa-cart-shopping text-white text-[10px]"></i>
-                </div>
+        </div>
+
+        <div id="see-all-trigger" style="width: 100%; background: #F2EDE4; padding: 15px 0; display: flex; justify-content: center; align-items: center;">
+            <div onclick="showAllImages()" style="background: white; padding: 8px 25px; border-radius: 30px; font-size: 13px; font-weight: 800; color: #1A0F0D; box-shadow: 0 2px 10px rgba(0,0,0,0.05); cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                See all <i class="fa-solid fa-chevron-down" style="font-size: 11px;"></i>
             </div>
         </div>
     </div>
@@ -1367,6 +1352,16 @@ function postReview() {
     }
     
     
+   function showAllImages() {
+    // Nuna sauran hotunan
+    document.getElementById('extra-images').style.display = 'block';
+    
+    // Boye See All button din gaba daya don hotunan su hade
+    document.getElementById('see-all-trigger').style.display = 'none';
+    
+    // Tabbatar babu sauran sarari a sama
+    document.getElementById('visual-proof-container').style.gap = '0';
+    }
     
 </script>
 </body>
