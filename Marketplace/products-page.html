@@ -564,27 +564,29 @@ h1 {
 </div>
         
         
-<span class="section-title" style="margin-left: 20px;">Visual Proof</span>
+<div class="px-5 mb-2">
+    <span class="section-title text-gray-500 uppercase tracking-widest text-[11px] font-bold">Visual Proof</span>
+</div>
 
-<div class="proof-section w-full">
-    <div id="croppedView" class="w-full relative overflow-hidden" style="height: 85vw; cursor: pointer;" onclick="showStack()">
+<div class="proof-section w-screen relative left-1/2 right-1/2 -ml-[50vw] mr-[50vw]" style="width: 100vw;">
+    <div id="croppedView" class="w-full relative overflow-hidden" style="height: 90vw; cursor: pointer;" onclick="showStack()">
         
         <img id="visual-main-img" src="" class="w-full h-full object-cover" style="display: block; object-position: top;">
         
-        <div class="absolute inset-0" style="background: linear-gradient(to bottom, transparent 50%, #e6e2d3 100%);"></div>
+        <div class="absolute inset-0" style="background: linear-gradient(to bottom, transparent 40%, #e6e2d3 100%);"></div>
         
-        <div class="absolute bottom-3 left-0 w-full text-center">
-            <div class="flex flex-col items-center">
-                <span class="text-[12px] font-medium text-gray-500">See all</span>
-                <i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+        <div class="absolute bottom-5 left-0 w-full text-center">
+            <div class="flex flex-col items-center opacity-80">
+                <span class="text-[12px] font-medium text-gray-600">See all</span>
+                <i class="fa-solid fa-chevron-down text-[10px] text-gray-500"></i>
             </div>
         </div>
     </div>
 
     <div id="tripleStack" style="display: none;" class="w-full">
-        <img src="" class="stack-img w-full block">
-        <img src="" class="stack-img w-full block">
-        <img src="" class="stack-img w-full block">
+        <img src="" class="stack-img w-full block border-b border-white/10">
+        <img src="" class="stack-img w-full block border-b border-white/10">
+        <img src="" class="stack-img w-full block border-b border-white/10">
     </div>
 </div>
         
