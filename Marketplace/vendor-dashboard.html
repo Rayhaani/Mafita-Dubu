@@ -613,32 +613,27 @@ let myInventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
 
 // 2. Function din da zai rinka adana sabon kaya
 function saveProduct() {
-    console.log("An danna button din save!"); // Wannan na dubawa ne a computer
-
     const nameInput = document.getElementById('p-name');
     const priceInput = document.getElementById('p-price');
     const fileInput = document.getElementById('fileInput');
 
-    // 1. Duba idan inputs din suna nan
-    if (!nameInput || !priceInput || !fileInput) {
-        alert("Akwai matsala: Ba a sami wurin rubuta suna ko farashi ba a code dinka.");
-        return;
-    }
-
-    // 2. Duba idan an cike su
+    // Duba idan an cike komai
     if (!nameInput.value || !priceInput.value || !fileInput.files[0]) {
-        alert("Don Allah cike duka bayanan Atamfa kafin ka adana!");
+        alert("Don Allah cike duka bayanan kafin ka dora!");
         return;
     }
 
     const reader = new FileReader();
     reader.onload = function(e) {
+        const imageUrl = e.target.result;
+
         const newAtamfa = {
             id: Date.now(),
             name: nameInput.value,
-            price: priceInput.value,
-            image: e.target.result,
-            stock: "12"
+            price: priceInput.value.replace(/[^\d]/g, ''), 
+            image: imageUrl,
+            stock: "12", // Default tunda baka da input dinsa
+            status: 'Active'
         };
 
         // Adana a waya
@@ -646,21 +641,21 @@ function saveProduct() {
         inventory.push(newAtamfa);
         localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
 
-        // Rufe modal da share fom
-        if (typeof closeModal === "function") closeModal();
+        // Refresh shafin don ganin kaya
+        renderInventory();
         
-        // Nuna kaya
-        if (typeof renderInventory === "function") {
-            renderInventory();
-        } else {
-            location.reload(); // Idan baka da renderInventory, reload zai fito da kayan
-        }
-
+        // Rufe modal da share fom
+        closeModal();
+        nameInput.value = '';
+        priceInput.value = '';
+        fileInput.value = '';
+        document.getElementById('preview-box').innerHTML = `<i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i><span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span>`;
+        
         alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
     };
     reader.readAsDataURL(fileInput.files[0]);
-                             }
-        
+}
+    
 
     
     function navTo(el, pageId) {
@@ -1005,19 +1000,18 @@ function updateDashboardSales(amount) {
     }
     }
 
-    
-function renderInventory() {
+  function renderInventory() {
     const catalogGrid = document.getElementById('catalog-grid-main');
     if (!catalogGrid) return;
 
     let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
     
-    // Goge tsohon kanti don saka sabon lissafi
+    // Share gurin don nuna sabbin kaya
     catalogGrid.innerHTML = '';
 
     inventory.forEach(product => {
         const card = `
-            <div class="catalog-card" onclick="handleCardTap(this)">
+            <div class="catalog-card" data-id="${product.id}" onclick="handleCardTap(this)">
                 <div class="check-orbit"></div>
                 <span class="stock-badge" style="background:#2ecc71;">${product.stock} IN STOCK</span>
                 <div class="catalog-img-box">
@@ -1032,11 +1026,9 @@ function renderInventory() {
         `;
         catalogGrid.innerHTML += card;
     });
-}
-
-// Tabbatar an nuna kaya lokacin da aka bude shafi
-document.addEventListener('DOMContentLoaded', renderInventory);
+        }
     
+
  
     
 </script>
