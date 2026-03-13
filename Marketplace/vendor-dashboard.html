@@ -607,6 +607,35 @@
 </div>
      
 <script>
+
+// 1. Wannan zai dauko kayan da suke ajiye a wayar, ko kuma ya bude sabon jeri idan babu
+let myInventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
+
+// 2. Function din da zai rinka adana sabon kaya
+function saveProductToSystem(name, price, stock, image, code) {
+    const newProduct = {
+        id: Date.now(), // Unique ID domin marketplace ya gane shi
+        name: name,
+        price: price,
+        stock: stock,
+        image: image,
+        code: code,
+        status: 'Active',
+        dateAdded: new Date().toLocaleDateString()
+    };
+
+    // Saka shi a cikin jerinmu
+    myInventory.push(newProduct);
+    
+    // Ajiye shi a cikin wayar (localStorage)
+    localStorage.setItem('nexus_inventory', JSON.stringify(myInventory));
+    
+    console.log("An yi nasarar ajiye: " + name);
+    renderInventory(); // Wannan zai nuna sabon hoton a karkashin Catalog
+}
+    
+
+
     function navTo(el, pageId) {
     document.querySelectorAll('.depth-item').forEach(item => {
         item.classList.remove('active');
