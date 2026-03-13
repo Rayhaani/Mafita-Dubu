@@ -962,26 +962,25 @@ function updateDashboardSales(amount) {
  // 1. Wannan zai nuna kayan da zaran ka bude shafi
 document.addEventListener('DOMContentLoaded', renderInventory);
 
+
 function saveProduct() {
     const nameInput = document.getElementById('p-name');
     const priceInput = document.getElementById('p-price');
     const fileInput = document.getElementById('fileInput');
 
     if (!nameInput.value || !priceInput.value || !fileInput.files[0]) {
-        alert("Don Allah cike duka bayanan kafin ka dora!");
+        alert("Don Allah cika duka bayanan!");
         return;
     }
 
     const reader = new FileReader();
     reader.onload = function(e) {
-        const imageUrl = e.target.result;
-
         const newAtamfa = {
             id: Date.now(),
             name: nameInput.value,
             price: priceInput.value.replace(/[^\d]/g, ''), 
-            image: imageUrl,
-            stock: "12", 
+            image: e.target.result,
+            stock: "12",
             status: 'Active'
         };
 
@@ -989,21 +988,22 @@ function saveProduct() {
         inventory.push(newAtamfa);
         localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
 
+        // WANNAN SHINE GYARAN: Ba za mu taba innerHTML na preview-box ba
+        closeModal();
         renderInventory();
         
-        closeModal();
+        // Share rubutun kawai, bar design din box din yadda yake
         nameInput.value = '';
         priceInput.value = '';
         fileInput.value = '';
-        // Mayar da asalin fasalin preview box
-        document.getElementById('preview-box').innerHTML = `<i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i><span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span>`;
         
         alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
     };
     reader.readAsDataURL(fileInput.files[0]);
 }
+    
 
-function renderInventory() {
+    function renderInventory() {
     const catalogGrid = document.getElementById('catalog-grid-main');
     if (!catalogGrid) return;
 
