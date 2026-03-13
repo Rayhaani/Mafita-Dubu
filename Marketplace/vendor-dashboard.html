@@ -829,26 +829,30 @@ function shareSelection() {
     const selectedCards = document.querySelectorAll('.catalog-card.selected');
     if (selectedCards.length === 0) return;
 
-    let text = "*Sabuwar Atamfa Daga Nexus:*\n\n";
-    
-    selectedCards.forEach(card => {
+    selectedCards.forEach((card, index) => {
         const name = card.querySelector('b').innerText;
         const price = card.querySelector('span[style*="color:var(--neu-accent)"]').innerText;
-        // Za mu dauko link din hoton idan akwai shi
         const imgUrl = card.querySelector('img').src; 
         
-        text += `🛍️ *${name}*\n💰 Farashi: ${price}\n🖼️ Hoton: ${imgUrl}\n\n`;
+        // Tsari mai kyan gani da Emojis
+        let text = `✨ *${name}* ✨\n\n`;
+        text += `💰 *Farashi:* ${price}\n`;
+        text += `✅ *Inganci:* 100% Cotton\n`;
+        text += `🚚 *Isarwa:* Akwai hanzari\n\n`;
+        text += `🖼️ *Duba Hoton Kaya:* ${imgUrl}\n\n`;
+        text += `🛒 *Yi Oda Anan:* https://afita-dubu.vercel.app`;
+
+        const url = "whatsapp://send?text=" + encodeURIComponent(text);
+        
+        // Idan kaya daya ne, zai tafi direct. Idan sun fi daya, zai rinka tura su daya-bayan-daya
+        setTimeout(() => {
+            window.location.href = url;
+        }, index * 1000); 
     });
     
-    text += "Duba sauran kaya a: https://afita-dubu.vercel.app";
-    
-    const url = "whatsapp://send?text=" + encodeURIComponent(text);
-    
-    // Wannan zai bude WhatsApp kai-tsaye ba tare da bakin box din ba
-    window.location.href = url;
-    
     resetManage();
-}
+    }
+            
     
 
 function hideSelection() {
