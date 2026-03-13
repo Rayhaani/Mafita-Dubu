@@ -993,15 +993,33 @@ h1 {
     cursor: pointer;
 }
  
-    .fs-slider {
-    width: 100%;
-    height: auto;
-    font-size: 1.2rem; /* Daidaita girman rubutu */
-    transition: all 0.5s ease-in-out;
-    border-radius: 8px;
-    overflow: hidden;
+    .fs-slider{
+display:flex;
+overflow-x:auto;
+scroll-snap-type:x mandatory;
+scroll-behavior:smooth;
+width:100%;
+height:100%;
 }
 
+.fs-slider img{
+width:100vw;
+height:100vh;
+object-fit:contain;
+flex-shrink:0;
+scroll-snap-align:center;
+    }
+    
+#fullscreen-viewer{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000;
+z-index:9999;
+display:none;
+    }
 /* Idan kana son rubutun ciki ya zama fari ko ya fito fili */
 .fs-slider text {
     color: #ffffff;
