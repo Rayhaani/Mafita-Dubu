@@ -530,14 +530,14 @@
         </div>
 
        
-        <div onclick="document.getElementById('fileInput').click()" id="preview-box" 
-     style="width:100%; height:180px; border-radius:25px; background:var(--neu-bg); box-shadow:inset 6px 6px 12px var(--neu-shadow), inset -6px -6px 12px var(--neu-light); display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; overflow:hidden;">
-    
+       <div class="upload-box" id="preview-box" onclick="document.getElementById('fileInput').click()">
     <i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i>
     <span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span>
+</div>
 
-            <input type="file" id="fileInput" hidden accept="image/*" onchange="previewImage(event)">
-             </div>
+<input type="file" id="fileInput" accept="image/*" style="display: none;">
+
+        
 
 <input type="text" class="search-box" id="p-name" placeholder="Sunan Kaya...">
 
@@ -1027,7 +1027,52 @@ function renderInventory() {
 }
     
     
+// Wannan zai kula da nuna hoton da zaran an zaba
+document.getElementById('fileInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const previewBox = document.getElementById('preview-box');
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            // Nuna hoton a cikin box din maimakon icon din camera
+            previewBox.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover; border-radius:15px;">`;
+        };
+        reader.readAsDataURL(file);
+    }
+});
 
+function saveProduct() {
+    const nameInput = document.getElementById('p-name');
+    const priceInput = document.getElementById('p-price');
+    const fileInput = document.getElementById('fileInput');
+
+    if (!nameInput.value || !priceInput.value || !fileInput.files[0]) {
+        alert("Don Allah a zabi hoto kuma a cika duka bayanan!");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const newAtamfa = {
+            id: Date.now(),
+            name: nameInput.value,
+            price: priceInput.value,
+            image: e.target.result,
+            stock: "12"
+        };
+
+        let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
+        inventory.push(newAtamfa);
+        localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
+
+        closeModal();
+        renderInventory();
+        alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
+    };
+    reader.readAsDataURL(fileInput.files[0]);
+        }
+    
  
     
 </script>
