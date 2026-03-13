@@ -612,57 +612,6 @@
 let myInventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
 
 // 2. Function din da zai rinka adana sabon kaya
-function saveProduct() {
-    // 1. Karbo bayanai daga fom
-    const name = document.getElementById('p-name').value;
-    const price = document.getElementById('p-price').value;
-    const stock = document.getElementById('p-stock') ? document.getElementById('p-stock').value : "0";
-    const code = document.getElementById('p-code') ? document.getElementById('p-code').value : "N/A";
-    const imageInput = document.getElementById('p-image');
-
-    // 2. Duba idan an cika komai
-    if (!name || !price || !imageInput.files[0]) {
-        alert("Don Allah cike duka bayanan Atamfa kafin ka dora!");
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const imageUrl = e.target.result;
-
-        // 3. Tsarin yadda za a ajiye kayan (Object)
-        const newAtamfa = {
-            id: Date.now(),
-            name: name,
-            price: price,
-            stock: stock,
-            code: code,
-            image: imageUrl,
-            status: 'Active',
-            dateAdded: new Date().toLocaleDateString()
-        };
-
-        // 4. Ajiye a cikin Ma'ajiyar Wayar (Local Storage)
-        let myInventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
-        myInventory.push(newAtamfa);
-        localStorage.setItem('nexus_inventory', JSON.stringify(myInventory));
-
-        // 5. Share fom din don wani karon
-        document.getElementById('p-name').value = '';
-        document.getElementById('p-price').value = '';
-        if(document.getElementById('p-stock')) document.getElementById('p-stock').value = '';
-        if(document.getElementById('p-code')) document.getElementById('p-code').value = '';
-        imageInput.value = '';
-
-        // 6. Nuna sabon kayan a Catalog nan take
-        renderInventory();
-        
-        alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa.");
-    };
-
-    reader.readAsDataURL(imageInput.files[0]);
-    }
-    
 
     function navTo(el, pageId) {
     document.querySelectorAll('.depth-item').forEach(item => {
@@ -1012,42 +961,89 @@ function updateDashboardSales(amount) {
     }
     }
 
-    function renderInventory() {
-    // 1. Dole ya dace da ID din dake cikin HTML dinka wato 'catalog-grid-main'
-    const catalogGrid = document.getElementById('catalog-grid-main');
-    
-    if (!catalogGrid) {
-        console.error("Ina jin akwai matsala, bangaren catalog-grid-main bai fito ba!");
+   
+    // 1. Gyararren Injin Adana Kaya (Save Product)
+function saveProduct() {
+    const name = document.getElementById('p-name').value;
+    const price = document.getElementById('p-price').value;
+    const category = document.getElementById('p-category').value;
+    const imageInput = document.getElementById('fileInput'); // Na canza daga p-image zuwa fileInput
+
+    if (!name || !price || !imageInput.files[0]) {
+        alert("Don Allah cike duka bayanan Atamfa kafin ka dora!");
         return;
     }
 
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const imageUrl = e.target.result;
+
+        const newAtamfa = {
+            id: Date.now(),
+            name: name,
+            price: price.replace(/[^\d]/g, ''), // Cire kowane harafi in ba lamba ba
+            image: imageUrl,
+            category: category,
+            stock: "12", // Default stock
+            status: 'Active'
+        };
+
+        let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
+        inventory.push(newAtamfa);
+        localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
+
+        // Share fom
+        document.getElementById('p-name').value = '';
+        document.getElementById('p-price').value = '';
+        imageInput.value = '';
+        document.getElementById('preview-box').innerHTML = `<i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i><span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span>`;
+
+        renderInventory(); // Kira baje koli nan take
+        closeModal();
+        alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
+    };
+    reader.readAsDataURL(imageInput.files[0]);
+}
+
+// 2. Gyararren Injin Baje Koli (Render Inventory)
+function renderInventory() {
+    const catalogGrid = document.getElementById('catalog-grid-main');
+    if (!catalogGrid) return;
+
     let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
-    catalogGrid.innerHTML = '';
+    
+    // Kada mu goge static items din da suke ciki tun farko idan kana sonsu
+    // Amma zai fi kyau mu share mu nuna na database kawai:
+    catalogGrid.innerHTML = ''; 
 
     inventory.forEach(product => {
-        // Wannan shi ne asalin tsarin katin da kake da shi a shafinka
         const card = `
-            <div class="catalog-card" data-id="${product.id}" onclick="toggleSelect(this)">
-                <div class="stock-badge">${product.stock} IN STOCK</div>
-                <img src="${product.image}" alt="${product.name}">
-                <div class="p-info">
-                    <b>${product.name}</b><br>
-                    <span style="color:var(--neu-accent); font-weight:bold;">₦${parseInt(product.price).toLocaleString()}</span>
-                    <p style="font-size:0.6rem; color:#888;">Code: ${product.code}</p>
+            <div class="catalog-card" data-id="${product.id}" onclick="handleCardTap(this)">
+                <div class="check-orbit"></div>
+                <span class="stock-badge" style="background:#2ecc71;">${product.stock} IN STOCK</span>
+                <div class="catalog-img-box">
+                    <img src="${product.image}" alt="${product.name}">
                 </div>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
-                    <span style="font-size:0.6rem; color:#888;">Active</span>
-                    <label class="switch">
-                        <input type="checkbox" checked>
-                        <span class="slider round"></span>
-                    </label>
+                <b style="font-size: 0.75rem; display:block;">${product.name}</b>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+                    <span style="font-size: 0.65rem; font-weight:700; color:var(--neu-accent);">₦${Number(product.price).toLocaleString()}</span>
+                    <span style="font-size: 0.55rem; color:#888;"><i class="fa-solid fa-eye"></i> 0</span>
+                </div>
+                <div style="display:flex; justify-content:center; align-items:center; margin-top:10px; border-top:1px solid rgba(0,0,0,0.05); padding-top:8px; gap:8px;">
+                    <span style="font-size:0.55rem; color:#888;">Active</span>
+                    <div class="toggle-switch on">
+                        <div class="circle"></div>
+                    </div>
                 </div>
             </div>
         `;
         catalogGrid.innerHTML += card;
     });
-    }
+}
 
+// 3. Tabbatar komai ya tashi da zaran an bude shafin
+document.addEventListener('DOMContentLoaded', renderInventory);
+    
 
 
     
