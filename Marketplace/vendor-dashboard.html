@@ -334,10 +334,13 @@
     <span class="cc-label">Sold</span>
             </div>
             
-        <div class="cc-item" onclick="fireAction('Price')">
-            <div class="cc-icon-box" style="color:var(--neu-accent);"><i class="fa-solid fa-tag"></i></div>
-            <span class="cc-label">Price</span>
+        <div class="cc-item" onclick="openPriceModal()">
+    <div class="cc-icon-box" style="color:var(--neu-accent);">
+        <i class="fa-solid fa-tag"></i>
+    </div>
+    <span class="cc-label">Price</span>
         </div>
+        
         <div class="cc-item" onclick="hideSelection()">
             <div class="cc-icon-box" style="color:#f39c12;"><i class="fa-solid fa-eye-slash"></i></div>
             <span class="cc-label">Hide</span>
@@ -916,7 +919,42 @@ function markAsSold() {
 function updateDashboardSales(amount) {
     console.log("Adding to total sales: " + amount);
 }
+   
     
+    function openPriceModal() {
+    const selectedCards = document.querySelectorAll('.catalog-card.selected');
+    if (selectedCards.length === 0) return;
+
+    // Tambayar sabon farashi
+    const newPrice = prompt(`Saka sabon farashi na Atamfa guda ${selectedCards.length} da ka zaba:`, "15000");
+
+    if (newPrice !== null && newPrice !== "") {
+        // Tabbatar an rubuta lamba
+        const formattedPrice = "₦" + parseInt(newPrice).toLocaleString();
+
+        selectedCards.forEach(card => {
+            // Neman gurbin farashi a cikin katin
+            const priceElement = card.querySelector('span[style*="color:var(--neu-accent)"]');
+            if (priceElement) {
+                priceElement.innerText = formattedPrice;
+                
+                // Dan karamin animation na nuna an canza
+                priceElement.style.transition = "0.3s";
+                priceElement.style.transform = "scale(1.2)";
+                priceElement.style.color = "#2ecc71"; // Kore (Success)
+                
+                setTimeout(() => {
+                    priceElement.style.transform = "scale(1)";
+                    priceElement.style.color = "var(--neu-accent)";
+                }, 1000);
+            }
+        });
+
+        alert(`Masha Allah! An sabunta farashin Atamfa guda ${selectedCards.length} zuwa ${formattedPrice}.`);
+        resetManage(); // Rufe command center
+    }
+    }
+        
     
 </script>
 </body>
