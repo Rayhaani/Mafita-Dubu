@@ -1013,10 +1013,19 @@ function updateDashboardSales(amount) {
     }
 
     function renderInventory() {
-    const catalogGrid = document.getElementById('catalog-grid');
-    catalogGrid.innerHTML = ''; // Share tsofaffin dake ciki
+    // 1. Dole ya dace da ID din dake cikin HTML dinka wato 'catalog-grid-main'
+    const catalogGrid = document.getElementById('catalog-grid-main');
+    
+    if (!catalogGrid) {
+        console.error("Ina jin akwai matsala, bangaren catalog-grid-main bai fito ba!");
+        return;
+    }
 
-    myInventory.forEach(product => {
+    let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
+    catalogGrid.innerHTML = '';
+
+    inventory.forEach(product => {
+        // Wannan shi ne asalin tsarin katin da kake da shi a shafinka
         const card = `
             <div class="catalog-card" data-id="${product.id}" onclick="toggleSelect(this)">
                 <div class="stock-badge">${product.stock} IN STOCK</div>
@@ -1026,17 +1035,19 @@ function updateDashboardSales(amount) {
                     <span style="color:var(--neu-accent); font-weight:bold;">₦${parseInt(product.price).toLocaleString()}</span>
                     <p style="font-size:0.6rem; color:#888;">Code: ${product.code}</p>
                 </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                    <span style="font-size:0.6rem; color:#888;">Active</span>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
             </div>
         `;
         catalogGrid.innerHTML += card;
     });
-}
-
-// Kira wannan function din da zaran shafi ya bude
-window.onload = renderInventory;
+    }
     
-    // Wannan zai tabbatar da cewa duk sanda ka bude shafin, atamfofin ka suna nan
-document.addEventListener('DOMContentLoaded', renderInventory);
     
 </script>
 </body>
