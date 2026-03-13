@@ -586,12 +586,11 @@ h1 {
     
     
 
-<div id="tripleStack" class="hidden -mx-5">
+<div id="tripleStack" class="hidden -mx-5 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
     <img src="" class="stack-img visual-proof-img w-full block" style="border-radius:0 !important;width:100%;" onclick="openVisualProofFS(0)">
     <img src="" class="stack-img visual-proof-img w-full block" style="border-radius:0 !important;width:100%;" onclick="openVisualProofFS(1)">
     <img src="" class="stack-img visual-proof-img w-full block" style="border-radius:0 !important;width:100%;" onclick="openVisualProofFS(2)">
 </div>
-
         
           
         <div class="mt-8 border-t border-white/5 pt-4 mb-24">
@@ -1009,9 +1008,11 @@ h1 {
     font-weight: bold;
     }
 
-    #tripleStack {
-    min-height: 500px;
-    width: 100%;
+#tripleStack img{
+display:block;
+width:100%;
+height:auto;
+object-fit:cover;
     }
     
 </style>
