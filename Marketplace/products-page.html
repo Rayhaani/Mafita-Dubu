@@ -1427,18 +1427,23 @@ function postReview() {
     document.getElementById('visual-proof-container').style.gap = '0';
     }
    function openVisualProofFS(startIndex) {
-    // 1. Nemo dukkan hotunan dake cikin Visual Proof
+
     const images = document.querySelectorAll('.visual-proof-img');
-    const imageUrls = Array.from(images).map(img => img.src);
-    
-    // 2. Kira asalin function din hoton babban allo (Fullscreen)
+
+    const imageUrls = Array.from(images)
+        .map(img => img.src)
+        .filter(src => src && src.trim() !== "");
+
+    if(imageUrls.length === 0) return;
+
     openFS(imageUrls);
-    
-    // 3. Tura shi zuwa hoton da aka danna (Scroll to selected index)
+
     setTimeout(() => {
         const slider = document.getElementById('fsSlider');
-        const scrollAmount = window.innerWidth * startIndex;
-        slider.scrollTo({ left: scrollAmount, behavior: 'auto' });
+        slider.scrollTo({
+            left: window.innerWidth * startIndex,
+            behavior: "instant"
+        });
     }, 50);
     }
     
@@ -1470,7 +1475,7 @@ function showStack() {
         tripleStack.style.display = 'block';
     }
     }
-    
+
     
         
 </script>
