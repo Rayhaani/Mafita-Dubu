@@ -613,45 +613,54 @@ let myInventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
 
 // 2. Function din da zai rinka adana sabon kaya
 function saveProduct() {
-    const name = document.getElementById('p-name').value;
-    const price = document.getElementById('p-price').value;
-    const fileInput = document.getElementById('fileInput'); // Tabbatar kana da input mai id="fileInput"
+    console.log("An danna button din save!"); // Wannan na dubawa ne a computer
 
-    // 1. Duba idan an cika komai
-    if (!name || !price || !fileInput.files[0]) {
-        alert("Don Allah cika sunan kaya, farashi, da hoton kaya!");
+    const nameInput = document.getElementById('p-name');
+    const priceInput = document.getElementById('p-price');
+    const fileInput = document.getElementById('fileInput');
+
+    // 1. Duba idan inputs din suna nan
+    if (!nameInput || !priceInput || !fileInput) {
+        alert("Akwai matsala: Ba a sami wurin rubuta suna ko farashi ba a code dinka.");
+        return;
+    }
+
+    // 2. Duba idan an cike su
+    if (!nameInput.value || !priceInput.value || !fileInput.files[0]) {
+        alert("Don Allah cike duka bayanan Atamfa kafin ka adana!");
         return;
     }
 
     const reader = new FileReader();
     reader.onload = function(e) {
-        // 2. Shirya bayanan atamfar
         const newAtamfa = {
             id: Date.now(),
-            name: name,
-            price: price.replace(/[^\d]/g, ''), 
+            name: nameInput.value,
+            price: priceInput.value,
             image: e.target.result,
-            stock: "12" // Wannan default ne
+            stock: "12"
         };
 
-        // 3. Adana a cikin localStorage (Nexus Inventory)
+        // Adana a waya
         let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
         inventory.push(newAtamfa);
         localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
 
-        // 4. Rufe modal da wanke fom din
-        closeModal(); 
-        document.getElementById('p-name').value = '';
-        document.getElementById('p-price').value = '';
-        fileInput.value = '';
+        // Rufe modal da share fom
+        if (typeof closeModal === "function") closeModal();
+        
+        // Nuna kaya
+        if (typeof renderInventory === "function") {
+            renderInventory();
+        } else {
+            location.reload(); // Idan baka da renderInventory, reload zai fito da kayan
+        }
 
-        // 5. Nuna kaya a catalogue nan take
-        renderInventory(); 
-        alert("Masha Allah! " + name + " ta tafi kasuwa. ✨");
+        alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
     };
     reader.readAsDataURL(fileInput.files[0]);
-}
-    
+                             }
+        
 
     
     function navTo(el, pageId) {
