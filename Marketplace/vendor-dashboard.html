@@ -530,13 +530,14 @@
         </div>
 
        
-       <div class="upload-box" id="preview-box" onclick="document.getElementById('fileInput').click()">
+       <div onclick="document.getElementById('fileInput').click()" id="preview-box" 
+     style="width:100%; height:180px; border-radius:25px; background:var(--neu-bg); box-shadow:inset 6px 6px 12px var(--neu-shadow), inset -6px -6px 12px var(--neu-light); display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; overflow:hidden;">
+    
     <i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i>
     <span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span>
-</div>
 
-<input type="file" id="fileInput" accept="image/*" style="display: none;">
-
+            <input type="file" id="fileInput" hidden accept="image/*" onchange="previewImage(event)">
+       </div>
         
 
 <input type="text" class="search-box" id="p-name" placeholder="Sunan Kaya...">
