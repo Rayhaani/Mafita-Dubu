@@ -964,44 +964,7 @@ function updateDashboardSales(amount) {
 document.addEventListener('DOMContentLoaded', renderInventory);
 
 
-function saveProduct() {
-    const nameInput = document.getElementById('p-name');
-    const priceInput = document.getElementById('p-price');
-    const fileInput = document.getElementById('fileInput');
 
-    if (!nameInput.value || !priceInput.value || !fileInput.files[0]) {
-        alert("Don Allah cika duka bayanan!");
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const newAtamfa = {
-            id: Date.now(),
-            name: nameInput.value,
-            price: priceInput.value.replace(/[^\d]/g, ''), 
-            image: e.target.result,
-            stock: "12",
-            status: 'Active'
-        };
-
-        let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
-        inventory.push(newAtamfa);
-        localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
-
-        // WANNAN SHINE GYARAN: Ba za mu taba innerHTML na preview-box ba
-        closeModal();
-        renderInventory();
-        
-        // Share rubutun kawai, bar design din box din yadda yake
-        nameInput.value = '';
-        priceInput.value = '';
-        fileInput.value = '';
-        
-        alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
-    };
-    reader.readAsDataURL(fileInput.files[0]);
-}
     
 
     function renderInventory() {
@@ -1036,9 +999,7 @@ function saveProduct() {
 // Wannan zai nuna kayan da zaran ka bude shafi
 document.addEventListener('DOMContentLoaded', renderInventory);
     
-
-
- // Wannan zai rinka lura da lokacin da aka zabo hoto
+// 1. Wannan zai kula da fitowar hoto a preview box
 document.addEventListener('change', function(e) {
     if (e.target && e.target.id === 'fileInput') {
         const file = e.target.files[0];
@@ -1047,7 +1008,8 @@ document.addEventListener('change', function(e) {
         if (file) {
             const reader = new FileReader();
             reader.onload = function(event) {
-                // Wannan zai saka hoton a cikin box din ba tare da ya taba kyan design din ba
+                // Adana hoton a 'data-img' don saveProduct ya gani
+                previewBox.setAttribute('data-img', event.target.result);
                 previewBox.innerHTML = `
                     <img src="${event.target.result}" style="width:100%; height:100%; object-fit:cover;">
                     <input type="file" id="fileInput" hidden accept="image/*">
@@ -1057,6 +1019,52 @@ document.addEventListener('change', function(e) {
         }
     }
 });
+
+// 2. Wannan shi ne babban injin da zai kai kaya kasuwa
+function saveProduct() {
+    const nameInput = document.getElementById('p-name');
+    const priceInput = document.getElementById('p-price');
+    const previewBox = document.getElementById('preview-box');
+    const imageData = previewBox.getAttribute('data-img');
+
+    // Duba idan an cike Suna, Farashi, da Hoto
+    if (!nameInput.value || !priceInput.value || !imageData) {
+        alert("Don Allah cika duka bayanan!");
+        return;
+    }
+
+    const newAtamfa = {
+        id: Date.now(),
+        name: nameInput.value,
+        price: priceInput.value.replace(/[^\d]/g, ''), 
+        image: imageData,
+        stock: "12",
+        status: 'Active'
+    };
+
+    let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
+    inventory.push(newAtamfa);
+    localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
+
+    // Nuna sabon kaya a catalogue da rufe modal
+    renderInventory();
+    closeModal();
+
+    // Reset komai zuwa asali ba tare da taba design ba
+    nameInput.value = '';
+    priceInput.value = '';
+    previewBox.removeAttribute('data-img');
+    previewBox.innerHTML = `
+        <i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i>
+        <span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span>
+        <input type="file" id="fileInput" hidden accept="image/*">
+    `;
+
+    alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
+}
+    
+
+ 
     
     
 </script>
