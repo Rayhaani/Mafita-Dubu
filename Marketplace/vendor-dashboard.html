@@ -826,18 +826,30 @@ function getSelectedProducts() {
 
 // 2. Sai ka jera ayyukan buttons din a karkashinsa
 function shareSelection() {
-    const selected = getSelectedProducts();
-    if (selected.length === 0) return;
+    const selectedCards = document.querySelectorAll('.catalog-card.selected');
+    if (selectedCards.length === 0) return;
 
-    let text = "Sabuwar Atamfa Daga Nexus:\n\n";
-    selected.forEach(p => {
-        text += `+ ${p.name} - ${p.price}\n`;
+    let text = "*Sabuwar Atamfa Daga Nexus:*\n\n";
+    
+    selectedCards.forEach(card => {
+        const name = card.querySelector('b').innerText;
+        const price = card.querySelector('span[style*="color:var(--neu-accent)"]').innerText;
+        // Za mu dauko link din hoton idan akwai shi
+        const imgUrl = card.querySelector('img').src; 
+        
+        text += `🛍️ *${name}*\n💰 Farashi: ${price}\n🖼️ Hoton: ${imgUrl}\n\n`;
     });
     
-    const url = "https://wa.me/?text=" + encodeURIComponent(text);
-    window.open(url, '_blank');
+    text += "Duba sauran kaya a: https://afita-dubu.vercel.app";
+    
+    const url = "whatsapp://send?text=" + encodeURIComponent(text);
+    
+    // Wannan zai bude WhatsApp kai-tsaye ba tare da bakin box din ba
+    window.location.href = url;
+    
     resetManage();
 }
+    
 
 function hideSelection() {
     const selectedCards = document.querySelectorAll('.catalog-card.selected');
