@@ -270,6 +270,41 @@
     justify-items: center; 
     width: 100%; 
         }
+
+        .cc-grid { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 20px 10px; /* Kara tazarar sama da kasa don su fito radau */
+    margin-top: 15px; 
+    justify-items: center; /* Wannan zai tilasta kowane icon zama a tsakiya */
+    align-items: start;
+    width: 100%;
+}
+
+.cc-item { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+    width: 100%; /* Tabbatar kowane box yana da fadi daya */
+    text-align: center;
+}
+
+.cc-icon-box { 
+    width: 48px; /* Kara fadin kadan domin su zama iri daya duka */
+    height: 48px; 
+    border-radius: 16px; 
+    background: var(--neu-bg); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    box-shadow: 4px 4px 8px var(--neu-shadow), -4px -4px 8px var(--neu-light); 
+    font-size: 1.2rem;
+    margin-bottom: 5px; /* Sarari tsakanin icon da rubutu */
+}
+        
+
+                                                                                                                                                                                   
         
 
 /* Tsarin Card lokacin da aka taba shi (Selection) */
