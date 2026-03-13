@@ -325,28 +325,31 @@
     <div style="text-align: center;"><span class="cc-pill" id="selected-indicator">0 SELECTED</span></div>
  
     
-<div class="cc-grid">
-        <div class="cc-item" onclick="fireAction('Share')"><div class="cc-icon-box" style="color:#25D366;"><i class="fa-brands fa-whatsapp"></i></div><span class="cc-label">Share</span></div>
-        <div class="cc-item" onclick="fireAction('Price')"><div class="cc-icon-box" style="color:var(--neu-accent);"><i class="fa-solid fa-tag"></i></div><span class="cc-label">Price</span></div>
-        <div class="cc-item" onclick="fireAction('Hide')"><div class="cc-icon-box" style="color:#f39c12;"><i class="fa-solid fa-eye-slash"></i></div><span class="cc-label">Hide</span></div>
-    <div class="cc-item" onclick="fireAction('Price')"><div class="cc-icon-box" style="color:var(--neu-accent);"><i class="fa-solid fa-tag"></i></div><span class="cc-label">Bulk Edit</span></div>
-        <div class="cc-item" onclick="fireAction('Price')"><div class="cc-icon-box" style="color:var(--neu-accent);"><i class="fa-solid fa-tag"></i></div><span class="cc-label">Stock Update</span></div>
-        <div class="cc-item" onclick="fireAction('Delete')"><div class="cc-icon-box" style="color:var(--neu-danger);"><i class="fa-solid fa-trash-can"></i></div><span class="cc-label">Delete</span></div>
-        <div class="cc-item" onclick="cloneProduct()">
-    <div class="cc-icon-box" style="color:#e67e22;">
-     <i class="fa-solid fa-copy"></i>
-    </div>
-    <span class="cc-label">Clone</span>
-        </div>
-        
-        <div class="cc-item" onclick="openBulkModal()">
-            <div class="cc-icon-box" style="color:#9b59b6;">
-                <i class="fa-solid fa-file-import"></i>
-            </div>
-            <span class="cc-label">Bulk Upload</span>
-        </div>   
-    </div>
+<div class="cc-item" onclick="shareSelection()">
+    <div class="cc-icon-box" style="color:#25D366;"><i class="fa-brands fa-whatsapp"></i></div>
+    <span class="cc-label">Share</span>
 </div>
+
+<div class="cc-item" onclick="fireAction('Price')">
+    <div class="cc-icon-box" style="color:var(--neu-accent);"><i class="fa-solid fa-tag"></i></div>
+    <span class="cc-label">Price</span>
+</div>
+
+<div class="cc-item" onclick="hideSelection()">
+    <div class="cc-icon-box" style="color:#f39c12;"><i class="fa-solid fa-eye-slash"></i></div>
+    <span class="cc-label">Hide</span>
+</div>
+
+<div class="cc-item" onclick="deleteSelection()">
+    <div class="cc-icon-box" style="color:var(--neu-danger);"><i class="fa-solid fa-trash-can"></i></div>
+    <span class="cc-label">Delete</span>
+</div>
+
+<div class="cc-item" onclick="cloneProduct()">
+    <div class="cc-icon-box" style="color:#e67e22;"><i class="fa-solid fa-copy"></i></div>
+    <span class="cc-label">Clone</span>
+</div>
+    
 
  
     <div id="home-page" class="page-content active">
@@ -794,6 +797,60 @@ document.getElementById('bulkFile')?.addEventListener('change', function(e) {
     
     if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
    }
+   
+    
+    // 1. Wannan shi ne babban injin da yake gano me aka zaba
+function getSelectedProducts() {
+    const selectedCards = document.querySelectorAll('.catalog-card.selected');
+    let productData = [];
+    
+    selectedCards.forEach(card => {
+        const name = card.querySelector('b').innerText;
+        const price = card.querySelector('span[style*="color:var(--neu-accent)"]').innerText;
+        productData.push({ name, price });
+    });
+    
+    return productData;
+}
+
+// 2. Sai ka jera ayyukan buttons din a karkashinsa
+function shareSelection() {
+    const selected = getSelectedProducts();
+    if (selected.length === 0) return;
+
+    let text = "Sabuwar Atamfa Daga Nexus:\n\n";
+    selected.forEach(p => {
+        text += `+ ${p.name} - ${p.price}\n`;
+    });
+    
+    const url = "https://wa.me/?text=" + encodeURIComponent(text);
+    window.open(url, '_blank');
+    resetManage();
+}
+
+function hideSelection() {
+    const selectedCards = document.querySelectorAll('.catalog-card.selected');
+    if (selectedCards.length === 0) return;
+    
+    if (confirm(`Shin kana son boye wadannan kaya guda ${selectedCards.length}?`)) {
+        selectedCards.forEach(card => {
+            card.style.opacity = "0.4";
+            card.querySelector('.stock-badge').innerText = "HIDDEN";
+            card.querySelector('.stock-badge').style.background = "#888";
+        });
+        resetManage();
+    }
+}
+
+function deleteSelection() {
+    const selectedCards = document.querySelectorAll('.catalog-card.selected');
+    if (selectedCards.length === 0) return;
+    
+    if (confirm(`Shin kana da tabbas? Za a goge kaya guda ${selectedCards.length} gaba daya!`)) {
+        selectedCards.forEach(card => card.remove());
+        resetManage();
+    }
+}
     
 </script>
 </body>
