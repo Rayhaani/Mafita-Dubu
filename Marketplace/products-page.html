@@ -430,6 +430,19 @@ h1 {
     width: 100%;
     border-radius: 20px;
     }
+
+<style>
+    /* Wannan shi ne sirrin da zai sa hoton ya mamaye ko'ina */
+    .full-width-fix {
+        width: 100vw !important;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+    }
+</style>
+    
     
 </style>
 </head>
@@ -564,24 +577,32 @@ h1 {
 </div>
 
         
-<div class="proof-section w-full mb-10">
-    <div id="croppedView" class="relative overflow-hidden cursor-pointer" onclick="showStack()">
+<div class="px-5 mb-3">
+    <span class="section-title text-[11px] uppercase tracking-widest font-bold text-gray-500">Visual Proof</span>
+</div>
+
+<div class="proof-section mb-10">
+    <div id="croppedView" class="relative overflow-hidden cursor-pointer rounded-xl" 
+         style="height: 95vw;" onclick="showStack()">
+        
         <img id="visual-main-img" src="HOTONKA.jpg" class="w-full h-full object-cover block">
         
         <div class="absolute inset-0" style="background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.5) 100%); pointer-events: none;"></div>
         
         <div class="absolute bottom-6 left-0 w-full text-center">
             <div class="flex flex-col items-center">
-                <span class="text-[14px] font-bold text-white uppercase tracking-wider">See all</span>
+                <span class="text-[14px] font-bold text-white uppercase">See all</span>
                 <i class="fa-solid fa-chevron-down text-[12px] text-white mt-1 animate-bounce"></i>
             </div>
         </div>
     </div>
 
-    <div id="tripleStack" style="display: none; width: 100vw; margin-left: calc(-50vw + 50%);">
-        <img src="HOTO1.jpg" class="stack-img w-full block" style="border-radius: 0 !important; margin-bottom: 2px;">
-        <img src="HOTO2.jpg" class="stack-img w-full block" style="border-radius: 0 !important; margin-bottom: 2px;">
-        <img src="HOTO3.jpg" class="stack-img w-full block" style="border-radius: 0 !important;">
+    <div id="tripleStack" class="hidden">
+        <div class="full-width-fix">
+            <img src="HOTO1.jpg" class="w-full block" style="margin-bottom: 2px;">
+            <img src="HOTO2.jpg" class="w-full block" style="margin-bottom: 2px;">
+            <img src="HOTO3.jpg" class="w-full block">
+        </div>
     </div>
 </div>
         
@@ -1433,24 +1454,15 @@ function infProceed() {
 
 // 3. Gyaran Visual Proof (Transition effect)
 function showStack() {
-    const cropped = document.getElementById('croppedView');
+    // Boye babban hoton, nuna stack din
+    document.getElementById('croppedView').classList.add('hidden');
+    document.getElementById('tripleStack').classList.remove('hidden');
+    
+    // Smooth scroll domin ya kai mutum saman hotunan
     const stack = document.getElementById('tripleStack');
-    const mainImg = document.getElementById('visual-main-img');
-
-    // 1. Boye karamin view, nuna dogon view
-    cropped.style.display = 'none';
-    stack.style.display = 'block';
-
-    // 2. Tabbatar duka hotunan cikin stack sun cika screen
-    const allImages = document.querySelectorAll('.stack-img');
-    allImages.forEach(img => {
-        img.style.width = '100vw'; // Ya cika fadin screen
-        img.style.marginLeft = 'calc(-50vw + 50%)'; // Ya fito daga container
-        img.style.borderRadius = '0'; // Ya cire kwanar
-        img.style.position = 'relative';
-        img.style.zIndex = '50'; // Ya fito sama
-    });
-}
+    window.scrollTo({ top: stack.offsetTop - 20, behavior: 'smooth' });
+    }
+    
     
         
 </script>
