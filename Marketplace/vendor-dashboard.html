@@ -613,6 +613,51 @@ let myInventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
 
 // 2. Function din da zai rinka adana sabon kaya
 
+function saveProduct() {
+    const nameInput = document.getElementById('p-name');
+    const priceInput = document.getElementById('p-price');
+    const fileInput = document.getElementById('fileInput');
+
+    // Duba idan an cike komai
+    if (!nameInput.value || !priceInput.value || !fileInput.files[0]) {
+        alert("Don Allah cike duka bayanan kafin ka dora!");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const imageUrl = e.target.result;
+
+        const newAtamfa = {
+            id: Date.now(),
+            name: nameInput.value,
+            price: priceInput.value.replace(/[^\d]/g, ''), 
+            image: imageUrl,
+            stock: "12", // Default tunda baka da input dinsa
+            status: 'Active'
+        };
+
+        // Adana a waya
+        let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
+        inventory.push(newAtamfa);
+        localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
+
+        // Refresh shafin don ganin kaya
+        renderInventory();
+        
+        // Rufe modal da share fom
+        closeModal();
+        nameInput.value = '';
+        priceInput.value = '';
+        fileInput.value = '';
+        document.getElementById('preview-box').innerHTML = `<i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i><span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span>`;
+        
+        alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
+    };
+    reader.readAsDataURL(fileInput.files[0]);
+}
+    
+    
     function navTo(el, pageId) {
     document.querySelectorAll('.depth-item').forEach(item => {
         item.classList.remove('active');
@@ -961,60 +1006,14 @@ function updateDashboardSales(amount) {
     }
     }
 
-   
-    // 1. Gyararren Injin Adana Kaya (Save Product)
-function saveProduct() {
-    const name = document.getElementById('p-name').value;
-    const price = document.getElementById('p-price').value;
-    const category = document.getElementById('p-category').value;
-    const imageInput = document.getElementById('fileInput'); // Na canza daga p-image zuwa fileInput
-
-    if (!name || !price || !imageInput.files[0]) {
-        alert("Don Allah cike duka bayanan Atamfa kafin ka dora!");
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const imageUrl = e.target.result;
-
-        const newAtamfa = {
-            id: Date.now(),
-            name: name,
-            price: price.replace(/[^\d]/g, ''), // Cire kowane harafi in ba lamba ba
-            image: imageUrl,
-            category: category,
-            stock: "12", // Default stock
-            status: 'Active'
-        };
-
-        let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
-        inventory.push(newAtamfa);
-        localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
-
-        // Share fom
-        document.getElementById('p-name').value = '';
-        document.getElementById('p-price').value = '';
-        imageInput.value = '';
-        document.getElementById('preview-box').innerHTML = `<i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i><span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span>`;
-
-        renderInventory(); // Kira baje koli nan take
-        closeModal();
-        alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
-    };
-    reader.readAsDataURL(imageInput.files[0]);
-}
-
-// 2. Gyararren Injin Baje Koli (Render Inventory)
-function renderInventory() {
+ function renderInventory() {
     const catalogGrid = document.getElementById('catalog-grid-main');
     if (!catalogGrid) return;
 
     let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
     
-    // Kada mu goge static items din da suke ciki tun farko idan kana sonsu
-    // Amma zai fi kyau mu share mu nuna na database kawai:
-    catalogGrid.innerHTML = ''; 
+    // Share gurin don nuna sabbin kaya
+    catalogGrid.innerHTML = '';
 
     inventory.forEach(product => {
         const card = `
@@ -1022,27 +1021,19 @@ function renderInventory() {
                 <div class="check-orbit"></div>
                 <span class="stock-badge" style="background:#2ecc71;">${product.stock} IN STOCK</span>
                 <div class="catalog-img-box">
-                    <img src="${product.image}" alt="${product.name}">
+                    <img src="${product.image}" alt="${product.name}" style="width:100%; height:100%; object-fit:cover;">
                 </div>
                 <b style="font-size: 0.75rem; display:block;">${product.name}</b>
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
                     <span style="font-size: 0.65rem; font-weight:700; color:var(--neu-accent);">₦${Number(product.price).toLocaleString()}</span>
                     <span style="font-size: 0.55rem; color:#888;"><i class="fa-solid fa-eye"></i> 0</span>
                 </div>
-                <div style="display:flex; justify-content:center; align-items:center; margin-top:10px; border-top:1px solid rgba(0,0,0,0.05); padding-top:8px; gap:8px;">
-                    <span style="font-size:0.55rem; color:#888;">Active</span>
-                    <div class="toggle-switch on">
-                        <div class="circle"></div>
-                    </div>
-                </div>
             </div>
         `;
         catalogGrid.innerHTML += card;
     });
-}
-
-// 3. Tabbatar komai ya tashi da zaran an bude shafin
-document.addEventListener('DOMContentLoaded', renderInventory);
+ }
+    
     
 
 
