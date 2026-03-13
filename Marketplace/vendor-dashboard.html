@@ -1038,7 +1038,26 @@ document.addEventListener('DOMContentLoaded', renderInventory);
     
 
 
- 
+ // Wannan zai rinka lura da lokacin da aka zabo hoto
+document.addEventListener('change', function(e) {
+    if (e.target && e.target.id === 'fileInput') {
+        const file = e.target.files[0];
+        const previewBox = document.getElementById('preview-box');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                // Wannan zai saka hoton a cikin box din ba tare da ya taba kyan design din ba
+                previewBox.innerHTML = `
+                    <img src="${event.target.result}" style="width:100%; height:100%; object-fit:cover;">
+                    <input type="file" id="fileInput" hidden accept="image/*">
+                `;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+});
+    
     
 </script>
 </body>
