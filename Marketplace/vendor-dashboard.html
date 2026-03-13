@@ -612,29 +612,57 @@
 let myInventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
 
 // 2. Function din da zai rinka adana sabon kaya
-function saveProductToSystem(name, price, stock, image, code) {
-    const newProduct = {
-        id: Date.now(), // Unique ID domin marketplace ya gane shi
-        name: name,
-        price: price,
-        stock: stock,
-        image: image,
-        code: code,
-        status: 'Active',
-        dateAdded: new Date().toLocaleDateString()
+function saveProduct() {
+    // 1. Karbo bayanai daga fom
+    const name = document.getElementById('p-name').value;
+    const price = document.getElementById('p-price').value;
+    const stock = document.getElementById('p-stock') ? document.getElementById('p-stock').value : "0";
+    const code = document.getElementById('p-code') ? document.getElementById('p-code').value : "N/A";
+    const imageInput = document.getElementById('p-image');
+
+    // 2. Duba idan an cika komai
+    if (!name || !price || !imageInput.files[0]) {
+        alert("Don Allah cike duka bayanan Atamfa kafin ka dora!");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const imageUrl = e.target.result;
+
+        // 3. Tsarin yadda za a ajiye kayan (Object)
+        const newAtamfa = {
+            id: Date.now(),
+            name: name,
+            price: price,
+            stock: stock,
+            code: code,
+            image: imageUrl,
+            status: 'Active',
+            dateAdded: new Date().toLocaleDateString()
+        };
+
+        // 4. Ajiye a cikin Ma'ajiyar Wayar (Local Storage)
+        let myInventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
+        myInventory.push(newAtamfa);
+        localStorage.setItem('nexus_inventory', JSON.stringify(myInventory));
+
+        // 5. Share fom din don wani karon
+        document.getElementById('p-name').value = '';
+        document.getElementById('p-price').value = '';
+        if(document.getElementById('p-stock')) document.getElementById('p-stock').value = '';
+        if(document.getElementById('p-code')) document.getElementById('p-code').value = '';
+        imageInput.value = '';
+
+        // 6. Nuna sabon kayan a Catalog nan take
+        renderInventory();
+        
+        alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa.");
     };
 
-    // Saka shi a cikin jerinmu
-    myInventory.push(newProduct);
+    reader.readAsDataURL(imageInput.files[0]);
+    }
     
-    // Ajiye shi a cikin wayar (localStorage)
-    localStorage.setItem('nexus_inventory', JSON.stringify(myInventory));
-    
-    console.log("An yi nasarar ajiye: " + name);
-    renderInventory(); // Wannan zai nuna sabon hoton a karkashin Catalog
-}
-    
-
 
     function navTo(el, pageId) {
     document.querySelectorAll('.depth-item').forEach(item => {
@@ -983,7 +1011,30 @@ function updateDashboardSales(amount) {
         resetManage(); // Rufe command center
     }
     }
-        
+
+    function renderInventory() {
+    const catalogGrid = document.getElementById('catalog-grid');
+    catalogGrid.innerHTML = ''; // Share tsofaffin dake ciki
+
+    myInventory.forEach(product => {
+        const card = `
+            <div class="catalog-card" data-id="${product.id}" onclick="toggleSelect(this)">
+                <div class="stock-badge">${product.stock} IN STOCK</div>
+                <img src="${product.image}" alt="${product.name}">
+                <div class="p-info">
+                    <b>${product.name}</b><br>
+                    <span style="color:var(--neu-accent); font-weight:bold;">₦${parseInt(product.price).toLocaleString()}</span>
+                    <p style="font-size:0.6rem; color:#888;">Code: ${product.code}</p>
+                </div>
+            </div>
+        `;
+        catalogGrid.innerHTML += card;
+    });
+}
+
+// Kira wannan function din da zaran shafi ya bude
+window.onload = renderInventory;
+    
     
 </script>
 </body>
