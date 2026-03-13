@@ -327,10 +327,13 @@
     </div>
     
     <div class="cc-grid">
-        <div class="cc-item" onclick="shareSelection()">
-            <div class="cc-icon-box" style="color:#25D366;"><i class="fa-brands fa-whatsapp"></i></div>
-            <span class="cc-label">Share</span>
-        </div>
+          <div class="cc-item" onclick="markAsSold()">
+    <div class="cc-icon-box" style="color:#2ecc71;">
+        <i class="fa-solid fa-cart-arrow-down"></i>
+    </div>
+    <span class="cc-label">Sold</span>
+            </div>
+            
         <div class="cc-item" onclick="fireAction('Price')">
             <div class="cc-icon-box" style="color:var(--neu-accent);"><i class="fa-solid fa-tag"></i></div>
             <span class="cc-label">Price</span>
@@ -878,6 +881,42 @@ function deleteSelection() {
         resetManage();
     }
 }
+
+function markAsSold() {
+    const selectedCards = document.querySelectorAll('.catalog-card.selected');
+    if (selectedCards.length === 0) return;
+
+    let totalEarned = 0;
+    
+    if (confirm(`Shin kana da tabbas an sayar da wadannan kaya guda ${selectedCards.length}?`)) {
+        selectedCards.forEach(card => {
+            // Dauko farashin (misali ₦12,500) mu mayar da shi lamba (12500)
+            const priceText = card.querySelector('span[style*="color:var(--neu-accent)"]').innerText;
+            const priceValue = parseInt(priceText.replace(/[^\d]/g, ''));
+            
+            totalEarned += priceValue;
+            
+            // Cire kayan da santsi
+            card.style.transform = "scale(0)";
+            card.style.opacity = "0";
+            setTimeout(() => card.remove(), 400);
+        });
+
+        // Wannan zai nuna maka nawa aka tara na wannan cinikin
+        alert(`Masha Allah! An sayar da kaya guda ${selectedCards.length}. \nAn kara ₦${totalEarned.toLocaleString()} a cikin lissafin yau.`);
+        
+        resetManage();
+        
+        // Idan kana da wani gurbi na "Total Sales" a Dashboard dinka, za mu iya tura 'totalEarned' din can
+        updateDashboardSales(totalEarned); 
+    }
+}
+
+// Function na bogi don update din kudi (Zaka iya saita asalin sa idan muna da dashboard stats)
+function updateDashboardSales(amount) {
+    console.log("Adding to total sales: " + amount);
+}
+    
     
 </script>
 </body>
