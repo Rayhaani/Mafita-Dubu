@@ -612,7 +612,46 @@
 let myInventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
 
 // 2. Function din da zai rinka adana sabon kaya
+function saveProduct() {
+    const name = document.getElementById('p-name').value;
+    const price = document.getElementById('p-price').value;
+    const fileInput = document.getElementById('fileInput'); // Tabbatar kana da input mai id="fileInput"
 
+    // 1. Duba idan an cika komai
+    if (!name || !price || !fileInput.files[0]) {
+        alert("Don Allah cika sunan kaya, farashi, da hoton kaya!");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        // 2. Shirya bayanan atamfar
+        const newAtamfa = {
+            id: Date.now(),
+            name: name,
+            price: price.replace(/[^\d]/g, ''), 
+            image: e.target.result,
+            stock: "12" // Wannan default ne
+        };
+
+        // 3. Adana a cikin localStorage (Nexus Inventory)
+        let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
+        inventory.push(newAtamfa);
+        localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
+
+        // 4. Rufe modal da wanke fom din
+        closeModal(); 
+        document.getElementById('p-name').value = '';
+        document.getElementById('p-price').value = '';
+        fileInput.value = '';
+
+        // 5. Nuna kaya a catalogue nan take
+        renderInventory(); 
+        alert("Masha Allah! " + name + " ta tafi kasuwa. ✨");
+    };
+    reader.readAsDataURL(fileInput.files[0]);
+}
+    
 
     
     function navTo(el, pageId) {
@@ -958,44 +997,6 @@ function updateDashboardSales(amount) {
     }
 
     
-    function saveProduct() {
-    const name = document.getElementById('p-name').value;
-    const price = document.getElementById('p-price').value;
-    const fileInput = document.getElementById('fileInput');
-
-    if (!name || !price || !fileInput.files[0]) {
-        alert("Don Allah cika duka bayanan Atamfa!");
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const newAtamfa = {
-            id: Date.now(),
-            name: name,
-            price: price.replace(/[^\d]/g, ''), 
-            image: e.target.result,
-            stock: "12",
-            status: 'Active'
-        };
-
-        let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
-        inventory.push(newAtamfa);
-        localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
-
-        // Share fom da rufe modal
-        document.getElementById('p-name').value = '';
-        document.getElementById('p-price').value = '';
-        fileInput.value = '';
-        closeModal();
-
-        // Nuna kaya nan take
-        renderInventory();
-        alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
-    };
-    reader.readAsDataURL(fileInput.files[0]);
-}
-
 function renderInventory() {
     const catalogGrid = document.getElementById('catalog-grid-main');
     if (!catalogGrid) return;
