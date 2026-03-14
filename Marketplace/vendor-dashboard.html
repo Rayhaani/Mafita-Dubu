@@ -1067,7 +1067,23 @@ function saveProduct() {
 
     alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
 }
-                
+
+
+
+    function resetManage() {
+    isManage = false;
+    const text = document.getElementById('manage-text');
+    if(text) { text.innerText = "MANAGE"; text.style.color = "var(--neu-accent)"; }
+    
+    const grid = document.getElementById('catalog-grid-main');
+    if(grid) grid.classList.remove('manage-active');
+    
+    document.querySelectorAll('.catalog-card').forEach(c => c.classList.remove('selected'));
+    
+    const cc = document.getElementById('command-center');
+    if(cc) cc.classList.remove('visible');
+    }
+    
 </script>
 </body>
 </html>
