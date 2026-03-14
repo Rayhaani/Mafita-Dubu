@@ -609,7 +609,10 @@
 </div>
      
 <script>
-
+    
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+    
 // 1. Wannan zai dauko kayan da suke ajiye a wayar, ko kuma ya bude sabon jeri idan babu
 let myInventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
 
@@ -1020,48 +1023,66 @@ document.addEventListener('change', function(e) {
     }
 });
 
-// 2. Wannan shi ne babban injin da zai kai kaya kasuwa
-function saveProduct() {
+// 1. Fara kunna Firebase (Saka wannan a saman Script dinka)
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// 2. Gyaran Injin Save din
+async function saveProduct() {
     const nameInput = document.getElementById('p-name');
     const priceInput = document.getElementById('p-price');
+    const categoryInput = document.getElementById('p-category');
     const previewBox = document.getElementById('preview-box');
     const imageData = previewBox.getAttribute('data-img');
 
-    // Duba idan an cike Suna, Farashi, da Hoto
+    // Duba idan an cike bayanan
     if (!nameInput.value || !priceInput.value || !imageData) {
         alert("Don Allah cika duka bayanan!");
         return;
     }
 
-    const newAtamfa = {
-        id: Date.now(),
-        name: nameInput.value,
-        price: priceInput.value.replace(/[^\d]/g, ''), 
-        image: imageData,
-        stock: "12",
-        status: 'Active'
-    };
+    // Nuna cewa ana kan tura kaya
+    const submitBtn = document.querySelector('.neu-btn');
+    const originalText = submitBtn.innerText;
+    submitBtn.innerText = "Ana Turawa...";
+    submitBtn.disabled = true;
 
-    let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
-    inventory.push(newAtamfa);
-    localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
+    try {
+        const productData = {
+            name: nameInput.value,
+            price: priceInput.value.replace(/[^\d]/g, ''),
+            category: categoryInput.value,
+            image: imageData, // Hoton da kake gani a preview
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            status: 'Active',
+            vendorId: "Vendor_001" // Anan za ka saka ID din shagon dake login
+        };
 
-    // Nuna sabon kaya a catalogue da rufe modal
-    renderInventory();
-    closeModal();
+        // Tura kaya zuwa rumbun Firebase
+        await db.collection("marketplace").add(productData);
 
-    // Reset komai zuwa asali ba tare da taba design ba
-    nameInput.value = '';
-    priceInput.value = '';
-    previewBox.removeAttribute('data-img');
-    previewBox.innerHTML = `
-        <i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i>
-        <span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span>
-        <input type="file" id="fileInput" hidden accept="image/*">
-    `;
+        alert("Masha Allah! Atamfar ka ta isa Marketplace. ✨");
+        
+        // Share form da rufe modal
+        closeModal();
+        nameInput.value = '';
+        priceInput.value = '';
+        previewBox.removeAttribute('data-img');
+        previewBox.innerHTML = `
+            <i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i>
+            <span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span>
+            <input type="file" id="fileInput" hidden accept="image/*">
+        `;
 
-    alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
-}
+    } catch (error) {
+        console.error("Firebase Error:", error);
+        alert("An samu matsala wurin tura kaya zuwa Firebase.");
+    } finally {
+        submitBtn.innerText = originalText;
+        submitBtn.disabled = false;
+    }
+                                              }
+    
     
 
  
