@@ -22,7 +22,7 @@
             min-height: 100vh; margin: 0; padding: 20px;
         }
 
-        /* 1. GURBIN CUDANYAR LAUNUKA (EXACTLY LIKE REGISTRATION) */
+        /* 1. GURBIN CUDANYAR LAUNUKA */
         .liquid-color-circle {
             width: 80px; height: 80px;
             margin: -90px auto 15px;
@@ -42,7 +42,7 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* 2. LUXURY CARD (EXACT SHAPE: 40px 10px 40px 10px) */
+        /* 2. LUXURY CARD */
         .luxury-card {
             background: var(--royal-black);
             border: 2px solid var(--dark-gold);
@@ -77,7 +77,7 @@
             margin-bottom: 15px;
         }
 
-        /* 3. LOGIN BUTTON (REDUCED SIZE LIKE REG) */
+        /* 3. LOGIN BUTTON */
         .submit-btn {
             background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
             color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900;
@@ -87,7 +87,7 @@
             display: flex; align-items: center; justify-content: center; gap: 10px;
         }
 
-        /* 4. GOOGLE BUTTON (PERKINS STYLE) */
+        /* 4. GOOGLE BUTTON */
         .google-btn {
             width: 100%; padding: 10px;
             background: #222; border: 1px solid #333;
@@ -133,8 +133,8 @@
         <div class="sub-text">Log in to manage your portfolio</div>
 
         <form id="loginForm">
-            <input type="email" class="gold-input" placeholder="Email Address" required>
-            <input type="password" class="gold-input" placeholder="Password" required>
+            <input type="email" id="email" class="gold-input" placeholder="Email Address" required>
+            <input type="password" id="password" class="gold-input" placeholder="Password" required>
             
             <div style="text-align: right; margin-top: -10px; margin-bottom: 15px;">
                 <a href="#" style="color: #888; font-size: 0.75rem; text-decoration: none;">Forgot password?</a>
@@ -158,9 +158,30 @@
         </form>
     </div>
 
-    <script>
-        document.getElementById('loginForm').onsubmit = function(e) {
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Configuration dinka da na shigar maka
+        const firebaseConfig = {
+          apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
+          authDomain: "global-market-admin.firebaseapp.com",
+          databaseURL: "https://global-market-admin-default-rtdb.firebaseio.com",
+          projectId: "global-market-admin",
+          storageBucket: "global-market-admin.firebasestorage.app",
+          messagingSenderId: "259715265619",
+          appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        document.getElementById('loginForm').onsubmit = async function(e) {
             e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
             const btn = document.getElementById('loginBtn');
             const loader = document.getElementById('loader');
             const text = document.getElementById('btnText');
@@ -169,37 +190,28 @@
             loader.style.display = 'block';
             text.innerText = 'Verifying...';
 
-            setTimeout(() => {
-                alert("An yi Login nasara!");
-                window.location.href = "dashboard.html"; 
-            }, 2000);
-        };
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
 
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+                // Duba ko shi Vendor ne ko Member a Firestore
+                const vendorDoc = await getDoc(doc(db, "vendors", user.uid));
+                const memberDoc = await getDoc(doc(db, "users", user.uid));
 
-const auth = getAuth();
-const db = getFirestore();
-
-onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        // Duba matsayin mutum a Firestore
-        const vendorDoc = await getDoc(doc(db, "vendors", user.uid));
-        const memberDoc = await getDoc(doc(db, "users", user.uid));
-
-        if (vendorDoc.exists()) {
-            if (vendorDoc.data().status === "approved") {
-                window.location.href = "vendor-dashboard.html";
-            } else {
-                alert("Har yanzu Admin bai amince da kai ba.");
+                if (vendorDoc.exists()) {
+                    window.location.href = "vendor-dashboard.html"; 
+                } else if (memberDoc.exists()) {
+                    window.location.href = "member-dashboard.html";
+                } else {
+                    window.location.href = "dashboard.html";
+                }
+            } catch (error) {
+                alert("Kuskure: Imel ko Password bai yi daidai ba!");
+                btn.disabled = false;
+                loader.style.display = 'none';
+                text.innerText = 'LOG IN';
             }
-        } else if (memberDoc.exists()) {
-            window.location.href = "member-dashboard.html";
-        }
-    }
-});
-        
-        
+        };
     </script>
 </body>
 </html>
