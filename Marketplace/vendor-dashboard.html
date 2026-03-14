@@ -184,12 +184,23 @@
         .page-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .catalog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .catalog-card {
-            background: var(--neu-bg); border-radius: 22px; padding: 12px;
-            box-shadow: 6px 6px 12px var(--neu-shadow), -6px -6px 12px var(--neu-light);
-            text-align: center; position: relative;
+        .catalog-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px; 
+    transition: padding-bottom 0.4s ease; /* Wannan ne zai sa kasan ya bude a hankali */
         }
+        
+        .catalog-card {
+    background: var(--neu-bg); 
+    border-radius: 22px; 
+    padding: 12px;
+    box-shadow: 6px 6px 12px var(--neu-shadow), -6px -6px 12px var(--neu-light);
+    text-align: center; 
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Ka kara wannan kadai */
+        }
+        
         .stock-badge {
             position: absolute; top: 8px; left: 8px; font-size: 0.5rem; padding: 3px 7px;
             border-radius: 10px; font-weight: 800; color: white; z-index: 10;
@@ -651,20 +662,29 @@ function toggleManageMode() {
 
 function handleCardTap(card) {
     if(!isManage) return;
+    
     card.classList.toggle('selected');
     const count = document.querySelectorAll('.catalog-card.selected').length;
     const cc = document.getElementById('command-center');
-    const indicator = document.getElementById('selected-indicator');
-    
+    const grid = document.getElementById('catalog-grid-main'); // Wannan ne grid din katinan kaya
+
     if(count > 0) {
         cc.classList.add('visible');
-        indicator.innerText = count + " SELECTED";
+        // Zai ba kasan shafin fili na 250px domin ka iya scroll sama
+        grid.style.paddingBottom = "250px"; 
     } else {
         cc.classList.remove('visible');
+        // Zai mayar da kasan yadda yake
+        grid.style.paddingBottom = "20px"; 
+    }
+    
+    const indicator = document.getElementById('selected-indicator');
+    if(count > 0) {
+        indicator.innerText = count + " SELECTED";
     }
     if (navigator.vibrate) navigator.vibrate(20);
 }
-
+    
 function resetManage() {
     isManage = false;
     const text = document.getElementById('manage-text');
