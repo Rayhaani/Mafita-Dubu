@@ -1026,50 +1026,156 @@ document.addEventListener('change', function(e) {
 });
 
 
-    
-// 2. Wannan shi ne babban injin da zai kai kaya kasuwa
-function saveProduct() {
-    const nameInput = document.getElementById('p-name');
-    const priceInput = document.getElementById('p-price');
-    const previewBox = document.getElementById('preview-box');
-    const imageData = previewBox.getAttribute('data-img');
+    // 1. Initialize Inventory
+let myInventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
 
-    // Duba idan an cike Suna, Farashi, da Hoto
-    if (!nameInput.value || !priceInput.value || !imageData) {
-        alert("Don Allah cika duka bayanan!");
-        return;
-    }
-
-    const newAtamfa = {
-        id: Date.now(),
-        name: nameInput.value,
-        price: priceInput.value.replace(/[^\d]/g, ''), 
-        image: imageData,
-        stock: "12",
-        status: 'Active'
-    };
+// 2. Render Inventory (Gyara: Na dawo da handleCardTap)
+function renderInventory() {
+    const catalogGrid = document.getElementById('catalog-grid-main');
+    if (!catalogGrid) return;
 
     let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
-    inventory.push(newAtamfa);
-    localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
+    catalogGrid.innerHTML = '';
 
-    // Nuna sabon kaya a catalogue da rufe modal
-    renderInventory();
-    closeModal();
-
-    // Reset komai zuwa asali ba tare da taba design ba
-    nameInput.value = '';
-    priceInput.value = '';
-    previewBox.removeAttribute('data-img');
-    previewBox.innerHTML = `
-        <i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i>
-        <span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span>
-        <input type="file" id="fileInput" hidden accept="image/*">
-    `;
-
-    alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
+    inventory.forEach(product => {
+        // Tabbatar handleCardTap yana nan a jikin katin
+        const card = `
+            <div class="catalog-card" data-id="${product.id}" onclick="handleCardTap(this)">
+                <div class="check-orbit"></div>
+                <span class="stock-badge" style="background:#2ecc71;">${product.stock} IN STOCK</span>
+                <div class="catalog-img-box">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <b style="font-size: 0.75rem; display:block;">${product.name}</b>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+                    <span style="font-size: 0.65rem; font-weight:700; color:var(--neu-accent);">₦${Number(product.price).toLocaleString()}</span>
+                    <span style="font-size: 0.55rem; color:#888;"><i class="fa-solid fa-eye"></i> 0</span>
+                </div>
+                <div class="toggle-container" style="display:flex; justify-content:center; align-items:center; margin-top:10px; border-top:1px solid rgba(0,0,0,0.05); padding-top:8px; gap:8px;">
+                    <span style="font-size:0.55rem; color:#888;">Active</span>
+                    <div class="toggle-switch on" onclick="event.stopPropagation(); this.classList.toggle('on')">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+        catalogGrid.innerHTML += card;
+    });
 }
 
+// 3. Manage Mode Logic (Gyara: Na saita logic din yadda zai yi aiki da dynamic cards)
+let isManage = false;
+
+function toggleManageMode() {
+    isManage = !isManage;
+    const text = document.getElementById('manage-text');
+    const grid = document.getElementById('catalog-grid-main');
+    
+    if(isManage) {
+        text.innerText = "DONE"; 
+        text.style.color = "var(--neu-danger)";
+        if(grid) grid.classList.add('manage-active');
+    } else {
+        resetManage();
+    }
+}
+
+function handleCardTap(card) {
+    if(!isManage) return;
+    
+    card.classList.toggle('selected');
+    
+    const count = document.querySelectorAll('.catalog-card.selected').length;
+    const cc = document.getElementById('command-center');
+    const indicator = document.getElementById('selected-indicator');
+    
+    if(count > 0) {
+        cc.classList.add('visible');
+        indicator.innerText = count + " SELECTED";
+    } else {
+        cc.classList.remove('visible');
+    }
+    
+    if (navigator.vibrate) navigator.vibrate(20);
+}
+
+function resetManage() {
+    isManage = false;
+    const text = document.getElementById('manage-text');
+    if(text) { 
+        text.innerText = "MANAGE"; 
+        text.style.color = "var(--neu-accent)"; 
+    }
+    
+    const grid = document.getElementById('catalog-grid-main');
+    if(grid) grid.classList.remove('manage-active');
+    
+    document.querySelectorAll('.catalog-card').forEach(c => c.classList.remove('selected'));
+    
+    const cc = document.getElementById('command-center');
+    if(cc) cc.classList.remove('visible');
+}
+
+// 4. Navigation Control
+function navTo(el, pageId) {
+    document.querySelectorAll('.depth-item').forEach(item => item.classList.remove('active'));
+    el.classList.add('active');
+
+    document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById(pageId);
+    if(target) target.classList.add('active');
+
+    resetManage(); // Kashe manage mode idan an canza page
+    if (navigator.vibrate) navigator.vibrate(35);
+}
+
+// 5. Delete Logic (Update: Don gogewa daga LocalStorage ma)
+function deleteSelection() {
+    const selectedCards = document.querySelectorAll('.catalog-card.selected');
+    if (selectedCards.length === 0) return;
+    
+    if (confirm(`Shin kana da tabbas? Za a goge kaya guda ${selectedCards.length}!`)) {
+        let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
+        
+        selectedCards.forEach(card => {
+            const id = card.getAttribute('data-id');
+            inventory = inventory.filter(item => item.id != id);
+            card.remove();
+        });
+        
+        localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
+        resetManage();
+    }
+}
+
+// 6. Image Preview Fix
+document.addEventListener('change', function(e) {
+    if (e.target && e.target.id === 'fileInput') {
+        const file = e.target.files[0];
+        const previewBox = document.getElementById('preview-box');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                previewBox.setAttribute('data-img', event.target.result);
+                previewBox.innerHTML = `
+                    <img src="${event.target.result}" style="width:100%; height:100%; object-fit:cover;">
+                    <input type="file" id="fileInput" hidden accept="image/*">
+                `;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+});
+
+// Start Up
+document.addEventListener('DOMContentLoaded', () => {
+    renderInventory();
+});
+
+// Sauran functions dinka (openModal, closeModal, etc.) suna nan daram.
+    
+    
 
     
 
