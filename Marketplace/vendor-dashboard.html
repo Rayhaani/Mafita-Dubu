@@ -7,6 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;700&family=JetBrains+Mono:wght@800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    
 
     <style>
         :root {
@@ -611,78 +614,35 @@
 </div>
      
 <script>
-    
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-    
-// 1. Wannan zai dauko kayan da suke ajiye a wayar, ko kuma ya bude sabon jeri idan babu
+// 1. Inventory Engine (Adana kaya a waya)
 let myInventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
 
-// 2. Function din da zai rinka adana sabon kaya
-
-    
-
-    
-    function navTo(el, pageId) {
-    document.querySelectorAll('.depth-item').forEach(item => {
-        item.classList.remove('active');
-    });
+// 2. Navigation System (Sauya shafuka)
+function navTo(el, pageId) {
+    document.querySelectorAll('.depth-item').forEach(item => item.classList.remove('active'));
     el.classList.add('active');
-
     document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
     const target = document.getElementById(pageId);
     if(target) target.classList.add('active');
-
-    // Wannan zai kashe manage mode idan ka bar shafin products
     resetManage();
-
     if (navigator.vibrate) navigator.vibrate(35);
-    }
-    // Function din bude modal
-function openModal() {
-    const modal = document.getElementById('product-modal');
-    if(modal) {
-        modal.style.display = 'block';
-        // Vibrate kadan don jin dadin tabawa
-        if (navigator.vibrate) navigator.vibrate(25);
-    }
+    if(pageId === 'products-page') renderInventory();
 }
 
-// Function din rufe modal
-function closeModal() {
-    const modal = document.getElementById('product-modal');
-    if(modal) {
-        modal.style.display = 'none';
-    }
-    }
-    
-
-    function press() {
-        const icon = document.getElementById('sync-icon');
-        icon.innerText = "⌛";
-        setTimeout(() => {
-            alert("Jumia-Sync: Data Updated.");
-            icon.innerText = "⚡";
-        }, 800);
-    }
-
-
-    let isManage = false;
-
-// Wannan ne yake kunna/kashe Manage mode
+// 3. Manage Mode Logic
+let isManage = false;
 function toggleManageMode() {
     isManage = !isManage;
     const text = document.getElementById('manage-text');
-    const grid = document.getElementById('catalog-grid-main'); // Tabbatar grid dinka sunansa haka
+    const grid = document.getElementById('catalog-grid-main');
     if(isManage) {
         text.innerText = "DONE"; text.style.color = "var(--neu-danger)";
-        grid.classList.add('manage-active');
+        if(grid) grid.classList.add('manage-active');
     } else {
         resetManage();
     }
 }
 
-// Wannan ne idan an taba Atamfa yake saka ta a "selected"
 function handleCardTap(card) {
     if(!isManage) return;
     card.classList.toggle('selected');
@@ -699,7 +659,6 @@ function handleCardTap(card) {
     if (navigator.vibrate) navigator.vibrate(20);
 }
 
-// Wannan ne yake komar da komai yadda yake (Normal Mode)
 function resetManage() {
     isManage = false;
     const text = document.getElementById('manage-text');
@@ -711,320 +670,35 @@ function resetManage() {
     if(cc) cc.classList.remove('visible');
 }
 
-function fireAction(action) {
-    alert("Nexus: " + action + " executed successfully.");
-    resetManage();
-        }
-        
-function openModal() {
-    document.getElementById('product-modal').style.display = 'block';
-}
+// 4. Modal Controls
+function openModal() { document.getElementById('product-modal').style.display = 'block'; }
+function closeModal() { document.getElementById('product-modal').style.display = 'none'; }
 
-function closeModal() {
-    document.getElementById('product-modal').style.display = 'none';
-}
-
-// Wannan function din zai kula da zaben kalar da aka taba
-let selectedColor = "";
-
-function selectColor(el, colorName) {
-    // Cire "active border" daga kowane color well
-    document.querySelectorAll('.color-well').forEach(well => {
-        well.style.border = "none";
-        well.style.transform = "scale(1)";
-    });
-    
-    // Saka wa wanda aka taba border
-    el.style.border = "3px solid var(--neu-accent)";
-    el.style.transform = "scale(1.2)";
-    selectedColor = colorName;
-    
-    if (navigator.vibrate) navigator.vibrate(15);
-}
-
-// Function din nuna hoton da aka dora (Image Preview)
-function previewImage(event) {
-    const reader = new FileReader();
-    reader.onload = function() {
-        const output = document.getElementById('preview-box');
-        output.innerHTML = `<img src="${reader.result}" style="width:100%; height:100%; object-fit:cover; border-radius:20px;">`;
-    }
-    reader.readAsDataURL(event.target.files[0]);
-}
-
-// Sabon updateFields mai dauke da "onclick" a jikin colors
-function updateFields(val) {
-    const container = document.getElementById('dynamic-fields');
-    container.innerHTML = "";
-
-    if (val === "atamfa") {
-        container.innerHTML = `
-            <p class="sub-header" style="margin-top:10px;">ZABO LAUNIN KAYA (COLOR)</p>
-            <div style="display:flex; gap:12px; margin-top:10px; padding:5px; overflow-x:auto;">
-                <div class="color-well" onclick="selectColor(this, 'Blue')" style="background:#0033ff; cursor:pointer;"></div>
-                <div class="color-well" onclick="selectColor(this, 'Wine')" style="background:#8b0000; cursor:pointer;"></div>
-                <div class="color-well" onclick="selectColor(this, 'Gold')" style="background:#ffd700; cursor:pointer;"></div>
-                <div class="color-well" onclick="selectColor(this, 'Green')" style="background:#2ecc71; cursor:pointer;"></div>
-                <div style="min-width:45px; height:45px; border-radius:50%; background:var(--neu-bg); display:flex; align-items:center; justify-content:center; box-shadow:4px 4px 8px var(--neu-shadow); cursor:pointer;"><i class="fa-solid fa-plus"></i></div>
-            </div>
-            <input type="text" class="search-box" id="p-fabric" placeholder="Nau'in Yadiko (e.g. Super Wax)">
-        `;
-    } 
-    // ... sauran categories (food, electronics) su tsaya yadda suke
-}
-    
-
-function openBulkModal() {
-    document.getElementById('bulk-modal').style.display = 'block';
-    resetManage(); // Rufe command center
-}
-
-function closeBulkModal() {
-    document.getElementById('bulk-modal').style.display = 'none';
-}
-
-// Logic na karbar file
-document.getElementById('bulkFile')?.addEventListener('change', function(e) {
-    const fileName = e.target.files[0].name;
-    alert("An karbi file: " + fileName + "\nSauran mataki shine raba bayanan (Parsing).");
-    // Anan ne zamu saka logic din da zai raba bayanan CSV ya mayar dasu Boxes
-    closeBulkModal();
-});
-    
-   function cloneProduct() {
-    // Nemo kayan da aka taba (selected)
-    const selectedCards = document.querySelectorAll('.catalog-card.selected');
-    
-    if (selectedCards.length !== 1) {
-        alert("Don Allah zabi kaya guda daya kacal da kake son yi wa 'Clone'.");
-        return;
-    }
-
-    const sourceCard = selectedCards[0];
-    
-    // Dauko bayanan daga katin (Suna da Farashi)
-    const name = sourceCard.querySelector('b').innerText;
-    const priceText = sourceCard.querySelector('span[style*="color:var(--neu-accent)"]').innerText;
-    const price = priceText.replace('₦', '').replace(',', '');
-
-    // Bude Modal din "Sabuwar Kaya"
-    openModal();
-
-    // Cika fom din automatically
-    document.getElementById('p-name').value = name + " (Copy)";
-    document.getElementById('p-price').value = price;
-    
-    // Tabbatar an dawo da shi kan "Atamfa" tunda cloning muke
-    const catSelect = document.getElementById('p-category');
-    catSelect.value = "atamfa";
-    updateFields("atamfa"); // Kira wannan don launuka su fito
-
-    // Rufe command center
-    resetManage();
-    
-    if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
-   }
-   
-    
-    // 1. Wannan shi ne babban injin da yake gano me aka zaba
-function getSelectedProducts() {
-    const selectedCards = document.querySelectorAll('.catalog-card.selected');
-    let productData = [];
-    
-    selectedCards.forEach(card => {
-        const name = card.querySelector('b').innerText;
-        const price = card.querySelector('span[style*="color:var(--neu-accent)"]').innerText;
-        productData.push({ name, price });
-    });
-    
-    return productData;
-}
-
-// 2. Sai ka jera ayyukan buttons din a karkashinsa
-function shareSelection() {
-    const selectedCards = document.querySelectorAll('.catalog-card.selected');
-    if (selectedCards.length === 0) return;
-
-    selectedCards.forEach((card, index) => {
-        const name = card.querySelector('b').innerText;
-        const price = card.querySelector('span[style*="color:var(--neu-accent)"]').innerText;
-        const imgUrl = card.querySelector('img').src; 
-        
-        // Tsari mai kyan gani da Emojis
-        let text = `✨ *${name}* ✨\n\n`;
-        text += `💰 *Farashi:* ${price}\n`;
-        text += `✅ *Inganci:* 100% Cotton\n`;
-        text += `🚚 *Isarwa:* Akwai hanzari\n\n`;
-        text += `🖼️ *Duba Hoton Kaya:* ${imgUrl}\n\n`;
-        text += `🛒 *Yi Oda Anan:* https://afita-dubu.vercel.app`;
-
-        const url = "whatsapp://send?text=" + encodeURIComponent(text);
-        
-        // Idan kaya daya ne, zai tafi direct. Idan sun fi daya, zai rinka tura su daya-bayan-daya
-        setTimeout(() => {
-            window.location.href = url;
-        }, index * 1000); 
-    });
-    
-    resetManage();
-    }
-            
-
-
-function hideSelection() {
-    const selectedCards = document.querySelectorAll('.catalog-card.selected');
-    if (selectedCards.length === 0) return;
-    
-    if (confirm(`Shin kana son boye wadannan kaya guda ${selectedCards.length}?`)) {
-        selectedCards.forEach(card => {
-            card.style.opacity = "0.4";
-            card.querySelector('.stock-badge').innerText = "HIDDEN";
-            card.querySelector('.stock-badge').style.background = "#888";
-        });
-        resetManage();
-    }
-}
-
-function deleteSelection() {
-    const selectedCards = document.querySelectorAll('.catalog-card.selected');
-    if (selectedCards.length === 0) return;
-    
-    if (confirm(`Shin kana da tabbas? Za a goge kaya guda ${selectedCards.length} gaba daya!`)) {
-        selectedCards.forEach(card => card.remove());
-        resetManage();
-    }
-}
-
-function markAsSold() {
-    const selectedCards = document.querySelectorAll('.catalog-card.selected');
-    if (selectedCards.length === 0) return;
-
-    let totalEarned = 0;
-    
-    if (confirm(`Shin kana da tabbas an sayar da wadannan kaya guda ${selectedCards.length}?`)) {
-        selectedCards.forEach(card => {
-            // Dauko farashin (misali ₦12,500) mu mayar da shi lamba (12500)
-            const priceText = card.querySelector('span[style*="color:var(--neu-accent)"]').innerText;
-            const priceValue = parseInt(priceText.replace(/[^\d]/g, ''));
-            
-            totalEarned += priceValue;
-            
-            // Cire kayan da santsi
-            card.style.transform = "scale(0)";
-            card.style.opacity = "0";
-            setTimeout(() => card.remove(), 400);
-        });
-
-        // Wannan zai nuna maka nawa aka tara na wannan cinikin
-        alert(`Masha Allah! An sayar da kaya guda ${selectedCards.length}. \nAn kara ₦${totalEarned.toLocaleString()} a cikin lissafin yau.`);
-        
-        resetManage();
-        
-        // Idan kana da wani gurbi na "Total Sales" a Dashboard dinka, za mu iya tura 'totalEarned' din can
-        updateDashboardSales(totalEarned); 
-    }
-}
-
-// Function na bogi don update din kudi (Zaka iya saita asalin sa idan muna da dashboard stats)
-function updateDashboardSales(amount) {
-    console.log("Adding to total sales: " + amount);
-}
-   
-    
-    function openPriceModal() {
-    const selectedCards = document.querySelectorAll('.catalog-card.selected');
-    if (selectedCards.length === 0) return;
-
-    // Tambayar sabon farashi
-    const newPrice = prompt(`Saka sabon farashi na Atamfa guda ${selectedCards.length} da ka zaba:`, "15000");
-
-    if (newPrice !== null && newPrice !== "") {
-        // Tabbatar an rubuta lamba
-        const formattedPrice = "₦" + parseInt(newPrice).toLocaleString();
-
-        selectedCards.forEach(card => {
-            // Neman gurbin farashi a cikin katin
-            const priceElement = card.querySelector('span[style*="color:var(--neu-accent)"]');
-            if (priceElement) {
-                priceElement.innerText = formattedPrice;
-                
-                // Dan karamin animation na nuna an canza
-                priceElement.style.transition = "0.3s";
-                priceElement.style.transform = "scale(1.2)";
-                priceElement.style.color = "#2ecc71"; // Kore (Success)
-                
-                setTimeout(() => {
-                    priceElement.style.transform = "scale(1)";
-                    priceElement.style.color = "var(--neu-accent)";
-                }, 1000);
-            }
-        });
-
-        alert(`Masha Allah! An sabunta farashin Atamfa guda ${selectedCards.length} zuwa ${formattedPrice}.`);
-        resetManage(); // Rufe command center
-    }
-    }
-
-
-// 3. Wannan zai nuna su a catalogue da asalin design dinka
-function renderInventory() {
-    const catalogGrid = document.getElementById('catalog-grid-main');
-    if (!catalogGrid) return;
-
-    let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
-    catalogGrid.innerHTML = '';
-
-    inventory.forEach(product => {
-        const card = `
-            <div class="catalog-card" data-id="${product.id}" onclick="handleCardTap(this)">
-                <div class="check-orbit"></div>
-                <span class="stock-badge" style="background:#2ecc71;">${product.stock} IN STOCK</span>
-                <div class="catalog-img-box">
-                    <img src="${product.image}" style="width:100%; height:100%; object-fit:cover;">
-                </div>
-                <b style="font-size: 0.75rem; display:block;">${product.name}</b>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
-                    <span style="font-size: 0.65rem; font-weight:700; color:var(--neu-accent);">₦${Number(product.price).toLocaleString()}</span>
-                    <span style="font-size: 0.55rem; color:#888;"><i class="fa-solid fa-eye"></i> 0</span>
-                </div>
-            </div>`;
-        catalogGrid.innerHTML += card;
-    });
-}
-
-
-
-    // 1. Wannan zai kula da fitowar hoto a preview box
+// 5. Image Preview & Storage Logic
 document.addEventListener('change', function(e) {
     if (e.target && e.target.id === 'fileInput') {
         const file = e.target.files[0];
         const previewBox = document.getElementById('preview-box');
-
         if (file) {
             const reader = new FileReader();
             reader.onload = function(event) {
-                // Adana hoton a 'data-img' don saveProduct ya gani
                 previewBox.setAttribute('data-img', event.target.result);
-                previewBox.innerHTML = `
-                    <img src="${event.target.result}" style="width:100%; height:100%; object-fit:cover;">
-                    <input type="file" id="fileInput" hidden accept="image/*">
-                `;
+                previewBox.innerHTML = `<img src="${event.target.result}" style="width:100%; height:100%; object-fit:cover; border-radius:20px;">`;
             };
             reader.readAsDataURL(file);
         }
     }
 });
 
-// 2. Wannan shi ne babban injin da zai kai kaya kasuwa
+// 6. Save Product (Gyararre)
 function saveProduct() {
     const nameInput = document.getElementById('p-name');
     const priceInput = document.getElementById('p-price');
     const previewBox = document.getElementById('preview-box');
     const imageData = previewBox.getAttribute('data-img');
 
-    // Duba idan an cike Suna, Farashi, da Hoto
     if (!nameInput.value || !priceInput.value || !imageData) {
-        alert("Don Allah cika duka bayanan!");
+        alert("Don Allah cika duka bayanan (Hoto, Suna, Farashi)!");
         return;
     }
 
@@ -1033,40 +707,56 @@ function saveProduct() {
         name: nameInput.value,
         price: priceInput.value.replace(/[^\d]/g, ''), 
         image: imageData,
-        stock: "12",
-        status: 'Active'
+        stock: "12"
     };
 
     let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
     inventory.push(newAtamfa);
     localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
 
-    // Nuna sabon kaya a catalogue da rufe modal
     renderInventory();
     closeModal();
-
-    // Reset komai zuwa asali ba tare da taba design ba
+    
+    // Reset form
     nameInput.value = '';
     priceInput.value = '';
     previewBox.removeAttribute('data-img');
-    previewBox.innerHTML = `
-        <i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i>
-        <span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span>
-        <input type="file" id="fileInput" hidden accept="image/*">
-    `;
+    previewBox.innerHTML = `<i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i><span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span><input type="file" id="fileInput" hidden accept="image/*">`;
 
     alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
-    }
+}
+
+// 7. Render Inventory (Wannan zai nuna kayan a fili)
+function renderInventory() {
+    const catalogGrid = document.getElementById('catalog-grid-main');
+    if (!catalogGrid) return;
+
+    let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
     
-    
+    // Kada mu goge asalin Atamfa guda biyu na farko idan kana son su zauna
+    // Idan kuma kana son komai ya fita sai sababbi su zo, ka bar wannan layin:
+    catalogGrid.innerHTML = ''; 
 
+    inventory.forEach(product => {
+        const card = `
+            <div class="catalog-card" onclick="handleCardTap(this)">
+                <div class="check-orbit"></div>
+                <span class="stock-badge" style="background:#2ecc71;">${product.stock} IN STOCK</span>
+                <div class="catalog-img-box">
+                    <img src="${product.image}" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <b style="font-size: 0.75rem; display:block;">${product.name}</b>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+                    <span style="font-size: 0.65rem; font-weight:700; color:var(--neu-accent);">₦${Number(product.price).toLocaleString()}</span>
+                </div>
+            </div>`;
+        catalogGrid.innerHTML += card;
+    });
+}
 
-
-
-
-        
-    
-    
+// Kira renderInventory idan an bude shafin
+window.onload = renderInventory;
+   
 </script>
 </body>
 </html>
