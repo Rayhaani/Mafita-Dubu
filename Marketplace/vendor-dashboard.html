@@ -1054,131 +1054,50 @@ document.addEventListener('change', function(e) {
 });
 
 
-    // 1. Firebase Configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
-  authDomain: "global-market-admin.firebaseapp.com",
-  databaseURL: "https://global-market-admin-default-rtdb.firebaseio.com",
-  projectId: "global-market-admin",
-  storageBucket: "global-market-admin.firebasestorage.app",
-  messagingSenderId: "259715265619",
-  appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
-};
-
-// 2. Kunna Firebase (Sau daya kacal!)
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
-const db = firebase.firestore();
-
-// 3. Navigation Function
-function navTo(el, pageId) {
-    document.querySelectorAll('.depth-item').forEach(item => item.classList.remove('active'));
-    el.classList.add('active');
-    document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
-    const target = document.getElementById(pageId);
-    if(target) target.classList.add('active');
-    resetManage();
-    if (navigator.vibrate) navigator.vibrate(35);
-}
-
-// 4. Modal Functions
-function openModal() {
-    document.getElementById('product-modal').style.display = 'block';
-    if (navigator.vibrate) navigator.vibrate(25);
-}
-
-function closeModal() {
-    document.getElementById('product-modal').style.display = 'none';
-}
-
-// 5. Image Preview Logic
-document.addEventListener('change', function(e) {
-    if (e.target && e.target.id === 'fileInput') {
-        const file = e.target.files[0];
-        const previewBox = document.getElementById('preview-box');
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                previewBox.setAttribute('data-img', event.target.result);
-                previewBox.innerHTML = `<img src="${event.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-});
-
-// 6. SAVE PRODUCT (Zuwa Firebase)
-async function saveProduct() {
+    
+// 2. Wannan shi ne babban injin da zai kai kaya kasuwa
+function saveProduct() {
     const nameInput = document.getElementById('p-name');
     const priceInput = document.getElementById('p-price');
-    const categoryInput = document.getElementById('p-category');
     const previewBox = document.getElementById('preview-box');
     const imageData = previewBox.getAttribute('data-img');
 
+    // Duba idan an cike Suna, Farashi, da Hoto
     if (!nameInput.value || !priceInput.value || !imageData) {
         alert("Don Allah cika duka bayanan!");
         return;
     }
 
-    const submitBtn = document.querySelector('.neu-btn');
-    submitBtn.innerText = "Ana Turawa...";
-    submitBtn.disabled = true;
+    const newAtamfa = {
+        id: Date.now(),
+        name: nameInput.value,
+        price: priceInput.value.replace(/[^\d]/g, ''), 
+        image: imageData,
+        stock: "12",
+        status: 'Active'
+    };
 
-    try {
-        await db.collection("marketplace").add({
-            name: nameInput.value,
-            price: priceInput.price || priceInput.value,
-            category: categoryInput.value,
-            image: imageData,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            vendorId: "Vendor_001"
-        });
+    let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
+    inventory.push(newAtamfa);
+    localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
 
-        alert("Masha Allah! Atamfar ka ta isa Marketplace. ✨");
-        closeModal();
-        location.reload(); // Refresh don ganin sabon kaya
-    } catch (error) {
-        alert("Error: " + error.message);
-    } finally {
-        submitBtn.innerText = "Dora Kaya A Kasuwa";
-        submitBtn.disabled = false;
-    }
+    // Nuna sabon kaya a catalogue da rufe modal
+    renderInventory();
+    closeModal();
+
+    // Reset komai zuwa asali ba tare da taba design ba
+    nameInput.value = '';
+    priceInput.value = '';
+    previewBox.removeAttribute('data-img');
+    previewBox.innerHTML = `
+        <i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i>
+        <span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span>
+        <input type="file" id="fileInput" hidden accept="image/*">
+    `;
+
+    alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
 }
 
-// 7. Manage Mode Logic
-let isManage = false;
-function toggleManageMode() {
-    isManage = !isManage;
-    const text = document.getElementById('manage-text');
-    const grid = document.getElementById('catalog-grid-main');
-    if(isManage) {
-        text.innerText = "DONE"; text.style.color = "var(--neu-danger)";
-        grid.classList.add('manage-active');
-    } else {
-        resetManage();
-    }
-}
-
-function handleCardTap(card) {
-    if(!isManage) return;
-    card.classList.toggle('selected');
-    const count = document.querySelectorAll('.catalog-card.selected').length;
-    const cc = document.getElementById('command-center');
-    const indicator = document.getElementById('selected-indicator');
-    if(count > 0) { cc.classList.add('visible'); indicator.innerText = count + " SELECTED"; }
-    else { cc.classList.remove('visible'); }
-}
-
-function resetManage() {
-    isManage = false;
-    const text = document.getElementById('manage-text');
-    if(text) { text.innerText = "MANAGE"; text.style.color = "var(--neu-accent)"; }
-    const cc = document.getElementById('command-center');
-    if(cc) cc.classList.remove('visible');
-    document.querySelectorAll('.catalog-card').forEach(c => c.classList.remove('selected'));
-    }
-    
 
     
 
