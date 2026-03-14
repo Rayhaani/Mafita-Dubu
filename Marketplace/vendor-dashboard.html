@@ -674,6 +674,49 @@ function resetManage() {
 function openModal() { document.getElementById('product-modal').style.display = 'block'; }
 function closeModal() { document.getElementById('product-modal').style.display = 'none'; }
 
+// Wannan zai rinka kula da launin da aka taba
+let selectedColor = "";
+
+function selectColor(el, colorName) {
+    // Cire "active border" daga kowane color well
+    document.querySelectorAll('.color-well').forEach(well => {
+        well.style.border = "none";
+        well.style.transform = "scale(1)";
+    });
+    
+    // Saka wa wanda aka taba border da girma
+    el.style.border = "3px solid var(--neu-accent)";
+    el.style.transform = "scale(1.15)";
+    selectedColor = colorName;
+    
+    if (navigator.vibrate) navigator.vibrate(15);
+}
+
+// Wannan ne zai fito da launuka da Nau'in Yadiko idan an zabi Atamfa
+function updateFields(val) {
+    const container = document.getElementById('dynamic-fields');
+    if(!container) return;
+    
+    container.innerHTML = "";
+
+    if (val === "atamfa") {
+        container.innerHTML = `
+            <p class="sub-header" style="margin-top:15px; font-size:0.6rem;">ZABO LAUNIN KAYA (COLOR)</p>
+            <div style="display:flex; gap:12px; margin-top:10px; padding:5px; overflow-x:auto; align-items:center;">
+                <div class="color-well" onclick="selectColor(this, 'Blue')" style="background:#0033ff; cursor:pointer; width:40px; height:40px; border-radius:50%; box-shadow:4px 4px 8px var(--neu-shadow); transition:0.3s;"></div>
+                <div class="color-well" onclick="selectColor(this, 'Wine')" style="background:#8b0000; cursor:pointer; width:40px; height:40px; border-radius:50%; box-shadow:4px 4px 8px var(--neu-shadow); transition:0.3s;"></div>
+                <div class="color-well" onclick="selectColor(this, 'Gold')" style="background:#ffd700; cursor:pointer; width:40px; height:40px; border-radius:50%; box-shadow:4px 4px 8px var(--neu-shadow); transition:0.3s;"></div>
+                <div class="color-well" onclick="selectColor(this, 'Green')" style="background:#2ecc71; cursor:pointer; width:40px; height:40px; border-radius:50%; box-shadow:4px 4px 8px var(--neu-shadow); transition:0.3s;"></div>
+                <div style="min-width:40px; height:40px; border-radius:50%; background:var(--neu-bg); display:flex; align-items:center; justify-content:center; box-shadow:4px 4px 8px var(--neu-shadow); cursor:pointer;"><i class="fa-solid fa-plus" style="font-size:0.8rem; color:#888;"></i></div>
+            </div>
+
+            <input type="text" class="search-box" id="p-fabric" placeholder="Nau'in Yadiko (e.g. Super Wax)" style="margin-top:20px;">
+        `;
+    }
+}
+
+    
+    
 // 5. Image Preview & Storage Logic
 document.addEventListener('change', function(e) {
     if (e.target && e.target.id === 'fileInput') {
