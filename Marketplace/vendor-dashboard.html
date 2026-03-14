@@ -665,27 +665,32 @@ function toggleManageMode() {
 function handleCardTap(card) {
     if(!isManage) return;
     
+    // 1. Zabo katin ko cirewa
     card.classList.toggle('selected');
+    
+    // 2. Kidaya yawan abubuwan da aka zaba
     const selectedCards = document.querySelectorAll('.catalog-card.selected');
     const count = selectedCards.length;
     
+    // 3. Nemo sauran sassan shafin
     const cc = document.getElementById('command-center');
     const indicator = document.getElementById('selected-indicator');
-    const grid = document.querySelector('.catalog-grid'); // Nemo grid din katinan
+    const grid = document.querySelector('.catalog-grid');
 
+    // 4. Saka ko cire "Dynamic Space" da Command Center
     if(count > 0) {
-        // Idan an zaba kaya: fito da Command Center kuma bude sarari a kasa
         cc.classList.add('visible');
-        grid.style.paddingBottom = "280px"; 
-        indicator.innerText = count + " SELECTED";
+        if(grid) grid.style.paddingBottom = "220px"; // Daidaitaccen tazarar (Professional Gap)
+        if(indicator) indicator.innerText = count + " SELECTED";
     } else {
-        // Idan an cire zabe: boye Command Center kuma rufe sararin kasan
         cc.classList.remove('visible');
-        grid.style.paddingBottom = "20px"; 
+        if(grid) grid.style.paddingBottom = "20px"; // Maida tazarar normal
     }
     
+    // 5. Karamin girgiza (Vibration)
     if (navigator.vibrate) navigator.vibrate(20);
-       }
+}
+    
             
     
 function resetManage() {
