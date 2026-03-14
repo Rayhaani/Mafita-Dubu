@@ -827,44 +827,58 @@ function saveProduct() {
 
 // 7. Render Inventory (Wannan zai nuna kayan a fili)
 function renderInventory() {
-    // 1. Wannan layin zai tabbatar sararin ya koma normal duk lokacin da aka bude shafin
-    const grid = document.querySelector('.catalog-grid');
-    if(grid) grid.style.paddingBottom = "20px"; 
-
-    
     const catalogGrid = document.getElementById('catalog-grid-main');
     if (!catalogGrid) return;
 
-    let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
-    catalogGrid.innerHTML = ''; 
+    // 1. Tabbatar mun share ramin kasan shafi idan an dawo shafin
+    catalogGrid.style.paddingBottom = "20px";
+    catalogGrid.innerHTML = '<div style="text-align:center; padding:20px; color:#888;">Ana loda kaya...</div>';
 
-    inventory.forEach(product => {
-        const card = `
-            <div class="catalog-card" onclick="handleCardTap(this)">
-                <div class="check-orbit"></div>
-                <span class="stock-badge" style="background:#2ecc71;">${product.stock} IN STOCK</span>
-                <div class="catalog-img-box">
-                    <img src="${product.image}" style="width:100%; height:100%; object-fit:cover;">
-                </div>
-                <b style="font-size: 0.75rem; display:block; margin-bottom:2px;">${product.name}</b>
-                
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-size: 0.65rem; font-weight:700; color:var(--neu-accent);">₦${Number(product.price).toLocaleString()}</span>
-                    <span style="font-size: 0.55rem; color:#aaa;"><i class="fa-solid fa-eye"></i> 0</span>
-                </div>
+    // 2. Nemo kayayyaki a Firebase karkashin "products"
+    // Muna tace su ta yadda kowane vendor zai ga nasa (misali vendor_001)
+    const currentVendor = "vendor_001"; 
+    
+    database.ref('products').orderByChild('vendorID').equalTo(currentVendor)
+    .on('value', (snapshot) => {
+        catalogGrid.innerHTML = ''; // Share sakon "Loading"
+        
+        if (!snapshot.exists()) {
+            catalogGrid.innerHTML = '<div style="text-align:center; padding:20px; color:#888;">Babu kaya a kantinka tukunna.</div>';
+            return;
+        }
 
-                <div style="display:flex; justify-content:center; align-items:center; margin-top:8px; padding-top:5px; border-top:1px solid rgba(0,0,0,0.03); gap:6px;">
-                    <span style="font-size:0.5rem; color:#bbb; font-weight:700; text-transform:uppercase;">Active</span>
-                    <div class="toggle-switch on" style="width:22px; height:10px;" onclick="event.stopPropagation(); this.classList.toggle('on')">
-                        <div class="circle" style="width:7px; height:7px; top:1.5px; left:1.5px;"></div>
+        snapshot.forEach((childSnapshot) => {
+            const product = childSnapshot.val();
+            const productId = childSnapshot.key; // Wannan shi ne ID na musamman daga Firebase
+
+            const card = `
+                <div class="catalog-card" onclick="handleCardTap(this)" data-id="${productId}">
+                    <div class="check-orbit"></div>
+                    <span class="stock-badge" style="background:#2ecc71;">IN STOCK</span>
+                    <div class="catalog-img-box">
+                        <img src="${product.image}" style="width:100%; height:100%; object-fit:cover;">
                     </div>
-                </div>
-            </div>`;
-        catalogGrid.innerHTML += card;
+                    <b style="font-size: 0.75rem; display:block; margin-bottom:2px;">${product.name}</b>
+                    
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size: 0.65rem; font-weight:700; color:var(--neu-accent);">₦${Number(product.price).toLocaleString()}</span>
+                        <span style="font-size: 0.55rem; color:#aaa;"><i class="fa-solid fa-eye"></i> 0</span>
+                    </div>
+
+                    <div style="display:flex; justify-content:center; align-items:center; margin-top:8px; padding-top:5px; border-top:1px solid rgba(0,0,0,0.03); gap:6px;">
+                        <span style="font-size:0.5rem; color:#bbb; font-weight:700; text-transform:uppercase;">Active</span>
+                        <div class="toggle-switch ${product.status === 'active' ? 'on' : ''}" 
+                             style="width:24px; height:12px;" 
+                             onclick="event.stopPropagation(); toggleProductStatus('${productId}', this)">
+                            <div class="circle" style="width:8px; height:8px; top:2px; left:2px;"></div>
+                        </div>
+                    </div>
+                </div>`;
+            catalogGrid.innerHTML += card;
+        });
     });
 }
-    
-   
+        
 </script>
 </body>
 </html>
