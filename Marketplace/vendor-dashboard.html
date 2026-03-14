@@ -805,6 +805,15 @@ function saveProduct() {
 
 // 7. Render Inventory (Wannan zai nuna kayan a fili)
 function renderInventory() {
+    // 1. Wannan layin zai tabbatar sararin ya koma normal duk lokacin da aka bude shafin
+    const grid = document.querySelector('.catalog-grid');
+    if(grid) grid.style.paddingBottom = "20px"; 
+
+    // ... sauran kudin renderInventory dinka dake biye ...
+    const catalogGrid = document.getElementById('catalog-grid-main');
+    // (da sauran su...)
+}
+    
     const catalogGrid = document.getElementById('catalog-grid-main');
     if (!catalogGrid) return;
 
