@@ -794,37 +794,37 @@ function saveProduct() {
     const nameInput = document.getElementById('p-name');
     const priceInput = document.getElementById('p-price');
     const previewBox = document.getElementById('preview-box');
-    const imageData = previewBox.getAttribute('data-img');
+    const imageData = previewBox.getAttribute('data-img'); // Hoton da ka zaba
 
+    // 1. Tabbatar dukkan bayanan suna nan
     if (!nameInput.value || !priceInput.value || !imageData) {
-        alert("Don Allah cika duka bayanan (Hoto, Suna, Farashi)!");
+        alert("Don Allah cika duka bayanan!");
         return;
     }
 
-    const newAtamfa = {
-        id: Date.now(),
+    // 2. Shirya bayanan da zasu tafi Database
+    const newProduct = {
         name: nameInput.value,
-        price: priceInput.value.replace(/[^\d]/g, ''), 
+        price: priceInput.value.replace(/[^\d]/g, ''),
         image: imageData,
-        stock: "12"
+        vendorID: "vendor_001", // Dole ya dace da wanda ke cikin renderInventory
+        status: "active",
+        createdAt: firebase.database.ServerValue.TIMESTAMP
     };
 
-    let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
-    inventory.push(newAtamfa);
-    localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
-
-    renderInventory();
-    closeModal();
-    
-    // Reset form
-    nameInput.value = '';
-    priceInput.value = '';
-    previewBox.removeAttribute('data-img');
-    previewBox.innerHTML = `<i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i><span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span><input type="file" id="fileInput" hidden accept="image/*">`;
-
-    alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
+    // 3. Tura shi zuwa rumbun "products" a Firebase
+    database.ref('products').push(newProduct)
+    .then(() => {
+        alert("An dora kaya cikin nasara! ✨");
+        closeModal(); // Rufe katin dora kaya
+        // renderInventory() zai yi update kansa ta atomatik saboda .on('value')
+    })
+    .catch((error) => {
+        console.error("Kuskure wajen tura kaya:", error);
+        alert("An samu matsala wajen tura kaya!");
+    });
 }
-
+        
 // 7. Render Inventory (Wannan zai nuna kayan a fili)
 function renderInventory() {
     const catalogGrid = document.getElementById('catalog-grid-main');
