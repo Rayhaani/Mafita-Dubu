@@ -791,39 +791,44 @@ document.addEventListener('change', function(e) {
 
 // 6. Save Product (Gyararre)
 function saveProduct() {
+    const btn = document.querySelector('.save-btn'); // Nemo button din save
     const nameInput = document.getElementById('p-name');
     const priceInput = document.getElementById('p-price');
-    const previewBox = document.getElementById('preview-box');
-    const imageData = previewBox.getAttribute('data-img'); // Hoton da ka zaba
+    const imageData = document.getElementById('preview-box').getAttribute('data-img');
 
-    // 1. Tabbatar dukkan bayanan suna nan
     if (!nameInput.value || !priceInput.value || !imageData) {
-        alert("Don Allah cika duka bayanan!");
+        alert("Cika duka bayanan!");
         return;
     }
 
-    // 2. Shirya bayanan da zasu tafi Database
+    // Nuna cewa ana kan tura kaya
+    const originalText = btn.innerText;
+    btn.innerText = "Ana loda kaya...";
+    btn.disabled = true;
+
     const newProduct = {
         name: nameInput.value,
         price: priceInput.value.replace(/[^\d]/g, ''),
         image: imageData,
-        vendorID: "vendor_001", // Dole ya dace da wanda ke cikin renderInventory
+        vendorID: "vendor_001",
         status: "active",
         createdAt: firebase.database.ServerValue.TIMESTAMP
     };
 
-    // 3. Tura shi zuwa rumbun "products" a Firebase
     database.ref('products').push(newProduct)
     .then(() => {
-        alert("An dora kaya cikin nasara! ✨");
-        closeModal(); // Rufe katin dora kaya
-        // renderInventory() zai yi update kansa ta atomatik saboda .on('value')
+        btn.innerText = originalText;
+        btn.disabled = false;
+        alert("Kayan ka ya bayyana a Marketplace! ✨");
+        closeModal();
     })
     .catch((error) => {
-        console.error("Kuskure wajen tura kaya:", error);
-        alert("An samu matsala wajen tura kaya!");
+        btn.innerText = originalText;
+        btn.disabled = false;
+        alert("An samu matsala: " + error.message);
     });
 }
+        
         
 // 7. Render Inventory (Wannan zai nuna kayan a fili)
 function renderInventory() {
