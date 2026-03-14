@@ -244,31 +244,28 @@
     const db = getFirestore(app);
     const auth = getAuth(app);
 
-    // --- 1. KUNNA TASWIRA (MAP) ---
-    // Wannan shine code din da zai sa taswirar ta fito
     var map = L.map('map').setView([9.0820, 8.6753], 6);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '© OpenStreetMap'
     }).addTo(map);
 
-    // --- 2. TSARO (AUTH CHECK) ---
     onAuthStateChanged(auth, (user) => {
         if (!user) {
-            window.location.href = "admin-login.html";
+            // Idan baka so ya kora ka yayin gwaji, zaka iya sa comment anan
+            // window.location.href = "admin-login.html";
         }
     });
 
-    // --- 3. APPROVAL FUNCTIONS ---
+    // MUHIMMI: Mun sanya approveVendor a window object don HTML ya ganshi
     window.approveVendor = async (vendorId) => {
         try {
             const vendorRef = doc(db, "vendors", vendorId);
             await updateDoc(vendorRef, { status: "approved" });
-            alert("An yi nasara!");
+            alert("Application Approved Successfully!");
         } catch (error) { alert("Error: " + error.message); }
     };
 
-    // --- 4. DATA SNAPSHOT ---
     onSnapshot(collection(db, "vendors"), (snapshot) => {
         let pending = 0;
         const list = document.getElementById('adminVendorList');
@@ -276,15 +273,16 @@
         snapshot.forEach((docSnap) => {
             const data = docSnap.data();
             const id = docSnap.id;
+            
             if(data.status === 'pending') {
                 pending++;
                 list.innerHTML += `
                     <tr class="border-b border-white/[0.03]">
                         <td class="px-5 py-4 font-bold text-white">${data.name || 'MD Vendor'}</td>
-                        <td class="px-5 py-4 text-gray-400">${data.portal || 'Market'}</td>
-                        <td class="px-5 py-4"><span class="text-[#D4AF37] text-[7px] font-bold">SCANNING...</span></td>
+                        <td class="px-5 py-4 text-gray-400">${data.type || 'Market'}</td>
+                        <td class="px-5 py-4"><span class="text-[#D4AF37] text-[7px] font-bold">PENDING...</span></td>
                         <td class="px-5 py-4 text-right">
-                            <button onclick="approveVendor('${id}')" class="bg-green-600/20 text-green-500 p-2 rounded-lg border border-green-500/20"><i class="fa-solid fa-check"></i></button>
+                            <button onclick="window.approveVendor('${id}')" class="bg-green-600/20 text-green-500 p-2 rounded-lg border border-green-500/20 hover:bg-green-600 hover:text-white transition"><i class="fa-solid fa-check"></i></button>
                         </td>
                     </tr>`;
             }
@@ -292,6 +290,6 @@
         document.getElementById('pCount').innerText = pending;
     });
 </script>
-    
 </body>
-              </html>
+                </html>
+                    
