@@ -966,59 +966,6 @@ function updateDashboardSales(amount) {
     }
 
 
-// 1. Wannan zai nuna hoton a cikin asalin box dinka idan an zaba
-document.getElementById('fileInput').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    const previewBox = document.getElementById('preview-box');
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            // Wannan zai saka hoton ba tare da ya taba kyan box din ba
-            previewBox.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover;">
-                                    <input type="file" id="fileInput" hidden accept="image/*">`;
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
-// 2. Wannan zai yi saving
-function saveProduct() {
-    const name = document.getElementById('p-name').value;
-    const price = document.getElementById('p-price').value;
-    const fileInput = document.getElementById('fileInput');
-
-    if (!name || !price || !fileInput.files[0]) {
-        alert("Don Allah cika duka bayanan!");
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const newAtamfa = {
-            id: Date.now(),
-            name: name,
-            price: price.replace(/[^\d]/g, ''), 
-            image: e.target.result,
-            stock: "12"
-        };
-
-        let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
-        inventory.push(newAtamfa);
-        localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
-
-        renderInventory(); // Nuna a catalogue
-        closeModal();
-        alert("Masha Allah! " + name + " ta tafi Kasuwa.");
-        
-        // Sake saita box din hoton zuwa yadda yake
-        document.getElementById('preview-box').innerHTML = `
-            <i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i>
-            <span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span>
-            <input type="file" id="fileInput" hidden accept="image/*">`;
-    };
-    reader.readAsDataURL(fileInput.files[0]);
-}
-
 // 3. Wannan zai nuna su a catalogue da asalin design dinka
 function renderInventory() {
     const catalogGrid = document.getElementById('catalog-grid-main');
@@ -1045,28 +992,72 @@ function renderInventory() {
     });
 }
 
-// Kira renderInventory idan an bude shafi
-document.addEventListener('DOMContentLoaded', renderInventory);
-    
-function previewImage(event) {
-    const previewBox = document.getElementById('preview-box');
-    const file = event.target.files[0];
 
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            // Wannan zai cire icon din camera ya saka hoton da ka zaba
-            previewBox.innerHTML = `
-                <img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover; border-radius:25px;">
-                <input type="file" id="fileInput" hidden accept="image/*" onchange="previewImage(event)">
-            `;
-        };
-        reader.readAsDataURL(file);
+
+    // 1. Wannan zai kula da fitowar hoto a preview box
+document.addEventListener('change', function(e) {
+    if (e.target && e.target.id === 'fileInput') {
+        const file = e.target.files[0];
+        const previewBox = document.getElementById('preview-box');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                // Adana hoton a 'data-img' don saveProduct ya gani
+                previewBox.setAttribute('data-img', event.target.result);
+                previewBox.innerHTML = `
+                    <img src="${event.target.result}" style="width:100%; height:100%; object-fit:cover;">
+                    <input type="file" id="fileInput" hidden accept="image/*">
+                `;
+            };
+            reader.readAsDataURL(file);
+        }
     }
-}
-    
-    
+});
 
+// 2. Wannan shi ne babban injin da zai kai kaya kasuwa
+function saveProduct() {
+    const nameInput = document.getElementById('p-name');
+    const priceInput = document.getElementById('p-price');
+    const previewBox = document.getElementById('preview-box');
+    const imageData = previewBox.getAttribute('data-img');
+
+    // Duba idan an cike Suna, Farashi, da Hoto
+    if (!nameInput.value || !priceInput.value || !imageData) {
+        alert("Don Allah cika duka bayanan!");
+        return;
+    }
+
+    const newAtamfa = {
+        id: Date.now(),
+        name: nameInput.value,
+        price: priceInput.value.replace(/[^\d]/g, ''), 
+        image: imageData,
+        stock: "12",
+        status: 'Active'
+    };
+
+    let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
+    inventory.push(newAtamfa);
+    localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
+
+    // Nuna sabon kaya a catalogue da rufe modal
+    renderInventory();
+    closeModal();
+
+    // Reset komai zuwa asali ba tare da taba design ba
+    nameInput.value = '';
+    priceInput.value = '';
+    previewBox.removeAttribute('data-img');
+    previewBox.innerHTML = `
+        <i class="fa-solid fa-camera-retro" style="font-size:2.5rem; color:var(--neu-accent);"></i>
+        <span style="font-size:0.6rem; margin-top:10px; font-weight:800; color:#888;">DORA HOTON KAYA</span>
+        <input type="file" id="fileInput" hidden accept="image/*">
+    `;
+
+    alert("Masha Allah! Sabuwar Atamfa ta tafi Kasuwa. ✨");
+    }
+    
     
 
 
