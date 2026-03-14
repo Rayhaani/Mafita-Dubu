@@ -613,27 +613,6 @@
      
 <script>
     
-// 1. Saka bayanan Config ɗinka (Wanda ka turo min ɗazu)
-const firebaseConfig = {
-  apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
-  authDomain: "global-market-admin.firebaseapp.com",
-  databaseURL: "https://global-market-admin-default-rtdb.firebaseio.com",
-  projectId: "global-market-admin",
-  storageBucket: "global-market-admin.firebasestorage.app",
-  messagingSenderId: "259715265619",
-  appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
-};
-
-// 2. Wannan shi ne babban sirrin: Kunna Firebase kawai idan bai riga ya kunna ba
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
-const db = firebase.firestore();
-
-// Daga nan sai sauran functions ɗinka (kamar openModal, saveProduct, da sauransu) su biyo baya
-    
-
-    
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
     
