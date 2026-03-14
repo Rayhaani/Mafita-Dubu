@@ -207,6 +207,37 @@
     <main class="product-grid" id="vendor-grid"></main>
 
     <script>
+
+// 1. Karanto UID daga URL (misali: storefront.html?vendor=USER_123)
+const urlParams = new URLSearchParams(window.location.search);
+const currentVendorId = urlParams.get('vendor');
+
+if (currentVendorId) {
+    // 2. Muna saita "Live Listener" a kan products
+    database.ref('products')
+        .orderByChild('vendorId')
+        .equalTo(currentVendorId)
+        .on('value', (snapshot) => {
+            const productsContainer = document.getElementById('storefront-grid');
+            productsContainer.innerHTML = ""; // Share tsohon bayani
+
+            snapshot.forEach((childSnapshot) => {
+                const product = childSnapshot.val();
+                
+                // 3. Wannan zai bayyana automatically duk lokacin da vendor ya kara kaya
+                productsContainer.innerHTML += `
+                    <div class="product-card">
+                        <img src="${product.image}" class="w-full h-48 object-cover">
+                        <h3 class="font-bold">${product.name}</h3>
+                        <p class="text-gold">₦${product.price}</p>
+                    </div>
+                `;
+            });
+        });
+}
+        
+
+        
         const products = [
             { img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500", price: "45,000" },
             // WANNAN BOX DIN NA BIYU SHINE VIDEO NA GWAJI:
