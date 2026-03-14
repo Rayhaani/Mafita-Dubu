@@ -188,7 +188,8 @@
     display: grid; 
     grid-template-columns: 1fr 1fr; 
     gap: 15px; 
-    transition: padding-bottom 0.4s ease; /* Wannan ne zai sa kasan ya bude a hankali */
+    padding-bottom: 20px; /* Sararin asali idan ba'a zabi komai ba */
+    transition: padding-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
         }
         
         .catalog-card {
@@ -664,26 +665,27 @@ function handleCardTap(card) {
     if(!isManage) return;
     
     card.classList.toggle('selected');
-    const count = document.querySelectorAll('.catalog-card.selected').length;
+    const selectedCards = document.querySelectorAll('.catalog-card.selected');
+    const count = selectedCards.length;
+    
     const cc = document.getElementById('command-center');
-    const grid = document.getElementById('catalog-grid-main'); // Wannan ne grid din katinan kaya
+    const indicator = document.getElementById('selected-indicator');
+    const grid = document.querySelector('.catalog-grid'); // Nemo grid din katinan
 
     if(count > 0) {
+        // Idan an zaba kaya: fito da Command Center kuma bude sarari a kasa
         cc.classList.add('visible');
-        // Zai ba kasan shafin fili na 250px domin ka iya scroll sama
-        grid.style.paddingBottom = "250px"; 
+        grid.style.paddingBottom = "280px"; 
+        indicator.innerText = count + " SELECTED";
     } else {
+        // Idan an cire zabe: boye Command Center kuma rufe sararin kasan
         cc.classList.remove('visible');
-        // Zai mayar da kasan yadda yake
         grid.style.paddingBottom = "20px"; 
     }
     
-    const indicator = document.getElementById('selected-indicator');
-    if(count > 0) {
-        indicator.innerText = count + " SELECTED";
-    }
     if (navigator.vibrate) navigator.vibrate(20);
-}
+       }
+            
     
 function resetManage() {
     isManage = false;
