@@ -965,110 +965,7 @@ function updateDashboardSales(amount) {
     }
     }
 
- // 1. Wannan zai nuna kayan da zaran ka bude shafi
-document.addEventListener('DOMContentLoaded', renderInventory);
 
-
-
-    
-
-    function renderInventory() {
-    const catalogGrid = document.getElementById('catalog-grid-main');
-    if (!catalogGrid) return;
-
-    let inventory = JSON.parse(localStorage.getItem('nexus_inventory')) || [];
-    
-    // Wannan zai share gurin sannan ya feso duka kayan dake ajiye a wayarka
-    catalogGrid.innerHTML = '';
-
-    inventory.forEach(product => {
-        // Wannan shi ne asalin fasalin box dinka kamar yadda ka turo
-        const card = `
-            <div class="catalog-card" data-id="${product.id}" onclick="handleCardTap(this)">
-                <div class="check-orbit"></div>
-                <span class="stock-badge" style="background:#2ecc71;">${product.stock} IN STOCK</span>
-                <div class="catalog-img-box">
-                    <img src="${product.image}" alt="${product.name}" style="width:100%; height:100%; object-fit:cover;">
-                </div>
-                <b style="font-size: 0.75rem; display:block;">${product.name}</b>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
-                    <span style="font-size: 0.65rem; font-weight:700; color:var(--neu-accent);">₦${Number(product.price).toLocaleString()}</span>
-                    <span style="font-size: 0.55rem; color:#888;"><i class="fa-solid fa-eye"></i> 0</span>
-                </div>
-            </div>
-        `;
-        catalogGrid.innerHTML += card;
-    });
-}
-
-// Wannan zai nuna kayan da zaran ka bude shafi
-document.addEventListener('DOMContentLoaded', renderInventory);
-    
-// 1. Wannan zai kula da fitowar hoto a preview box
-document.addEventListener('change', function(e) {
-    if (e.target && e.target.id === 'fileInput') {
-        const file = e.target.files[0];
-        const previewBox = document.getElementById('preview-box');
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                // Adana hoton a 'data-img' don saveProduct ya gani
-                previewBox.setAttribute('data-img', event.target.result);
-                previewBox.innerHTML = `
-                    <img src="${event.target.result}" style="width:100%; height:100%; object-fit:cover;">
-                    <input type="file" id="fileInput" hidden accept="image/*">
-                `;
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-});
-
-// 1. Wannan zai kula da fitowar hoto a preview box
-document.addEventListener('change', function(e) {
-    if (e.target && e.target.id === 'fileInput') {
-        const file = e.target.files[0];
-        const previewBox = document.getElementById('preview-box');
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                // Adana hoton a 'data-img' don saveProduct ya gani
-                previewBox.setAttribute('data-img', event.target.result);
-                previewBox.innerHTML = `
-                    <img src="${event.target.result}" style="width:100%; height:100%; object-fit:cover;">
-                    <input type="file" id="fileInput" hidden accept="image/*">
-                `;
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-});
-
-// 2. Wannan shi ne babban injin da zai kai kaya kasuwa
-
-    
-// Wannan zai rinka lura da lokacin da aka zabo hoto
-document.addEventListener('change', function(e) {
-    if (e.target && e.target.id === 'fileInput') {
-        const file = e.target.files[0];
-        const previewBox = document.getElementById('preview-box');
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                // Wannan zai saka hoton a cikin box din ba tare da ya taba kyan design din ba
-                previewBox.innerHTML = `
-                    <img src="${event.target.result}" style="width:100%; height:100%; object-fit:cover;">
-                    <input type="file" id="fileInput" hidden accept="image/*">
-                `;
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-});
-    
 // 1. Wannan zai nuna hoton a cikin asalin box dinka idan an zaba
 document.getElementById('fileInput').addEventListener('change', function(event) {
     const file = event.target.files[0];
@@ -1150,7 +1047,33 @@ function renderInventory() {
 
 // Kira renderInventory idan an bude shafi
 document.addEventListener('DOMContentLoaded', renderInventory);
-            
+    
+function previewImage(event) {
+    const previewBox = document.getElementById('preview-box');
+    const file = event.target.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            // Wannan zai cire icon din camera ya saka hoton da ka zaba
+            previewBox.innerHTML = `
+                <img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover; border-radius:25px;">
+                <input type="file" id="fileInput" hidden accept="image/*" onchange="previewImage(event)">
+            `;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+    
+    
+
+    
+
+
+
+
+
+        
     
     
 </script>
