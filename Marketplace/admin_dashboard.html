@@ -29,109 +29,80 @@
             text-transform: uppercase;
         }
 
-        /* TOP NAV */
         .top-nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            height: 65px;
-            background: #0a0f1a;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 15px;
-            z-index: 1001;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            position: fixed; top: 0; left: 0; right: 0; height: 65px;
+            background: #0a0f1a; display: flex; align-items: center; justify-content: space-between;
+            padding: 0 15px; z-index: 1001; border-bottom: 1px solid rgba(212, 175, 55, 0.1);
         }
 
-        /* PROFESSIONAL SIDEBAR */
         .futuristic-sidebar {
-            width: 260px;
-            background: rgba(10, 15, 26, 0.98);
-            backdrop-filter: blur(15px);
-            border-right: 1px solid rgba(212, 175, 55, 0.15);
-            height: 100vh;
-            position: fixed;
-            left: -260px; top: 0;
-            z-index: 9999;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex; flex-direction: column;
+            width: 260px; background: rgba(10, 15, 26, 0.98); backdrop-filter: blur(15px);
+            border-right: 1px solid rgba(212, 175, 55, 0.15); height: 100vh;
+            position: fixed; left: -260px; top: 0; z-index: 9999;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column;
         }
 
         .sidebar-active { left: 0 !important; }
 
         .sidebar-user-box {
-            padding: 30px 20px;
-            background: linear-gradient(to bottom, rgba(212, 175, 55, 0.05), transparent);
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-            margin-bottom: 15px;
-            margin-top: 65px;
+            padding: 30px 20px; background: linear-gradient(to bottom, rgba(212, 175, 55, 0.05), transparent);
+            border-bottom: 1px solid rgba(255,255,255,0.03); margin-bottom: 15px; margin-top: 65px;
         }
 
         .nav-item {
-            display: flex; align-items: center; gap: 15px;
-            padding: 14px 25px;
-            color: #8a99af;
-            font-size: 0.85rem;
-            transition: 0.3s;
-            text-decoration: none;
+            display: flex; align-items: center; gap: 15px; padding: 14px 25px;
+            color: #8a99af; font-size: 0.85rem; transition: 0.3s; text-decoration: none; cursor: pointer;
         }
 
         .nav-item:hover, .nav-item.active {
-            color: var(--neon-gold);
-            background: rgba(212, 175, 55, 0.08);
-            border-left: 3px solid var(--neon-gold);
+            color: var(--neon-gold); background: rgba(212, 175, 55, 0.08); border-left: 3px solid var(--neon-gold);
         }
 
         .menu-trigger {
-            background: #1e293b; color: var(--neon-gold);
-            border: 1px solid var(--neon-gold);
-            width: 38px; height: 38px; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
+            background: #1e293b; color: var(--neon-gold); border: 1px solid var(--neon-gold);
+            width: 38px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer;
         }
 
         .main-content { padding: 15px; padding-top: 85px; width: 100%; }
 
-        /* 4-GRID STATS */
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+        .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
 
         .stat-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 12px;
-            border-radius: 12px;
-            border-top: 2px solid var(--neon-gold);
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+            padding: 12px; border-radius: 12px; border-top: 2px solid var(--neon-gold);
         }
 
-        /* TABLE */
         .table-container {
-            background: #0a0f1a;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.05);
-            overflow: hidden;
-            margin-bottom: 25px;
+            background: #0a0f1a; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden; margin-bottom: 25px;
         }
 
         .table-header-box {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .pending-title { font-weight: 800; font-size: 0.8rem; color: white; }
-        .view-all { color: var(--neon-gold); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; }
 
         #map { height: 350px; border-radius: 15px; border: 2px solid var(--neon-gold); margin-top: 20px; background: white; }
 
         .overlay {
-            display: none; position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.7); z-index: 9998;
+        }
+
+        /* MODAL STYLE */
+        .cat-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 20000; align-items: center; justify-content: center; backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background: #0a0f1a; border: 1px solid var(--neon-gold); padding: 25px;
+            width: 95%; max-width: 500px; border-radius: 15px; max-height: 85vh; overflow-y: auto;
+        }
+        .gold-input {
+            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 12px; border-radius: 8px; color: white; margin-bottom: 10px; font-size: 0.8rem;
         }
     </style>
 </head>
@@ -162,6 +133,7 @@
         </div>
         <nav style="flex: 1">
             <a href="#" class="nav-item active"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+            <a onclick="window.toggleCatModal()" class="nav-item"><i class="fa-solid fa-tags"></i> Categories</a>
             <a href="#" class="nav-item"><i class="fa-solid fa-users-gear"></i> Members</a>
             <a href="#" class="nav-item"><i class="fa-solid fa-cart-flatbed-suitcases"></i> Vendors</a>
             <a href="#" class="nav-item"><i class="fa-solid fa-fingerprint"></i> Security</a>
@@ -170,6 +142,26 @@
             <button onclick="alert('Logging out...')" class="w-full py-2 bg-red-500/10 text-red-500 rounded-lg text-xs font-bold border border-red-500/20 transition hover:bg-red-500 hover:text-white">LOGOUT</button>
         </div>
     </aside>
+
+    <div id="catModal" class="cat-modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-5">
+                <h2 class="cyber-heading">Category Manager</h2>
+                <button onclick="window.toggleCatModal()" class="text-gray-500 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="bg-white/5 p-4 rounded-xl border border-white/10 mb-6">
+                <p class="text-[10px] text-yellow-500 font-bold uppercase mb-3">Add New Category</p>
+                <input type="text" id="newCatName" class="gold-input" placeholder="Category Name (e.g. Kayan Sakawa)">
+                <input type="text" id="newSubCats" class="gold-input" placeholder="Sub-categories (separate with comma)">
+                <button onclick="window.addCategoryToFirebase()" class="w-full py-3 bg-yellow-600 text-black font-bold rounded-lg text-[10px] uppercase tracking-widest hover:bg-yellow-500 transition">Save Category</button>
+            </div>
+
+            <p class="text-[10px] text-gray-500 font-bold uppercase mb-3">Active Categories on Site</p>
+            <div id="categoryDisplayList" class="space-y-3">
+                </div>
+        </div>
+    </div>
 
     <main class="main-content">
         <div class="stat-grid">
@@ -194,7 +186,7 @@
         <div class="table-container">
             <div class="table-header-box">
                 <span class="pending-title">Pending Approvals</span>
-                <span class="view-all">View All Portals</span>
+                <span class="view-all" style="color:var(--neon-gold); font-size:10px;">ACTION REQUIRED</span>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-[9px]">
@@ -210,25 +202,6 @@
                 </table>
             </div>
         </div>
-
-        
-        <div class="table-container" style="border-top: 2px solid #00d4ff;">
-    <div class="table-header-box">
-        <span class="pending-title">Category Management</span>
-        <span class="view-all" style="color: #00d4ff;">Live Sync</span>
-    </div>
-    <div class="p-4 space-y-4">
-        <div class="grid grid-cols-1 gap-3">
-            <input type="text" id="newCatName" class="gold-input" placeholder="Enter New Category Name (e.g. Kayan Kitchen)" style="background: #1e293b; margin:0;">
-            <input type="text" id="newSubCats" class="gold-input" placeholder="Sub-categories (separate with comma: e.g. Tukane, Kofuna)" style="background: #1e293b; margin:0;">
-            <button onclick="window.addCategoryToFirebase()" class="primary-btn" style="margin:0; background: linear-gradient(135deg, #00d4ff, #0055ff); color: white;">ADD CATEGORY</button>
-        </div>
-        
-        <div id="categoryDisplayList" class="mt-4 space-y-2">
-            </div>
-    </div>
-                                                                    </div>
-        
 
         <div id="map"></div>
     </main>
@@ -247,60 +220,8 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, collection, onSnapshot, doc, updateDoc, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-    
-    
-    import { collection, addDoc, deleteDoc, onSnapshot, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-// Aikin Karawa
-window.addCategoryToFirebase = async () => {
-    const name = document.getElementById('newCatName').value;
-    const subs = document.getElementById('newSubCats').value.split(',').map(s => s.trim());
-    if(!name || subs.length === 0) {
-        alert("Don Allah cike suna da sub-categories!");
-        return;
-    }
-
-    try {
-        await addDoc(collection(db, "app_settings"), {
-            type: "category_list",
-            name: name,
-            subCategories: subs
-        });
-        document.getElementById('newCatName').value = "";
-        document.getElementById('newSubCats').value = "";
-        alert("Category Added!");
-    } catch (e) { alert("Error: " + e.message); }
-};
-
-// Aikin Nuna su da kuma Gogewa
-onSnapshot(collection(db, "app_settings"), (snapshot) => {
-    const display = document.getElementById('categoryDisplayList');
-    display.innerHTML = "";
-    snapshot.forEach(docSnap => {
-        const data = docSnap.data();
-        if(data.type === "category_list") {
-            display.innerHTML += `
-                <div class="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/10">
-                    <div>
-                        <p class="text-xs font-bold text-white">${data.name}</p>
-                        <p class="text-[8px] text-gray-500">${data.subCategories.join(', ')}</p>
-                    </div>
-                    <button onclick="window.deleteCategory('${docSnap.id}')" class="text-red-500 hover:text-red-700 text-xs"><i class="fa-solid fa-trash"></i></button>
-                </div>`;
-        }
-    });
-});
-
-window.deleteCategory = async (id) => {
-    if(confirm("Kana da tabbas kana son goge wannan?")) {
-        await deleteDoc(doc(db, "app_settings", id));
-    }
-};
-    
-
     
     const firebaseConfig = {
         apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
@@ -316,25 +237,61 @@ window.deleteCategory = async (id) => {
     const auth = getAuth(app);
 
     var map = L.map('map').setView([9.0820, 8.6753], 6);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap'
-    }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
 
-    onAuthStateChanged(auth, (user) => {
-        if (!user) {
-            // Idan baka so ya kora ka yayin gwaji, zaka iya sa comment anan
-            // window.location.href = "admin-login.html";
+    // --- CATEGORY ENGINE ---
+    window.toggleCatModal = () => {
+        const m = document.getElementById('catModal');
+        m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
+        if(document.getElementById('sidebar').classList.contains('sidebar-active')) toggleSidebar();
+    };
+
+    window.addCategoryToFirebase = async () => {
+        const name = document.getElementById('newCatName').value;
+        const subsRaw = document.getElementById('newSubCats').value;
+        if(!name || !subsRaw) return alert("Don Allah cike dukkan guraren!");
+        const subs = subsRaw.split(',').map(s => s.trim());
+        try {
+            await addDoc(collection(db, "app_settings"), { type: "category_list", name, subCategories: subs });
+            document.getElementById('newCatName').value = ""; document.getElementById('newSubCats').value = "";
+            alert("An yi nasarar karawa!");
+        } catch (e) { alert(e.message); }
+    };
+
+    window.deleteCategory = async (id) => {
+        if(confirm("Kana da tabbas kana son goge wannan Category din gaba daya?")) {
+            await deleteDoc(doc(db, "app_settings", id));
         }
+    };
+
+    onSnapshot(collection(db, "app_settings"), (snap) => {
+        const list = document.getElementById('categoryDisplayList');
+        list.innerHTML = "";
+        snap.forEach(d => {
+            const data = d.data();
+            if(data.type === "category_list") {
+                list.innerHTML += `
+                    <div class="bg-white/5 p-3 rounded-lg border border-white/10 flex justify-between items-center group hover:border-yellow-600/30 transition">
+                        <div>
+                            <p class="text-[10px] font-bold text-yellow-500 uppercase tracking-wider">${data.name}</p>
+                            <p class="text-[8px] text-gray-500 mt-0.5">${data.subCategories.join(' • ')}</p>
+                        </div>
+                        <button onclick="window.deleteCategory('${d.id}')" class="text-red-500/50 hover:text-red-500 p-2 transition">
+                            <i class="fa-solid fa-trash-can text-xs"></i>
+                        </button>
+                    </div>`;
+            }
+        });
+        if(list.innerHTML === "") list.innerHTML = "<p class='text-[9px] text-gray-600 text-center italic py-4'>No categories found.</p>";
     });
 
-    // MUHIMMI: Mun sanya approveVendor a window object don HTML ya ganshi
-    window.approveVendor = async (vendorId) => {
-        try {
-            const vendorRef = doc(db, "vendors", vendorId);
-            await updateDoc(vendorRef, { status: "approved" });
-            alert("Application Approved Successfully!");
-        } catch (error) { alert("Error: " + error.message); }
+    // --- APPROVAL ENGINE ---
+    window.updateStatus = async (id, status) => {
+        if(confirm(`Are you sure you want to ${status} this vendor?`)) {
+            try {
+                await updateDoc(doc(db, "vendors", id), { status: status });
+            } catch (e) { alert(e.message); }
+        }
     };
 
     onSnapshot(collection(db, "vendors"), (snapshot) => {
@@ -343,17 +300,16 @@ window.deleteCategory = async (id) => {
         list.innerHTML = ""; 
         snapshot.forEach((docSnap) => {
             const data = docSnap.data();
-            const id = docSnap.id;
-            
             if(data.status === 'pending') {
                 pending++;
                 list.innerHTML += `
                     <tr class="border-b border-white/[0.03]">
-                        <td class="px-5 py-4 font-bold text-white">${data.name || 'MD Vendor'}</td>
-                        <td class="px-5 py-4 text-gray-400">${data.type || 'Market'}</td>
-                        <td class="px-5 py-4"><span class="text-[#D4AF37] text-[7px] font-bold">PENDING...</span></td>
-                        <td class="px-5 py-4 text-right">
-                            <button onclick="window.approveVendor('${id}')" class="bg-green-600/20 text-green-500 p-2 rounded-lg border border-green-500/20 hover:bg-green-600 hover:text-white transition"><i class="fa-solid fa-check"></i></button>
+                        <td class="px-5 py-4 font-bold text-white">${data.name || 'Vendor'}</td>
+                        <td class="px-5 py-4 text-gray-400">${data.type || 'N/A'}</td>
+                        <td class="px-5 py-4"><span class="text-yellow-500 text-[7px] font-bold uppercase">Pending</span></td>
+                        <td class="px-5 py-4 text-right space-x-2">
+                            <button onclick="window.updateStatus('${docSnap.id}', 'approved')" class="bg-green-600/20 text-green-500 p-2 rounded-lg border border-green-500/20 hover:bg-green-600 hover:text-white transition"><i class="fa-solid fa-check"></i></button>
+                            <button onclick="window.updateStatus('${docSnap.id}', 'rejected')" class="bg-red-600/20 text-red-500 p-2 rounded-lg border border-red-500/20 hover:bg-red-600 hover:text-white transition"><i class="fa-solid fa-xmark"></i></button>
                         </td>
                     </tr>`;
             }
@@ -362,5 +318,4 @@ window.deleteCategory = async (id) => {
     });
 </script>
 </body>
-                </html>
-                    
+</html>
