@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mafita Dubu | Access Granted</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@300;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --royal-black: #080808;
+            --gold-bright: #f3cf7a;
+            --gold-dim: #8b6b1b;
+        }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--royal-black);
+            display: flex; align-items: center; justify-content: center; 
+            min-height: 100vh; margin: 0; overflow: hidden;
+            background: radial-gradient(circle at center, #1a1405 0%, #080808 100%);
+        }
+
+        /* Slim Futuristic Card */
+        .slim-card {
+            position: relative;
+            width: 320px; /* Slim width */
+            padding: 60px 30px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(243, 207, 122, 0.1);
+            border-radius: 100px 20px 100px 20px; /* Unique Smart Shape */
+            text-align: center;
+            backdrop-blur: 20px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            overflow: hidden;
+        }
+
+        /* Animated Gold Border Glow */
+        .slim-card::before {
+            content: "";
+            position: absolute; inset: 0;
+            border-radius: inherit;
+            padding: 2px; 
+            background: linear-gradient(180deg, transparent, var(--gold-bright), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: borderRotate 4s linear infinite;
+        }
+
+        @keyframes borderRotate {
+            0% { filter: hue-rotate(0deg); top: -100%; }
+            100% { filter: hue-rotate(360deg); top: 100%; }
+        }
+
+        .check-circle {
+            width: 70px; height: 70px;
+            border: 1px solid var(--gold-bright);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(243, 207, 122, 0.05);
+            box-shadow: 0 0 30px rgba(243, 207, 122, 0.2);
+        }
+
+        .status-badge {
+            font-size: 10px;
+            color: var(--gold-bright);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            border: 1px solid var(--gold-dim);
+            padding: 4px 15px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 20px;
+            background: rgba(139, 107, 27, 0.1);
+        }
+
+        .main-title {
+            font-family: 'Cinzel', serif;
+            color: #fff;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .desc {
+            color: #888;
+            font-size: 0.8rem;
+            line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            border: 1px solid var(--gold-bright);
+            color: var(--gold-bright);
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.4s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .action-btn:hover {
+            background: var(--gold-bright);
+            color: var(--royal-black);
+            box-shadow: 0 0 30px var(--gold-bright);
+        }
+
+        /* Ambient Light Particles */
+        .particle {
+            position: absolute;
+            width: 2px; height: 2px;
+            background: var(--gold-bright);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 10s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh); }
+            100% { transform: translateY(-100vh); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 30%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 70%; animation-delay: 5s;"></div>
+    <div class="particle" style="left: 90%; animation-delay: 1s;"></div>
+
+    <div class="slim-card">
+        <div class="status-badge">Secure Access</div>
+        
+        <div class="check-circle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" viewBox="0 0 16 16">
+                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+            </svg>
+        </div>
+
+        <h1 class="main-title">SUCCESS</h1>
+        <p class="desc">
+            Your identity has been verified.<br>
+            Your digital vault is now ready.
+        </p>
+
+        <a href="login.html" class="action-btn">OPEN DASHBOARD</a>
+        
+        <div style="margin-top: 40px; font-size: 8px; color: #444; letter-spacing: 4px;">MD-CORE-SYSTEM</div>
+    </div>
+
+</body>
+                                                                                                         </html>
+                                                                                                         
