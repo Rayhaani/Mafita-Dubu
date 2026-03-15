@@ -137,37 +137,46 @@
     }
 
     async function saveToFirebase() {
-        const user = auth.currentUser;
-        if (!user) {
-            alert("Dole sai kayi login kafin ka cike wannan shafin!");
-            return;
-        }
+    // 1. Nemo wanda yake login a yanzu (Firebase Compat mode)
+    const user = firebase.auth().currentUser;
 
-        const btn = document.getElementById('finishBtn');
-        btn.innerText = "UPLOADING...";
-        btn.disabled = true;
-
-        const data = {
-            uid: user.uid,
-            name: document.getElementById('bizName').value,
-            type: document.getElementById('bizType').value,
-            description: document.getElementById('bizDesc').value,
-            location: vendorLocation,
-            status: "pending",
-            role: "vendor",
-            timestamp: serverTimestamp()
-        };
-
-        try {
-            await setDoc(doc(db, "vendors", user.uid), data);
-            localStorage.setItem('currentUserName', data.name);
-            handleStatus('pending');
-        } catch (e) {
-            alert("Error: " + e.message);
-            btn.disabled = false;
-            btn.innerText = "RETRY UPLOAD";
-        }
+    if (!user) {
+        alert("Ba a samu bayanan Login dinka ba. Don Allah koma kayi Register tukunna!");
+        return;
     }
+
+    const btn = document.querySelector('#layer3 .primary-btn'); // Wannan zai nemo button din dake layer 3
+    btn.innerText = "UPLOADING...";
+    btn.disabled = true;
+
+    // 2. Shirya bayanan da za a tura
+    const data = {
+        uid: user.uid,
+        bizName: document.getElementById('bizName').value,
+        bizType: document.getElementById('bizType').value,
+        // Tun da a Layer 3 kake da Business Description, tabbatar input din yana da class ko id
+        description: document.querySelector('.item-name').value, 
+        location: vendorLocation, // Wannan wanda kake kamoshi da GPS
+        status: "pending",
+        role: "vendor",
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    try {
+        // 3. Ajiye bayanan a karkashin UID din sa (Update/Set)
+        // Wannan zai hada bayanan Universal Form da na Vendor Setup a waje daya
+        await db.collection("vendors").doc(user.uid).set(data, { merge: true });
+        
+        localStorage.setItem('currentUserName', data.bizName);
+        handleStatus('pending'); // Wannan zai nuna wancan Modal din "Under Review"
+    } catch (e) {
+        console.error("Error: ", e);
+        alert("An samu matsala: " + e.message);
+        btn.disabled = false;
+        btn.innerText = "RETRY UPLOAD";
+    }
+    }
+            
 
     function handleStatus(statusType) {
         const modal = document.getElementById('statusModal');
