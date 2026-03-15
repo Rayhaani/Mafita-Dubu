@@ -211,6 +211,25 @@
             </div>
         </div>
 
+        
+        <div class="table-container" style="border-top: 2px solid #00d4ff;">
+    <div class="table-header-box">
+        <span class="pending-title">Category Management</span>
+        <span class="view-all" style="color: #00d4ff;">Live Sync</span>
+    </div>
+    <div class="p-4 space-y-4">
+        <div class="grid grid-cols-1 gap-3">
+            <input type="text" id="newCatName" class="gold-input" placeholder="Enter New Category Name (e.g. Kayan Kitchen)" style="background: #1e293b; margin:0;">
+            <input type="text" id="newSubCats" class="gold-input" placeholder="Sub-categories (separate with comma: e.g. Tukane, Kofuna)" style="background: #1e293b; margin:0;">
+            <button onclick="window.addCategoryToFirebase()" class="primary-btn" style="margin:0; background: linear-gradient(135deg, #00d4ff, #0055ff); color: white;">ADD CATEGORY</button>
+        </div>
+        
+        <div id="categoryDisplayList" class="mt-4 space-y-2">
+            </div>
+    </div>
+                                                                    </div>
+        
+
         <div id="map"></div>
     </main>
 
@@ -230,6 +249,58 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    
+    
+    import { collection, addDoc, deleteDoc, onSnapshot, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// Aikin Karawa
+window.addCategoryToFirebase = async () => {
+    const name = document.getElementById('newCatName').value;
+    const subs = document.getElementById('newSubCats').value.split(',').map(s => s.trim());
+    if(!name || subs.length === 0) {
+        alert("Don Allah cike suna da sub-categories!");
+        return;
+    }
+
+    try {
+        await addDoc(collection(db, "app_settings"), {
+            type: "category_list",
+            name: name,
+            subCategories: subs
+        });
+        document.getElementById('newCatName').value = "";
+        document.getElementById('newSubCats').value = "";
+        alert("Category Added!");
+    } catch (e) { alert("Error: " + e.message); }
+};
+
+// Aikin Nuna su da kuma Gogewa
+onSnapshot(collection(db, "app_settings"), (snapshot) => {
+    const display = document.getElementById('categoryDisplayList');
+    display.innerHTML = "";
+    snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        if(data.type === "category_list") {
+            display.innerHTML += `
+                <div class="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/10">
+                    <div>
+                        <p class="text-xs font-bold text-white">${data.name}</p>
+                        <p class="text-[8px] text-gray-500">${data.subCategories.join(', ')}</p>
+                    </div>
+                    <button onclick="window.deleteCategory('${docSnap.id}')" class="text-red-500 hover:text-red-700 text-xs"><i class="fa-solid fa-trash"></i></button>
+                </div>`;
+        }
+    });
+});
+
+window.deleteCategory = async (id) => {
+    if(confirm("Kana da tabbas kana son goge wannan?")) {
+        await deleteDoc(doc(db, "app_settings", id));
+    }
+};
+    
+
     
     const firebaseConfig = {
         apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
