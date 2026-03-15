@@ -3,203 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Premium Login</title>
+    <title>MD | Textile & Clothing Elite</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Montserrat:wght@900&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --milk-bg: #FFF5E1; 
-            --royal-black: #1a1405;
-            --dark-gold: #8b6b1b;
-            --light-gold: #f3cf7a;
-        }
-        
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--milk-bg); 
-            display: flex; align-items: center; justify-content: center; 
-            min-height: 100vh; margin: 0; padding: 20px;
+            --milk-bg: #E8E1D5; 
+            --dark-chocolate: #1A0F0D; 
+            --gold-accent: #B8860B;
+            --neon-gold: #D4AF37;
         }
 
-        .liquid-color-circle {
-            width: 80px; height: 80px;
-            margin: -90px auto 15px;
-            position: relative; z-index: 100;
-            border-radius: 50%;
-            border: 2px solid #ffffff;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            background: linear-gradient(-45deg, #ffd700, #ff00ea, #00d4ff, #3dff00, #ff9100, #7028e4);
-            background-size: 400% 400%;
-            animation: liquidFlow 8s ease infinite;
+        body {
+            background-color: var(--milk-bg);
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
-        @keyframes liquidFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .glass-header {
+            background: rgba(26, 15, 13, 0.98); 
+            backdrop-filter: blur(20px);
+            border-bottom: 1.5px solid rgba(212, 175, 55, 0.4);
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        .luxury-card {
-            background: var(--royal-black);
-            border: 2px solid var(--dark-gold);
-            border-radius: 40px 10px 40px 10px;
-            padding: 40px 30px 25px;
-            width: 100%; max-width: 400px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-            position: relative; margin-top: 50px;
+        .header-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--neon-gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
         }
 
-        .header-title { 
-            font-family: 'Cinzel', serif;
-            font-size: 1.6rem; color: var(--light-gold); 
-            text-align: center; margin-bottom: 5px;
+        .header-subtext {
+            font-size: 0.5rem;
+            color: #A0A0A0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+            text-align: center;
         }
 
-        .welcome-back { color: #ffffff; text-align: center; font-size: 1.1rem; font-weight: 600; margin-bottom: 5px; }
-        .sub-text { color: #888; text-align: center; font-size: 0.8rem; margin-bottom: 25px; }
-
-        .gold-input {
-            width: 100%; background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(243, 207, 122, 0.2);
-            padding: 12px 15px; border-radius: 12px;
-            color: #fff; font-size: 0.85rem; outline: none; margin-bottom: 15px;
+        .compact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px 15px;
+            padding: 20px 15px;
+            max-width: 500px;
+            margin: auto;
         }
 
-        .submit-btn {
-            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
-            color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900;
-            width: 100%; padding: 12px; border-radius: 10px; margin-top: 10px;
-            font-size: 1rem; border: none; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
+        .category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            width: 100%;
         }
 
-        .google-btn {
-            width: 100%; padding: 10px; background: #222; border: 1px solid #333;
-            border-radius: 10px; color: #fff; display: flex; align-items: center; 
-            justify-content: center; gap: 10px; cursor: pointer; font-size: 0.85rem; margin-top: 15px;
+        .box-frame {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-color: var(--dark-chocolate);
+            border-radius: 25px; 
+            position: relative;
+            border: 1.5px solid var(--gold-accent);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transition: transform 0.2s, background-image 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
         }
 
-        .divider { display: flex; align-items: center; margin: 20px 0; color: #555; font-size: 0.75rem; font-weight: 700; }
-        .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: #333; }
-        .divider span { padding: 0 10px; }
-
-        .footer-link { text-align: center; margin-top: 20px; color: #ffffff; font-size: 0.85rem; }
-        .footer-link a { color: var(--light-gold); font-weight: 700; text-decoration: none; margin-left: 5px; }
-
-        .loader {
-            width: 18px; height: 18px; border: 2px solid #1a1405;
-            border-top: 2px solid transparent; border-radius: 50%;
-            display: none; animation: spin 0.8s linear infinite;
+        .category-item:active .box-frame {
+            transform: scale(0.95);
         }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .label-bar {
+            background: var(--dark-chocolate);
+            padding: 5px 10px;
+            text-align: center;
+            border-radius: 50px; 
+            margin-top: -12px; 
+            z-index: 10;
+            border: 1.5px solid var(--gold-accent);
+            width: 75%;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.4);
+        }
+
+        .label-bar span {
+            color: #FFFFFF;
+            font-size: 0.58rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 900;
+            display: block;
+        }
     </style>
 </head>
 <body>
 
-    <div class="luxury-card">
-        <div class="liquid-color-circle"></div>
-        <h1 class="header-title">Mafita Dubu</h1>
-        <div class="welcome-back">Welcome Back</div>
-        <div class="sub-text">Log in to manage your portfolio</div>
-
-        <form id="loginForm">
-            <input type="email" id="email" class="gold-input" placeholder="Email Address" required>
-            <input type="password" id="password" class="gold-input" placeholder="Password" required>
-            
-            <div style="text-align: right; margin-top: -10px; margin-bottom: 15px;">
-                <a href="#" style="color: #888; font-size: 0.75rem; text-decoration: none;">Forgot password?</a>
-            </div>
-
-            <button type="submit" class="submit-btn" id="loginBtn">
-                <div class="loader" id="loader"></div>
-                <span id="btnText">LOG IN</span>
-            </button>
-            
-            <div class="divider"><span>OR</span></div>
-
-            <button type="button" class="google-btn">
-                <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png" width="16" alt="G">
-                Continue with Google
-            </button>
-
-            <div class="footer-link">
-                Don't have an account? <a href="selection.html">Sign Up</a>
-            </div>
-        </form>
-    </div>
-
-    <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
-        authDomain: "global-market-admin.firebaseapp.com",
-        projectId: "global-market-admin",
-        storageBucket: "global-market-admin.firebasestorage.app",
-        messagingSenderId: "259715265619",
-        appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    document.getElementById('loginForm').onsubmit = async function(e) {
-        e.preventDefault();
-        const btn = document.getElementById('loginBtn');
-        const loader = document.getElementById('loader');
-        const text = document.getElementById('btnText');
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-
-        btn.disabled = true;
-        loader.style.display = 'block';
-        text.innerText = 'Verifying...';
-
-        try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const uid = userCredential.user.uid;
-
-            // 1. Duba Admin
-            const adminDoc = await getDoc(doc(db, "admins", uid));
-            if (adminDoc.exists()) {
-                // MUN GYARA: Mun cire "Admin/" kuma mun tabbatar sunan ya yi daidai da na GitHub
-                window.location.href = "admin_dashboard.html"; 
-                return;
-            }
-
-            // 2. Duba Vendor
-            const vendorDoc = await getDoc(doc(db, "vendors", uid));
-            if (vendorDoc.exists()) {
-                if (vendorDoc.data().status === "approved") {
-                    window.location.href = "vendor-dashboard.html";
-                } else {
-                    alert("Har yanzu Admin bai amince da kai ba.");
-                    resetUI();
-                }
-                return;
-            }
-
-            // 3. Member
-            window.location.href = "member-dashboard.html";
-
-        } catch (error) {
-            alert("Kuskure: " + error.message);
-            resetUI();
-        }
-
-        function resetUI() {
-            btn.disabled = false;
-            loader.style.display = 'none';
-            text.innerText = 'LOG IN';
-        }
-    };
-    </script>
-    
+    <header class="glass-header">
+        <button onclick="history.back()" class="text-white text-lg active:scale-90 transition-transform">
+            <i class="fa-solid fa-arrow-left-long"></i>
+        </button>
         
+        <div>
+            <h1 class="header-title">TEXTILE & CLOTHING</h1>
+            <p class="header-subtext">Select Sub-Category Hub</p>
+        </div>
+        
+        <div class="w-6"></div> 
+    </header>
+
+    <main class="compact-grid">
+        <script>
+            const categories = [
+                "Atamfa", "Laces", "Shadda", "Yadi", 
+                "Lifaya", "Sleepwear", "Hijabs", "Gyale", 
+                "Underwears", "Caps / Hula", "Men Lace", "Jewelry",
+                "Cosmetics", "Shoes", "Bags", "Accessories"
+            ];
+
+            categories.forEach(item => {
+                let link = "#";
+                let boxId = "";
+                
+                if (item === "Atamfa") {
+                    link = "atamfa.html";
+                    boxId = 'id="atamfa-preview"';
+                } 
+                // Annan na hada Shadda da admin_dashboard.html
+                else if (item === "Shadda") {
+                    link = "admin_dashboard.html";
+                }
+                else if (item === "Laces") {
+                    link = "vendor-dashboard.html";
+                }
+
+                document.write(`
+                    <a href="${link}" class="category-item">
+                        <div class="box-frame" ${boxId}></div>
+                        <div class="label-bar">
+                            <span>${item}</span>
+                        </div>
+                    </a>
+                `);
+            });
+        </script>
+    </main>
+
+    <div style="height: 40px;"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
+            authDomain: "global-market-admin.firebaseapp.com",
+            projectId: "global-market-admin",
+            storageBucket: "global-market-admin.firebasestorage.app",
+            messagingSenderId: "259715265619",
+            appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.firestore();
+
+        async function startAtamfaPreview() {
+            const previewBox = document.getElementById('atamfa-preview');
+            if (!previewBox) return;
+
+            try {
+                const snapshot = await db.collection('products')
+                    .orderBy('timestamp', 'desc')
+                    .limit(5)
+                    .get();
+
+                const images = [];
+                snapshot.forEach(doc => {
+                    if (doc.data().img) images.push(doc.data().img);
+                });
+
+                if (images.length > 0) {
+                    let i = 0;
+                    previewBox.style.backgroundImage = `url('${images[0]}')`;
+                    
+                    setInterval(() => {
+                        i = (i + 1) % images.length;
+                        previewBox.style.backgroundImage = `url('${images[i]}')`;
+                    }, 3000);
+                }
+            } catch (err) {
+                console.error("Preview Error:", err);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', startAtamfaPreview);
+    </script>
+
 </body>
 </html>
