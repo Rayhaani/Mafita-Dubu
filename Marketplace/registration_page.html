@@ -187,10 +187,14 @@
                 const user = userCredential.user;
 
                 // 2. Redirect Settings (To Login)
-                const actionCodeSettings = {
-                    url: 'https://mafita-dubu.vercel.app/login.html',
-                    handleCodeInApp: true,
-                };
+const actionCodeSettings = {
+    // URL din shafin verify-success.html dinka
+    url: 'https://mafita-dubu.vercel.app/verify-success.html', 
+    handleCodeInApp: true,
+};
+
+await sendEmailVerification(user, actionCodeSettings);
+                
 
                 // 3. Send Verification
                 await sendEmailVerification(user, actionCodeSettings);
