@@ -181,11 +181,34 @@
             const phone = document.getElementById('phone').value;
             const state = document.getElementById('state').value;
 
-            try {
-                // 1. Create Account
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
+        
 
+            try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // 1. Ajiye bayanan asali a 'users' collection
+    await setDoc(doc(db, "users", user.uid), {
+        fullName: fullName,
+        email: email,
+        phone: phone,
+        role: "vendor", // Tunda ya zabo vendor a wancan hoton
+        createdAt: new Date()
+    });
+
+    // 2. Wannan shi ne babban matakin: Tura shi zuwa Vendor Setup Page
+    // Misali idan ka kira Setup page din "vendor-setup.html"
+    window.location.href = "vendor-setup.html"; 
+
+} catch (error) {
+    if (error.code === 'auth/email-already-in-use') {
+        alert("Wannan Email din an riga an yi amfani da shi. Da fatan za ka yi Login.");
+    } else {
+        alert("Kuskure: " + error.message);
+    }
+}
+
+            
                 // 2. Redirect Settings (To Login)
 const actionCodeSettings = {
     // URL din shafin verify-success.html dinka
