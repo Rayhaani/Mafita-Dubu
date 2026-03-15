@@ -226,6 +226,35 @@
         }
     }
 });
+
+
+        import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const auth = getAuth();
+
+async function loginVendor(email, password) {
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Check if the user has verified their email
+        if (user.emailVerified) {
+            // Success: Redirect to Vendor Dashboard
+            console.log("Login successful. Verified user.");
+            window.location.href = "vendor-dashboard.html";
+        } else {
+            // Failure: User exists but email is not verified
+            alert("Account Not Verified: Please check your email inbox and click the verification link to activate your account.");
+            
+            // Force logout to prevent unverified sessions
+            await signOut(auth);
+        }
+    } catch (error) {
+        // Handle common errors like "wrong password" or "user not found"
+        console.error("Login Error:", error.message);
+        alert("Login Failed: " + error.message);
+    }
+                }
         
     </script>
 </body>
