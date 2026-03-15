@@ -144,7 +144,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -181,48 +181,18 @@
             const phone = document.getElementById('phone').value;
             const state = document.getElementById('state').value;
 
-        
-
             try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
 
-    // 1. Ajiye bayanan asali a 'users' collection
-    await setDoc(doc(db, "users", user.uid), {
-        fullName: fullName,
-        email: email,
-        phone: phone,
-        role: "vendor", // Tunda ya zabo vendor a wancan hoton
-        createdAt: new Date()
-    });
-
-    // 2. Wannan shi ne babban matakin: Tura shi zuwa Vendor Setup Page
-    // Misali idan ka kira Setup page din "vendor-setup.html"
-    window.location.href = "vendor-setup.html"; 
-
-} catch (error) {
-    if (error.code === 'auth/email-already-in-use') {
-        alert("Wannan Email din an riga an yi amfani da shi. Da fatan za ka yi Login.");
-    } else {
-        alert("Kuskure: " + error.message);
-    }
-}
-
-            
-                // 2. Redirect Settings (To Login)
-const actionCodeSettings = {
-    // URL din shafin verify-success.html dinka
-    url: 'https://mafita-dubu.vercel.app/verify-success.html', 
-    handleCodeInApp: true,
-};
-
-await sendEmailVerification(user, actionCodeSettings);
-                
-
-                // 3. Send Verification
+                // Send Verification
+                const actionCodeSettings = {
+                    url: 'https://afita-dubu.vercel.app/login.html', 
+                    handleCodeInApp: true,
+                };
                 await sendEmailVerification(user, actionCodeSettings);
 
-                // 4. Save to Firestore
+                // Save to Firestore
                 await setDoc(doc(db, "users", user.uid), {
                     uid: user.uid,
                     fullName,
@@ -230,17 +200,15 @@ await sendEmailVerification(user, actionCodeSettings);
                     email,
                     phone,
                     state,
-                    role: "member",
+                    role: "vendor",
                     emailVerified: false,
                     createdAt: serverTimestamp()
                 });
 
-                showToast("Verification link sent! Check your email to activate.");
+                showToast("Success! Opening Setup...");
                 
-                // Sign out to force login after verification
-                await signOut(auth);
-                
-                setTimeout(() => { window.location.href = "login.html"; }, 4000);
+                // Wucewa zuwa Vendor Setup
+                setTimeout(() => { window.location.href = "vendor-setup.html"; }, 2000);
 
             } catch (error) {
                 btn.disabled = false;
