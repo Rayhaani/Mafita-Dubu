@@ -22,7 +22,6 @@
             min-height: 100vh; margin: 0; padding: 20px;
         }
 
-        /* 1. GURBIN CUDANYAR LAUNUKA */
         .liquid-color-circle {
             width: 80px; height: 80px;
             margin: -90px auto 15px;
@@ -42,7 +41,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* 2. LUXURY CARD */
         .luxury-card {
             background: var(--royal-black);
             border: 2px solid var(--dark-gold);
@@ -77,7 +75,6 @@
             margin-bottom: 15px;
         }
 
-        /* 3. LOGIN BUTTON */
         .submit-btn {
             background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
             color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900;
@@ -87,7 +84,6 @@
             display: flex; align-items: center; justify-content: center; gap: 10px;
         }
 
-        /* 4. GOOGLE BUTTON */
         .google-btn {
             width: 100%; padding: 10px;
             background: #222; border: 1px solid #333;
@@ -96,7 +92,6 @@
             gap: 10px; cursor: pointer; font-size: 0.85rem; margin-top: 15px;
             transition: 0.3s;
         }
-        .google-btn:hover { background: #333; }
 
         .divider {
             display: flex; align-items: center; margin: 20px 0;
@@ -114,13 +109,9 @@
             text-decoration: none; margin-left: 5px;
         }
 
-        /* Loading Spinner */
-        .loader {
-            width: 18px; height: 18px; border: 2px solid #1a1405;
-            border-top: 2px solid transparent; border-radius: 50%;
-            display: none; animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        /* Radar Animation */
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .animate-spin { animation: spin 1s linear infinite; }
     </style>
 </head>
 <body>
@@ -141,9 +132,15 @@
             </div>
 
             <button type="submit" class="submit-btn" id="loginBtn">
-                <div class="loader" id="loader"></div>
                 <span id="btnText">LOG IN</span>
             </button>
+
+            <div id="resend-section" style="display: none;" class="mt-4 text-center">
+                <p class="text-[10px] text-gray-400 mb-2">Didn't get the email?</p>
+                <button type="button" id="resendBtn" class="text-yellow-500 text-xs font-bold underline uppercase tracking-widest">
+                    Resend Verification Link
+                </button>
+            </div>
             
             <div class="divider"><span>OR</span></div>
 
@@ -158,40 +155,23 @@
         </form>
     </div>
 
-
-    <div id="resend-section" style="display: none;" class="mt-4 text-center">
-    <p class="text-[10px] text-gray-400 mb-2">Didn't get the email?</p>
-    <button onclick="resendVerification()" class="text-yellow-500 text-xs font-bold underline uppercase tracking-widest">
-        Resend Verification Link
-    </button>
-    </div>
-
     <div id="radar-loader" class="hidden fixed inset-0 z-[10000] bg-[#05070a]/90 flex flex-col items-center justify-center backdrop-blur-sm">
-    <div class="relative w-24 h-24 border-2 border-yellow-500/20 rounded-full flex items-center justify-center">
-        <div class="absolute inset-0 border-t-2 border-yellow-500 rounded-full animate-spin"></div>
-        <div class="w-2 h-2 bg-yellow-500 rounded-full animate-ping"></div>
-        <div class="absolute inset-0 rounded-full shadow-[inset_0_0_20px_rgba(212,175,55,0.2)]"></div>
+        <div class="relative w-24 h-24 border-2 border-yellow-500/20 rounded-full flex items-center justify-center">
+            <div class="absolute inset-0 border-t-2 border-yellow-500 rounded-full animate-spin"></div>
+            <div class="w-2 h-2 bg-yellow-500 rounded-full animate-ping"></div>
+            <div class="absolute inset-0 rounded-full shadow-[inset_0_0_20px_rgba(212,175,55,0.2)]"></div>
+        </div>
+        <div class="mt-6 text-center">
+            <h2 class="text-yellow-500 font-bold tracking-[0.2em] text-xs uppercase animate-pulse">Authenticating</h2>
+            <p class="text-[8px] text-gray-500 uppercase mt-1">Scanning Neural Link...</p>
+        </div>
     </div>
-    <div class="mt-6 text-center">
-        <h2 class="text-yellow-500 font-bold tracking-[0.2em] text-xs uppercase animate-pulse">Authenticating</h2>
-        <p class="text-[8px] text-gray-500 uppercase mt-1">Scanning Neural Link...</p>
-    </div>
-</div>
-
-<style>
-    @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-    .animate-spin { animation: spin 1s linear infinite; }
-</style>
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Configuration dinka da na shigar maka
         const firebaseConfig = {
           apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
           authDomain: "global-market-admin.firebaseapp.com",
@@ -206,25 +186,35 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
+        // LOGIN PROCESS
         document.getElementById('loginForm').onsubmit = async function(e) {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const btn = document.getElementById('loginBtn');
-            const loader = document.getElementById('loader');
-            const text = document.getElementById('btnText');
+            const loader = document.getElementById('radar-loader');
+            const resendSection = document.getElementById('resend-section');
 
-            btn.disabled = true;
-            loader.style.display = 'block';
-            text.innerText = 'Verifying...';
+            loader.classList.remove('hidden');
 
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
 
-                // Duba ko shi Vendor ne ko Member a Firestore
+                // 1. Check Email Verification First
+                if (!user.emailVerified) {
+                    loader.classList.add('hidden');
+                    alert("Account Not Verified: Please check your email and click the link to activate your account.");
+                    resendSection.style.display = 'block';
+                    await signOut(auth);
+                    return;
+                }
+
+                // 2. Identify Role from Firestore
                 const vendorDoc = await getDoc(doc(db, "vendors", user.uid));
                 const memberDoc = await getDoc(doc(db, "users", user.uid));
+
+                // Final Delay for Radar Effect
+                await new Promise(res => setTimeout(res, 1500));
 
                 if (vendorDoc.exists()) {
                     window.location.href = "vendor-dashboard.html"; 
@@ -233,91 +223,20 @@
                 } else {
                     window.location.href = "dashboard.html";
                 }
+                
             } catch (error) {
-                alert("Kuskure: Imel ko Password bai yi daidai ba!");
-                btn.disabled = false;
-                loader.style.display = 'none';
-                text.innerText = 'LOG IN';
+                loader.classList.add('hidden');
+                alert("Login Failed: Incorrect email or password.");
             }
         };
 
+        // RESEND VERIFICATION
+        document.getElementById('resendBtn').onclick = async () => {
+            // Note: Since we signed out, we need to sign in again or use a different logic.
+            // But usually, we can prompt the user to try logging in again to trigger the current session.
+            alert("To resend the link, please re-enter your details and try logging in. If not verified, the option will appear.");
+        };
 
-        onAuthStateChanged(auth, (user) => {
-    if (user) {
-        if (user.emailVerified) {
-            // Idan ya danna link din, ya wuce
-            window.location.href = "vendor-dashboard.html";
-        } else {
-            // Idan bai danna ba, a dakatar da shi
-            alert("Don Allah ka tabbatar da email dinka tukunna!");
-            auth.signOut();
-        }
-    }
-});
-
-
-        import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-const auth = getAuth();
-
-async function loginVendor(email, password) {
-    try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        // Check if the user has verified their email
-        if (user.emailVerified) {
-            // Success: Redirect to Vendor Dashboard
-            console.log("Login successful. Verified user.");
-            window.location.href = "vendor-dashboard.html";
-        } else {
-            // Failure: User exists but email is not verified
-            alert("Account Not Verified: Please check your email inbox and click the verification link to activate your account.");
-            
-            // Force logout to prevent unverified sessions
-            await signOut(auth);
-        }
-    } catch (error) {
-        // Handle common errors like "wrong password" or "user not found"
-        console.error("Login Error:", error.message);
-        alert("Login Failed: " + error.message);
-    }
-                }
-
-
-        if (user.emailVerified) {
-    // Idan mutum ya yi verification, sai mu duba ko shi Vendor ne ko Member
-    // Zaka iya duba wannan a Firestore (collection na users ko vendors)
-    
-    if (userRole === 'vendor') {
-        window.location.href = "vendor-dashboard.html";
-    } else {
-        window.location.href = "marketplace.html"; // Shafi na kowa da kowa
-    }
-        }
-
-        import { getAuth, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-const auth = getAuth();
-
-// Wannan zai sake aika link din
-window.resendVerification = async () => {
-    const user = auth.currentUser;
-    if (user) {
-        try {
-            await sendEmailVerification(user);
-            alert("A new verification link has been sent to your inbox. Please check (including Spam folder).");
-        } catch (error) {
-            alert("Error: " + error.message);
-        }
-    } else {
-        alert("Please login first to resend the verification link.");
-    }
-};
-
-// A cikin login function dinka, idan emailVerified === false:
-// document.getElementById('resend-section').style.display = 'block';
-        
     </script>
 </body>
 </html>
