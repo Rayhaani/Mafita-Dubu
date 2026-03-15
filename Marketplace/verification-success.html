@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mafita Dubu | Access Granted</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@300;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -15,6 +15,7 @@
         }
         
         body { 
+            /* Na tabbatar jikin shafin yana amfani da Plus Jakarta Sans */
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--royal-black);
             display: flex; align-items: center; justify-content: center; 
@@ -25,11 +26,11 @@
         /* Slim Futuristic Card */
         .slim-card {
             position: relative;
-            width: 320px; /* Slim width */
+            width: 320px; 
             padding: 60px 30px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(243, 207, 122, 0.1);
-            border-radius: 100px 20px 100px 20px; /* Unique Smart Shape */
+            border-radius: 100px 20px 100px 20px;
             text-align: center;
             backdrop-blur: 20px;
             box-shadow: 0 40px 100px rgba(0,0,0,0.8);
@@ -66,6 +67,9 @@
         }
 
         .status-badge {
+            /* Plus Jakarta Sans don kananan bayani */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
             font-size: 10px;
             color: var(--gold-bright);
             letter-spacing: 5px;
@@ -79,17 +83,21 @@
         }
 
         .main-title {
+            /* Cinzel don babban take */
             font-family: 'Cinzel', serif;
             color: #fff;
             font-size: 1.4rem;
             margin-bottom: 10px;
+            font-weight: 800;
         }
 
         .desc {
+            /* Plus Jakarta Sans don description */
+            font-family: 'Plus Jakarta Sans', sans-serif;
             color: #888;
             font-size: 0.8rem;
             line-height: 1.8;
-            font-weight: 300;
+            font-weight: 400;
             margin-bottom: 40px;
         }
 
@@ -99,19 +107,31 @@
             background: transparent;
             border: 1px solid var(--gold-bright);
             color: var(--gold-bright);
+            /* Cinzel don button text */
             font-family: 'Cinzel', serif;
-            font-size: 0.9rem;
+            font-weight: 800;
+            font-size: 0.85rem;
             border-radius: 50px;
             cursor: pointer;
             transition: 0.4s;
             text-decoration: none;
             display: block;
+            letter-spacing: 1px;
         }
 
         .action-btn:hover {
             background: var(--gold-bright);
             color: var(--royal-black);
             box-shadow: 0 0 30px var(--gold-bright);
+        }
+
+        .footer-tag {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin-top: 40px; 
+            font-size: 8px; 
+            color: #444; 
+            letter-spacing: 4px;
+            font-weight: 600;
         }
 
         /* Ambient Light Particles */
@@ -154,9 +174,8 @@
 
         <a href="login.html" class="action-btn">OPEN DASHBOARD</a>
         
-        <div style="margin-top: 40px; font-size: 8px; color: #444; letter-spacing: 4px;">MD-CORE-SYSTEM</div>
+        <div class="footer-tag">MD-CORE-SYSTEM</div>
     </div>
 
 </body>
-                                                                                                         </html>
-                                                                                                         
+</html>
