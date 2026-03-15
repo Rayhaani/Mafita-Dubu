@@ -219,14 +219,16 @@
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
 
+                // Tabbatar da Verification kafin shiga
                 if (!user.emailVerified) {
                     loader.classList.add('hidden');
-                    showToast("Account Not Verified. Please check your email.");
+                    showToast("Account Not Verified. Check your inbox.");
                     resendSection.style.display = 'block';
-                    await signOut(auth);
+                    await signOut(auth); // Fitar dashi tunda bai yi verify ba
                     return;
                 }
 
+                // Duba matsayin mai amfani (Vendor ko Member)
                 const vendorDoc = await getDoc(doc(db, "vendors", user.uid));
                 const memberDoc = await getDoc(doc(db, "users", user.uid));
 
@@ -246,11 +248,33 @@
             }
         };
 
-        // RESEND VERIFICATION
-        document.getElementById('resendBtn').onclick = () => {
-            showToast("Please re-enter your details to request a new link.");
+        // RESEND VERIFICATION LOGIC
+        document.getElementById('resendBtn').onclick = async () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if(!email || !password) {
+                showToast("Please enter your email and password first.");
+                return;
+            }
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                
+                const actionCodeSettings = {
+                    url: 'https://mafita-dubu.vercel.app/verify-success.html',
+                    handleCodeInApp: true,
+                };
+
+                await sendEmailVerification(userCredential.user, actionCodeSettings);
+                showToast("A new link has been sent to your email.");
+                await signOut(auth);
+            } catch (error) {
+                showToast("Error: " + error.message);
+            }
         };
 
     </script>
 </body>
-</html>
+    </html>
+    
