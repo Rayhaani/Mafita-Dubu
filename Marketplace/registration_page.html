@@ -95,6 +95,20 @@
             transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex; align-items: center; gap: 12px;
         }
+
+        #vendorSetupModal {
+    display: none; /* Zai boyu sai an gama register */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9); /* Bakin baya domin hasken card din ya fito */
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px); /* Domin asalin shafin ya yi dishi-dishi a baya */
+        }
+
+        
     </style>
 </head>
 <body>
@@ -142,11 +156,11 @@
         </form>
     </div>
 
-<div id="vendorSetupModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:2000; overflow-y:auto; align-items:center; justify-content:center; padding:20px;">
-    
+
+<div id="vendorSetupModal">
     <div class="luxury-card">
         <h2 style="font-family: 'Cinzel'; color: #fcf6ba; text-align: center; margin-bottom: 20px;">Vendor Setup</h2>
-
+        
         <div class="step-layer active" id="layer1">
             <input type="text" id="bizName" class="gold-input" placeholder="Business Name (Suna)">
             <select id="bizType" class="gold-input" onchange="startGPS()">
@@ -157,26 +171,9 @@
             <div id="gps-status" style="font-size: 0.75rem; color: #ff4d4d; margin-bottom: 10px;">📍 GPS: Not Fixed</div>
             <button class="primary-btn" onclick="validateLayer1()">NEXT: AI SCAN</button>
         </div>
-
-        <div class="step-layer" id="layer2">
-            <div class="scanner-box">
-                <video id="webcam" autoplay playsinline></video>
-            </div>
-            <p id="ai-msg" style="text-align:center; font-size: 0.8rem; margin: 10px 0;">[ INITIALIZING SCAN... ]</p>
-            <button class="primary-btn" id="camBtn" disabled onclick="goToLayer(3)">CONTINUE</button>
         </div>
-
-        <div class="step-layer" id="layer3">
-            <div id="items-list">
-                <input type="text" id="bizDesc" class="gold-input item-name" placeholder="Business Description">
-                <p class="text-[10px] text-gray-400 mb-4">Danna Finish don tura aikinka ga Admin don dubawa.</p>
-            </div>
-            <button class="primary-btn" onclick="saveToFirebase()">FINISH & UPLOAD</button>
-        </div>
-    </div>
 </div>
     
-
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
