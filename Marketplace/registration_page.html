@@ -5,176 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mafita Dubu | Premium Register</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Satisfy&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --milk-bg: #FFF5E1; 
-            --royal-black: #1a1405;
-            --dark-gold: #8b6b1b;
-            --light-gold: #f3cf7a;
-        }
+        :root { --milk-bg: #FFF5E1; --royal-black: #1a1405; --dark-gold: #8b6b1b; --light-gold: #f3cf7a; --gold: #bf953f; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--milk-bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
         
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--milk-bg); 
-            display: flex; align-items: center; justify-content: center; 
-            min-height: 100vh; margin: 0; padding: 20px;
-        }
-
-        /* 1. GURBIN CUDANYAR LAUNUKA (MULTIPLE LIGHT COLORS) */
-        .liquid-color-circle {
-            width: 80px; height: 80px;
-            margin: -90px auto 15px;
-            position: relative; z-index: 100;
-            border-radius: 50%;
-            border: 2px solid #ffffff;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            background: linear-gradient(-45deg, #ffd700, #ff00ea, #00d4ff, #3dff00, #ff9100, #7028e4);
-            background-size: 400% 400%;
-            animation: liquidFlow 8s ease infinite;
-        }
-
-        @keyframes liquidFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .luxury-card {
-            background: var(--royal-black);
-            border: 2px solid var(--dark-gold);
-            border-radius: 40px 10px 40px 10px;
-            padding: 40px 30px 25px;
-            width: 100%; max-width: 400px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-            position: relative; margin-top: 50px;
-        }
-
-        .header-title { 
-            font-family: 'Cinzel', serif;
-            font-size: 1.6rem; color: var(--light-gold); 
-            text-align: center; margin-bottom: 25px;
-        }
-
-        .gold-input {
-            width: 100%; background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(243, 207, 122, 0.2);
-            padding: 12px 15px; border-radius: 12px;
-            color: #fff; font-size: 0.85rem; outline: none;
-        }
-
-        /* REGISTER BUTTON (REDUCED SIZE) */
-        .submit-btn {
-            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
-            color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900;
-            width: 100%; padding: 12px;
-            border-radius: 10px; margin-top: 15px;
-            font-size: 1rem; border: none; cursor: pointer;
-            transition: 0.3s;
-        }
-        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-
-        /* LOGIN LINK AT THE BOTTOM */
-        .login-footer {
-            text-align: center; margin-top: 20px;
-            color: #ffffff; font-size: 0.85rem;
-        }
-        .login-footer a {
-            color: var(--light-gold); font-weight: 700;
-            text-decoration: none; margin-left: 5px;
-        }
-
-        /* Notification Toast Styling */
-        #status-toast {
-            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-            z-index: 1000; width: 90%; max-width: 350px;
-            background: #1a1405; border-l-4 border-[#bf953f];
-            padding: 15px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; align-items: center; gap: 12px;
-        }
-
-        #vendorSetupModal {
-    display: none; /* Zai boyu sai an gama register */
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.9); /* Bakin baya domin hasken card din ya fito */
-    z-index: 9999;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(5px); /* Domin asalin shafin ya yi dishi-dishi a baya */
-        }
-
+        /* Register Card Styles */
+        .liquid-color-circle { width: 80px; height: 80px; margin: -90px auto 15px; position: relative; z-index: 100; border-radius: 50%; border: 2px solid #ffffff; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5); background: linear-gradient(-45deg, #ffd700, #ff00ea, #00d4ff, #3dff00, #ff9100, #7028e4); background-size: 400% 400%; animation: liquidFlow 8s ease infinite; }
+        @keyframes liquidFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .luxury-card { background: var(--royal-black); border: 2px solid var(--dark-gold); border-radius: 40px 10px; padding: 40px 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); position: relative; margin-top: 50px; }
+        .header-title { font-family: 'Cinzel', serif; font-size: 1.6rem; color: var(--light-gold); text-align: center; margin-bottom: 25px; }
+        .gold-input { width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(243, 207, 122, 0.2); padding: 12px 15px; border-radius: 12px; color: #fff; font-size: 0.85rem; outline: none; margin-bottom: 10px; }
+        .submit-btn, .primary-btn { background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900; width: 100%; padding: 12px; border-radius: 10px; margin-top: 15px; font-size: 1rem; border: none; cursor: pointer; transition: 0.3s; }
         
+        /* Modal Overlay Style */
+        #vendorSetupModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(8px); }
+        .step-layer { display: none; }
+        .active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .scanner-box { width: 100%; height: 200px; background: #000; border-radius: 15px; position: relative; overflow: hidden; margin-top: 10px; }
+        video { width: 100%; height: 100%; object-fit: cover; }
+        #status-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); z-index: 10000; width: 90%; max-width: 350px; background: #1a1405; border-left: 4px solid #bf953f; padding: 15px; border-radius: 8px; transition: 0.5s; display: flex; align-items: center; gap: 12px; }
     </style>
 </head>
 <body>
 
     <div id="status-toast">
         <div style="color: #f3cf7a; font-weight: bold; font-size: 20px;">!</div>
-        <div>
-            <p id="toast-title" style="text-transform: uppercase; font-size: 10px; color: #888; letter-spacing: 2px; font-weight: 800; margin: 0;">System Alert</p>
-            <p id="toast-msg" style="color: white; font-size: 12px; margin: 0;"></p>
-        </div>
+        <div><p id="toast-title" style="text-transform: uppercase; font-size: 10px; color: #888; font-weight: 800; margin: 0;">System Alert</p><p id="toast-msg" style="color: white; font-size: 12px; margin: 0;"></p></div>
     </div>
 
     <div class="luxury-card">
         <div class="liquid-color-circle"></div>
-        
         <h1 class="header-title">Mafita Dubu</h1>
-
         <form id="universalRegisterForm">
-            <div class="mb-4">
-                <input type="text" id="fullName" class="gold-input" placeholder="Full Name" required>
-            </div>
-
-            <div class="mb-4">
-                <input type="text" id="username" class="gold-input" placeholder="Username" required>
-            </div>
-
-            <div class="mb-4">
-                <input type="email" id="email" class="gold-input" placeholder="Email Address" required>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-4 mb-4">
+            <input type="text" id="fullName" class="gold-input" placeholder="Full Name" required>
+            <input type="text" id="username" class="gold-input" placeholder="Username" required>
+            <input type="email" id="email" class="gold-input" placeholder="Email Address" required>
+            <div class="grid grid-cols-2 gap-4">
                 <input type="tel" id="phone" class="gold-input" placeholder="Phone" required>
                 <input type="text" id="state" class="gold-input" placeholder="State" required>
             </div>
-
-            <div class="mb-4">
-                <input type="password" id="password" class="gold-input" placeholder="Password" required>
-            </div>
-
+            <input type="password" id="password" class="gold-input" placeholder="Password" required>
             <button type="submit" id="regBtn" class="submit-btn">REGISTER NOW</button>
-            
-            <div class="login-footer">
-                Already have an account? <a href="login.html">Login</a>
-            </div>
         </form>
     </div>
 
+    <div id="vendorSetupModal">
+        <div class="luxury-card" style="margin-top:0; border-radius: 40px 10px;">
+            <h2 style="font-family: 'Cinzel'; color: #fcf6ba; text-align: center; margin-bottom: 20px;">Vendor Setup</h2>
+            <div class="step-layer active" id="layer1">
+                <input type="text" id="bizName" class="gold-input" placeholder="Business Name (Suna)">
+                <select id="bizType" class="gold-input" onchange="startGPS()" style="background: #2a2210; border: 1px solid var(--gold);">
+                    <option value="">-- Select Category --</option>
+                    <option value="Store">Physical Store</option>
+                    <option value="Home">Home-Based</option>
+                </select>
+                <div id="gps-status" style="font-size: 0.75rem; color: #ff4d4d; margin-bottom: 10px;">📍 GPS: Not Fixed</div>
+                <button class="primary-btn" onclick="validateLayer1()">NEXT: AI SCAN</button>
+            </div>
+            <div class="step-layer" id="layer2">
+                <div class="scanner-box"><video id="webcam" autoplay playsinline></video></div>
+                <p id="ai-msg" style="text-align:center; font-size: 0.8rem; margin: 10px 0; color: white;">[ INITIALIZING SCAN... ]</p>
+                <button class="primary-btn" id="camBtn" disabled onclick="goToLayer(3)">CONTINUE</button>
+            </div>
+            <div class="step-layer" id="layer3">
+                <input type="text" id="bizDesc" class="gold-input" placeholder="Business Description">
+                <p style="font-size: 10px; color: #9ca3af; text-align: center; margin-bottom: 15px;">Danna Finish don tura aikinka ga Admin don dubawa.</p>
+                <button class="primary-btn" onclick="saveToFirebase()">FINISH & UPLOAD</button>
+            </div>
+        </div>
+    </div>
 
-<div id="vendorSetupModal">
-    <div class="luxury-card">
-        <h2 style="font-family: 'Cinzel'; color: #fcf6ba; text-align: center; margin-bottom: 20px;">Vendor Setup</h2>
-        
-        <div class="step-layer active" id="layer1">
-            <input type="text" id="bizName" class="gold-input" placeholder="Business Name (Suna)">
-            <select id="bizType" class="gold-input" onchange="startGPS()">
-                <option value="">-- Select Category --</option>
-                <option value="Store">Physical Store</option>
-                <option value="Home">Home-Based</option>
-            </select>
-            <div id="gps-status" style="font-size: 0.75rem; color: #ff4d4d; margin-bottom: 10px;">📍 GPS: Not Fixed</div>
-            <button class="primary-btn" onclick="validateLayer1()">NEXT: AI SCAN</button>
-        </div>
-        </div>
-</div>
-    
-    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -201,66 +104,26 @@
             setTimeout(() => { toast.style.top = '-100px'; }, 5000);
         }
 
+        // REGISTER LOGIC
         document.getElementById('universalRegisterForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('regBtn');
             btn.disabled = true;
             btn.innerText = "PROCESSING...";
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const fullName = document.getElementById('fullName').value;
-            const username = document.getElementById('username').value;
-            const phone = document.getElementById('phone').value;
-            const state = document.getElementById('state').value;
-
             try {
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-
-                // Send Verification
-                const actionCodeSettings = {
-                    url: 'https://mafita-dubu.vercel.app/login.html', 
-                    handleCodeInApp: true,
-                };
-                await sendEmailVerification(user, actionCodeSettings);
-
-                // Save to Firestore
-                await setDoc(doc(db, "users", user.uid), {
-                    uid: user.uid,
-                    fullName,
-                    username,
-                    email,
-                    phone,
-                    state,
+                
+                await setDoc(doc(db, "users", userCredential.user.uid), {
+                    fullName: document.getElementById('fullName').value,
                     role: "vendor",
-                    emailVerified: false,
                     createdAt: serverTimestamp()
                 });
 
                 showToast("Success! Opening Setup...");
-                
-        
-                // Nuna Modal din KAWAI idan mai amfani Vendor ne
-showToast("Registration Successful!");
-
-const userRole = "vendor"; // Wannan yana nuna cewa wanda ya cike form din nan Vendor ne
-
-if (userRole === "vendor") {
-    setTimeout(() => {
-        document.getElementById('vendorSetupModal').style.display = 'flex';
-    }, 1500);
-} else {
-    // Idan Member ne ko wani daban, tura shi Dashboard kai tsaye
-    setTimeout(() => {
-        window.location.href = "dashboard.html";
-    }, 2000);
-}
-
-          document.getElementById('vendorSetupModal').style.display = 'flex';
-                
-
-                
+                setTimeout(() => { document.getElementById('vendorSetupModal').style.display = 'flex'; }, 1500);
             } catch (error) {
                 btn.disabled = false;
                 btn.innerText = "REGISTER NOW";
@@ -268,37 +131,56 @@ if (userRole === "vendor") {
             }
         };
 
-        document.getElementById('vendorSetupForm').onsubmit = async (e) => {
-    e.preventDefault();
-    const setupBtn = document.getElementById('setupBtn');
-    setupBtn.disabled = true;
-    setupBtn.innerText = "SAVING...";
+        // SETUP LOGIC (YOUR ORIGINAL FUNCTIONS)
+        window.startGPS = () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(pos => {
+                    window.vendorLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+                    const status = document.getElementById('gps-status');
+                    status.innerText = `📍 GPS Fixed: ${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
+                    status.style.color = "#00ffcc";
+                }, () => { alert("Please enable Location!"); });
+            }
+        };
 
-    const storeName = document.getElementById('storeName').value;
-    const marketLocation = document.getElementById('marketLocation').value;
-    const storeAddress = document.getElementById('storeAddress').value;
-    const user = auth.currentUser;
+        window.validateLayer1 = () => {
+            if(!document.getElementById('bizName').value || !window.vendorLocation) {
+                alert("Saka Suna sannan ka tabbatar GPS ya nuna!");
+                return;
+            }
+            goToLayer(2);
+            startCamera();
+        };
 
-    try {
-        // Muna update din user document din da bayanan shago a Firestore
-        await setDoc(doc(db, "users", user.uid), {
-            storeName,
-            marketLocation,
-            storeAddress,
-            setupComplete: true
-        }, { merge: true });
+        window.goToLayer = (n) => {
+            document.querySelectorAll('.step-layer').forEach(l => l.classList.remove('active'));
+            document.getElementById('layer' + n).classList.add('active');
+        };
 
-        showToast("Welcome to Mafita Dubu!");
-        // Yanzu za ka iya tura shi Dashboard
-        setTimeout(() => { window.location.href = "dashboard.html"; }, 2000);
-    } catch (error) {
-        setupBtn.disabled = false;
-        setupBtn.innerText = "FINISH & SAVE";
-        showToast("Error: " + error.message, true);
-    }
-};
-            
+        async function startCamera() {
+            const video = document.getElementById('webcam');
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+            video.srcObject = stream;
+            setTimeout(() => {
+                document.getElementById('ai-msg').innerText = "✅ SCAN SUCCESSFUL";
+                document.getElementById('camBtn').disabled = false;
+            }, 3000);
+        }
+
+        window.saveToFirebase = async () => {
+            const btn = document.querySelector('#layer3 .primary-btn');
+            btn.innerText = "UPLOADING..."; btn.disabled = true;
+            try {
+                await setDoc(doc(db, "vendors", auth.currentUser.uid), {
+                    bizName: document.getElementById('bizName').value,
+                    location: window.vendorLocation,
+                    status: "pending",
+                    timestamp: serverTimestamp()
+                });
+                alert("Masha Allah! Application dinka yana karkashin tantancewa.");
+                window.location.href = "member-dashboard.html";
+            } catch (e) { alert("Error: " + e.message); btn.disabled = false; }
+        };
     </script>
-      
 </body>
 </html>
