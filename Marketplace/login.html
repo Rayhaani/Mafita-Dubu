@@ -212,6 +212,21 @@
                 text.innerText = 'LOG IN';
             }
         };
+
+
+        onAuthStateChanged(auth, (user) => {
+    if (user) {
+        if (user.emailVerified) {
+            // Idan ya danna link din, ya wuce
+            window.location.href = "vendor-dashboard.html";
+        } else {
+            // Idan bai danna ba, a dakatar da shi
+            alert("Don Allah ka tabbatar da email dinka tukunna!");
+            auth.signOut();
+        }
+    }
+});
+        
     </script>
 </body>
 </html>
