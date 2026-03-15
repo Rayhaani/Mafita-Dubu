@@ -255,6 +255,18 @@ async function loginVendor(email, password) {
         alert("Login Failed: " + error.message);
     }
                 }
+
+
+        if (user.emailVerified) {
+    // Idan mutum ya yi verification, sai mu duba ko shi Vendor ne ko Member
+    // Zaka iya duba wannan a Firestore (collection na users ko vendors)
+    
+    if (userRole === 'vendor') {
+        window.location.href = "vendor-dashboard.html";
+    } else {
+        window.location.href = "marketplace.html"; // Shafi na kowa da kowa
+    }
+        }
         
     </script>
 </body>
