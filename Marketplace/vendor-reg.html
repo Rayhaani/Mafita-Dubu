@@ -194,6 +194,37 @@
     }
 
     document.getElementById('finishBtn').onclick = saveToFirebase;
+
+async function registerVendor(email, password, fullName, businessName) {
+    const auth = getAuth();
+    const db = getFirestore();
+
+    try {
+        // 1. Kirkirar account
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // 2. AIKA DA VERIFICATION EMAIL (Wannan ne OTP din)
+        await sendEmailVerification(user);
+        alert("An aika da sakon tabbatarwa (Verification) zuwa email dinka. Duba Inbox ko Spam!");
+
+        // 3. Aika bayanan zuwa Firestore
+        await setDoc(doc(db, "vendors", user.uid), {
+            uid: user.uid,
+            name: fullName,
+            business: businessName,
+            email: email,
+            emailVerified: false, // Zai koma true idan ya danna link din
+            status: "pending",
+            role: "vendor",
+            createdAt: new Date()
+        });
+
+    } catch (error) {
+        console.error("Kuskure:", error.message);
+    }
+}
+
 </script>
 
 </body>
