@@ -1,4 +1,4 @@
-          <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ha">
 <head>
     <meta charset="UTF-8">
@@ -80,7 +80,7 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getAuth, sendEmailVerification, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -159,7 +159,6 @@
         };
 
         try {
-            // Muna amfani da UID dinka a matsayin ID na Document
             await setDoc(doc(db, "vendors", user.uid), data);
             localStorage.setItem('currentUserName', data.name);
             handleStatus('pending');
@@ -195,38 +194,40 @@
 
     document.getElementById('finishBtn').onclick = saveToFirebase;
 
-async function registerVendor(email, password, fullName, businessName) {
-    const auth = getAuth();
-    const db = getFirestore();
+    // REDIRECT CONFIGURATION & REGISTRATION LOGIC
+    async function registerVendor(email, password, fullName, businessName) {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
 
-    try {
-        // 1. Kirkirar account
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+            // 1. Saita Inda zai dawo bayan ya danna link (Login Page)
+            const actionCodeSettings = {
+                url: 'https://mafita-dubu.vercel.app/login.html',
+                handleCodeInApp: true,
+            };
 
-        // 2. AIKA DA VERIFICATION EMAIL (Wannan ne OTP din)
-        await sendEmailVerification(user);
-        alert("An aika da sakon tabbatarwa (Verification) zuwa email dinka. Duba Inbox ko Spam!");
+            // 2. Aika Verification Email da wadannan settings din
+            await sendEmailVerification(user, actionCodeSettings);
+            alert("Success! A verification link has been sent to your email. Click it to activate your account and return here.");
 
-        // 3. Aika bayanan zuwa Firestore
-        await setDoc(doc(db, "vendors", user.uid), {
-            uid: user.uid,
-            name: fullName,
-            business: businessName,
-            email: email,
-            emailVerified: false, // Zai koma true idan ya danna link din
-            status: "pending",
-            role: "vendor",
-            createdAt: new Date()
-        });
+            // 3. Adana basic info a Firestore
+            await setDoc(doc(db, "vendors", user.uid), {
+                uid: user.uid,
+                name: fullName,
+                business: businessName,
+                email: email,
+                emailVerified: false,
+                status: "pending",
+                role: "vendor",
+                createdAt: serverTimestamp()
+            });
 
-    } catch (error) {
-        console.error("Kuskure:", error.message);
+        } catch (error) {
+            alert("Registration Failed: " + error.message);
+        }
     }
-}
-
 </script>
 
 </body>
-    </html>
-    
+          </html>
+                    
