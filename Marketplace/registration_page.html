@@ -142,26 +142,41 @@
         </form>
     </div>
 
+<div id="vendorSetupModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:2000; overflow-y:auto; align-items:center; justify-content:center; padding:20px;">
+    
+    <div class="luxury-card">
+        <h2 style="font-family: 'Cinzel'; color: #fcf6ba; text-align: center; margin-bottom: 20px;">Vendor Setup</h2>
 
-    <div id="vendorSetupModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; align-items:center; justify-content:center; padding:20px;">
-    <div class="luxury-card" style="margin-top:0; max-width:450px;">
-        <h2 class="header-title" style="font-size:1.2rem;">Complete Vendor Setup</h2>
-        <p style="color:white; font-size:0.75rem; text-align:center; margin-bottom:20px; opacity:0.8;">Saka bayanan shagonka domin fara kasuwanci.</p>
-        
-        <form id="vendorSetupForm">
-            <div class="mb-4">
-                <input type="text" id="storeName" class="gold-input" placeholder="Sunan Shago (Store Name)" required>
+        <div class="step-layer active" id="layer1">
+            <input type="text" id="bizName" class="gold-input" placeholder="Business Name (Suna)">
+            <select id="bizType" class="gold-input" onchange="startGPS()">
+                <option value="">-- Select Category --</option>
+                <option value="Store">Physical Store</option>
+                <option value="Home">Home-Based</option>
+            </select>
+            <div id="gps-status" style="font-size: 0.75rem; color: #ff4d4d; margin-bottom: 10px;">📍 GPS: Not Fixed</div>
+            <button class="primary-btn" onclick="validateLayer1()">NEXT: AI SCAN</button>
+        </div>
+
+        <div class="step-layer" id="layer2">
+            <div class="scanner-box">
+                <video id="webcam" autoplay playsinline></video>
             </div>
-            <div class="mb-4">
-                <input type="text" id="marketLocation" class="gold-input" placeholder="Kasuwarka (e.g. Kantin Kwari)" required>
+            <p id="ai-msg" style="text-align:center; font-size: 0.8rem; margin: 10px 0;">[ INITIALIZING SCAN... ]</p>
+            <button class="primary-btn" id="camBtn" disabled onclick="goToLayer(3)">CONTINUE</button>
+        </div>
+
+        <div class="step-layer" id="layer3">
+            <div id="items-list">
+                <input type="text" id="bizDesc" class="gold-input item-name" placeholder="Business Description">
+                <p class="text-[10px] text-gray-400 mb-4">Danna Finish don tura aikinka ga Admin don dubawa.</p>
             </div>
-            <div class="mb-4">
-                <textarea id="storeAddress" class="gold-input" placeholder="Cikakken Adireshin Shago" rows="2" required></textarea>
-            </div>
-            <button type="submit" id="setupBtn" class="submit-btn">FINISH & SAVE</button>
-        </form>
+            <button class="primary-btn" onclick="saveToFirebase()">FINISH & UPLOAD</button>
+        </div>
     </div>
-    </div>
+</div>
+    
+
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -245,7 +260,9 @@ if (userRole === "vendor") {
     }, 2000);
 }
 
+          document.getElementById('vendorSetupModal').style.display = 'flex';
                 
+
                 
             } catch (error) {
                 btn.disabled = false;
