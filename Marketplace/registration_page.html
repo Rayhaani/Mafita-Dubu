@@ -142,6 +142,27 @@
         </form>
     </div>
 
+
+    <div id="vendorSetupModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; align-items:center; justify-content:center; padding:20px;">
+    <div class="luxury-card" style="margin-top:0; max-width:450px;">
+        <h2 class="header-title" style="font-size:1.2rem;">Complete Vendor Setup</h2>
+        <p style="color:white; font-size:0.75rem; text-align:center; margin-bottom:20px; opacity:0.8;">Saka bayanan shagonka domin fara kasuwanci.</p>
+        
+        <form id="vendorSetupForm">
+            <div class="mb-4">
+                <input type="text" id="storeName" class="gold-input" placeholder="Sunan Shago (Store Name)" required>
+            </div>
+            <div class="mb-4">
+                <input type="text" id="marketLocation" class="gold-input" placeholder="Kasuwarka (e.g. Kantin Kwari)" required>
+            </div>
+            <div class="mb-4">
+                <textarea id="storeAddress" class="gold-input" placeholder="Cikakken Adireshin Shago" rows="2" required></textarea>
+            </div>
+            <button type="submit" id="setupBtn" class="submit-btn">FINISH & SAVE</button>
+        </form>
+    </div>
+    </div>
+    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -207,15 +228,63 @@
 
                 showToast("Success! Opening Setup...");
                 
-                // Wucewa zuwa Vendor Setup
-                setTimeout(() => { window.location.href = "vendor-setup.html"; }, 2000);
+        
+                // Nuna Modal din KAWAI idan mai amfani Vendor ne
+showToast("Registration Successful!");
 
+const userRole = "vendor"; // Wannan yana nuna cewa wanda ya cike form din nan Vendor ne
+
+if (userRole === "vendor") {
+    setTimeout(() => {
+        document.getElementById('vendorSetupModal').style.display = 'flex';
+    }, 1500);
+} else {
+    // Idan Member ne ko wani daban, tura shi Dashboard kai tsaye
+    setTimeout(() => {
+        window.location.href = "dashboard.html";
+    }, 2000);
+}
+
+                
+                
             } catch (error) {
                 btn.disabled = false;
                 btn.innerText = "REGISTER NOW";
                 showToast(error.message, true);
             }
         };
+
+        document.getElementById('vendorSetupForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const setupBtn = document.getElementById('setupBtn');
+    setupBtn.disabled = true;
+    setupBtn.innerText = "SAVING...";
+
+    const storeName = document.getElementById('storeName').value;
+    const marketLocation = document.getElementById('marketLocation').value;
+    const storeAddress = document.getElementById('storeAddress').value;
+    const user = auth.currentUser;
+
+    try {
+        // Muna update din user document din da bayanan shago a Firestore
+        await setDoc(doc(db, "users", user.uid), {
+            storeName,
+            marketLocation,
+            storeAddress,
+            setupComplete: true
+        }, { merge: true });
+
+        showToast("Welcome to Mafita Dubu!");
+        // Yanzu za ka iya tura shi Dashboard
+        setTimeout(() => { window.location.href = "dashboard.html"; }, 2000);
+    } catch (error) {
+        setupBtn.disabled = false;
+        setupBtn.innerText = "FINISH & SAVE";
+        showToast("Error: " + error.message, true);
+    }
+};
+            
     </script>
+      
 </body>
 </html>
