@@ -55,31 +55,47 @@
         </div>
 
         <div id="setupSection">
-            <p class="text-white text-[10px] text-center mb-4 opacity-70">Kammala saita kasuwancinka ta amfani da GPS</p>
-            <form id="setupForm">
-                <div class="mb-4"><input type="text" id="bizName" class="gold-input" placeholder="Business Name" required></div>
-                <div class="mb-4">
-                    <select id="bizCategory" class="gold-input bg-[#1a1405]">
-                        <option value="" disabled selected>Select Category</option>
-                        <option value="Clothing">Clothing</option>
-                        <option value="Electronics">Electronics</option>
-                        <option value="Service">Service</option>
-                    </select>
-                </div>
-                
-                <div class="mb-4">
-                    <button type="button" onclick="startGPS()" id="gpsBtn" class="gold-input flex items-center justify-center gap-2 border-[#bf953f] hover:bg-[#3d2c10]">
-                        <span id="gps-icon">📍</span> 
-                        <span id="gps-text" class="text-[10px] font-bold">DAUKO LOCATION (GPS)</span>
-                    </button>
-                    <input type="hidden" id="lat">
-                    <input type="hidden" id="lng">
-                </div>
-
-                <button type="submit" id="setupBtn" class="submit-btn">FINISH SETUP</button>
-            </form>
+    <p class="text-white text-[10px] text-center mb-4 opacity-70">Saita bayanan kasuwancinka daki-daki</p>
+    <form id="setupForm">
+        <div class="mb-4">
+            <input type="text" id="bizName" class="gold-input" placeholder="Business Name" required>
         </div>
-    </div>
+
+        <div class="mb-4">
+            <select id="bizCategory" class="gold-input bg-[#1a1405]" onchange="updateSubCategory()" required>
+                <option value="" disabled selected>Select Category</option>
+                <option value="Clothing">Clothing (Tufafi)</option>
+                <option value="Shoes">Shoes (Takalmi)</option>
+                <option value="Electronics">Electronics</option>
+            </select>
+        </div>
+
+        <div id="subCatWrapper" class="mb-4 hidden">
+            <select id="subCategory" class="gold-input bg-[#1a1405]">
+                </select>
+        </div>
+
+        <div class="mb-4">
+            <select id="shopType" class="gold-input bg-[#1a1405]" required>
+                <option value="" disabled selected>Shop Type</option>
+                <option value="Physical">Physical Shop (Ina da Shago)</option>
+                <option value="Home">Home-based (Daga Gida nake aiki)</option>
+            </select>
+        </div>
+        
+        <div class="mb-4">
+            <button type="button" onclick="startGPS()" id="gpsBtn" class="gold-input flex items-center justify-center gap-2 border-[#bf953f] hover:bg-[#3d2c10]">
+                <span id="gps-icon">📍</span> 
+                <span id="gps-text" class="text-[10px] font-bold">DAUKO LOCATION (GPS)</span>
+            </button>
+            <input type="hidden" id="lat">
+            <input type="hidden" id="lng">
+        </div>
+
+        <button type="submit" id="setupBtn" class="submit-btn">FINISH SETUP</button>
+    </form>
+        </div>
+        
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -187,6 +203,64 @@
                 btn.disabled = false;
             }
         };
+
+
+        // Data na Categories
+const categoryData = {
+    "Clothing": ["Men's Wear", "Women's Wear", "Children's Wear", "Traditional (Kaftan/Abaya)"],
+    "Shoes": ["Sneakers", "Corporate Shoes", "Sandals/Slippers", "Kids Shoes"],
+    "Electronics": ["Phones & Tablets", "Laptops", "Home Appliances", "Accessories"]
+};
+
+window.updateSubCategory = function() {
+    const mainCat = document.getElementById('bizCategory').value;
+    const subCatWrapper = document.getElementById('subCatWrapper');
+    const subCatSelect = document.getElementById('subCategory');
+    
+    if (categoryData[mainCat]) {
+        subCatWrapper.classList.remove('hidden');
+        subCatSelect.innerHTML = '<option value="" disabled selected>Select Sub-category</option>';
+        
+        categoryData[mainCat].forEach(item => {
+            const option = document.createElement('option');
+            option.value = item;
+            option.text = item;
+            subCatSelect.appendChild(option);
+        });
+    } else {
+        subCatWrapper.classList.add('hidden');
+    }
+};
+
+// Gyaran Save Function (Firebase)
+document.getElementById('setupForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const lat = document.getElementById('lat').value;
+    if(!lat) return showToast("Dole ne ka dauki GPS Location!", true);
+
+    const btn = document.getElementById('setupBtn');
+    btn.disabled = true; btn.innerText = "SAVING...";
+
+    try {
+        await setDoc(doc(db, "vendor_details", currentUserUid), {
+            businessName: document.getElementById('bizName').value,
+            category: document.getElementById('bizCategory').value,
+            subCategory: document.getElementById('subCategory').value,
+            shopType: document.getElementById('shopType').value,
+            latitude: lat,
+            longitude: document.getElementById('lng').value,
+            status: "pending",
+            setupComplete: true
+        });
+
+        showToast("Masha Allah! Registration complete.");
+        setTimeout(() => { window.location.href = "login.html"; }, 2500);
+    } catch (error) {
+        showToast(error.message, true);
+        btn.disabled = false;
+    }
+};
+        
     </script>
 </body>
 </html>
