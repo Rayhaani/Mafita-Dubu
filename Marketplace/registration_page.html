@@ -279,14 +279,15 @@ onAuthStateChanged(auth, async (user) => {
     }
 });
 
-        import { collection, onSnapshot, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// Wannan zai dauko categories daga Admin Radar kai tsaye
+// Wannan zai sa Categories dinka su zama "Live" daga Admin Radar
 onSnapshot(collection(db, "app_settings"), (snap) => {
     const mainCatDropdown = document.getElementById('mainCategory');
-    mainCatDropdown.innerHTML = '<option value="">-- Main Category --</option>';
+    if(!mainCatDropdown) return;
     
-    window.allCategories = {}; // Adana su a memory don amfanin sub-categories
+    mainCatDropdown.innerHTML = '<option value="">-- Main Category --</option>';
+    window.allCategories = {}; 
 
     snap.forEach(doc => {
         const data = doc.data();
@@ -295,30 +296,11 @@ onSnapshot(collection(db, "app_settings"), (snap) => {
             option.value = data.name;
             option.text = data.name;
             mainCatDropdown.appendChild(option);
-            
-            // Adana sub-categories din kowanne
             window.allCategories[data.name] = data.subCategories;
         }
     });
 });
 
-// Gyaran function din Sub-Categories
-window.updateSubCategories = () => {
-    const mainCat = document.getElementById('mainCategory').value;
-    const subCatDropdown = document.getElementById('subCategory');
-    subCatDropdown.innerHTML = '<option value="">-- Sub-Category --</option>';
-    
-    if (mainCat && window.allCategories[mainCat]) {
-        subCatDropdown.style.display = 'block';
-        window.allCategories[mainCat].forEach(sub => {
-            const option = document.createElement('option');
-            option.value = sub; option.text = sub;
-            subCatDropdown.appendChild(option);
-        });
-    } else { 
-        subCatDropdown.style.display = 'none'; 
-    }
-};
                     
                 
     </script>
