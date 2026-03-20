@@ -9,27 +9,105 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        :root { --milk-bg: #FFF5E1; --royal-black: #1a1405; --dark-gold: #8b6b1b; --light-gold: #f3cf7a; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--milk-bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
-        .liquid-color-circle { width: 80px; height: 80px; margin: -90px auto 15px; position: relative; z-index: 100; border-radius: 50%; border: 2px solid #ffffff; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5); background: linear-gradient(-45deg, #ffd700, #ff00ea, #00d4ff, #3dff00, #ff9100, #7028e4); background-size: 400% 400%; animation: liquidFlow 8s ease infinite; }
-        @keyframes liquidFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .luxury-card { background: var(--royal-black); border: 2px solid var(--dark-gold); border-radius: 40px 10px; padding: 40px 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); position: relative; margin-top: 50px; }
-        .header-title { font-family: 'Cinzel', serif; font-size: 1.6rem; color: var(--light-gold); text-align: center; margin-bottom: 25px; }
-        .gold-input { width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(243, 207, 122, 0.2); padding: 12px 15px; border-radius: 12px; color: #fff; font-size: 0.85rem; outline: none; }
-        .submit-btn { background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900; width: 100%; padding: 12px; border-radius: 10px; margin-top: 15px; font-size: 1rem; border: none; cursor: pointer; transition: 0.3s; }
+        :root {
+            --milk-bg: #FFF5E1; 
+            --royal-black: #1a1405;
+            --dark-gold: #8b6b1b;
+            --light-gold: #f3cf7a;
+            --gold: #bf953f;
+        }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--milk-bg); 
+            display: flex; align-items: center; justify-content: center; 
+            min-height: 100vh; margin: 0; padding: 20px;
+        }
+
+        .liquid-color-circle {
+            width: 80px; height: 80px;
+            margin: -90px auto 15px;
+            position: relative; z-index: 100;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            background: linear-gradient(-45deg, #ffd700, #ff00ea, #00d4ff, #3dff00, #ff9100, #7028e4);
+            background-size: 400% 400%;
+            animation: liquidFlow 8s ease infinite;
+        }
+
+        @keyframes liquidFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .luxury-card {
+            background: var(--royal-black);
+            border: 2px solid var(--dark-gold);
+            border-radius: 40px 10px;
+            padding: 40px 30px 25px;
+            width: 100%; max-width: 400px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            position: relative; margin-top: 50px;
+        }
+
+        .header-title { 
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem; color: var(--light-gold); 
+            text-align: center; margin-bottom: 25px;
+        }
+
+        .gold-input {
+            width: 100%; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(243, 207, 122, 0.2);
+            padding: 12px 15px; border-radius: 12px;
+            color: #fff; font-size: 0.85rem; outline: none;
+        }
+
+        .otp-wrapper { position: relative; display: flex; align-items: center; }
+
+        .send-otp-btn {
+            position: absolute; right: 6px; top: 6px; bottom: 6px;
+            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
+            color: #1a1405; 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 10px; padding: 0 12px; border-radius: 8px;
+            border: none; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-transform: uppercase; /* Wannan ne zai sa duka su zama Capital Letters */
+        }
+        .send-otp-btn:hover { filter: brightness(1.1); transform: scale(1.02); }
+        .send-otp-btn:disabled { background: #444; color: #888; cursor: not-allowed; }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
+            color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900;
+            width: 100%; padding: 12px; border-radius: 10px; margin-top: 15px;
+            font-size: 1rem; border: none; cursor: pointer; transition: 0.3s;
+        }
+
         .login-footer { text-align: center; margin-top: 20px; color: #ffffff; font-size: 0.85rem; }
         .login-footer a { color: var(--light-gold); font-weight: 700; text-decoration: none; margin-left: 5px; }
-        #status-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); z-index: 1000; width: 90%; max-width: 350px; background: #1a1405; border-left: 4px solid #bf953f; padding: 15px; border-radius: 8px; transition: 0.5s; display: flex; align-items: center; gap: 12px; }
-        
-        /* OTP SEND BUTTON STYLE */
-        .send-otp-btn { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: var(--gold); color: #1a1405; font-size: 9px; font-weight: 800; padding: 5px 10px; border-radius: 8px; cursor: pointer; border: none; }
+
+        #status-toast {
+            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+            z-index: 1000; width: 90%; max-width: 350px; background: #1a1405;
+            border-left: 4px solid #bf953f; padding: 15px; border-radius: 8px;
+            transition: 0.5s; display: flex; align-items: center; gap: 12px;
+        }
     </style>
 </head>
 <body>
 
     <div id="status-toast">
         <div style="color: #f3cf7a; font-weight: bold; font-size: 20px;">!</div>
-        <div><p id="toast-title" style="text-transform: uppercase; font-size: 10px; color: #888; font-weight: 800; margin: 0;">System Alert</p><p id="toast-msg" style="color: white; font-size: 12px; margin: 0;"></p></div>
+        <div>
+            <p id="toast-title" style="text-transform: uppercase; font-size: 10px; color: #888; font-weight: 800; margin: 0;">System Alert</p>
+            <p id="toast-msg" style="color: white; font-size: 12px; margin: 0;"></p>
+        </div>
     </div>
 
     <div class="luxury-card">
@@ -40,13 +118,13 @@
             <div class="mb-4"><input type="text" id="fullName" class="gold-input" placeholder="Full Name" required></div>
             <div class="mb-4"><input type="text" id="username" class="gold-input" placeholder="Username" required></div>
 
-            <div class="mb-4 relative">
-                <input type="email" id="email" class="gold-input" placeholder="Email Address" required>
+            <div class="mb-4 otp-wrapper">
+                <input type="email" id="email" class="gold-input" placeholder="Email Address" required style="padding-right: 95px;">
                 <button type="button" id="sendOtpBtn" class="send-otp-btn" onclick="sendOTP()">SEND OTP</button>
             </div>
             
             <div id="otpInputArea" class="mb-4" style="display:none;">
-                <input type="text" id="otpCode" class="gold-input border-yellow-500" placeholder="Enter 6-Digit OTP">
+                <input type="text" id="otpCode" class="gold-input" placeholder="Enter 6-Digit OTP" maxlength="6" style="border-color: var(--gold); text-align: center; letter-spacing: 5px; font-weight: 800;">
             </div>
 
             <div class="grid grid-cols-2 gap-4 mb-4">
@@ -80,7 +158,6 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Initialize EmailJS
         emailjs.init("YOUR_PUBLIC_KEY"); 
 
         let generatedOTP = null;
@@ -95,7 +172,7 @@
 
         window.sendOTP = async () => {
             const email = document.getElementById('email').value;
-            if(!email) { alert("Saka email dinka tukunna!"); return; }
+            if(!email) { showToast("Saka email dinka!", true); return; }
 
             const btn = document.getElementById('sendOtpBtn');
             btn.innerText = "SENDING..."; btn.disabled = true;
@@ -105,13 +182,15 @@
             try {
                 await emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
                     to_email: email,
-                    otp_code: generatedOTP
+                    otp_code: generatedOTP,
+                    user_name: document.getElementById('fullName').value || "User"
                 });
-                showToast("An tura OTP zuwa email dinka!");
+                showToast("OTP sent! Check your email.");
                 document.getElementById('otpInputArea').style.display = 'block';
                 btn.innerText = "SENT ✅";
+                document.getElementById('email').readOnly = true;
             } catch (err) {
-                alert("Kuskure wurin tura OTP: " + err.text);
+                showToast("Error: " + err.text, true);
                 btn.innerText = "SEND OTP"; btn.disabled = false;
             }
         };
@@ -120,23 +199,23 @@
             e.preventDefault();
             const userOTP = document.getElementById('otpCode').value;
 
-            if(userOTP != generatedOTP) {
-                showToast("Lambar OTP bata dace ba!", true);
-                return;
+            if(!generatedOTP || userOTP != generatedOTP) {
+                showToast("Lambar OTP bata dace ba!", true); return;
             }
 
             const btn = document.getElementById('regBtn');
-            btn.disabled = true; btn.innerText = "VERIFYING...";
-
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            btn.disabled = true; btn.innerText = "CREATING...";
 
             try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const userCredential = await createUserWithEmailAndPassword(auth, 
+                    document.getElementById('email').value, 
+                    document.getElementById('password').value
+                );
+                
                 await setDoc(doc(db, "users", userCredential.user.uid), {
                     fullName: document.getElementById('fullName').value,
                     username: document.getElementById('username').value,
-                    email: email,
+                    email: document.getElementById('email').value,
                     phone: document.getElementById('phone').value,
                     state: document.getElementById('state').value,
                     role: "vendor",
@@ -144,7 +223,7 @@
                     createdAt: serverTimestamp()
                 });
 
-                showToast("OTP Verified! Proceeding to Setup...");
+                showToast("Verified! Opening Setup...");
                 setTimeout(() => { window.location.href = "vendor-setup.html"; }, 2000);
             } catch (error) {
                 showToast(error.message, true);
@@ -153,4 +232,5 @@
         };
     </script>
 </body>
-</html>
+    </html>
+    
