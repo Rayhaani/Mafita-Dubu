@@ -274,6 +274,19 @@
             }
         };
 
+
+        // Lokacin da zai yi Login
+const user = userCredential.user;
+
+if (!user.emailVerified) {
+    showToast("Don Allah ka yi verifying email dinka tukunna!", true);
+    // Za mu iya nuna masa wani button na "Resend Verification"
+    return; 
+} else {
+    // Idan ya yi verify, sai mu bar shi ya shiga Dashboard
+    window.location.href = "dashboard.html";
+}
+        
     </script>
 </body>
     </html>
