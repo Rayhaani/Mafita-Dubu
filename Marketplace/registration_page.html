@@ -17,11 +17,7 @@
         .gold-input { width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(243, 207, 122, 0.2); padding: 12px 15px; border-radius: 12px; color: #fff; font-size: 0.85rem; outline: none; }
         .submit-btn { background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900; width: 100%; padding: 12px; border-radius: 10px; margin-top: 15px; font-size: 1rem; border: none; cursor: pointer; transition: 0.3s; }
         .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        .login-footer { text-align: center; margin-top: 20px; color: #ffffff; font-size: 0.85rem; }
-        .login-footer a { color: var(--light-gold); font-weight: 700; text-decoration: none; margin-left: 5px; }
         #status-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); z-index: 1000; width: 90%; max-width: 350px; background: #1a1405; border-left: 4px solid #bf953f; padding: 15px; border-radius: 8px; transition: 0.5s; display: flex; align-items: center; gap: 12px; }
-        
-        /* Bangaren Boye Setup Section */
         #setupSection { display: none; }
     </style>
 </head>
@@ -50,52 +46,42 @@
                 </div>
                 <div class="mb-4"><input type="password" id="password" class="gold-input" placeholder="Password" required></div>
                 <button type="submit" id="regBtn" class="submit-btn">REGISTER NOW</button>
-                <div class="login-footer">Already have an account? <a href="login.html">Login</a></div>
             </form>
         </div>
 
         <div id="setupSection">
-    <p class="text-white text-[10px] text-center mb-4 opacity-70">Saita bayanan kasuwancinka daki-daki</p>
-    <form id="setupForm">
-        <div class="mb-4">
-            <input type="text" id="bizName" class="gold-input" placeholder="Business Name" required>
+            <p class="text-white text-[10px] text-center mb-4 opacity-70">Saita bayanan kasuwancinka daki-daki</p>
+            <form id="setupForm">
+                <div class="mb-4"><input type="text" id="bizName" class="gold-input" placeholder="Business Name" required></div>
+                <div class="mb-4">
+                    <select id="bizCategory" class="gold-input bg-[#1a1405]" onchange="updateSubCategory()" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="Clothing">Clothing (Tufafi)</option>
+                        <option value="Shoes">Shoes (Takalmi)</option>
+                        <option value="Electronics">Electronics</option>
+                    </select>
+                </div>
+                <div id="subCatWrapper" class="mb-4 hidden">
+                    <select id="subCategory" class="gold-input bg-[#1a1405]"></select>
+                </div>
+                <div class="mb-4">
+                    <select id="shopType" class="gold-input bg-[#1a1405]" required>
+                        <option value="" disabled selected>Shop Type</option>
+                        <option value="Physical">Physical Shop</option>
+                        <option value="Home">Home-based</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <button type="button" onclick="startGPS()" id="gpsBtn" class="gold-input flex items-center justify-center gap-2 border-[#bf953f] hover:bg-[#3d2c10]">
+                        <span id="gps-icon">📍</span> 
+                        <span id="gps-text" class="text-[10px] font-bold">DAUKO LOCATION (GPS)</span>
+                    </button>
+                    <input type="hidden" id="lat"><input type="hidden" id="lng">
+                </div>
+                <button type="submit" id="setupBtn" class="submit-btn">FINISH SETUP</button>
+            </form>
         </div>
-
-        <div class="mb-4">
-            <select id="bizCategory" class="gold-input bg-[#1a1405]" onchange="updateSubCategory()" required>
-                <option value="" disabled selected>Select Category</option>
-                <option value="Clothing">Clothing (Tufafi)</option>
-                <option value="Shoes">Shoes (Takalmi)</option>
-                <option value="Electronics">Electronics</option>
-            </select>
-        </div>
-
-        <div id="subCatWrapper" class="mb-4 hidden">
-            <select id="subCategory" class="gold-input bg-[#1a1405]">
-                </select>
-        </div>
-
-        <div class="mb-4">
-            <select id="shopType" class="gold-input bg-[#1a1405]" required>
-                <option value="" disabled selected>Shop Type</option>
-                <option value="Physical">Physical Shop (Ina da Shago)</option>
-                <option value="Home">Home-based (Daga Gida nake aiki)</option>
-            </select>
-        </div>
-        
-        <div class="mb-4">
-            <button type="button" onclick="startGPS()" id="gpsBtn" class="gold-input flex items-center justify-center gap-2 border-[#bf953f] hover:bg-[#3d2c10]">
-                <span id="gps-icon">📍</span> 
-                <span id="gps-text" class="text-[10px] font-bold">DAUKO LOCATION (GPS)</span>
-            </button>
-            <input type="hidden" id="lat">
-            <input type="hidden" id="lng">
-        </div>
-
-        <button type="submit" id="setupBtn" class="submit-btn">FINISH SETUP</button>
-    </form>
-        </div>
-        
+    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -114,8 +100,13 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-
         let currentUserUid = null;
+
+        const categoryData = {
+            "Clothing": ["Men's Wear", "Women's Wear", "Children's Wear", "Traditional (Kaftan/Abaya)"],
+            "Shoes": ["Sneakers", "Corporate Shoes", "Sandals/Slippers", "Kids Shoes"],
+            "Electronics": ["Phones & Tablets", "Laptops", "Home Appliances", "Accessories"]
+        };
 
         window.showToast = function(msg, isError = false) {
             const toast = document.getElementById('status-toast');
@@ -125,235 +116,74 @@
             setTimeout(() => { toast.style.top = '-100px'; }, 5000);
         }
 
-        // Function na daukar Location daidai (High Accuracy)
-window.startGPS = function() {
-    const gpsText = document.getElementById('gps-text');
-    const gpsBtn = document.getElementById('gpsBtn');
-    
-    gpsText.innerText = "ANA NEMAN INDA KAKE (GPS)...";
-    gpsBtn.disabled = true; // Hana danna shi yayin da yake nema
+        window.updateSubCategory = function() {
+            const mainCat = document.getElementById('bizCategory').value;
+            const subCatWrapper = document.getElementById('subCatWrapper');
+            const subCatSelect = document.getElementById('subCategory');
+            if (categoryData[mainCat]) {
+                subCatWrapper.classList.remove('hidden');
+                subCatSelect.innerHTML = '<option value="" disabled selected>Select Sub-category</option>';
+                categoryData[mainCat].forEach(item => {
+                    const opt = document.createElement('option'); opt.value = opt.text = item;
+                    subCatSelect.appendChild(opt);
+                });
+            } else { subCatWrapper.classList.add('hidden'); }
+        };
 
-    const options = {
-        enableHighAccuracy: true, // Amfani da madaidaicin GPS
-        timeout: 10000,          // Jira na tsawon sakan 10
-        maximumAge: 0            // Kada a yi amfani da tsohon cache
-    };
+        window.startGPS = function() {
+            const gpsText = document.getElementById('gps-text');
+            const gpsBtn = document.getElementById('gpsBtn');
+            gpsText.innerText = "ANA NEMAN GPS...";
+            gpsBtn.disabled = true;
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((pos) => {
+                    document.getElementById('lat').value = pos.coords.latitude;
+                    document.getElementById('lng').value = pos.coords.longitude;
+                    gpsText.innerText = "✅ LOCATION FIXED!";
+                    gpsBtn.style.borderColor = "#00ffcc"; gpsText.style.color = "#00ffcc";
+                    gpsBtn.disabled = false;
+                }, () => { showToast("Kunna GPS!", true); gpsBtn.disabled = false; }, { enableHighAccuracy: true });
+            }
+        };
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((pos) => {
-            // Daukar Lat da Lng
-            const lat = pos.coords.latitude;
-            const lng = pos.coords.longitude;
-
-            // Adana su a hidden inputs
-            document.getElementById('lat').value = lat;
-            document.getElementById('lng').value = lng;
-            
-            // Canza kalar button da rubutu don nuna nasara
-            gpsText.innerText = "✅ LOCATION FIXED (SUCCESS)";
-            gpsBtn.style.borderColor = "#00ffcc";
-            gpsText.style.color = "#00ffcc";
-            gpsBtn.disabled = false;
-
-            showToast("An samu madaidaicin wurin shagonka!");
-        }, (err) => {
-            gpsBtn.disabled = false;
-            let errorMsg = "Kunna GPS din wayarka!";
-            if(err.code === 1) errorMsg = "Ka ba mu damar (Permission) daukar location!";
-            
-            showToast(errorMsg, true);
-            gpsText.innerText = "❌ SAKE GWADA GPS";
-        }, options);
-    } else {
-        showToast("Browser dinka ba ta da GPS.", true);
-    }
-};
-        
-
-        // STEP 1: REGISTER
         document.getElementById('universalRegisterForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('regBtn');
             btn.disabled = true; btn.innerText = "PROCESSING...";
-
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
                 currentUserUid = userCredential.user.uid;
-
                 await setDoc(doc(db, "users", currentUserUid), {
                     fullName: document.getElementById('fullName').value,
-                    username: document.getElementById('username').value,
                     email: document.getElementById('email').value,
-                    role: "vendor",
-                    createdAt: serverTimestamp()
+                    role: "vendor", createdAt: serverTimestamp()
                 });
-
                 await sendEmailVerification(userCredential.user);
-
-                // Nuna Setup Overlay
                 document.getElementById('registerSection').style.display = 'none';
                 document.getElementById('setupSection').style.display = 'block';
                 document.getElementById('mainTitle').innerText = "Business Setup";
-
-            } catch (error) {
-                showToast(error.message, true);
-                btn.disabled = false; btn.innerText = "REGISTER NOW";
-            }
+            } catch (error) { showToast(error.message, true); btn.disabled = false; btn.innerText = "REGISTER NOW"; }
         };
 
-        // STEP 2: SETUP
         document.getElementById('setupForm').onsubmit = async (e) => {
             e.preventDefault();
-            const lat = document.getElementById('lat').value;
-            if(!lat) return showToast("Dole ne ka dauki GPS Location!", true);
-
+            const latRaw = document.getElementById('lat').value;
+            if(!latRaw) return showToast("Dole ne ka dauki GPS!", true);
             const btn = document.getElementById('setupBtn');
             btn.disabled = true; btn.innerText = "SAVING...";
-
             try {
                 await setDoc(doc(db, "vendor_details", currentUserUid), {
                     businessName: document.getElementById('bizName').value,
                     category: document.getElementById('bizCategory').value,
-                    latitude: lat,
-                    longitude: document.getElementById('lng').value,
-                    setupComplete: true,
-                    status: "pending"
+                    subCategory: document.getElementById('subCategory').value,
+                    shopType: document.getElementById('shopType').value,
+                    location: { lat: parseFloat(latRaw), lng: parseFloat(document.getElementById('lng').value) },
+                    status: "pending", setupComplete: true, isLive: true, updatedAt: serverTimestamp()
                 });
-
-                showToast("An kammala! Duba Email dinka don verify.");
-                setTimeout(() => { window.location.href = "login.html"; }, 3000);
-            } catch (error) {
-                showToast(error.message, true);
-                btn.disabled = false;
-            }
+                showToast("An kammala! Duba Email dinka.");
+                setTimeout(() => { window.location.href = "login.html"; }, 2500);
+            } catch (error) { showToast(error.message, true); btn.disabled = false; }
         };
-
-
-        // Data na Categories
-const categoryData = {
-    "Clothing": ["Men's Wear", "Women's Wear", "Children's Wear", "Traditional (Kaftan/Abaya)"],
-    "Shoes": ["Sneakers", "Corporate Shoes", "Sandals/Slippers", "Kids Shoes"],
-    "Electronics": ["Phones & Tablets", "Laptops", "Home Appliances", "Accessories"]
-};
-
-window.updateSubCategory = function() {
-    const mainCat = document.getElementById('bizCategory').value;
-    const subCatWrapper = document.getElementById('subCatWrapper');
-    const subCatSelect = document.getElementById('subCategory');
-    
-    if (categoryData[mainCat]) {
-        subCatWrapper.classList.remove('hidden');
-        subCatSelect.innerHTML = '<option value="" disabled selected>Select Sub-category</option>';
-        
-        categoryData[mainCat].forEach(item => {
-            const option = document.createElement('option');
-            option.value = item;
-            option.text = item;
-            subCatSelect.appendChild(option);
-        });
-    } else {
-        subCatWrapper.classList.add('hidden');
-    }
-};
-
-
-
-        // 1. Data na Categories
-const categoryData = {
-    "Clothing": ["Men's Wear", "Women's Wear", "Children's Wear", "Traditional (Kaftan/Abaya)"],
-    "Shoes": ["Sneakers", "Corporate Shoes", "Sandals/Slippers", "Kids Shoes"],
-    "Electronics": ["Phones & Tablets", "Laptops", "Home Appliances", "Accessories"]
-};
-
-// 2. Function na nuna Sub-category
-window.updateSubCategory = function() {
-    const mainCat = document.getElementById('bizCategory').value;
-    const subCatWrapper = document.getElementById('subCatWrapper');
-    const subCatSelect = document.getElementById('subCategory');
-    
-    if (categoryData[mainCat]) {
-        subCatWrapper.classList.remove('hidden');
-        subCatSelect.innerHTML = '<option value="" disabled selected>Select Sub-category</option>';
-        categoryData[mainCat].forEach(item => {
-            const option = document.createElement('option');
-            option.value = item;
-            option.text = item;
-            subCatSelect.appendChild(option);
-        });
-    } else {
-        subCatWrapper.classList.add('hidden');
-    }
-};
-
-// 3. Active GPS Function (High Accuracy)
-window.startGPS = function() {
-    const gpsText = document.getElementById('gps-text');
-    const gpsBtn = document.getElementById('gpsBtn');
-    gpsText.innerText = "NEMAN LOCATION...";
-    gpsBtn.disabled = true;
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((pos) => {
-            document.getElementById('lat').value = pos.coords.latitude;
-            document.getElementById('lng').value = pos.coords.longitude;
-            gpsText.innerText = "✅ LOCATION FIXED!";
-            gpsBtn.style.borderColor = "#00ffcc";
-            gpsText.style.color = "#00ffcc";
-            gpsBtn.disabled = false;
-            showToast("An samu inda kake!");
-        }, () => {
-            showToast("Kunna GPS din wayarka!", true);
-            gpsText.innerText = "❌ SAKE GWADA GPS";
-            gpsBtn.disabled = false;
-        }, { enableHighAccuracy: true });
-    }
-};
-            
-
-                 
-// Gyaran Save Function (Firebase)
-document.getElementById('setupForm').onsubmit = async (e) => {
-    e.preventDefault();
-    
-    // Tabbatar an dauki GPS coordinates
-    const latRaw = document.getElementById('lat').value;
-    const lngRaw = document.getElementById('lng').value;
-    
-    if(!latRaw || !lngRaw) {
-        return showToast("Dole ne ka dauki GPS Location kafin ka karasa!", true);
-    }
-
-    const btn = document.getElementById('setupBtn');
-    btn.disabled = true; 
-    btn.innerText = "UPLOADING DATA...";
-
-    try {
-        // Ajiye komai a matsayin lamba (Float) don Radar View
-        await setDoc(doc(db, "vendor_details", currentUserUid), {
-            businessName: document.getElementById('bizName').value,
-            category: document.getElementById('bizCategory').value,
-            subCategory: document.getElementById('subCategory').value,
-            shopType: document.getElementById('shopType').value,
-            location: {
-                lat: parseFloat(latRaw),
-                lng: parseFloat(lngRaw)
-            },
-            status: "pending",
-            setupComplete: true,
-            isLive: true,
-            updatedAt: serverTimestamp()
-        });
-
-        showToast("Masha Allah! Bayananka sun isa ga Admin.");
-        setTimeout(() => { window.location.href = "login.html"; }, 2500);
-    } catch (error) {
-        showToast("Error: " + error.message, true);
-        btn.disabled = false;
-        btn.innerText = "RETRY SETUP";
-    }
-};
-        
-        
     </script>
 </body>
 </html>
