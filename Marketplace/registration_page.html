@@ -94,6 +94,22 @@
         </div>     
     </div>
 
+
+    <div id="verifySection" class="hidden text-center p-6">
+    <div class="mb-6">
+        <div class="inline-block p-4 rounded-full bg-[#f3cf7a]/10 mb-4">
+            <span class="text-5xl">📧</span>
+        </div>
+        <h2 class="text-[#f3cf7a] font-bold text-xl mb-2">Tantance Email Dinka</h2>
+        <p class="text-white/70 text-sm">Mun tura maka link na tantancewa (Verification Link) zuwa email dinka. Don Allah duba 'Inbox' ko 'Spam' sannan ka danna link din.</p>
+    </div>
+
+    <div class="space-y-4">
+        <button onclick="window.location.reload()" class="submit-btn">NA DANNA LINK DIN (LOGIN)</button>
+        <p class="text-[10px] text-white/50">Ba ka ga sako ba? <a href="#" onclick="resendEmail()" class="text-[#f3cf7a] underline">Sake turawa</a></p>
+    </div>
+    </div>
+    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -168,70 +184,99 @@
             }
         };
 
-       // STEP 1: REGISTER LOGIC (MAI EMAIL VERIFICATION)
+       // Function na sake tura Email (Resend)
+window.resendEmail = async () => {
+    if (auth.currentUser) {
+        await sendEmailVerification(auth.currentUser);
+        showToast("An sake tura sabon link!");
+    }
+};
+
+
+        // 1. REGISTER LOGIC
 document.getElementById('universalRegisterForm').onsubmit = async (e) => {
     e.preventDefault();
     const btn = document.getElementById('regBtn');
-    btn.disabled = true; 
-    btn.innerText = "SAYARWA...";
-
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    btn.disabled = true; btn.innerText = "SAYARWA...";
 
     try {
-        // 1. Kirkirar Account
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Kirkirar Account
         const userCred = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCred.user;
-
-        // 2. Tura Verification Email (Kamar Facebook)
-        await sendEmailVerification(user);
-        showToast("An tura Verification Link zuwa email dinka!");
-
-        // 3. Ajiye bayanan asali (Amma emailVerified: false)
-        await setDoc(doc(db, "users", user.uid), {
+        
+        // Tura Verification Link nan take (Kamar Facebook)
+        await sendEmailVerification(userCred.user);
+        
+        // Ajiye bayanan asali
+        await setDoc(doc(db, "users", userCred.user.uid), {
             fullName: document.getElementById('fullName').value,
+            username: document.getElementById('username').value,
             email: email,
             role: "vendor",
-            emailVerified: false, // Alamun bai gama ba tukunna
+            emailVerified: false,
             createdAt: serverTimestamp()
         });
 
-        // 4. Kai shi shafin Setup (Domin ya fara cike bayanan shago yayin da yake jiran email)
+        // Nuna Setup Section
         document.getElementById('registerSection').style.display = 'none';
         document.getElementById('setupSection').style.display = 'block';
         document.getElementById('mainTitle').innerText = "Business Setup";
+        showToast("An tura Verification Link zuwa Email dinka!");
 
-    } catch (error) { 
-        showToast("Kuskure: " + error.message, true); 
-        btn.disabled = false; 
-        btn.innerText = "REGISTER NOW"; 
+    } catch (error) {
+        showToast(error.message, true);
+        btn.disabled = false;
+        btn.innerText = "REGISTER NOW";
+    }
+};
+
+// 2. FINISH SETUP LOGIC
+document.getElementById('setupForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const lat = document.getElementById('lat').value;
+    const photo = document.getElementById('photoBase64').value;
+    
+    if(!lat || !photo) return showToast("Dauki GPS da Hoto!", true);
+    
+    const btn = document.getElementById('setupBtn');
+    btn.disabled = true; btn.innerText = "SAVING...";
+
+    try {
+        await setDoc(doc(db, "vendor_details", auth.currentUser.uid), {
+            businessName: document.getElementById('bizName').value,
+            category: document.getElementById('bizCategory').value,
+            subCategory: document.getElementById('subCategory').value,
+            shopType: document.getElementById('shopType').value,
+            location: { lat: parseFloat(lat), lng: parseFloat(document.getElementById('lng').value) },
+            shopImage: photo,
+            status: "pending", 
+            setupComplete: true, 
+            isLive: false, // Ba zai fito a App ba tukunna
+            updatedAt: serverTimestamp()
+        });
+
+        // MAIMAKON LOGIN, SAI MU NUNA MASA VERIFICATION OVERLAY
+        document.getElementById('setupSection').style.display = 'none';
+        document.getElementById('verifySection').classList.remove('hidden');
+        document.getElementById('mainTitle').innerText = "Check Your Email";
+        
+    } catch (error) {
+        showToast(error.message, true);
+        btn.disabled = false;
     }
 };
         
+        
 
-        // STEP 2: SETUP LOGIC
-        document.getElementById('setupForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const lat = document.getElementById('lat').value;
-            const photo = document.getElementById('photoBase64').value;
-            if(!lat || !photo) return showToast("Dauki GPS da Hoto!", true);
-            
-            const btn = document.getElementById('setupBtn');
-            btn.disabled = true; btn.innerText = "SAVING...";
-            try {
-                await setDoc(doc(db, "vendor_details", auth.currentUser.uid), {
-                    businessName: document.getElementById('bizName').value,
-                    category: document.getElementById('bizCategory').value,
-                    subCategory: document.getElementById('subCategory').value,
-                    shopType: document.getElementById('shopType').value,
-                    location: { lat: parseFloat(lat), lng: parseFloat(document.getElementById('lng').value) },
-                    shopImage: photo,
-                    status: "pending", setupComplete: true, isLive: true, updatedAt: serverTimestamp()
-                });
-                showToast("An kammala! Duba Email.");
-                setTimeout(() => window.location.href = "login.html", 2500);
-            } catch (error) { showToast(error.message, true); btn.disabled = false; }
-        };
+                    window.resendEmail = async () => {
+    if (auth.currentUser) {
+        await sendEmailVerification(auth.currentUser);
+        showToast("An sake tura sabon link!");
+    }
+};
+        
     </script>
 </body>
 </html>
