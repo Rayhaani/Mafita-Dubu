@@ -6,24 +6,35 @@
     <title>Mafita Dubu | Premium Register</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Satisfy&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
         :root { --milk-bg: #FFF5E1; --royal-black: #1a1405; --dark-gold: #8b6b1b; --light-gold: #f3cf7a; --gold: #bf953f; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--milk-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
+        
         .liquid-color-circle { width: 80px; height: 80px; margin: -90px auto 15px; position: relative; z-index: 100; border-radius: 50%; border: 2px solid #ffffff; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5); background: linear-gradient(-45deg, #ffd700, #ff00ea, #00d4ff, #3dff00, #ff9100, #7028e4); background-size: 400% 400%; animation: liquidFlow 8s ease infinite; }
         @keyframes liquidFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
         .luxury-card { background: var(--royal-black); border: 2px solid var(--dark-gold); border-radius: 40px 10px; padding: 40px 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); position: relative; margin-top: 50px; }
         .header-title { font-family: 'Cinzel', serif; font-size: 1.6rem; color: var(--light-gold); text-align: center; margin-bottom: 25px; }
         .gold-input { width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(243, 207, 122, 0.2); padding: 12px 15px; border-radius: 12px; color: #fff; font-size: 0.85rem; outline: none; margin-bottom: 10px; }
         .submit-btn, .primary-btn { background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900; width: 100%; padding: 12px; border-radius: 10px; margin-top: 15px; font-size: 1rem; border: none; cursor: pointer; transition: 0.3s; }
+        
+        /* Fixed Modal Style */
         #vendorSetupModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(8px); }
         .step-layer { display: none; }
         .active { display: block; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .scanner-box { width: 100%; height: 200px; background: #000; border-radius: 15px; position: relative; overflow: hidden; margin-top: 10px; }
         video { width: 100%; height: 100%; object-fit: cover; }
+        #status-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); z-index: 10000; width: 90%; max-width: 350px; background: #1a1405; border-left: 4px solid #bf953f; padding: 15px; border-radius: 8px; transition: 0.5s; display: flex; align-items: center; gap: 12px; }
     </style>
 </head>
 <body>
+
+    <div id="status-toast">
+        <div style="color: #f3cf7a; font-weight: bold; font-size: 20px;">!</div>
+        <div><p id="toast-title" style="text-transform: uppercase; font-size: 10px; color: #888; font-weight: 800; margin: 0;">System Alert</p><p id="toast-msg" style="color: white; font-size: 12px; margin: 0;"></p></div>
+    </div>
 
     <div class="luxury-card" id="mainRegisterCard">
         <div class="liquid-color-circle"></div>
@@ -39,6 +50,9 @@
             <input type="password" id="password" class="gold-input" placeholder="Password" required>
             <button type="submit" id="regBtn" class="submit-btn">REGISTER NOW</button>
         </form>
+        <p style="color: #888; font-size: 0.75rem; text-align: center; margin-top: 20px;">
+            Already have an account? <a href="login.html" style="color: var(--light-gold); font-weight: 600;">LOGIN</a>
+        </p>
     </div>
 
     <div id="vendorSetupModal">
@@ -49,16 +63,10 @@
                 <select id="bizType" class="gold-input" style="background: #2a2210;"><option value="Store">Physical Store</option><option value="Home">Home-Based</option></select>
                 <select id="mainCategory" class="gold-input" style="background: #2a2210;" onchange="updateSubCategories()"><option value="">-- Category --</option></select>
                 <select id="subCategory" class="gold-input" style="background: #2a2210; display:none;"><option value="">-- Sub-Category --</option></select>
-                <button class="primary-btn" onclick="validateLayer1()">NEXT: SCAN</button>
+                <button class="primary-btn" onclick="validateLayer1()">NEXT: AI SCAN</button>
             </div>
-            <div class="step-layer" id="layer2">
-                <div class="scanner-box"><video id="webcam" autoplay playsinline></video></div>
-                <button class="primary-btn" id="camBtn" disabled onclick="goToLayer(3)">CONTINUE</button>
-            </div>
-            <div class="step-layer" id="layer3">
-                <input type="text" id="bizDesc" class="gold-input" placeholder="Description">
-                <button class="primary-btn" onclick="saveToFirebase()">FINISH</button>
-            </div>
+            <div class="step-layer" id="layer2"><div class="scanner-box"><video id="webcam" autoplay playsinline></video></div><button class="primary-btn" id="camBtn" disabled onclick="goToLayer(3)">CONTINUE</button></div>
+            <div class="step-layer" id="layer3"><input type="text" id="bizDesc" class="gold-input" placeholder="Description"><button class="primary-btn" onclick="saveToFirebase()">FINISH & UPLOAD</button></div>
         </div>
     </div>
 
@@ -80,24 +88,21 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // 1. AUTO REDIRECT LOGIC (Wannan ne yake gano verification link dinka)
+        // AUTO-DETECTION: Wannan zai bude Modal nan take idan mutum ya dawo daga email
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 await user.reload();
                 if (user.emailVerified) {
                     const userSnap = await getDoc(doc(db, "users", user.uid));
-                    if (userSnap.exists()) {
-                        const userData = userSnap.data();
-                        if (userData.role === "vendor" && !userData.setupComplete) {
-                            document.getElementById('mainRegisterCard').style.display = 'none';
-                            document.getElementById('vendorSetupModal').style.display = 'flex';
-                        }
+                    if (userSnap.exists() && userSnap.data().role === "vendor" && !userSnap.data().setupComplete) {
+                        document.getElementById('mainRegisterCard').style.display = 'none';
+                        document.getElementById('vendorSetupModal').style.display = 'flex';
                     }
                 }
             }
         });
 
-        // 2. REGISTER LOGIC
+        // REGISTRATION
         document.getElementById('universalRegisterForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('regBtn');
@@ -107,20 +112,23 @@
                 const password = document.getElementById('password').value;
                 const userCred = await createUserWithEmailAndPassword(auth, email, password);
                 
-                await sendEmailVerification(userCred.user, { url: 'https://mafita-dubu.vercel.app/register.html' });
+                await sendEmailVerification(userCred.user, { 
+                    url: 'https://mafita-dubu.vercel.app/register.html',
+                    handleCodeInApp: true 
+                });
                 
                 await setDoc(doc(db, "users", userCred.user.uid), {
                     fullName: document.getElementById('fullName').value,
                     role: "vendor",
                     setupComplete: false 
                 });
-                alert("An tura link email dinka. Shiga email din ka danna link din don karasa setup!");
+                alert("Mun tura link zuwa email dinka. Shiga ka danna link din don karasa setup.");
                 await signOut(auth);
                 window.location.reload();
             } catch (err) { alert(err.message); btn.disabled = false; }
         };
 
-        // 3. LIVE CATEGORIES
+        // LIVE CATEGORIES
         onSnapshot(collection(db, "app_settings"), (snap) => {
             const dropdown = document.getElementById('mainCategory');
             dropdown.innerHTML = '<option value="">-- Category --</option>';
@@ -134,8 +142,11 @@
             });
         });
 
-        // GLOBAL HELPERS
-        window.validateLayer1 = () => { goToLayer(2); startCamera(); };
+        // HELPERS
+        window.validateLayer1 = () => { 
+            if(!document.getElementById('bizName').value) { alert("Saka sunan kasuwanci!"); return; }
+            goToLayer(2); startCamera(); 
+        };
         window.goToLayer = (n) => { document.querySelectorAll('.step-layer').forEach(l => l.classList.remove('active')); document.getElementById('layer' + n).classList.add('active'); };
         async function startCamera() {
             const video = document.getElementById('webcam');
@@ -143,7 +154,26 @@
             video.srcObject = stream;
             setTimeout(() => { document.getElementById('camBtn').disabled = false; }, 2000);
         }
-        window.saveToFirebase = async () => { /* Add your save logic here */ alert("An gama!"); };
+
+        // ASALIN SAVE SCRIPT DIN KA
+        window.saveToFirebase = async () => {
+            const btn = document.querySelector('#layer3 .primary-btn');
+            btn.innerText = "UPLOADING..."; btn.disabled = true;
+            try {
+                await setDoc(doc(db, "vendors", auth.currentUser.uid), {
+                    bizName: document.getElementById('bizName').value,
+                    bizType: document.getElementById('bizType').value,
+                    category: document.getElementById('mainCategory').value,
+                    subCategory: document.getElementById('subCategory').value,
+                    status: "pending",
+                    timestamp: serverTimestamp()
+                });
+                // Update user setupComplete status
+                await setDoc(doc(db, "users", auth.currentUser.uid), { setupComplete: true }, { merge: true });
+                alert("Application dinka yana karkashin tantancewa!");
+                window.location.href = "member-dashboard.html";
+            } catch (e) { alert("Error: " + e.message); btn.disabled = false; }
+        };
     </script>
 </body>
 </html>
