@@ -125,26 +125,50 @@
             setTimeout(() => { toast.style.top = '-100px'; }, 5000);
         }
 
-        // GPS FUNCTION
-        window.startGPS = function() {
-            const gpsText = document.getElementById('gps-text');
-            const gpsBtn = document.getElementById('gpsBtn');
-            gpsText.innerText = "NEMAN LOCATION...";
+        // Function na daukar Location daidai (High Accuracy)
+window.startGPS = function() {
+    const gpsText = document.getElementById('gps-text');
+    const gpsBtn = document.getElementById('gpsBtn');
+    
+    gpsText.innerText = "ANA NEMAN INDA KAKE (GPS)...";
+    gpsBtn.disabled = true; // Hana danna shi yayin da yake nema
 
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((pos) => {
-                    document.getElementById('lat').value = pos.coords.latitude;
-                    document.getElementById('lng').value = pos.coords.longitude;
-                    gpsText.innerText = "✅ LOCATION FIXED!";
-                    gpsBtn.style.borderColor = "#00ffcc";
-                    gpsText.style.color = "#00ffcc";
-                    showToast("Masha Allah! GPS ya kama.");
-                }, () => {
-                    showToast("Kunna GPS din wayarka!", true);
-                    gpsText.innerText = "❌ SAKE GWADA GPS";
-                });
-            }
-        };
+    const options = {
+        enableHighAccuracy: true, // Amfani da madaidaicin GPS
+        timeout: 10000,          // Jira na tsawon sakan 10
+        maximumAge: 0            // Kada a yi amfani da tsohon cache
+    };
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((pos) => {
+            // Daukar Lat da Lng
+            const lat = pos.coords.latitude;
+            const lng = pos.coords.longitude;
+
+            // Adana su a hidden inputs
+            document.getElementById('lat').value = lat;
+            document.getElementById('lng').value = lng;
+            
+            // Canza kalar button da rubutu don nuna nasara
+            gpsText.innerText = "✅ LOCATION FIXED (SUCCESS)";
+            gpsBtn.style.borderColor = "#00ffcc";
+            gpsText.style.color = "#00ffcc";
+            gpsBtn.disabled = false;
+
+            showToast("An samu madaidaicin wurin shagonka!");
+        }, (err) => {
+            gpsBtn.disabled = false;
+            let errorMsg = "Kunna GPS din wayarka!";
+            if(err.code === 1) errorMsg = "Ka ba mu damar (Permission) daukar location!";
+            
+            showToast(errorMsg, true);
+            gpsText.innerText = "❌ SAKE GWADA GPS";
+        }, options);
+    } else {
+        showToast("Browser dinka ba ta da GPS.", true);
+    }
+};
+        
 
         // STEP 1: REGISTER
         document.getElementById('universalRegisterForm').onsubmit = async (e) => {
@@ -232,34 +256,103 @@ window.updateSubCategory = function() {
     }
 };
 
+
+
+        // 1. Data na Categories
+const categoryData = {
+    "Clothing": ["Men's Wear", "Women's Wear", "Children's Wear", "Traditional (Kaftan/Abaya)"],
+    "Shoes": ["Sneakers", "Corporate Shoes", "Sandals/Slippers", "Kids Shoes"],
+    "Electronics": ["Phones & Tablets", "Laptops", "Home Appliances", "Accessories"]
+};
+
+// 2. Function na nuna Sub-category
+window.updateSubCategory = function() {
+    const mainCat = document.getElementById('bizCategory').value;
+    const subCatWrapper = document.getElementById('subCatWrapper');
+    const subCatSelect = document.getElementById('subCategory');
+    
+    if (categoryData[mainCat]) {
+        subCatWrapper.classList.remove('hidden');
+        subCatSelect.innerHTML = '<option value="" disabled selected>Select Sub-category</option>';
+        categoryData[mainCat].forEach(item => {
+            const option = document.createElement('option');
+            option.value = item;
+            option.text = item;
+            subCatSelect.appendChild(option);
+        });
+    } else {
+        subCatWrapper.classList.add('hidden');
+    }
+};
+
+// 3. Active GPS Function (High Accuracy)
+window.startGPS = function() {
+    const gpsText = document.getElementById('gps-text');
+    const gpsBtn = document.getElementById('gpsBtn');
+    gpsText.innerText = "NEMAN LOCATION...";
+    gpsBtn.disabled = true;
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((pos) => {
+            document.getElementById('lat').value = pos.coords.latitude;
+            document.getElementById('lng').value = pos.coords.longitude;
+            gpsText.innerText = "✅ LOCATION FIXED!";
+            gpsBtn.style.borderColor = "#00ffcc";
+            gpsText.style.color = "#00ffcc";
+            gpsBtn.disabled = false;
+            showToast("An samu inda kake!");
+        }, () => {
+            showToast("Kunna GPS din wayarka!", true);
+            gpsText.innerText = "❌ SAKE GWADA GPS";
+            gpsBtn.disabled = false;
+        }, { enableHighAccuracy: true });
+    }
+};
+            
+
+                 
 // Gyaran Save Function (Firebase)
 document.getElementById('setupForm').onsubmit = async (e) => {
     e.preventDefault();
-    const lat = document.getElementById('lat').value;
-    if(!lat) return showToast("Dole ne ka dauki GPS Location!", true);
+    
+    // Tabbatar an dauki GPS coordinates
+    const latRaw = document.getElementById('lat').value;
+    const lngRaw = document.getElementById('lng').value;
+    
+    if(!latRaw || !lngRaw) {
+        return showToast("Dole ne ka dauki GPS Location kafin ka karasa!", true);
+    }
 
     const btn = document.getElementById('setupBtn');
-    btn.disabled = true; btn.innerText = "SAVING...";
+    btn.disabled = true; 
+    btn.innerText = "UPLOADING DATA...";
 
     try {
+        // Ajiye komai a matsayin lamba (Float) don Radar View
         await setDoc(doc(db, "vendor_details", currentUserUid), {
             businessName: document.getElementById('bizName').value,
             category: document.getElementById('bizCategory').value,
             subCategory: document.getElementById('subCategory').value,
             shopType: document.getElementById('shopType').value,
-            latitude: lat,
-            longitude: document.getElementById('lng').value,
+            location: {
+                lat: parseFloat(latRaw),
+                lng: parseFloat(lngRaw)
+            },
             status: "pending",
-            setupComplete: true
+            setupComplete: true,
+            isLive: true,
+            updatedAt: serverTimestamp()
         });
 
-        showToast("Masha Allah! Registration complete.");
+        showToast("Masha Allah! Bayananka sun isa ga Admin.");
         setTimeout(() => { window.location.href = "login.html"; }, 2500);
     } catch (error) {
-        showToast(error.message, true);
+        showToast("Error: " + error.message, true);
         btn.disabled = false;
+        btn.innerText = "RETRY SETUP";
     }
 };
+        
         
     </script>
 </body>
