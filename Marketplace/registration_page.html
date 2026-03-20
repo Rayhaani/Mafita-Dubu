@@ -8,80 +8,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --milk-bg: #FFF5E1; 
-            --royal-black: #1a1405;
-            --dark-gold: #8b6b1b;
-            --light-gold: #f3cf7a;
-            --gold: #bf953f;
-        }
-        
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--milk-bg); 
-            display: flex; align-items: center; justify-content: center; 
-            min-height: 100vh; margin: 0; padding: 20px;
-        }
-
-        .liquid-color-circle {
-            width: 80px; height: 80px;
-            margin: -90px auto 15px;
-            position: relative; z-index: 100;
-            border-radius: 50%;
-            border: 2px solid #ffffff;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            background: linear-gradient(-45deg, #ffd700, #ff00ea, #00d4ff, #3dff00, #ff9100, #7028e4);
-            background-size: 400% 400%;
-            animation: liquidFlow 8s ease infinite;
-        }
-
-        @keyframes liquidFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .luxury-card {
-            background: var(--royal-black);
-            border: 2px solid var(--dark-gold);
-            border-radius: 40px 10px;
-            padding: 40px 30px 25px;
-            width: 100%; max-width: 400px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-            position: relative; margin-top: 50px;
-        }
-
-        .header-title { 
-            font-family: 'Cinzel', serif;
-            font-size: 1.6rem; color: var(--light-gold); 
-            text-align: center; margin-bottom: 25px;
-        }
-
-        .gold-input {
-            width: 100%; background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(243, 207, 122, 0.2);
-            padding: 12px 15px; border-radius: 12px;
-            color: #fff; font-size: 0.85rem; outline: none;
-        }
-
-        .submit-btn {
-            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
-            color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900;
-            width: 100%; padding: 12px; border-radius: 10px; margin-top: 15px;
-            font-size: 1rem; border: none; cursor: pointer; transition: 0.3s;
-        }
+        :root { --milk-bg: #FFF5E1; --royal-black: #1a1405; --dark-gold: #8b6b1b; --light-gold: #f3cf7a; --gold: #bf953f; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--milk-bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .liquid-color-circle { width: 80px; height: 80px; margin: -90px auto 15px; position: relative; z-index: 100; border-radius: 50%; border: 2px solid #ffffff; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5); background: linear-gradient(-45deg, #ffd700, #ff00ea, #00d4ff, #3dff00, #ff9100, #7028e4); background-size: 400% 400%; animation: liquidFlow 8s ease infinite; }
+        @keyframes liquidFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .luxury-card { background: var(--royal-black); border: 2px solid var(--dark-gold); border-radius: 40px 10px; padding: 40px 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); position: relative; margin-top: 50px; }
+        .header-title { font-family: 'Cinzel', serif; font-size: 1.6rem; color: var(--light-gold); text-align: center; margin-bottom: 25px; }
+        .gold-input { width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(243, 207, 122, 0.2); padding: 12px 15px; border-radius: 12px; color: #fff; font-size: 0.85rem; outline: none; }
+        .submit-btn { background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900; width: 100%; padding: 12px; border-radius: 10px; margin-top: 15px; font-size: 1rem; border: none; cursor: pointer; transition: 0.3s; }
         .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-
         .login-footer { text-align: center; margin-top: 20px; color: #ffffff; font-size: 0.85rem; }
         .login-footer a { color: var(--light-gold); font-weight: 700; text-decoration: none; margin-left: 5px; }
-
-        #status-toast {
-            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-            z-index: 1000; width: 90%; max-width: 350px; background: #1a1405;
-            border-left: 4px solid #bf953f; padding: 15px; border-radius: 8px;
-            transition: 0.5s; display: flex; align-items: center; gap: 12px;
-        }
+        #status-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); z-index: 1000; width: 90%; max-width: 350px; background: #1a1405; border-left: 4px solid #bf953f; padding: 15px; border-radius: 8px; transition: 0.5s; display: flex; align-items: center; gap: 12px; }
+        
+        /* Bangaren Boye Setup Section */
+        #setupSection { display: none; }
     </style>
 </head>
 <body>
@@ -96,24 +37,48 @@
 
     <div class="luxury-card">
         <div class="liquid-color-circle"></div>
-        <h1 class="header-title">Mafita Dubu</h1>
+        <h1 class="header-title" id="mainTitle">Mafita Dubu</h1>
 
-        <form id="universalRegisterForm">
-            <div class="mb-4"><input type="text" id="fullName" class="gold-input" placeholder="Full Name" required></div>
-            <div class="mb-4"><input type="text" id="username" class="gold-input" placeholder="Username" required></div>
-            <div class="mb-4"><input type="email" id="email" class="gold-input" placeholder="Email Address" required></div>
-            
-            <div class="grid grid-cols-2 gap-4 mb-4">
-                <input type="tel" id="phone" class="gold-input" placeholder="Phone" required>
-                <input type="text" id="state" class="gold-input" placeholder="State" required>
-            </div>
+        <div id="registerSection">
+            <form id="universalRegisterForm">
+                <div class="mb-4"><input type="text" id="fullName" class="gold-input" placeholder="Full Name" required></div>
+                <div class="mb-4"><input type="text" id="username" class="gold-input" placeholder="Username" required></div>
+                <div class="mb-4"><input type="email" id="email" class="gold-input" placeholder="Email Address" required></div>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <input type="tel" id="phone" class="gold-input" placeholder="Phone" required>
+                    <input type="text" id="state" class="gold-input" placeholder="State" required>
+                </div>
+                <div class="mb-4"><input type="password" id="password" class="gold-input" placeholder="Password" required></div>
+                <button type="submit" id="regBtn" class="submit-btn">REGISTER NOW</button>
+                <div class="login-footer">Already have an account? <a href="login.html">Login</a></div>
+            </form>
+        </div>
 
-            <div class="mb-4"><input type="password" id="password" class="gold-input" placeholder="Password" required></div>
+        <div id="setupSection">
+            <p class="text-white text-[10px] text-center mb-4 opacity-70">Kammala saita kasuwancinka ta amfani da GPS</p>
+            <form id="setupForm">
+                <div class="mb-4"><input type="text" id="bizName" class="gold-input" placeholder="Business Name" required></div>
+                <div class="mb-4">
+                    <select id="bizCategory" class="gold-input bg-[#1a1405]">
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Service">Service</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
+                    <button type="button" onclick="startGPS()" id="gpsBtn" class="gold-input flex items-center justify-center gap-2 border-[#bf953f] hover:bg-[#3d2c10]">
+                        <span id="gps-icon">📍</span> 
+                        <span id="gps-text" class="text-[10px] font-bold">DAUKO LOCATION (GPS)</span>
+                    </button>
+                    <input type="hidden" id="lat">
+                    <input type="hidden" id="lng">
+                </div>
 
-            <button type="submit" id="regBtn" class="submit-btn">REGISTER NOW</button>
-            
-            <div class="login-footer">Already have an account? <a href="login.html">Login</a></div>
-        </form>
+                <button type="submit" id="setupBtn" class="submit-btn">FINISH SETUP</button>
+            </form>
+        </div>
     </div>
 
     <script type="module">
@@ -134,7 +99,9 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        function showToast(msg, isError = false) {
+        let currentUserUid = null;
+
+        window.showToast = function(msg, isError = false) {
             const toast = document.getElementById('status-toast');
             document.getElementById('toast-msg').innerText = msg;
             toast.style.borderLeftColor = isError ? '#ef4444' : '#bf953f';
@@ -142,51 +109,84 @@
             setTimeout(() => { toast.style.top = '-100px'; }, 5000);
         }
 
+        // GPS FUNCTION
+        window.startGPS = function() {
+            const gpsText = document.getElementById('gps-text');
+            const gpsBtn = document.getElementById('gpsBtn');
+            gpsText.innerText = "NEMAN LOCATION...";
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((pos) => {
+                    document.getElementById('lat').value = pos.coords.latitude;
+                    document.getElementById('lng').value = pos.coords.longitude;
+                    gpsText.innerText = "✅ LOCATION FIXED!";
+                    gpsBtn.style.borderColor = "#00ffcc";
+                    gpsText.style.color = "#00ffcc";
+                    showToast("Masha Allah! GPS ya kama.");
+                }, () => {
+                    showToast("Kunna GPS din wayarka!", true);
+                    gpsText.innerText = "❌ SAKE GWADA GPS";
+                });
+            }
+        };
+
+        // STEP 1: REGISTER
         document.getElementById('universalRegisterForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('regBtn');
-            btn.disabled = true;
-            btn.innerText = "PROCESSING...";
-
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            btn.disabled = true; btn.innerText = "PROCESSING...";
 
             try {
-                // 1. Yi Register
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
+                const userCredential = await createUserWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
+                currentUserUid = userCredential.user.uid;
 
-                // 2. Ajiye bayanan asali
-                await setDoc(doc(db, "users", user.uid), {
+                await setDoc(doc(db, "users", currentUserUid), {
                     fullName: document.getElementById('fullName').value,
                     username: document.getElementById('username').value,
-                    email: email,
-                    phone: document.getElementById('phone').value,
-                    state: document.getElementById('state').value,
+                    email: document.getElementById('email').value,
                     role: "vendor",
-                    setupComplete: false,
-                    emailVerified: false,
                     createdAt: serverTimestamp()
                 });
 
-                // 3. Tura Verification Link (Background)
-                await sendEmailVerification(user);
+                await sendEmailVerification(userCredential.user);
 
-                // 4. Bude masa Setup Modal/Page nan take
-                showToast("Account Created! Opening Setup...");
-                setTimeout(() => { 
-                    window.location.href = "vendor-setup.html"; 
-                }, 1500);
+                // Nuna Setup Overlay
+                document.getElementById('registerSection').style.display = 'none';
+                document.getElementById('setupSection').style.display = 'block';
+                document.getElementById('mainTitle').innerText = "Business Setup";
 
             } catch (error) {
-                let msg = error.message;
-                if (error.code === 'auth/email-already-in-use') msg = "Wannan email din an riga an yi amfani da shi.";
-                showToast(msg, true);
+                showToast(error.message, true);
+                btn.disabled = false; btn.innerText = "REGISTER NOW";
+            }
+        };
+
+        // STEP 2: SETUP
+        document.getElementById('setupForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const lat = document.getElementById('lat').value;
+            if(!lat) return showToast("Dole ne ka dauki GPS Location!", true);
+
+            const btn = document.getElementById('setupBtn');
+            btn.disabled = true; btn.innerText = "SAVING...";
+
+            try {
+                await setDoc(doc(db, "vendor_details", currentUserUid), {
+                    businessName: document.getElementById('bizName').value,
+                    category: document.getElementById('bizCategory').value,
+                    latitude: lat,
+                    longitude: document.getElementById('lng').value,
+                    setupComplete: true,
+                    status: "pending"
+                });
+
+                showToast("An kammala! Duba Email dinka don verify.");
+                setTimeout(() => { window.location.href = "login.html"; }, 3000);
+            } catch (error) {
+                showToast(error.message, true);
                 btn.disabled = false;
-                btn.innerText = "REGISTER NOW";
             }
         };
     </script>
 </body>
-                </html>
-                
+</html>
