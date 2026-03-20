@@ -95,7 +95,24 @@
     </form>
         </div>     
     </div>
+    
 
+    <div id="photoSection" class="mb-4 hidden">
+    <label class="block text-[#f3cf7a] text-[10px] font-bold mb-1 uppercase">Hoto/Bidiyon Shago (Shop Preview)</label>
+    <div class="relative w-full h-40 border-2 border-dashed border-[#bf953f] rounded-xl overflow-hidden bg-black/20 flex flex-col items-center justify-center cursor-pointer" onclick="document.getElementById('shopPhoto').click()">
+        <video id="cameraPreview" class="absolute inset-0 w-full h-full object-cover hidden" autoplay playsinline></video>
+        <img id="photoPreview" class="absolute inset-0 w-full h-full object-cover hidden">
+        
+        <div id="uploadUI" class="text-center">
+            <span class="text-3xl">📸</span>
+            <p class="text-[10px] text-white/70">Danna don daukar hoto</p>
+        </div>
+    </div>
+    <input type="file" id="shopPhoto" accept="image/*" capture="camera" class="hidden" onchange="previewImage(this)">
+    <input type="hidden" id="photoBase64">
+    </div>
+
+    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -143,108 +160,98 @@
             } else { subCatWrapper.classList.add('hidden'); }
         };
 
-        window.startGPS = function() {
+        
+        // Function na Preview Hoto
+window.previewImage = function(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('photoPreview').src = e.target.result;
+            document.getElementById('photoPreview').classList.remove('hidden');
+            document.getElementById('uploadUI').classList.add('hidden');
+            document.getElementById('photoBase64').value = e.target.result; // Ajiye hoton a matsayin text
+            showToast("Hoto ya hau!");
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// Gyaran startGPS don ya bude Camera
+window.startGPS = function() {
     const gpsStatusInput = document.getElementById('gpsStatus');
     const gpsBtn = document.getElementById('gpsBtn');
     
     gpsStatusInput.value = "Ana nema...";
     gpsBtn.disabled = true;
-    gpsBtn.classList.add('opacity-50');
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((pos) => {
-            const lat = pos.coords.latitude;
-            const lng = pos.coords.longitude;
-
-            // Saka koordinat a cikin hidden inputs
-            document.getElementById('lat').value = lat;
-            document.getElementById('lng').value = lng;
+            document.getElementById('lat').value = pos.coords.latitude;
+            document.getElementById('lng').value = pos.coords.longitude;
             
-            // Rubuta nasara a cikin input field din kamar na hoton
             gpsStatusInput.value = "✅ Location Fixed";
-            gpsStatusInput.classList.remove('opacity-70');
             gpsStatusInput.style.color = "#00ffcc";
-            
             gpsBtn.disabled = false;
-            gpsBtn.classList.remove('opacity-50');
-            showToast("An samu madaidaicin wurin shagonka!");
+
+            // Nuna bangaren Camera bayan an gama GPS
+            document.getElementById('photoSection').classList.remove('hidden');
+            showToast("Yanzu dauki hoton shagonka!");
         }, (err) => {
             gpsBtn.disabled = false;
-            gpsBtn.classList.remove('opacity-50');
-            gpsStatusInput.value = "❌ Ba a dauka ba";
-            showToast("Don Allah ka kunna GPS!", true);
+            showToast("Bamu damar GPS (Permission)!", true);
         }, { enableHighAccuracy: true });
-    } else {
-        showToast("Browser dinka ba ta da GPS.", true);
     }
 };
-                                                 
 
-        document.getElementById('universalRegisterForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('regBtn');
-            btn.disabled = true; btn.innerText = "PROCESSING...";
-            try {
-                const userCredential = await createUserWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
-                currentUserUid = userCredential.user.uid;
-                await setDoc(doc(db, "users", currentUserUid), {
-                    fullName: document.getElementById('fullName').value,
-                    email: document.getElementById('email').value,
-                    role: "vendor", createdAt: serverTimestamp()
-                });
-                await sendEmailVerification(userCredential.user);
-                document.getElementById('registerSection').style.display = 'none';
-                document.getElementById('setupSection').style.display = 'block';
-                document.getElementById('mainTitle').innerText = "Business Setup";
-            } catch (error) { showToast(error.message, true); btn.disabled = false; btn.innerText = "REGISTER NOW"; }
-        };
-
-        document.getElementById('setupForm').onsubmit = async (e) => {
+// Gyaran Submit (Domin magance 'Insufficient Permissions')
+document.getElementById('setupForm').onsubmit = async (e) => {
     e.preventDefault();
     
-    // 1. Tabbatar an dauki GPS (Value daga hidden inputs)
-    const latRaw = document.getElementById('lat').value;
-    const lngRaw = document.getElementById('lng').value;
+    const lat = document.getElementById('lat').value;
+    const photo = document.getElementById('photoBase64').value;
     
-    if(!latRaw || !lngRaw) {
-        return showToast("Dole ne ka danna 'Get' don daukar GPS!", true);
-    }
+    if(!lat) return showToast("Dole ne ka dauki GPS!", true);
+    if(!photo) return showToast("Don Allah dauki hoton shagonka!", true);
 
     const btn = document.getElementById('setupBtn');
     btn.disabled = true; 
-    btn.innerText = "SAVING DATA...";
+    btn.innerText = "UPLOADING...";
 
     try {
-        // 2. Ajiye bayanan a Firebase
-        await setDoc(doc(db, "vendor_details", currentUserUid), {
+        // MUHIMMI: Tabbatar currentUserUid ba null bane
+        if (!auth.currentUser) {
+            throw new Error("Ba a gano login dinka ba. Sake shiga.");
+        }
+
+        await setDoc(doc(db, "vendor_details", auth.currentUser.uid), {
             businessName: document.getElementById('bizName').value,
             category: document.getElementById('bizCategory').value,
             subCategory: document.getElementById('subCategory').value,
             shopType: document.getElementById('shopType').value,
-            // Mun canza su zuwa Float (Numbers) don Radar ta gane su
             location: { 
-                lat: parseFloat(latRaw), 
-                lng: parseFloat(lngRaw) 
+                lat: parseFloat(lat), 
+                lng: parseFloat(document.getElementById('lng').value) 
             },
-            status: "pending", 
-            setupComplete: true, 
-            isLive: true, 
+            shopImage: photo, // Hoton da aka dauka
+            status: "pending",
+            setupComplete: true,
+            isLive: true,
             updatedAt: serverTimestamp()
         });
 
-        showToast("Masha Allah! Registration dinka ya kammala.");
-        
-        // 3. Kai shi shafin login bayan sakan 2.5
-        setTimeout(() => { 
-            window.location.href = "login.html"; 
-        }, 2500);
+        showToast("Masha Allah! Komai ya kammala.");
+        setTimeout(() => { window.location.href = "login.html"; }, 2500);
 
-    } catch (error) { 
-        showToast("An samu matsala: " + error.message, true); 
-        btn.disabled = false; 
+    } catch (error) {
+        console.error("Firebase Error:", error);
+        showToast("Error: " + error.message, true);
+        btn.disabled = false;
         btn.innerText = "FINISH SETUP";
     }
 };
+        
+
+        
         
     </script>
 </body>
