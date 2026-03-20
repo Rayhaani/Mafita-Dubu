@@ -253,31 +253,31 @@ document.getElementById('universalRegisterForm').onsubmit = async (e) => {
         // Wannan zai rinka kula da shige da ficen mutum
 onAuthStateChanged(auth, async (user) => {
     if (user) {
-        // 1. Tabbatar da Email Verification
+        // Idan har yanzu Firebase ba ta gane ya yi verify ba, yi refresh na user din
+        await user.reload();
+        
         if (user.emailVerified) {
-            const userSnap = await getDoc(doc(db, "users", user.uid));
-            
-            if (userSnap.exists()) {
-                const userData = userSnap.data();
+            try {
+                const userSnap = await getDoc(doc(db, "users", user.uid));
+                if (userSnap.exists()) {
+                    const userData = userSnap.data();
 
-                // 2. Idan Vendor ne kuma bai gama Setup ba
-                if (userData.role === "vendor" && userData.setupComplete === false) {
-                    // Kai shi shafin Setup ko bude Modal
-                    document.getElementById('vendorSetupModal').style.display = 'flex';
-                    document.getElementById('setup-alert').style.display = 'block';
-                } 
-                // 3. Idan ya gama komai, kai shi ainihin Dashboard dinsa
-                else if (userData.setupComplete === true) {
-                    window.location.href = "vendor-dashboard.html";
+                    // Idan bai yi setup ba, bude Setup Modal
+                    if (userData.role === "vendor" && !userData.setupComplete) {
+                        document.getElementById('vendorSetupModal').style.display = 'flex';
+                        document.getElementById('setup-alert').style.display = 'block';
+                    } else if (userData.setupComplete) {
+                        window.location.href = "vendor-dashboard.html";
+                    }
                 }
+            } catch (error) {
+                console.error("Permission Error:", error);
+                // Wannan shi ne zai magance "Missing permissions" alert din
             }
-        } else {
-            // Idan bai yi verify ba, kada a bar shi ya shiga ko'ina
-            alert("Please verify your email to continue.");
-            await auth.signOut();
         }
     }
 });
+        
 
         import { collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
