@@ -25,10 +25,7 @@
 
     <div id="status-toast">
         <div style="color: #f3cf7a; font-weight: bold; font-size: 20px;">!</div>
-        <div>
-            <p id="toast-title" style="text-transform: uppercase; font-size: 10px; color: #888; font-weight: 800; margin: 0;">System Alert</p>
-            <p id="toast-msg" style="color: white; font-size: 12px; margin: 0;"></p>
-        </div>
+        <div><p id="toast-msg" style="color: white; font-size: 12px; margin: 0;"></p></div>
     </div>
 
     <div class="luxury-card">
@@ -49,70 +46,54 @@
             </form>
         </div>
 
-
         <div id="setupSection">
-    <p class="text-white text-[10px] text-center mb-4 opacity-70">Saita bayanan kasuwancinka daki-daki</p>
-    <form id="setupForm">
-        <div class="mb-4">
-            <input type="text" id="bizName" class="gold-input" placeholder="Business Name" required>
-        </div>
+            <p class="text-white text-[10px] text-center mb-4 opacity-70">Saita bayanan kasuwancinka daki-daki</p>
+            <form id="setupForm">
+                <div class="mb-4"><input type="text" id="bizName" class="gold-input" placeholder="Business Name" required></div>
+                <div class="mb-4">
+                    <select id="bizCategory" class="gold-input bg-[#1a1405]" onchange="updateSubCategory()" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="Clothing">Clothing (Tufafi)</option>
+                        <option value="Shoes">Shoes (Takalmi)</option>
+                        <option value="Electronics">Electronics</option>
+                    </select>
+                </div>
+                <div id="subCatWrapper" class="mb-4 hidden">
+                    <select id="subCategory" class="gold-input bg-[#1a1405]"></select>
+                </div>
+                <div class="mb-4">
+                    <select id="shopType" class="gold-input bg-[#1a1405]" required>
+                        <option value="" disabled selected>Shop Type</option>
+                        <option value="Physical">Physical Shop</option>
+                        <option value="Home">Home-based</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-[#f3cf7a] text-[10px] font-bold mb-1 uppercase">Shop Location (GPS)</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="gpsStatus" class="gold-input flex-1 opacity-70" placeholder="Ba a dauki location ba" readonly>
+                        <button type="button" onclick="startGPS()" id="gpsBtn" class="bg-[#22c55e] hover:bg-[#16a34a] text-white px-4 py-2 rounded-xl flex shadow-lg">
+                            <span class="p-2">📍 Get</span>
+                        </button>
+                    </div>
+                    <input type="hidden" id="lat"><input type="hidden" id="lng">
+                </div>
 
-        <div class="mb-4">
-            <select id="bizCategory" class="gold-input bg-[#1a1405]" onchange="updateSubCategory()" required>
-                <option value="" disabled selected>Select Category</option>
-                <option value="Clothing">Clothing (Tufafi)</option>
-                <option value="Shoes">Shoes (Takalmi)</option>
-                <option value="Electronics">Electronics</option>
-            </select>
-        </div>
+                <div id="photoSection" class="mb-4 hidden">
+                    <label class="block text-[#f3cf7a] text-[10px] font-bold mb-1 uppercase">Hoto/Bidiyon Shago</label>
+                    <div class="relative w-full h-32 border-2 border-dashed border-[#bf953f] rounded-xl flex flex-col items-center justify-center cursor-pointer overflow-hidden" onclick="document.getElementById('shopPhoto').click()">
+                        <img id="photoPreview" class="absolute inset-0 w-full h-full object-cover hidden">
+                        <div id="uploadUI" class="text-center"><span class="text-2xl">📸</span><p class="text-[10px] text-white/50">Danna don daukar hoto</p></div>
+                    </div>
+                    <input type="file" id="shopPhoto" accept="image/*" capture="camera" class="hidden" onchange="previewImage(this)">
+                    <input type="hidden" id="photoBase64">
+                </div>
 
-        <div id="subCatWrapper" class="mb-4 hidden">
-            <select id="subCategory" class="gold-input bg-[#1a1405]"></select>
-        </div>
-
-        <div class="mb-4">
-            <select id="shopType" class="gold-input bg-[#1a1405]" required>
-                <option value="" disabled selected>Shop Type</option>
-                <option value="Physical">Physical Shop (Ina da Shago)</option>
-                <option value="Home">Home-based (Daga Gida nake aiki)</option>
-            </select>
-        </div>
-        
-        <div class="mb-4">
-            <label class="block text-[#f3cf7a] text-[10px] font-bold mb-1 uppercase">Shop Location (GPS)</label>
-            <div class="flex gap-2">
-                <input type="text" id="gpsStatus" class="gold-input flex-1 opacity-70" placeholder="Ba a dauki location ba" readonly>
-                <button type="button" onclick="startGPS()" id="gpsBtn" class="bg-[#22c55e] hover:bg-[#16a34a] text-white px-4 py-2 rounded-xl flex items-center gap-1 transition-all shadow-lg active:scale-95">
-                    <span class="text-lg">📍</span>
-                    <span class="font-bold text-xs">Get</span>
-                </button>
-            </div>
-            <input type="hidden" id="lat">
-            <input type="hidden" id="lng">
-        </div>
-
-        <button type="submit" id="setupBtn" class="submit-btn">FINISH SETUP</button>
-    </form>
+                <button type="submit" id="setupBtn" class="submit-btn">FINISH SETUP</button>
+            </form>
         </div>     
     </div>
-    
 
-    <div id="photoSection" class="mb-4 hidden">
-    <label class="block text-[#f3cf7a] text-[10px] font-bold mb-1 uppercase">Hoto/Bidiyon Shago (Shop Preview)</label>
-    <div class="relative w-full h-40 border-2 border-dashed border-[#bf953f] rounded-xl overflow-hidden bg-black/20 flex flex-col items-center justify-center cursor-pointer" onclick="document.getElementById('shopPhoto').click()">
-        <video id="cameraPreview" class="absolute inset-0 w-full h-full object-cover hidden" autoplay playsinline></video>
-        <img id="photoPreview" class="absolute inset-0 w-full h-full object-cover hidden">
-        
-        <div id="uploadUI" class="text-center">
-            <span class="text-3xl">📸</span>
-            <p class="text-[10px] text-white/70">Danna don daukar hoto</p>
-        </div>
-    </div>
-    <input type="file" id="shopPhoto" accept="image/*" capture="camera" class="hidden" onchange="previewImage(this)">
-    <input type="hidden" id="photoBase64">
-    </div>
-
-    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -130,7 +111,6 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        let currentUserUid = null;
 
         const categoryData = {
             "Clothing": ["Men's Wear", "Women's Wear", "Children's Wear", "Traditional (Kaftan/Abaya)"],
@@ -143,7 +123,7 @@
             document.getElementById('toast-msg').innerText = msg;
             toast.style.borderLeftColor = isError ? '#ef4444' : '#bf953f';
             toast.style.top = '20px';
-            setTimeout(() => { toast.style.top = '-100px'; }, 5000);
+            setTimeout(() => { toast.style.top = '-100px'; }, 4000);
         }
 
         window.updateSubCategory = function() {
@@ -157,102 +137,78 @@
                     const opt = document.createElement('option'); opt.value = opt.text = item;
                     subCatSelect.appendChild(opt);
                 });
-            } else { subCatWrapper.classList.add('hidden'); }
+            }
         };
 
-        
-        // Function na Preview Hoto
-window.previewImage = function(input) {
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('photoPreview').src = e.target.result;
-            document.getElementById('photoPreview').classList.remove('hidden');
-            document.getElementById('uploadUI').classList.add('hidden');
-            document.getElementById('photoBase64').value = e.target.result; // Ajiye hoton a matsayin text
-            showToast("Hoto ya hau!");
-        }
-        reader.readAsDataURL(input.files[0]);
-    }
-}
+        window.startGPS = function() {
+            const status = document.getElementById('gpsStatus');
+            status.value = "Ana nema...";
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((pos) => {
+                    document.getElementById('lat').value = pos.coords.latitude;
+                    document.getElementById('lng').value = pos.coords.longitude;
+                    status.value = "✅ Location Fixed";
+                    status.style.color = "#00ffcc";
+                    document.getElementById('photoSection').classList.remove('hidden');
+                    showToast("GPS ya hau! Dauki hoton shago.");
+                }, () => showToast("Kunna GPS!", true), { enableHighAccuracy: true });
+            }
+        };
 
-// Gyaran startGPS don ya bude Camera
-window.startGPS = function() {
-    const gpsStatusInput = document.getElementById('gpsStatus');
-    const gpsBtn = document.getElementById('gpsBtn');
-    
-    gpsStatusInput.value = "Ana nema...";
-    gpsBtn.disabled = true;
+        window.previewImage = function(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('photoPreview').src = e.target.result;
+                    document.getElementById('photoPreview').classList.remove('hidden');
+                    document.getElementById('uploadUI').classList.add('hidden');
+                    document.getElementById('photoBase64').value = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        };
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((pos) => {
-            document.getElementById('lat').value = pos.coords.latitude;
-            document.getElementById('lng').value = pos.coords.longitude;
+        // STEP 1: REGISTER LOGIC
+        document.getElementById('universalRegisterForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('regBtn');
+            btn.disabled = true; btn.innerText = "PROCESSING...";
+            try {
+                const userCred = await createUserWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
+                await setDoc(doc(db, "users", userCred.user.uid), {
+                    fullName: document.getElementById('fullName').value,
+                    email: document.getElementById('email').value,
+                    role: "vendor", createdAt: serverTimestamp()
+                });
+                document.getElementById('registerSection').style.display = 'none';
+                document.getElementById('setupSection').style.display = 'block';
+                document.getElementById('mainTitle').innerText = "Business Setup";
+            } catch (error) { showToast(error.message, true); btn.disabled = false; btn.innerText = "REGISTER NOW"; }
+        };
+
+        // STEP 2: SETUP LOGIC
+        document.getElementById('setupForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const lat = document.getElementById('lat').value;
+            const photo = document.getElementById('photoBase64').value;
+            if(!lat || !photo) return showToast("Dauki GPS da Hoto!", true);
             
-            gpsStatusInput.value = "✅ Location Fixed";
-            gpsStatusInput.style.color = "#00ffcc";
-            gpsBtn.disabled = false;
-
-            // Nuna bangaren Camera bayan an gama GPS
-            document.getElementById('photoSection').classList.remove('hidden');
-            showToast("Yanzu dauki hoton shagonka!");
-        }, (err) => {
-            gpsBtn.disabled = false;
-            showToast("Bamu damar GPS (Permission)!", true);
-        }, { enableHighAccuracy: true });
-    }
-};
-
-// Gyaran Submit (Domin magance 'Insufficient Permissions')
-document.getElementById('setupForm').onsubmit = async (e) => {
-    e.preventDefault();
-    
-    const lat = document.getElementById('lat').value;
-    const photo = document.getElementById('photoBase64').value;
-    
-    if(!lat) return showToast("Dole ne ka dauki GPS!", true);
-    if(!photo) return showToast("Don Allah dauki hoton shagonka!", true);
-
-    const btn = document.getElementById('setupBtn');
-    btn.disabled = true; 
-    btn.innerText = "UPLOADING...";
-
-    try {
-        // MUHIMMI: Tabbatar currentUserUid ba null bane
-        if (!auth.currentUser) {
-            throw new Error("Ba a gano login dinka ba. Sake shiga.");
-        }
-
-        await setDoc(doc(db, "vendor_details", auth.currentUser.uid), {
-            businessName: document.getElementById('bizName').value,
-            category: document.getElementById('bizCategory').value,
-            subCategory: document.getElementById('subCategory').value,
-            shopType: document.getElementById('shopType').value,
-            location: { 
-                lat: parseFloat(lat), 
-                lng: parseFloat(document.getElementById('lng').value) 
-            },
-            shopImage: photo, // Hoton da aka dauka
-            status: "pending",
-            setupComplete: true,
-            isLive: true,
-            updatedAt: serverTimestamp()
-        });
-
-        showToast("Masha Allah! Komai ya kammala.");
-        setTimeout(() => { window.location.href = "login.html"; }, 2500);
-
-    } catch (error) {
-        console.error("Firebase Error:", error);
-        showToast("Error: " + error.message, true);
-        btn.disabled = false;
-        btn.innerText = "FINISH SETUP";
-    }
-};
-        
-
-        
-        
+            const btn = document.getElementById('setupBtn');
+            btn.disabled = true; btn.innerText = "SAVING...";
+            try {
+                await setDoc(doc(db, "vendor_details", auth.currentUser.uid), {
+                    businessName: document.getElementById('bizName').value,
+                    category: document.getElementById('bizCategory').value,
+                    subCategory: document.getElementById('subCategory').value,
+                    shopType: document.getElementById('shopType').value,
+                    location: { lat: parseFloat(lat), lng: parseFloat(document.getElementById('lng').value) },
+                    shopImage: photo,
+                    status: "pending", setupComplete: true, isLive: true, updatedAt: serverTimestamp()
+                });
+                showToast("An kammala! Duba Email.");
+                setTimeout(() => window.location.href = "login.html", 2500);
+            } catch (error) { showToast(error.message, true); btn.disabled = false; }
+        };
     </script>
 </body>
 </html>
