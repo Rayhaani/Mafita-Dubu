@@ -158,7 +158,7 @@
         };
 
         // REGISTRATION
-        document.getElementById('universalRegisterForm').onsubmit = async (e) => {
+document.getElementById('universalRegisterForm').onsubmit = async (e) => {
     e.preventDefault();
     const btn = document.getElementById('regBtn');
     btn.disabled = true;
@@ -168,25 +168,32 @@
         const password = document.getElementById('password').value;
 
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        await sendEmailVerification(userCredential.user);
+        
+        // Wannan shi ne sirrin: Gaya wa Firebase inda zai dawo da mutum bayan ya yi verify
+        const actionCodeSettings = {
+            url: 'https://afita-dubu.vercel.app/register.html', // Saka link din shafin register dinka anan
+            handleCodeInApp: true,
+        };
 
-        // Ajiye matsayinsa a matsayin wanda bai gama Setup ba
+        await sendEmailVerification(userCredential.user, actionCodeSettings);
+
         await setDoc(doc(db, "users", userCredential.user.uid), {
             fullName: document.getElementById('fullName').value,
             role: "vendor",
             setupComplete: false 
         });
 
-        alert("Masha Allah! Mun tura sako zuwa email dinka. Don Allah danna link din dake ciki sannan ka dawo kayi Login domin karasa setup din kasuwancinka.");
+        alert("Masha Allah! Mun tura sako zuwa email dinka. Shiga email dinka ka danna link din, sannan system din zai dawo da kai nan kai tsaye don karasa setup.");
         
-        await auth.signOut(); // Fitar dashi nan take
-        window.location.href = "login.html";
+        await auth.signOut(); 
+        window.location.reload();
 
     } catch (error) {
         btn.disabled = false;
         alert(error.message);
     }
 };
+        
         
         
 
@@ -271,7 +278,48 @@ onAuthStateChanged(auth, async (user) => {
         }
     }
 });
-        
+
+        import { collection, onSnapshot, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// Wannan zai dauko categories daga Admin Radar kai tsaye
+onSnapshot(collection(db, "app_settings"), (snap) => {
+    const mainCatDropdown = document.getElementById('mainCategory');
+    mainCatDropdown.innerHTML = '<option value="">-- Main Category --</option>';
+    
+    window.allCategories = {}; // Adana su a memory don amfanin sub-categories
+
+    snap.forEach(doc => {
+        const data = doc.data();
+        if(data.type === "category_list") {
+            const option = document.createElement('option');
+            option.value = data.name;
+            option.text = data.name;
+            mainCatDropdown.appendChild(option);
+            
+            // Adana sub-categories din kowanne
+            window.allCategories[data.name] = data.subCategories;
+        }
+    });
+});
+
+// Gyaran function din Sub-Categories
+window.updateSubCategories = () => {
+    const mainCat = document.getElementById('mainCategory').value;
+    const subCatDropdown = document.getElementById('subCategory');
+    subCatDropdown.innerHTML = '<option value="">-- Sub-Category --</option>';
+    
+    if (mainCat && window.allCategories[mainCat]) {
+        subCatDropdown.style.display = 'block';
+        window.allCategories[mainCat].forEach(sub => {
+            const option = document.createElement('option');
+            option.value = sub; option.text = sub;
+            subCatDropdown.appendChild(option);
+        });
+    } else { 
+        subCatDropdown.style.display = 'none'; 
+    }
+};
+                    
                 
     </script>
 </body>
