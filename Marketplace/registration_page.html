@@ -95,7 +95,13 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { 
+    getAuth, 
+    createUserWithEmailAndPassword, 
+    sendEmailVerification, 
+    onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        
         import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -140,25 +146,42 @@
 
         // REGISTRATION
         document.getElementById('universalRegisterForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('regBtn');
-            btn.disabled = true; btn.innerText = "PROCESSING...";
-            try {
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                await setDoc(doc(db, "users", userCredential.user.uid), {
-                    fullName: document.getElementById('fullName').value,
-                    role: "vendor",
-                    createdAt: serverTimestamp()
-                });
-                showToast("Success! Opening Setup...");
-                setTimeout(() => { document.getElementById('vendorSetupModal').style.display = 'flex'; }, 1500);
-            } catch (error) {
-                btn.disabled = false; btn.innerText = "REGISTER NOW";
-                showToast(error.message, true);
-            }
-        };
+    e.preventDefault();
+    const btn = document.getElementById('regBtn');
+    btn.disabled = true; btn.innerText = "PROCESSING...";
+    
+    try {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        // 1. Kirkirar User
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // 2. Tura Email Verification (Matsala ta 2)
+        await sendEmailVerification(user);
+
+        // 3. Ajiye bayanan Role a matsayin 'vendor'
+        await setDoc(doc(db, "users", user.uid), {
+            fullName: document.getElementById('fullName').value,
+            email: email,
+            role: "vendor", // Wannan zai hana system din korarka
+            createdAt: serverTimestamp()
+        });
+
+        btn.innerText = "CHECK YOUR EMAIL!";
+        showToast("An yi nasara! Duba email dinka ka danna link din verification kafin ka ci gaba.", false);
+        
+        // Maimakon bude Setup Modal kai tsaye, za mu dakata har sai ya yi verify
+        alert("Mun tura sako zuwa email dinka. Don Allah je ka danna link din dake ciki sannan ka dawo kayi Login.");
+        window.location.reload(); 
+
+    } catch (error) {
+        btn.disabled = false; btn.innerText = "REGISTER NOW";
+        showToast(error.message, true);
+    }
+};
+        
 
         // SETUP FUNCTIONS
         window.startGPS = () => {
@@ -211,6 +234,35 @@
                 window.location.href = "member-dashboard.html";
             } catch (e) { alert("Error: " + e.message); btn.disabled = false; }
         };
+
+       
+        // Wannan zai rinka kula da shige da ficen mutum
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        // Idan bai yi email verification ba, a kore shi
+        if (!user.emailVerified) {
+            // Idan yana kokarin shiga setup ne, mu dakatar da shi
+            if(document.getElementById('vendorSetupModal').style.display === 'flex') {
+                alert("Don Allah duba email dinka kayi verify kafin ka karasa Setup!");
+                window.location.reload();
+            }
+            return;
+        }
+
+        // Duba Role dinsa a Firestore (Matsala ta 3)
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists()) {
+            const userData = userSnap.data();
+            // Idan Role dinsa vendor ne, nuna masa Setup Modal idan bai gama ba
+            if (userData.role === "vendor") {
+                console.log("Welcome Vendor: " + userData.fullName);
+            }
+        }
+    }
+});
+                
     </script>
 </body>
 </html>
