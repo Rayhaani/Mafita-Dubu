@@ -53,6 +53,19 @@
     </div>
 
     <div id="vendorSetupModal">
+
+
+        <div id="setup-alert" class="bg-yellow-600/10 border-b border-yellow-600/20 p-4 mb-6 animate-pulse">
+    <div class="flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-yellow-500 text-xl"></i>
+        <div>
+            <h3 class="text-yellow-500 font-bold text-xs uppercase tracking-widest">Email Verified Successfully!</h3>
+            <p class="text-gray-400 text-[10px] mt-1">Sannu da zuwa! Don Allah karasa cike bayanan kasuwancinka a kasa domin ka fara baje kolin hajarka a duniyar <b>Mafita Dubu</b>.</p>
+        </div>
+    </div>
+        </div>
+
+        
         <div class="luxury-card" style="margin-top:0;">
             <h2 style="font-family: 'Cinzel'; color: #fcf6ba; text-align: center; margin-bottom: 20px;">Vendor Setup</h2>
             
@@ -148,39 +161,33 @@
         document.getElementById('universalRegisterForm').onsubmit = async (e) => {
     e.preventDefault();
     const btn = document.getElementById('regBtn');
-    btn.disabled = true; btn.innerText = "PROCESSING...";
+    btn.disabled = true;
     
     try {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-        
-        // 1. Kirkirar User
+
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+        await sendEmailVerification(userCredential.user);
 
-        // 2. Tura Email Verification (Matsala ta 2)
-        await sendEmailVerification(user);
-
-        // 3. Ajiye bayanan Role a matsayin 'vendor'
-        await setDoc(doc(db, "users", user.uid), {
+        // Ajiye matsayinsa a matsayin wanda bai gama Setup ba
+        await setDoc(doc(db, "users", userCredential.user.uid), {
             fullName: document.getElementById('fullName').value,
-            email: email,
-            role: "vendor", // Wannan zai hana system din korarka
-            createdAt: serverTimestamp()
+            role: "vendor",
+            setupComplete: false 
         });
 
-        btn.innerText = "CHECK YOUR EMAIL!";
-        showToast("An yi nasara! Duba email dinka ka danna link din verification kafin ka ci gaba.", false);
+        alert("Masha Allah! Mun tura sako zuwa email dinka. Don Allah danna link din dake ciki sannan ka dawo kayi Login domin karasa setup din kasuwancinka.");
         
-        // Maimakon bude Setup Modal kai tsaye, za mu dakata har sai ya yi verify
-        alert("Mun tura sako zuwa email dinka. Don Allah je ka danna link din dake ciki sannan ka dawo kayi Login.");
-        window.location.reload(); 
+        await auth.signOut(); // Fitar dashi nan take
+        window.location.href = "login.html";
 
     } catch (error) {
-        btn.disabled = false; btn.innerText = "REGISTER NOW";
-        showToast(error.message, true);
+        btn.disabled = false;
+        alert(error.message);
     }
 };
+        
         
 
         // SETUP FUNCTIONS
@@ -239,29 +246,32 @@
         // Wannan zai rinka kula da shige da ficen mutum
 onAuthStateChanged(auth, async (user) => {
     if (user) {
-        // Idan bai yi email verification ba, a kore shi
-        if (!user.emailVerified) {
-            // Idan yana kokarin shiga setup ne, mu dakatar da shi
-            if(document.getElementById('vendorSetupModal').style.display === 'flex') {
-                alert("Don Allah duba email dinka kayi verify kafin ka karasa Setup!");
-                window.location.reload();
-            }
-            return;
-        }
+        // 1. Tabbatar da Email Verification
+        if (user.emailVerified) {
+            const userSnap = await getDoc(doc(db, "users", user.uid));
+            
+            if (userSnap.exists()) {
+                const userData = userSnap.data();
 
-        // Duba Role dinsa a Firestore (Matsala ta 3)
-        const userRef = doc(db, "users", user.uid);
-        const userSnap = await getDoc(userRef);
-
-        if (userSnap.exists()) {
-            const userData = userSnap.data();
-            // Idan Role dinsa vendor ne, nuna masa Setup Modal idan bai gama ba
-            if (userData.role === "vendor") {
-                console.log("Welcome Vendor: " + userData.fullName);
+                // 2. Idan Vendor ne kuma bai gama Setup ba
+                if (userData.role === "vendor" && userData.setupComplete === false) {
+                    // Kai shi shafin Setup ko bude Modal
+                    document.getElementById('vendorSetupModal').style.display = 'flex';
+                    document.getElementById('setup-alert').style.display = 'block';
+                } 
+                // 3. Idan ya gama komai, kai shi ainihin Dashboard dinsa
+                else if (userData.setupComplete === true) {
+                    window.location.href = "vendor-dashboard.html";
+                }
             }
+        } else {
+            // Idan bai yi verify ba, kada a bar shi ya shiga ko'ina
+            alert("Please verify your email to continue.");
+            await auth.signOut();
         }
     }
 });
+        
                 
     </script>
 </body>
