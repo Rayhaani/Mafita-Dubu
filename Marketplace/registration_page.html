@@ -301,7 +301,45 @@ onSnapshot(collection(db, "app_settings"), (snap) => {
     });
 });
 
-                    
+       <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    // ... (Saka Firebase Config dinka anan)
+
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            // Refresh bayanan user don tabbatar ya riga ya danna link
+            await user.reload();
+
+            if (user.emailVerified) {
+                try {
+                    const userSnap = await getDoc(doc(db, "users", user.uid));
+                    if (userSnap.exists()) {
+                        const userData = userSnap.data();
+
+                        // Idan Vendor ne kuma bai gama setup ba, nuna masa Modal din nan take
+                        if (userData.role === "vendor" && userData.setupComplete === false) {
+                            // Goge Form din Register don kada ya dame shi
+                            document.querySelector('.luxury-card').style.display = 'none';
+                            
+                            // Bude Setup Modal kai tsaye
+                            document.getElementById('vendorSetupModal').style.display = 'flex';
+                            document.getElementById('setup-alert').style.display = 'block';
+                        } 
+                        else if (userData.setupComplete === true) {
+                            window.location.href = "vendor-dashboard.html";
+                        }
+                    }
+                } catch (error) {
+                    console.error("Error:", error); // Magance 'Insufficient permissions'
+                }
+            }
+        }
+    });
+</script>
+    
                 
     </script>
 </body>
