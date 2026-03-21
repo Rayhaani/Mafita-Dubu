@@ -118,8 +118,9 @@
             if(!user.status || user.status === 'pending') {
                 pending++;
                 grid.innerHTML += `
-                <div class="glass-card p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 reveal">
-                    <div class="flex items-center gap-8">
+                grid.innerHTML += `
+                <div class="glass-card w-full p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 reveal">
+                  <div class="flex items-center gap-8">
                         <div class="h-20 w-20 bg-gradient-to-br from-white to-gray-600 rounded-full flex items-center justify-center text-black text-2xl font-black italic">
                             ${(user.fullName || 'A').charAt(0)}
                         </div>
