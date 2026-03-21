@@ -3,239 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORE INFRASTRUCTURE</title>
+    <title>ARCHITECT | CORE INFRASTRUCTURE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-main: #020202; --panel-bg: rgba(10, 10, 10, 0.75); --border-color: rgba(255, 255, 255, 0.05); }
+        :root { --bg-main: #000000; --panel-bg: #0a0a0a; --border-color: rgba(255, 255, 255, 0.08); }
         
         body { 
             background-color: var(--bg-main); color: #ffffff; 
             font-family: 'Quicksand', sans-serif;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.03) 0%, transparent 40%);
+            -webkit-font-smoothing: antialiased;
         }
         .syne { font-family: 'Syne', sans-serif; }
 
-        /* Animated Background Orbs */
-        .orb {
-            position: fixed; width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
-            z-index: -1; border-radius: 50%; animation: float 20s infinite alternate;
-        }
-
-        @keyframes float {
-            from { transform: translate(0, 0); }
-            to { transform: translate(100px, 100px); }
-        }
-
-        /* Futuristic Panel Design */
         .panel-container {
             background: var(--panel-bg);
-            backdrop-filter: blur(25px);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 12px;
+            transition: border 0.3s ease;
         }
-        .panel-container:hover { border-color: rgba(255, 255, 255, 0.15); box-shadow: 0 0 40px rgba(255,255,255,0.02); }
+        .panel-container:hover { border-color: rgba(255, 255, 255, 0.15); }
 
         .standard-input {
-            background: rgba(255, 255, 255, 0.02);
+            background: #111111;
             border: 1px solid var(--border-color);
-            border-radius: 12px; color: white; padding: 14px 18px;
-            transition: 0.3s;
+            border-radius: 8px;
+            color: white;
+            padding: 12px 16px;
+            width: 100%;
+            font-size: 14px;
+            transition: all 0.3s ease;
         }
-        .standard-input:focus { background: rgba(255, 255, 255, 0.05); border-color: rgba(255,255,255,0.3); outline: none; }
+        .standard-input:focus { border-color: white; outline: none; background: #161616; }
 
         .nav-link {
-            font-size: 10px; font-weight: 700; letter-spacing: 3px;
-            padding: 12px 28px; border-radius: 10px; transition: 0.4s;
-            color: rgba(255,255,255,0.3); border: 1px solid transparent;
+            font-size: 10px; font-weight: 700; letter-spacing: 2px;
+            padding: 10px 24px; border-radius: 6px;
+            transition: all 0.3s ease; border: 1px solid transparent;
+            color: rgba(255,255,255,0.4);
         }
-        .nav-link.active { background: white; color: black; box-shadow: 0 0 25px rgba(255,255,255,0.2); }
+        .nav-link.active { 
+            background: white; color: black; border-color: white;
+        }
+        .nav-link:hover:not(.active) { color: white; border-color: var(--border-color); }
 
         .data-row {
-            background: rgba(255, 255, 255, 0.01);
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border-color);
-            border-radius: 14px; padding: 18px 24px;
+            border-radius: 8px;
+            padding: 14px 20px;
             display: flex; justify-content: space-between; align-items: center;
-            transition: 0.3s; cursor: pointer;
+            transition: background 0.2s;
+            margin-bottom: 8px;
         }
-        .data-row:hover { background: rgba(255, 255, 255, 0.04); transform: translateX(5px); }
-        .data-row.active-row { border-color: white; background: rgba(255, 255, 255, 0.06); }
+        .data-row:hover { background: rgba(255, 255, 255, 0.04); }
 
-        .btn-execute {
-            background: white; color: black; font-weight: 800; font-size: 10px;
-            letter-spacing: 2px; text-transform: uppercase;
-            padding: 14px 30px; border-radius: 12px; transition: 0.3s;
-        }
-        .btn-execute:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
-        .btn-execute:active { transform: translateY(0); }
-
-        .custom-scroll::-webkit-scrollbar { width: 3px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
     </style>
 </head>
-<body class="p-6 md:p-12 lg:p-16">
-    <div class="orb" style="top: 10%; left: 10%;"></div>
-    <div class="orb" style="bottom: 10%; right: 10%; animation-delay: -5s;"></div>
+<body class="p-5 md:p-12 lg:p-16">
 
-    <header class="max-w-7xl mx-auto mb-20 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10">
+    <header class="max-w-6xl mx-auto mb-16 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
         <div>
-            <div class="flex items-center gap-3 mb-3">
-                <div class="h-[2px] w-12 bg-white"></div>
-                <p class="text-[10px] font-bold tracking-[0.6em] opacity-40 uppercase">Global Market Infrastructure</p>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="h-1 w-8 bg-white"></div>
+                <p class="text-[9px] font-bold tracking-[0.5em] opacity-40 uppercase">System Core v2.0</p>
             </div>
-            <h1 class="syne text-4xl font-extrabold tracking-tighter uppercase leading-none">Category <span class="opacity-20 italic">Architect</span></h1>
+            <h1 class="syne text-3xl font-extrabold tracking-tighter uppercase">Infrastructure <span class="opacity-20">Control</span></h1>
         </div>
         
-        <nav class="flex p-1.5 bg-white/5 backdrop-blur-md rounded-2xl border border-white/5 w-full lg:w-auto overflow-x-auto no-scrollbar">
+        <nav class="flex flex-wrap gap-2 p-1 bg-white/5 rounded-lg border border-white/5 w-full lg:w-auto">
             <button onclick="switchMode('vendor')" id="mode-vendor" class="nav-link active flex-grow lg:flex-none">VENDORS</button>
-            <button onclick="switchMode('lab')" id="mode-lab" class="nav-link flex-grow lg:flex-none">LABS</button>
+            <button onclick="switchMode('lab')" id="mode-lab" class="nav-link flex-grow lg:flex-none">LABORATORIES</button>
             <button onclick="switchMode('expert')" id="mode-expert" class="nav-link flex-grow lg:flex-none">EXPERTS</button>
         </nav>
     </header>
 
-    <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10">
+    <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <section class="lg:col-span-5 panel-container p-10">
-            <div class="flex justify-between items-center mb-12">
-                <h2 class="text-[11px] font-bold tracking-[0.3em] uppercase opacity-50">Master Segments</h2>
-                <button onclick="addMaster()" class="h-10 w-10 flex items-center justify-center rounded-full border border-white/10 hover:bg-white hover:text-black transition duration-500">
-                    <i class="fa-solid fa-plus text-xs"></i>
-                </button>
+        <section class="lg:col-span-5 panel-container p-8">
+            <div class="flex justify-between items-center mb-10">
+                <h2 class="text-xs font-bold tracking-widest uppercase opacity-60 italic">Master Segments</h2>
+                <button onclick="addNewSegment()" class="text-[10px] font-bold border border-white/20 px-4 py-2 rounded hover:bg-white hover:text-black transition">NEW SEGMENT</button>
             </div>
             
-            <div class="space-y-4 custom-scroll max-h-[550px] overflow-y-auto pr-3" id="masterList">
+            <div class="space-y-3 custom-scroll max-h-[500px] overflow-y-auto pr-2" id="masterList">
+                <div class="data-row border-l-2 border-l-white" id="main-node-1">
+                    <div>
+                        <h3 class="text-sm font-bold tracking-wide">Consumer Electronics</h3>
+                        <p class="text-[10px] opacity-30 mt-1 uppercase italic">12 Sub-nodes attached</p>
+                    </div>
+                    <button onclick="deleteNode('main-node-1')" class="opacity-20 hover:opacity-100 hover:text-red-500 transition"><i class="fa-solid fa-trash-can text-xs"></i></button>
                 </div>
+            </div>
         </section>
 
-        <section class="lg:col-span-7 panel-container p-10">
-            <div class="mb-12">
-                <div class="flex items-center gap-2 mb-2">
-                    <div class="h-1.5 w-1.5 bg-white rounded-full animate-pulse"></div>
-                    <h2 class="text-[11px] font-bold tracking-[0.3em] uppercase opacity-50">Node Configuration</h2>
-                </div>
-                <p class="text-xs text-gray-500">Active Protocol: <span id="selectedCatName" class="text-white font-medium uppercase tracking-widest italic border-b border-white/20 pb-1 ml-2">Select Segment</span></p>
+        <section class="lg:col-span-7 panel-container p-8">
+            <div class="mb-10">
+                <h2 class="text-xs font-bold tracking-widest uppercase opacity-60 italic mb-2">Node Configuration</h2>
+                <p class="text-xs text-gray-500">Managing protocols for: <span class="text-white font-bold italic">Consumer Electronics</span></p>
             </div>
 
-            <div class="flex flex-col md:flex-row gap-4 mb-12">
-                <input type="text" id="subInput" placeholder="Define sub-protocol..." class="standard-input flex-grow">
-                <button onclick="addSub()" class="btn-execute">Execute</button>
+            <div class="flex flex-col md:flex-row gap-3 mb-8">
+                <input type="text" id="subInput" placeholder="Specify sub-protocol..." class="standard-input font-medium">
+                <button onclick="executeAdd()" class="bg-white text-black px-8 py-3 rounded-lg font-bold text-[10px] uppercase tracking-widest hover:bg-gray-200 transition">Execute</button>
             </div>
 
-            <div class="space-y-3 custom-scroll max-h-[400px] overflow-y-auto pr-3" id="subList">
+            <div class="space-y-2 custom-scroll max-h-[350px] overflow-y-auto pr-2" id="subList">
+                <div class="data-row" id="sub-node-1">
+                    <span class="text-sm font-medium tracking-tight">Mobile Telephony & Hardware</span>
+                    <button onclick="deleteNode('sub-node-1')" class="opacity-20 hover:opacity-100 hover:text-red-500 transition"><i class="fa-solid fa-trash-can text-xs"></i></button>
                 </div>
+                <div class="data-row" id="sub-node-2">
+                    <span class="text-sm font-medium tracking-tight">Personal Computing Systems</span>
+                    <button onclick="deleteNode('sub-node-2')" class="opacity-20 hover:opacity-100 hover:text-red-500 transition"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                </div>
+            </div>
         </section>
-
     </main>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, onSnapshot, doc, addDoc, updateDoc, deleteDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
-        authDomain: "global-market-admin.firebaseapp.com",
-        projectId: "global-market-admin",
-        storageBucket: "global-market-admin.firebasestorage.app",
-        messagingSenderId: "259715265619",
-        appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    let currentType = 'vendor';
-    let activeMasterId = null;
-
-    window.switchMode = (mode) => {
-        currentType = mode;
-        activeMasterId = null;
-        document.getElementById('selectedCatName').innerText = "Select Segment";
-        document.getElementById('subList').innerHTML = "";
-        ['vendor', 'lab', 'expert'].forEach(m => document.getElementById('mode-'+m).classList.toggle('active', m === mode));
-        loadMasters();
-    };
-
-    const loadMasters = () => {
-        const q = query(collection(db, "categories"), where("type", "==", currentType), orderBy("name"));
-        onSnapshot(q, (snap) => {
-            const list = document.getElementById('masterList');
-            list.innerHTML = "";
-            snap.forEach(d => {
-                const data = d.data();
-                const div = document.createElement('div');
-                div.className = `data-row ${activeMasterId === d.id ? 'active-row' : ''}`;
-                div.onclick = () => selectMaster(d.id, data.name);
-                div.innerHTML = `
-                    <div class="min-w-0">
-                        <h3 class="text-sm font-bold tracking-tight truncate">${data.name}</h3>
-                        <p class="text-[9px] opacity-20 font-mono mt-1">${d.id.toUpperCase()}</p>
-                    </div>
-                    <div class="flex gap-5 ml-4">
-                        <button onclick="event.stopPropagation(); editMaster('${d.id}', '${data.name}')" class="opacity-10 hover:opacity-100 transition"><i class="fa-solid fa-pen-nib text-xs"></i></button>
-                        <button onclick="event.stopPropagation(); deleteMaster('${d.id}')" class="opacity-10 hover:opacity-100 hover:text-red-500 transition"><i class="fa-solid fa-trash-can text-xs"></i></button>
-                    </div>`;
-                list.appendChild(div);
-            });
-        });
-    };
-
-    window.selectMaster = (id, name) => {
-        activeMasterId = id;
-        document.getElementById('selectedCatName').innerText = name;
-        loadMasters();
-        loadSubs(id);
-    };
-
-    const loadSubs = (parentId) => {
-        const q = query(collection(db, "subcategories"), where("parentId", "==", parentId), orderBy("name"));
-        onSnapshot(q, (snap) => {
-            const list = document.getElementById('subList');
-            list.innerHTML = "";
-            snap.forEach(d => {
-                list.innerHTML += `
-                    <div class="data-row">
-                        <span class="text-sm font-semibold opacity-70 tracking-tight">${d.data().name}</span>
-                        <button onclick="deleteSub('${d.id}')" class="opacity-10 hover:opacity-100 hover:text-red-400 transition"><i class="fa-solid fa-circle-xmark text-xs"></i></button>
-                    </div>`;
-            });
-        });
-    };
-
-    window.addMaster = async () => {
-        const n = prompt("Sunan Sabon Segment:");
-        if(n) await addDoc(collection(db, "categories"), { name: n, type: currentType });
-    };
-
-    window.editMaster = async (id, old) => {
-        const n = prompt("Modify Segment Name:", old);
-        if(n) await updateDoc(doc(db, "categories", id), { name: n });
-    };
-
-    window.deleteMaster = async (id) => {
-        if(confirm("Lallai kana son goge wannan Segment din?")) await deleteDoc(doc(db, "categories", id));
-    };
-
-    window.addSub = async () => {
-        const input = document.getElementById('subInput');
-        if(!activeMasterId) return alert("Identify a Master Segment first.");
-        if(input.value) {
-            await addDoc(collection(db, "subcategories"), { name: input.value, parentId: activeMasterId });
-            input.value = "";
+    <script>
+        // Bridge Function for Delete
+        function deleteNode(id) {
+            if(confirm("Are you sure you want to terminate this node?")) {
+                const element = document.getElementById(id);
+                element.style.opacity = "0";
+                setTimeout(() => element.remove(), 300);
+            }
         }
-    };
 
-    window.deleteSub = async (id) => {
-        if(confirm("Terminate sub-protocol?")) await deleteDoc(doc(db, "subcategories", id));
-    };
+        // Bridge Function for Execute
+        function executeAdd() {
+            const val = document.getElementById('subInput').value;
+            if(val) {
+                const list = document.getElementById('subList');
+                const id = 'node-' + Date.now();
+                list.innerHTML += `
+                    <div class="data-row" id="${id}">
+                        <span class="text-sm font-medium tracking-tight">${val}</span>
+                        <button onclick="deleteNode('${id}')" class="opacity-20 hover:opacity-100 hover:text-red-500 transition"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                    </div>`;
+                document.getElementById('subInput').value = "";
+            }
+        }
 
-    loadMasters();
-</script>
+        function switchMode(mode) {
+            const btns = ['vendor', 'lab', 'expert'];
+            btns.forEach(b => document.getElementById('mode-' + b).classList.remove('active'));
+            document.getElementById('mode-' + mode).classList.add('active');
+        }
+    </script>
 </body>
-</html>
+                    </html>
+                    
