@@ -179,9 +179,58 @@
     </div>
     
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        // 1. IMPORTS (Dole su tsaya a sama kuma guda daya kacal)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// 2. FIREBASE CONFIG (Saka naka a nan)
+const firebaseConfig = {
+    apiKey: "AIzaSy...",
+    // sauran config dinka...
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// 3. LOGIN LOGIC (Babu sauran import a nan)
+async function handleLogin(email, password) {
+    const loginBtn = document.getElementById('loginBtn');
+    if(loginBtn) {
+        loginBtn.disabled = true;
+        loginBtn.innerText = "LOGGING IN...";
+    }
+
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        if (!user.emailVerified) {
+            showToast("Don Allah ka tantance email dinka a Inbox dinka!", true);
+            loginBtn.disabled = false;
+            loginBtn.innerText = "LOGIN";
+            return;
+        }
+
+        showToast("Barka da shigowa!");
+        // Bayan ya shiga, tura shi index.html
+        setTimeout(() => { window.location.href = "index.html"; }, 2000);
+
+    } catch (error) {
+        showToast("Email ko Password ba daidai ba!", true);
+        if(loginBtn) {
+            loginBtn.disabled = false;
+            loginBtn.innerText = "LOGIN";
+        }
+    }
+}
+
+// Ka tabbatar ka fitar da handleLogin domin HTML ya ganshi
+window.handleLogin = handleLogin;
+        
+        
 
         const firebaseConfig = {
           apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
