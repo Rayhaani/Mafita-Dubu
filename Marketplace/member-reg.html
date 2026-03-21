@@ -239,13 +239,21 @@
                     createdAt: serverTimestamp()
                 });
 
-                await sendEmailVerification(user);
+                                // --- 4. Tura Verification Link (Tare da Continue URL) ---
+                const actionCodeSettings = {
+                    url: 'https://mafita-dubu.vercel.app/verify-success.html',
+                    handleCodeInApp: true,
+                };
 
+                await sendEmailVerification(user, actionCodeSettings);
+
+                // --- 5. Switch to Verification Overlay ---
                 document.getElementById('registerSection').classList.add('hidden');
                 document.getElementById('verifySection').classList.remove('hidden');
                 document.getElementById('mainTitle').innerText = "Verify Email";
                 showToast("Account Created! Check your email.");
 
+                
             } catch (error) {
                 let msg = error.message;
                 if (error.code === 'auth/email-already-in-use') msg = "Wannan email din an riga an yi amfani da shi.";
