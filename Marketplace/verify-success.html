@@ -178,9 +178,9 @@
     </div>
 
 <script type="module">
+   
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     // Firebase Configuration
     const firebaseConfig = {
@@ -194,49 +194,22 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getFirestore(app);
 
-    // Kama elements na jikin shafin
     const actionBtn = document.querySelector('.action-btn');
-    const statusDesc = document.querySelector('.desc');
-    const badgeText = document.querySelector('.status-badge');
 
-    onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            // Refresh asusu don tabbatar da verification
-            await user.reload(); 
-            
-            try {
-                const userSnap = await getDoc(doc(db, "users", user.uid));
-                
-                if (userSnap.exists()) {
-                    const userData = userSnap.data();
-
-                    if (userData.role === "vendor") {
-                        // Idan VENDOR ne:
-                        badgeText.innerText = "Vendor Access";
-                        statusDesc.innerHTML = `
-                            Your identity has been verified. <br>
-                            <span style="color: #f3cf7a; font-weight: 600;">
-                                Click the link below to complete the setup for you to be able to start selling on our platform.
-                            </span>`;
-                        
-                        actionBtn.innerText = "COMPLETE SETUP";
-                        actionBtn.href = "register.html?action=setup"; // Zai tura shi shafin setup
-                    } else {
-                        // Idan MEMBER ne (ba zai ga setup ba):
-                        badgeText.innerText = "Member Access";
-                        statusDesc.innerHTML = "Your identity has been verified. <br>Your digital vault is now ready.";
-                        actionBtn.innerText = "PROCEED TO LOGIN";
-                        actionBtn.href = "member-dashboard.html";
-                    }
-                }
-            } catch (error) {
-                console.error("Firestore Error:", error);
-                // Wannan yana magance matsalar 'Insufficient permissions'
-            }
+    // Wannan shine maganin matsalar:
+    actionBtn.addEventListener('click', async (e) => {
+        e.preventDefault(); // Kare shi daga tafiya kai tsaye
+        try {
+            // Muna cire shi daga Firebase session din register
+            await signOut(auth);
+            // Sannan mu tura shi shafin Login na gaskiya
+            window.location.href = "login.html";
+        } catch (error) {
+            window.location.href = "login.html";
         }
     });
+
 </script>
     
 </body>
