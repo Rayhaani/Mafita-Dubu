@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mafita Dubu | Premium Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --milk-bg: #FFF5E1; 
+            --royal-black: #1a1405;
+            --dark-gold: #8b6b1b;
+            --light-gold: #f3cf7a;
+            --gold: #bf953f;
+        }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--milk-bg); 
+            display: flex; align-items: center; justify-content: center; 
+            min-height: 100vh; margin: 0; padding: 20px;
+        }
+
+        .liquid-color-circle {
+            width: 80px; height: 80px;
+            margin: -90px auto 15px;
+            position: relative; z-index: 100;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            background: linear-gradient(-45deg, #ffd700, #ff00ea, #00d4ff, #3dff00, #ff9100, #7028e4);
+            background-size: 400% 400%;
+            animation: liquidFlow 8s ease infinite;
+        }
+
+        @keyframes liquidFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .luxury-card {
+            background: var(--royal-black);
+            border: 2px solid var(--dark-gold);
+            border-radius: 40px 10px;
+            padding: 40px 30px 25px;
+            width: 100%; max-width: 400px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            position: relative; margin-top: 50px;
+        }
+
+        .header-title { 
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem; color: var(--light-gold); 
+            text-align: center; margin-bottom: 25px;
+        }
+
+        .gold-input {
+            width: 100%; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(243, 207, 122, 0.2);
+            padding: 12px 15px; border-radius: 12px;
+            color: #fff; font-size: 0.85rem; outline: none;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
+            color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900;
+            width: 100%; padding: 12px; border-radius: 10px; margin-top: 15px;
+            font-size: 1rem; border: none; cursor: pointer; transition: 0.3s;
+        }
+        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .login-footer { text-align: center; margin-top: 20px; color: #ffffff; font-size: 0.85rem; }
+        .login-footer a { color: var(--light-gold); font-weight: 700; text-decoration: none; margin-left: 5px; }
+
+        #status-toast {
+            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+            z-index: 1000; width: 90%; max-width: 350px; background: #1a1405;
+            border-left: 4px solid #bf953f; padding: 15px; border-radius: 8px;
+            transition: 0.5s; display: flex; align-items: center; gap: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="status-toast">
+        <div style="color: #f3cf7a; font-weight: bold; font-size: 20px;">!</div>
+        <div>
+            <p id="toast-title" style="text-transform: uppercase; font-size: 10px; color: #888; font-weight: 800; margin: 0;">System Alert</p>
+            <p id="toast-msg" style="color: white; font-size: 12px; margin: 0;"></p>
+        </div>
+    </div>
+
+    <div class="luxury-card">
+        <div class="liquid-color-circle"></div>
+        <h1 class="header-title" id="mainTitle">Mafita Dubu</h1>
+
+        <div id="registerSection">
+            <form id="universalRegisterForm">
+                <div class="mb-4"><input type="text" id="fullName" class="gold-input" placeholder="Full Name" required></div>
+                <div class="mb-4"><input type="text" id="username" class="gold-input" placeholder="Username" required></div>
+                <div class="mb-4"><input type="email" id="email" class="gold-input" placeholder="Email Address" required></div>
+                
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <input type="tel" id="phone" class="gold-input" placeholder="Phone" required>
+                    <input type="text" id="state" class="gold-input" placeholder="State" required>
+                </div>
+
+                <div class="mb-4"><input type="password" id="password" class="gold-input" placeholder="Password" required></div>
+
+                <button type="submit" id="regBtn" class="submit-btn">REGISTER NOW</button>
+                
+                <div class="login-footer">Already have an account? <a href="login.html">Login</a></div>
+            </form>
+        </div>
+
+        <div id="verifySection" class="hidden text-center py-4">
+            <div class="mb-6">
+                <div class="inline-block p-4 rounded-full bg-[#f3cf7a]/10 mb-4">
+                    <span class="text-5xl">📧</span>
+                </div>
+                <h2 class="text-[#f3cf7a] font-bold text-xl mb-2">Tantance Email</h2>
+                <p class="text-white/70 text-[12px] leading-relaxed">Mun tura maka link na tantancewa zuwa email dinka. Don Allah duba 'Inbox' ko 'Spam' sannan ka danna link din don kunna account dinka.</p>
+            </div>
+
+            <div class="space-y-4">
+                <button onclick="window.location.reload()" class="submit-btn">NA DANNA LINK DIN (LOGIN)</button>
+                <p class="text-[10px] text-white/50">Ba ka ga sako ba? <a href="#" onclick="resendEmail()" class="text-[#f3cf7a] underline">Sake turawa</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, serverTimestamp, query, where, getDocs, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
+            authDomain: "global-market-admin.firebaseapp.com",
+            projectId: "global-market-admin",
+            storageBucket: "global-market-admin.firebasestorage.app",
+            messagingSenderId: "259715265619",
+            appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('status-toast');
+            document.getElementById('toast-msg').innerText = msg;
+            toast.style.borderLeftColor = isError ? '#ef4444' : '#bf953f';
+            toast.style.top = '20px';
+            setTimeout(() => { toast.style.top = '-100px'; }, 5000);
+        }
+
+        // Resend Verification Email
+        window.resendEmail = async () => {
+            if (auth.currentUser) {
+                try {
+                    await sendEmailVerification(auth.currentUser);
+                    showToast("An sake tura sabon link zuwa email!");
+                } catch (err) {
+                    showToast(err.message, true);
+                }
+            }
+        };
+
+        document.getElementById('universalRegisterForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('regBtn');
+            
+            const username = document.getElementById('username').value.trim().toLowerCase();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            btn.disabled = true;
+            btn.innerText = "CHECKING...";
+
+            try {
+                // 1. Duba idan Username ko Phone akwai su (Consistency)
+                const uQuery = query(collection(db, "users"), where("username", "==", username));
+                const pQuery = query(collection(db, "users"), where("phone", "==", phone));
+                const [uSnap, pSnap] = await Promise.all([getDocs(uQuery), getDocs(pQuery)]);
+
+                if (!uSnap.empty) {
+                    showToast("Wannan Username din an riga an dauka!", true);
+                    btn.disabled = false; btn.innerText = "REGISTER NOW";
+                    return;
+                }
+                if (!pSnap.empty) {
+                    showToast("Lambar wayar nan an riga an yi amfani da ita!", true);
+                    btn.disabled = false; btn.innerText = "REGISTER NOW";
+                    return;
+                }
+
+                // 2. Yi Register
+                btn.innerText = "CREATING...";
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // 3. Ajiye bayanan asali (Role: member don consistency)
+                await setDoc(doc(db, "users", user.uid), {
+                    fullName: document.getElementById('fullName').value,
+                    username: username,
+                    email: email,
+                    phone: phone,
+                    state: document.getElementById('state').value,
+                    role: "member",
+                    emailVerified: false,
+                    createdAt: serverTimestamp()
+                });
+
+                // 4. Tura Verification Link
+                await sendEmailVerification(user);
+
+                // 5. Switch to Verification Overlay
+                document.getElementById('registerSection').classList.add('hidden');
+                document.getElementById('verifySection').classList.remove('hidden');
+                document.getElementById('mainTitle').innerText = "Verify Email";
+                showToast("Account Created! Check your email.");
+
+            } catch (error) {
+                let msg = error.message;
+                if (error.code === 'auth/email-already-in-use') msg = "Wannan email din an riga an yi amfani da shi.";
+                showToast(msg, true);
+                btn.disabled = false;
+                btn.innerText = "REGISTER NOW";
+            }
+        };
+    </script>
+</body>
+</html>
