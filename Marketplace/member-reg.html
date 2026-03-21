@@ -134,8 +134,8 @@
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+                import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, serverTimestamp, query, where, getDocs, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -151,6 +151,18 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
+        // --- SABON FUNCTION NA REDIRECT (AUTOMATIC) ---
+        // Wannan zai rinka dubawa duk bayan dakika 3 ko an yi verify
+        setInterval(async () => {
+            if (auth.currentUser) {
+                await auth.currentUser.reload();
+                if (auth.currentUser.emailVerified) {
+                    window.location.href = "login.html"; // Ko sunan success page dinka
+                }
+            }
+        }, 3000);
+        // ----------------------------------------------
+
         function showToast(msg, isError = false) {
             const toast = document.getElementById('status-toast');
             document.getElementById('toast-msg').innerText = msg;
@@ -159,7 +171,6 @@
             setTimeout(() => { toast.style.top = '-100px'; }, 5000);
         }
 
-        // Resend Verification Email
         window.resendEmail = async () => {
             if (auth.currentUser) {
                 try {
@@ -184,7 +195,6 @@
             btn.innerText = "CHECKING...";
 
             try {
-                // 1. Duba idan Username ko Phone akwai su (Consistency)
                 const uQuery = query(collection(db, "users"), where("username", "==", username));
                 const pQuery = query(collection(db, "users"), where("phone", "==", phone));
                 const [uSnap, pSnap] = await Promise.all([getDocs(uQuery), getDocs(pQuery)]);
@@ -200,12 +210,10 @@
                     return;
                 }
 
-                // 2. Yi Register
                 btn.innerText = "CREATING...";
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
 
-                // 3. Ajiye bayanan asali (Role: member don consistency)
                 await setDoc(doc(db, "users", user.uid), {
                     fullName: document.getElementById('fullName').value,
                     username: username,
@@ -217,10 +225,8 @@
                     createdAt: serverTimestamp()
                 });
 
-                // 4. Tura Verification Link
                 await sendEmailVerification(user);
 
-                // 5. Switch to Verification Overlay
                 document.getElementById('registerSection').classList.add('hidden');
                 document.getElementById('verifySection').classList.remove('hidden');
                 document.getElementById('mainTitle').innerText = "Verify Email";
@@ -234,6 +240,7 @@
                 btn.innerText = "REGISTER NOW";
             }
         };
+                              
     </script>
 </body>
 </html>
