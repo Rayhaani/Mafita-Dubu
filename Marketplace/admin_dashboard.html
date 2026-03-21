@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MD Admin Radar</title>
+    <title>MD Admin Radar | Secure Access</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -91,7 +91,6 @@
             background: rgba(0,0,0,0.7); z-index: 9998;
         }
 
-        /* MODAL STYLE */
         .cat-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); z-index: 20000; align-items: center; justify-content: center; backdrop-filter: blur(5px);
@@ -139,7 +138,7 @@
             <a href="#" class="nav-item"><i class="fa-solid fa-fingerprint"></i> Security</a>
         </nav>
         <div class="p-4 border-t border-white/5">
-            <button onclick="alert('Logging out...')" class="w-full py-2 bg-red-500/10 text-red-500 rounded-lg text-xs font-bold border border-red-500/20 transition hover:bg-red-500 hover:text-white">LOGOUT</button>
+            <button id="adminLogoutBtn" class="w-full py-2 bg-red-500/10 text-red-500 rounded-lg text-xs font-bold border border-red-500/20 transition hover:bg-red-500 hover:text-white">LOGOUT</button>
         </div>
     </aside>
 
@@ -152,14 +151,13 @@
             
             <div class="bg-white/5 p-4 rounded-xl border border-white/10 mb-6">
                 <p class="text-[10px] text-yellow-500 font-bold uppercase mb-3">Add New Category</p>
-                <input type="text" id="newCatName" class="gold-input" placeholder="Category Name (e.g. Kayan Sakawa)">
+                <input type="text" id="newCatName" class="gold-input" placeholder="Category Name">
                 <input type="text" id="newSubCats" class="gold-input" placeholder="Sub-categories (separate with comma)">
                 <button onclick="window.addCategoryToFirebase()" class="w-full py-3 bg-yellow-600 text-black font-bold rounded-lg text-[10px] uppercase tracking-widest hover:bg-yellow-500 transition">Save Category</button>
             </div>
 
-            <p class="text-[10px] text-gray-500 font-bold uppercase mb-3">Active Categories on Site</p>
-            <div id="categoryDisplayList" class="space-y-3">
-                </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase mb-3">Active Categories</p>
+            <div id="categoryDisplayList" class="space-y-3"></div>
         </div>
     </div>
 
@@ -167,11 +165,11 @@
         <div class="stat-grid">
             <div class="stat-card">
                 <p class="text-[8px] text-gray-500 font-bold uppercase">Members</p>
-                <h3 class="text-base font-bold">12,450</h3>
+                <h3 id="memberTotalCount" class="text-base font-bold">...</h3>
             </div>
             <div class="stat-card">
                 <p class="text-[8px] text-gray-500 font-bold uppercase">Vendors</p>
-                <h3 class="text-base font-bold text-[#D4AF37]">4,820</h3>
+                <h3 id="vendorTotalCount" class="text-base font-bold text-[#D4AF37]">...</h3>
             </div>
             <div class="stat-card">
                 <p class="text-[8px] text-gray-500 font-bold uppercase">Experts</p>
@@ -179,23 +177,23 @@
             </div>
             <div class="stat-card">
                 <p class="text-[8px] text-gray-500 font-bold uppercase">Vault</p>
-                <h3 class="text-base font-bold text-blue-400">₦2.4M</h3>
+                <h3 class="text-base font-bold text-blue-400">₦0</h3>
             </div>
         </div>
 
         <div class="table-container">
             <div class="table-header-box">
                 <span class="pending-title">Pending Approvals</span>
-                <span class="view-all" style="color:var(--neon-gold); font-size:10px;">ACTION REQUIRED</span>
+                <span style="color:var(--neon-gold); font-size:10px;">ACTION REQUIRED</span>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-[9px]">
                     <thead class="bg-white/5 text-gray-500 uppercase">
                         <tr>
-                            <th class="px-4 py-3">Applicant</th>
-                            <th class="px-4 py-3">Portal</th>
+                            <th class="px-4 py-3">Applicant Info</th>
+                            <th class="px-4 py-3">Role</th>
                             <th class="px-4 py-3">Status</th>
-                            <th class="px-4 py-3 text-right">Actions</th>
+                            <th class="px-4 py-3 text-right">Control</th>
                         </tr>
                     </thead>
                     <tbody id="adminVendorList"></tbody>
@@ -220,8 +218,8 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, onSnapshot, doc, updateDoc, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, collection, onSnapshot, doc, updateDoc, addDoc, deleteDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     
     const firebaseConfig = {
         apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
@@ -236,8 +234,17 @@
     const db = getFirestore(app);
     const auth = getAuth(app);
 
+    // Map Init
     var map = L.map('map').setView([9.0820, 8.6753], 6);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+
+    // --- LOGOUT ENGINE ---
+    document.getElementById('adminLogoutBtn').onclick = async () => {
+        if(confirm("Kana son fita daga Admin Panel?")) {
+            await signOut(auth);
+            window.location.href = "login.html";
+        }
+    };
 
     // --- CATEGORY ENGINE ---
     window.toggleCatModal = () => {
@@ -254,14 +261,12 @@
         try {
             await addDoc(collection(db, "app_settings"), { type: "category_list", name, subCategories: subs });
             document.getElementById('newCatName').value = ""; document.getElementById('newSubCats').value = "";
-            alert("An yi nasarar karawa!");
+            alert("Success!");
         } catch (e) { alert(e.message); }
     };
 
     window.deleteCategory = async (id) => {
-        if(confirm("Kana da tabbas kana son goge wannan Category din gaba daya?")) {
-            await deleteDoc(doc(db, "app_settings", id));
-        }
+        if(confirm("Goge wannan category din?")) await deleteDoc(doc(db, "app_settings", id));
     };
 
     onSnapshot(collection(db, "app_settings"), (snap) => {
@@ -271,50 +276,78 @@
             const data = d.data();
             if(data.type === "category_list") {
                 list.innerHTML += `
-                    <div class="bg-white/5 p-3 rounded-lg border border-white/10 flex justify-between items-center group hover:border-yellow-600/30 transition">
+                    <div class="bg-white/5 p-3 rounded-lg border border-white/10 flex justify-between items-center">
                         <div>
-                            <p class="text-[10px] font-bold text-yellow-500 uppercase tracking-wider">${data.name}</p>
-                            <p class="text-[8px] text-gray-500 mt-0.5">${data.subCategories.join(' • ')}</p>
+                            <p class="text-[10px] font-bold text-yellow-500 uppercase">${data.name}</p>
+                            <p class="text-[8px] text-gray-500">${data.subCategories.join(' • ')}</p>
                         </div>
-                        <button onclick="window.deleteCategory('${d.id}')" class="text-red-500/50 hover:text-red-500 p-2 transition">
-                            <i class="fa-solid fa-trash-can text-xs"></i>
-                        </button>
+                        <button onclick="window.deleteCategory('${d.id}')" class="text-red-500/50 hover:text-red-500"><i class="fa-solid fa-trash-can"></i></button>
                     </div>`;
             }
         });
-        if(list.innerHTML === "") list.innerHTML = "<p class='text-[9px] text-gray-600 text-center italic py-4'>No categories found.</p>";
     });
 
-    // --- APPROVAL ENGINE ---
-    window.updateStatus = async (id, status) => {
-        if(confirm(`Are you sure you want to ${status} this vendor?`)) {
-            try {
-                await updateDoc(doc(db, "vendors", id), { status: status });
-            } catch (e) { alert(e.message); }
+    // --- MASTER APPROVAL ENGINE (gyaran da kake so) ---
+
+    // 1. ACCEPT
+    window.approveUser = async (id) => {
+        if(confirm("Confirm Approval?")) {
+            await updateDoc(doc(db, "users", id), { status: "approved", role: "vendor" });
         }
     };
 
-    onSnapshot(collection(db, "vendors"), (snapshot) => {
+    // 2. REJECT
+    window.rejectUser = async (id) => {
+        if(confirm("Reject this application?")) {
+            await updateDoc(doc(db, "users", id), { status: "rejected" });
+        }
+    };
+
+    // 3. DELETE (Disappear from DB)
+    window.deleteUser = async (id) => {
+        if(confirm("GARGADI: Zai bace daga Database gaba daya. Continue?")) {
+            await deleteDoc(doc(db, "users", id));
+        }
+    };
+
+    // REAL-TIME LISTENER
+    onSnapshot(collection(db, "users"), (snapshot) => {
         let pending = 0;
+        let totalMembers = 0;
+        let totalVendors = 0;
         const list = document.getElementById('adminVendorList');
         list.innerHTML = ""; 
+
         snapshot.forEach((docSnap) => {
             const data = docSnap.data();
-            if(data.status === 'pending') {
+            
+            // Lissafin Stats
+            totalMembers++;
+            if(data.role === "vendor") totalVendors++;
+
+            // Nuna Masu Pending Approval
+            if(data.status === 'pending' || data.role === "vendor_applicant") {
                 pending++;
                 list.innerHTML += `
                     <tr class="border-b border-white/[0.03]">
-                        <td class="px-5 py-4 font-bold text-white">${data.name || 'Vendor'}</td>
-                        <td class="px-5 py-4 text-gray-400">${data.type || 'N/A'}</td>
+                        <td class="px-5 py-4">
+                            <span class="font-bold text-white block">${data.fullName || data.username}</span>
+                            <span class="text-[7px] text-gray-500">${data.email}</span>
+                        </td>
+                        <td class="px-5 py-4 text-gray-400 uppercase">${data.role || 'User'}</td>
                         <td class="px-5 py-4"><span class="text-yellow-500 text-[7px] font-bold uppercase">Pending</span></td>
-                        <td class="px-5 py-4 text-right space-x-2">
-                            <button onclick="window.updateStatus('${docSnap.id}', 'approved')" class="bg-green-600/20 text-green-500 p-2 rounded-lg border border-green-500/20 hover:bg-green-600 hover:text-white transition"><i class="fa-solid fa-check"></i></button>
-                            <button onclick="window.updateStatus('${docSnap.id}', 'rejected')" class="bg-red-600/20 text-red-500 p-2 rounded-lg border border-red-500/20 hover:bg-red-600 hover:text-white transition"><i class="fa-solid fa-xmark"></i></button>
+                        <td class="px-5 py-4 text-right space-x-1">
+                            <button onclick="window.approveUser('${docSnap.id}')" class="bg-green-600/20 text-green-500 p-2 rounded-lg border border-green-500/20 hover:bg-green-600 hover:text-white transition"><i class="fa-solid fa-check"></i></button>
+                            <button onclick="window.rejectUser('${docSnap.id}')" class="bg-orange-600/20 text-orange-500 p-2 rounded-lg border border-orange-500/20 hover:bg-orange-600 hover:text-white transition"><i class="fa-solid fa-xmark"></i></button>
+                            <button onclick="window.deleteUser('${docSnap.id}')" class="bg-red-600/20 text-red-500 p-2 rounded-lg border border-red-500/20 hover:bg-red-600 hover:text-white transition"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>`;
             }
         });
+        
         document.getElementById('pCount').innerText = pending;
+        document.getElementById('memberTotalCount').innerText = totalMembers.toLocaleString();
+        document.getElementById('vendorTotalCount').innerText = totalVendors.toLocaleString();
     });
 </script>
 </body>
