@@ -10,16 +10,13 @@
     <style>
         :root { --royal-black: #1a1405; --dark-gold: #8b6b1b; --light-gold: #f3cf7a; --milk-bg: #FFF5E1; --gold: #bf953f; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--milk-bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; margin: 0; }
-        
         .liquid-color-circle { width: 80px; height: 80px; margin: -90px auto 15px; position: relative; z-index: 100; border-radius: 50%; border: 2px solid #ffffff; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5); background: linear-gradient(-45deg, #ffd700, #ff00ea, #00d4ff, #3dff00, #ff9100, #7028e4); background-size: 400% 400%; animation: liquidFlow 8s ease infinite; }
         @keyframes liquidFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-
         .luxury-card { background: var(--royal-black); border: 2px solid var(--dark-gold); border-radius: 40px 10px 40px 10px; padding: 35px 25px; width: 100%; max-width: 480px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); position: relative; margin-top: 50px; }
         .gold-input { width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(243, 207, 122, 0.2); padding: 12px; border-radius: 12px; color: #fff; font-size: 0.85rem; margin-bottom: 15px; outline: none; }
         .submit-btn { background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728); color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900; width: 100%; padding: 14px; border-radius: 12px; cursor: pointer; border: none; margin-top: 10px; transition: 0.3s; }
-        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .camera-btn { width: 100%; background: #222; border: 1px solid var(--dark-gold); color: var(--light-gold); padding: 15px; border-radius: 12px; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; margin-top: 10px; }
-        
+        .gps-btn { background: #10b981; color: white; padding: 10px 20px; border-radius: 10px; font-weight: bold; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; }
         #status-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); z-index: 1000; width: 90%; max-width: 350px; background: #1a1405; border-left: 4px solid #bf953f; padding: 15px; border-radius: 8px; transition: 0.5s; display: flex; align-items: center; gap: 12px; }
         .hidden { display: none; }
     </style>
@@ -54,14 +51,8 @@
             <form id="expertSetupForm">
                 <select id="expertCategory" class="gold-input" required>
                     <option value="">-- Zabi Fannin Kwarewarka --</option>
-                    <optgroup label="Technical">
-                        <option value="phone">Gyaran Wayoyi</option>
-                        <option value="solar">Solar Installation</option>
-                    </optgroup>
-                    <optgroup label="Building">
-                        <option value="mason">Magini</option>
-                        <option value="pop">POP & Painting</option>
-                    </optgroup>
+                    <option value="phone">Gyaran Wayoyi</option>
+                    <option value="solar">Solar Installation</option>
                 </select>
 
                 <div class="grid grid-cols-2 gap-2 mb-4">
@@ -70,17 +61,27 @@
                 </div>
                 <input type="hidden" id="baseType" required>
 
-                <input type="text" id="expertAddress" class="gold-input" placeholder="Cikakken Address na Base/Gida" required>
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="flex-1 gold-input" id="gpsStatus" style="margin-bottom:0; font-size:11px; color:#aaa;">Ba a dauki location ba</div>
+                    <button type="button" onclick="getLocation()" class="gps-btn">📍 Get</button>
+                </div>
 
                 <div style="border: 1px dashed var(--light-gold); padding: 15px; border-radius: 15px;">
                     <p style="color: var(--light-gold); font-size: 0.7rem; font-weight: bold;">SAFETY VERIFICATION:</p>
-                    <button type="button" class="camera-btn" onclick="triggerCamera('door')">📷 <span id="doorTxt">Dauki hoton kofar gida</span></button>
-                    <button type="button" class="camera-btn" onclick="triggerCamera('tools')">🛠️ <span id="toolsTxt">Dauki hoton Tools (Kayan Aiki)</span></button>
+                    <button type="button" class="camera-btn" onclick="openCam('door')">📷 <span id="doorTxt">Dauki hoton kofar gida</span></button>
+                    <button type="button" class="camera-btn" onclick="openCam('tools')">🛠️ <span id="toolsTxt">Dauki hoton Tools (Kayan Aiki)</span></button>
+                    <input type="file" id="fileInput" accept="image/*" capture="camera" class="hidden" onchange="handleFile(event)">
                 </div>
                 
-                <input type="file" id="cameraInput" accept="image/*" capture="camera" class="hidden">
                 <button type="submit" id="setupBtn" class="submit-btn">REGISTER AS EXPERT</button>
             </form>
+        </div>
+
+        <div id="verifySection" class="hidden text-center py-6">
+            <div class="text-5xl mb-4">📧</div>
+            <h2 class="text-[#f3cf7a] font-bold text-xl mb-2">Tantance Email</h2>
+            <p class="text-white/70 text-[12px] mb-6 px-4">Mun tura link zuwa email dinka. Don Allah duba 'Inbox' ko 'Spam' don kammalawa.</p>
+            <button onclick="window.location.reload()" class="submit-btn">DONE (GO TO LOGIN)</button>
         </div>
     </div>
 
@@ -89,89 +90,99 @@
         import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, serverTimestamp, query, where, getDocs, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
-            authDomain: "global-market-admin.firebaseapp.com",
-            projectId: "global-market-admin",
-            storageBucket: "global-market-admin.firebasestorage.app",
-            messagingSenderId: "259715265619",
-            appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
-        };
-
+        // FIREBASE CONFIG (Daidai da naka)
+        const firebaseConfig = { apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M", authDomain: "global-market-admin.firebaseapp.com", projectId: "global-market-admin", storageBucket: "global-market-admin.firebasestorage.app", messagingSenderId: "259715265619", appId: "1:259715265619:web:313919773f57cc5fb9c2a6" };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        window.showToast = (msg, isError = false) => {
-            const toast = document.getElementById('status-toast');
+        let coords = null;
+        let activeCamType = '';
+
+        window.showToast = (msg, isErr = false) => {
+            const t = document.getElementById('status-toast');
             document.getElementById('toast-msg').innerText = msg;
-            toast.style.borderLeftColor = isError ? '#ef4444' : '#bf953f';
-            toast.style.top = '20px';
-            setTimeout(() => { toast.style.top = '-100px'; }, 4000);
+            t.style.borderLeftColor = isErr ? '#ef4444' : '#bf953f';
+            t.style.top = '20px'; setTimeout(() => t.style.top = '-100px', 4000);
         };
 
-        window.setBase = (type) => {
-            document.getElementById('baseType').value = type;
-            document.getElementById('officeBtn').style.background = type === 'office' ? '#f3cf7a' : 'transparent';
-            document.getElementById('officeBtn').style.color = type === 'office' ? '#000' : '#fff';
-            document.getElementById('homeBtn').style.background = type === 'home' ? '#f3cf7a' : 'transparent';
-            document.getElementById('homeBtn').style.color = type === 'home' ? '#000' : '#fff';
+        window.getLocation = () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(p => {
+                    coords = { lat: p.coords.latitude, lng: p.coords.longitude };
+                    document.getElementById('gpsStatus').innerText = "Location Fixed ✅";
+                    document.getElementById('gpsStatus').style.color = "#10b981";
+                    showToast("GPS successfully captured!");
+                }, () => showToast("Please enable GPS!", true));
+            }
         };
 
-        // Logic for Universal Form (Step 1)
+        window.openCam = (type) => { activeCamType = type; document.getElementById('fileInput').click(); };
+        window.handleFile = (e) => { 
+            const file = e.target.files[0];
+            if(file) {
+                document.getElementById(activeCamType + 'Txt').innerText = "Photo Captured ✅";
+                showToast(activeCamType.toUpperCase() + " captured!");
+            }
+        };
+
+        window.setBase = (t) => {
+            document.getElementById('baseType').value = t;
+            document.getElementById('officeBtn').style.background = t==='office' ? '#f3cf7a' : 'transparent';
+            document.getElementById('officeBtn').style.color = t==='office' ? '#000' : '#fff';
+            document.getElementById('homeBtn').style.background = t==='home' ? '#f3cf7a' : 'transparent';
+            document.getElementById('homeBtn').style.color = t==='home' ? '#000' : '#fff';
+        };
+
+        // STEP 1 REGISTER
         document.getElementById('universalRegisterForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('regBtn');
-            const username = document.getElementById('username').value.trim().toLowerCase();
+            const user = document.getElementById('username').value.trim().toLowerCase();
             const phone = document.getElementById('phone').value.trim();
-            
-            btn.disabled = true; btn.innerText = "VERIFYING...";
+            btn.disabled = true; btn.innerText = "CHECKING...";
+
+            const uQ = query(collection(db, "users"), where("username", "==", user));
+            const pQ = query(collection(db, "users"), where("phone", "==", phone));
+            const [uS, pS] = await Promise.all([getDocs(uQ), getDocs(pQ)]);
+
+            if(!uS.empty || !pS.empty) { showToast("Username or Phone exists!", true); btn.disabled = false; return; }
 
             try {
-                // Check Username & Phone
-                const uQ = query(collection(db, "users"), where("username", "==", username));
-                const pQ = query(collection(db, "users"), where("phone", "==", phone));
-                const [uS, pS] = await Promise.all([getDocs(uQ), getDocs(pQ)]);
-
-                if (!uS.empty) { showToast("Username taken!", true); btn.disabled = false; return; }
-                if (!pS.empty) { showToast("Phone registered!", true); btn.disabled = false; return; }
-
-                // Create Account
                 const cred = await createUserWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
-                await sendEmailVerification(cred.user);
-                
                 await setDoc(doc(db, "users", cred.user.uid), {
                     fullName: document.getElementById('fullName').value,
-                    username: username, phone: phone, role: "expert", createdAt: serverTimestamp()
+                    username: user, phone: phone, role: "expert", createdAt: serverTimestamp()
                 });
-
-                // Fading to Setup
                 document.getElementById('registerSection').classList.add('hidden');
                 document.getElementById('setupSection').classList.remove('hidden');
-                showToast("Account Created! Complete Setup.");
-            } catch (err) { showToast(err.message, true); btn.disabled = false; }
+                showToast("Account ready! Set up Hub.");
+            } catch(err) { showToast(err.message, true); btn.disabled = false; }
         };
 
-        // Logic for Expert Setup (Step 2)
+        // STEP 2 SETUP
         document.getElementById('expertSetupForm').onsubmit = async (e) => {
             e.preventDefault();
+            if(!coords) return showToast("Click 'Get' for GPS!", true);
             const btn = document.getElementById('setupBtn');
-            if(!document.getElementById('baseType').value) return showToast("Zabi Office ko Home Based!", true);
-            
-            btn.disabled = true; btn.innerText = "SAVING...";
+            btn.disabled = true; btn.innerText = "FINISHING...";
+
             try {
                 await setDoc(doc(db, "expert_details", auth.currentUser.uid), {
                     category: document.getElementById('expertCategory').value,
                     baseType: document.getElementById('baseType').value,
-                    address: document.getElementById('expertAddress').value,
-                    status: "pending_verification",
+                    location: coords,
+                    status: "pending",
                     updatedAt: serverTimestamp()
                 });
-                showToast("Registration Complete! Redirecting...");
-                setTimeout(() => window.location.href = "login.html", 2000);
-            } catch (err) { showToast(err.message, true); btn.disabled = false; }
+                await sendEmailVerification(auth.currentUser);
+                document.getElementById('setupSection').classList.add('hidden');
+                document.getElementById('verifySection').classList.remove('hidden');
+                document.getElementById('mainTitle').innerText = "Check Email";
+                showToast("Registration Successful!");
+            } catch(err) { showToast(err.message, true); btn.disabled = false; }
         };
     </script>
 </body>
                         </html>
-    
+                        
