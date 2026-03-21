@@ -3,224 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MD Admin Radar | Secure Access</title>
+    <title>THE ARCHITECT | ELITE OS</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;800&family=Inter:wght@300;900&display=swap" rel="stylesheet">
     <style>
-        :root { --neon-gold: #D4AF37; --deep-bg: #05070a; }
-
+        :root { --accent: #ffffff; --bg: #050505; }
         body { 
-            background: var(--deep-bg); 
-            color: white; 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            margin: 0; padding: 0;
-            min-height: 100vh;
-            overflow-x: hidden;
+            background-color: var(--bg); color: white; font-family: 'Inter', sans-serif;
+            background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
+        }
+        .syne { font-family: 'Syne', sans-serif; }
+        
+        /* CLASSY HEADER: Minimalist Floating */
+        .elite-header {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px 40px;
         }
 
-        .cyber-heading {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--neon-gold);
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+        /* CLASSY LAYOUT: Ultra-modern Cards */
+        .glass-card {
+            background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(5,5,5,1));
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 40px;
+            box-shadow: 20px 20px 60px #020202, -5px -5px 30px rgba(255,255,255,0.02);
+            transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .glass-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
-        .top-nav {
-            position: fixed; top: 0; left: 0; right: 0; height: 65px;
-            background: #0a0f1a; display: flex; align-items: center; justify-content: space-between;
-            padding: 0 15px; z-index: 1001; border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        /* MOBILE OPTIMIZED BUTTONS */
+        .btn-luxury {
+            background: white; color: black;
+            border-radius: 100px; font-weight: 800;
+            padding: 12px 30px; font-size: 11px;
+            letter-spacing: 2px; text-transform: uppercase;
+            transition: 0.4s;
         }
+        .btn-luxury:active { scale: 0.9; }
 
-        .futuristic-sidebar {
-            width: 260px; background: rgba(10, 15, 26, 0.98); backdrop-filter: blur(15px);
-            border-right: 1px solid rgba(212, 175, 55, 0.15); height: 100vh;
-            position: fixed; left: -260px; top: 0; z-index: 9999;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column;
+        .delete-icon {
+            width: 45px; height: 45px; border-radius: 50%;
+            background: rgba(255, 0, 0, 0.1); color: #ff4444;
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.4s;
         }
+        .delete-icon:hover { background: #ff4444; color: white; }
 
-        .sidebar-active { left: 0 !important; }
-
-        .sidebar-user-box {
-            padding: 30px 20px; background: linear-gradient(to bottom, rgba(212, 175, 55, 0.05), transparent);
-            border-bottom: 1px solid rgba(255,255,255,0.03); margin-bottom: 15px; margin-top: 65px;
-        }
-
-        .nav-item {
-            display: flex; align-items: center; gap: 15px; padding: 14px 25px;
-            color: #8a99af; font-size: 0.85rem; transition: 0.3s; text-decoration: none; cursor: pointer;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            color: var(--neon-gold); background: rgba(212, 175, 55, 0.08); border-left: 3px solid var(--neon-gold);
-        }
-
-        .menu-trigger {
-            background: #1e293b; color: var(--neon-gold); border: 1px solid var(--neon-gold);
-            width: 38px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer;
-        }
-
-        .main-content { padding: 15px; padding-top: 85px; width: 100%; }
-
-        .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-
-        .stat-card {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
-            padding: 12px; border-radius: 12px; border-top: 2px solid var(--neon-gold);
-        }
-
-        .table-container {
-            background: #0a0f1a; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);
-            overflow: hidden; margin-bottom: 25px;
-        }
-
-        .table-header-box {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .pending-title { font-weight: 800; font-size: 0.8rem; color: white; }
-
-        #map { height: 350px; border-radius: 15px; border: 2px solid var(--neon-gold); margin-top: 20px; background: white; }
-
-        .overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); z-index: 9998;
-        }
-
-        .cat-modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 20000; align-items: center; justify-content: center; backdrop-filter: blur(5px);
-        }
-        .modal-content {
-            background: #0a0f1a; border: 1px solid var(--neon-gold); padding: 25px;
-            width: 95%; max-width: 500px; border-radius: 15px; max-height: 85vh; overflow-y: auto;
-        }
-        .gold-input {
-            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 12px; border-radius: 8px; color: white; margin-bottom: 10px; font-size: 0.8rem;
-        }
+        /* SCROLL ANIMATION */
+        .reveal { opacity: 0; transform: translateY(30px); animation: fadeInUp 0.8s forwards; }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <header class="top-nav">
-        <div class="flex items-center gap-3">
-            <div class="menu-trigger" onclick="toggleSidebar()"><i class="fa-solid fa-bars-staggered"></i></div>
-            <h1 class="cyber-heading">Admin Radar</h1>
+    <header class="elite-header sticky top-0 z-50 flex justify-between items-center">
+        <div class="flex items-center gap-4">
+            <div class="h-2 w-2 bg-white rounded-full animate-ping"></div>
+            <h1 class="syne text-2xl font-black uppercase tracking-tighter">Architect<span class="opacity-30">.OS</span></h1>
         </div>
-        <div class="bg-orange-600/20 px-3 py-1 rounded-lg border border-orange-600/30 text-right">
-            <span id="pCount" class="text-orange-500 font-bold text-sm leading-none">0</span>
-            <span class="text-[7px] text-gray-400 block uppercase font-black">Pending</span>
-        </div>
+        <button onclick="logout()" class="text-[10px] font-bold tracking-[0.3em] opacity-50 hover:opacity-100 transition">TERMINATE SESSION</button>
     </header>
 
-    <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
-
-    <aside id="sidebar" class="futuristic-sidebar">
-        <div class="sidebar-user-box">
-            <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-lg bg-yellow-600 flex items-center justify-center text-white font-bold border border-yellow-400/30 shadow-lg">M</div>
-                <div>
-                    <h2 class="text-xs font-bold text-white uppercase tracking-wider">MD OS v3.0</h2>
-                    <p class="text-[9px] text-yellow-500 font-bold uppercase">Root Access</p>
-                </div>
+    <main class="p-6 md:p-16 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-20">
+            <div class="reveal" style="animation-delay: 0.1s">
+                <p class="text-[10px] text-gray-500 font-bold tracking-widest uppercase mb-4">Total Entities</p>
+                <h2 id="totalUsers" class="syne text-6xl font-extrabold tracking-tighter">--</h2>
             </div>
-        </div>
-        <nav style="flex: 1">
-            <a href="#" class="nav-item active"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
-            <a onclick="window.toggleCatModal()" class="nav-item"><i class="fa-solid fa-tags"></i> Categories</a>
-            <a href="#" class="nav-item"><i class="fa-solid fa-users-gear"></i> Members</a>
-            <a href="#" class="nav-item"><i class="fa-solid fa-cart-flatbed-suitcases"></i> Vendors</a>
-            <a href="#" class="nav-item"><i class="fa-solid fa-fingerprint"></i> Security</a>
-        </nav>
-        <div class="p-4 border-t border-white/5">
-            <button id="adminLogoutBtn" class="w-full py-2 bg-red-500/10 text-red-500 rounded-lg text-xs font-bold border border-red-500/20 transition hover:bg-red-500 hover:text-white">LOGOUT</button>
-        </div>
-    </aside>
-
-    <div id="catModal" class="cat-modal">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-5">
-                <h2 class="cyber-heading">Category Manager</h2>
-                <button onclick="window.toggleCatModal()" class="text-gray-500 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="reveal" style="animation-delay: 0.2s">
+                <p class="text-[10px] text-gray-500 font-bold tracking-widest uppercase mb-4">Verified Nodes</p>
+                <h2 id="totalVendors" class="syne text-6xl font-extrabold tracking-tighter opacity-40">--</h2>
             </div>
-            
-            <div class="bg-white/5 p-4 rounded-xl border border-white/10 mb-6">
-                <p class="text-[10px] text-yellow-500 font-bold uppercase mb-3">Add New Category</p>
-                <input type="text" id="newCatName" class="gold-input" placeholder="Category Name">
-                <input type="text" id="newSubCats" class="gold-input" placeholder="Sub-categories (separate with comma)">
-                <button onclick="window.addCategoryToFirebase()" class="w-full py-3 bg-yellow-600 text-black font-bold rounded-lg text-[10px] uppercase tracking-widest hover:bg-yellow-500 transition">Save Category</button>
-            </div>
-
-            <p class="text-[10px] text-gray-500 font-bold uppercase mb-3">Active Categories</p>
-            <div id="categoryDisplayList" class="space-y-3"></div>
-        </div>
-    </div>
-
-    <main class="main-content">
-        <div class="stat-grid">
-            <div class="stat-card">
-                <p class="text-[8px] text-gray-500 font-bold uppercase">Members</p>
-                <h3 id="memberTotalCount" class="text-base font-bold">...</h3>
-            </div>
-            <div class="stat-card">
-                <p class="text-[8px] text-gray-500 font-bold uppercase">Vendors</p>
-                <h3 id="vendorTotalCount" class="text-base font-bold text-[#D4AF37]">...</h3>
-            </div>
-            <div class="stat-card">
-                <p class="text-[8px] text-gray-500 font-bold uppercase">Experts</p>
-                <h3 class="text-base font-bold text-green-500">158</h3>
-            </div>
-            <div class="stat-card">
-                <p class="text-[8px] text-gray-500 font-bold uppercase">Vault</p>
-                <h3 class="text-base font-bold text-blue-400">₦0</h3>
+            <div class="reveal" style="animation-delay: 0.3s">
+                <p class="text-[10px] text-red-500 font-bold tracking-widest uppercase mb-4">Action Required</p>
+                <h2 id="pendingCount" class="syne text-6xl font-extrabold tracking-tighter text-red-600">0</h2>
             </div>
         </div>
 
-        <div class="table-container">
-            <div class="table-header-box">
-                <span class="pending-title">Pending Approvals</span>
-                <span style="color:var(--neon-gold); font-size:10px;">ACTION REQUIRED</span>
+        <div class="space-y-8" id="userGrid">
             </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-[9px]">
-                    <thead class="bg-white/5 text-gray-500 uppercase">
-                        <tr>
-                            <th class="px-4 py-3">Applicant Info</th>
-                            <th class="px-4 py-3">Role</th>
-                            <th class="px-4 py-3">Status</th>
-                            <th class="px-4 py-3 text-right">Control</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adminVendorList"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <div id="map"></div>
     </main>
 
-    <script>
-        function toggleSidebar() {
-            const s = document.getElementById('sidebar');
-            const o = document.getElementById('overlay');
-            if(s && o) {
-                s.classList.toggle('sidebar-active');
-                o.style.display = s.classList.contains('sidebar-active') ? 'block' : 'none';
-            }
-        }
-    </script>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, onSnapshot, doc, updateDoc, addDoc, deleteDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    
+    import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
     const firebaseConfig = {
         apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
         authDomain: "global-market-admin.firebaseapp.com",
@@ -232,123 +104,51 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const auth = getAuth(app);
 
-    // Map Init
-    var map = L.map('map').setView([9.0820, 8.6753], 6);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+    onSnapshot(collection(db, "users"), (snap) => {
+        const grid = document.getElementById('userGrid');
+        let pending = 0, vendors = 0, total = 0;
+        grid.innerHTML = "";
 
-    // --- LOGOUT ENGINE ---
-    document.getElementById('adminLogoutBtn').onclick = async () => {
-        if(confirm("Kana son fita daga Admin Panel?")) {
-            await signOut(auth);
-            window.location.href = "login.html";
-        }
-    };
-
-    // --- CATEGORY ENGINE ---
-    window.toggleCatModal = () => {
-        const m = document.getElementById('catModal');
-        m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
-        if(document.getElementById('sidebar').classList.contains('sidebar-active')) toggleSidebar();
-    };
-
-    window.addCategoryToFirebase = async () => {
-        const name = document.getElementById('newCatName').value;
-        const subsRaw = document.getElementById('newSubCats').value;
-        if(!name || !subsRaw) return alert("Don Allah cike dukkan guraren!");
-        const subs = subsRaw.split(',').map(s => s.trim());
-        try {
-            await addDoc(collection(db, "app_settings"), { type: "category_list", name, subCategories: subs });
-            document.getElementById('newCatName').value = ""; document.getElementById('newSubCats').value = "";
-            alert("Success!");
-        } catch (e) { alert(e.message); }
-    };
-
-    window.deleteCategory = async (id) => {
-        if(confirm("Goge wannan category din?")) await deleteDoc(doc(db, "app_settings", id));
-    };
-
-    onSnapshot(collection(db, "app_settings"), (snap) => {
-        const list = document.getElementById('categoryDisplayList');
-        list.innerHTML = "";
         snap.forEach(d => {
-            const data = d.data();
-            if(data.type === "category_list") {
-                list.innerHTML += `
-                    <div class="bg-white/5 p-3 rounded-lg border border-white/10 flex justify-between items-center">
-                        <div>
-                            <p class="text-[10px] font-bold text-yellow-500 uppercase">${data.name}</p>
-                            <p class="text-[8px] text-gray-500">${data.subCategories.join(' • ')}</p>
-                        </div>
-                        <button onclick="window.deleteCategory('${d.id}')" class="text-red-500/50 hover:text-red-500"><i class="fa-solid fa-trash-can"></i></button>
-                    </div>`;
-            }
-        });
-    });
+            const user = d.data();
+            total++;
+            if(user.role === 'vendor') vendors++;
 
-    // --- MASTER APPROVAL ENGINE (gyaran da kake so) ---
-
-    // 1. ACCEPT
-    window.approveUser = async (id) => {
-        if(confirm("Confirm Approval?")) {
-            await updateDoc(doc(db, "users", id), { status: "approved", role: "vendor" });
-        }
-    };
-
-    // 2. REJECT
-    window.rejectUser = async (id) => {
-        if(confirm("Reject this application?")) {
-            await updateDoc(doc(db, "users", id), { status: "rejected" });
-        }
-    };
-
-    // 3. DELETE (Disappear from DB)
-    window.deleteUser = async (id) => {
-        if(confirm("GARGADI: Zai bace daga Database gaba daya. Continue?")) {
-            await deleteDoc(doc(db, "users", id));
-        }
-    };
-
-    // REAL-TIME LISTENER
-    onSnapshot(collection(db, "users"), (snapshot) => {
-        let pending = 0;
-        let totalMembers = 0;
-        let totalVendors = 0;
-        const list = document.getElementById('adminVendorList');
-        list.innerHTML = ""; 
-
-        snapshot.forEach((docSnap) => {
-            const data = docSnap.data();
-            
-            // Lissafin Stats
-            totalMembers++;
-            if(data.role === "vendor") totalVendors++;
-
-            // Nuna Masu Pending Approval
-            if(data.status === 'pending' || data.role === "vendor_applicant") {
+            if(!user.status || user.status === 'pending') {
                 pending++;
-                list.innerHTML += `
-                    <tr class="border-b border-white/[0.03]">
-                        <td class="px-5 py-4">
-                            <span class="font-bold text-white block">${data.fullName || data.username}</span>
-                            <span class="text-[7px] text-gray-500">${data.email}</span>
-                        </td>
-                        <td class="px-5 py-4 text-gray-400 uppercase">${data.role || 'User'}</td>
-                        <td class="px-5 py-4"><span class="text-yellow-500 text-[7px] font-bold uppercase">Pending</span></td>
-                        <td class="px-5 py-4 text-right space-x-1">
-                            <button onclick="window.approveUser('${docSnap.id}')" class="bg-green-600/20 text-green-500 p-2 rounded-lg border border-green-500/20 hover:bg-green-600 hover:text-white transition"><i class="fa-solid fa-check"></i></button>
-                            <button onclick="window.rejectUser('${docSnap.id}')" class="bg-orange-600/20 text-orange-500 p-2 rounded-lg border border-orange-500/20 hover:bg-orange-600 hover:text-white transition"><i class="fa-solid fa-xmark"></i></button>
-                            <button onclick="window.deleteUser('${docSnap.id}')" class="bg-red-600/20 text-red-500 p-2 rounded-lg border border-red-500/20 hover:bg-red-600 hover:text-white transition"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>`;
+                grid.innerHTML += `
+                <div class="glass-card p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 reveal">
+                    <div class="flex items-center gap-8">
+                        <div class="h-20 w-20 bg-gradient-to-br from-white to-gray-600 rounded-full flex items-center justify-center text-black text-2xl font-black italic">
+                            ${(user.fullName || 'A').charAt(0)}
+                        </div>
+                        <div>
+                            <h3 class="syne text-3xl font-bold tracking-tight">${user.fullName || user.username}</h3>
+                            <p class="text-gray-500 font-mono text-sm tracking-tighter mt-1">${user.email}</p>
+                            <span class="inline-block mt-4 px-4 py-1 border border-white/10 rounded-full text-[9px] font-bold text-gray-400 uppercase tracking-widest">${user.role || 'Member'}</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-6 w-full md:w-auto">
+                        <button onclick="approve('${d.id}')" class="btn-luxury w-full md:w-auto">Authorize Node</button>
+                        <button onclick="del('${d.id}')" class="delete-icon"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                </div>`;
             }
         });
-        
-        document.getElementById('pCount').innerText = pending;
-        document.getElementById('memberTotalCount').innerText = totalMembers.toLocaleString();
-        document.getElementById('vendorTotalCount').innerText = totalVendors.toLocaleString();
+
+        document.getElementById('totalUsers').innerText = total;
+        document.getElementById('totalVendors').innerText = vendors;
+        document.getElementById('pendingCount').innerText = pending;
+
+        if(pending === 0) {
+            grid.innerHTML = `<div class="p-20 text-center opacity-20 syne text-2xl uppercase tracking-[1em]">All Nodes Verified</div>`;
+        }
     });
+
+    window.approve = async (id) => { await updateDoc(doc(db, "users", id), { status: 'approved', role: 'vendor' }); };
+    window.del = async (id) => { if(confirm('Erase Identity?')) await deleteDoc(doc(db, "users", id)); };
+    window.logout = () => { window.location.href = "login.html"; };
 </script>
 </body>
 </html>
