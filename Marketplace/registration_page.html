@@ -113,8 +113,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
+        import { getFirestore, doc, setDoc, serverTimestamp, query, where, getDocs, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        
         const firebaseConfig = {
             apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
             authDomain: "global-market-admin.firebaseapp.com",
@@ -197,40 +197,69 @@ window.resendEmail = async () => {
 document.getElementById('universalRegisterForm').onsubmit = async (e) => {
     e.preventDefault();
     const btn = document.getElementById('regBtn');
-    btn.disabled = true; btn.innerText = "SAYARWA...";
+    
+    // Dauko bayanan da aka rubuta
+    const username = document.getElementById('username').value.trim().toLowerCase();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    btn.disabled = true; 
+    btn.innerText = "CHECKING DETAILS...";
 
     try {
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+        // 1. DUBA IDAN USERNAME YA RIGA YA TABATA
+        const uQuery = query(collection(db, "users"), where("username", "==", username));
+        const uSnap = await getDocs(uQuery);
+        if (!uSnap.empty) {
+            showToast("Wannan Username din an riga an dauka!", true);
+            btn.disabled = false; btn.innerText = "REGISTER NOW";
+            return;
+        }
 
-        // Kirkirar Account
+        // 2. DUBA IDAN LAMBAR WAYA TA RIGA TA TABATA
+        const pQuery = query(collection(db, "users"), where("phone", "==", phone));
+        const pSnap = await getDocs(pQuery);
+        if (!pSnap.empty) {
+            showToast("Wannan Lambar Wayar an riga an yi amfani da ita!", true);
+            btn.disabled = false; btn.innerText = "REGISTER NOW";
+            return;
+        }
+
+        // 3. IDAN DUKKA BABU SU, SAI A YI REGISTER
+        btn.innerText = "CREATING ACCOUNT...";
         const userCred = await createUserWithEmailAndPassword(auth, email, password);
         
-        // Tura Verification Link nan take (Kamar Facebook)
+        // Tura Verification Link
         await sendEmailVerification(userCred.user);
         
-        // Ajiye bayanan asali
+        // Ajiye sauran bayanan
         await setDoc(doc(db, "users", userCred.user.uid), {
             fullName: document.getElementById('fullName').value,
-            username: document.getElementById('username').value,
+            username: username,
             email: email,
+            phone: phone,
+            state: document.getElementById('state').value,
             role: "vendor",
             emailVerified: false,
             createdAt: serverTimestamp()
         });
 
-        // Nuna Setup Section
+        // Wucewa zuwa Setup
         document.getElementById('registerSection').style.display = 'none';
         document.getElementById('setupSection').style.display = 'block';
         document.getElementById('mainTitle').innerText = "Business Setup";
-        showToast("An tura Verification Link zuwa Email dinka!");
+        showToast("Username da Phone OK! Duba Email dinka.");
 
     } catch (error) {
-        showToast(error.message, true);
+        let msg = error.message;
+        if (error.code === 'auth/email-already-in-use') msg = "Wannan Email din ma an riga an dauka!";
+        showToast(msg, true);
         btn.disabled = false;
         btn.innerText = "REGISTER NOW";
     }
 };
+            
 
 // 2. FINISH SETUP LOGIC
 document.getElementById('setupForm').onsubmit = async (e) => {
