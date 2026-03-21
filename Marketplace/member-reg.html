@@ -165,16 +165,18 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // --- AUTOMATIC REDIRECT CHECKER ---
+                // --- AUTOMATIC REDIRECT CHECKER (FIXED) ---
         setInterval(async () => {
             if (auth.currentUser) {
                 await auth.currentUser.reload();
                 if (auth.currentUser.emailVerified) {
+                    // Na tabbatar wannan layin ya dace da abinda ya bude maka
                     window.location.href = "verify-success.html"; 
                 }
             }
         }, 3000);
-
+        // ------------------------------------------
+        
         function showToast(msg, isError = false) {
             const toast = document.getElementById('status-toast');
             document.getElementById('toast-msg').innerText = msg;
