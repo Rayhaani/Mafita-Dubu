@@ -56,9 +56,9 @@
             <div class="mb-6">
                 <div class="inline-block p-4 rounded-full bg-[#f3cf7a]/10 mb-4"><span class="text-5xl">📧</span></div>
                 <h2 class="text-[#f3cf7a] font-bold text-xl mb-2">Tantance Email</h2>
-                <p class="text-white/70 text-[12px] leading-relaxed">Mun tura sako zuwa email dinka. Don Allah duba 'Inbox' ko 'Spam' sannan ka danna link din.</p>
+                <p class="text-white/70 text-[12px] leading-relaxed">Mun tura sako zuwa email dinka. Shiga Inbox dinka ka danna link din verification.</p>
                 <div class="spinner"></div>
-                <p id="waitingText" style="color: #f3cf7a; font-size: 10px;">Checking status automatically...</p>
+                <p id="waitingText" style="color: #f3cf7a; font-size: 10px;">Waiting for verification...</p>
             </div>
             <div class="space-y-4">
                 <button id="checkLoginBtn" class="submit-btn">NA DANNA LINK DIN (LOGIN)</button>
@@ -93,24 +93,25 @@
         setTimeout(() => { toast.style.top = '-100px'; }, 5000);
     }
 
-    // --- 1. SMART AUTO-CHECKER (Checking every 3 seconds) ---
+    // --- 1. SMART BACKGROUND RELOADER ---
+    // Yana duba kowane sakan 3 ko anyi verification
     setInterval(async () => {
         if (auth.currentUser) {
             try {
-                await auth.currentUser.reload(); // Wannan layin shi ne "wayon"
+                await auth.currentUser.reload();
                 if (auth.currentUser.emailVerified) {
-                    window.location.href = "verify-success.html";
+                    window.location.replace("verify-success.html");
                 }
-            } catch (e) { console.log("Silent check..."); }
+            } catch (e) { console.log("Silent check active..."); }
         }
     }, 3000);
 
-    // --- 2. OBSERVER (Switching Sections) ---
+    // --- 2. AUTH OBSERVER ---
     onAuthStateChanged(auth, async (user) => {
         if (user) {
             await user.reload();
             if (user.emailVerified) {
-                window.location.href = "verify-success.html";
+                window.location.replace("verify-success.html");
             } else {
                 document.getElementById('registerSection').classList.add('hidden');
                 document.getElementById('verifySection').classList.remove('hidden');
@@ -119,38 +120,32 @@
         }
     });
 
-    // --- 3. MANUAL BUTTON FIX ---
-    document.getElementById('checkLoginBtn').addEventListener('click', async () => {
-        const user = auth.currentUser;
-        if (user) {
-            try {
-                await user.reload(); // Refresh session
-                if (user.emailVerified) {
-                    window.location.href = "verify-success.html";
-                } else {
-                    showToast("Ba ka danna link din ba tukunna!", true);
-                }
-            } catch (e) { showToast("Sake gwadawa...", true); }
-        }
-    });
-
-    // --- 4. RESEND EMAIL ---
-    document.getElementById('resendBtn').onclick = async (e) => {
-        e.preventDefault();
+    // --- 3. MANUAL BUTTON RELOAD ---
+    document.getElementById('checkLoginBtn').onclick = async () => {
         if (auth.currentUser) {
+            const btn = document.getElementById('checkLoginBtn');
+            btn.innerText = "DUBIKEWA...";
             try {
-                await sendEmailVerification(auth.currentUser);
-                showToast("Sako ya sake tafiya email dinka.");
-            } catch (err) { showToast(err.message, true); }
+                await auth.currentUser.reload();
+                if (auth.currentUser.emailVerified) {
+                    window.location.replace("verify-success.html");
+                } else {
+                    showToast("Ba ka danna link din ba tukunna! Duba email dinka.", true);
+                    btn.innerText = "NA DANNA LINK DIN (LOGIN)";
+                }
+            } catch (e) {
+                showToast("Network problem, sake gwadawa.", true);
+                btn.innerText = "NA DANNA LINK DIN (LOGIN)";
+            }
         }
     };
 
-    // --- 5. REGISTER FORM (WITH .VALUE FIX) ---
+    // --- 4. REGISTER FORM LOGIC ---
     document.getElementById('universalRegisterForm').onsubmit = async (e) => {
         e.preventDefault();
         const btn = document.getElementById('regBtn');
         
-        // Ciro rubutu (values) - Gyara daga error na baya
+        // Gyara: Ciro ainihin rubutu (.value)
         const fullName = document.getElementById('fullName').value.trim();
         const username = document.getElementById('username').value.trim().toLowerCase();
         const email = document.getElementById('email').value.trim();
@@ -158,16 +153,19 @@
         const state = document.getElementById('state').value.trim();
         const password = document.getElementById('password').value;
 
-        btn.disabled = true; btn.innerText = "Processing...";
+        btn.disabled = true;
+        btn.innerText = "CHECKING...";
 
         try {
+            // Check existence
             const uQuery = query(collection(db, "users"), where("username", "==", username));
             const pQuery = query(collection(db, "users"), where("phone", "==", phone));
             const [uSnap, pSnap] = await Promise.all([getDocs(uQuery), getDocs(pQuery)]);
 
-            if (!uSnap.empty) { showToast("Username taken!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
-            if (!pSnap.empty) { showToast("Phone used!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
+            if (!uSnap.empty) { showToast("Wannan Username din akwai shi!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
+            if (!pSnap.empty) { showToast("An riga da an yi amfani da wannan Phone number din!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
 
+            btn.innerText = "CREATING...";
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
@@ -177,15 +175,27 @@
             });
 
             await sendEmailVerification(user);
-            showToast("Success! Check your email.");
+            showToast("An yi nasara! Duba email dinka yanzu.");
             
-            // Tilasta shafin ya sauya kansa
+            // Switch to verification view
             document.getElementById('registerSection').classList.add('hidden');
             document.getElementById('verifySection').classList.remove('hidden');
             document.getElementById('mainTitle').innerText = "Verify Email";
         } catch (error) {
             showToast(error.message, true);
-            btn.disabled = false; btn.innerText = "REGISTER NOW";
+            btn.disabled = false;
+            btn.innerText = "REGISTER NOW";
+        }
+    };
+
+    // Resend Email
+    document.getElementById('resendBtn').onclick = async (e) => {
+        e.preventDefault();
+        if (auth.currentUser) {
+            try {
+                await sendEmailVerification(auth.currentUser);
+                showToast("An sake tura maka link din.");
+            } catch (err) { showToast(err.message, true); }
         }
     };
 </script>
