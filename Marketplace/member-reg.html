@@ -68,12 +68,11 @@
     </div>
 
 <script type="module">
-    // 1. DUKKAN IMPORTS
+    // --- IMPORTING EVERYTHING ---
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, serverTimestamp, query, where, getDocs, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // 2. CONFIGURATION
     const firebaseConfig = {
         apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
         authDomain: "global-market-admin.firebaseapp.com",
@@ -95,7 +94,7 @@
         setTimeout(() => { toast.style.top = '-100px'; }, 5000);
     }
 
-    // 3. SMART BACKGROUND RELOADER (Duk sakan 3 yana dubawa)
+    // --- SMART RELOADER ---
     setInterval(async () => {
         if (auth.currentUser) {
             try {
@@ -103,11 +102,11 @@
                 if (auth.currentUser.emailVerified) {
                     window.location.replace("verify-success.html");
                 }
-            } catch (e) { console.log("Silent checking..."); }
+            } catch (e) { console.log("System is monitoring verification status..."); }
         }
-    }, 3000);
+    }, 4000);
 
-    // 4. AUTH OBSERVER (Yana lura da shiga da fita)
+    // --- AUTH OBSERVER ---
     onAuthStateChanged(auth, async (user) => {
         if (user) {
             await user.reload();
@@ -121,28 +120,28 @@
         }
     });
 
-    // 5. MANUAL BUTTON RELOAD (GYARAN DA KAKE SO)
-    const checkBtn = document.getElementById('checkLoginBtn');
-    checkBtn.onclick = async () => {
+    // --- BUTTON CLICK (FIXED) ---
+    document.getElementById('checkLoginBtn').addEventListener('click', async () => {
         const user = auth.currentUser;
         if (user) {
-            checkBtn.innerText = "DUBIKEWA...";
+            const btn = document.getElementById('checkLoginBtn');
+            btn.innerText = "DUBIKEWA...";
             try {
-                await user.reload(); 
+                await user.reload(); // Wannan layin zai sabunta Firebase
                 if (auth.currentUser.emailVerified) {
                     window.location.replace("verify-success.html");
                 } else {
-                    showToast("Har yanzu ba a tantance email din ba! Duba Inbox dinka.", true);
-                    checkBtn.innerText = "NA DANNA LINK DIN (LOGIN)";
+                    showToast("Har yanzu ba a tantance email dinka ba! Duba Gmail dinka.", true);
+                    btn.innerText = "NA DANNA LINK DIN (LOGIN)";
                 }
             } catch (e) {
-                showToast("Network problem, sake gwadawa.", true);
-                checkBtn.innerText = "NA DANNA LINK DIN (LOGIN)";
+                showToast("System error, sake gwadawa.", true);
+                btn.innerText = "NA DANNA LINK DIN (LOGIN)";
             }
         }
-    };
+    });
 
-    // 6. REGISTER FORM LOGIC
+    // --- REGISTER FORM ---
     document.getElementById('universalRegisterForm').onsubmit = async (e) => {
         e.preventDefault();
         const btn = document.getElementById('regBtn');
@@ -162,8 +161,8 @@
             const pQuery = query(collection(db, "users"), where("phone", "==", phone));
             const [uSnap, pSnap] = await Promise.all([getDocs(uQuery), getDocs(pQuery)]);
 
-            if (!uSnap.empty) { showToast("Username taken!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
-            if (!pSnap.empty) { showToast("Phone number used!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
+            if (!uSnap.empty) { showToast("An riga da an yi amfani da Username din nan!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
+            if (!pSnap.empty) { showToast("An riga da an yi amfani da Phone number din nan!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
 
             btn.innerText = "CREATING...";
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -175,11 +174,10 @@
             });
 
             await sendEmailVerification(user);
-            showToast("Success! Check your email.");
+            showToast("An yi nasara! Duba email dinka don tantancewa.");
             
             document.getElementById('registerSection').classList.add('hidden');
             document.getElementById('verifySection').classList.remove('hidden');
-            document.getElementById('mainTitle').innerText = "Verify Email";
         } catch (error) {
             showToast(error.message, true);
             btn.disabled = false;
@@ -187,17 +185,16 @@
         }
     };
 
-    // Resend Email
+    // Resend
     document.getElementById('resendBtn').onclick = async (e) => {
         e.preventDefault();
         if (auth.currentUser) {
             try {
                 await sendEmailVerification(auth.currentUser);
-                showToast("An sake tura maka link din.");
+                showToast("An sake tura maka link din tantancewa.");
             } catch (err) { showToast(err.message, true); }
         }
     };
 </script>
 </body>
-    </html>
-    
+</html>
