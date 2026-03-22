@@ -6,7 +6,6 @@
     <title>Mafita Dubu | Premium Register</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    
     <style>
         :root { --milk-bg: #FFF5E1; --royal-black: #1a1405; --dark-gold: #8b6b1b; --light-gold: #f3cf7a; --gold: #bf953f; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--milk-bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
@@ -57,9 +56,9 @@
             <div class="mb-6">
                 <div class="inline-block p-4 rounded-full bg-[#f3cf7a]/10 mb-4"><span class="text-5xl">📧</span></div>
                 <h2 class="text-[#f3cf7a] font-bold text-xl mb-2">Tantance Email</h2>
-                <p class="text-white/70 text-[12px] leading-relaxed">Mun tura maka link na tantancewa zuwa email dinka. Duba 'Inbox' ko 'Spam' sannan ka danna link din.</p>
+                <p class="text-white/70 text-[12px] leading-relaxed">Mun tura maka link na tantancewa zuwa email dinka. Duba 'Inbox' ko 'Spam'.</p>
                 <div class="spinner"></div>
-                <p style="color: #f3cf7a; font-size: 10px;">Muna jiran ka danna link din email dinka...</p>
+                <p id="waitingText" style="color: #f3cf7a; font-size: 10px;">System na jiran ka danna link a email...</p>
             </div>
             <div class="space-y-4">
                 <button id="checkLoginBtn" class="submit-btn">NA DANNA LINK DIN (LOGIN)</button>
@@ -73,7 +72,6 @@
     import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, serverTimestamp, query, where, getDocs, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // NA MAIDA CONFIG DINKA (WANNAN SHINE YA HADASA BLANK DIN)
     const firebaseConfig = {
         apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
         authDomain: "global-market-admin.firebaseapp.com",
@@ -95,31 +93,50 @@
         setTimeout(() => { toast.style.top = '-100px'; }, 5000);
     }
 
-    // --- WATCHDOG (AUTO-SWITCH) ---
+    // --- SMART AUTO-CHECKER (THE BRAIN) ---
+    // Wannan zai rika duba emailVerification duk bayan sakan 3 automatically
+    setInterval(async () => {
+        const user = auth.currentUser;
+        if (user && !user.emailVerified) {
+            await user.reload(); // Tambayi Firebase idan an canza status
+            if (user.emailVerified) {
+                showToast("Email Verified! Redirecting...");
+                window.location.href = "verify-success.html";
+            }
+        }
+    }, 3000);
+
+    // --- OBSERVER (Lura da wane Page ya kamata ya fito) ---
     onAuthStateChanged(auth, async (user) => {
         if (user) {
             await user.reload();
             if (user.emailVerified) {
-                window.location.href = "verify-success.html"; 
+                window.location.href = "verify-success.html";
             } else {
                 document.getElementById('registerSection').classList.add('hidden');
                 document.getElementById('verifySection').classList.remove('hidden');
                 document.getElementById('mainTitle').innerText = "Verify Email";
             }
+        } else {
+            document.getElementById('registerSection').classList.remove('hidden');
+            document.getElementById('verifySection').classList.add('hidden');
         }
     });
 
-    // --- CHECK LOGIN BUTTON ---
-    document.getElementById('checkLoginBtn').onclick = async () => {
-        if (auth.currentUser) {
-            await auth.currentUser.reload();
-            if (auth.currentUser.emailVerified) {
+    // --- FIX BUTTON (Manual Check) ---
+    document.getElementById('checkLoginBtn').addEventListener('click', async () => {
+        const user = auth.currentUser;
+        if (user) {
+            await user.reload();
+            if (user.emailVerified) {
                 window.location.href = "verify-success.html";
             } else {
-                showToast("Har yanzu ba ka danna link din ba!", true);
+                showToast("Har yanzu ba ka danna link din a email dinka ba!", true);
             }
+        } else {
+            window.location.reload();
         }
-    };
+    });
 
     // --- RESEND EMAIL ---
     document.getElementById('resendBtn').onclick = async (e) => {
@@ -127,12 +144,12 @@
         if (auth.currentUser) {
             try {
                 await sendEmailVerification(auth.currentUser);
-                showToast("An sake tura sabon link!");
+                showToast("An sake tura link, duba email dinka.");
             } catch (err) { showToast(err.message, true); }
         }
     };
 
-    // --- REGISTER FORM ---
+    // --- REGISTER LOGIC ---
     document.getElementById('universalRegisterForm').onsubmit = async (e) => {
         e.preventDefault();
         const btn = document.getElementById('regBtn');
@@ -159,12 +176,12 @@
                 fullName: document.getElementById('fullName').value,
                 username: username, email: email, phone: phone,
                 state: document.getElementById('state').value,
-                role: "member", emailVerified: false, createdAt: serverTimestamp()
+                role: "member", status: "approved", emailVerified: false, createdAt: serverTimestamp()
             });
 
             await sendEmailVerification(user);
             showToast("Success! Check your email.");
-            // onAuthStateChanged zai kula da sauran switch din
+            // onAuthStateChanged zai boye Register section automatically
         } catch (error) {
             showToast(error.message, true);
             btn.disabled = false; btn.innerText = "REGISTER NOW";
