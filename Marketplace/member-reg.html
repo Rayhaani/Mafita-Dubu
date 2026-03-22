@@ -16,6 +16,11 @@
         .gold-input { width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(243, 207, 122, 0.2); padding: 12px 15px; border-radius: 12px; color: #fff; font-size: 0.85rem; outline: none; }
         .submit-btn { background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900; width: 100%; padding: 12px; border-radius: 10px; margin-top: 15px; font-size: 1rem; border: none; cursor: pointer; transition: 0.3s; }
         .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        
+        /* Futuristic Resend Button */
+        .resend-btn { background: rgba(243, 207, 122, 0.1); border: 1px solid var(--gold); color: var(--light-gold); width: 100%; padding: 12px; border-radius: 10px; margin-top: 15px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .resend-btn:hover { background: var(--gold); color: var(--royal-black); }
+
         .login-footer { text-align: center; margin-top: 20px; color: #ffffff; font-size: 0.85rem; }
         .login-footer a { color: var(--light-gold); font-weight: 700; text-decoration: none; margin-left: 5px; }
         #status-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); z-index: 1000; width: 90%; max-width: 350px; background: #1a1405; border-left: 4px solid #bf953f; padding: 15px; border-radius: 8px; transition: 0.5s; display: flex; align-items: center; gap: 12px; }
@@ -50,13 +55,22 @@
             </form>
         </div>
 
-        <div id="verifySection" class="hidden text-center py-4">
-            <div class="mb-6">
-                <div class="inline-block p-4 rounded-full bg-[#f3cf7a]/10 mb-4"><span class="text-5xl">📧</span></div>
-                <h2 class="text-[#f3cf7a] font-bold text-xl mb-2">Tantance Email</h2>
-                <p class="text-white/70 text-[12px] leading-relaxed">Mun tura link dinka zuwa email dinka. Shiga Inbox dinka ka danna domin kunna account dinka.</p>
+        <div id="verifySection" class="hidden text-left py-2">
+            <h2 class="text-white font-bold text-3xl mb-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">Email Confirmation Required</h2>
+            
+            <p class="text-white/80 text-[14px] leading-relaxed mb-4">
+                We sent the email to <span id="displayEmail" class="text-[#f3cf7a] font-bold"></span>.<br>
+                Check your inbox to activate the account. If the confirmation email is not in your inbox, please check the Spam. Thank you.
+            </p>
+
+            <button id="resendBtn" class="resend-btn">
+                <span>🔄</span> Resend Email
+            </button>
+            
+            <div class="mt-8 text-center">
+                <a href="login.html" class="text-white/50 text-[12px] hover:text-[#f3cf7a]">Back to Login</a>
             </div>
-            </div>
+        </div>
     </div>
 
 <script type="module">
@@ -103,8 +117,8 @@
             const pQuery = query(collection(db, "users"), where("phone", "==", phone));
             const [uSnap, pSnap] = await Promise.all([getDocs(uQuery), getDocs(pQuery)]);
 
-            if (!uSnap.empty) { showToast("An riga da an yi amfani da Username din!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
-            if (!pSnap.empty) { showToast("An riga da an yi amfani da Wayar nan!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
+            if (!uSnap.empty) { showToast("Username already exists!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
+            if (!pSnap.empty) { showToast("Phone number already exists!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
 
             btn.innerText = "CREATING...";
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -118,15 +132,22 @@
             await sendEmailVerification(user);
             await signOut(auth);
 
+            // Nuna Verify Section da sanya Email din mutum
+            document.getElementById('displayEmail').innerText = email;
             document.getElementById('registerSection').classList.add('hidden');
             document.getElementById('verifySection').classList.remove('hidden');
-            document.getElementById('mainTitle').innerText = "Verify Email";
+            document.getElementById('mainTitle').classList.add('hidden'); // Boye tsohon tittle don ya zama kamar EmailJS
 
         } catch (error) {
             showToast(error.message, true);
             btn.disabled = false;
             btn.innerText = "REGISTER NOW";
         }
+    };
+
+    document.getElementById('resendBtn').onclick = () => {
+        showToast("Please return to Login to resend the link.", true);
+        setTimeout(() => { window.location.href = "login.html"; }, 2000);
     };
 </script>
 </body>
