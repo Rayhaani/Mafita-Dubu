@@ -57,8 +57,6 @@
                 <div class="inline-block p-4 rounded-full bg-[#f3cf7a]/10 mb-4"><span class="text-5xl">📧</span></div>
                 <h2 class="text-[#f3cf7a] font-bold text-xl mb-2">Tantance Email</h2>
                 <p class="text-white/70 text-[12px] leading-relaxed">Mun tura link dinka zuwa email dinka. Shiga Inbox dinka ka danna domin kunna account dinka.</p>
-                <div class="spinner"></div>
-                <p id="waitingText" style="color: #f3cf7a; font-size: 10px;">Waiting for verification...</p>
             </div>
             <div class="space-y-4">
                 <button id="checkLoginBtn" class="submit-btn">NA DANNA LINK DIN (CONTINUE)</button>
@@ -69,7 +67,7 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, serverTimestamp, query, where, getDocs, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -93,35 +91,11 @@
         setTimeout(() => { toast.style.top = '-100px'; }, 5000);
     }
 
-    // --- GYARA: AN CIRE AUTO-RELOAD DOMIN BIN TSARIN EMAILJS ---
-
-    onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            // Idan ya yi verifying a wani shafin, nan zai tsaya har sai ya danna button
-            document.getElementById('registerSection').classList.add('hidden');
-            document.getElementById('verifySection').classList.remove('hidden');
-            document.getElementById('mainTitle').innerText = "Verify Email";
-        }
-    });
+    // --- AN CIRE DUKKAN WANI AUTO-CHECKING DA REFRESH ---
 
     document.getElementById('checkLoginBtn').addEventListener('click', async () => {
-        const user = auth.currentUser;
-        if (user) {
-            const btn = document.getElementById('checkLoginBtn');
-            btn.innerText = "DUBIKEWA...";
-            try {
-                await user.reload(); 
-                if (auth.currentUser.emailVerified) {
-                    window.location.replace("verify-success.html");
-                } else {
-                    showToast("Ba a gama tantancewa ba tukuna. Duba Gmail dinka!", true);
-                    btn.innerText = "NA DANNA LINK DIN (CONTINUE)";
-                }
-            } catch (e) {
-                showToast("System Error. Sake gwadawa.", true);
-                btn.innerText = "NA DANNA LINK DIN (CONTINUE)";
-            }
-        }
+        // Maimakon refresh, za mu tura shi kawai shafin Login don ya shiga da kansa
+        window.location.href = "login.html";
     });
 
     document.getElementById('universalRegisterForm').onsubmit = async (e) => {
@@ -155,11 +129,14 @@
             });
 
             await sendEmailVerification(user);
-            showToast("An yi nasara! Duba Email dinka.");
             
+            // Logout kai tsaye bayan register domin tsaro da kuma bin tsarin EmailJS
+            await signOut(auth);
+
             document.getElementById('registerSection').classList.add('hidden');
             document.getElementById('verifySection').classList.remove('hidden');
             document.getElementById('mainTitle').innerText = "Verify Email";
+
         } catch (error) {
             showToast(error.message, true);
             btn.disabled = false;
@@ -167,16 +144,11 @@
         }
     };
 
-    document.getElementById('resendBtn').onclick = async (e) => {
+    document.getElementById('resendBtn').onclick = (e) => {
         e.preventDefault();
-        if (auth.currentUser) {
-            try {
-                await sendEmailVerification(auth.currentUser);
-                showToast("An sake tura maka sabon link.");
-            } catch (err) { showToast(err.message, true); }
-        }
+        showToast("Don Allah ka koma shafin Login domin sake tura link.", true);
+        setTimeout(() => { window.location.href = "login.html"; }, 2000);
     };
 </script>
 </body>
-    </html>
-    
+</html>
