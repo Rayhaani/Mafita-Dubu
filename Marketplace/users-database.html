@@ -1,143 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ha">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Futuristic Ecosystem</title>
+<title>ARCHITECT | ELITE CORE</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700;800;900&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
+:root { --neon: #00f7ff; --neon-dim: rgba(0, 247, 255, 0.1); --bg: #02040a; }
+
+*{margin:0;padding:0;box-sizing:border-box;font-family: 'Quicksand', sans-serif;}
 
 body{
-background:#02040a;
-color:#fff;
-overflow-x:hidden;
+    background: var(--bg); color:#fff;
+    overflow-x:hidden; min-height: 100vh;
 }
 
-/* 🌌 PARTICLE BACKGROUND */
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
-}
+canvas{ position:fixed; top:0; left:0; z-index:-1; }
 
-/* HEADER */
+/* 🚀 HEADER - SINGLE LINE */
 .header{
-text-align:center;
-padding:20px;
-font-weight:700;
-letter-spacing:1px;
-background:rgba(255,255,255,0.03);
-backdrop-filter:blur(10px);
+    text-align:center; padding:30px 10px; font-weight:900; font-size: 18px;
+    letter-spacing:4px; text-transform: uppercase;
+    background: rgba(255,255,255,0.01); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-/* TABS */
-.tabs{
-display:flex;
-overflow-x:auto;
-gap:10px;
-padding:15px;
+/* 🧭 NAVIGATION TABS (FIXED OVERFLOW) */
+.tabs-wrapper {
+    width: 100%; display: flex; justify-content: center; padding: 20px 10px;
 }
+.tabs{ 
+    display:flex; gap:8px; overflow-x: auto; 
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+.tabs::-webkit-scrollbar { display: none; } /* Chrome/Safari */
 
 .tab-btn{
-padding:10px 18px;
-border-radius:25px;
-border:none;
-background:rgba(255,255,255,0.05);
-color:#aaa;
-cursor:pointer;
-transition:0.4s;
+    flex: 0 0 auto; /* Hana buttons din takurewa */
+    padding: 10px 18px; border-radius:15px; border: 1px solid rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.03); color:#555;
+    font-size: 11px; font-weight: 800; cursor:pointer; transition:0.3s;
+    text-transform: uppercase; white-space: nowrap;
 }
 
 .tab-btn.active{
-background:linear-gradient(135deg,#00f7ff,#00c3ff);
-color:#000;
-box-shadow:0 0 25px #00f7ff;
+    background: var(--neon); color:#000;
+    box-shadow: 0 0 20px var(--neon-dim); border-color: var(--neon);
 }
 
-/* CONTAINER */
-.container{
-padding:15px;
-position:relative;
+/* 📦 CONTAINER */
+.container{ padding:10px 15px; max-width: 600px; margin: 0 auto; }
+.list { display: none; flex-direction: column; gap: 12px; }
+.list.active { display: flex; animation: slideUp 0.4s ease-out; }
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* LIST */
-.list{
-position:absolute;
-width:100%;
-opacity:0;
-transform:scale(0.9);
-pointer-events:none;
-transition:0.5s ease;
-}
-
-.list.active{
-opacity:1;
-transform:scale(1);
-pointer-events:auto;
-position:relative;
-}
-
-/* CARD */
+/* 💎 THE CARD */
 .card{
-padding:15px;
-border-radius:20px;
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(15px);
-margin-bottom:12px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-transition:0.3s;
+    padding:16px; border-radius:20px;
+    background: rgba(255,255,255,0.02); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.04);
+    display:flex; justify-content:space-between; align-items:center;
 }
+.card:hover { border-color: var(--neon-dim); background: rgba(255,255,255,0.04); }
 
-.card:hover{
-transform:scale(1.05);
-box-shadow:0 10px 30px rgba(0,255,255,0.2);
-}
-
-/* LEFT */
-.left{display:flex;align-items:center;gap:10px;}
-
+.left{ display:flex; align-items:center; gap:12px; }
 .avatar{
-width:45px;
-height:45px;
-border-radius:50%;
-background:linear-gradient(135deg,#00f7ff,#008cff);
-display:flex;
-align-items:center;
-justify-content:center;
-color:#000;
-font-weight:bold;
+    width:42px; height:42px; border-radius:12px;
+    background: var(--neon-dim); border: 1px solid var(--neon-dim);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--neon); font-weight:900; font-size: 16px;
 }
+.u-info .name { font-size: 14px; font-weight: 800; }
+.u-info .email { font-size: 10px; color: #444; }
 
-/* BADGE */
-.badge{
-font-size:11px;
-padding:4px 10px;
-border-radius:20px;
-background:#00f7ff;
-color:#000;
+/* 🛠️ ACTION BUTTONS */
+.actions { display: flex; gap: 8px; }
+.act-btn {
+    width: 35px; height: 35px; border-radius: 10px;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items:center; justify-content:center;
+    color: #fff; cursor: pointer; transition: 0.2s; font-size: 12px;
 }
-
-/* BUTTON */
-.icon-btn{
-width:30px;
-height:30px;
-border-radius:50%;
-background:rgba(255,255,255,0.08);
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-transition:0.3s;
-}
-
-.icon-btn:hover{
-background:#00f7ff;
-color:#000;
-}
+.act-btn:hover { background: var(--neon); color: #000; box-shadow: 0 0 15px var(--neon); }
+.btn-del:hover { background: #ff3344 !important; color: #fff !important; }
 
   /* Dock Menu Style */
         .futuristic-dock {
@@ -162,57 +114,27 @@ color:#000;
         .dock-item:hover, .dock-item.active {
             background: white; color: black;
             transform: scale(1.25) translateY(-12px);
-  }
+        }
 </style>
-
 </head>
 <body>
 
 <canvas id="bg"></canvas>
 
-<div class="header">🧠 AI Ecosystem</div>
+<div class="header">Users Database</div>
 
-<div class="tabs">
-<button class="tab-btn active" onclick="switchTab('customers',this)">Customers</button>
-<button class="tab-btn" onclick="switchTab('vendors',this)">Vendors</button>
-<button class="tab-btn" onclick="switchTab('experts',this)">Experts</button>
-<button class="tab-btn" onclick="switchTab('labs',this)">Labs</button>
-</div>
-
-<div class="container">
-
-<div class="list active" id="customers">
-<div class="card">
-<div class="left"><div class="avatar">A</div>Aliyu Musa</div>
-<div class="badge">VIP</div>
-</div>
+<div class="tabs-wrapper">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('customer',this)">👥 Customers</button>
+        <button class="tab-btn" onclick="switchTab('vendor',this)">🏪 Vendors</button>
+        <button class="tab-btn" onclick="switchTab('expert',this)">🧠 Experts</button>
+        <button class="tab-btn" onclick="switchTab('lab',this)">🧪 Labs</button>
+    </div>
 </div>
 
-<div class="list" id="vendors">
-<div class="card">
-<div class="left"><div class="avatar">T</div>TechStore</div>
-<div class="badge">Top</div>
-</div>
-</div>
-
-<div class="list" id="experts">
-<div class="card">
-<div class="left"><div class="avatar">X</div>AI Expert</div>
-<div class="badge">AI</div>
-</div>
-</div>
-
-<div class="list" id="labs">
-<div class="card">
-<div class="left"><div class="avatar">L</div>Future Lab</div>
-<div class="badge">R&D</div>
-</div>
-</div>
-
-</div>
 
   <div class="futuristic-dock">
-    <div class="dock-item" onclick="location.href='categories.html'" title="Neural Core">
+    <div class="dock-item" onclick="location.href='admin-dashboard.html'" title="Neural Core">
         <i class="fa-solid fa-microchip"></i>
     </div>
 
@@ -220,7 +142,7 @@ color:#000;
         <i class="fa-solid fa-fingerprint"></i>
     </div>
 
-    <div class="dock-item" onclick="location.href='index.html'" title="Protocol Arch">
+    <div class="dock-item" onclick="location.href='categories.html'" title="Protocol Arch">
         <i class="fa-solid fa-diagram-project"></i>
     </div>
 
@@ -232,55 +154,101 @@ color:#000;
         <i class="fa-solid fa-vault"></i>
     </div>
   </div>
-<script>
-// SWITCH
-function switchTab(id,btn){
-document.querySelectorAll('.list').forEach(l=>l.classList.remove('active'));
-document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+<div class="container" id="registryBox">
+    </div>
 
-setTimeout(()=>{
-document.getElementById(id).classList.add('active');
-},150);
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-btn.classList.add('active');
+const firebaseConfig = {
+    apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
+    authDomain: "global-market-admin.firebaseapp.com",
+    projectId: "global-market-admin",
+    storageBucket: "global-market-admin.firebasestorage.app",
+    messagingSenderId: "259715265619",
+    appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+let currentSector = 'customer';
+
+const sync = () => {
+    onSnapshot(collection(db, "users"), (snap) => {
+        const box = document.getElementById('registryBox');
+        box.innerHTML = `<div class="list active" id="listBody"></div>`;
+        const listBody = document.getElementById('listBody');
+
+        snap.forEach(d => {
+            const u = d.data();
+            const role = (u.role || '').toLowerCase();
+            const status = u.status || 'pending';
+
+            let match = (currentSector === 'customer' && (role === 'customer' || role === 'client')) || 
+                        (role === currentSector && (status === 'approved' || status === 'suspended'));
+
+            if(match) {
+                const initial = (u.fullName || u.username || '?').charAt(0).toUpperCase();
+                listBody.innerHTML += `
+                <div class="card" style="${status === 'suspended' ? 'opacity: 0.2;' : ''}">
+                    <div class="left">
+                        <div class="avatar">${initial}</div>
+                        <div class="u-info">
+                            <div class="name">${u.fullName || u.username}</div>
+                            <div class="email">${u.email}</div>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <div class="act-btn" onclick="updateStatus('${d.id}', '${status}')">
+                            <i class="fa-solid ${status === 'suspended' ? 'fa-play' : 'fa-pause'}"></i>
+                        </div>
+                        <div class="act-btn btn-del" onclick="killNode('${d.id}')">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </div>
+                    </div>
+                </div>`;
+            }
+        });
+    });
 }
 
-// 🌌 PARTICLES
+window.switchTab = (sector, btn) => {
+    currentSector = sector;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    sync();
+}
+
+window.updateStatus = async (id, s) => {
+    const next = s === 'suspended' ? 'approved' : 'suspended';
+    await updateDoc(doc(db, "users", id), { status: next });
+};
+
+window.killNode = async (id) => {
+    if(confirm('TERMINATE NODE?')) await deleteDoc(doc(db, "users", id));
+};
+
+// 🌌 SMOOTH PARTICLES
 const canvas = document.getElementById('bg');
 const ctx = canvas.getContext('2d');
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particles = [];
-
-for(let i=0;i<80;i++){
-particles.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*2,
-dx:(Math.random()-0.5),
-dy:(Math.random()-0.5)
-});
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+let pts = [];
+for(let i=0;i<50;i++){
+    pts.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.2, dx:(Math.random()-0.5)*0.6, dy:(Math.random()-0.5)*0.6 });
 }
-
-function animate(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-particles.forEach(p=>{
-p.x+=p.dx;
-p.y+=p.dy;
-
-ctx.beginPath();
-ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-ctx.fillStyle="cyan";
-ctx.fill();
-});
-
-requestAnimationFrame(animate);
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pts.forEach(p=>{
+        p.x+=p.dx; p.y+=p.dy;
+        if(p.x<0 || p.x>canvas.width) p.dx*=-1; if(p.y<0 || p.y>canvas.height) p.dy*=-1;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle="rgba(0, 247, 255, 0.3)"; ctx.fill();
+    });
+    requestAnimationFrame(draw);
 }
-animate();
+draw();
+sync();
 </script>
-
 </body>
 </html>
