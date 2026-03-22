@@ -11,7 +11,7 @@
 :root { --neon: #00f7ff; --neon-dim: rgba(0, 247, 255, 0.1); --bg: #02040a; }
 *{margin:0;padding:0;box-sizing:border-box;font-family: 'Quicksand', sans-serif;}
 
-body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; touch-action: none; }
+body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; }
 
 /* 🚀 HEADER */
 .header{
@@ -21,50 +21,57 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; t
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-/* 🧭 TABS (ALL 4 VISIBLE - NO SLIDING) */
-.tabs-wrapper {
-    width: 100%; display: flex; justify-content: center; padding: 15px 5px;
-}
-.tabs { 
-    display: flex; width: 100%; max-width: 500px; 
-    justify-content: space-between; gap: 4px;
-}
+/* 🧭 TABS (ALL 4 VISIBLE) */
+.tabs-wrapper { width: 100%; display: flex; justify-content: center; padding: 15px 5px; }
+.tabs { display: flex; width: 100%; max-width: 500px; justify-content: space-between; gap: 4px; }
 .tab-btn {
-    flex: 1; /* Rarraba sarari daidai */
-    padding: 10px 2px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);
-    background: rgba(255,255,255,0.03); color:#666; font-size: 10px; /* Rage size kadan */
+    flex: 1; padding: 10px 2px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.03); color:#666; font-size: 10px;
     font-weight: 800; cursor:pointer; transition: 0.3s; text-transform: uppercase;
     text-align: center; white-space: nowrap;
 }
 .tab-btn.active { background: var(--neon); color:#000; box-shadow: 0 0 15px var(--neon-dim); border-color: var(--neon); }
 
-/* 🔍 MOVABLE SEARCH BAR (DRAGGABLE) */
-#draggableSearch {
-    position: fixed; top: 150px; right: 20px; width: 50px; height: 50px;
-    background: var(--neon); border-radius: 50%; display: flex;
-    align-items: center; justify-content: center; z-index: 10000;
-    cursor: move; box-shadow: 0 0 20px var(--neon-dim);
-    transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+/* 🔍 MOVABLE & COLLAPSIBLE SEARCH BAR */
+#dragContainer {
+    position: fixed; top: 120px; right: 20px; z-index: 10000;
+    display: flex; align-items: center;
+}
+.search-box-style {
+    width: 50px; height: 50px;
+    background: var(--neon);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--neon);
+    border-radius: 50%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 20px var(--neon-dim);
+    transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s, border-radius 0.4s;
     overflow: hidden;
 }
-#draggableSearch.expanded {
-    width: 260px; border-radius: 30px; padding: 0 15px; justify-content: flex-start;
-    background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border: 1px solid var(--neon);
+.search-box-style.expanded {
+    width: 260px;
+    border-radius: 30px;
+    background: rgba(15, 15, 15, 0.9);
 }
-#draggableSearch i { color: #000; font-size: 20px; min-width: 25px; transition: 0.3s; }
-#draggableSearch.expanded i { color: var(--neon); }
-#draggableSearch input {
+
+#searchIcon { 
+    color: #000; font-size: 20px; cursor: move; 
+    min-width: 30px; display: flex; justify-content: center;
+}
+.search-box-style.expanded #searchIcon { color: var(--neon); }
+
+#searchInput {
     background: transparent; border: none; outline: none; color: #fff;
-    width: 0; font-weight: 700; padding-left: 0; transition: 0.3s;
+    width: 0; font-weight: 700; transition: 0.3s; opacity: 0;
 }
-#draggableSearch.expanded input { width: 100%; padding-left: 10px; }
+.search-box-style.expanded #searchInput { width: 100%; opacity: 1; padding-left: 10px; }
 
-/* 📦 CONTAINER */
+/* 📦 CONTAINER & CARDS */
 .container{ padding:10px; max-width: 600px; margin: 0 auto; }
-
-/* 💎 THE CARD */
 .card{
-    padding:15px; border-radius:20px; background: rgba(255,255,255,0.02);
+    padding: 15px; border-radius:20px; background: rgba(255,255,255,0.02);
     border: 1px solid rgba(255,255,255,0.04);
     display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;
 }
@@ -74,18 +81,13 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; t
     display:flex; align-items:center; justify-content:center;
     color: var(--neon); font-weight:900; font-size: 14px;
 }
-.u-info .name { font-size: 13px; font-weight: 800; }
-.u-info .email { font-size: 9px; color: #444; }
-
-/* 🛠️ ACTION BUTTONS */
 .actions { display: flex; gap: 6px; }
 .act-btn {
     width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.08); display: flex; align-items:center; justify-content:center;
-    color: #fff; cursor: pointer; transition: 0.2s; font-size: 10px;
+    color: #fff; cursor: pointer; font-size: 10px;
 }
 .act-btn:hover { background: var(--neon); color: #000; }
-.btn-del:hover { background: #ff3344 !important; color: #fff !important; }
 
 /* Dock Menu Style */
         .futuristic-dock {
@@ -110,20 +112,19 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; t
         .dock-item:hover, .dock-item.active {
             background: white; color: black;
             transform: scale(1.25) translateY(-12px);
-    }
+        }
 </style>
 </head>
 <body>
 
-<div id="dragContainer" style="position: fixed; top: 120px; right: 20px; z-index: 10000; display: flex; align-items: center;">
+<div id="dragContainer">
     <div id="draggableSearch" class="search-box-style">
-        <i class="fa-solid fa-magnifying-glass" id="searchIcon" style="cursor: move; min-width: 30px; color: #00f7ff;" onclick="toggleSearch()"></i>
+        <i class="fa-solid fa-magnifying-glass" id="searchIcon" onclick="toggleSearch(event)"></i>
         
         <input type="text" id="searchInput" placeholder="Rubuta suna..." 
                oninput="window.filterData(this.value)" 
                onmousedown="event.stopPropagation()" 
-               ontouchstart="event.stopPropagation()"
-               style="background: transparent; border: none; outline: none; color: #fff; width: 180px; font-weight: 700;">
+               ontouchstart="event.stopPropagation()">
     </div>
 </div>
 
@@ -140,7 +141,7 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; t
 
 <div class="container" id="registryBox"></div>
 
-   <div class="futuristic-dock">
+<div class="futuristic-dock">
     <div class="dock-item" onclick="location.href='admin_dashboard.html'" title="Neural Core">
         <i class="fa-solid fa-microchip"></i>
     </div>
@@ -162,7 +163,7 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; t
     </div>
   </div>
 <div class="container" id="registryBox">
-</div> 
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -179,33 +180,59 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-let currentSector = 'customer';
-let allData = [];
+let currentSector = 'customer', allData = [];
 
-// DRAGGABLE LOGIC
-const dragItem = document.getElementById("draggableSearch");
-let active = false, currentX, currentY, initialX, initialY, xOffset = 0, yOffset = 0;
+// 🕵️ SEARCH TOGGLE & DRAG
+const dragBox = document.getElementById("dragContainer");
+const searchBox = document.getElementById("draggableSearch");
+const searchIcon = document.getElementById("searchIcon");
 
-document.addEventListener("touchstart", dragStart, false);
-document.addEventListener("touchend", dragEnd, false);
-document.addEventListener("touchmove", drag, false);
+window.toggleSearch = (e) => {
+    e.stopPropagation();
+    searchBox.classList.toggle('expanded');
+    if(searchBox.classList.contains('expanded')) document.getElementById('searchInput').focus();
+};
 
-function dragStart(e) {
-    initialX = e.touches[0].clientX - xOffset;
-    initialY = e.touches[0].clientY - yOffset;
-    if (e.target === dragItem || dragItem.contains(e.target)) active = true;
-}
-function dragEnd() { initialX = currentX; initialY = currentY; active = false; }
-function drag(e) {
-    if (active) {
-        e.preventDefault();
-        currentX = e.touches[0].clientX - initialX;
-        currentY = e.touches[0].clientY - initialY;
-        xOffset = currentX; yOffset = currentY;
-        dragItem.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
-    }
-}
+document.addEventListener('click', (e) => {
+    if(!searchBox.contains(e.target)) searchBox.classList.remove('expanded');
+});
 
+// DRAG ENGINE
+let offset = {x:0, y:0}, isDragging = false;
+
+const startDrag = (e) => {
+    isDragging = false;
+    const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+    offset.x = clientX - dragBox.offsetLeft;
+    offset.y = clientY - dragBox.offsetTop;
+    
+    const moveDrag = (m) => {
+        isDragging = true;
+        const mX = m.type.includes('touch') ? m.touches[0].clientX : m.clientX;
+        const mY = m.type.includes('touch') ? m.touches[0].clientY : m.clientY;
+        dragBox.style.left = (mX - offset.x) + 'px';
+        dragBox.style.top = (mY - offset.y) + 'px';
+        dragBox.style.right = 'auto';
+    };
+    
+    const stopDrag = () => {
+        document.removeEventListener('mousemove', moveDrag);
+        document.removeEventListener('mouseup', stopDrag);
+        document.removeEventListener('touchmove', moveDrag);
+        document.removeEventListener('touchend', stopDrag);
+    };
+
+    document.addEventListener('mousemove', moveDrag);
+    document.addEventListener('mouseup', stopDrag);
+    document.addEventListener('touchmove', moveDrag);
+    document.addEventListener('touchend', stopDrag);
+};
+
+searchIcon.addEventListener('mousedown', startDrag);
+searchIcon.addEventListener('touchstart', startDrag);
+
+// FIREBASE LOGIC
 const sync = () => {
     onSnapshot(collection(db, "users"), (snap) => {
         allData = [];
@@ -214,7 +241,7 @@ const sync = () => {
     });
 }
 
-const render = (filter = "") => {
+window.render = (filter = "") => {
     const box = document.getElementById('registryBox');
     box.innerHTML = "";
     allData.forEach(u => {
@@ -240,7 +267,7 @@ const render = (filter = "") => {
     });
 }
 
-window.filterData = (e) => { e.stopPropagation(); render(e.target.value); }
+window.filterData = (val) => render(val);
 window.switchTab = (sector, btn) => {
     currentSector = sector;
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -248,7 +275,7 @@ window.switchTab = (sector, btn) => {
     render();
 }
 window.updateStatus = async (id, s) => { await updateDoc(doc(db, "users", id), { status: s === 'suspended' ? 'approved' : 'suspended' }); };
-window.killNode = async (id) => { if(confirm('TERMINATE?')) await deleteDoc(doc(db, "users", id)); };
+window.killNode = async (id) => { if(confirm('GOGE?')) await deleteDoc(doc(db, "users", id)); };
 
 sync();
 </script>
