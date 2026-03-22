@@ -126,7 +126,7 @@
 
             await setDoc(doc(db, "users", user.uid), {
                 fullName, username, email, phone, state,
-                role: "member", status: "pending", emailVerified: false, createdAt: serverTimestamp()
+                role: "customer", status: "active", emailVerified: false, createdAt: serverTimestamp()
             });
 
             await sendEmailVerification(user);
