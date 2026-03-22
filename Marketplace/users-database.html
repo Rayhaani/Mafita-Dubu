@@ -236,7 +236,8 @@ const sync = () => {
     });
 }
 
-window.render = (filter = "") => {
+
+   window.render = (filter = "") => {
     const box = document.getElementById('registryBox');
     box.innerHTML = "";
     const searchText = filter.toLowerCase();
@@ -246,23 +247,25 @@ window.render = (filter = "") => {
         const status = (u.status || '').toLowerCase();
         const name = (u.fullName || u.username || '').toLowerCase();
 
-        let shouldShow = false;
-
+        // MATAKI NA 1: Tace Status (Ko mutum yana Trash ko baya ciki)
+        let isCorrectStatus = false;
         if (isTrashMode) {
-            // Idan Trash Mode ne, nuna kowa muddin status dinsa 'trash' ne
-            if (status === 'trash') shouldShow = true;
+            if (status === 'trash') isCorrectStatus = true;
         } else {
-            // Idan ba Trash Mode ba ne, nuna wadanda ba 'trash' ba kawai
-            if (status !== 'trash') {
-                if (currentSector === 'customer') {
-                    if (role === 'customer' || role === 'client' || role === 'member') shouldShow = true;
-                } else {
-                    if (role === currentSector) shouldShow = true;
-                }
-            }
+            // Idan ba Trash mode ba, nuna Approved/Suspended (ba Deleted ba)
+            if (status !== 'trash') isCorrectStatus = true;
         }
 
-        if(shouldShow && name.includes(searchText)) {
+        // MATAKI NA 2: Tace Rukunoni (Tabs)
+        let isCorrectTab = false;
+        if (currentSector === 'customer') {
+            if (role === 'customer' || role === 'client' || role === 'member') isCorrectTab = true;
+        } else {
+            if (role === currentSector) isCorrectTab = true;
+        }
+
+        // HADUWA: Dole mutum ya zama yana da Status da ya dace KUMA yana Tab da ya dace
+        if(isCorrectStatus && isCorrectTab && name.includes(searchText)) {
             box.innerHTML += `
             <div class="card" style="${status === 'suspended' ? 'opacity: 0.4;' : ''} ${status === 'trash' ? 'border: 1px solid #ff4444; background: rgba(255,0,0,0.05);' : ''}">
                 <div class="left">
@@ -277,8 +280,8 @@ window.render = (filter = "") => {
                 </div>
                 <div class="actions">
                     ${isTrashMode ? 
-                        `<div class="act-btn" style="color:#00ff88; border-color:#00ff88;" onclick="window.restoreNode('${u.id}')"><i class="fa-solid fa-trash-arrow-up"></i></div>
-                         <div class="act-btn" style="color:#ff4444;" onclick="window.permaKill('${u.id}')"><i class="fa-solid fa-skull-crossbones"></i></div>` :
+                        `<div class="act-btn" style="color:#00ff88; border-color:#00ff88;" onclick="window.restoreNode('${u.id}')" title="Restore"><i class="fa-solid fa-trash-arrow-up"></i></div>
+                         <div class="act-btn" style="color:#ff4444;" onclick="window.permaKill('${u.id}')" title="Delete Forever"><i class="fa-solid fa-skull-crossbones"></i></div>` :
                         `<div class="act-btn" onclick="window.updateStatus('${u.id}', '${status}')"><i class="fa-solid ${status === 'suspended' ? 'fa-play' : 'fa-pause'}"></i></div>
                          <div class="act-btn" style="color:#ff4444;" onclick="window.softDelete('${u.id}')"><i class="fa-solid fa-trash-can"></i></div>`
                     }
@@ -287,13 +290,11 @@ window.render = (filter = "") => {
         }
     });
 
-    // Idan babu komai a ciki
     if (box.innerHTML === "") {
-        const msg = isTrashMode ? "Bin Shara (Trash) a wanke take!" : "Babu kowa a wannan sashen...";
+        const msg = isTrashMode ? `Babu gogaggun ${currentSector}s anan.` : `Babu kowa a sashen ${currentSector}s...`;
         box.innerHTML = `<div style="text-align:center; padding:50px; color:#444; font-size:12px;">${msg}</div>`;
     }
 };
-    
     
 
    
