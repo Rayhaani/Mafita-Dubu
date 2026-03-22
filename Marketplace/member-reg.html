@@ -8,90 +8,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --milk-bg: #FFF5E1; 
-            --royal-black: #1a1405;
-            --dark-gold: #8b6b1b;
-            --light-gold: #f3cf7a;
-            --gold: #bf953f;
-        }
-        
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--milk-bg); 
-            display: flex; align-items: center; justify-content: center; 
-            min-height: 100vh; margin: 0; padding: 20px;
-        }
-
-        .liquid-color-circle {
-            width: 80px; height: 80px;
-            margin: -90px auto 15px;
-            position: relative; z-index: 100;
-            border-radius: 50%;
-            border: 2px solid #ffffff;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            background: linear-gradient(-45deg, #ffd700, #ff00ea, #00d4ff, #3dff00, #ff9100, #7028e4);
-            background-size: 400% 400%;
-            animation: liquidFlow 8s ease infinite;
-        }
-
-        @keyframes liquidFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .luxury-card {
-            background: var(--royal-black);
-            border: 2px solid var(--dark-gold);
-            border-radius: 40px 10px;
-            padding: 40px 30px 25px;
-            width: 100%; max-width: 400px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-            position: relative; margin-top: 50px;
-        }
-
-        .header-title { 
-            font-family: 'Cinzel', serif;
-            font-size: 1.6rem; color: var(--light-gold); 
-            text-align: center; margin-bottom: 25px;
-        }
-
-        .gold-input {
-            width: 100%; background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(243, 207, 122, 0.2);
-            padding: 12px 15px; border-radius: 12px;
-            color: #fff; font-size: 0.85rem; outline: none;
-        }
-
-        .submit-btn {
-            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
-            color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900;
-            width: 100%; padding: 12px; border-radius: 10px; margin-top: 15px;
-            font-size: 1rem; border: none; cursor: pointer; transition: 0.3s;
-        }
+        :root { --milk-bg: #FFF5E1; --royal-black: #1a1405; --dark-gold: #8b6b1b; --light-gold: #f3cf7a; --gold: #bf953f; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--milk-bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .liquid-color-circle { width: 80px; height: 80px; margin: -90px auto 15px; position: relative; z-index: 100; border-radius: 50%; border: 2px solid #ffffff; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5); background: linear-gradient(-45deg, #ffd700, #ff00ea, #00d4ff, #3dff00, #ff9100, #7028e4); background-size: 400% 400%; animation: liquidFlow 8s ease infinite; }
+        @keyframes liquidFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .luxury-card { background: var(--royal-black); border: 2px solid var(--dark-gold); border-radius: 40px 10px; padding: 40px 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); position: relative; margin-top: 50px; }
+        .header-title { font-family: 'Cinzel', serif; font-size: 1.6rem; color: var(--light-gold); text-align: center; margin-bottom: 25px; }
+        .gold-input { width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(243, 207, 122, 0.2); padding: 12px 15px; border-radius: 12px; color: #fff; font-size: 0.85rem; outline: none; }
+        .submit-btn { background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); color: #1a1405; font-family: 'Cinzel', serif; font-weight: 900; width: 100%; padding: 12px; border-radius: 10px; margin-top: 15px; font-size: 1rem; border: none; cursor: pointer; transition: 0.3s; }
         .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-
         .login-footer { text-align: center; margin-top: 20px; color: #ffffff; font-size: 0.85rem; }
         .login-footer a { color: var(--light-gold); font-weight: 700; text-decoration: none; margin-left: 5px; }
-
-        #status-toast {
-            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-            z-index: 1000; width: 90%; max-width: 350px; background: #1a1405;
-            border-left: 4px solid #bf953f; padding: 15px; border-radius: 8px;
-            transition: 0.5s; display: flex; align-items: center; gap: 12px;
-        }
-
-        /* --- LOADING SPINNER CSS --- */
-        .spinner {
-            width: 30px; height: 30px;
-            border: 3px solid rgba(243, 207, 122, 0.1);
-            border-left-color: #f3cf7a;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 15px auto;
-        }
+        #status-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); z-index: 1000; width: 90%; max-width: 350px; background: #1a1405; border-left: 4px solid #bf953f; padding: 15px; border-radius: 8px; transition: 0.5s; display: flex; align-items: center; gap: 12px; }
+        .spinner { width: 30px; height: 30px; border: 3px solid rgba(243, 207, 122, 0.1); border-left-color: #f3cf7a; border-radius: 50%; animation: spin 1s linear infinite; margin: 15px auto; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
@@ -114,171 +43,133 @@
                 <div class="mb-4"><input type="text" id="fullName" class="gold-input" placeholder="Full Name" required></div>
                 <div class="mb-4"><input type="text" id="username" class="gold-input" placeholder="Username" required></div>
                 <div class="mb-4"><input type="email" id="email" class="gold-input" placeholder="Email Address" required></div>
-                
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <input type="tel" id="phone" class="gold-input" placeholder="Phone" required>
                     <input type="text" id="state" class="gold-input" placeholder="State" required>
                 </div>
-
                 <div class="mb-4"><input type="password" id="password" class="gold-input" placeholder="Password" required></div>
-
                 <button type="submit" id="regBtn" class="submit-btn">REGISTER NOW</button>
-                
                 <div class="login-footer">Already have an account? <a href="login.html">Login</a></div>
             </form>
         </div>
 
         <div id="verifySection" class="hidden text-center py-4">
             <div class="mb-6">
-                <div class="inline-block p-4 rounded-full bg-[#f3cf7a]/10 mb-4">
-                    <span class="text-5xl">📧</span>
-                </div>
+                <div class="inline-block p-4 rounded-full bg-[#f3cf7a]/10 mb-4"><span class="text-5xl">📧</span></div>
                 <h2 class="text-[#f3cf7a] font-bold text-xl mb-2">Tantance Email</h2>
-                <p class="text-white/70 text-[12px] leading-relaxed">Mun tura maka link na tantancewa zuwa email dinka. Don Allah duba 'Inbox' ko 'Spam' sannan ka danna link din don kunna account dinka.</p>
-                
+                <p class="text-white/70 text-[12px] leading-relaxed">Mun tura maka link na tantancewa zuwa email dinka. Duba 'Inbox' ko 'Spam' sannan ka danna link din.</p>
                 <div class="spinner"></div>
                 <p style="color: #f3cf7a; font-size: 10px;">Muna jiran ka danna link din email dinka...</p>
             </div>
-
             <div class="space-y-4">
-                <button onclick="checkAndLogin()" class="submit-btn">NA DANNA LINK DIN (LOGIN)</button>
-                <p class="text-[10px] text-white/50">Ba ka ga sako ba? <a href="#" onclick="resendEmail()" class="text-[#f3cf7a] underline">Sake turawa</a></p>
+                <button id="checkLoginBtn" class="submit-btn">NA DANNA LINK DIN (LOGIN)</button>
+                <p class="text-[10px] text-white/50">Ba ka ga sako ba? <a href="#" id="resendBtn" class="text-[#f3cf7a] underline">Sake turawa</a></p>
             </div>
         </div>
     </div>
-
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, serverTimestamp, query, where, getDocs, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // ... (Firebase Config dinka yana nan kamar yadda yake) ...
+    // NA MAIDA CONFIG DINKA (WANNAN SHINE YA HADASA BLANK DIN)
+    const firebaseConfig = {
+        apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
+        authDomain: "global-market-admin.firebaseapp.com",
+        projectId: "global-market-admin",
+        storageBucket: "global-market-admin.firebasestorage.app",
+        messagingSenderId: "259715265619",
+        appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
+    };
+
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // --- 1. SABON LOGIC: Watchdog for User State ---
+    function showToast(msg, isError = false) {
+        const toast = document.getElementById('status-toast');
+        document.getElementById('toast-msg').innerText = msg;
+        toast.style.borderLeftColor = isError ? '#ef4444' : '#bf953f';
+        toast.style.top = '20px';
+        setTimeout(() => { toast.style.top = '-100px'; }, 5000);
+    }
+
+    // --- WATCHDOG (AUTO-SWITCH) ---
     onAuthStateChanged(auth, async (user) => {
         if (user) {
-            await user.reload(); // Refresh bayanan user daga Firebase
-            
+            await user.reload();
             if (user.emailVerified) {
-                // Idan an yi verify, tura shi dashboard
                 window.location.href = "verify-success.html"; 
             } else {
-                // Idan yana ciki amma bai yi verify ba, boye Register Form, nuna Verify Section
                 document.getElementById('registerSection').classList.add('hidden');
                 document.getElementById('verifySection').classList.remove('hidden');
                 document.getElementById('mainTitle').innerText = "Verify Email";
             }
-        } else {
-            // Idan ba a yi login ba, nuna Register Form (Kamar yadda yake a asali)
-            document.getElementById('registerSection').classList.remove('hidden');
-            document.getElementById('verifySection').classList.add('hidden');
         }
     });
 
-    // --- 2. GYARAN BUTTON (LOGIN/RELOAD) ---
-    // Maimakon window.location.reload(), gara mu kira user.reload() kai tsaye
-    window.checkAndLogin = async () => {
+    // --- CHECK LOGIN BUTTON ---
+    document.getElementById('checkLoginBtn').onclick = async () => {
         if (auth.currentUser) {
             await auth.currentUser.reload();
             if (auth.currentUser.emailVerified) {
                 window.location.href = "verify-success.html";
             } else {
-                showToast("Ba ka danna link din ba tukuna!", true);
+                showToast("Har yanzu ba ka danna link din ba!", true);
             }
         }
     };
 
-        
-        function showToast(msg, isError = false) {
-            const toast = document.getElementById('status-toast');
-            document.getElementById('toast-msg').innerText = msg;
-            toast.style.borderLeftColor = isError ? '#ef4444' : '#bf953f';
-            toast.style.top = '20px';
-            setTimeout(() => { toast.style.top = '-100px'; }, 5000);
-        }
-
-        window.resendEmail = async () => {
-            if (auth.currentUser) {
-                try {
-                    await sendEmailVerification(auth.currentUser);
-                    showToast("An sake tura sabon link zuwa email!");
-                } catch (err) {
-                    showToast(err.message, true);
-                }
-            }
-        };
-
-        document.getElementById('universalRegisterForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('regBtn');
-            
-            const username = document.getElementById('username').value.trim().toLowerCase();
-            const phone = document.getElementById('phone').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-
-            btn.disabled = true;
-            btn.innerText = "CHECKING...";
-
+    // --- RESEND EMAIL ---
+    document.getElementById('resendBtn').onclick = async (e) => {
+        e.preventDefault();
+        if (auth.currentUser) {
             try {
-                const uQuery = query(collection(db, "users"), where("username", "==", username));
-                const pQuery = query(collection(db, "users"), where("phone", "==", phone));
-                const [uSnap, pSnap] = await Promise.all([getDocs(uQuery), getDocs(pQuery)]);
+                await sendEmailVerification(auth.currentUser);
+                showToast("An sake tura sabon link!");
+            } catch (err) { showToast(err.message, true); }
+        }
+    };
 
-                if (!uSnap.empty) {
-                    showToast("Wannan Username din an riga an dauka!", true);
-                    btn.disabled = false; btn.innerText = "REGISTER NOW";
-                    return;
-                }
-                if (!pSnap.empty) {
-                    showToast("Lambar wayar nan an riga an yi amfani da ita!", true);
-                    btn.disabled = false; btn.innerText = "REGISTER NOW";
-                    return;
-                }
+    // --- REGISTER FORM ---
+    document.getElementById('universalRegisterForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('regBtn');
+        const username = document.getElementById('username').value.trim().toLowerCase();
+        const phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
 
-                btn.innerText = "CREATING...";
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
+        btn.disabled = true; btn.innerText = "CHECKING...";
 
-                await setDoc(doc(db, "users", user.uid), {
-                    fullName: document.getElementById('fullName').value,
-                    username: username,
-                    email: email,
-                    phone: phone,
-                    state: document.getElementById('state').value,
-                    role: "member",
-                    emailVerified: false,
-                    createdAt: serverTimestamp()
-                });
+        try {
+            const uQuery = query(collection(db, "users"), where("username", "==", username));
+            const pQuery = query(collection(db, "users"), where("phone", "==", phone));
+            const [uSnap, pSnap] = await Promise.all([getDocs(uQuery), getDocs(pQuery)]);
 
-                                // --- 4. Tura Verification Link (Tare da Continue URL) ---
-                const actionCodeSettings = {
-                    url: 'https://mafita-dubu.vercel.app/verify-success.html',
-                    handleCodeInApp: true,
-                };
+            if (!uSnap.empty) { showToast("Username taken!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
+            if (!pSnap.empty) { showToast("Phone used!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
 
-                await sendEmailVerification(user, actionCodeSettings);
+            btn.innerText = "CREATING...";
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
 
-                // --- 5. Switch to Verification Overlay ---
-                document.getElementById('registerSection').classList.add('hidden');
-                document.getElementById('verifySection').classList.remove('hidden');
-                document.getElementById('mainTitle').innerText = "Verify Email";
-                showToast("Account Created! Check your email.");
+            await setDoc(doc(db, "users", user.uid), {
+                fullName: document.getElementById('fullName').value,
+                username: username, email: email, phone: phone,
+                state: document.getElementById('state').value,
+                role: "member", emailVerified: false, createdAt: serverTimestamp()
+            });
 
-                
-            } catch (error) {
-                let msg = error.message;
-                if (error.code === 'auth/email-already-in-use') msg = "Wannan email din an riga an yi amfani da shi.";
-                showToast(msg, true);
-                btn.disabled = false;
-                btn.innerText = "REGISTER NOW";
-            }
-        };
-    </script>
+            await sendEmailVerification(user);
+            showToast("Success! Check your email.");
+            // onAuthStateChanged zai kula da sauran switch din
+        } catch (error) {
+            showToast(error.message, true);
+            btn.disabled = false; btn.innerText = "REGISTER NOW";
+        }
+    };
+</script>
 </body>
-    </html>
-    
+</html>
