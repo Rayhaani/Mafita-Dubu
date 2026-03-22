@@ -34,9 +34,15 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; }
 
 /* 🔍 MOVABLE & COLLAPSIBLE SEARCH BAR */
 #dragContainer {
-    position: fixed; top: 120px; right: 20px; z-index: 10000;
-    display: flex; align-items: center;
+    position: fixed; 
+    top: 120px; 
+    right: 20px; 
+    z-index: 10000;
+    display: flex; 
+    align-items: center;
+    touch-action: none; /* WANNAN SHINE GYARAN */
 }
+    
 .search-box-style {
     width: 50px; height: 50px;
     background: var(--neon);
@@ -208,13 +214,15 @@ const startDrag = (e) => {
     offset.y = clientY - dragBox.offsetTop;
     
     const moveDrag = (m) => {
-        isDragging = true;
-        const mX = m.type.includes('touch') ? m.touches[0].clientX : m.clientX;
-        const mY = m.type.includes('touch') ? m.touches[0].clientY : m.clientY;
-        dragBox.style.left = (mX - offset.x) + 'px';
-        dragBox.style.top = (mY - offset.y) + 'px';
-        dragBox.style.right = 'auto';
-    };
+    if (m.cancelable) m.preventDefault(); // WANNAN ZAI HANA PAGE DIN MOTSI
+    isDragging = true;
+    const mX = m.type.includes('touch') ? m.touches[0].clientX : m.clientX;
+    const mY = m.type.includes('touch') ? m.touches[0].clientY : m.clientY;
+    dragBox.style.left = (mX - offset.x) + 'px';
+    dragBox.style.top = (mY - offset.y) + 'px';
+    dragBox.style.right = 'auto';
+};
+    
     
     const stopDrag = () => {
         document.removeEventListener('mousemove', moveDrag);
