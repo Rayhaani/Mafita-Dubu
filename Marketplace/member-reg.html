@@ -58,7 +58,7 @@
                 <h2 class="text-[#f3cf7a] font-bold text-xl mb-2">Tantance Email</h2>
                 <p class="text-white/70 text-[12px] leading-relaxed">Mun tura maka link na tantancewa zuwa email dinka. Duba 'Inbox' ko 'Spam'.</p>
                 <div class="spinner"></div>
-                <p id="waitingText" style="color: #f3cf7a; font-size: 10px;">System na jiran ka danna link a email...</p>
+                <p id="waitingText" style="color: #f3cf7a; font-size: 10px;">Checking status...</p>
             </div>
             <div class="space-y-4">
                 <button id="checkLoginBtn" class="submit-btn">NA DANNA LINK DIN (LOGIN)</button>
@@ -93,59 +93,49 @@
         setTimeout(() => { toast.style.top = '-100px'; }, 5000);
     }
 
-    // --- 1. SMART AUTO-CHECKER ---
+    // --- AGGRESSIVE SMART CHECKER ---
+    // Yana duba kowane sakan 2.
     setInterval(async () => {
-        const user = auth.currentUser;
-        if (user) {
-            await user.reload(); 
-            if (user.emailVerified) {
-                window.location.href = "verify-success.html";
-            }
+        if (auth.currentUser) {
+            try {
+                await auth.currentUser.reload();
+                if (auth.currentUser.emailVerified) {
+                    window.location.href = "verify-success.html";
+                }
+            } catch (e) { console.log("Checking..."); }
         }
-    }, 3000);
+    }, 2000);
 
-    // --- 2. OBSERVER ---
+    // --- OBSERVER ---
     onAuthStateChanged(auth, async (user) => {
         if (user) {
-            if (!user.emailVerified) {
+            await user.reload();
+            if (user.emailVerified) {
+                window.location.href = "verify-success.html";
+            } else {
                 document.getElementById('registerSection').classList.add('hidden');
                 document.getElementById('verifySection').classList.remove('hidden');
                 document.getElementById('mainTitle').innerText = "Verify Email";
-            } else {
-                window.location.href = "verify-success.html";
             }
         }
     });
 
-    // --- 3. MANUAL CHECK BUTTON ---
+    // --- MANUAL BUTTON ---
     document.getElementById('checkLoginBtn').onclick = async () => {
         if (auth.currentUser) {
             await auth.currentUser.reload();
             if (auth.currentUser.emailVerified) {
                 window.location.href = "verify-success.html";
             } else {
-                showToast("Har yanzu ba a tantance email din ba!", true);
+                showToast("Email dinka bai riga ya zama verified ba!", true);
             }
         }
     };
 
-    // --- 4. RESEND EMAIL ---
-    document.getElementById('resendBtn').onclick = async (e) => {
-        e.preventDefault();
-        if (auth.currentUser) {
-            try {
-                await sendEmailVerification(auth.currentUser);
-                showToast("An sake tura link, duba email dinka.");
-            } catch (err) { showToast(err.message, true); }
-        }
-    };
-
-    // --- 5. REGISTER FORM (GYARARRE) ---
+    // --- REGISTER LOGIC ---
     document.getElementById('universalRegisterForm').onsubmit = async (e) => {
         e.preventDefault();
         const btn = document.getElementById('regBtn');
-        
-        // GYARA: Ciro rubutun (value) yadda ya kamata
         const fullName = document.getElementById('fullName').value.trim();
         const username = document.getElementById('username').value.trim().toLowerCase();
         const email = document.getElementById('email').value.trim();
@@ -153,8 +143,7 @@
         const state = document.getElementById('state').value.trim();
         const password = document.getElementById('password').value;
 
-        btn.disabled = true;
-        btn.innerText = "CHECKING...";
+        btn.disabled = true; btn.innerText = "Processing...";
 
         try {
             const uQuery = query(collection(db, "users"), where("username", "==", username));
@@ -164,33 +153,34 @@
             if (!uSnap.empty) { showToast("Username taken!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
             if (!pSnap.empty) { showToast("Phone used!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
 
-            btn.innerText = "CREATING...";
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
             await setDoc(doc(db, "users", user.uid), {
-                fullName: fullName,
-                username: username,
-                email: email,
-                phone: phone,
-                state: state,
-                role: "member",
-                status: "approved",
-                emailVerified: false,
-                createdAt: serverTimestamp()
+                fullName, username, email, phone, state,
+                role: "member", status: "approved", emailVerified: false, createdAt: serverTimestamp()
             });
 
             await sendEmailVerification(user);
+            showToast("An tura link! Duba email dinka.");
             
+            // Canza shafi
             document.getElementById('registerSection').classList.add('hidden');
             document.getElementById('verifySection').classList.remove('hidden');
             document.getElementById('mainTitle').innerText = "Verify Email";
-            
-            showToast("Success! Check your email.");
         } catch (error) {
             showToast(error.message, true);
-            btn.disabled = false;
-            btn.innerText = "REGISTER NOW";
+            btn.disabled = false; btn.innerText = "REGISTER NOW";
+        }
+    };
+
+    document.getElementById('resendBtn').onclick = async (e) => {
+        e.preventDefault();
+        if (auth.currentUser) {
+            try {
+                await sendEmailVerification(auth.currentUser);
+                showToast("An sake tura sabon link!");
+            } catch (err) { showToast(err.message, true); }
         }
     };
 </script>
