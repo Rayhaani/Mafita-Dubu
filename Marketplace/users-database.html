@@ -236,31 +236,29 @@ const sync = () => {
     });
 }
 
-
- 
-    window.render = (filter = "") => {
+window.render = (filter = "") => {
     const box = document.getElementById('registryBox');
     box.innerHTML = "";
+    const searchText = filter.toLowerCase();
     
     allData.forEach(u => {
         const role = (u.role || '').toLowerCase();
         const status = (u.status || '').toLowerCase();
         const name = (u.fullName || u.username || '').toLowerCase();
-        const searchText = filter.toLowerCase();
 
         let shouldShow = false;
 
-        // CRITICAL FIX: Idan Trash Mode ne, nuna kowa ba tare da duba role ba
         if (isTrashMode) {
+            // Idan Trash Mode ne, nuna kowa muddin status dinsa 'trash' ne
             if (status === 'trash') shouldShow = true;
         } else {
-            // Idan ba Trash Mode ba ne, nuna mutum gwargwadon tab dinsa
-            if (status === 'trash') {
-                shouldShow = false; 
-            } else if (currentSector === 'customer') {
-                if (role === 'customer' || role === 'client' || role === 'member') shouldShow = true;
-            } else {
-                if (role === currentSector && (status === 'approved' || status === 'suspended')) shouldShow = true;
+            // Idan ba Trash Mode ba ne, nuna wadanda ba 'trash' ba kawai
+            if (status !== 'trash') {
+                if (currentSector === 'customer') {
+                    if (role === 'customer' || role === 'client' || role === 'member') shouldShow = true;
+                } else {
+                    if (role === currentSector) shouldShow = true;
+                }
             }
         }
 
@@ -289,19 +287,13 @@ const sync = () => {
         }
     });
 
+    // Idan babu komai a ciki
     if (box.innerHTML === "") {
         const msg = isTrashMode ? "Bin Shara (Trash) a wanke take!" : "Babu kowa a wannan sashen...";
         box.innerHTML = `<div style="text-align:center; padding:50px; color:#444; font-size:12px;">${msg}</div>`;
     }
 };
-
-// GYARA: SwitchTab ba zai sake kashe Trash Mode ba idan ka danna shi
-window.switchTab = (sector, btn) => {
-    currentSector = sector;
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    render(); // Zai nuna mutum ko da yana trash ne ko a'a gwargwadon isTrashMode
-    }
+    
     
 
    
@@ -310,10 +302,20 @@ window.switchTab = (sector, btn) => {
 // 1. Move to Trash (Soft Delete)
 window.softDelete = async (id) => {
     if(confirm('A tura wannan asusun zuwa Bin Shara (Trash)?')) {
-        await updateDoc(doc(db, "users", id), { status: 'trash' });
+        try {
+            const userRef = doc(db, "users", id);
+            await updateDoc(userRef, { 
+                status: 'trash' 
+            });
+            // Ba sai mun kira render() ba, onSnapshot zai yi mana update da kansa
+            console.log("Node moved to trash successfully");
+        } catch (error) {
+            console.error("Error moving to trash: ", error);
+            alert("An samu matsala wajen gogewa!");
+        }
     }
 };
-
+    
 // 2. Restore from Trash
 window.restoreNode = async (id, originalRole) => {
     // Dawo dashi as approved/automatic don ya fito a inda yake
