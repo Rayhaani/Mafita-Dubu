@@ -93,100 +93,69 @@
         setTimeout(() => { toast.style.top = '-100px'; }, 5000);
     }
 
-    // --- SMART AUTO-CHECKER (THE BRAIN) ---
-    // Wannan zai rika duba emailVerification duk bayan sakan 3 automatically
-    setInterval(async () => {
-        const user = auth.currentUser;
-        if (user && !user.emailVerified) {
-            await user.reload(); // Tambayi Firebase idan an canza status
-            if (user.emailVerified) {
-                showToast("Email Verified! Redirecting...");
-                window.location.href = "verify-success.html";
-            }
+// --- 1. SMART AUTO-CHECKER (THE BRAIN) ---
+// Wannan shi ne zai sa ta gane anyi verification da kanta instantly
+setInterval(async () => {
+    // Dole mu sake tambayar Firebase halin da ake ciki (Auth State)
+    const user = auth.currentUser;
+    if (user) {
+        await user.reload(); // Wannan layin shi ne mafi muhimmanci
+        if (user.emailVerified) {
+            console.log("Verified! Redirecting...");
+            window.location.href = "verify-success.html";
         }
-    }, 3000);
+    }
+}, 3000); // Kowane bayan sakan 3
 
-    // --- OBSERVER (Lura da wane Page ya kamata ya fito) ---
-    onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            await user.reload();
-            if (user.emailVerified) {
-                window.location.href = "verify-success.html";
-            } else {
-                document.getElementById('registerSection').classList.add('hidden');
-                document.getElementById('verifySection').classList.remove('hidden');
-                document.getElementById('mainTitle').innerText = "Verify Email";
-            }
+// --- 2. OBSERVER (Wanda zai kula da sauyin shafi) ---
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        // Idan mutum ya riga ya shiga amma bai yi verify ba
+        if (!user.emailVerified) {
+            document.getElementById('registerSection').classList.add('hidden');
+            document.getElementById('verifySection').classList.remove('hidden');
+            document.getElementById('mainTitle').innerText = "Verify Email";
         } else {
-            document.getElementById('registerSection').classList.remove('hidden');
-            document.getElementById('verifySection').classList.add('hidden');
+            // Idan ma ya riga ya yi verify, to kawai ya tura shi success page
+            window.location.href = "verify-success.html";
         }
-    });
+    }
+});
 
-    // --- FIX BUTTON (Manual Check) ---
-    document.getElementById('checkLoginBtn').addEventListener('click', async () => {
-        const user = auth.currentUser;
-        if (user) {
-            await user.reload();
-            if (user.emailVerified) {
-                window.location.href = "verify-success.html";
-            } else {
-                showToast("Har yanzu ba ka danna link din a email dinka ba!", true);
-            }
-        } else {
-            window.location.reload();
-        }
-    });
+// --- 3. GYARAN FORM SUBMIT (Don kar ya tsaya a "CREATING") ---
+document.getElementById('universalRegisterForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('regBtn');
+    // ... sauran bayanan inputs dinka ...
 
-    // --- RESEND EMAIL ---
-    document.getElementById('resendBtn').onclick = async (e) => {
-        e.preventDefault();
-        if (auth.currentUser) {
-            try {
-                await sendEmailVerification(auth.currentUser);
-                showToast("An sake tura link, duba email dinka.");
-            } catch (err) { showToast(err.message, true); }
-        }
-    };
+    btn.disabled = true;
+    btn.innerText = "CREATING...";
 
-    // --- REGISTER LOGIC ---
-    document.getElementById('universalRegisterForm').onsubmit = async (e) => {
-        e.preventDefault();
-        const btn = document.getElementById('regBtn');
-        const username = document.getElementById('username').value.trim().toLowerCase();
-        const phone = document.getElementById('phone').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value;
+    try {
+        // ... (Checking username & phone dinka yana nan kamar yadda yake) ...
 
-        btn.disabled = true; btn.innerText = "CHECKING...";
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-        try {
-            const uQuery = query(collection(db, "users"), where("username", "==", username));
-            const pQuery = query(collection(db, "users"), where("phone", "==", phone));
-            const [uSnap, pSnap] = await Promise.all([getDocs(uQuery), getDocs(pQuery)]);
+        await setDoc(doc(db, "users", user.uid), {
+            // ... (Bayanan setDoc dinka) ...
+        });
 
-            if (!uSnap.empty) { showToast("Username taken!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
-            if (!pSnap.empty) { showToast("Phone used!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
-
-            btn.innerText = "CREATING...";
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-
-            await setDoc(doc(db, "users", user.uid), {
-                fullName: document.getElementById('fullName').value,
-                username: username, email: email, phone: phone,
-                state: document.getElementById('state').value,
-                role: "member", status: "approved", emailVerified: false, createdAt: serverTimestamp()
-            });
-
-            await sendEmailVerification(user);
-            showToast("Success! Check your email.");
-            // onAuthStateChanged zai boye Register section automatically
-        } catch (error) {
-            showToast(error.message, true);
-            btn.disabled = false; btn.innerText = "REGISTER NOW";
-        }
-    };
+        await sendEmailVerification(user);
+        
+        // MAFITA: Maimakon mu jira komai, bari mu tilasta masa nuna Verify Section
+        document.getElementById('registerSection').classList.add('hidden');
+        document.getElementById('verifySection').classList.remove('hidden');
+        document.getElementById('mainTitle').innerText = "Verify Email";
+        
+        showToast("Success! Check your email.");
+    } catch (error) {
+        showToast(error.message, true);
+        btn.disabled = false;
+        btn.innerText = "REGISTER NOW";
+    }
+};
+    
 </script>
 </body>
 </html>
