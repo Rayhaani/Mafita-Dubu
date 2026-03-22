@@ -115,9 +115,16 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; t
 </head>
 <body>
 
-<div id="draggableSearch" onclick="this.classList.toggle('expanded')">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <input type="text" id="searchInput" placeholder="Search Node..." onkeyup="filterData(event)">
+<div id="dragContainer" style="position: fixed; top: 120px; right: 20px; z-index: 10000; display: flex; align-items: center;">
+    <div id="draggableSearch" class="search-box-style">
+        <i class="fa-solid fa-magnifying-glass" id="searchIcon" style="cursor: move; min-width: 30px; color: #00f7ff;" onclick="toggleSearch()"></i>
+        
+        <input type="text" id="searchInput" placeholder="Rubuta suna..." 
+               oninput="window.filterData(this.value)" 
+               onmousedown="event.stopPropagation()" 
+               ontouchstart="event.stopPropagation()"
+               style="background: transparent; border: none; outline: none; color: #fff; width: 180px; font-weight: 700;">
+    </div>
 </div>
 
 <div class="header">Identity Ledger</div>
