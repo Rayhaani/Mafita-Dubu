@@ -186,61 +186,22 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-let currentSector = 'customer', allData = [];
+let currentSector = 'customer', allData = [], isTrashMode = false;
 
-// 🕵️ SEARCH TOGGLE & DRAG
-const dragBox = document.getElementById("dragContainer");
-const searchBox = document.getElementById("draggableSearch");
-const searchIcon = document.getElementById("searchIcon");
+// UI ENHANCEMENT: Saka Trash Icon a Header
+document.querySelector('.header').innerHTML = `
+    Identity Ledger 
+    <i class="fa-solid fa-trash-can" id="trashToggle" 
+       style="margin-left:15px; font-size:14px; cursor:pointer; color:rgba(255,255,255,0.2);"></i>
+`;
 
-window.toggleSearch = (e) => {
-    e.stopPropagation();
-    searchBox.classList.toggle('expanded');
-    if(searchBox.classList.contains('expanded')) document.getElementById('searchInput').focus();
+document.getElementById('trashToggle').onclick = function() {
+    isTrashMode = !isTrashMode;
+    this.style.color = isTrashMode ? "#ff4444" : "rgba(255,255,255,0.2)";
+    this.classList.toggle('fa-bounce');
+    render();
 };
 
-document.addEventListener('click', (e) => {
-    if(!searchBox.contains(e.target)) searchBox.classList.remove('expanded');
-});
-
-// DRAG ENGINE
-let offset = {x:0, y:0}, isDragging = false;
-
-const startDrag = (e) => {
-    isDragging = false;
-    const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-    const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
-    offset.x = clientX - dragBox.offsetLeft;
-    offset.y = clientY - dragBox.offsetTop;
-    
-    const moveDrag = (m) => {
-    if (m.cancelable) m.preventDefault(); // WANNAN ZAI HANA PAGE DIN MOTSI
-    isDragging = true;
-    const mX = m.type.includes('touch') ? m.touches[0].clientX : m.clientX;
-    const mY = m.type.includes('touch') ? m.touches[0].clientY : m.clientY;
-    dragBox.style.left = (mX - offset.x) + 'px';
-    dragBox.style.top = (mY - offset.y) + 'px';
-    dragBox.style.right = 'auto';
-};
-    
-    
-    const stopDrag = () => {
-        document.removeEventListener('mousemove', moveDrag);
-        document.removeEventListener('mouseup', stopDrag);
-        document.removeEventListener('touchmove', moveDrag);
-        document.removeEventListener('touchend', stopDrag);
-    };
-
-    document.addEventListener('mousemove', moveDrag);
-    document.addEventListener('mouseup', stopDrag);
-    document.addEventListener('touchmove', moveDrag);
-    document.addEventListener('touchend', stopDrag);
-};
-
-searchIcon.addEventListener('mousedown', startDrag);
-searchIcon.addEventListener('touchstart', startDrag);
-
-// FIREBASE LOGIC
 const sync = () => {
     onSnapshot(collection(db, "users"), (snap) => {
         allData = [];
@@ -252,40 +213,91 @@ const sync = () => {
 window.render = (filter = "") => {
     const box = document.getElementById('registryBox');
     box.innerHTML = "";
+    
     allData.forEach(u => {
         const role = (u.role || '').toLowerCase();
-        const status = u.status || 'pending';
+        const status = (u.status || '').toLowerCase();
         const name = (u.fullName || u.username || '').toLowerCase();
-        let match = (currentSector === 'customer' && (role === 'customer' || role === 'client')) || 
-                    (role === currentSector && (status === 'approved' || status === 'suspended'));
+        const searchText = filter.toLowerCase();
 
-        if(match && name.includes(filter.toLowerCase())) {
+        let shouldShow = false;
+
+        if (isTrashMode) {
+            // Idan muna Trash Mode, nuna wadanda aka goge kawai
+            if (status === 'trash') shouldShow = true;
+        } else {
+            // Yanayin nuna na yau da kullum (ka riga ka saba da wannan)
+            if (status === 'trash') {
+                shouldShow = false;
+            } else if (currentSector === 'customer') {
+                if (role === 'customer' || role === 'client' || role === 'member') shouldShow = true;
+            } else {
+                if (role === currentSector && (status === 'approved' || status === 'suspended')) shouldShow = true;
+            }
+        }
+
+        if(shouldShow && name.includes(searchText)) {
             box.innerHTML += `
-            <div class="card" style="${status === 'suspended' ? 'opacity: 0.3;' : ''}">
+            <div class="card" style="${status === 'suspended' ? 'opacity: 0.4;' : ''} ${status === 'trash' ? 'border: 1px dashed #ff4444;' : ''}">
                 <div class="left">
-                    <div class="avatar">${(u.fullName || 'U').charAt(0)}</div>
-                    <div class="u-info"><div class="name">${u.fullName || u.username}</div><div class="email">${u.email}</div></div>
+                    <div class="avatar">${(u.fullName || 'U').charAt(0).toUpperCase()}</div>
+                    <div class="u-info">
+                        <div class="name">${u.fullName || u.username}</div>
+                        <div class="email">${u.email}</div>
+                    </div>
                 </div>
                 <div class="actions">
-                    <div class="act-btn" onclick="window.updateStatus('${u.id}', '${status}')"><i class="fa-solid ${status === 'suspended' ? 'fa-play' : 'fa-pause'}"></i></div>
-                    <div class="act-btn btn-del" onclick="window.killNode('${u.id}')"><i class="fa-solid fa-trash-can"></i></div>
+                    ${isTrashMode ? 
+                        `<div class="act-btn" style="color:#00ff88; border-color:#00ff88;" onclick="window.restoreNode('${u.id}', '${role}')" title="Restore"><i class="fa-solid fa-rotate-left"></i></div>
+                         <div class="act-btn" style="color:#ff4444;" onclick="window.permaKill('${u.id}')" title="Delete Forever"><i class="fa-solid fa-skull"></i></div>` :
+                        `<div class="act-btn" onclick="window.updateStatus('${u.id}', '${status}')"><i class="fa-solid ${status === 'suspended' ? 'fa-play' : 'fa-pause'}"></i></div>
+                         <div class="act-btn" onclick="window.softDelete('${u.id}')"><i class="fa-solid fa-trash-can"></i></div>`
+                    }
                 </div>
             </div>`;
         }
     });
-}
+};
+
+// --- FUNCTIONS ---
+
+// 1. Move to Trash (Soft Delete)
+window.softDelete = async (id) => {
+    if(confirm('A tura wannan asusun zuwa Bin Shara (Trash)?')) {
+        await updateDoc(doc(db, "users", id), { status: 'trash' });
+    }
+};
+
+// 2. Restore from Trash
+window.restoreNode = async (id, originalRole) => {
+    // Dawo dashi as approved/automatic don ya fito a inda yake
+    await updateDoc(doc(db, "users", id), { status: 'approved' });
+    alert('An dawo da asusun nasara!');
+};
+
+// 3. Permanent Delete (Idan kana son gogewa gaba daya yanzu)
+window.permaKill = async (id) => {
+    if(confirm('WANNAN ZAI GOGE SHI GABA DAYA DAGA DATABASE! Ci gaba?')) {
+        await deleteDoc(doc(db, "users", id));
+    }
+};
+
+window.updateStatus = async (id, s) => { 
+    await updateDoc(doc(db, "users", id), { status: s === 'suspended' ? 'approved' : 'suspended' }); 
+};
 
 window.filterData = (val) => render(val);
 window.switchTab = (sector, btn) => {
     currentSector = sector;
+    isTrashMode = false; // Rufe trash idan an sauya tab
+    document.getElementById('trashToggle').style.color = "rgba(255,255,255,0.2)";
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     render();
 }
-window.updateStatus = async (id, s) => { await updateDoc(doc(db, "users", id), { status: s === 'suspended' ? 'approved' : 'suspended' }); };
-window.killNode = async (id) => { if(confirm('GOGE?')) await deleteDoc(doc(db, "users", id)); };
 
 sync();
+
 </script>
 </body>
 </html>
