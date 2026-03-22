@@ -237,20 +237,8 @@ const sync = () => {
 }
 
 
-    // UI ENHANCEMENT: Futuristic Icon in Header
-document.querySelector('.header').innerHTML = `
-    Identity Ledger 
-    <i class="fa-solid fa-dumpster-fire" id="trashToggle" 
-       style="margin-left:15px; font-size:16px; cursor:pointer; color:rgba(255,255,255,0.3);"></i>
-`;
-
-document.getElementById('trashToggle').onclick = function() {
-    isTrashMode = !isTrashMode;
-    this.classList.toggle('active-neon');
-    render();
-};
-
-window.render = (filter = "") => {
+ 
+    window.render = (filter = "") => {
     const box = document.getElementById('registryBox');
     box.innerHTML = "";
     
@@ -262,14 +250,13 @@ window.render = (filter = "") => {
 
         let shouldShow = false;
 
-        // GYARAR LOGIC:
+        // CRITICAL FIX: Idan Trash Mode ne, nuna kowa ba tare da duba role ba
         if (isTrashMode) {
-            // Idan Trash Mode a kunne yake, nuna kowa muddin status dinsa 'trash' ne
             if (status === 'trash') shouldShow = true;
         } else {
-            // Idan Trash Mode a kashe yake, nuna mutum gwargwadon Sector dinsa
+            // Idan ba Trash Mode ba ne, nuna mutum gwargwadon tab dinsa
             if (status === 'trash') {
-                shouldShow = false;
+                shouldShow = false; 
             } else if (currentSector === 'customer') {
                 if (role === 'customer' || role === 'client' || role === 'member') shouldShow = true;
             } else {
@@ -287,13 +274,13 @@ window.render = (filter = "") => {
                     <div class="u-info">
                         <div class="name">${u.fullName || u.username}</div>
                         <div class="email">${u.email}</div>
-                        ${status === 'trash' ? '<div style="font-size:9px; color:#ff4444; font-weight:800;">[ DELETED NODE ]</div>' : ''}
+                        ${status === 'trash' ? '<div style="font-size:9px; color:#ff4444; font-weight:800; letter-spacing:1px;">RECOVERY PENDING</div>' : ''}
                     </div>
                 </div>
                 <div class="actions">
                     ${isTrashMode ? 
-                        `<div class="act-btn" style="color:#00ff88; border-color:#00ff88;" onclick="window.restoreNode('${u.id}')" title="Restore"><i class="fa-solid fa-trash-arrow-up"></i></div>
-                         <div class="act-btn" style="color:#ff4444;" onclick="window.permaKill('${u.id}')" title="Purge Forever"><i class="fa-solid fa-skull-crossbones"></i></div>` :
+                        `<div class="act-btn" style="color:#00ff88; border-color:#00ff88;" onclick="window.restoreNode('${u.id}')"><i class="fa-solid fa-trash-arrow-up"></i></div>
+                         <div class="act-btn" style="color:#ff4444;" onclick="window.permaKill('${u.id}')"><i class="fa-solid fa-skull-crossbones"></i></div>` :
                         `<div class="act-btn" onclick="window.updateStatus('${u.id}', '${status}')"><i class="fa-solid ${status === 'suspended' ? 'fa-play' : 'fa-pause'}"></i></div>
                          <div class="act-btn" style="color:#ff4444;" onclick="window.softDelete('${u.id}')"><i class="fa-solid fa-trash-can"></i></div>`
                     }
@@ -303,22 +290,21 @@ window.render = (filter = "") => {
     });
 
     if (box.innerHTML === "") {
-        const msg = isTrashMode ? "Bin Shara (Trash) komai fes!" : "Babu kowa a wannan sashen...";
+        const msg = isTrashMode ? "Bin Shara (Trash) a wanke take!" : "Babu kowa a wannan sashen...";
         box.innerHTML = `<div style="text-align:center; padding:50px; color:#444; font-size:12px;">${msg}</div>`;
     }
 };
 
-// Simplified Restore Function
-window.restoreNode = async (id) => {
-    if(confirm('A dawo da wannan asusun?')) {
-        // Zai koma approved don ya fito a Main List
-        await updateDoc(doc(db, "users", id), { status: 'approved' });
-        showToast("An dawo da asusun!", false);
+// GYARA: SwitchTab ba zai sake kashe Trash Mode ba idan ka danna shi
+window.switchTab = (sector, btn) => {
+    currentSector = sector;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render(); // Zai nuna mutum ko da yana trash ne ko a'a gwargwadon isTrashMode
     }
-};
     
 
-
+   
     // --- FUNCTIONS ---
 
 // 1. Move to Trash (Soft Delete)
