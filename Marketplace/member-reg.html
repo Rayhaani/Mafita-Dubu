@@ -56,23 +56,24 @@
             <div class="mb-6">
                 <div class="inline-block p-4 rounded-full bg-[#f3cf7a]/10 mb-4"><span class="text-5xl">📧</span></div>
                 <h2 class="text-[#f3cf7a] font-bold text-xl mb-2">Tantance Email</h2>
-                <p class="text-white/70 text-[12px] leading-relaxed">Mun tura sako zuwa email dinka. Shiga Inbox dinka ka danna link din verification.</p>
+                <p class="text-white/70 text-[12px] leading-relaxed">Mun tura link dinka zuwa email dinka. Shiga Inbox dinka ka danna domin kunna account dinka.</p>
                 <div class="spinner"></div>
                 <p id="waitingText" style="color: #f3cf7a; font-size: 10px;">Waiting for verification...</p>
             </div>
             <div class="space-y-4">
-                <button id="checkLoginBtn" class="submit-btn">NA DANNA LINK DIN (LOGIN)</button>
+                <button id="checkLoginBtn" class="submit-btn">NA DANNA LINK DIN (CONTINUE)</button>
                 <p class="text-[10px] text-white/50">Ba ka ga sako ba? <a href="#" id="resendBtn" class="text-[#f3cf7a] underline">Sake turawa</a></p>
             </div>
         </div>
     </div>
 
 <script type="module">
-    // --- IMPORTING EVERYTHING ---
+    // --- 1. DUKKAN IMPORTS ---
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, serverTimestamp, query, where, getDocs, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+    // --- 2. CONFIGURATION ---
     const firebaseConfig = {
         apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
         authDomain: "global-market-admin.firebaseapp.com",
@@ -94,7 +95,7 @@
         setTimeout(() => { toast.style.top = '-100px'; }, 5000);
     }
 
-    // --- SMART RELOADER ---
+    // --- 3. AUTO-RELOAD (Monitoring Status) ---
     setInterval(async () => {
         if (auth.currentUser) {
             try {
@@ -102,11 +103,11 @@
                 if (auth.currentUser.emailVerified) {
                     window.location.replace("verify-success.html");
                 }
-            } catch (e) { console.log("System is monitoring verification status..."); }
+            } catch (e) { console.log("Checking..."); }
         }
-    }, 4000);
+    }, 3000);
 
-    // --- AUTH OBSERVER ---
+    // --- 4. AUTH OBSERVER (Keep Session Alive) ---
     onAuthStateChanged(auth, async (user) => {
         if (user) {
             await user.reload();
@@ -120,28 +121,28 @@
         }
     });
 
-    // --- BUTTON CLICK (FIXED) ---
+    // --- 5. PROFESSIONAL "CONTINUE" BUTTON ---
     document.getElementById('checkLoginBtn').addEventListener('click', async () => {
         const user = auth.currentUser;
         if (user) {
             const btn = document.getElementById('checkLoginBtn');
             btn.innerText = "DUBIKEWA...";
             try {
-                await user.reload(); // Wannan layin zai sabunta Firebase
+                await user.reload(); 
                 if (auth.currentUser.emailVerified) {
                     window.location.replace("verify-success.html");
                 } else {
-                    showToast("Har yanzu ba a tantance email dinka ba! Duba Gmail dinka.", true);
-                    btn.innerText = "NA DANNA LINK DIN (LOGIN)";
+                    showToast("Ba a gama tantancewa ba tukuna. Duba Gmail dinka!", true);
+                    btn.innerText = "NA DANNA LINK DIN (CONTINUE)";
                 }
             } catch (e) {
-                showToast("System error, sake gwadawa.", true);
-                btn.innerText = "NA DANNA LINK DIN (LOGIN)";
+                showToast("System Error. Sake gwadawa.", true);
+                btn.innerText = "NA DANNA LINK DIN (CONTINUE)";
             }
         }
     });
 
-    // --- REGISTER FORM ---
+    // --- 6. REGISTER LOGIC ---
     document.getElementById('universalRegisterForm').onsubmit = async (e) => {
         e.preventDefault();
         const btn = document.getElementById('regBtn');
@@ -157,27 +158,31 @@
         btn.innerText = "CHECKING...";
 
         try {
+            // Check Duplicates
             const uQuery = query(collection(db, "users"), where("username", "==", username));
             const pQuery = query(collection(db, "users"), where("phone", "==", phone));
             const [uSnap, pSnap] = await Promise.all([getDocs(uQuery), getDocs(pQuery)]);
 
-            if (!uSnap.empty) { showToast("An riga da an yi amfani da Username din nan!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
-            if (!pSnap.empty) { showToast("An riga da an yi amfani da Phone number din nan!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
+            if (!uSnap.empty) { showToast("An riga da an yi amfani da Username din!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
+            if (!pSnap.empty) { showToast("An riga da an yi amfani da Wayar nan!", true); btn.disabled = false; btn.innerText = "REGISTER NOW"; return; }
 
             btn.innerText = "CREATING...";
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
+            // Save Data
             await setDoc(doc(db, "users", user.uid), {
                 fullName, username, email, phone, state,
-                role: "member", status: "approved", emailVerified: false, createdAt: serverTimestamp()
+                role: "member", status: "pending", emailVerified: false, createdAt: serverTimestamp()
             });
 
+            // Send Email
             await sendEmailVerification(user);
-            showToast("An yi nasara! Duba email dinka don tantancewa.");
+            showToast("An yi nasara! Duba Email dinka.");
             
             document.getElementById('registerSection').classList.add('hidden');
             document.getElementById('verifySection').classList.remove('hidden');
+            document.getElementById('mainTitle').innerText = "Verify Email";
         } catch (error) {
             showToast(error.message, true);
             btn.disabled = false;
@@ -185,13 +190,13 @@
         }
     };
 
-    // Resend
+    // Resend Logic
     document.getElementById('resendBtn').onclick = async (e) => {
         e.preventDefault();
         if (auth.currentUser) {
             try {
                 await sendEmailVerification(auth.currentUser);
-                showToast("An sake tura maka link din tantancewa.");
+                showToast("An sake tura maka sabon link.");
             } catch (err) { showToast(err.message, true); }
         }
     };
