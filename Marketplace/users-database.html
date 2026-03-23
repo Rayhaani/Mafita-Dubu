@@ -152,11 +152,11 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; }
 <div id="dragContainer">
     <div id="draggableSearch" class="search-box-style">
         <i class="fa-solid fa-magnifying-glass" id="searchIcon" onclick="toggleSearch(event)"></i>
-        <input type="text" id="searchInput" placeholder="Rubuta suna..." 
-       oninput="window.render(this.value)" 
-       onmousedown="event.stopPropagation()" 
-       ontouchstart="event.stopPropagation()">
-        
+       
+                  <input type="text" id="searchInput" placeholder="Rubuta suna..." 
+               oninput="window.filterData(this.value)" 
+               onmousedown="event.stopPropagation()" 
+               ontouchstart="event.stopPropagation()">      
     </div>
 </div>
 
