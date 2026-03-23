@@ -21,7 +21,7 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; }
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-/* 🧭 TABS (ALL 4 VISIBLE) */
+/* 🧭 TABS */
 .tabs-wrapper { width: 100%; display: flex; justify-content: center; padding: 15px 5px; }
 .tabs { display: flex; width: 100%; max-width: 500px; justify-content: space-between; gap: 4px; }
 .tab-btn {
@@ -32,45 +32,28 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; }
 }
 .tab-btn.active { background: var(--neon); color:#000; box-shadow: 0 0 15px var(--neon-dim); border-color: var(--neon); }
 
-/* 🔍 MOVABLE & COLLAPSIBLE SEARCH BAR */
+/* 🔍 MOVABLE SEARCH BAR */
 #dragContainer {
-    position: fixed; 
-    top: 120px; 
-    right: 20px; 
-    z-index: 10000;
-    display: flex; 
-    align-items: center;
-    touch-action: none; /* WANNAN SHINE GYARAN */
+    position: fixed; top: 120px; right: 20px; z-index: 10000;
+    display: flex; align-items: center; touch-action: none;
 }
     
 .search-box-style {
-    width: 50px; height: 50px;
-    background: var(--neon);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--neon);
-    border-radius: 50%;
-    padding: 10px;
-    display: flex;
-    align-items: center;
+    width: 50px; height: 50px; background: var(--neon);
+    backdrop-filter: blur(20px); border: 1px solid var(--neon);
+    border-radius: 50%; padding: 10px; display: flex; align-items: center;
     box-shadow: 0 0 20px var(--neon-dim);
     transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s, border-radius 0.4s;
     overflow: hidden;
 }
-.search-box-style.expanded {
-    width: 260px;
-    border-radius: 30px;
-    background: rgba(15, 15, 15, 0.9);
-}
+.search-box-style.expanded { width: 260px; border-radius: 30px; background: rgba(15, 15, 15, 0.9); }
 
-#searchIcon { 
-    color: #000; font-size: 20px; cursor: move; 
-    min-width: 30px; display: flex; justify-content: center;
-}
+#searchIcon { color: #000; font-size: 20px; cursor: move; min-width: 30px; display: flex; justify-content: center; }
 .search-box-style.expanded #searchIcon { color: var(--neon); }
 
 #searchInput {
     background: transparent; border: none; outline: none; color: #fff;
-    width: 0; font-weight: 700; transition: 0.3s; opacity: 0;
+    width: 0; font-weight: 700; transition: 0.3s; opacity: 0; cursor: text;
 }
 .search-box-style.expanded #searchInput { width: 100%; opacity: 1; padding-left: 10px; }
 
@@ -78,8 +61,8 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; }
 .container{ padding:10px; max-width: 600px; margin: 0 auto; }
 .card{
     padding: 15px; border-radius:20px; background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.04);
-    display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;
+    border: 1px solid rgba(255,255,255,0.04); display:flex; justify-content:space-between; 
+    align-items:center; margin-bottom: 10px; transition: 0.3s;
 }
 .left{ display:flex; align-items:center; gap:10px; }
 .avatar{
@@ -95,72 +78,38 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; }
 }
 .act-btn:hover { background: var(--neon); color: #000; }
 
-/* Dock Menu Style */
-        .futuristic-dock {
-            position: fixed; bottom: 30px; left: 50%;
-            transform: translateX(-50%);
-            background: rgba(15, 15, 15, 0.8);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 100px;
-            padding: 12px 25px;
-            display: flex; gap: 20px;
-            z-index: 10000;
-            box-shadow: 0 25px 50px rgba(0,0,0,1);
-        }
-        .dock-item {
-            width: 48px; height: 48px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 50%; color: rgba(255,255,255,0.3);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-        }
-        .dock-item:hover, .dock-item.active {
-            background: white; color: black;
-            transform: scale(1.25) translateY(-12px);
-        }
+.futuristic-dock {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+    background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 100px;
+    padding: 12px 25px; display: flex; gap: 20px; z-index: 10000;
+}
+.dock-item {
+    width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; color: rgba(255,255,255,0.3); transition: 0.4s; cursor: pointer;
+}
+.dock-item:hover, .dock-item.active { background: white; color: black; transform: scale(1.2) translateY(-10px); }
 
-
-    /* Futuristic Trash Toggle Style */
 #trashToggle {
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    padding: 8px;
-    border-radius: 10px;
-    background: rgba(255, 68, 68, 0.05);
-    border: 1px solid rgba(255, 68, 68, 0.1);
-    box-shadow: 0 0 0px transparent;
+    transition: 0.4s; padding: 8px; border-radius: 10px;
+    background: rgba(255, 68, 68, 0.05); border: 1px solid rgba(255, 68, 68, 0.1);
 }
-
-#trashToggle.active-neon {
-    color: #ff4444 !important;
-    background: rgba(255, 68, 68, 0.2);
-    border-color: #ff4444;
-    box-shadow: 0 0 15px rgba(255, 68, 68, 0.4);
-    animation: pulse-red 2s infinite;
-}
-
-@keyframes pulse-red {
-    0% { transform: scale(1); box-shadow: 0 0 5px rgba(255, 68, 68, 0.4); }
-    50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 68, 68, 0.7); }
-    100% { transform: scale(1); box-shadow: 0 0 5px rgba(255, 68, 68, 0.4); }
-}
-    
 </style>
 </head>
 <body>
 
 <div id="dragContainer">
     <div id="draggableSearch" class="search-box-style">
-        <i class="fa-solid fa-magnifying-glass" id="searchIcon" onclick="toggleSearch(event)"></i>
-       
-                  <input type="text" id="searchInput" placeholder="Rubuta suna..." 
-               oninput="window.filterData(this.value)" 
+        <i class="fa-solid fa-magnifying-glass" id="searchIcon" onclick="window.toggleSearch(event)"></i>
+        <input type="text" id="searchInput" placeholder="Rubuta suna..." 
+               oninput="window.render(this.value)" 
+               onclick="event.stopPropagation()"
                onmousedown="event.stopPropagation()" 
                ontouchstart="event.stopPropagation()">      
     </div>
 </div>
 
-<div class="header">Identity Ledger</div>
+<div class="header" id="mainHeader">Identity Ledger</div>
 
 <div class="tabs-wrapper">
     <div class="tabs">
@@ -174,27 +123,11 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; }
 <div class="container" id="registryBox"></div>
 
 <div class="futuristic-dock">
-    <div class="dock-item" onclick="location.href='admin_dashboard.html'" title="Neural Core">
-        <i class="fa-solid fa-microchip"></i>
-    </div>
-
-    <div class="dock-item" onclick="location.href='users-database.html'" title="Identity Matrix">
-        <i class="fa-solid fa-fingerprint"></i>
-    </div>
-
-    <div class="dock-item" onclick="location.href='categories.html'" title="Protocol Arch">
-        <i class="fa-solid fa-diagram-project"></i>
-    </div>
-
-    <div class="dock-item" title="Firewall OS">
-        <i class="fa-solid fa-shield-halved"></i>
-    </div>
-
-    <div class="dock-item active" onclick="location.href='registry.html'" title="Ledger Node">
-        <i class="fa-solid fa-vault"></i>
-    </div>
-  </div>
-<div class="container" id="registryBox">
+    <div class="dock-item" onclick="location.href='admin_dashboard.html'"><i class="fa-solid fa-microchip"></i></div>
+    <div class="dock-item" onclick="location.href='users-database.html'"><i class="fa-solid fa-fingerprint"></i></div>
+    <div class="dock-item" onclick="location.href='categories.html'"><i class="fa-solid fa-diagram-project"></i></div>
+    <div class="dock-item"><i class="fa-solid fa-shield-halved"></i></div>
+    <div class="dock-item active" onclick="location.href='registry.html'"><i class="fa-solid fa-vault"></i></div>
 </div>
 
 <script type="module">
@@ -214,8 +147,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 let currentSector = 'customer', allData = [], isTrashMode = false;
 
-// UI ENHANCEMENT: Saka Trash Icon a Header
-document.querySelector('.header').innerHTML = `
+// Header Trash Icon
+document.getElementById('mainHeader').innerHTML = `
     Identity Ledger 
     <i class="fa-solid fa-trash-can" id="trashToggle" 
        style="margin-left:15px; font-size:14px; cursor:pointer; color:rgba(255,255,255,0.2);"></i>
@@ -224,64 +157,84 @@ document.querySelector('.header').innerHTML = `
 document.getElementById('trashToggle').onclick = function() {
     isTrashMode = !isTrashMode;
     this.style.color = isTrashMode ? "#ff4444" : "rgba(255,255,255,0.2)";
-    this.classList.toggle('fa-bounce');
-    render();
+    window.render(document.getElementById('searchInput').value);
 };
 
+// 🕵️ SEARCH TOGGLE & DRAG ENGINE
+const dragBox = document.getElementById("dragContainer");
+const searchBox = document.getElementById("draggableSearch");
+const searchIcon = document.getElementById("searchIcon");
+
+window.toggleSearch = (e) => {
+    e.stopPropagation();
+    searchBox.classList.toggle('expanded');
+    if(searchBox.classList.contains('expanded')) {
+        setTimeout(() => document.getElementById('searchInput').focus(), 300);
+    }
+};
+
+document.addEventListener('click', (e) => {
+    if(!searchBox.contains(e.target)) searchBox.classList.remove('expanded');
+});
+
+let offset = {x:0, y:0}, isDragging = false;
+const startDrag = (e) => {
+    const ev = e.type.includes('touch') ? e.touches[0] : e;
+    offset.x = ev.clientX - dragBox.offsetLeft;
+    offset.y = ev.clientY - dragBox.offsetTop;
+    const moveDrag = (m) => {
+        const mv = m.type.includes('touch') ? m.touches[0] : m;
+        dragBox.style.left = (mv.clientX - offset.x) + 'px';
+        dragBox.style.top = (mv.clientY - offset.y) + 'px';
+        dragBox.style.right = 'auto';
+    };
+    const stopDrag = () => {
+        document.removeEventListener('mousemove', moveDrag); document.removeEventListener('mouseup', stopDrag);
+        document.removeEventListener('touchmove', moveDrag); document.removeEventListener('touchend', stopDrag);
+    };
+    document.addEventListener('mousemove', moveDrag); document.addEventListener('mouseup', stopDrag);
+    document.addEventListener('touchmove', moveDrag); document.addEventListener('touchend', stopDrag);
+};
+searchIcon.addEventListener('mousedown', startDrag);
+searchIcon.addEventListener('touchstart', startDrag);
+
+// --- CORE LOGIC ---
 const sync = () => {
     onSnapshot(collection(db, "users"), (snap) => {
         allData = [];
         snap.forEach(d => allData.push({id: d.id, ...d.data()}));
-        render();
+        window.render(document.getElementById('searchInput').value);
     });
 }
 
-
-   window.render = (filter = "") => {
+window.render = (filter = "") => {
     const box = document.getElementById('registryBox');
     box.innerHTML = "";
-    const searchText = filter.toLowerCase();
-    
+    const term = filter.toLowerCase();
+
     allData.forEach(u => {
         const role = (u.role || '').toLowerCase();
-        const status = (u.status || '').toLowerCase();
+        const status = (u.status || 'pending').toLowerCase();
         const name = (u.fullName || u.username || '').toLowerCase();
 
-        // MATAKI NA 1: Tace Status (Ko mutum yana Trash ko baya ciki)
-        let isCorrectStatus = false;
-        if (isTrashMode) {
-            if (status === 'trash') isCorrectStatus = true;
-        } else {
-            // Idan ba Trash mode ba, nuna Approved/Suspended (ba Deleted ba)
-            if (status !== 'trash') isCorrectStatus = true;
-        }
+        let isCorrectStatus = isTrashMode ? (status === 'trash') : (status !== 'trash');
+        let isCorrectTab = (currentSector === 'customer') ? 
+            (role === 'customer' || role === 'client' || role === 'member') : (role === currentSector);
 
-        // MATAKI NA 2: Tace Rukunoni (Tabs)
-        let isCorrectTab = false;
-        if (currentSector === 'customer') {
-            if (role === 'customer' || role === 'client' || role === 'member') isCorrectTab = true;
-        } else {
-            if (role === currentSector) isCorrectTab = true;
-        }
-
-        // HADUWA: Dole mutum ya zama yana da Status da ya dace KUMA yana Tab da ya dace
-        if(isCorrectStatus && isCorrectTab && name.includes(searchText)) {
+        if(isCorrectStatus && isCorrectTab && name.includes(term)) {
             box.innerHTML += `
-            <div class="card" style="${status === 'suspended' ? 'opacity: 0.4;' : ''} ${status === 'trash' ? 'border: 1px solid #ff4444; background: rgba(255,0,0,0.05);' : ''}">
+            <div class="card" style="${status === 'suspended' ? 'opacity: 0.4;' : ''}">
                 <div class="left">
-                    <div class="avatar" style="${status === 'trash' ? 'background:rgba(255,68,68,0.2); color:#ff4444;' : ''}">
-                        ${(u.fullName || 'U').charAt(0).toUpperCase()}
-                    </div>
+                    <div class="avatar" style="${status === 'trash' ? 'color:#ff4444;' : ''}">${(u.fullName || 'U').charAt(0).toUpperCase()}</div>
                     <div class="u-info">
                         <div class="name">${u.fullName || u.username}</div>
-                        <div class="email">${u.email}</div>
-                        ${status === 'trash' ? '<div style="font-size:9px; color:#ff4444; font-weight:800; letter-spacing:1px;">RECOVERY PENDING</div>' : ''}
+                        <div class="email" style="font-size:9px; opacity:0.5;">${u.email}</div>
                     </div>
                 </div>
                 <div class="actions">
                     ${isTrashMode ? 
-                        `<div class="act-btn" style="color:#00ff88; border-color:#00ff88;" onclick="window.restoreNode('${u.id}')" title="Restore"><i class="fa-solid fa-trash-arrow-up"></i></div>
-                         <div class="act-btn" style="color:#ff4444;" onclick="window.permaKill('${u.id}')" title="Delete Forever"><i class="fa-solid fa-skull-crossbones"></i></div>` :
+                        `<div class="act-btn" style="color:#00ff88;" onclick="window.restoreNode('${u.id}')"><i class="fa-solid fa-trash-arrow-up"></i></div>
+                         <div class="act-btn" style="color:#ff4444;" onclick="window.permaKill('${u.id}')"><i class="fa-solid fa-skull-crossbones"></i></div>` :
                         `<div class="act-btn" onclick="window.updateStatus('${u.id}', '${status}')"><i class="fa-solid ${status === 'suspended' ? 'fa-play' : 'fa-pause'}"></i></div>
                          <div class="act-btn" style="color:#ff4444;" onclick="window.softDelete('${u.id}')"><i class="fa-solid fa-trash-can"></i></div>`
                     }
@@ -289,65 +242,21 @@ const sync = () => {
             </div>`;
         }
     });
+}
 
-    if (box.innerHTML === "") {
-        const msg = isTrashMode ? `Babu gogaggun ${currentSector}s anan.` : `Babu kowa a sashen ${currentSector}s...`;
-        box.innerHTML = `<div style="text-align:center; padding:50px; color:#444; font-size:12px;">${msg}</div>`;
-    }
-};
-    
-
-   
-    // --- FUNCTIONS ---
-
-// 1. Move to Trash (Soft Delete)
-window.softDelete = async (id) => {
-    if(confirm('A tura wannan asusun zuwa Bin Shara (Trash)?')) {
-        try {
-            const userRef = doc(db, "users", id);
-            await updateDoc(userRef, { 
-                status: 'trash' 
-            });
-            // Ba sai mun kira render() ba, onSnapshot zai yi mana update da kansa
-            console.log("Node moved to trash successfully");
-        } catch (error) {
-            console.error("Error moving to trash: ", error);
-            alert("An samu matsala wajen gogewa!");
-        }
-    }
-};
-    
-// 2. Restore from Trash
-window.restoreNode = async (id, originalRole) => {
-    // Dawo dashi as approved/automatic don ya fito a inda yake
-    await updateDoc(doc(db, "users", id), { status: 'approved' });
-    alert('An dawo da asusun nasara!');
-};
-
-// 3. Permanent Delete (Idan kana son gogewa gaba daya yanzu)
-window.permaKill = async (id) => {
-    if(confirm('WANNAN ZAI GOGE SHI GABA DAYA DAGA DATABASE! Ci gaba?')) {
-        await deleteDoc(doc(db, "users", id));
-    }
-};
-
-window.updateStatus = async (id, s) => { 
-    await updateDoc(doc(db, "users", id), { status: s === 'suspended' ? 'approved' : 'suspended' }); 
-};
-
-    window.filterData = (val) => render(val);
+window.softDelete = async (id) => { if(confirm('A tura zuwa Trash?')) await updateDoc(doc(db, "users", id), { status: 'trash' }); };
+window.restoreNode = async (id) => { await updateDoc(doc(db, "users", id), { status: 'approved' }); };
+window.permaKill = async (id) => { if(confirm('GOGE GABA DAYA?')) await deleteDoc(doc(db, "users", id)); };
+window.updateStatus = async (id, s) => { await updateDoc(doc(db, "users", id), { status: s === 'suspended' ? 'approved' : 'suspended' }); };
 window.switchTab = (sector, btn) => {
-    currentSector = sector;
+    currentSector = sector; isTrashMode = false;
+    document.getElementById('searchInput').value = "";
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     render();
 }
-window.updateStatus = async (id, s) => { await updateDoc(doc(db, "users", id), { status: s === 'suspended' ? 'approved' : 'suspended' }); };
-window.killNode = async (id) => { if(confirm('GOGE?')) await deleteDoc(doc(db, "users", id)); };
 
 sync();
-
-    
 </script>
 </body>
 </html>
