@@ -47,21 +47,17 @@
         </div>
 
         <div class="login-footer" style="text-align: center; margin-top: 20px; color: #ffffff; font-size: 0.85rem;">
-    Already have an account? <a href="login.html" style="color: #f3cf7a; font-weight: 700; text-decoration: none; margin-left: 5px;">Login</a>
+            Already have an account? <a href="login.html" style="color: #f3cf7a; font-weight: 700; text-decoration: none; margin-left: 5px;">Login</a>
         </div>
-        
 
         <div id="setupSection">
             <p class="text-white text-[10px] text-center mb-4 opacity-70">Saita bayanan kasuwancinka daki-daki</p>
             <form id="setupForm">
                 <div class="mb-4"><input type="text" id="bizName" class="gold-input" placeholder="Business Name" required></div>
                 <div class="mb-4">
-                    <select id="bizCategory" class="gold-input bg-[#1a1405]" onchange="updateSubCategory()" required>
+                    <select id="bizCategory" class="gold-input bg-[#1a1405]" onchange="window.updateSubCategory()" required>
                         <option value="" disabled selected>Select Category</option>
-                        <option value="Clothing">Clothing (Tufafi)</option>
-                        <option value="Shoes">Shoes (Takalmi)</option>
-                        <option value="Electronics">Electronics</option>
-                    </select>
+                        </select>
                 </div>
                 <div id="subCatWrapper" class="mb-4 hidden">
                     <select id="subCategory" class="gold-input bg-[#1a1405]"></select>
@@ -77,7 +73,7 @@
                     <label class="block text-[#f3cf7a] text-[10px] font-bold mb-1 uppercase">Shop Location (GPS)</label>
                     <div class="flex gap-2">
                         <input type="text" id="gpsStatus" class="gold-input flex-1 opacity-70" placeholder="Ba a dauki location ba" readonly>
-                        <button type="button" onclick="startGPS()" id="gpsBtn" class="bg-[#22c55e] hover:bg-[#16a34a] text-white px-4 py-2 rounded-xl flex shadow-lg">
+                        <button type="button" onclick="window.startGPS()" id="gpsBtn" class="bg-[#22c55e] hover:bg-[#16a34a] text-white px-4 py-2 rounded-xl flex shadow-lg">
                             <span class="p-2">📍 Get</span>
                         </button>
                     </div>
@@ -90,7 +86,7 @@
                         <img id="photoPreview" class="absolute inset-0 w-full h-full object-cover hidden">
                         <div id="uploadUI" class="text-center"><span class="text-2xl">📸</span><p class="text-[10px] text-white/50">Danna don daukar hoto</p></div>
                     </div>
-                    <input type="file" id="shopPhoto" accept="image/*" capture="camera" class="hidden" onchange="previewImage(this)">
+                    <input type="file" id="shopPhoto" accept="image/*" capture="camera" class="hidden" onchange="window.previewImage(this)">
                     <input type="hidden" id="photoBase64">
                 </div>
 
@@ -99,29 +95,25 @@
         </div>     
     </div>
 
-
     <div id="verifySection" class="hidden text-center p-6">
-    <div class="mb-6">
-        <div class="inline-block p-4 rounded-full bg-[#f3cf7a]/10 mb-4">
-            <span class="text-5xl">📧</span>
+        <div class="mb-6">
+            <div class="inline-block p-4 rounded-full bg-[#f3cf7a]/10 mb-4">
+                <span class="text-5xl">📧</span>
+            </div>
+            <h2 class="text-[#f3cf7a] font-bold text-xl mb-2">Tantance Email Dinka</h2>
+            <p class="text-white/70 text-sm">Mun tura maka link na tantancewa (Verification Link) zuwa email dinka. Don Allah duba 'Inbox' ko 'Spam' sannan ka danna link din.</p>
         </div>
-        <h2 class="text-[#f3cf7a] font-bold text-xl mb-2">Tantance Email Dinka</h2>
-        <p class="text-white/70 text-sm">Mun tura maka link na tantancewa (Verification Link) zuwa email dinka. Don Allah duba 'Inbox' ko 'Spam' sannan ka danna link din.</p>
-    </div>
-
-    <div class="space-y-4">
-        <button onclick="window.location.reload()" class="submit-btn">NA DANNA LINK DIN (LOGIN)</button>
-        <p class="text-[10px] text-white/50">Ba ka ga sako ba? <a href="#" onclick="resendEmail()" class="text-[#f3cf7a] underline">Sake turawa</a></p>
-    </div>
+        <div class="space-y-4">
+            <button onclick="window.location.reload()" class="submit-btn">NA DANNA LINK DIN (LOGIN)</button>
+            <p class="text-[10px] text-white/50">Ba ka ga sako ba? <a href="#" onclick="window.resendEmail()" class="text-[#f3cf7a] underline">Sake turawa</a></p>
+        </div>
     </div>
     
     <script type="module">
-
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, serverTimestamp, query, where, getDocs, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, serverTimestamp, query, where, getDocs, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        
         const firebaseConfig = {
             apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
             authDomain: "global-market-admin.firebaseapp.com",
@@ -135,10 +127,33 @@ import { getFirestore, doc, setDoc, serverTimestamp, query, where, getDocs, coll
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        const categoryData = {
-            "Clothing": ["Men's Wear", "Women's Wear", "Children's Wear", "Traditional (Kaftan/Abaya)"],
-            "Shoes": ["Sneakers", "Corporate Shoes", "Sandals/Slippers", "Kids Shoes"],
-            "Electronics": ["Phones & Tablets", "Laptops", "Home Appliances", "Accessories"]
+        // --- DYNAMIC CATEGORY SYNC ---
+        let firebaseCategories = {};
+        onSnapshot(doc(db, "app_settings", "categories"), (snap) => {
+            if (snap.exists()) {
+                firebaseCategories = snap.data().vendor || {};
+                const categorySelect = document.getElementById('bizCategory');
+                categorySelect.innerHTML = '<option value="" disabled selected>Select Category</option>';
+                Object.keys(firebaseCategories).sort().forEach(cat => {
+                    const opt = document.createElement('option');
+                    opt.value = opt.text = cat;
+                    categorySelect.appendChild(opt);
+                });
+            }
+        });
+
+        window.updateSubCategory = function() {
+            const mainCat = document.getElementById('bizCategory').value;
+            const subCatWrapper = document.getElementById('subCatWrapper');
+            const subCatSelect = document.getElementById('subCategory');
+            if (firebaseCategories[mainCat]) {
+                subCatWrapper.classList.remove('hidden');
+                subCatSelect.innerHTML = '<option value="" disabled selected>Select Sub-category</option>';
+                firebaseCategories[mainCat].forEach(item => {
+                    const opt = document.createElement('option'); opt.value = opt.text = item;
+                    subCatSelect.appendChild(opt);
+                });
+            }
         };
 
         window.showToast = function(msg, isError = false) {
@@ -148,20 +163,6 @@ import { getFirestore, doc, setDoc, serverTimestamp, query, where, getDocs, coll
             toast.style.top = '20px';
             setTimeout(() => { toast.style.top = '-100px'; }, 4000);
         }
-
-        window.updateSubCategory = function() {
-            const mainCat = document.getElementById('bizCategory').value;
-            const subCatWrapper = document.getElementById('subCatWrapper');
-            const subCatSelect = document.getElementById('subCategory');
-            if (categoryData[mainCat]) {
-                subCatWrapper.classList.remove('hidden');
-                subCatSelect.innerHTML = '<option value="" disabled selected>Select Sub-category</option>';
-                categoryData[mainCat].forEach(item => {
-                    const opt = document.createElement('option'); opt.value = opt.text = item;
-                    subCatSelect.appendChild(opt);
-                });
-            }
-        };
 
         window.startGPS = function() {
             const status = document.getElementById('gpsStatus');
@@ -191,128 +192,100 @@ import { getFirestore, doc, setDoc, serverTimestamp, query, where, getDocs, coll
             }
         };
 
-       // Function na sake tura Email (Resend)
-window.resendEmail = async () => {
-    if (auth.currentUser) {
-        await sendEmailVerification(auth.currentUser);
-        showToast("An sake tura sabon link!");
-    }
-};
+        window.resendEmail = async () => {
+            if (auth.currentUser) {
+                await sendEmailVerification(auth.currentUser);
+                showToast("An sake tura sabon link!");
+            }
+        };
 
+        document.getElementById('universalRegisterForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('regBtn');
+            const username = document.getElementById('username').value.trim().toLowerCase();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
 
-        // 1. REGISTER LOGIC
-document.getElementById('universalRegisterForm').onsubmit = async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('regBtn');
-    
-    // Dauko bayanan da aka rubuta
-    const username = document.getElementById('username').value.trim().toLowerCase();
-    const phone = document.getElementById('phone').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
+            btn.disabled = true; 
+            btn.innerText = "CHECKING DETAILS...";
 
-    btn.disabled = true; 
-    btn.innerText = "CHECKING DETAILS...";
+            try {
+                const uQuery = query(collection(db, "users"), where("username", "==", username));
+                const uSnap = await getDocs(uQuery);
+                if (!uSnap.empty) {
+                    showToast("Wannan Username din an riga an dauka!", true);
+                    btn.disabled = false; btn.innerText = "REGISTER NOW";
+                    return;
+                }
 
-    try {
-        // 1. DUBA IDAN USERNAME YA RIGA YA TABATA
-        const uQuery = query(collection(db, "users"), where("username", "==", username));
-        const uSnap = await getDocs(uQuery);
-        if (!uSnap.empty) {
-            showToast("Wannan Username din an riga an dauka!", true);
-            btn.disabled = false; btn.innerText = "REGISTER NOW";
-            return;
-        }
+                const pQuery = query(collection(db, "users"), where("phone", "==", phone));
+                const pSnap = await getDocs(pQuery);
+                if (!pSnap.empty) {
+                    showToast("Wannan Lambar Wayar an riga an yi amfani da ita!", true);
+                    btn.disabled = false; btn.innerText = "REGISTER NOW";
+                    return;
+                }
 
-        // 2. DUBA IDAN LAMBAR WAYA TA RIGA TA TABATA
-        const pQuery = query(collection(db, "users"), where("phone", "==", phone));
-        const pSnap = await getDocs(pQuery);
-        if (!pSnap.empty) {
-            showToast("Wannan Lambar Wayar an riga an yi amfani da ita!", true);
-            btn.disabled = false; btn.innerText = "REGISTER NOW";
-            return;
-        }
+                btn.innerText = "CREATING ACCOUNT...";
+                const userCred = await createUserWithEmailAndPassword(auth, email, password);
+                await sendEmailVerification(userCred.user);
+                
+                await setDoc(doc(db, "users", userCred.user.uid), {
+                    fullName: document.getElementById('fullName').value,
+                    username: username,
+                    email: email,
+                    phone: phone,
+                    state: document.getElementById('state').value,
+                    role: "vendor",
+                    emailVerified: false,
+                    createdAt: serverTimestamp()
+                });
 
-        // 3. IDAN DUKKA BABU SU, SAI A YI REGISTER
-        btn.innerText = "CREATING ACCOUNT...";
-        const userCred = await createUserWithEmailAndPassword(auth, email, password);
-        
-        // Tura Verification Link
-        await sendEmailVerification(userCred.user);
-        
-        // Ajiye sauran bayanan
-        await setDoc(doc(db, "users", userCred.user.uid), {
-            fullName: document.getElementById('fullName').value,
-            username: username,
-            email: email,
-            phone: phone,
-            state: document.getElementById('state').value,
-            role: "vendor",
-            emailVerified: false,
-            createdAt: serverTimestamp()
-        });
+                document.getElementById('registerSection').style.display = 'none';
+                document.getElementById('setupSection').style.display = 'block';
+                document.getElementById('mainTitle').innerText = "Business Setup";
+                showToast("Username da Phone OK! Duba Email dinka.");
 
-        // Wucewa zuwa Setup
-        document.getElementById('registerSection').style.display = 'none';
-        document.getElementById('setupSection').style.display = 'block';
-        document.getElementById('mainTitle').innerText = "Business Setup";
-        showToast("Username da Phone OK! Duba Email dinka.");
+            } catch (error) {
+                let msg = error.message;
+                if (error.code === 'auth/email-already-in-use') msg = "Wannan Email din ma an riga an dauka!";
+                showToast(msg, true);
+                btn.disabled = false;
+                btn.innerText = "REGISTER NOW";
+            }
+        };
 
-    } catch (error) {
-        let msg = error.message;
-        if (error.code === 'auth/email-already-in-use') msg = "Wannan Email din ma an riga an dauka!";
-        showToast(msg, true);
-        btn.disabled = false;
-        btn.innerText = "REGISTER NOW";
-    }
-};
+        document.getElementById('setupForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const lat = document.getElementById('lat').value;
+            const photo = document.getElementById('photoBase64').value;
+            if(!lat || !photo) return showToast("Dauki GPS da Hoto!", true);
             
+            const btn = document.getElementById('setupBtn');
+            btn.disabled = true; btn.innerText = "SAVING...";
 
-// 2. FINISH SETUP LOGIC
-document.getElementById('setupForm').onsubmit = async (e) => {
-    e.preventDefault();
-    const lat = document.getElementById('lat').value;
-    const photo = document.getElementById('photoBase64').value;
-    
-    if(!lat || !photo) return showToast("Dauki GPS da Hoto!", true);
-    
-    const btn = document.getElementById('setupBtn');
-    btn.disabled = true; btn.innerText = "SAVING...";
-
-    try {
-        await setDoc(doc(db, "vendor_details", auth.currentUser.uid), {
-            businessName: document.getElementById('bizName').value,
-            category: document.getElementById('bizCategory').value,
-            subCategory: document.getElementById('subCategory').value,
-            shopType: document.getElementById('shopType').value,
-            location: { lat: parseFloat(lat), lng: parseFloat(document.getElementById('lng').value) },
-            shopImage: photo,
-            status: "pending", 
-            setupComplete: true, 
-            isLive: false, // Ba zai fito a App ba tukunna
-            updatedAt: serverTimestamp()
-        });
-
-        // MAIMAKON LOGIN, SAI MU NUNA MASA VERIFICATION OVERLAY
-        document.getElementById('setupSection').style.display = 'none';
-        document.getElementById('verifySection').classList.remove('hidden');
-        document.getElementById('mainTitle').innerText = "Check Your Email";
-        
-    } catch (error) {
-        showToast(error.message, true);
-        btn.disabled = false;
-    }
-};
-        
-        
-
-                    window.resendEmail = async () => {
-    if (auth.currentUser) {
-        await sendEmailVerification(auth.currentUser);
-        showToast("An sake tura sabon link!");
-    }
-};
-        
+            try {
+                await setDoc(doc(db, "vendor_details", auth.currentUser.uid), {
+                    businessName: document.getElementById('bizName').value,
+                    category: document.getElementById('bizCategory').value,
+                    subCategory: document.getElementById('subCategory').value,
+                    shopType: document.getElementById('shopType').value,
+                    location: { lat: parseFloat(lat), lng: parseFloat(document.getElementById('lng').value) },
+                    shopImage: photo,
+                    status: "pending", 
+                    setupComplete: true, 
+                    isLive: false,
+                    updatedAt: serverTimestamp()
+                });
+                document.getElementById('setupSection').style.display = 'none';
+                document.getElementById('verifySection').classList.remove('hidden');
+                document.getElementById('mainTitle').innerText = "Check Your Email";
+            } catch (error) {
+                showToast(error.message, true);
+                btn.disabled = false;
+            }
+        };
     </script>
 </body>
 </html>
