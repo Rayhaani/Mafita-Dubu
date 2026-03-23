@@ -55,24 +55,30 @@
         .data-row:hover { background: rgba(255, 255, 255, 0.05); transform: translateX(5px); }
         .data-row.selected { border-left: 4px solid white; background: rgba(255, 255, 255, 0.07); }
 
-        /* Futuristic Dock */
+         /* Dock Menu Style */
         .futuristic-dock {
             position: fixed; bottom: 30px; left: 50%;
             transform: translateX(-50%);
             background: rgba(15, 15, 15, 0.8);
             backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 100px; padding: 12px 25px;
-            display: flex; gap: 20px; z-index: 10000;
+            border-radius: 100px;
+            padding: 12px 25px;
+            display: flex; gap: 20px;
+            z-index: 10000;
+            box-shadow: 0 25px 50px rgba(0,0,0,1);
         }
         .dock-item {
-            width: 50px; height: 50px;
+            width: 48px; height: 48px;
             display: flex; align-items: center; justify-content: center;
             border-radius: 50%; color: rgba(255,255,255,0.3);
-            transition: 0.4s; cursor: pointer;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
         }
-        .dock-item:hover, .dock-item.active { background: white; color: black; transform: scale(1.2) translateY(-10px); }
-        
+        .dock-item:hover, .dock-item.active {
+            background: white; color: black;
+            transform: scale(1.25) translateY(-12px);
+        }
     </style>
 </head>
 <body>
