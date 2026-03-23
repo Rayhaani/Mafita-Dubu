@@ -1,269 +1,238 @@
 <!DOCTYPE html>
 <html lang="ha">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARCHITECT | DYNAMIC CORE</title>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700;800;900&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARCHITECT | PROTOCOL ARCHWAY</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700;800;900&family=Syne:wght@800&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-main: #050505; --panel-bg: #0a0a0a; --accent: #ffffff; --neon: #00f7ff; }
+        
+        /* FONT DA GIRMAN RUBUTU YADDA KAKE SO */
+        *{ margin:0; padding:0; box-sizing:border-box; font-family: 'Quicksand', sans-serif; }
+        body { 
+            background-color: var(--bg-main); color: #ffffff; 
+            background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
+            padding-bottom: 120px;
+        }
+        .syne { font-family: 'Syne', sans-serif; }
 
-<style>
-:root { --neon: #00f7ff; --neon-dim: rgba(0, 247, 255, 0.1); --bg: #02040a; }
-*{margin:0;padding:0;box-sizing:border-box;font-family: 'Quicksand', sans-serif;}
+        .glass-header {
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky; top: 0; z-index: 1000;
+        }
 
-body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; }
+        .panel-container {
+            background: var(--panel-bg); border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
 
-/* 🚀 HEADER */
-.header{
-    text-align:center; padding:20px; font-weight:900; font-size: 18px; /* Na ƙara girma */
-    letter-spacing:3px; text-transform: uppercase;
-    background: rgba(255,255,255,0.01); backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-}
+        .standard-input {
+            background: #111111; border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px; color: white; padding: 14px 18px;
+            width: 100%; font-size: 16px; font-weight: 700;
+        }
 
-/* 🧭 TABS */
-.tabs-wrapper { width: 100%; display: flex; justify-content: center; padding: 15px 5px; }
-.tabs { display: flex; width: 100%; max-width: 500px; justify-content: space-between; gap: 4px; }
-.tab-btn {
-    flex: 1; padding: 12px 2px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);
-    background: rgba(255,255,255,0.03); color:#666; font-size: 11px; /* Na ƙara girma */
-    font-weight: 800; cursor:pointer; transition: 0.3s; text-transform: uppercase;
-    text-align: center; white-space: nowrap;
-}
-.tab-btn.active { background: var(--neon); color:#000; box-shadow: 0 0 15px var(--neon-dim); border-color: var(--neon); }
+        .nav-link {
+            font-size: 10px; font-weight: 900; letter-spacing: 2px;
+            padding: 12px 28px; border-radius: 10px; transition: 0.4s;
+            color: rgba(255,255,255,0.4); border: 1px solid transparent;
+        }
+        .nav-link.active { background: white; color: black; }
 
-/* 🔍 MOVABLE SEARCH BAR */
-#dragContainer {
-    position: fixed; top: 120px; right: 20px; z-index: 10000;
-    display: flex; align-items: center; touch-action: none;
-}
-.search-box-style {
-    width: 55px; height: 55px; background: var(--neon);
-    backdrop-filter: blur(20px); border: 1px solid var(--neon);
-    border-radius: 50%; padding: 10px; display: flex; align-items: center;
-    box-shadow: 0 0 20px var(--neon-dim);
-    transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s, border-radius 0.4s;
-    overflow: hidden;
-}
-.search-box-style.expanded { width: 280px; border-radius: 30px; background: rgba(15, 15, 15, 0.95); }
-#searchIcon { color: #000; font-size: 22px; cursor: move; min-width: 35px; display: flex; justify-content: center; }
-#searchInput {
-    background: transparent; border: none; outline: none; color: #fff;
-    width: 0; font-weight: 700; transition: 0.3s; opacity: 0; font-family: 'Quicksand', sans-serif;
-    font-size: 16px; /* Girman rubutun search */
-}
-.search-box-style.expanded #searchInput { width: 100%; opacity: 1; padding-left: 10px; }
+        /* DATA ROWS (CATEGORIES) */
+        .data-row {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px; padding: 16px 22px; display: flex;
+            justify-content: space-between; align-items: center;
+            transition: 0.3s; margin-bottom: 10px; cursor: pointer;
+        }
+        .data-row:hover { background: rgba(255, 255, 255, 0.05); }
+        .data-row.selected { border-left: 4px solid var(--neon); background: rgba(0, 247, 255, 0.05); }
 
-/* 📦 CONTAINER & CARDS */
-.container{ padding:10px; max-width: 600px; margin: 0 auto; }
-.card{
-    padding: 18px; border-radius:22px; background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.04);
-    display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;
-}
-.left{ display:flex; align-items:center; gap:14px; }
-.avatar{
-    width:48px; height:48px; border-radius:12px; background: var(--neon-dim);
-    display:flex; align-items:center; justify-content:center;
-    color: var(--neon); font-weight:900; font-size: 16px;
-}
+        .cat-name { font-size: 19px; font-weight: 800; } /* GIRMAN SUNAN CATEGORY */
+        .sub-count { font-size: 11px; opacity: 0.4; font-weight: 700; }
 
-/* 🟢 NAN NE GYARAN GIRMAN FONT DIN DA KAKE SO */
-.name { 
-    font-size: 19px; /* Na ƙara girman sunan sosai */
-    font-weight: 800; 
-    letter-spacing: -0.2px;
-}
-.email { 
-    font-size: 12px; /* Na ƙara girman email ɗin */
-    opacity: 0.6; 
-    margin-top: 1px;
-}
+        /* DOCK MENU */
+        .futuristic-dock {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 100px;
+            padding: 12px 25px; display: flex; gap: 20px; z-index: 10000;
+        }
+        .dock-item {
+            width: 50px; height: 50px; display: flex; align-items: center;
+            justify-content: center; border-radius: 50%; color: rgba(255,255,255,0.3);
+            transition: 0.4s; cursor: pointer;
+        }
+        .dock-item.active { background: white; color: black; transform: scale(1.2) translateY(-10px); }
 
-.actions { display: flex; gap: 8px; }
-.act-btn {
-    width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08); display: flex; align-items:center; justify-content:center;
-    color: #fff; cursor: pointer; font-size: 12px;
-}
-.act-btn:hover { background: var(--neon); color: #000; }
-
-.futuristic-dock {
-    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-    background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 100px;
-    padding: 12px 25px; display: flex; gap: 20px; z-index: 10000;
-    box-shadow: 0 25px 50px rgba(0,0,0,1);
-}
-.dock-item {
-    width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
-    border-radius: 50%; color: rgba(255,255,255,0.3); transition: 0.4s; cursor: pointer;
-}
-.dock-item:hover, .dock-item.active { background: white; color: black; transform: scale(1.25) translateY(-12px); }
-
-#trashToggle {
-    transition: 0.4s; padding: 10px; border-radius: 12px;
-    background: rgba(255, 68, 68, 0.05); border: 1px solid rgba(255, 68, 68, 0.1);
-}
-</style>
+        .custom-scroll::-webkit-scrollbar { width: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
+    </style>
 </head>
 <body>
 
-<div id="dragContainer">
-    <div id="draggableSearch" class="search-box-style">
-        <i class="fa-solid fa-magnifying-glass" id="searchIcon" onclick="window.toggleSearch(event)"></i>
-        <input type="text" id="searchInput" placeholder="Rubuta suna..." 
-               oninput="window.render(this.value)" 
-               onmousedown="event.stopPropagation()" 
-               ontouchstart="event.stopPropagation()">      
+    <header class="glass-header p-8 mb-10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-4">
+                <div class="h-10 w-10 bg-white rounded-2xl flex items-center justify-center rotate-12">
+                    <i class="fa-solid fa-diagram-project text-black text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="syne text-2xl font-black tracking-tighter uppercase">Protocol <span class="opacity-40">Archway</span></h1>
+                    <p class="text-[9px] font-bold tracking-[4px] uppercase opacity-40 text-white">System Segments Manager</p>
+                </div>
+            </div>
+            <nav class="flex gap-2 p-1.5 bg-white/5 rounded-2xl border border-white/5">
+                <button onclick="window.switchMode('vendor', this)" class="nav-link active">VENDORS</button>
+                <button onclick="window.switchMode('lab', this)" class="nav-link">LABS</button>
+                <button onclick="window.switchMode('expert', this)" class="nav-link">EXPERTS</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 px-6">
+        <section class="lg:col-span-5 panel-container p-10">
+            <div class="flex justify-between items-center mb-10">
+                <h2 class="text-xs font-black tracking-widest uppercase opacity-40">Master Segments</h2>
+                <button onclick="window.addNewSegment()" class="text-[10px] font-bold border border-white/20 px-5 py-2.5 rounded-xl hover:bg-white hover:text-black transition uppercase tracking-widest">Add Segment</button>
+            </div>
+            <div class="space-y-3 custom-scroll max-h-[550px] overflow-y-auto pr-3" id="masterList"></div>
+        </section>
+
+        <section class="lg:col-span-7 panel-container p-10">
+            <div class="mb-10">
+                <h2 class="text-xs font-black tracking-widest uppercase opacity-40 mb-3">Node Configuration</h2>
+                <div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+                    <p id="selectedCatName" class="text-xl font-bold italic text-white">Select a segment to begin...</p>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row gap-4 mb-10">
+                <input type="text" id="subInput" placeholder="Specify sub-protocol name..." class="standard-input">
+                <button onclick="window.executeAdd()" class="bg-white text-black px-10 py-4 rounded-xl font-black text-[11px] uppercase tracking-widest">Execute</button>
+            </div>
+            <div class="space-y-3 custom-scroll max-h-[400px] overflow-y-auto pr-3" id="subList"></div>
+        </section>
+    </main>
+
+    <div class="futuristic-dock">
+        <div class="dock-item" onclick="location.href='admin_dashboard.html'"><i class="fa-solid fa-microchip"></i></div>
+        <div class="dock-item" onclick="location.href='users-database.html'"><i class="fa-solid fa-fingerprint"></i></div>
+        <div class="dock-item active"><i class="fa-solid fa-diagram-project"></i></div>
+        <div class="dock-item" onclick="location.href='registry.html'"><i class="fa-solid fa-vault"></i></div>
     </div>
-</div>
-
-<div class="header">Identity Ledger</div>
-
-<div class="tabs-wrapper">
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('customer',this)">Customers</button>
-        <button class="tab-btn" onclick="switchTab('vendor',this)">Vendors</button>
-        <button class="tab-btn" onclick="switchTab('expert',this)">Experts</button>
-        <button class="tab-btn" onclick="switchTab('lab',this)">Labs</button>
-    </div>
-</div>
-
-<div class="container" id="registryBox"></div>
-
-<div class="futuristic-dock">
-    <div class="dock-item" onclick="location.href='admin_dashboard.html'"><i class="fa-solid fa-microchip"></i></div>
-    <div class="dock-item" onclick="location.href='users-database.html'"><i class="fa-solid fa-fingerprint"></i></div>
-    <div class="dock-item" onclick="location.href='categories.html'"><i class="fa-solid fa-diagram-project"></i></div>
-    <div class="dock-item"><i class="fa-solid fa-shield-halved"></i></div>
-    <div class="dock-item active" onclick="location.href='registry.html'"><i class="fa-solid fa-vault"></i></div>
-</div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, doc, onSnapshot, updateDoc, arrayUnion, arrayRemove, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
-    authDomain: "global-market-admin.firebaseapp.com",
-    projectId: "global-market-admin",
-    storageBucket: "global-market-admin.firebasestorage.app",
-    messagingSenderId: "259715265619",
-    appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-let currentSector = 'customer', allData = [], isTrashMode = false;
-
-document.querySelector('.header').innerHTML = `
-    Identity Ledger 
-    <i class="fa-solid fa-trash-can" id="trashToggle" 
-       style="margin-left:15px; font-size:14px; cursor:pointer; color:rgba(255,255,255,0.2);"></i>
-`;
-
-document.getElementById('trashToggle').onclick = function() {
-    isTrashMode = !isTrashMode;
-    this.style.color = isTrashMode ? "#ff4444" : "rgba(255,255,255,0.2)";
-    window.render(document.getElementById('searchInput').value);
-};
-
-window.toggleSearch = (e) => {
-    e.stopPropagation();
-    document.getElementById("draggableSearch").classList.toggle('expanded');
-    if(document.getElementById("draggableSearch").classList.contains('expanded')) {
-        setTimeout(() => document.getElementById('searchInput').focus(), 300);
-    }
-};
-
-document.addEventListener('click', (e) => {
-    const box = document.getElementById("draggableSearch");
-    if(box && !box.contains(e.target)) box.classList.remove('expanded');
-});
-
-const dragBox = document.getElementById("dragContainer");
-const searchIcon = document.getElementById("searchIcon");
-let offset = {x:0, y:0};
-const startDrag = (e) => {
-    const ev = e.type.includes('touch') ? e.touches[0] : e;
-    offset.x = ev.clientX - dragBox.offsetLeft;
-    offset.y = ev.clientY - dragBox.offsetTop;
-    const moveDrag = (m) => {
-        const mv = m.type.includes('touch') ? m.touches[0] : m;
-        dragBox.style.left = (mv.clientX - offset.x) + 'px';
-        dragBox.style.top = (mv.clientY - offset.y) + 'px';
-        dragBox.style.right = 'auto';
+    const firebaseConfig = {
+        apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
+        authDomain: "global-market-admin.firebaseapp.com",
+        projectId: "global-market-admin",
+        storageBucket: "global-market-admin.firebasestorage.app",
+        messagingSenderId: "259715265619",
+        appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
     };
-    const stopDrag = () => {
-        document.removeEventListener('mousemove', moveDrag); document.removeEventListener('mouseup', stopDrag);
-        document.removeEventListener('touchmove', moveDrag); document.removeEventListener('touchend', stopDrag);
-    };
-    document.addEventListener('mousemove', moveDrag); document.addEventListener('mouseup', stopDrag);
-    document.addEventListener('touchmove', moveDrag); document.addEventListener('touchend', stopDrag);
-};
-searchIcon.addEventListener('mousedown', startDrag);
-searchIcon.addEventListener('touchstart', startDrag);
 
-const sync = () => {
-    onSnapshot(collection(db, "users"), (snap) => {
-        allData = [];
-        snap.forEach(d => allData.push({id: d.id, ...d.data()}));
-        window.render(document.getElementById('searchInput').value);
-    });
-}
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    let currentMode = 'vendor', selectedCategory = null, allCategories = {};
 
-window.render = (filter = "") => {
-    const box = document.getElementById('registryBox');
-    box.innerHTML = "";
-    const term = filter.toLowerCase();
-
-    allData.forEach(u => {
-        const role = (u.role || '').toLowerCase();
-        const status = (u.status || '').toLowerCase();
-        const nameText = u.fullName || u.username || 'Unknown';
-
-        let isCorrectStatus = isTrashMode ? (status === 'trash') : (status !== 'trash');
-        let isCorrectTab = (currentSector === 'customer') ? 
-            (role === 'customer' || role === 'client' || role === 'member') : (role === currentSector);
-
-        if(isCorrectStatus && isCorrectTab && nameText.toLowerCase().includes(term)) {
-            box.innerHTML += `
-            <div class="card" style="${status === 'suspended' ? 'opacity: 0.4;' : ''}">
-                <div class="left">
-                    <div class="avatar" style="${status === 'trash' ? 'color:#ff4444;' : ''}">
-                        ${nameText.charAt(0).toUpperCase()}
-                    </div>
-                    <div class="u-info">
-                        <div class="name">${nameText}</div>
-                        <div class="email">${u.email || ''}</div>
-                    </div>
-                </div>
-                <div class="actions">
-                    ${isTrashMode ? 
-                        `<div class="act-btn" style="color:#00ff88;" onclick="window.restoreNode('${u.id}')"><i class="fa-solid fa-trash-arrow-up"></i></div>
-                         <div class="act-btn" style="color:#ff4444;" onclick="window.permaKill('${u.id}')"><i class="fa-solid fa-skull-crossbones"></i></div>` :
-                        `<div class="act-btn" onclick="window.updateStatus('${u.id}', '${status}')"><i class="fa-solid ${status === 'suspended' ? 'fa-play' : 'fa-pause'}"></i></div>
-                         <div class="act-btn" style="color:#ff4444;" onclick="window.softDelete('${u.id}')"><i class="fa-solid fa-trash-can"></i></div>`
-                    }
-                </div>
-            </div>`;
+    // 1. Daukowa tare da Real-time Sync
+    onSnapshot(doc(db, "app_settings", "categories"), (snap) => {
+        if (snap.exists()) {
+            allCategories = snap.data();
+            window.renderMasterList();
+        } else {
+            setDoc(doc(db, "app_settings", "categories"), { vendor: {}, lab: {}, expert: {} });
         }
     });
-}
 
-window.softDelete = async (id) => { if(confirm('Tura zuwa Trash?')) await updateDoc(doc(db, "users", id), { status: 'trash' }); };
-window.restoreNode = async (id) => { await updateDoc(doc(db, "users", id), { status: 'approved' }); };
-window.permaKill = async (id) => { if(confirm('Goge gaba daya?')) await deleteDoc(doc(db, "users", id)); };
-window.updateStatus = async (id, s) => { await updateDoc(doc(db, "users", id), { status: s === 'suspended' ? 'approved' : 'suspended' }); };
-window.switchTab = (sector, btn) => {
-    currentSector = sector; isTrashMode = false;
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    render();
-}
-sync();
+    window.renderMasterList = () => {
+        const list = document.getElementById('masterList');
+        list.innerHTML = "";
+        const categories = allCategories[currentMode] || {};
+
+        Object.keys(categories).sort().forEach(catName => {
+            const subCount = categories[catName].length;
+            const isSel = selectedCategory === catName;
+            list.innerHTML += `
+                <div class="data-row ${isSel ? 'selected' : ''}" onclick="window.selectCategory('${catName}')">
+                    <div>
+                        <h3 class="cat-name ${isSel ? 'text-white' : 'text-gray-400'}">${catName}</h3>
+                        <p class="sub-count uppercase">${subCount} Protocols</p>
+                    </div>
+                    <i class="fa-solid fa-trash-can opacity-20 hover:text-red-500 hover:opacity-100" onclick="event.stopPropagation(); window.deleteCategory('${catName}')"></i>
+                </div>`;
+        });
+        if (selectedCategory) window.renderSubList();
+    };
+
+    window.renderSubList = () => {
+        document.getElementById('selectedCatName').innerText = selectedCategory;
+        const list = document.getElementById('subList');
+        list.innerHTML = "";
+        const subs = allCategories[currentMode][selectedCategory] || [];
+        subs.forEach(sub => {
+            list.innerHTML += `
+                <div class="data-row">
+                    <span class="text-sm font-bold text-gray-300">${sub}</span>
+                    <i class="fa-solid fa-xmark text-gray-600 hover:text-red-500" onclick="window.deleteSubCategory('${sub}')"></i>
+                </div>`;
+        });
+    };
+
+    window.addNewSegment = async () => {
+        const name = prompt("New Segment Name:");
+        if (name && name.trim()) {
+            const docRef = doc(db, "app_settings", "categories");
+            const snap = await getDoc(docRef);
+            let data = snap.data();
+            if(!data[currentMode]) data[currentMode] = {};
+            data[currentMode][name.trim()] = []; 
+            await setDoc(docRef, data);
+        }
+    };
+
+    window.executeAdd = async () => {
+        const val = document.getElementById('subInput').value.trim();
+        if (val && selectedCategory) {
+            const fieldPath = `${currentMode}.${selectedCategory}`;
+            await updateDoc(doc(db, "app_settings", "categories"), { [fieldPath]: arrayUnion(val) });
+            document.getElementById('subInput').value = "";
+        } else { alert("Zaɓi Category tukunna!"); }
+    };
+
+    window.deleteCategory = async (catName) => {
+        if(confirm(`Delete ${catName}?`)) {
+            const docRef = doc(db, "app_settings", "categories");
+            const snap = await getDoc(docRef);
+            let data = snap.data();
+            delete data[currentMode][catName];
+            await setDoc(docRef, data);
+            selectedCategory = null;
+        }
+    };
+
+    window.deleteSubCategory = async (subName) => {
+        const fieldPath = `${currentMode}.${selectedCategory}`;
+        await updateDoc(doc(db, "app_settings", "categories"), { [fieldPath]: arrayRemove(subName) });
+    };
+
+    window.selectCategory = (n) => { selectedCategory = n; window.renderMasterList(); };
+    window.switchMode = (mode, btn) => {
+        currentMode = mode; selectedCategory = null;
+        document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        window.renderMasterList();
+        document.getElementById('selectedCatName').innerText = "Select a segment to begin...";
+        document.getElementById('subList').innerHTML = "";
+    };
 </script>
 </body>
-        </html>
-        
+</html>
