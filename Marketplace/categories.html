@@ -18,7 +18,6 @@
         }
         .syne { font-family: 'Syne', sans-serif; }
 
-        /* Premium Glass Header */
         .glass-header {
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(20px);
@@ -61,7 +60,6 @@
         .data-row:hover { background: rgba(255, 255, 255, 0.05); transform: translateX(5px); }
         .data-row.selected { border-left: 4px solid white; background: rgba(255, 255, 255, 0.07); }
 
-        /* Dock Menu Style */
         .futuristic-dock {
             position: fixed; bottom: 30px; left: 50%;
             transform: translateX(-50%);
@@ -84,7 +82,7 @@
         .dock-item:hover, .dock-item.active {
             background: white; color: black;
             transform: scale(1.25) translateY(-12px);
-                                  }
+        }
         
         .custom-scroll::-webkit-scrollbar { width: 3px; }
         .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
@@ -105,9 +103,9 @@
             </div>
 
             <nav class="flex gap-2 p-1.5 bg-white/5 rounded-2xl border border-white/5">
-                <button onclick="switchMode('vendor')" id="mode-vendor" class="nav-link active">VENDORS</button>
-                <button onclick="switchMode('lab')" id="mode-lab" class="nav-link">LABS</button>
-                <button onclick="switchMode('expert')" id="mode-expert" class="nav-link">EXPERTS</button>
+                <button onclick="window.switchMode('vendor')" id="mode-vendor" class="nav-link active">VENDORS</button>
+                <button onclick="window.switchMode('lab')" id="mode-lab" class="nav-link">LABS</button>
+                <button onclick="window.switchMode('expert')" id="mode-expert" class="nav-link">EXPERTS</button>
             </nav>
         </div>
     </header>
@@ -120,11 +118,10 @@
                     <h2 class="text-xs font-black tracking-widest uppercase opacity-40">Master Segments</h2>
                     <div class="h-1 w-8 bg-white mt-2"></div>
                 </div>
-                <button onclick="addNewSegment()" class="text-[10px] font-bold border border-white/20 px-5 py-2.5 rounded-xl hover:bg-white hover:text-black transition uppercase tracking-widest">Add Segment</button>
+                <button onclick="window.addNewSegment()" class="text-[10px] font-bold border border-white/20 px-5 py-2.5 rounded-xl hover:bg-white hover:text-black transition uppercase tracking-widest">Add Segment</button>
             </div>
             
-            <div class="space-y-3 custom-scroll max-h-[550px] overflow-y-auto pr-3" id="masterList">
-                </div>
+            <div class="space-y-3 custom-scroll max-h-[550px] overflow-y-auto pr-3" id="masterList"></div>
         </section>
 
         <section class="lg:col-span-7 panel-container p-10">
@@ -138,41 +135,24 @@
 
             <div class="flex flex-col md:flex-row gap-4 mb-10">
                 <input type="text" id="subInput" placeholder="Specify sub-protocol name..." class="standard-input font-medium">
-                <button onclick="executeAdd()" class="bg-white text-black px-10 py-4 rounded-xl font-black text-[11px] uppercase tracking-widest hover:scale-105 transition active:scale-95 shadow-xl shadow-white/5">Execute</button>
+                <button onclick="window.executeAdd()" class="bg-white text-black px-10 py-4 rounded-xl font-black text-[11px] uppercase tracking-widest hover:scale-105 transition active:scale-95 shadow-xl shadow-white/5">Execute</button>
             </div>
 
-            <div class="space-y-3 custom-scroll max-h-[400px] overflow-y-auto pr-3" id="subList">
-                </div>
+            <div class="space-y-3 custom-scroll max-h-[400px] overflow-y-auto pr-3" id="subList"></div>
         </section>
     </main>
 
-<div class="futuristic-dock">
-    <div class="dock-item" onclick="location.href='admin_dashboard.html'" title="Neural Core">
-        <i class="fa-solid fa-microchip"></i>
+    <div class="futuristic-dock">
+        <div class="dock-item" onclick="location.href='admin_dashboard.html'" title="Neural Core"><i class="fa-solid fa-microchip"></i></div>
+        <div class="dock-item" onclick="location.href='users-database.html'" title="Identity Matrix"><i class="fa-solid fa-fingerprint"></i></div>
+        <div class="dock-item" onclick="location.href='categories.html'" title="Protocol Arch"><i class="fa-solid fa-diagram-project"></i></div>
+        <div class="dock-item" title="Firewall OS"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="dock-item active" onclick="location.href='registry.html'" title="Ledger Node"><i class="fa-solid fa-vault"></i></div>
     </div>
-
-    <div class="dock-item" onclick="location.href='users-database.html'" title="Identity Matrix">
-        <i class="fa-solid fa-fingerprint"></i>
-    </div>
-
-    <div class="dock-item" onclick="location.href='categories.html'" title="Protocol Arch">
-        <i class="fa-solid fa-diagram-project"></i>
-    </div>
-
-    <div class="dock-item" title="Firewall OS">
-        <i class="fa-solid fa-shield-halved"></i>
-    </div>
-
-    <div class="dock-item active" onclick="location.href='registry.html'" title="Ledger Node">
-        <i class="fa-solid fa-vault"></i>
-    </div>
-  </div>
-<div class="container" id="registryBox">
-</div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, doc, setDoc, onSnapshot, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, onSnapshot, updateDoc, arrayUnion, arrayRemove, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
@@ -188,19 +168,19 @@
 
     let currentMode = 'vendor', selectedCategory = null, allCategories = {};
 
-    // Sync with Firestore
+    // --- REALTIME SYNC ---
     onSnapshot(doc(db, "app_settings", "categories"), (snap) => {
         if (snap.exists()) {
             allCategories = snap.data();
-            renderMasterList();
+            window.renderMasterList();
         } else {
-            // Initialize if empty
             setDoc(doc(db, "app_settings", "categories"), { vendor: {}, lab: {}, expert: {} });
         }
     });
 
     window.renderMasterList = () => {
         const list = document.getElementById('masterList');
+        if(!list) return;
         list.innerHTML = "";
         const categories = allCategories[currentMode] || {};
 
@@ -219,12 +199,14 @@
                     </button>
                 </div>`;
         });
-        if (selectedCategory) renderSubList();
+        if (selectedCategory) window.renderSubList();
     };
 
     window.renderSubList = () => {
-        document.getElementById('selectedCatName').innerText = selectedCategory;
+        const titleEl = document.getElementById('selectedCatName');
+        if(titleEl) titleEl.innerText = selectedCategory;
         const list = document.getElementById('subList');
+        if(!list) return;
         list.innerHTML = "";
         const subs = (allCategories[currentMode] && allCategories[currentMode][selectedCategory]) || [];
 
@@ -239,40 +221,78 @@
         });
     };
 
+    // --- FUNCTION GYARARRE (NO DISAPPEARING) ---
     window.addNewSegment = async () => {
         const name = prompt("New Segment Identity:");
-        if (name) {
-            await updateDoc(doc(db, "app_settings", "categories"), { [`${currentMode}.${name}`]: [] });
+        if (name && name.trim()) {
+            const cleanName = name.trim();
+            const docRef = doc(db, "app_settings", "categories");
+            
+            try {
+                // Muna amfani da Dot Notation don gyara matsalar bacewa
+                const updatePath = `${currentMode}.${cleanName}`;
+                await updateDoc(docRef, {
+                    [updatePath]: []
+                });
+            } catch (e) {
+                // Fallback idan babu document din
+                const snap = await getDoc(docRef);
+                let data = snap.exists() ? snap.data() : { vendor: {}, lab: {}, expert: {} };
+                if(!data[currentMode]) data[currentMode] = {};
+                data[currentMode][cleanName] = [];
+                await setDoc(docRef, data, { merge: true });
+            }
         }
     };
 
     window.executeAdd = async () => {
-        const val = document.getElementById('subInput').value;
+        const input = document.getElementById('subInput');
+        const val = input.value.trim();
         if (val && selectedCategory) {
-            await updateDoc(doc(db, "app_settings", "categories"), { [`${currentMode}.${selectedCategory}`]: arrayUnion(val) });
-            document.getElementById('subInput').value = "";
+            const docRef = doc(db, "app_settings", "categories");
+            const fieldPath = `${currentMode}.${selectedCategory}`;
+            try {
+                await updateDoc(docRef, { [fieldPath]: arrayUnion(val) });
+                input.value = ""; // Clear input after execute
+            } catch (e) {
+                alert("Execution Error: " + e.message);
+            }
+        } else if (!selectedCategory) {
+            alert("Select a Master Segment first!");
         }
     };
 
     window.deleteCategory = async (catName) => {
         if(confirm(`Terminate Segment: ${catName}?`)) {
-            const newData = { ...allCategories };
-            delete newData[currentMode][catName];
-            await setDoc(doc(db, "app_settings", "categories"), newData);
-            selectedCategory = null;
+            const docRef = doc(db, "app_settings", "categories");
+            const snap = await getDoc(docRef);
+            let data = snap.data();
+            delete data[currentMode][catName];
+            await setDoc(docRef, data);
+            if(selectedCategory === catName) selectedCategory = null;
         }
     };
 
     window.deleteSubCategory = async (subName) => {
-        await updateDoc(doc(db, "app_settings", "categories"), { [`${currentMode}.${selectedCategory}`]: arrayRemove(subName) });
+        const docRef = doc(db, "app_settings", "categories");
+        const fieldPath = `${currentMode}.${selectedCategory}`;
+        await updateDoc(docRef, { [fieldPath]: arrayRemove(subName) });
     };
 
-    window.selectCategory = (name) => { selectedCategory = name; renderMasterList(); };
+    window.selectCategory = (name) => { 
+        selectedCategory = name; 
+        window.renderMasterList(); 
+        window.renderSubList();
+    };
 
     window.switchMode = (mode) => {
-        currentMode = mode; selectedCategory = null;
-        ['vendor', 'lab', 'expert'].forEach(b => document.getElementById('mode-' + b).classList.toggle('active', b === mode));
-        renderMasterList();
+        currentMode = mode; 
+        selectedCategory = null;
+        ['vendor', 'lab', 'expert'].forEach(b => {
+            const btn = document.getElementById('mode-' + b);
+            if(btn) btn.classList.toggle('active', b === mode);
+        });
+        window.renderMasterList();
         document.getElementById('selectedCatName').innerText = "Select a segment to begin...";
         document.getElementById('subList').innerHTML = "";
     };
