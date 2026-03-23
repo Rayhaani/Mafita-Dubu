@@ -152,11 +152,11 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; }
 <div id="dragContainer">
     <div id="draggableSearch" class="search-box-style">
         <i class="fa-solid fa-magnifying-glass" id="searchIcon" onclick="toggleSearch(event)"></i>
-        
         <input type="text" id="searchInput" placeholder="Rubuta suna..." 
-               oninput="window.filterData(this.value)" 
-               onmousedown="event.stopPropagation()" 
-               ontouchstart="event.stopPropagation()">
+       oninput="window.render(this.value)" 
+       onmousedown="event.stopPropagation()" 
+       ontouchstart="event.stopPropagation()">
+        
     </div>
 </div>
 
@@ -335,18 +335,74 @@ window.updateStatus = async (id, s) => {
     await updateDoc(doc(db, "users", id), { status: s === 'suspended' ? 'approved' : 'suspended' }); 
 };
 
-window.filterData = (val) => render(val);
+// 1. Wannan shine zai gyara Search Bar dinka
+window.render = (filter = "") => {
+    const box = document.getElementById('registryBox');
+    box.innerHTML = "";
+    const searchText = filter.toLowerCase();
+    
+    allData.forEach(u => {
+        const role = (u.role || '').toLowerCase();
+        const status = (u.status || '').toLowerCase();
+        const name = (u.fullName || u.username || '').toLowerCase();
+
+        // Tace Status
+        let isCorrectStatus = isTrashMode ? (status === 'trash') : (status !== 'trash');
+
+        // Tace Rukunoni (Tabs)
+        let isCorrectTab = false;
+        if (currentSector === 'customer') {
+            if (role === 'customer' || role === 'client' || role === 'member') isCorrectTab = true;
+        } else {
+            if (role === currentSector) isCorrectTab = true;
+        }
+
+        // Tace Search (Wannan ne zai sa Search din yayi aiki)
+        if(isCorrectStatus && isCorrectTab && name.includes(searchText)) {
+            box.innerHTML += `
+            <div class="card" style="${status === 'suspended' ? 'opacity: 0.4;' : ''} ${status === 'trash' ? 'border: 1px solid #ff4444; background: rgba(255,0,0,0.05);' : ''}">
+                <div class="left">
+                    <div class="avatar" style="${status === 'trash' ? 'background:rgba(255,68,68,0.2); color:#ff4444;' : ''}">
+                        ${(u.fullName || 'U').charAt(0).toUpperCase()}
+                    </div>
+                    <div class="u-info">
+                        <div class="name">${u.fullName || u.username}</div>
+                        <div class="email">${u.email}</div>
+                    </div>
+                </div>
+                <div class="actions">
+                    ${isTrashMode ? 
+                        `<div class="act-btn" style="color:#00ff88;" onclick="window.restoreNode('${u.id}')"><i class="fa-solid fa-trash-arrow-up"></i></div>
+                         <div class="act-btn" style="color:#ff4444;" onclick="window.permaKill('${u.id}')"><i class="fa-solid fa-skull-crossbones"></i></div>` :
+                        `<div class="act-btn" onclick="window.updateStatus('${u.id}', '${status}')"><i class="fa-solid ${status === 'suspended' ? 'fa-play' : 'fa-pause'}"></i></div>
+                         <div class="act-btn" style="color:#ff4444;" onclick="window.softDelete('${u.id}')"><i class="fa-solid fa-trash-can"></i></div>`
+                    }
+                </div>
+            </div>`;
+        }
+    });
+
+    if (box.innerHTML === "") {
+        const msg = isTrashMode ? `Babu gogaggun ${currentSector}s.` : `Babu kowa a sashen ${currentSector}s...`;
+        box.innerHTML = `<div style="text-align:center; padding:50px; color:#444; font-size:12px;">${msg}</div>`;
+    }
+};
+
+// 2. Wannan function din zai kula da sauya Tabs
 window.switchTab = (sector, btn) => {
     currentSector = sector;
-    isTrashMode = false; // Rufe trash idan an sauya tab
+    isTrashMode = false; 
     document.getElementById('trashToggle').style.color = "rgba(255,255,255,0.2)";
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    render();
-}
+    // Sake loda bayanan ba tare da filter ba
+    render(); 
+};
 
+// Fara hada koden da Firebase
 sync();
 
+    
 </script>
 </body>
 </html>
