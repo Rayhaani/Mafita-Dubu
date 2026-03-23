@@ -9,83 +9,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Syne:wght@800&display=swap" rel="stylesheet">
     <style>
         :root { --bg-main: #050505; --panel-bg: #0a0a0a; --accent: #ffffff; }
-        
-        body { 
-            background-color: var(--bg-main); color: #ffffff; 
-            font-family: 'Quicksand', sans-serif;
-            background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
-            padding-bottom: 120px;
-        }
+        body { background-color: var(--bg-main); color: #ffffff; font-family: 'Quicksand', sans-serif; background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png"); padding-bottom: 120px; }
         .syne { font-family: 'Syne', sans-serif; }
-
-        .glass-header {
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            position: sticky; top: 0; z-index: 1000;
-        }
-
-        .panel-container {
-            background: var(--panel-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-
-        .standard-input {
-            background: #111111;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            color: white; padding: 14px 18px;
-            width: 100%; font-size: 14px;
-            transition: 0.3s;
-        }
+        .glass-header { background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); position: sticky; top: 0; z-index: 1000; }
+        .panel-container { background: var(--panel-bg); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .standard-input { background: #111111; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; color: white; padding: 14px 18px; width: 100%; font-size: 14px; transition: 0.3s; }
         .standard-input:focus { border-color: var(--accent); outline: none; background: #151515; }
-
-        .nav-link {
-            font-size: 10px; font-weight: 800; letter-spacing: 2px;
-            padding: 12px 28px; border-radius: 10px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            color: rgba(255,255,255,0.4); border: 1px solid transparent;
-        }
+        .nav-link { font-size: 10px; font-weight: 800; letter-spacing: 2px; padding: 12px 28px; border-radius: 10px; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); color: rgba(255,255,255,0.4); border: 1px solid transparent; }
         .nav-link.active { background: white; color: black; box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
-
-        .data-row {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 14px; padding: 16px 22px;
-            display: flex; justify-content: space-between; align-items: center;
-            transition: 0.3s; margin-bottom: 10px;
-        }
-        .data-row:hover { background: rgba(255, 255, 255, 0.05); transform: translateX(5px); }
+        .data-row { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 14px; padding: 16px 22px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; margin-bottom: 10px; }
         .data-row.selected { border-left: 4px solid white; background: rgba(255, 255, 255, 0.07); }
-
-        .futuristic-dock {
-            position: fixed; bottom: 30px; left: 50%;
-            transform: translateX(-50%);
-            background: rgba(15, 15, 15, 0.8);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 100px;
-            padding: 12px 25px;
-            display: flex; gap: 20px;
-            z-index: 10000;
-            box-shadow: 0 25px 50px rgba(0,0,0,1);
-        }
-        .dock-item {
-            width: 48px; height: 48px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 50%; color: rgba(255,255,255,0.3);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-        }
-        .dock-item:hover, .dock-item.active {
-            background: white; color: black;
-            transform: scale(1.25) translateY(-12px);
-        }
-        
-        .custom-scroll::-webkit-scrollbar { width: 3px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .futuristic-dock { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 100px; padding: 12px 25px; display: flex; gap: 20px; z-index: 10000; box-shadow: 0 25px 50px rgba(0,0,0,1); }
+        .dock-item { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: rgba(255,255,255,0.3); transition: 0.4s; cursor: pointer; }
+        .dock-item.active { background: white; color: black; transform: scale(1.2) translateY(-10px); }
     </style>
 </head>
 <body>
@@ -101,7 +37,6 @@
                     <p class="text-[9px] font-bold tracking-[4px] uppercase opacity-40 text-white">System Segments Manager</p>
                 </div>
             </div>
-
             <nav class="flex gap-2 p-1.5 bg-white/5 rounded-2xl border border-white/5">
                 <button onclick="window.switchMode('vendor')" id="mode-vendor" class="nav-link active">VENDORS</button>
                 <button onclick="window.switchMode('lab')" id="mode-lab" class="nav-link">LABS</button>
@@ -111,16 +46,11 @@
     </header>
 
     <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 px-6">
-        
         <section class="lg:col-span-5 panel-container p-10">
             <div class="flex justify-between items-center mb-10">
-                <div>
-                    <h2 class="text-xs font-black tracking-widest uppercase opacity-40">Master Segments</h2>
-                    <div class="h-1 w-8 bg-white mt-2"></div>
-                </div>
+                <div><h2 class="text-xs font-black tracking-widest uppercase opacity-40">Master Segments</h2></div>
                 <button onclick="window.addNewSegment()" class="text-[10px] font-bold border border-white/20 px-5 py-2.5 rounded-xl hover:bg-white hover:text-black transition uppercase tracking-widest">Add Segment</button>
             </div>
-            
             <div class="space-y-3 custom-scroll max-h-[550px] overflow-y-auto pr-3" id="masterList"></div>
         </section>
 
@@ -132,27 +62,24 @@
                     <p id="selectedCatName" class="text-xl font-bold italic text-white mt-1">Select a segment to begin...</p>
                 </div>
             </div>
-
             <div class="flex flex-col md:flex-row gap-4 mb-10">
                 <input type="text" id="subInput" placeholder="Specify sub-protocol name..." class="standard-input font-medium">
-                <button onclick="window.executeAdd()" class="bg-white text-black px-10 py-4 rounded-xl font-black text-[11px] uppercase tracking-widest hover:scale-105 transition active:scale-95 shadow-xl shadow-white/5">Execute</button>
+                <button onclick="window.executeAdd()" class="bg-white text-black px-10 py-4 rounded-xl font-black text-[11px] uppercase tracking-widest">Execute</button>
             </div>
-
             <div class="space-y-3 custom-scroll max-h-[400px] overflow-y-auto pr-3" id="subList"></div>
         </section>
     </main>
 
     <div class="futuristic-dock">
-        <div class="dock-item" onclick="location.href='admin_dashboard.html'" title="Neural Core"><i class="fa-solid fa-microchip"></i></div>
-        <div class="dock-item" onclick="location.href='users-database.html'" title="Identity Matrix"><i class="fa-solid fa-fingerprint"></i></div>
-        <div class="dock-item" onclick="location.href='categories.html'" title="Protocol Arch"><i class="fa-solid fa-diagram-project"></i></div>
-        <div class="dock-item" title="Firewall OS"><i class="fa-solid fa-shield-halved"></i></div>
-        <div class="dock-item active" onclick="location.href='registry.html'" title="Ledger Node"><i class="fa-solid fa-vault"></i></div>
+        <div class="dock-item" onclick="location.href='admin_dashboard.html'"><i class="fa-solid fa-microchip"></i></div>
+        <div class="dock-item" onclick="location.href='users-database.html'"><i class="fa-solid fa-fingerprint"></i></div>
+        <div class="dock-item" onclick="location.href='categories.html'"><i class="fa-solid fa-diagram-project"></i></div>
+        <div class="dock-item active" onclick="location.href='registry.html'"><i class="fa-solid fa-vault"></i></div>
     </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, doc, setDoc, onSnapshot, updateDoc, arrayUnion, arrayRemove, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, getDoc, onSnapshot, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
@@ -165,83 +92,54 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    let currentMode = 'vendor', selectedCategory = null, allCategories = { vendor: {}, lab: {}, expert: {} };
+    const docRef = doc(db, "app_settings", "categories");
 
-    let currentMode = 'vendor', selectedCategory = null, allCategories = {};
-
-    // --- REALTIME SYNC ---
-    onSnapshot(doc(db, "app_settings", "categories"), (snap) => {
+    onSnapshot(docRef, (snap) => {
         if (snap.exists()) {
             allCategories = snap.data();
             window.renderMasterList();
         } else {
-            setDoc(doc(db, "app_settings", "categories"), { vendor: {}, lab: {}, expert: {} });
+            setDoc(docRef, { vendor: {}, lab: {}, expert: {} });
         }
+    }, (err) => {
+        alert("Firebase Permission Error! Duba Rules dinka.");
     });
 
     window.renderMasterList = () => {
         const list = document.getElementById('masterList');
-        if(!list) return;
-        list.innerHTML = "";
+        if(!list) return; list.innerHTML = "";
         const categories = allCategories[currentMode] || {};
-
         Object.keys(categories).sort().forEach(catName => {
-            const subCount = categories[catName].length;
             const isSel = selectedCategory === catName;
-            
-            list.innerHTML += `
-                <div class="data-row ${isSel ? 'selected' : ''}" onclick="window.selectCategory('${catName}')">
-                    <div>
-                        <h3 class="text-sm font-extrabold tracking-wide ${isSel ? 'text-white' : 'text-gray-400'}">${catName}</h3>
-                        <p class="text-[9px] opacity-40 mt-1 uppercase font-bold italic">${subCount} Protocols linked</p>
-                    </div>
-                    <button onclick="event.stopPropagation(); window.deleteCategory('${catName}')" class="h-8 w-8 rounded-lg flex items-center justify-center hover:bg-red-500/20 hover:text-red-500 transition-all opacity-30 hover:opacity-100">
-                        <i class="fa-solid fa-trash-can text-[10px]"></i>
-                    </button>
-                </div>`;
+            list.innerHTML += `<div class="data-row ${isSel ? 'selected' : ''}" onclick="window.selectCategory('${catName}')">
+                <div><h3 class="text-sm font-extrabold ${isSel ? 'text-white' : 'text-gray-400'}">${catName}</h3></div>
+                <button onclick="event.stopPropagation(); window.deleteCategory('${catName}')" class="text-red-500 opacity-30 hover:opacity-100"><i class="fa-solid fa-trash-can"></i></button>
+            </div>`;
         });
         if (selectedCategory) window.renderSubList();
     };
 
     window.renderSubList = () => {
-        const titleEl = document.getElementById('selectedCatName');
-        if(titleEl) titleEl.innerText = selectedCategory;
+        document.getElementById('selectedCatName').innerText = selectedCategory;
         const list = document.getElementById('subList');
-        if(!list) return;
-        list.innerHTML = "";
-        const subs = (allCategories[currentMode] && allCategories[currentMode][selectedCategory]) || [];
-
+        if(!list) return; list.innerHTML = "";
+        const subs = allCategories[currentMode][selectedCategory] || [];
         subs.forEach(sub => {
-            list.innerHTML += `
-                <div class="data-row bg-white/[0.01]">
-                    <span class="text-sm font-semibold tracking-tight text-gray-300">${sub}</span>
-                    <button onclick="window.deleteSubCategory('${sub}')" class="text-gray-600 hover:text-red-500 transition">
-                        <i class="fa-solid fa-xmark text-xs"></i>
-                    </button>
-                </div>`;
+            list.innerHTML += `<div class="data-row"><span>${sub}</span>
+                <button onclick="window.deleteSubCategory('${sub}')" class="text-red-500"><i class="fa-solid fa-xmark"></i></button>
+            </div>`;
         });
     };
 
-    // --- FUNCTION GYARARRE (NO DISAPPEARING) ---
     window.addNewSegment = async () => {
         const name = prompt("New Segment Identity:");
         if (name && name.trim()) {
-            const cleanName = name.trim();
-            const docRef = doc(db, "app_settings", "categories");
-            
-            try {
-                // Muna amfani da Dot Notation don gyara matsalar bacewa
-                const updatePath = `${currentMode}.${cleanName}`;
-                await updateDoc(docRef, {
-                    [updatePath]: []
-                });
-            } catch (e) {
-                // Fallback idan babu document din
-                const snap = await getDoc(docRef);
-                let data = snap.exists() ? snap.data() : { vendor: {}, lab: {}, expert: {} };
-                if(!data[currentMode]) data[currentMode] = {};
-                data[currentMode][cleanName] = [];
-                await setDoc(docRef, data, { merge: true });
-            }
+            const snap = await getDoc(docRef);
+            let data = snap.exists() ? snap.data() : { vendor: {}, lab: {}, expert: {} };
+            if(!data[currentMode]) data[currentMode] = {};
+            data[currentMode][name.trim()] = [];
+            await setDoc(docRef, data);
         }
     };
 
@@ -249,54 +147,32 @@
         const input = document.getElementById('subInput');
         const val = input.value.trim();
         if (val && selectedCategory) {
-            const docRef = doc(db, "app_settings", "categories");
-            const fieldPath = `${currentMode}.${selectedCategory}`;
-            try {
-                await updateDoc(docRef, { [fieldPath]: arrayUnion(val) });
-                input.value = ""; // Clear input after execute
-            } catch (e) {
-                alert("Execution Error: " + e.message);
-            }
-        } else if (!selectedCategory) {
-            alert("Select a Master Segment first!");
+            await updateDoc(docRef, { [`${currentMode}.${selectedCategory}`]: arrayUnion(val) });
+            input.value = "";
         }
     };
 
     window.deleteCategory = async (catName) => {
-        if(confirm(`Terminate Segment: ${catName}?`)) {
-            const docRef = doc(db, "app_settings", "categories");
+        if(confirm(`Delete ${catName}?`)) {
             const snap = await getDoc(docRef);
             let data = snap.data();
             delete data[currentMode][catName];
             await setDoc(docRef, data);
-            if(selectedCategory === catName) selectedCategory = null;
+            selectedCategory = null;
         }
     };
 
     window.deleteSubCategory = async (subName) => {
-        const docRef = doc(db, "app_settings", "categories");
-        const fieldPath = `${currentMode}.${selectedCategory}`;
-        await updateDoc(docRef, { [fieldPath]: arrayRemove(subName) });
+        await updateDoc(docRef, { [`${currentMode}.${selectedCategory}`]: arrayRemove(subName) });
     };
 
-    window.selectCategory = (name) => { 
-        selectedCategory = name; 
-        window.renderMasterList(); 
-        window.renderSubList();
-    };
-
+    window.selectCategory = (name) => { selectedCategory = name; window.renderMasterList(); };
     window.switchMode = (mode) => {
-        currentMode = mode; 
-        selectedCategory = null;
-        ['vendor', 'lab', 'expert'].forEach(b => {
-            const btn = document.getElementById('mode-' + b);
-            if(btn) btn.classList.toggle('active', b === mode);
-        });
+        currentMode = mode; selectedCategory = null;
+        ['vendor', 'lab', 'expert'].forEach(m => document.getElementById('mode-'+m).classList.toggle('active', m===mode));
         window.renderMasterList();
-        document.getElementById('selectedCatName').innerText = "Select a segment to begin...";
         document.getElementById('subList').innerHTML = "";
     };
 </script>
 </body>
-    </html>
-    
+</html>
