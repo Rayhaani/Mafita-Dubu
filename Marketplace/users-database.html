@@ -15,7 +15,7 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; }
 
 /* 🚀 HEADER */
 .header{
-    text-align:center; padding:20px; font-weight:900; font-size: 16px;
+    text-align:center; padding:20px; font-weight:900; font-size: 18px; /* Na ƙara girma */
     letter-spacing:3px; text-transform: uppercase;
     background: rgba(255,255,255,0.01); backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -25,8 +25,8 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; }
 .tabs-wrapper { width: 100%; display: flex; justify-content: center; padding: 15px 5px; }
 .tabs { display: flex; width: 100%; max-width: 500px; justify-content: space-between; gap: 4px; }
 .tab-btn {
-    flex: 1; padding: 10px 2px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);
-    background: rgba(255,255,255,0.03); color:#666; font-size: 10px;
+    flex: 1; padding: 12px 2px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.03); color:#666; font-size: 11px; /* Na ƙara girma */
     font-weight: 800; cursor:pointer; transition: 0.3s; text-transform: uppercase;
     text-align: center; white-space: nowrap;
 }
@@ -37,61 +37,72 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; }
     position: fixed; top: 120px; right: 20px; z-index: 10000;
     display: flex; align-items: center; touch-action: none;
 }
-    
 .search-box-style {
-    width: 50px; height: 50px; background: var(--neon);
+    width: 55px; height: 55px; background: var(--neon);
     backdrop-filter: blur(20px); border: 1px solid var(--neon);
     border-radius: 50%; padding: 10px; display: flex; align-items: center;
     box-shadow: 0 0 20px var(--neon-dim);
     transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s, border-radius 0.4s;
     overflow: hidden;
 }
-.search-box-style.expanded { width: 260px; border-radius: 30px; background: rgba(15, 15, 15, 0.9); }
-
-#searchIcon { color: #000; font-size: 20px; cursor: move; min-width: 30px; display: flex; justify-content: center; }
-.search-box-style.expanded #searchIcon { color: var(--neon); }
-
+.search-box-style.expanded { width: 280px; border-radius: 30px; background: rgba(15, 15, 15, 0.95); }
+#searchIcon { color: #000; font-size: 22px; cursor: move; min-width: 35px; display: flex; justify-content: center; }
 #searchInput {
     background: transparent; border: none; outline: none; color: #fff;
-    width: 0; font-weight: 700; transition: 0.3s; opacity: 0; cursor: text;
+    width: 0; font-weight: 700; transition: 0.3s; opacity: 0; font-family: 'Quicksand', sans-serif;
+    font-size: 16px; /* Girman rubutun search */
 }
 .search-box-style.expanded #searchInput { width: 100%; opacity: 1; padding-left: 10px; }
 
 /* 📦 CONTAINER & CARDS */
 .container{ padding:10px; max-width: 600px; margin: 0 auto; }
 .card{
-    padding: 15px; border-radius:20px; background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.04); display:flex; justify-content:space-between; 
-    align-items:center; margin-bottom: 10px; transition: 0.3s;
+    padding: 18px; border-radius:22px; background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.04);
+    display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;
 }
-.left{ display:flex; align-items:center; gap:10px; }
+.left{ display:flex; align-items:center; gap:14px; }
 .avatar{
-    width:40px; height:40px; border-radius:10px; background: var(--neon-dim);
+    width:48px; height:48px; border-radius:12px; background: var(--neon-dim);
     display:flex; align-items:center; justify-content:center;
-    color: var(--neon); font-weight:900; font-size: 14px;
+    color: var(--neon); font-weight:900; font-size: 16px;
 }
-.actions { display: flex; gap: 6px; }
+
+/* 🟢 NAN NE GYARAN GIRMAN FONT DIN DA KAKE SO */
+.name { 
+    font-size: 19px; /* Na ƙara girman sunan sosai */
+    font-weight: 800; 
+    letter-spacing: -0.2px;
+}
+.email { 
+    font-size: 12px; /* Na ƙara girman email ɗin */
+    opacity: 0.6; 
+    margin-top: 1px;
+}
+
+.actions { display: flex; gap: 8px; }
 .act-btn {
-    width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.03);
+    width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.08); display: flex; align-items:center; justify-content:center;
-    color: #fff; cursor: pointer; font-size: 10px;
+    color: #fff; cursor: pointer; font-size: 12px;
 }
 .act-btn:hover { background: var(--neon); color: #000; }
 
 .futuristic-dock {
     position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-    background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(25px);
+    background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(25px);
     border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 100px;
     padding: 12px 25px; display: flex; gap: 20px; z-index: 10000;
+    box-shadow: 0 25px 50px rgba(0,0,0,1);
 }
 .dock-item {
-    width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+    width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
     border-radius: 50%; color: rgba(255,255,255,0.3); transition: 0.4s; cursor: pointer;
 }
-.dock-item:hover, .dock-item.active { background: white; color: black; transform: scale(1.2) translateY(-10px); }
+.dock-item:hover, .dock-item.active { background: white; color: black; transform: scale(1.25) translateY(-12px); }
 
 #trashToggle {
-    transition: 0.4s; padding: 8px; border-radius: 10px;
+    transition: 0.4s; padding: 10px; border-radius: 12px;
     background: rgba(255, 68, 68, 0.05); border: 1px solid rgba(255, 68, 68, 0.1);
 }
 </style>
@@ -103,13 +114,12 @@ body{ background: var(--bg); color:#fff; overflow-x:hidden; min-height: 100vh; }
         <i class="fa-solid fa-magnifying-glass" id="searchIcon" onclick="window.toggleSearch(event)"></i>
         <input type="text" id="searchInput" placeholder="Rubuta suna..." 
                oninput="window.render(this.value)" 
-               onclick="event.stopPropagation()"
                onmousedown="event.stopPropagation()" 
                ontouchstart="event.stopPropagation()">      
     </div>
 </div>
 
-<div class="header" id="mainHeader">Identity Ledger</div>
+<div class="header">Identity Ledger</div>
 
 <div class="tabs-wrapper">
     <div class="tabs">
@@ -147,8 +157,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 let currentSector = 'customer', allData = [], isTrashMode = false;
 
-// Header Trash Icon
-document.getElementById('mainHeader').innerHTML = `
+document.querySelector('.header').innerHTML = `
     Identity Ledger 
     <i class="fa-solid fa-trash-can" id="trashToggle" 
        style="margin-left:15px; font-size:14px; cursor:pointer; color:rgba(255,255,255,0.2);"></i>
@@ -160,24 +169,22 @@ document.getElementById('trashToggle').onclick = function() {
     window.render(document.getElementById('searchInput').value);
 };
 
-// 🕵️ SEARCH TOGGLE & DRAG ENGINE
-const dragBox = document.getElementById("dragContainer");
-const searchBox = document.getElementById("draggableSearch");
-const searchIcon = document.getElementById("searchIcon");
-
 window.toggleSearch = (e) => {
     e.stopPropagation();
-    searchBox.classList.toggle('expanded');
-    if(searchBox.classList.contains('expanded')) {
+    document.getElementById("draggableSearch").classList.toggle('expanded');
+    if(document.getElementById("draggableSearch").classList.contains('expanded')) {
         setTimeout(() => document.getElementById('searchInput').focus(), 300);
     }
 };
 
 document.addEventListener('click', (e) => {
-    if(!searchBox.contains(e.target)) searchBox.classList.remove('expanded');
+    const box = document.getElementById("draggableSearch");
+    if(box && !box.contains(e.target)) box.classList.remove('expanded');
 });
 
-let offset = {x:0, y:0}, isDragging = false;
+const dragBox = document.getElementById("dragContainer");
+const searchIcon = document.getElementById("searchIcon");
+let offset = {x:0, y:0};
 const startDrag = (e) => {
     const ev = e.type.includes('touch') ? e.touches[0] : e;
     offset.x = ev.clientX - dragBox.offsetLeft;
@@ -198,7 +205,6 @@ const startDrag = (e) => {
 searchIcon.addEventListener('mousedown', startDrag);
 searchIcon.addEventListener('touchstart', startDrag);
 
-// --- CORE LOGIC ---
 const sync = () => {
     onSnapshot(collection(db, "users"), (snap) => {
         allData = [];
@@ -214,21 +220,23 @@ window.render = (filter = "") => {
 
     allData.forEach(u => {
         const role = (u.role || '').toLowerCase();
-        const status = (u.status || 'pending').toLowerCase();
-        const name = (u.fullName || u.username || '').toLowerCase();
+        const status = (u.status || '').toLowerCase();
+        const nameText = u.fullName || u.username || 'Unknown';
 
         let isCorrectStatus = isTrashMode ? (status === 'trash') : (status !== 'trash');
         let isCorrectTab = (currentSector === 'customer') ? 
             (role === 'customer' || role === 'client' || role === 'member') : (role === currentSector);
 
-        if(isCorrectStatus && isCorrectTab && name.includes(term)) {
+        if(isCorrectStatus && isCorrectTab && nameText.toLowerCase().includes(term)) {
             box.innerHTML += `
             <div class="card" style="${status === 'suspended' ? 'opacity: 0.4;' : ''}">
                 <div class="left">
-                    <div class="avatar" style="${status === 'trash' ? 'color:#ff4444;' : ''}">${(u.fullName || 'U').charAt(0).toUpperCase()}</div>
+                    <div class="avatar" style="${status === 'trash' ? 'color:#ff4444;' : ''}">
+                        ${nameText.charAt(0).toUpperCase()}
+                    </div>
                     <div class="u-info">
-                        <div class="name">${u.fullName || u.username}</div>
-                        <div class="email" style="font-size:9px; opacity:0.5;">${u.email}</div>
+                        <div class="name">${nameText}</div>
+                        <div class="email">${u.email || ''}</div>
                     </div>
                 </div>
                 <div class="actions">
@@ -244,19 +252,18 @@ window.render = (filter = "") => {
     });
 }
 
-window.softDelete = async (id) => { if(confirm('A tura zuwa Trash?')) await updateDoc(doc(db, "users", id), { status: 'trash' }); };
+window.softDelete = async (id) => { if(confirm('Tura zuwa Trash?')) await updateDoc(doc(db, "users", id), { status: 'trash' }); };
 window.restoreNode = async (id) => { await updateDoc(doc(db, "users", id), { status: 'approved' }); };
-window.permaKill = async (id) => { if(confirm('GOGE GABA DAYA?')) await deleteDoc(doc(db, "users", id)); };
+window.permaKill = async (id) => { if(confirm('Goge gaba daya?')) await deleteDoc(doc(db, "users", id)); };
 window.updateStatus = async (id, s) => { await updateDoc(doc(db, "users", id), { status: s === 'suspended' ? 'approved' : 'suspended' }); };
 window.switchTab = (sector, btn) => {
     currentSector = sector; isTrashMode = false;
-    document.getElementById('searchInput').value = "";
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     render();
 }
-
 sync();
 </script>
 </body>
-</html>
+        </html>
+        
