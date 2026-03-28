@@ -3,116 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu | Master Portal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Satisfy&display=swap" rel="stylesheet">
+    <title>Mafita Dubu - Universal Dashboard</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #05070a; color: white; overflow-x: hidden; }
-        .glass-portal { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 35px; transition: all 0.4s ease; }
-        .glass-portal:hover { border-color: #d4af37; transform: translateY(-10px); background: rgba(212, 175, 55, 0.05); }
-        .neon-glow { text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
-        .portal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; }
+        :root {
+            --milk: #FFFDD0;
+            --deep-gold: #b58900;
+        }
         
-        /* Animation na musamman don portals */
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-in { animation: slideUp 0.6s ease-out forwards; }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--milk);
+            color: #2d3436;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        /* DYNAMIC GLOW LOGIC */
+        .glass-card:hover {
+            transform: scale(1.05) translateY(-5px);
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--glow-color);
+            box-shadow: 0 20px 40px var(--glow-shadow);
+        }
+
+        /* Assigning colors per card type */
+        .card-kasuwa { --glow-color: #fbbf24; --glow-shadow: rgba(251, 191, 36, 0.2); }
+        .card-used { --glow-color: #22c55e; --glow-shadow: rgba(34, 197, 94, 0.2); }
+        .card-lafiya { --glow-color: #ef4444; --glow-shadow: rgba(239, 68, 68, 0.2); }
+        .card-sanaa { --glow-color: #2563eb; --glow-shadow: rgba(37, 99, 235, 0.2); }
+        .card-aure { --glow-color: #ec4899; --glow-shadow: rgba(236, 72, 153, 0.2); }
+        .card-hub { --glow-color: #d4af37; --glow-shadow: rgba(212, 175, 55, 0.4); }
+        .card-experts { --glow-color: #9333ea; --glow-shadow: rgba(147, 51, 234, 0.2); }
+        .card-girki { --glow-color: #ea580c; --glow-shadow: rgba(234, 88, 12, 0.2); }
+
+        .icon-gradient {
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--milk); }
+        ::-webkit-scrollbar-thumb { background: #d1d1d1; border-radius: 10px; }
+
+        .active-role {
+            background: #2d3436 !important;
+            color: white !important;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
-<body class="p-6">
+<body class="pb-10">
 
-    <header class="flex justify-between items-center mb-10">
+
+<header class="p-6 sticky top-0 z-50 backdrop-blur-md" style="background: #111; background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); border-bottom: 2px solid rgba(212, 175, 55, 0.4); border-radius: 0 0 2.5rem 2.5rem;">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
         <div>
-            <p class="text-[10px] uppercase tracking-[0.5em] text-gray-500 mb-1">Elite Ecosystem Access</p>
-            <h1 class="text-3xl font-extrabold">Welcome, <span id="userName" class="text-[#d4af37] font-['Satisfy'] text-4xl neon-glow">Member</span></h1>
+            <h1 id="greeting" class="text-xl font-[700] text-white tracking-tight">Barka da Zuwa, Sadiq</h1>
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                <p id="role-text" class="text-[10px] uppercase font-[700] tracking-[0.2em] text-[#d4af37]">Member Portal</p>
+            </div>
         </div>
-        <div class="relative group">
-            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#d4af37] to-[#fcf6ba] p-[2px] cursor-pointer">
-                <div class="w-full h-full bg-[#05070a] rounded-2xl flex items-center justify-center">
-                    <i class="fa-solid fa-user-gear text-[#d4af37]"></i>
+        </div>
+    </div>
+</header>
+
+
+
+
+    <header class="p-6 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 id="greeting" class="text-xl font-[700] text-gray-800 tracking-tight">Barka da Zuwa, Sadiq</h1>
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    <p id="role-text" class="text-[10px] uppercase font-[700] tracking-[0.2em] text-gray-500">Member Portal</p>
                 </div>
+            </div>
+
+            <div class="flex bg-white/40 p-1 rounded-full border border-white shadow-inner">
+                <button onclick="switchRole('Member')" id="btnMember" class="role-btn px-4 py-2 rounded-full text-[10px] font-[700] uppercase transition-all active-role">Member</button>
+                <button onclick="switchRole('Vendor')" id="btnVendor" class="role-btn px-4 py-2 rounded-full text-[10px] font-[700] uppercase transition-all">Vendor</button>
+                <button onclick="switchRole('Admin')" id="btnAdmin" class="role-btn px-4 py-2 rounded-full text-[10px] font-[700] uppercase transition-all">Admin</button>
             </div>
         </div>
     </header>
 
-    <div class="mb-10 p-4 bg-blue-600/10 border border-blue-500/20 rounded-2xl flex items-center gap-4 animate-in">
-        <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center animate-pulse">
-            <i class="fa-solid fa-bell text-white text-xs"></i>
-        </div>
-        <div class="text-xs">
-            <p class="font-bold text-blue-400">Sabon Labari:</p>
-            <p class="text-gray-400">An bude sashin koyon girki na zamani yanzu. Duba shi!</p>
-        </div>
-    </div>
-
-    <div class="portal-grid">
+    <main class="max-w-7xl mx-auto px-6 mt-4">
         
-        <a href="skill-hub.html" class="glass-portal p-6 text-center group">
-            <div class="text-3xl mb-4 group-hover:scale-125 transition">🛠️</div>
-            <h3 class="text-sm font-bold uppercase tracking-widest">Koyon Sana'a</h3>
-            <p class="text-[10px] text-gray-500 mt-2">Skill Acquisition Hub</p>
-        </a>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            
+            <div class="glass-card card-kasuwa rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
+                <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
+                    <i class="fa-solid fa-shop text-xl text-yellow-700"></i>
+                </div>
+                <h3 class="font-[700] text-xs uppercase tracking-wide">Kasuwa</h3>
+                <p class="text-[9px] text-gray-400 mt-1">Sabbin Kaya</p>
+            </div>
 
-        <a href="solutions.html" class="glass-portal p-6 text-center group">
-            <div class="text-3xl mb-4 group-hover:scale-125 transition">💡</div>
-            <h3 class="text-sm font-bold uppercase tracking-widest">Neman Mafita</h3>
-            <p class="text-[10px] text-gray-500 mt-2">Life Solutions Portal</p>
-        </a>
+            <div class="glass-card card-used rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
+                <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
+                    <i class="fa-solid fa-tag text-xl text-green-700"></i>
+                </div>
+                <h3 class="font-[700] text-xs uppercase tracking-wide">Used Items</h3>
+                <p class="text-[9px] text-gray-400 mt-1">Hannu na Biyu</p>
+            </div>
 
-        <a href="experts.html" class="glass-portal p-6 text-center group">
-            <div class="text-3xl mb-4 group-hover:scale-125 transition">🛡️</div>
-            <h3 class="text-sm font-bold uppercase tracking-widest">Kwararru</h3>
-            <p class="text-[10px] text-gray-500 mt-2">Verified Professional AI</p>
-        </a>
+            <div class="glass-card card-lafiya rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
+                <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
+                    <i class="fa-solid fa-stethoscope text-xl text-red-500"></i>
+                </div>
+                <h3 class="font-[700] text-xs uppercase tracking-wide">Lafiya</h3>
+                <p class="text-[9px] text-gray-400 mt-1">Duba Lafiya</p>
+            </div>
 
-        <a href="health.html" class="glass-portal p-6 text-center group">
-            <div class="text-3xl mb-4 group-hover:scale-125 transition">🩺</div>
-            <h3 class="text-sm font-bold uppercase tracking-widest">Kiwon Lafiya</h3>
-            <p class="text-[10px] text-gray-500 mt-2">Health & Wellness Hub</p>
-        </a>
+            <div class="glass-card card-sanaa rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
+                <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
+                    <i class="fa-solid fa-hammer text-xl text-blue-600"></i>
+                </div>
+                <h3 class="font-[700] text-xs uppercase tracking-wide">Sana'a</h3>
+                <p class="text-[9px] text-gray-400 mt-1">Koyi Sana'a</p>
+            </div>
 
-        <a href="market.html" class="glass-portal p-6 text-center group">
-            <div class="text-3xl mb-4 group-hover:scale-125 transition">🛒</div>
-            <h3 class="text-sm font-bold uppercase tracking-widest">Yan Kasuwa</h3>
-            <p class="text-[10px] text-gray-500 mt-2">Elite Marketplace</p>
-        </a>
+            <div class="glass-card card-aure rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
+                <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
+                    <i class="fa-solid fa-heart text-xl text-pink-500"></i>
+                </div>
+                <h3 class="font-[700] text-xs uppercase tracking-wide">Aure</h3>
+                <p class="text-[9px] text-gray-400 mt-1">Zaman Lafiya</p>
+            </div>
 
-        <a href="marriage.html" class="glass-portal p-6 text-center group">
-            <div class="text-3xl mb-4 group-hover:scale-125 transition">❤️</div>
-            <h3 class="text-sm font-bold uppercase tracking-widest">Hadin Aure</h3>
-            <p class="text-[10px] text-gray-500 mt-2">Family & Marriage Hub</p>
-        </a>
+            <div class="glass-card card-hub rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center border-2 border-yellow-200/50 bg-white/60">
+                <div class="bg-yellow-100 w-14 h-14 rounded-full flex items-center justify-center mb-3 shadow-inner">
+                    <i class="fa-solid fa-star text-xl text-yellow-600"></i>
+                </div>
+                <h3 class="font-[800] text-xs uppercase tracking-widest text-yellow-800">Mafita Hub</h3>
+                <p class="text-[9px] text-yellow-600/70 font-bold mt-1 uppercase">Specialized</p>
+            </div>
 
-    </div>
+            <div class="glass-card card-experts rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
+                <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
+                    <i class="fa-solid fa-user-gear text-xl text-purple-600"></i>
+                </div>
+                <h3 class="font-[700] text-xs uppercase tracking-wide">Experts</h3>
+                <p class="text-[9px] text-gray-400 mt-1">Kwararru</p>
+            </div>
 
-    <footer class="mt-20 border-t border-gray-800 pt-6 text-center">
-        <button onclick="logout()" class="text-gray-600 hover:text-red-500 transition text-xs font-bold tracking-widest">
-            <i class="fa-solid fa-power-off mr-2"></i> EXIT MASTER PORTAL
-        </button>
-    </footer>
+            <div class="glass-card card-girki rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
+                <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
+                    <i class="fa-solid fa-bowl-food text-xl text-orange-600"></i>
+                </div>
+                <h3 class="font-[700] text-xs uppercase tracking-wide">Girki</h3>
+                <p class="text-[9px] text-gray-400 mt-1">Abinci</p>
+            </div>
+
+            <div class="col-span-2 md:col-span-2 glass-card rounded-[3rem] p-8 flex items-center justify-between relative overflow-hidden">
+                <div class="z-10">
+                    <h2 class="text-xl font-[800] tracking-tighter">TELECOM</h2>
+                    <p class="text-[10px] text-gray-500 font-[600] uppercase tracking-widest mb-4">Data & Airtime</p>
+                    <button class="bg-black text-white px-6 py-2 rounded-full text-[10px] font-[700] hover:scale-110 transition-transform">SAYA YANZU</button>
+                </div>
+                <div class="absolute -right-4 bottom-0 opacity-10 text-8xl">
+                    <i class="fa-solid fa-wifi rotate-12"></i>
+                </div>
+                <div class="w-24 h-24 bg-yellow-200/30 blur-3xl absolute top-0 right-0 rounded-full"></div>
+            </div>
+
+            <div class="col-span-2 glass-card rounded-[3rem] p-8 flex items-center gap-6">
+                <div class="flex-1">
+                    <h3 class="text-sm font-[700]">Sanarwa</h3>
+                    <p class="text-[11px] text-gray-500 leading-relaxed">Sannu Sadiq, akwai sabbin kayayyaki a kasuwa yanzu.</p>
+                </div>
+                <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
+                    <i class="fa-solid fa-bell text-yellow-600"></i>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md glass-card rounded-full p-2 flex justify-around items-center z-50">
+        <a href="#" class="w-12 h-12 rounded-full flex items-center justify-center text-gray-800 bg-white/60 shadow-sm"><i class="fa-solid fa-house"></i></a>
+        <a href="#" class="w-12 h-12 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-800"><i class="fa-solid fa-magnifying-glass"></i></a>
+        <a href="#" class="w-12 h-12 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-800"><i class="fa-solid fa-wallet"></i></a>
+        <a href="#" class="w-12 h-12 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-800"><i class="fa-solid fa-user"></i></a>
+    </nav>
 
     <script>
-        
-        // Gatekeeper: Idan ba a yi login ba, ba za a iya zama a wannan shafin ba
-if (!localStorage.getItem('currentUserName')) {
-    alert("Kayi hakuri! Wannan shafin na mambobi ne kawai. Da fatan zaka yi rajista ko shiga (Login).");
-    window.location.href = 'index.html'; // Zai mayar da shi homepage
-}
-        
-        // Dauko sunan mamba
-        window.onload = function() {
-            const name = localStorage.getItem('currentUserName') || "Elite Member";
-            document.getElementById('userName').innerText = name;
-        }
+        function switchRole(role) {
+            document.getElementById('role-text').innerText = role + " Portal";
+            const buttons = document.querySelectorAll('.role-btn');
+            buttons.forEach(btn => btn.classList.remove('active-role'));
+            
+            if(role === 'Member') document.getElementById('btnMember').classList.add('active-role');
+            if(role === 'Vendor') document.getElementById('btnVendor').classList.add('active-role');
+            if(role === 'Admin') document.getElementById('btnAdmin').classList.add('active-role');
 
-        function logout() {
-            if(confirm("Kana son fita daga Master Portal?")) {
-                localStorage.removeItem('currentUserName');
-                window.location.href = 'index.html';
-            }
+            document.body.style.opacity = '0.5';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+                if(role === 'Admin') {
+                    alert("Yanzu kana yanayin Admin (Control Mode)");
+                }
+            }, 300);
         }
     </script>
-
 </body>
-</html>
+                    </html>
+                        
