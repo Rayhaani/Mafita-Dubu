@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu - Universal Dashboard</title>
+    <title>Mafita Dubu - Member Dashboard</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Quicksand:wght@300;400;500;600;700;800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -14,76 +14,115 @@
             --milk: #FFFDD0;
             --deep-gold: #b58900;
             --gold-glow: #D4AF37;
+            --sand-color: #C2B280;
+            --void-bg: #050505;
+            --milk-bg: #E8E1D5; /* Daga sabon code dinka */
+            --dark-chocolate: #1A0F0D;
+            --neon-gold: #D4AF37;
+            --universal-gap: 8px;
         }
 
-        /* --- WORLD-CLASS SPLASH SCREEN --- */
+        /* --- MAGNETIC SAND SPLASH --- */
         #welcome-screen {
             position: fixed;
             inset: 0;
-            background: #000;
-            background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            background: var(--void-bg);
+            z-index: 10000;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 10000;
-            transition: all 1.2s cubic-bezier(0.9, 0, 0.1, 1);
+            overflow: hidden;
+            transition: all 1.5s cubic-bezier(0.6, -0.28, 0.735, 0.045);
         }
 
-        .welcome-text {
-            color: white;
-            font-size: 2.5rem; /* Babban font size */
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.25em;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(30px) scale(0.9);
-            filter: blur(10px);
-            animation: premiumEntry 1.5s cubic-bezier(0.2, 1, 0.3, 1) forwards;
-        }
-
-        .welcome-text span {
-            color: var(--gold-glow);
-            display: block;
-            font-size: 1rem;
+        .sand-text {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(3rem, 15vw, 6.5rem);
+            font-weight: 700;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(194, 178, 128, 0.5);
+            position: relative;
             letter-spacing: 0.5em;
-            margin-top: 10px;
-            font-weight: 400;
+            text-transform: uppercase;
+            animation: assemble 4s cubic-bezier(0.19, 1, 0.22, 1) forwards;
         }
 
-        @keyframes premiumEntry {
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-                filter: blur(0);
-            }
+        .sand-text::after {
+            content: 'SADIQ';
+            position: absolute;
+            left: 0; top: 0; width: 100%; height: 100%;
+            color: var(--sand-color);
+            text-shadow: 0 0 20px var(--sand-color);
+            mask-image: linear-gradient(to right, transparent, black, transparent);
+            mask-size: 200% 100%;
+            animation: sandWave 3s linear infinite;
         }
 
-        /* Reaction lokacin daukewa */
+        @keyframes assemble {
+            0% { letter-spacing: 2em; opacity: 0; filter: blur(20px); transform: scale(1.5); }
+            100% { letter-spacing: 0.2em; opacity: 1; filter: blur(0px); transform: scale(1); }
+        }
+
+        @keyframes sandWave {
+            0% { mask-position: 200% 0%; }
+            100% { mask-position: -200% 0%; }
+        }
+
+        .sand-line {
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--sand-color), transparent);
+            width: 100%; margin-top: 10px;
+        }
+
         .screen-exit {
-            transform: scale(1.5) !important;
-            filter: brightness(3) blur(20px) !important;
-            opacity: 0 !important;
+            filter: opacity(0) saturate(0) blur(40px);
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+
+        /* --- TICKER --- */
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background: rgba(212, 175, 55, 0.1);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 8px 0;
+        }
+
+        .ticker-move {
+            display: inline-block;
+            white-space: nowrap;
+            padding-right: 100%;
+            animation: ticker 25s linear infinite;
+            font-size: 11px;
+            font-weight: 700;
+            color: #b58900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--milk);
+            margin: 0;
+            overflow-x: hidden;
         }
 
         #main-content {
             opacity: 0;
-            transform: scale(0.95);
+            transform: scale(0.98);
             transition: all 1s ease-out;
+            padding-bottom: 100px; /* Space for Footer */
         }
 
         #main-content.show {
             opacity: 1;
             transform: scale(1);
-        }
-        /* ---------------------------------- */
-        
-        body {
-            font-family: 'Quicksand', sans-serif;
-            background-color: var(--milk);
-            color: #2d3436;
-            margin: 0;
-            overflow-x: hidden;
         }
 
         .glass-card {
@@ -109,15 +148,8 @@
             z-index: 0;
         }
 
-        .glass-card:hover::before, .glass-card.active-prism::before {
-            opacity: 1;
-        }
-
-        .glass-card > div, .glass-card > h3, .glass-card > p, .glass-card > button {
-            position: relative;
-            z-index: 1;
-        }
-
+        .glass-card:hover::before, .glass-card.active-prism::before { opacity: 1; }
+        .glass-card > div, .glass-card > h3, .glass-card > p, .glass-card > button { position: relative; z-index: 1; }
         @keyframes rotate { 100% { transform: rotate(360deg); } }
 
         .glass-card:hover {
@@ -136,38 +168,73 @@
         .card-experts { --glow-color: #9333ea; --glow-shadow: rgba(147, 51, 234, 0.2); }
         .card-girki { --glow-color: #ea580c; --glow-shadow: rgba(234, 88, 12, 0.2); }
 
-        .icon-gradient {
-            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+        .icon-gradient { background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%); }
+
+        /* --- DEPTH DOCK FOOTER (Daga Code dinka) --- */
+        .depth-dock { 
+            position: fixed; 
+            bottom: var(--universal-gap); 
+            left: var(--universal-gap); 
+            right: var(--universal-gap); 
+            height: 70px; 
+            background: #E8E1D5; /* Milk bg dinka */
+            border-radius: 20px; 
+            display: flex; 
+            justify-content: space-around; 
+            align-items: center; 
+            padding: 0 10px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+            z-index: 1000; 
         }
+
+        .depth-item { 
+            position: relative; 
+            width: 45px; 
+            height: 45px; 
+            background: #E8E1D5; 
+            border-radius: 12px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.1); 
+            color: #777; 
+            transition: 0.2s; 
+        }
+
+        .depth-item.active { box-shadow: inset 4px 4px 10px rgba(0,0,0,0.15); color: var(--neon-gold); }
     </style>
 </head>
-<body class="pb-10">
+<body>
 
-    <!-- WELCOME SPLASH SCREEN -->
+    <!-- MAGNETIC SAND SPLASH SCREEN -->
     <div id="welcome-screen">
-        <h1 class="welcome-text">
-            BARKA DA ZUWA
-            <span>SADIQ</span>
-        </h1>
+        <div class="text-center">
+            <h1 class="sand-text">SADIQ</h1>
+            <div class="sand-line"></div>
+            <p class="text-[8px] tracking-[1em] text-white/30 mt-6 uppercase">Reconstructing Protocol</p>
+        </div>
     </div>
 
     <!-- MAIN DASHBOARD CONTENT -->
     <div id="main-content">
-        <header class="p-6 sticky top-0 z-50 backdrop-blur-md" style="background: #111; background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); border-bottom: 2px solid rgba(212, 175, 55, 0.4); border-radius: 0 0 2.5rem 2.5rem;">
-            <div class="max-w-7xl mx-auto flex justify-between items-center">
-                <div>
-                    <h1 class="text-xl font-[700] text-white tracking-tight">Dashboard</h1>
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                        <p class="text-[10px] uppercase font-[700] tracking-[0.2em] text-[#d4af37]">Member Portal</p>
-                    </div>
-                </div>
+        <!-- CLEAN PROFESSIONAL HEADER -->
+        <header class="py-5 px-6 sticky top-0 z-50 backdrop-blur-md" style="background: #111; background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); border-bottom: 2px solid var(--gold-glow);">
+            <div class="max-w-7xl mx-auto flex justify-center items-center">
+                <h1 class="text-lg md:text-xl font-bold text-white tracking-widest uppercase text-center" style="font-family: 'Syncopate', sans-serif;">Member Dashboard</h1>
             </div>
-        </header>      
+        </header>
 
-        <main class="max-w-7xl mx-auto px-6 mt-4">
+        <!-- SINGLE LINE TICKER -->
+        <div class="ticker-wrap">
+            <div class="ticker-move">
+                Barka da zuwa Mafita Dubu Abokina Sadiq... Sabbin kaya sun iso a sashin Kasuwa... Duba sashen Experts domin samun shawara... Kar ka manta da duba lafiyar ka yau... 
+            </div>
+        </div>
+
+        <main class="max-w-7xl mx-auto px-6 mt-8">
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-                <!-- Duk Boxes dinka suna nan yadda kake son su -->
+                <!-- Kasuwa -->
                 <div class="glass-card card-kasuwa rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
                     <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
                         <i class="fa-solid fa-shop text-xl text-yellow-700"></i>
@@ -176,6 +243,7 @@
                     <p class="text-[9px] text-gray-400 mt-1">Sabbin Kaya</p>
                 </div>
 
+                <!-- Used Items -->
                 <div class="glass-card card-used rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
                     <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
                         <i class="fa-solid fa-tag text-xl text-green-700"></i>
@@ -184,6 +252,7 @@
                     <p class="text-[9px] text-gray-400 mt-1">Hannu na Biyu</p>
                 </div>
 
+                <!-- Lafiya -->
                 <div class="glass-card card-lafiya rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
                     <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
                         <i class="fa-solid fa-stethoscope text-xl text-red-500"></i>
@@ -192,6 +261,7 @@
                     <p class="text-[9px] text-gray-400 mt-1">Duba Lafiya</p>
                 </div>
 
+                <!-- Sana'a -->
                 <div class="glass-card card-sanaa rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
                     <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
                         <i class="fa-solid fa-hammer text-xl text-blue-600"></i>
@@ -200,6 +270,7 @@
                     <p class="text-[9px] text-gray-400 mt-1">Koyi Sana'a</p>
                 </div>
 
+                <!-- Aure -->
                 <div class="glass-card card-aure rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
                     <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
                         <i class="fa-solid fa-heart text-xl text-pink-500"></i>
@@ -208,6 +279,7 @@
                     <p class="text-[9px] text-gray-400 mt-1">Zaman Lafiya</p>
                 </div>
 
+                <!-- Mafita Hub -->
                 <div class="glass-card card-hub rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center border-2 border-yellow-200/50 bg-white/60">
                     <div class="bg-yellow-100 w-14 h-14 rounded-full flex items-center justify-center mb-3 shadow-inner">
                         <i class="fa-solid fa-star text-xl text-yellow-600"></i>
@@ -216,6 +288,7 @@
                     <p class="text-[9px] text-yellow-600/70 font-bold mt-1 uppercase">Specialized</p>
                 </div>
 
+                <!-- Experts -->
                 <div class="glass-card card-experts rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
                     <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
                         <i class="fa-solid fa-user-gear text-xl text-purple-600"></i>
@@ -224,6 +297,7 @@
                     <p class="text-[9px] text-gray-400 mt-1">Kwararru</p>
                 </div>
 
+                <!-- Girki -->
                 <div class="glass-card card-girki rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
                     <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
                         <i class="fa-solid fa-bowl-food text-xl text-orange-600"></i>
@@ -232,6 +306,7 @@
                     <p class="text-[9px] text-gray-400 mt-1">Abinci</p>
                 </div>
 
+                <!-- Telecom -->
                 <div class="col-span-2 md:col-span-2 glass-card rounded-[3rem] p-8 flex items-center justify-between relative overflow-hidden">
                     <div class="z-10">
                         <h2 class="text-xl font-[800] tracking-tighter">TELECOM</h2>
@@ -243,44 +318,55 @@
                     </div>
                 </div>
 
+                <!-- Notification Alert -->
                 <div class="col-span-2 glass-card rounded-[3rem] p-8 flex items-center gap-6">
                     <div class="flex-1">
-                        <h3 class="text-sm font-[700]">Sanarwa</h3>
-                        <p class="text-[11px] text-gray-500 leading-relaxed">Akwai sabon sako a gareka abokina.</p>
+                        <h3 class="text-sm font-[700]">Tsaro</h3>
+                        <p class="text-[11px] text-gray-500 leading-relaxed">Asusun ka yana nan lafiya kalau.</p>
                     </div>
                     <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
-                        <i class="fa-solid fa-bell text-yellow-600"></i>
+                        <i class="fa-solid fa-shield-halved text-green-600"></i>
                     </div>
                 </div>
             </div>
         </main>
+
+        <!-- FOOTER NAV (Depth Dock) -->
+        <nav class="depth-dock">
+            <div class="depth-item active" onclick="activate(this)"><i class="fa-solid fa-house"></i></div>
+            <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-chart-pie"></i></div>
+            <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-basket-shopping"></i></div>
+            <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-paper-plane"></i></div>
+            <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-id-card-clip"></i></div>
+        </nav>
     </div>
 
     <script>
-        // LOGIC NA WELCOME SCREEN
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const welcome = document.getElementById('welcome-screen');
                 const main = document.getElementById('main-content');
-                
-                // Reaction na daukewa (Zoom & Brightness Flash)
                 welcome.classList.add('screen-exit');
-                
                 setTimeout(() => {
                     welcome.style.display = 'none';
                     main.classList.add('show');
-                }, 1000); // Jira transition din ya gama
-            }, 3000); // Na tsawon sakan 3
+                }, 1500); 
+            }, 5000); 
         });
 
-        // ELECTRIC PULSE LOGIC
+        function activate(el) {
+            document.querySelectorAll('.depth-item').forEach(item => item.classList.remove('active'));
+            el.classList.add('active');
+        }
+
         const cards = document.querySelectorAll('.glass-card');
         cards.forEach(card => {
             card.addEventListener('click', function() {
                 cards.forEach(c => c.classList.remove('active-prism'));
                 this.classList.add('active-prism');
-                const title = this.querySelector('h3') ? this.querySelector('h3').innerText : this.querySelector('h2').innerText;
-                localStorage.setItem('mafita_last_active', title);
+                const titleElement = this.querySelector('h3') || this.querySelector('h2');
+                const title = titleElement ? titleElement.innerText : '';
+                if(title) localStorage.setItem('mafita_last_active', title);
             });
         });
 
@@ -288,12 +374,12 @@
             const lastActive = localStorage.getItem('mafita_last_active');
             if(lastActive) {
                 cards.forEach(card => {
-                    const cardTitle = card.querySelector('h3') ? card.querySelector('h3').innerText : card.querySelector('h2').innerText;
+                    const titleElement = card.querySelector('h3') || card.querySelector('h2');
+                    const cardTitle = titleElement ? titleElement.innerText : '';
                     if(cardTitle === lastActive) card.classList.add('active-prism');
                 });
             }
         });
     </script>
 </body>
-                        </html>
-                        
+</html>
