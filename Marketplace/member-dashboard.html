@@ -16,8 +16,6 @@
             --gold-glow: #D4AF37;
             --sand-color: #C2B280;
             --void-bg: #050505;
-            --milk-bg: #E8E1D5; /* Daga sabon code dinka */
-            --dark-chocolate: #1A0F0D;
             --neon-gold: #D4AF37;
             --universal-gap: 8px;
         }
@@ -94,11 +92,13 @@
             white-space: nowrap;
             padding-right: 100%;
             animation: ticker 25s linear infinite;
-            font-size: 11px;
+            /* ELITE FONT UPDATE */
+            font-family: 'Syncopate', sans-serif;
+            font-size: 9px;
             font-weight: 700;
             color: #b58900;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
         @keyframes ticker {
@@ -117,7 +117,9 @@
             opacity: 0;
             transform: scale(0.98);
             transition: all 1s ease-out;
-            padding-bottom: 100px; /* Space for Footer */
+            background-color: var(--milk);
+            /* Padding added to avoid content being hidden by fixed footer */
+            padding-bottom: 80px; 
         }
 
         #main-content.show {
@@ -159,6 +161,17 @@
             box-shadow: 0 20px 40px var(--glow-shadow);
         }
 
+        /* --- MELTING EFFECT --- */
+        .melt-trigger {
+            animation: meltEffect 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            pointer-events: none;
+        }
+
+        @keyframes meltEffect {
+            0% { transform: translateY(0); filter: blur(0); opacity: 1; }
+            100% { transform: translateY(100vh) scaleY(1.5); filter: blur(20px); opacity: 0; }
+        }
+
         .card-kasuwa { --glow-color: #fbbf24; --glow-shadow: rgba(251, 191, 36, 0.2); }
         .card-used { --glow-color: #22c55e; --glow-shadow: rgba(34, 197, 94, 0.2); }
         .card-lafiya { --glow-color: #ef4444; --glow-shadow: rgba(239, 68, 68, 0.2); }
@@ -170,39 +183,39 @@
 
         .icon-gradient { background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%); }
 
-        /* --- DEPTH DOCK FOOTER (Daga Code dinka) --- */
+        /* --- FIXED FOOTER (NO SPACE) --- */
         .depth-dock { 
-            position: fixed; 
-            bottom: var(--universal-gap); 
-            left: var(--universal-gap); 
-            right: var(--universal-gap); 
+            position: fixed; /* Manne a waje guda */
+            bottom: 0; /* Ya dube kasa radau */
+            left: 0;
+            right: 0;
             height: 70px; 
-            background: #E8E1D5; /* Milk bg dinka */
-            border-radius: 20px; 
+            background: var(--milk); 
             display: flex; 
             justify-content: space-around; 
             align-items: center; 
             padding: 0 10px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
-            z-index: 1000; 
+            box-shadow: 0 -5px 25px rgba(0,0,0,0.08); 
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            z-index: 1000;
         }
 
         .depth-item { 
             position: relative; 
             width: 45px; 
             height: 45px; 
-            background: #E8E1D5; 
+            background: var(--milk); 
             border-radius: 12px; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
             cursor: pointer; 
-            box-shadow: 4px 4px 10px rgba(0,0,0,0.1); 
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.08); 
             color: #777; 
             transition: 0.2s; 
         }
 
-        .depth-item.active { box-shadow: inset 4px 4px 10px rgba(0,0,0,0.15); color: var(--neon-gold); }
+        .depth-item.active { box-shadow: inset 3px 3px 8px rgba(0,0,0,0.1); color: var(--neon-gold); }
     </style>
 </head>
 <body>
@@ -235,7 +248,7 @@
         <main class="max-w-7xl mx-auto px-6 mt-8">
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
                 <!-- Kasuwa -->
-                <div class="glass-card card-kasuwa rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
+                <div class="glass-card card-kasuwa rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center clickable-box">
                     <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
                         <i class="fa-solid fa-shop text-xl text-yellow-700"></i>
                     </div>
@@ -244,7 +257,7 @@
                 </div>
 
                 <!-- Used Items -->
-                <div class="glass-card card-used rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
+                <div class="glass-card card-used rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center clickable-box">
                     <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
                         <i class="fa-solid fa-tag text-xl text-green-700"></i>
                     </div>
@@ -253,7 +266,7 @@
                 </div>
 
                 <!-- Lafiya -->
-                <div class="glass-card card-lafiya rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
+                <div class="glass-card card-lafiya rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center clickable-box">
                     <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
                         <i class="fa-solid fa-stethoscope text-xl text-red-500"></i>
                     </div>
@@ -262,7 +275,7 @@
                 </div>
 
                 <!-- Sana'a -->
-                <div class="glass-card card-sanaa rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
+                <div class="glass-card card-sanaa rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center clickable-box">
                     <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
                         <i class="fa-solid fa-hammer text-xl text-blue-600"></i>
                     </div>
@@ -271,7 +284,7 @@
                 </div>
 
                 <!-- Aure -->
-                <div class="glass-card card-aure rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
+                <div class="glass-card card-aure rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center clickable-box">
                     <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
                         <i class="fa-solid fa-heart text-xl text-pink-500"></i>
                     </div>
@@ -280,7 +293,7 @@
                 </div>
 
                 <!-- Mafita Hub -->
-                <div class="glass-card card-hub rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center border-2 border-yellow-200/50 bg-white/60">
+                <div class="glass-card card-hub rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center border-2 border-yellow-200/50 bg-white/60 clickable-box">
                     <div class="bg-yellow-100 w-14 h-14 rounded-full flex items-center justify-center mb-3 shadow-inner">
                         <i class="fa-solid fa-star text-xl text-yellow-600"></i>
                     </div>
@@ -289,7 +302,7 @@
                 </div>
 
                 <!-- Experts -->
-                <div class="glass-card card-experts rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
+                <div class="glass-card card-experts rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center clickable-box">
                     <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
                         <i class="fa-solid fa-user-gear text-xl text-purple-600"></i>
                     </div>
@@ -298,7 +311,7 @@
                 </div>
 
                 <!-- Girki -->
-                <div class="glass-card card-girki rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center">
+                <div class="glass-card card-girki rounded-[2.5rem] p-6 flex flex-col items-center justify-center text-center clickable-box">
                     <div class="icon-gradient w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-sm">
                         <i class="fa-solid fa-bowl-food text-xl text-orange-600"></i>
                     </div>
@@ -307,7 +320,7 @@
                 </div>
 
                 <!-- Telecom -->
-                <div class="col-span-2 md:col-span-2 glass-card rounded-[3rem] p-8 flex items-center justify-between relative overflow-hidden">
+                <div class="col-span-2 md:col-span-4 glass-card rounded-[3rem] p-8 flex items-center justify-between relative overflow-hidden clickable-box">
                     <div class="z-10">
                         <h2 class="text-xl font-[800] tracking-tighter">TELECOM</h2>
                         <p class="text-[10px] text-gray-500 font-[600] uppercase tracking-widest mb-4">Data & Airtime</p>
@@ -317,21 +330,10 @@
                         <i class="fa-solid fa-wifi rotate-12"></i>
                     </div>
                 </div>
-
-                <!-- Notification Alert -->
-                <div class="col-span-2 glass-card rounded-[3rem] p-8 flex items-center gap-6">
-                    <div class="flex-1">
-                        <h3 class="text-sm font-[700]">Tsaro</h3>
-                        <p class="text-[11px] text-gray-500 leading-relaxed">Asusun ka yana nan lafiya kalau.</p>
-                    </div>
-                    <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
-                        <i class="fa-solid fa-shield-halved text-green-600"></i>
-                    </div>
-                </div>
             </div>
         </main>
 
-        <!-- FOOTER NAV (Depth Dock) -->
+        <!-- STATIC FOOTER NAV (FIXED AT BOTTOM) -->
         <nav class="depth-dock">
             <div class="depth-item active" onclick="activate(this)"><i class="fa-solid fa-house"></i></div>
             <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-chart-pie"></i></div>
@@ -352,6 +354,18 @@
                     main.classList.add('show');
                 }, 1500); 
             }, 5000); 
+        });
+
+        // MELTING ACTION LOGIC
+        const clickables = document.querySelectorAll('.clickable-box, .depth-item');
+        clickables.forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.getElementById('main-content').classList.add('melt-trigger');
+                setTimeout(() => {
+                    // Logic din tafiya zuwa wani shafin anan
+                    console.log("Melting complete...");
+                }, 1000);
+            });
         });
 
         function activate(el) {
