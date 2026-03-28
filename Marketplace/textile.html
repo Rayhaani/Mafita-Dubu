@@ -129,6 +129,7 @@
 
     <main class="compact-grid">
         <script>
+
             const categories = [
                 "Atamfa", "Laces", "Shadda", "Yadi", 
                 "Lifaya", "Sleepwear", "Hijabs", "Gyale", 
@@ -144,12 +145,15 @@
                     link = "atamfa.html";
                     boxId = 'id="atamfa-preview"';
                 } 
-                // Annan na hada Shadda da admin_dashboard.html
                 else if (item === "Shadda") {
                     link = "admin_dashboard.html";
                 }
                 else if (item === "Laces") {
                     link = "vendor-dashboard.html";
+                }
+                // Anan na hada Yadi da member-dashboard.html kamar yadda ka bukata
+                else if (item === "Yadi") {
+                    link = "member-dashboard.html";
                 }
 
                 document.write(`
@@ -162,6 +166,7 @@
                 `);
             });
         </script>
+        
     </main>
 
     <div style="height: 40px;"></div>
