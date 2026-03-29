@@ -58,7 +58,7 @@
             top: 0; 
             z-index: 8000; 
             background-color: var(--milk); 
-            padding: 4px 12px 10px 12px; /* Reduced top padding from 10px to 4px */
+            padding: 4px 12px 10px 12px; 
         }
         .titan-search-engine {
             position: relative; 
@@ -107,7 +107,7 @@
             line-height: 1; 
         }
 
-        /* --- 8 BOXES STYLING (UNTOUCHED) --- */
+        /* --- 8 BOXES STYLING --- */
         .static-box { position: relative; overflow: hidden; height: 208px; border-radius: 2.5rem; background: #0c0c0c; }
         .box-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 14px; text-transform: capitalize; z-index: 45; }
         .img-container { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -118,7 +118,7 @@
             display: flex; align-items: center; justify-content: center; margin-top: 8px;
         }
 
-        /* --- FOOTER (UNTOUCHED) --- */
+        /* --- FOOTER --- */
         .depth-dock { 
             position: fixed; bottom: 0; left: 0; right: 0; 
             height: 50px; 
@@ -193,24 +193,25 @@
         </main>
     </div>
 
+    <!-- FOOTER WITH CONNECTED LINKS -->
     <nav class="depth-dock">
         <div class="depth-item active" onclick="activate(this)">
             <i class="fa-solid fa-house"></i>
             <span class="depth-label">Home</span>
         </div>
-        <div class="depth-item" onclick="activate(this)">
+        <div class="depth-item" onclick="window.location.href='mdcategories.html'">
             <i class="fa-solid fa-list-ul"></i>
             <span class="depth-label">Categories</span>
         </div>
-        <div class="depth-item" onclick="activate(this)">
+        <div class="depth-item" onclick="window.location.href='mdmessages.html'">
             <i class="fa-solid fa-comment-dots"></i>
             <span class="depth-label">Messages</span>
         </div>
-        <div class="depth-item" onclick="activate(this)">
+        <div class="depth-item" onclick="window.location.href='mdtransactions.html'">
             <i class="fa-solid fa-basket-shopping"></i>
             <span class="depth-label">Transactions</span>
         </div>
-        <div class="depth-item" onclick="activate(this)">
+        <div class="depth-item" onclick="window.location.href='mdyou.html'">
             <i class="fa-solid fa-user"></i>
             <span class="depth-label">You</span>
         </div>
@@ -234,4 +235,5 @@
         }
     </script>
 </body>
-</html>
+                                                   </html>
+                                                                                                                                                         
