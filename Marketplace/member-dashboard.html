@@ -46,7 +46,7 @@
         .screen-exit { filter: opacity(0) saturate(0) blur(40px); transform: scale(0.8); pointer-events: none; }
         
         body { font-family: 'Quicksand', sans-serif; background-color: var(--milk); margin: 0; overflow-x: hidden; }
-        #main-content { opacity: 0; transform: scale(0.98); transition: all 1s ease-out; background-color: var(--milk); padding-bottom: 100px; }
+        #main-content { opacity: 0; transform: scale(0.98); transition: all 1s ease-out; background-color: var(--milk); padding-bottom: 110px; }
         #main-content.show { opacity: 1; transform: scale(1); }
 
         /* --- HEADER (STICKY SEARCH BAR) --- */
@@ -106,28 +106,47 @@
             display: flex; align-items: center; justify-content: center; margin-top: 8px;
         }
 
-        /* --- FOOTER (FIXED DEPTH DOCK) --- */
+        /* --- FOOTER (WITH LABELS) --- */
         .depth-dock { 
             position: fixed; 
             bottom: 0; 
             left: 0; 
             right: 0; 
-            height: 75px; 
+            height: 80px; 
             background: var(--milk); 
             display: flex; 
             justify-content: space-around; 
             align-items: center; 
-            padding: 0 10px; 
+            padding: 0 5px; 
             box-shadow: 0 -8px 30px rgba(0,0,0,0.1); 
             border-top: 1px solid rgba(212, 175, 55, 0.15); 
-            z-index: 9999; /* Z-index mafi girma don ya dore a saman komai */
+            z-index: 9999;
         }
         .depth-item { 
-            width: 45px; height: 45px; background: var(--milk); border-radius: 12px; 
-            display: flex; align-items: center; justify-content: center; cursor: pointer; 
-            box-shadow: 3px 3px 8px rgba(0,0,0,0.08); color: #777; transition: 0.2s; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer; 
+            transition: 0.3s;
+            color: #777;
+            min-width: 60px;
         }
-        .depth-item.active { box-shadow: inset 3px 3px 8px rgba(0,0,0,0.1); color: var(--neon-gold); }
+        .depth-icon {
+            width: 42px; height: 42px; 
+            background: var(--milk); border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center; 
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.08);
+            margin-bottom: 4px;
+            font-size: 18px;
+        }
+        .depth-label {
+            font-size: 10px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+        }
+        .depth-item.active { color: var(--neon-gold); }
+        .depth-item.active .depth-icon { box-shadow: inset 3px 3px 8px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
@@ -140,7 +159,6 @@
         </div>
     </div>
 
-    <!-- MAIN APP CONTENT -->
     <div id="main-content">
         <header class="search-wrapper">
             <div class="titan-search-engine">
@@ -157,42 +175,35 @@
 
         <main class="max-w-7xl mx-auto px-6 mt-8">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 pb-12">
-                <!-- Box 1 -->
+                <!-- Boxes Content (Unchanged) -->
                 <a href="Marketplace/market.html" class="static-box block">
                     <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-white">Sashen 'Yan Kasuwa</h4><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-[10px]"></i></div></div>
                     <div class="img-container"><img src="https://i.postimg.cc/02LNsdFH/istockphoto-2196140224-612x612.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
                 </a>
-                <!-- Box 2 -->
                 <a href="Used Hub/index.html" class="static-box block">
                     <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-white">Kasuwar Gwanjo</h4><div class="royal-seal"><i class="fa-solid fa-tags text-white text-[10px]"></i></div></div>
                     <div class="img-container"><img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
                 </a>
-                <!-- Box 3 -->
                 <a href="Health Hub/health.html" class="static-box block">
                     <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-white">Kiwon Lafiya</h4><div class="royal-seal"><i class="fa-solid fa-heart-pulse text-white text-[10px]"></i></div></div>
                     <div class="img-container"><img src="https://i.postimg.cc/Y0P2spNJ/image-1.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
                 </a>
-                <!-- Box 4 -->
                 <a href="Daular Sana'a/index.html" class="static-box block">
                     <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-white">Koyon Sana'a</h4><div class="royal-seal"><i class="fa-solid fa-hammer text-white text-[10px]"></i></div></div>
                     <div class="img-container"><img src="https://i.postimg.cc/j2V5zhch/IMG-20260122-WA0044(1).jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
                 </a>
-                <!-- Box 5 -->
                 <a href="Marriage Hub/marriage-hub.html" class="static-box block">
                     <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-pink-500">Dandalin Aure</h4><div class="royal-seal" style="background: radial-gradient(circle, #ff69b4 0%, #c71585 100%);"><i class="fa-solid fa-heart text-white text-[10px]"></i></div></div>   
                     <div class="img-container"><img src="https://i.postimg.cc/pT5n7Xh8/wedding-1.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
                 </a>
-                <!-- Box 6 -->
                 <div class="static-box">
                     <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-yellow-500">Mafita Hub</h4><div class="royal-seal"><i class="fa-solid fa-star text-white text-[10px]"></i></div></div>
                     <div class="img-container"><img src="https://i.postimg.cc/GtRJvx6H/IMG-20260123-WA0031(1).jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
                 </div>
-                <!-- Box 7 -->
                 <div class="static-box">
                     <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-purple-500">Kwararru</h4><div class="royal-seal"><i class="fa-solid fa-user-gear text-white text-[10px]"></i></div></div>
                     <div class="img-container"><img src="https://i.postimg.cc/JzcXcxTS/IMG-20260124-WA0029.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
                 </div>
-                <!-- Box 8 -->
                 <div class="static-box">
                     <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-orange-500">Sashen Girki</h4><div class="royal-seal"><i class="fa-solid fa-bowl-food text-white text-[10px]"></i></div></div>
                     <div class="img-container"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
@@ -201,13 +212,28 @@
         </main>
     </div>
 
-    <!-- FOOTER IS NOW COMPLETELY OUTSIDE AND FIXED -->
+    <!-- UPDATED FOOTER WITH LABELS -->
     <nav class="depth-dock">
-        <div class="depth-item active" onclick="activate(this)"><i class="fa-solid fa-house"></i></div>
-        <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-chart-pie"></i></div>
-        <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-basket-shopping"></i></div>
-        <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-paper-plane"></i></div>
-        <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-id-card-clip"></i></div>
+        <div class="depth-item active" onclick="activate(this)">
+            <div class="depth-icon"><i class="fa-solid fa-house"></i></div>
+            <span class="depth-label">Home</span>
+        </div>
+        <div class="depth-item" onclick="activate(this)">
+            <div class="depth-icon"><i class="fa-solid fa-chart-pie"></i></div>
+            <span class="depth-label">Categories</span>
+        </div>
+        <div class="depth-item" onclick="activate(this)">
+            <div class="depth-icon"><i class="fa-solid fa-paper-plane"></i></div>
+            <span class="depth-label">Messages</span>
+        </div>
+        <div class="depth-item" onclick="activate(this)">
+            <div class="depth-icon"><i class="fa-solid fa-basket-shopping"></i></div>
+            <span class="depth-label">Transactions</span>
+        </div>
+        <div class="depth-item" onclick="activate(this)">
+            <div class="depth-icon"><i class="fa-solid fa-id-card-clip"></i></div>
+            <span class="depth-label">Profile</span>
+        </div>
     </nav>
 
     <script>
@@ -229,4 +255,5 @@
         }
     </script>
 </body>
-</html>
+                    </html>
+    
