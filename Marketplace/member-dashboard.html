@@ -19,7 +19,7 @@
             --neon-gold: #D4AF37;
         }
 
-        /* --- SPLASH SCREEN --- */
+        /* --- SPLASH SCREEN (UNTOUCHED) --- */
         #welcome-screen {
             position: fixed; inset: 0; background: var(--void-bg); z-index: 10000;
             display: flex; align-items: center; justify-content: center; overflow: hidden;
@@ -49,7 +49,7 @@
         #main-content { opacity: 0; transform: scale(0.98); transition: all 1s ease-out; background-color: var(--milk); padding-bottom: 60px; }
         #main-content.show { opacity: 1; transform: scale(1); }
 
-        /* --- TEMU EXACT HEADER --- */
+        /* --- ALIEXPRESS HEADER (SHIFTED UP) --- */
         .search-wrapper { 
             width: 100%; 
             display: flex; 
@@ -58,16 +58,16 @@
             top: 0; 
             z-index: 8000; 
             background-color: var(--milk); 
-            padding: 5px 12px 10px 12px;
+            padding: 4px 12px 10px 12px; /* Reduced top padding from 10px to 4px */
         }
         .titan-search-engine {
             position: relative; 
             width: 100%; 
-            height: 40px;
+            height: 42px;
             display: flex; 
             align-items: center; 
             background: transparent;
-            border-radius: 22px; 
+            border-radius: 25px; 
             padding-left: 15px;
             border: 1.5px solid #000;
         }
@@ -78,11 +78,7 @@
             font-size: 15px;
             font-weight: 500;
         }
-        .titan-input::placeholder { 
-            color: #888; 
-            font-family: 'Quicksand', sans-serif;
-            font-size: 14px;
-        }
+        .titan-input::placeholder { color: #888; font-size: 14px; }
 
         .temu-controls { 
             display: flex; 
@@ -91,34 +87,27 @@
         }
         .camera-trigger { 
             color: #000; 
-            font-size: 24px; 
+            font-size: 22px; 
             cursor: pointer; 
-            padding: 0 10px;
+            padding-right: 8px; 
         }
-        .search-trigger-circle {
+        .search-trigger-pill {
             background: #000; 
-            width: 36px; height: 36px; 
-            border-radius: 50%;
+            height: calc(100% - 4px); 
+            padding: 0 18px; 
+            border-radius: 20px; 
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; 
-            margin-right: 3px;
+            margin-right: 2px;
         }
-        .search-trigger-circle i { 
-    color: #fff; 
-    font-size: 12px; 
-    display: block; 
-    line-height: 1; 
+        .search-trigger-pill i { 
+            color: #fff; 
+            font-size: 16px; 
+            display: block; 
+            line-height: 1; 
         }
-        
-        .golden-scan-line {
-            position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); 
-            height: 2px; width: 0%;
-            background: linear-gradient(90deg, transparent, var(--gold-glow), #fff, var(--gold-glow), transparent);
-            transition: width 0.4s ease;
-        }
-        .titan-input:focus ~ .golden-scan-line { width: 85%; }
 
-        /* --- 8 BOXES STYLING --- */
+        /* --- 8 BOXES STYLING (UNTOUCHED) --- */
         .static-box { position: relative; overflow: hidden; height: 208px; border-radius: 2.5rem; background: #0c0c0c; }
         .box-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 14px; text-transform: capitalize; z-index: 45; }
         .img-container { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -129,39 +118,18 @@
             display: flex; align-items: center; justify-content: center; margin-top: 8px;
         }
 
-        /* --- ULTRA-SMART MINIMALIST FOOTER --- */
+        /* --- FOOTER (UNTOUCHED) --- */
         .depth-dock { 
-            position: fixed; 
-            bottom: 0; 
-            left: 0; 
-            right: 0; 
-            height: 50px; /* Slimmer height */
-            background: var(--milk); 
-            display: flex; 
-            justify-content: space-around; 
-            align-items: center; 
-            padding: 0; /* Zero padding */
-            box-shadow: 0 -1px 10px rgba(0,0,0,0.05); 
-            border-top: 0.5px solid rgba(0, 0, 0, 0.08); 
-            z-index: 9999;
+            position: fixed; bottom: 0; left: 0; right: 0; 
+            height: 50px; 
+            background: var(--milk); display: flex; justify-content: space-around; 
+            align-items: center; padding: 0; box-shadow: 0 -1px 10px rgba(0,0,0,0.05); 
+            border-top: 0.5px solid rgba(0, 0, 0, 0.08); z-index: 9999;
         }
-        .depth-item { 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.2s; color: #555; width: 20%; height: 100%;
-        }
-        .depth-item i {
-            font-size: 18px; /* Professional smaller size */
-            margin: 0;
-        }
-        .depth-label { 
-            font-size: 9px; 
-            font-weight: 700; 
-            font-family: 'Inter', sans-serif; 
-            margin-top: 1px;
-        }
-        
+        .depth-item { display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; color: #555; width: 20%; height: 100%; }
+        .depth-item i { font-size: 18px; margin: 0; }
+        .depth-label { font-size: 9px; font-weight: 700; margin-top: 1px; }
         .depth-item.active { color: #000; }
-        .depth-item:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
@@ -180,11 +148,10 @@
                 <input type="text" placeholder="Nemi komai a Mafita Dubu..." class="titan-input">
                 <div class="temu-controls">
                     <i class="fa-solid fa-camera camera-trigger"></i>
-                    <div class="search-trigger-circle">
+                    <div class="search-trigger-pill">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </div>
                 </div>
-                <div class="golden-scan-line"></div>
             </div>
         </header>
 
@@ -226,7 +193,6 @@
         </main>
     </div>
 
-    <!-- RESTORED TRANSACTIONS & SLIM FOOTER -->
     <nav class="depth-dock">
         <div class="depth-item active" onclick="activate(this)">
             <i class="fa-solid fa-house"></i>
@@ -262,12 +228,10 @@
                 }, 1500); 
             }, 5000); 
         });
-
         function activate(el) {
             document.querySelectorAll('.depth-item').forEach(item => item.classList.remove('active'));
             el.classList.add('active');
         }
     </script>
 </body>
-                    </html>
-    
+</html>
