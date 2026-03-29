@@ -232,178 +232,142 @@
     <!-- MAIN DASHBOARD CONTENT -->
     <div id="main-content">
         
-     
-        <!-- FUTURISTIC NAVIGATION HUB (NEW HEADER) -->
-<header class="floating-header">
-    <div class="search-container">
-        <!-- Brand Logo/Icon -->
-        <div class="hub-logo">
-            <i class="fa-solid fa-microchip"></i>
-        </div>
+     <!-- THE PURE FUTURISTIC SEARCH HUB -->
+<div class="search-wrapper">
+    <div class="neo-search-engine">
+        <!-- Search Icon -->
+        <i class="fa-solid fa-magnifying-glass main-glass"></i>
+        
+        <!-- Input Field -->
+        <input type="text" placeholder="Nemi komai a Mafita Dubu..." class="futuristic-input">
 
-        <!-- The Futuristic Search Bar -->
-        <div class="neo-search-bar">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" placeholder="Nemi komai a Mafita Dubu..." id="main-search">
-            <div class="search-scan-line"></div>
-            <button class="voice-cmd">
+        <!-- Tech Icons (Camera & Voice) -->
+        <div class="input-actions">
+            <button class="action-btn camera-trigger" title="Visual Search">
+                <i class="fa-solid fa-camera-retro"></i>
+            </button>
+            <button class="action-btn mic-trigger" title="Voice Search">
                 <i class="fa-solid fa-microphone-lines"></i>
             </button>
         </div>
 
-        <!-- Quick Action Profile -->
-        <div class="user-status">
-            <div class="status-ring"></div>
-            <img src="https://ui-avatars.com/api/?name=Sadiq&background=D4AF37&color=fff" alt="User">
-        </div>
+        <!-- Scanning Beam Animation -->
+        <div class="beam-light"></div>
     </div>
-</header>
+</div>
 
 <style>
-    /* FLOATING HEADER CORE */
-    .floating-header {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        padding: 15px 10px;
-        background: rgba(5, 5, 5, 0.85); /* Dark Glass */
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-    }
-
-    .search-container {
-        max-width: 1200px;
-        margin: 0 auto;
+    .search-wrapper {
+        width: 100%;
+        padding: 20px;
         display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .hub-logo {
-        width: 40px;
-        height: 40px;
-        background: linear-gradient(135deg, #D4AF37, #b58900);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
         justify-content: center;
-        color: #000;
-        font-size: 1.2rem;
-        box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        /* Yana amfani da background din shafinka kai tsaye */
     }
 
-    /* NEO SEARCH BAR */
-    .neo-search-bar {
-        flex: 1;
-        height: 48px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(212, 175, 55, 0.2);
-        border-radius: 15px;
+    .neo-search-engine {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        height: 55px;
         display: flex;
         align-items: center;
-        padding: 0 15px;
-        position: relative;
-        overflow: hidden;
-        transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        background: rgba(255, 255, 255, 0.03); /* Transparent */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(212, 175, 55, 0.3);
+        border-radius: 50px;
+        padding: 0 20px;
+        transition: all 0.4s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
-    .neo-search-bar:focus-within {
+    /* Pulse Gold Glow lokacin da ake bincike */
+    .neo-search-engine:focus-within {
         border-color: #D4AF37;
-        box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
-        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+        background: rgba(255, 255, 255, 0.07);
+        transform: translateY(-2px);
     }
 
-    .search-icon {
+    .main-glass {
         color: #D4AF37;
-        margin-right: 12px;
-        font-size: 0.9rem;
+        font-size: 18px;
+        margin-right: 15px;
+        filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
     }
 
-    .neo-search-bar input {
+    .futuristic-input {
+        flex: 1;
         background: transparent;
         border: none;
         outline: none;
         color: #fff;
         font-family: 'Quicksand', sans-serif;
-        font-size: 13px;
+        font-size: 15px;
         font-weight: 500;
-        width: 100%;
+        letter-spacing: 0.5px;
     }
 
-    .neo-search-bar input::placeholder {
-        color: rgba(212, 175, 55, 0.5);
+    .futuristic-input::placeholder {
+        color: rgba(212, 175, 55, 0.4);
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 2px;
     }
 
-    /* Voice Command Button */
-    .voice-cmd {
+    .input-actions {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        border-left: 1px solid rgba(212, 175, 55, 0.2);
+        padding-left: 15px;
+    }
+
+    .action-btn {
         background: transparent;
         border: none;
         color: #D4AF37;
+        font-size: 18px;
         cursor: pointer;
-        padding: 5px;
         transition: 0.3s;
+        opacity: 0.7;
     }
 
-    .voice-cmd:hover {
+    .action-btn:hover {
+        opacity: 1;
         transform: scale(1.2);
-        text-shadow: 0 0 10px #D4AF37;
+        filter: drop-shadow(0 0 8px #D4AF37);
     }
 
-    /* Scanning Line Animation in Search */
-    .search-scan-line {
+    /* Scanning Beam - Yana wucewa akai-akai */
+    .beam-light {
         position: absolute;
         top: 0;
         left: -100%;
-        width: 30%;
+        width: 40%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
-        animation: search-scan 3s infinite;
+        background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.15), transparent);
+        animation: beam-swipe 4s infinite linear;
         pointer-events: none;
     }
 
-    @keyframes search-scan {
+    @keyframes beam-swipe {
         0% { left: -100%; }
-        100% { left: 100%; }
+        100% { left: 150%; }
     }
 
-    /* User Avatar & Status */
-    .user-status {
-        position: relative;
-        width: 42px;
-        height: 42px;
+    /* Camera Icon Blinking Effect (Attractive) */
+    .camera-trigger {
+        animation: cam-pulse 2s infinite alternate;
     }
 
-    .user-status img {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        border: 2px solid #D4AF37;
-        padding: 2px;
-    }
-
-    .status-ring {
-        position: absolute;
-        bottom: 2px;
-        right: 2px;
-        width: 10px;
-        height: 10px;
-        background: #00ff00; /* Online status */
-        border: 2px solid #000;
-        border-radius: 50%;
-        z-index: 2;
-        animation: pulse-green 2s infinite;
-    }
-
-    @keyframes pulse-green {
-        0% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7); }
-        70% { box-shadow: 0 0 0 10px rgba(0, 255, 0, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0); }
+    @keyframes cam-pulse {
+        0% { filter: drop-shadow(0 0 2px #D4AF37); }
+        100% { filter: drop-shadow(0 0 10px #D4AF37); opacity: 1; }
     }
 </style>
         
-
-
         
 
         <main class="max-w-7xl mx-auto px-6 mt-8">
