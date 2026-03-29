@@ -46,10 +46,10 @@
         .screen-exit { filter: opacity(0) saturate(0) blur(40px); transform: scale(0.8); pointer-events: none; }
         
         body { font-family: 'Quicksand', sans-serif; background-color: var(--milk); margin: 0; overflow-x: hidden; }
-        #main-content { opacity: 0; transform: scale(0.98); transition: all 1s ease-out; background-color: var(--milk); padding-bottom: 110px; }
+        #main-content { opacity: 0; transform: scale(0.98); transition: all 1s ease-out; background-color: var(--milk); padding-bottom: 60px; }
         #main-content.show { opacity: 1; transform: scale(1); }
 
-        /* --- HEADER (STICKY SEARCH BAR) --- */
+        /* --- TEMU EXACT HEADER --- */
         .search-wrapper { 
             width: 100%; 
             display: flex; 
@@ -58,42 +58,60 @@
             top: 0; 
             z-index: 8000; 
             background-color: var(--milk); 
+            padding: 5px 12px 10px 12px;
         }
         .titan-search-engine {
-            position: relative; width: 100%; max-width: 1100px; height: 52px;
-            display: flex; align-items: center; background: #0d0d0d;
-            border-radius: 0 0 40px 40px; padding: 0 10px 0 25px;
-            border: 1px solid rgba(212, 175, 55, 0.25); border-top: none;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            position: relative; 
+            width: 100%; 
+            height: 44px;
+            display: flex; 
+            align-items: center; 
+            background: transparent;
+            border-radius: 22px; 
+            padding-left: 15px;
+            border: 1.5px solid #000;
         }
         .titan-input {
             flex: 1; background: transparent; border: none; outline: none;
-            color: var(--gold-glow);
+            color: #333;
             font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            font-weight: 600; 
-            letter-spacing: 0.2px;
+            font-size: 15px;
+            font-weight: 500;
         }
         .titan-input::placeholder { 
-            color: rgba(212, 175, 55, 0.3); 
-            font-family: 'Syncopate', sans-serif;
-            font-size: 10px;
+            color: #888; 
+            font-family: 'Quicksand', sans-serif;
+            font-size: 14px;
         }
 
-        .icon-group { display: flex; align-items: center; gap: 12px; }
-        .camera-trigger { color: var(--gold-glow); font-size: 22px; cursor: pointer; opacity: 0.9; }
+        .temu-controls { 
+            display: flex; 
+            align-items: center; 
+            height: 100%;
+        }
+        .camera-trigger { 
+            color: #000; 
+            font-size: 20px; 
+            cursor: pointer; 
+            padding: 0 12px;
+        }
         .search-trigger-circle {
-            background: #1a1a1a; width: 42px; height: 42px; border-radius: 50%;
+            background: #000; 
+            width: 36px; height: 36px; 
+            border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; border: 1px solid var(--gold-glow);
+            cursor: pointer; 
+            margin-right: 3px;
         }
-        .search-trigger-circle i { color: var(--gold-glow); font-size: 18px; }
+        .search-trigger-circle i { color: #fff; font-size: 16px; }
+        
         .golden-scan-line {
-            position: absolute; bottom: 0; left: 0; height: 3px; width: 0%;
+            position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); 
+            height: 2px; width: 0%;
             background: linear-gradient(90deg, transparent, var(--gold-glow), #fff, var(--gold-glow), transparent);
-            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: width 0.4s ease;
         }
-        .titan-input:focus ~ .golden-scan-line { width: 100%; }
+        .titan-input:focus ~ .golden-scan-line { width: 85%; }
 
         /* --- 8 BOXES STYLING --- */
         .static-box { position: relative; overflow: hidden; height: 208px; border-radius: 2.5rem; background: #0c0c0c; }
@@ -106,47 +124,39 @@
             display: flex; align-items: center; justify-content: center; margin-top: 8px;
         }
 
-        /* --- FOOTER (WITH LABELS) --- */
+        /* --- ULTRA-SMART MINIMALIST FOOTER --- */
         .depth-dock { 
             position: fixed; 
             bottom: 0; 
             left: 0; 
             right: 0; 
-            height: 80px; 
+            height: 50px; /* Slimmer height */
             background: var(--milk); 
             display: flex; 
             justify-content: space-around; 
             align-items: center; 
-            padding: 0 5px; 
-            box-shadow: 0 -8px 30px rgba(0,0,0,0.1); 
-            border-top: 1px solid rgba(212, 175, 55, 0.15); 
+            padding: 0; /* Zero padding */
+            box-shadow: 0 -1px 10px rgba(0,0,0,0.05); 
+            border-top: 0.5px solid rgba(0, 0, 0, 0.08); 
             z-index: 9999;
         }
         .depth-item { 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer; 
-            transition: 0.3s;
-            color: #777;
-            min-width: 60px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.2s; color: #555; width: 20%; height: 100%;
         }
-        .depth-icon {
-            width: 42px; height: 42px; 
-            background: var(--milk); border-radius: 12px; 
-            display: flex; align-items: center; justify-content: center; 
-            box-shadow: 3px 3px 8px rgba(0,0,0,0.08);
-            margin-bottom: 4px;
-            font-size: 18px;
+        .depth-item i {
+            font-size: 18px; /* Professional smaller size */
+            margin: 0;
         }
-        .depth-label {
-            font-size: 10px;
-            font-weight: 700;
-            font-family: 'Inter', sans-serif;
+        .depth-label { 
+            font-size: 9px; 
+            font-weight: 700; 
+            font-family: 'Inter', sans-serif; 
+            margin-top: 1px;
         }
-        .depth-item.active { color: var(--neon-gold); }
-        .depth-item.active .depth-icon { box-shadow: inset 3px 3px 8px rgba(0,0,0,0.1); }
+        
+        .depth-item.active { color: #000; }
+        .depth-item:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
@@ -162,8 +172,8 @@
     <div id="main-content">
         <header class="search-wrapper">
             <div class="titan-search-engine">
-                <input type="text" placeholder="NEMI KOMAI A MAFITA DUBU..." class="titan-input">
-                <div class="icon-group">
+                <input type="text" placeholder="Nemi komai a Mafita Dubu..." class="titan-input">
+                <div class="temu-controls">
                     <i class="fa-solid fa-camera camera-trigger"></i>
                     <div class="search-trigger-circle">
                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -173,9 +183,8 @@
             </div>
         </header>
 
-        <main class="max-w-7xl mx-auto px-6 mt-8">
+        <main class="max-w-7xl mx-auto px-6 mt-4">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 pb-12">
-                <!-- Boxes Content (Unchanged) -->
                 <a href="Marketplace/market.html" class="static-box block">
                     <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-white">Sashen 'Yan Kasuwa</h4><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-[10px]"></i></div></div>
                     <div class="img-container"><img src="https://i.postimg.cc/02LNsdFH/istockphoto-2196140224-612x612.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
@@ -212,27 +221,27 @@
         </main>
     </div>
 
-    <!-- UPDATED FOOTER WITH LABELS -->
+    <!-- RESTORED TRANSACTIONS & SLIM FOOTER -->
     <nav class="depth-dock">
         <div class="depth-item active" onclick="activate(this)">
-            <div class="depth-icon"><i class="fa-solid fa-house"></i></div>
+            <i class="fa-solid fa-house"></i>
             <span class="depth-label">Home</span>
         </div>
         <div class="depth-item" onclick="activate(this)">
-            <div class="depth-icon"><i class="fa-solid fa-chart-pie"></i></div>
+            <i class="fa-solid fa-list-ul"></i>
             <span class="depth-label">Categories</span>
         </div>
         <div class="depth-item" onclick="activate(this)">
-            <div class="depth-icon"><i class="fa-solid fa-paper-plane"></i></div>
+            <i class="fa-solid fa-comment-dots"></i>
             <span class="depth-label">Messages</span>
         </div>
         <div class="depth-item" onclick="activate(this)">
-            <div class="depth-icon"><i class="fa-solid fa-basket-shopping"></i></div>
+            <i class="fa-solid fa-basket-shopping"></i>
             <span class="depth-label">Transactions</span>
         </div>
         <div class="depth-item" onclick="activate(this)">
-            <div class="depth-icon"><i class="fa-solid fa-id-card-clip"></i></div>
-            <span class="depth-label">Profile</span>
+            <i class="fa-solid fa-user"></i>
+            <span class="depth-label">You</span>
         </div>
     </nav>
 
