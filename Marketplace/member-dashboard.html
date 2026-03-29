@@ -77,34 +77,6 @@
             transform: scale(0.8);
             pointer-events: none;
         }
-
-        /* --- TICKER --- */
-        .ticker-wrap {
-            width: 100%;
-            overflow: hidden;
-            background: rgba(212, 175, 55, 0.1);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 8px 0;
-        }
-
-        .ticker-move {
-            display: inline-block;
-            white-space: nowrap;
-            padding-right: 100%;
-            animation: ticker 25s linear infinite;
-            /* ELITE FONT UPDATE */
-            font-family: 'Syncopate', sans-serif;
-            font-size: 9px;
-            font-weight: 700;
-            color: #b58900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        @keyframes ticker {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-100%, 0, 0); }
-        }
         
         body {
             font-family: 'Quicksand', sans-serif;
@@ -118,7 +90,6 @@
             transform: scale(0.98);
             transition: all 1s ease-out;
             background-color: var(--milk);
-            /* Padding added to avoid content being hidden by fixed footer */
             padding-bottom: 80px; 
         }
 
@@ -127,92 +98,134 @@
             transform: scale(1);
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* --- TITAN SEARCH --- */
+        .search-wrapper {
+            width: 100%;
+            padding: 0; 
+            display: flex;
+            justify-content: center;
+        }
+
+        .titan-search-engine {
             position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            background: #0d0d0d;
+            border-radius: 0 0 50px 50px;
+            padding: 0 25px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-top: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             overflow: hidden;
         }
 
-        .glass-card::before {
-            content: '';
+        .titan-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-family: 'Syncopate', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .titan-input::placeholder {
+            color: rgba(212, 175, 55, 0.3);
+            font-size: 10px;
+        }
+
+        .camera-icon {
+            color: #D4AF37;
+            font-size: 18px;
+            margin-left: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            opacity: 0.8;
+        }
+
+        .camera-icon:hover {
+            opacity: 1;
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 8px #D4AF37);
+        }
+
+        .scan-line {
             position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: conic-gradient(transparent, transparent, transparent, var(--gold-glow));
-            animation: rotate 4s linear infinite;
-            opacity: 0;
-            transition: 0.5s;
-            z-index: 0;
-        }
-
-        .glass-card:hover::before, .glass-card.active-prism::before { opacity: 1; }
-        .glass-card > div, .glass-card > h3, .glass-card > p, .glass-card > button { position: relative; z-index: 1; }
-        @keyframes rotate { 100% { transform: rotate(360deg); } }
-
-        .glass-card:hover {
-            transform: scale(1.05) translateY(-5px);
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid var(--glow-color);
-            box-shadow: 0 20px 40px var(--glow-shadow);
-        }
-
-        /* --- MELTING EFFECT --- */
-        .melt-trigger {
-            animation: meltEffect 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-            pointer-events: none;
-        }
-
-        @keyframes meltEffect {
-            0% { transform: translateY(0); filter: blur(0); opacity: 1; }
-            100% { transform: translateY(100vh) scaleY(1.5); filter: blur(20px); opacity: 0; }
-        }
-
-        .card-kasuwa { --glow-color: #fbbf24; --glow-shadow: rgba(251, 191, 36, 0.2); }
-        .card-used { --glow-color: #22c55e; --glow-shadow: rgba(34, 197, 94, 0.2); }
-        .card-lafiya { --glow-color: #ef4444; --glow-shadow: rgba(239, 68, 68, 0.2); }
-        .card-sanaa { --glow-color: #2563eb; --glow-shadow: rgba(37, 99, 235, 0.2); }
-        .card-aure { --glow-color: #ec4899; --glow-shadow: rgba(236, 72, 153, 0.2); }
-        .card-hub { --glow-color: #d4af37; --glow-shadow: rgba(212, 175, 55, 0.4); }
-        .card-experts { --glow-color: #9333ea; --glow-shadow: rgba(147, 51, 234, 0.2); }
-        .card-girki { --glow-color: #ea580c; --glow-shadow: rgba(234, 88, 12, 0.2); }
-
-        .icon-gradient { background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%); }
-
-        /* --- FIXED FOOTER (NO SPACE) --- */
-        .depth-dock { 
-            position: fixed; /* Manne a waje guda */
-            bottom: 0; /* Ya dube kasa radau */
+            bottom: 0;
             left: 0;
-            right: 0;
-            height: 70px; 
-            background: var(--milk); 
-            display: flex; 
-            justify-content: space-around; 
-            align-items: center; 
-            padding: 0 10px; 
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, transparent, #D4AF37, #fff, #D4AF37, transparent);
+            transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .titan-input:focus ~ .scan-line {
+            width: 100%;
+        }
+
+        /* --- STATIC BOXES SYSTEM (8 BOXES) --- */
+        .static-box {
+            position: relative;
+            overflow: hidden;
+            height: 208px;
+            border-radius: 2.5rem;
+            background: #0c0c0c;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        @keyframes photo-reveal {
+            0%, 18% { opacity: 1; z-index: 30; visibility: visible; } 
+            23%, 25% { opacity: 0; z-index: 5; visibility: hidden; }
+            26%, 100% { opacity: 0; z-index: 5; visibility: hidden; } 
+        }
+
+        .img-container { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; animation: photo-reveal 16s infinite linear; }
+        .img-1 { animation-delay: 0s !important; }
+        .img-2 { animation-delay: 4s !important; }
+        .img-3 { animation-delay: 8s !important; }
+        .img-4 { animation-delay: 12s !important; }
+
+        .box-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(90deg, #d400ff, #00d2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            font-size: 14px;
+            text-transform: capitalize;
+        }
+
+        .box-overlay { position: absolute; inset: 0; z-index: 35; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%); pointer-events: none; }
+
+        .royal-seal {
+            background: radial-gradient(circle, #ffd700 0%, #b8860b 100%);
+            border: 1.5px solid #ffffff;
+            border-radius: 50%;
+            width: 28px; height: 28px;
+            display: flex; align-items: center; justify-content: center;
+            margin-top: 8px;
+        }
+
+        .depth-dock { 
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            height: 70px; background: var(--milk); 
+            display: flex; justify-content: space-around; align-items: center; padding: 0 10px; 
             box-shadow: 0 -5px 25px rgba(0,0,0,0.08); 
             border-top: 1px solid rgba(212, 175, 55, 0.2);
             z-index: 1000;
         }
 
         .depth-item { 
-            position: relative; 
-            width: 45px; 
-            height: 45px; 
-            background: var(--milk); 
-            border-radius: 12px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            cursor: pointer; 
-            box-shadow: 3px 3px 8px rgba(0,0,0,0.08); 
-            color: #777; 
-            transition: 0.2s; 
+            width: 45px; height: 45px; background: var(--milk); 
+            border-radius: 12px; display: flex; align-items: center; justify-content: center; 
+            cursor: pointer; box-shadow: 3px 3px 8px rgba(0,0,0,0.08); color: #777; transition: 0.2s; 
         }
 
         .depth-item.active { box-shadow: inset 3px 3px 8px rgba(0,0,0,0.1); color: var(--neon-gold); }
@@ -220,7 +233,6 @@
 </head>
 <body>
 
-    <!-- MAGNETIC SAND SPLASH SCREEN -->
     <div id="welcome-screen">
         <div class="text-center">
             <h1 class="sand-text">SADIQ</h1>
@@ -229,252 +241,101 @@
         </div>
     </div>
 
-    <!-- MAIN DASHBOARD CONTENT -->
     <div id="main-content">
-        
-     <!-- THE PURE FUTURISTIC SEARCH HUB -->
-<div class="search-wrapper">
-    <div class="neo-search-engine">
-        <!-- Search Icon -->
-        <i class="fa-solid fa-magnifying-glass main-glass"></i>
-        
-        <!-- Input Field -->
-        <input type="text" placeholder="Nemi komai a Mafita Dubu..." class="futuristic-input">
-
-        <!-- Tech Icons (Camera & Voice) -->
-        <div class="input-actions">
-            <button class="action-btn camera-trigger" title="Visual Search">
-                <i class="fa-solid fa-camera-retro"></i>
-            </button>
-            <button class="action-btn mic-trigger" title="Voice Search">
-                <i class="fa-solid fa-microphone-lines"></i>
-            </button>
-        </div>
-
-        <!-- Scanning Beam Animation -->
-        <div class="beam-light"></div>
-    </div>
-</div>
-
-<style>
-    .search-wrapper {
-        width: 100%;
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-        /* Yana amfani da background din shafinka kai tsaye */
-    }
-
-    .neo-search-engine {
-        position: relative;
-        width: 100%;
-        max-width: 600px;
-        height: 55px;
-        display: flex;
-        align-items: center;
-        background: rgba(255, 255, 255, 0.03); /* Transparent */
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(212, 175, 55, 0.3);
-        border-radius: 50px;
-        padding: 0 20px;
-        transition: all 0.4s ease;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Pulse Gold Glow lokacin da ake bincike */
-    .neo-search-engine:focus-within {
-        border-color: #D4AF37;
-        box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
-        background: rgba(255, 255, 255, 0.07);
-        transform: translateY(-2px);
-    }
-
-    .main-glass {
-        color: #D4AF37;
-        font-size: 18px;
-        margin-right: 15px;
-        filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
-    }
-
-    .futuristic-input {
-        flex: 1;
-        background: transparent;
-        border: none;
-        outline: none;
-        color: #fff;
-        font-family: 'Quicksand', sans-serif;
-        font-size: 15px;
-        font-weight: 500;
-        letter-spacing: 0.5px;
-    }
-
-    .futuristic-input::placeholder {
-        color: rgba(212, 175, 55, 0.4);
-        text-transform: uppercase;
-        font-size: 11px;
-        letter-spacing: 2px;
-    }
-
-    .input-actions {
-        display: flex;
-        gap: 15px;
-        align-items: center;
-        border-left: 1px solid rgba(212, 175, 55, 0.2);
-        padding-left: 15px;
-    }
-
-    .action-btn {
-        background: transparent;
-        border: none;
-        color: #D4AF37;
-        font-size: 18px;
-        cursor: pointer;
-        transition: 0.3s;
-        opacity: 0.7;
-    }
-
-    .action-btn:hover {
-        opacity: 1;
-        transform: scale(1.2);
-        filter: drop-shadow(0 0 8px #D4AF37);
-    }
-
-    /* Scanning Beam - Yana wucewa akai-akai */
-    .beam-light {
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 40%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.15), transparent);
-        animation: beam-swipe 4s infinite linear;
-        pointer-events: none;
-    }
-
-    @keyframes beam-swipe {
-        0% { left: -100%; }
-        100% { left: 150%; }
-    }
-
-    /* Camera Icon Blinking Effect (Attractive) */
-    .camera-trigger {
-        animation: cam-pulse 2s infinite alternate;
-    }
-
-    @keyframes cam-pulse {
-        0% { filter: drop-shadow(0 0 2px #D4AF37); }
-        100% { filter: drop-shadow(0 0 10px #D4AF37); opacity: 1; }
-    }
-</style>
-        
-      </div>
-</section> 
-<div class="px-5 grid grid-cols-2 gap-4 pb-10">
-<a href="Marketplace/market.html" class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0c0c0c] shadow-xl floating-box delay-5 block">
-        <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-            <h4 class="box-title text-white">Sashen 'Yan Kasuwa</h4> 
-            <div class="royal-seal"><i class="fa-solid fa-bolt text-white text-xs"></i></div>
-        </div>
-        <div class="img-container img-1"><img src="https://i.postimg.cc/02LNsdFH/istockphoto-2196140224-612x612.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-2"><img src="https://i.postimg.cc/fRnMFW0w/kano-market.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-3"><img src="https://i.postimg.cc/8s8gqwsT/348s.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-4"><img src="https://images.unsplash.com/photo-1578916171728-46686eac8d58?q=80&w=500" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-</a>
-    
-<a href="Used%20Hub/index.html" class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0c0c0c] shadow-xl floating-box delay-5 block group cursor-pointer">
-        <div class="absolute inset-0 flex flex-col items-center justify-center z-20 text-center">
-            <h4 class="box-title text-white group-hover:scale-110 transition-transform">Kasuwar Gwanjo</h4> 
-            <div class="royal-seal" style="background: radial-gradient(circle, #D4AF37 0%, #8B6508 100%);">
-                <i class="fa-solid fa-tags text-white text-[10px]"></i>
+        <div class="search-wrapper">
+            <div class="titan-search-engine">
+                <input type="text" placeholder="NEMI KOMAI A MAFITA DUBU..." class="titan-input">
+                <i class="fa-solid fa-camera camera-icon"></i>
+                <div class="scan-line"></div>
             </div>
         </div>
-        <div class="img-container img-1"><img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-2"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-3"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-4"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-</a>
 
-<a href="Health%20Hub/health.html" class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0c0c0c] shadow-xl floating-box delay-4 block cursor-pointer group">
-    <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-        <h4 class="box-title group-hover:scale-110 transition-transform duration-500">Sashen Kiwon Lafiya</h4>
-        <div class="royal-seal shadow-[0_0_15px_rgba(0,242,255,0.5)]"><i class="fa-solid fa-heart-pulse text-white text-xs"></i></div>
-    </div>
-    <div class="img-container img-1"><img src="https://i.postimg.cc/Y0P2spNJ/image-1.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-    <div class="img-container img-2"><img src="https://i.postimg.cc/7YCZT2wP/image-3.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-    <div class="img-container img-3"><img src="https://i.postimg.cc/hPHP8ttC/image-2.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-    <div class="img-container img-4"><img src="https://i.postimg.cc/6QhWNVfx/image-4.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-</a>
-    
-<div onclick="window.location.href='Marriage Hub/marriage-hub.html'" 
-         class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0c0c0c] shadow-xl floating-box delay-6 cursor-pointer group hover:ring-2 hover:ring-pink-500/50 transition-all duration-500">
-        <div class="absolute inset-0 flex flex-col items-center justify-center z-20 text-center">
-            <h4 class="box-title text-pink-500 group-hover:scale-110 transition-transform">Dandalin Hadin Aure</h4> 
-            <div class="royal-seal" style="background: radial-gradient(circle, #ff69b4 0%, #c71585 100%);">
-                <i class="fa-solid fa-heart text-white text-xs"></i>
+        <main class="max-w-7xl mx-auto px-6 mt-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 pb-10">
+                
+                <!-- 1. Kasuwa -->
+                <a href="Marketplace/market.html" class="static-box block">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center z-[40] text-center">
+                        <h4 class="box-title text-white">Sashen 'Yan Kasuwa</h4> 
+                        <div class="royal-seal"><i class="fa-solid fa-bolt text-white text-[10px]"></i></div>
+                    </div>
+                    <div class="img-container img-1"><img src="https://i.postimg.cc/02LNsdFH/istockphoto-2196140224-612x612.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+                    <div class="img-container img-2"><img src="https://i.postimg.cc/fRnMFW0w/kano-market.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+                    <div class="img-container img-3"><img src="https://i.postimg.cc/8s8gqwsT/348s.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+                    <div class="img-container img-4"><img src="https://images.unsplash.com/photo-1578916171728-46686eac8d58?q=80&w=500" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+                </a>
+
+                <!-- 2. Gwanjo -->
+                <a href="Used Hub/index.html" class="static-box block">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center z-[40] text-center">
+                        <h4 class="box-title text-white">Kasuwar Gwanjo</h4> 
+                        <div class="royal-seal"><i class="fa-solid fa-tags text-white text-[10px]"></i></div>
+                    </div>
+                    <div class="img-container img-1"><img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+                    <div class="img-container img-2"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+                    <div class="img-container img-3"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+                    <div class="img-container img-4"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+                </a>
+
+                <!-- 3. Lafiya -->
+                <a href="Health Hub/health.html" class="static-box block">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center z-[40] text-center">
+                        <h4 class="box-title text-white">Kiwon Lafiya</h4>
+                        <div class="royal-seal"><i class="fa-solid fa-heart-pulse text-white text-[10px]"></i></div>
+                    </div>
+                    <div class="img-container img-1"><img src="https://i.postimg.cc/Y0P2spNJ/image-1.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+                    <div class="img-container img-2"><img src="https://i.postimg.cc/7YCZT2wP/image-3.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+                </a>
+
+                <!-- 4. Sana'a -->
+                <a href="Daular Sana'a/index.html" class="static-box block">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center z-[40] text-center">
+                        <h4 class="box-title text-white">Koyon Sana'a</h4> 
+                        <div class="royal-seal"><i class="fa-solid fa-hammer text-white text-[10px]"></i></div>
+                    </div>
+                    <div class="img-container img-1"><img src="https://i.postimg.cc/j2V5zhch/IMG-20260122-WA0044(1).jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+                </a>
+
+                <!-- 5. Aure -->
+                <a href="Marriage Hub/marriage-hub.html" class="static-box block">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center z-[40] text-center">
+                        <h4 class="box-title text-pink-500">Dandalin Aure</h4> 
+                        <div class="royal-seal" style="background: radial-gradient(circle, #ff69b4 0%, #c71585 100%);"><i class="fa-solid fa-heart text-white text-[10px]"></i></div>
+                    </div>   
+                    <div class="img-container img-1"><img src="https://i.postimg.cc/pT5n7Xh8/wedding-1.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+                    <div class="img-container img-2"><img src="https://i.postimg.cc/mD8N1V7k/wedding-2.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+                </a>
+
+                <!-- 6. Mafita Hub -->
+                <div class="static-box">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center z-[40] text-center">
+                        <h4 class="box-title text-yellow-500">Mafita Hub</h4> 
+                        <div class="royal-seal"><i class="fa-solid fa-star text-white text-[10px]"></i></div>
+                    </div>
+                    <div class="img-container img-1"><img src="https://i.postimg.cc/GtRJvx6H/IMG-20260123-WA0031(1).jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+                </div>
+
+                <!-- 7. Experts -->
+                <div class="static-box">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center z-[40] text-center">
+                        <h4 class="box-title text-purple-500">Kwararru</h4> 
+                        <div class="royal-seal"><i class="fa-solid fa-user-gear text-white text-[10px]"></i></div>
+                    </div>
+                    <div class="img-container img-1"><img src="https://i.postimg.cc/JzcXcxTS/IMG-20260124-WA0029.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+                </div>
+
+                <!-- 8. Girki -->
+                <div class="static-box">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center z-[40] text-center">
+                        <h4 class="box-title text-orange-500">Sashen Girki</h4> 
+                        <div class="royal-seal"><i class="fa-solid fa-bowl-food text-white text-[10px]"></i></div>
+                    </div>
+                    <div class="img-container img-1"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+                </div>
+
             </div>
-        </div>   
-        <div class="img-container img-1"><img src="https://i.postimg.cc/pT5n7Xh8/wedding-1.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-2"><img src="https://i.postimg.cc/mD8N1V7k/wedding-2.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-3"><img src="https://i.postimg.cc/vH8zY8R1/wedding-3.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-4"><img src="https://i.postimg.cc/9M4S0V8q/wedding-4.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="absolute inset-0 bg-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-</div>
-    
-<a href="Daular Sana'a/index.html" class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0c0c0c] shadow-xl floating-box delay-1 block cursor-pointer">
-    <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-        <h4 class="box-title text-white">Koyon Sana'a</h4>
-        <div class="royal-seal"><i class="fa-solid fa-bolt text-white text-xs"></i></div>
-    </div>
-    <div class="img-container img-1"><img src="https://i.postimg.cc/j2V5zhch/IMG-20260122-WA0044(1).jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-    <div class="img-container img-2"><img src="https://i.postimg.cc/0jgQpCnG/IMG-20260124-WA0008.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-    <div class="img-container img-3"><img src="https://i.postimg.cc/J0wnbQx5/IMG-20260124-WA0009.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-    <div class="img-container img-4"><img src="https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?q=80&w=500" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-</a>
-    
+        </main>
 
-    <div class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0c0c0c] shadow-xl floating-box delay-2">
-        <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-            <h4 class="box-title">Neman Mafita</h4>
-            <div class="royal-seal"><i class="fa-solid fa-bolt text-white text-xs"></i></div>
-        </div>
-        <div class="img-container img-1"><img src="https://i.postimg.cc/GtRJvx6H/IMG-20260123-WA0031(1).jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-2"><img src="https://i.postimg.cc/kXKG0d6r/Chat-GPT-Image-Jan-24-2026-05-17-58-PM-png.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-3"><img src="https://i.postimg.cc/GmbL6Tn9/Chat-GPT-Image-Jan-24-2026-05-18-59-PM-png.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-4"><img src="https://i.postimg.cc/SNhkzYs8/Chat-GPT-Image-Jan-24-2026-05-16-08-PM-png.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-    </div>
-
-    <div class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0c0c0c] shadow-xl floating-box delay-3">
-        <div class="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-            <h4 class="box-title">Sashen Kwararru</h4>
-            <div class="royal-seal"><i class="fa-solid fa-bolt text-white text-xs"></i></div>
-        </div>
-        <div class="img-container img-1"><img src="https://i.postimg.cc/JzcXcxTS/IMG-20260124-WA0029.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-2"><img src="https://i.postimg.cc/Qdm7f7KH/images-20.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-3"><img src="https://i.postimg.cc/dDc7GZGY/IMG-20260122-WA0039-1.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-4"><img src="https://i.postimg.cc/bvKFw4yK/IMG-20260124-WA0028(1).jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-    </div>
-
-    <div onclick="alert('Muna girka muku kyakkyawan fannin Girki! Coming Soon.')" 
-         class="relative overflow-hidden h-52 rounded-[2.5rem] bg-[#0c0c0c] shadow-xl floating-box delay-6 cursor-pointer group">
-        <div class="absolute inset-0 flex flex-col items-center justify-center z-20 text-center">
-            <h4 class="box-title text-[#FFA500] group-hover:scale-110 transition-transform">Fannin Girki</h4> 
-            <div class="royal-seal" style="background: radial-gradient(circle, #FFA500 0%, #FF4500 100%);">
-                <i class="fa-solid fa-utensils text-white text-[10px]"></i>
-            </div>
-        </div>   
-        <div class="img-container img-1"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-2"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-3"><img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="img-container img-4"><img src="https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-        <div class="absolute inset-0 bg-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-    </div>
-
-</div>  
-
-                     
-
-        <!-- STATIC FOOTER NAV (FIXED AT BOTTOM) -->
         <nav class="depth-dock">
             <div class="depth-item active" onclick="activate(this)"><i class="fa-solid fa-house"></i></div>
             <div class="depth-item" onclick="activate(this)"><i class="fa-solid fa-chart-pie"></i></div>
@@ -497,44 +358,11 @@
             }, 5000); 
         });
 
-        // MELTING ACTION LOGIC
-        const clickables = document.querySelectorAll('.clickable-box, .depth-item');
-        clickables.forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.getElementById('main-content').classList.add('melt-trigger');
-                setTimeout(() => {
-                    // Logic din tafiya zuwa wani shafin anan
-                    console.log("Melting complete...");
-                }, 1000);
-            });
-        });
-
         function activate(el) {
             document.querySelectorAll('.depth-item').forEach(item => item.classList.remove('active'));
             el.classList.add('active');
         }
-
-        const cards = document.querySelectorAll('.glass-card');
-        cards.forEach(card => {
-            card.addEventListener('click', function() {
-                cards.forEach(c => c.classList.remove('active-prism'));
-                this.classList.add('active-prism');
-                const titleElement = this.querySelector('h3') || this.querySelector('h2');
-                const title = titleElement ? titleElement.innerText : '';
-                if(title) localStorage.setItem('mafita_last_active', title);
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const lastActive = localStorage.getItem('mafita_last_active');
-            if(lastActive) {
-                cards.forEach(card => {
-                    const titleElement = card.querySelector('h3') || card.querySelector('h2');
-                    const cardTitle = titleElement ? titleElement.innerText : '';
-                    if(cardTitle === lastActive) card.classList.add('active-prism');
-                });
-            }
-        });
     </script>
 </body>
-</html>
+                                                                                                                                                                                                        </html>
+                                                         
