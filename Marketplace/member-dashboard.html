@@ -217,23 +217,37 @@
         </div>
     </nav>
 
-    <script>
-        window.addEventListener('load', () => {
+    
+        <script>
+    window.addEventListener('load', () => {
+        const welcome = document.getElementById('welcome-screen');
+        const main = document.getElementById('main-content');
+
+        // Bincika ko an riga an nuna Welcome Screen a wannan zaman (session)
+        if (sessionStorage.getItem('welcomeFinished')) {
+            // Idan an riga an gani, boye welcome screen kai tsaye, nuna main content
+            welcome.style.display = 'none';
+            main.classList.add('show');
+        } else {
+            // Idan farkon shigowa ne, nuna shi na sakan 5 kamar yadda kake da shi
             setTimeout(() => {
-                const welcome = document.getElementById('welcome-screen');
-                const main = document.getElementById('main-content');
                 welcome.classList.add('screen-exit');
                 setTimeout(() => {
                     welcome.style.display = 'none';
                     main.classList.add('show');
+                    // Adana bayanin cewa an riga an nuna welcome screen
+                    sessionStorage.setItem('welcomeFinished', 'true');
                 }, 1500); 
             }, 5000); 
-        });
-        function activate(el) {
-            document.querySelectorAll('.depth-item').forEach(item => item.classList.remove('active'));
-            el.classList.add('active');
         }
-    </script>
+    });
+
+    function activate(el) {
+        document.querySelectorAll('.depth-item').forEach(item => item.classList.remove('active'));
+        el.classList.add('active');
+    }
+</script>
+    
 </body>
                                                    </html>
                                                                                                                                                          
