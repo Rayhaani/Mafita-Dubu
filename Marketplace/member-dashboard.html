@@ -238,12 +238,32 @@
             </div>
         </header>
 
-        <!-- SINGLE LINE TICKER -->
-        <div class="ticker-wrap">
-            <div class="ticker-move">
-                Barka da zuwa Mafita Dubu Abokina Sadiq... Sabbin kaya sun iso a sashin Kasuwa... Duba sashen Experts domin samun shawara... Kar ka manta da duba lafiyar ka yau... 
-            </div>
-        </div>
+        <!-- ELITE PREMIUM TICKER -->
+<div class="ticker-wrap" style="background: rgba(10, 10, 10, 0.95); border-top: 1px solid var(--gold-glow); border-bottom: 1px solid var(--gold-glow); box-shadow: 0 0 15px rgba(212, 175, 55, 0.1); padding: 12px 0;">
+    <div class="ticker-move" style="font-family: 'Syncopate', sans-serif; font-size: 10px; letter-spacing: 3px; color: var(--gold-glow); text-shadow: 0 0 8px rgba(212, 175, 55, 0.4);">
+        <i class="fa-solid fa-shield-halved mr-2"></i> SECURITY PROTOCOL ACTIVE • 
+        <i class="fa-solid fa-bolt mr-2"></i> SABBIN KAYA SUN ISO A KASUWA • 
+        <i class="fa-solid fa-crown mr-2"></i> WELCOME SADIQ (PREMIUM MEMBER) • 
+        <i class="fa-solid fa-circle-nodes mr-2"></i> SYNERGY NETWORK UPDATED •
+        <i class="fa-solid fa-shield-halved mr-2"></i> SECURITY PROTOCOL ACTIVE • 
+        <i class="fa-solid fa-bolt mr-2"></i> SABBIN KAYA SUN ISO A KASUWA • 
+    </div>
+</div>
+
+<style>
+    /* Karashen gyaran santsin tafiyar ticker */
+    .ticker-move {
+        display: inline-block;
+        white-space: nowrap;
+        animation: ticker 20s linear infinite; /* Na rage saurin don ya fi karantuwa */
+    }
+    
+    @keyframes ticker {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); } /* Domin ya zama seamless loop */
+    }
+</style>
+        
 
         <main class="max-w-7xl mx-auto px-6 mt-8">
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
