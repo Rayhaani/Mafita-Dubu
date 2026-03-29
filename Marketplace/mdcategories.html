@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories | Mafita Dubu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { --gold: #FB7701; }
+        body { font-family: 'Inter', sans-serif; background-color: #fff; margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        .sidebar-left::-webkit-scrollbar, .content-right::-webkit-scrollbar { display: none; }
+        .sidebar-left, .content-right { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .search-wrapper { width: 100%; background: #fff; padding: 6px 12px; border-bottom: 0.5px solid #f0f0f0; }
+        .titan-search-engine { width: 100%; height: 34px; display: flex; align-items: center; border-radius: 18px; border: 1.2px solid #111; padding-left: 12px; background: #fff; }
+        
+        .categories-container { display: flex; flex: 1; overflow: hidden; }
+        
+        /* SIDEBAR - STRICTLY RESTORED */
+        .sidebar-left { width: 85px; background: #f7f7f7; overflow-y: auto; height: 100%; border-right: 0.5px solid #eee; }
+        .cat-btn { width: 100%; padding: 12px 6px; font-size: 11px; font-weight: 500; text-align: left; color: #555; cursor: pointer; line-height: 1.2; }
+        .cat-btn.active { background: #fff; color: #000; font-weight: 700; border-left: 3.5px solid var(--gold); }
+        .side-dropdown { display: none; background: #fff; }
+        .marketplace-fixed { display: block !important; }
+        .side-sub-item { padding: 8px 10px; font-size: 10px; color: #888; text-align: left; cursor: pointer; border-bottom: 0.2px solid #fcfcfc; }
+
+        .content-right { flex: 1; background: #fff; overflow-y: auto; padding: 10px; }
+        .section-header { font-size: 14px; font-weight: 700; margin: 15px 0 10px 0; color: #111; display: flex; justify-content: space-between; align-items: center; }
+
+        /* SHOP BY CATEGORY - BIGGER CIRCLES */
+        .circle-row { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 4%; width: 100%; }
+        .circle-item { width: 30%; text-align: center; margin-bottom: 18px; }
+        .img-circle-box { 
+            width: 85px; height: 85px; background: #f8f8f8; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            overflow: hidden; margin: 0 auto 6px auto; border: 1px solid #f0f0f0;
+        }
+        .img-circle-box img { width: 100%; height: 100%; object-fit: cover; }
+        .circle-item p { font-size: 10px; font-weight: 600; color: #222; margin: 0; line-height: 1.2; }
+
+        /* TRENDING ITEMS - 2 per row, many rows */
+        .trending-row { display: flex; flex-wrap: wrap; justify-content: space-between; width: 100%; }
+        .trend-item { width: 48.5%; background: #fff; margin-bottom: 15px; border-radius: 8px; overflow: hidden; }
+        .trend-img-box { width: 100%; aspect-ratio: 1/1.2; background: #f5f5f5; position: relative; border-radius: 8px; overflow: hidden; }
+        .trend-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .cart-icon { position: absolute; bottom: 8px; right: 8px; background: #fff; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+        .trend-meta { padding: 8px 4px; }
+        .star-text { font-size: 9px; color: #111; font-weight: 500; margin-bottom: 2px; }
+        .price-bold { font-size: 14px; font-weight: 800; color: #000; }
+
+        .depth-dock { height: 55px; background: #fff; display: flex; justify-content: space-around; align-items: center; border-top: 0.5px solid #eee; }
+        .depth-item { display: flex; flex-direction: column; align-items: center; color: #666; font-size: 10px; font-weight: 600; }
+        .active-icon { color: var(--gold); }
+    </style>
+</head>
+<body>
+    <header class="search-wrapper">
+        <div class="titan-search-engine">
+            <input type="text" placeholder="pants for ladies underwear" class="flex-1 bg-transparent outline-none text-[12px]">
+            <i class="fa-solid fa-camera pr-3 text-gray-600"></i>
+            <i class="fa-solid fa-magnifying-glass pr-3"></i>
+        </div>
+    </header>
+
+    <div class="categories-container">
+        <aside class="sidebar-left">
+            <div class="cat-group"><div class="cat-btn" onclick="toggleSideMenu(this)">Health</div><div class="side-dropdown"><div class="side-sub-item">Pharmacy</div></div></div>
+            <div class="cat-group"><div class="cat-btn" onclick="toggleSideMenu(this)">Experts</div><div class="side-dropdown"><div class="side-sub-item">Lawyers</div></div></div>
+            <div class="cat-group"><div class="cat-btn" onclick="toggleSideMenu(this)">Life Solutions</div><div class="side-dropdown"><div class="side-sub-item">Counseling</div></div></div>
+            <div class="cat-group"><div class="cat-btn" onclick="toggleSideMenu(this)">Vocational</div><div class="side-dropdown"><div class="side-sub-item">Tailoring</div></div></div>
+            <div class="cat-group"><div class="cat-btn" onclick="toggleSideMenu(this)">Catering</div><div class="side-dropdown"><div class="side-sub-item">Recipes</div></div></div>
+            <div class="cat-group"><div class="cat-btn" onclick="toggleSideMenu(this)">Matchmaking</div><div class="side-dropdown"><div class="side-sub-item">Bride</div></div></div>
+            <div class="cat-group"><div class="cat-btn" onclick="toggleSideMenu(this)">Used Market</div><div class="side-dropdown"><div class="side-sub-item">Gwanjo</div></div></div>
+            <div class="cat-group">
+                <div class="cat-btn active" onclick="toggleSideMenu(this)">Marketplace</div>
+                <div class="side-dropdown marketplace-fixed">
+                    <div class="side-sub-item" style="color:var(--gold); font-weight:700;">Atamfa</div>
+                    <div class="side-sub-item">Laces</div>
+                    <div class="side-sub-item">Shadda</div>
+                    <div class="side-sub-item">Yadi</div>
+                    <div class="side-sub-item">Lifaya</div>
+                    <div class="side-sub-item">Sleepwear</div>
+                    <div class="side-sub-item">Hijabs</div>
+                    <div class="side-sub-item">Veils</div>
+                    <div class="side-sub-item">Underwears</div>
+                    <div class="side-sub-item">Caps</div>
+                    <div class="side-sub-item">Men lace</div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content-right">
+            <div class="section-header"><span>Shop by category</span></div>
+            <div class="circle-row">
+                <div class="circle-item"><div class="img-circle-box"><i class="fa-solid fa-grid-2 text-gray-400 text-2xl"></i></div><p>View All</p></div>
+                <div class="circle-item"><div class="img-circle-box"><img src="https://i.postimg.cc/02LNsdFH/istockphoto-2196140224-612x612.jpg"></div><p>Atamfa</p></div>
+                <div class="circle-item"><div class="img-circle-box"><img src="https://i.postimg.cc/pT5n7Xh8/wedding-1.jpg"></div><p>Laces</p></div>
+                <div class="circle-item"><div class="img-circle-box"><img src="https://i.postimg.cc/Y0P2spNJ/image-1.jpg"></div><p>Shadda</p></div>
+                <div class="circle-item"><div class="img-circle-box"><img src="https://i.postimg.cc/j2V5zhch/IMG-20260122-WA0044(1).jpg"></div><p>Yadi</p></div>
+                <div class="circle-item"><div class="img-circle-box"><img src="https://i.postimg.cc/GtRJvx6H/IMG-20260123-WA0031(1).jpg"></div><p>Lifaya</p></div>
+            </div>
+
+            <div class="section-header"><span>Trending items</span><span class="text-[11px] text-gray-400">Sort by <i class="fa-solid fa-chevron-down"></i></span></div>
+            <div class="trending-row">
+                <!-- Rows added to make at least 7-8 rows of products -->
+                <script>
+                    const items = [
+                        {img: 'https://i.postimg.cc/JzcXcxTS/IMG-20260124-WA0029.jpg', price: '3,207', sold: '45'},
+                        {img: 'https://i.postimg.cc/GtRJvx6H/IMG-20260123-WA0031(1).jpg', price: '26,424', sold: '166'},
+                        {img: 'https://i.postimg.cc/pT5n7Xh8/wedding-1.jpg', price: '15,000', sold: '89'},
+                        {img: 'https://i.postimg.cc/Y0P2spNJ/image-1.jpg', price: '8,500', sold: '230'},
+                        {img: 'https://i.postimg.cc/02LNsdFH/istockphoto-2196140224-612x612.jpg', price: '4,200', sold: '1.2k'},
+                        {img: 'https://i.postimg.cc/j2V5zhch/IMG-20260122-WA0044(1).jpg', price: '12,300', sold: '56'},
+                        {img: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=300', price: '2,500', sold: '400'},
+                        {img: 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=300', price: '1,200', sold: '1k'},
+                        {img: 'https://i.postimg.cc/JzcXcxTS/IMG-20260124-WA0029.jpg', price: '5,000', sold: '15'},
+                        {img: 'https://i.postimg.cc/pT5n7Xh8/wedding-1.jpg', price: '35,000', sold: '20'},
+                        {img: 'https://i.postimg.cc/Y0P2spNJ/image-1.jpg', price: '9,900', sold: '300'},
+                        {img: 'https://i.postimg.cc/GtRJvx6H/IMG-20260123-WA0031(1).jpg', price: '18,700', sold: '90'},
+                        {img: 'https://i.postimg.cc/02LNsdFH/istockphoto-2196140224-612x612.jpg', price: '6,400', sold: '45'},
+                        {img: 'https://i.postimg.cc/j2V5zhch/IMG-20260122-WA0044(1).jpg', price: '11,000', sold: '10'}
+                    ];
+                    items.forEach(item => {
+                        document.write(`
+                            <div class="trend-item">
+                                <div class="trend-img-box"><img src="${item.img}"><div class="cart-icon"><i class="fa-solid fa-cart-shopping"></i></div></div>
+                                <div class="trend-meta"><div class="star-text"><i class="fa-solid fa-star text-[8px]"></i> 4.8 | ${item.sold} sold</div><div class="price-bold">₦${item.price}</div></div>
+                            </div>
+                        `);
+                    });
+                </script>
+            </div>
+        </main>
+    </div>
+
+    <nav class="depth-dock">
+        <div class="depth-item"><i class="fa-solid fa-house"></i><span>Home</span></div>
+        <div class="depth-item active-icon"><i class="fa-solid fa-list-ul"></i><span>Categories</span></div>
+        <div class="depth-item"><i class="fa-solid fa-cart-shopping"></i><span>Cart</span></div>
+        <div class="depth-item"><i class="fa-solid fa-user"></i><span>You</span></div>
+    </nav>
+
+    <script>
+        function toggleSideMenu(element) {
+            const dropdown = element.nextElementSibling;
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            document.querySelectorAll('.side-dropdown').forEach(d => {
+                if (d !== dropdown && !d.classList.contains('marketplace-fixed')) d.style.display = 'none';
+            });
+            if (dropdown && !dropdown.classList.contains('marketplace-fixed')) {
+                dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+            }
+        }
+    </script>
+</body>
+</html>
