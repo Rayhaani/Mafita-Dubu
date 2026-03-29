@@ -3,53 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafita Dubu - Member Dashboard</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Quicksand:wght@300;400;500;600;700;800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>Categories | Mafita Dubu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Quicksand:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-
     <style>
-        :root {
-            --milk: #FFFDD0;
-            --deep-gold: #b58900;
-            --gold-glow: #D4AF37;
-            --sand-color: #C2B280;
-            --void-bg: #050505;
-            --neon-gold: #D4AF37;
+        :root { 
+            --gold: #FB7701; 
+            --milk: #FFFDD0; /* Background color daga dashboard */
         }
-
-        /* --- SPLASH SCREEN (UNTOUCHED) --- */
-        #welcome-screen {
-            position: fixed; inset: 0; background: var(--void-bg); z-index: 10000;
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
-            transition: all 1.5s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            background-color: var(--milk); 
+            margin: 0; 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
         }
-        .sand-text {
-            font-family: 'Syncopate', sans-serif; font-size: clamp(3rem, 15vw, 6.5rem);
-            font-weight: 700; color: transparent; -webkit-text-stroke: 1px rgba(194, 178, 128, 0.5);
-            position: relative; letter-spacing: 0.5em; text-transform: uppercase;
-            animation: assemble 4s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-        }
-        .sand-text::after {
-            content: 'SADIQ'; position: absolute; left: 0; top: 0; width: 100%; height: 100%;
-            color: var(--sand-color); text-shadow: 0 0 20px var(--sand-color);
-            mask-image: linear-gradient(to right, transparent, black, transparent);
-            mask-size: 200% 100%; animation: sandWave 3s linear infinite;
-        }
-        @keyframes assemble {
-            0% { letter-spacing: 2em; opacity: 0; filter: blur(20px); transform: scale(1.5); }
-            100% { letter-spacing: 0.2em; opacity: 1; filter: blur(0px); transform: scale(1); }
-        }
-        @keyframes sandWave { 0% { mask-position: 200% 0%; } 100% { mask-position: -200% 0%; } }
-        .sand-line { height: 2px; background: linear-gradient(to right, transparent, var(--sand-color), transparent); width: 100%; margin-top: 10px; }
-        .screen-exit { filter: opacity(0) saturate(0) blur(40px); transform: scale(0.8); pointer-events: none; }
         
-        body { font-family: 'Quicksand', sans-serif; background-color: var(--milk); margin: 0; overflow-x: hidden; }
-        #main-content { opacity: 0; transform: scale(0.98); transition: all 1s ease-out; background-color: var(--milk); padding-bottom: 60px; }
-        #main-content.show { opacity: 1; transform: scale(1); }
-
-        /* --- ALIEXPRESS HEADER (SHIFTED UP) --- */
+        /* HEADER STYLE - EXACTLY FROM DASHBOARD */
         .search-wrapper { 
             width: 100%; 
             display: flex; 
@@ -58,7 +31,7 @@
             top: 0; 
             z-index: 8000; 
             background-color: var(--milk); 
-            padding: 4px 12px 10px 12px; 
+            padding: 4px 12px 10px 12px;
         }
         .titan-search-engine {
             position: relative; 
@@ -78,47 +51,52 @@
             font-size: 15px;
             font-weight: 500;
         }
-        .titan-input::placeholder { color: #888; font-size: 14px; }
-
-        .temu-controls { 
-            display: flex; 
-            align-items: center; 
-            height: 100%;
-        }
-        .camera-trigger { 
-            color: #000; 
-            font-size: 22px; 
-            cursor: pointer; 
-            padding-right: 8px; 
-        }
+        .temu-controls { display: flex; align-items: center; height: 100%; }
+        .camera-trigger { color: #000; font-size: 22px; cursor: pointer; padding-right: 8px; }
         .search-trigger-pill {
-            background: #000; 
-            height: calc(100% - 4px); 
-            padding: 0 18px; 
-            border-radius: 20px; 
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; 
-            margin-right: 2px;
+            background: #000; height: calc(100% - 4px); padding: 0 18px; 
+            border-radius: 20px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; margin-right: 2px;
         }
-        .search-trigger-pill i { 
-            color: #fff; 
-            font-size: 16px; 
-            display: block; 
-            line-height: 1; 
-        }
+        .search-trigger-pill i { color: #fff; font-size: 16px; }
 
-        /* --- 8 BOXES STYLING --- */
-        .static-box { position: relative; overflow: hidden; height: 208px; border-radius: 2.5rem; background: #0c0c0c; }
-        .box-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 14px; text-transform: capitalize; z-index: 45; }
-        .img-container { position: absolute; inset: 0; width: 100%; height: 100%; }
-        .box-overlay { position: absolute; inset: 0; z-index: 35; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 70%); }
-        .royal-seal {
-            background: radial-gradient(circle, #ffd700 0%, #b8860b 100%);
-            border: 1.5px solid #fff; border-radius: 50%; width: 28px; height: 28px;
-            display: flex; align-items: center; justify-content: center; margin-top: 8px;
-        }
+        .categories-container { display: flex; flex: 1; overflow: hidden; }
+        
+        /* SIDEBAR */
+        .sidebar-left { width: 85px; background: rgba(0,0,0,0.03); overflow-y: auto; height: 100%; border-right: 0.5px solid rgba(0,0,0,0.05); }
+        .sidebar-left::-webkit-scrollbar { display: none; }
+        .cat-btn { width: 100%; padding: 12px 6px; font-size: 11px; font-weight: 600; text-align: left; color: #555; cursor: pointer; }
+        .cat-btn.active { background: var(--milk); color: #000; font-weight: 800; border-left: 3.5px solid #000; }
+        .side-dropdown { display: none; background: var(--milk); }
+        .marketplace-fixed { display: block !important; }
+        .side-sub-item { padding: 8px 10px; font-size: 10px; color: #888; text-align: left; border-bottom: 0.2px solid rgba(0,0,0,0.02); }
 
-        /* --- FOOTER --- */
+        .content-right { flex: 1; background: var(--milk); overflow-y: auto; padding: 10px; }
+        .content-right::-webkit-scrollbar { display: none; }
+        .section-header { font-size: 14px; font-weight: 800; margin: 15px 0 10px 0; color: #111; display: flex; justify-content: space-between; align-items: center; }
+
+        /* CATEGORY CIRCLES */
+        .circle-row { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 4%; width: 100%; }
+        .circle-item { width: 30%; text-align: center; margin-bottom: 18px; }
+        .img-circle-box { 
+            width: 85px; height: 85px; background: #fff; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            overflow: hidden; margin: 0 auto 6px auto; border: 1px solid rgba(0,0,0,0.05);
+        }
+        .img-circle-box img { width: 100%; height: 100%; object-fit: cover; }
+        .circle-item p { font-size: 10px; font-weight: 700; color: #222; margin: 0; }
+
+        /* TRENDING ITEMS */
+        .trending-row { display: flex; flex-wrap: wrap; justify-content: space-between; width: 100%; }
+        .trend-item { width: 48.5%; background: #fff; margin-bottom: 15px; border-radius: 12px; overflow: hidden; border: 0.5px solid rgba(0,0,0,0.05); }
+        .trend-img-box { width: 100%; aspect-ratio: 1/1.2; background: #f5f5f5; position: relative; }
+        .trend-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .cart-icon { position: absolute; bottom: 8px; right: 8px; background: #fff; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        .trend-meta { padding: 8px; }
+        .star-text { font-size: 9px; color: #666; font-weight: 600; }
+        .price-bold { font-size: 14px; font-weight: 800; color: #000; }
+
+        /* FOOTER STYLE - EXACTLY FROM DASHBOARD */
         .depth-dock { 
             position: fixed; bottom: 0; left: 0; right: 0; 
             height: 50px; 
@@ -133,73 +111,96 @@
     </style>
 </head>
 <body>
-
-    <div id="welcome-screen">
-        <div class="text-center">
-            <h1 class="sand-text">SADIQ</h1>
-            <div class="sand-line"></div>
-            <p class="text-[8px] tracking-[1em] text-white/30 mt-6 uppercase">Reconstructing Protocol</p>
-        </div>
-    </div>
-
-    <div id="main-content">
-        <header class="search-wrapper">
-            <div class="titan-search-engine">
-                <input type="text" placeholder="Nemi komai a Mafita Dubu..." class="titan-input">
-                <div class="temu-controls">
-                    <i class="fa-solid fa-camera camera-trigger"></i>
-                    <div class="search-trigger-pill">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </div>
+    <!-- HEADER EXACTLY FROM DASHBOARD -->
+    <header class="search-wrapper">
+        <div class="titan-search-engine">
+            <input type="text" placeholder="Nemi komai a Mafita Dubu..." class="titan-input">
+            <div class="temu-controls">
+                <i class="fa-solid fa-camera camera-trigger"></i>
+                <div class="search-trigger-pill">
+                    <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
             </div>
-        </header>
+        </div>
+    </header>
 
-        <main class="max-w-7xl mx-auto px-6 mt-4">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 pb-12">
-                <a href="Marketplace/market.html" class="static-box block">
-                    <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-white">Sashen 'Yan Kasuwa</h4><div class="royal-seal"><i class="fa-solid fa-bolt text-white text-[10px]"></i></div></div>
-                    <div class="img-container"><img src="https://i.postimg.cc/02LNsdFH/istockphoto-2196140224-612x612.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-                </a>
-                <a href="Used Hub/index.html" class="static-box block">
-                    <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-white">Kasuwar Gwanjo</h4><div class="royal-seal"><i class="fa-solid fa-tags text-white text-[10px]"></i></div></div>
-                    <div class="img-container"><img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-                </a>
-                <a href="Health Hub/health.html" class="static-box block">
-                    <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-white">Kiwon Lafiya</h4><div class="royal-seal"><i class="fa-solid fa-heart-pulse text-white text-[10px]"></i></div></div>
-                    <div class="img-container"><img src="https://i.postimg.cc/Y0P2spNJ/image-1.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-                </a>
-                <a href="Daular Sana'a/index.html" class="static-box block">
-                    <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-white">Koyon Sana'a</h4><div class="royal-seal"><i class="fa-solid fa-hammer text-white text-[10px]"></i></div></div>
-                    <div class="img-container"><img src="https://i.postimg.cc/j2V5zhch/IMG-20260122-WA0044(1).jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-                </a>
-                <a href="Marriage Hub/marriage-hub.html" class="static-box block">
-                    <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-pink-500">Dandalin Aure</h4><div class="royal-seal" style="background: radial-gradient(circle, #ff69b4 0%, #c71585 100%);"><i class="fa-solid fa-heart text-white text-[10px]"></i></div></div>   
-                    <div class="img-container"><img src="https://i.postimg.cc/pT5n7Xh8/wedding-1.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-                </a>
-                <div class="static-box">
-                    <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-yellow-500">Mafita Hub</h4><div class="royal-seal"><i class="fa-solid fa-star text-white text-[10px]"></i></div></div>
-                    <div class="img-container"><img src="https://i.postimg.cc/GtRJvx6H/IMG-20260123-WA0031(1).jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
+    <div class="categories-container">
+        <aside class="sidebar-left">
+            <div class="cat-group"><div class="cat-btn" onclick="toggleSideMenu(this)">Health</div><div class="side-dropdown"><div class="side-sub-item">Pharmacy</div></div></div>
+            <div class="cat-group"><div class="cat-btn" onclick="toggleSideMenu(this)">Experts</div><div class="side-dropdown"><div class="side-sub-item">Lawyers</div></div></div>
+            <div class="cat-group"><div class="cat-btn" onclick="toggleSideMenu(this)">Life Solutions</div><div class="side-dropdown"><div class="side-sub-item">Counseling</div></div></div>
+            <div class="cat-group"><div class="cat-btn" onclick="toggleSideMenu(this)">Vocational</div><div class="side-dropdown"><div class="side-sub-item">Tailoring</div></div></div>
+            <div class="cat-group"><div class="cat-btn" onclick="toggleSideMenu(this)">Catering</div><div class="side-dropdown"><div class="side-sub-item">Recipes</div></div></div>
+            <div class="cat-group"><div class="cat-btn" onclick="toggleSideMenu(this)">Matchmaking</div><div class="side-dropdown"><div class="side-sub-item">Bride</div></div></div>
+            <div class="cat-group"><div class="cat-btn" onclick="toggleSideMenu(this)">Used Market</div><div class="side-dropdown"><div class="side-sub-item">Gwanjo</div></div></div>
+            <div class="cat-group">
+                <div class="cat-btn active" onclick="toggleSideMenu(this)">Marketplace</div>
+                <div class="side-dropdown marketplace-fixed">
+                    <div class="side-sub-item" style="color:#000; font-weight:800;">Atamfa</div>
+                    <div class="side-sub-item">Laces</div>
+                    <div class="side-sub-item">Shadda</div>
+                    <div class="side-sub-item">Yadi</div>
+                    <div class="side-sub-item">Lifaya</div>
+                    <div class="side-sub-item">Sleepwear</div>
+                    <div class="side-sub-item">Hijabs</div>
+                    <div class="side-sub-item">Veils</div>
+                    <div class="side-sub-item">Underwears</div>
+                    <div class="side-sub-item">Caps</div>
+                    <div class="side-sub-item">Men lace</div>
                 </div>
-                <div class="static-box">
-                    <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-purple-500">Kwararru</h4><div class="royal-seal"><i class="fa-solid fa-user-gear text-white text-[10px]"></i></div></div>
-                    <div class="img-container"><img src="https://i.postimg.cc/JzcXcxTS/IMG-20260124-WA0029.jpg" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-                </div>
-                <div class="static-box">
-                    <div class="absolute inset-0 flex flex-col items-center justify-center z-[40]"><h4 class="box-title text-orange-500">Sashen Girki</h4><div class="royal-seal"><i class="fa-solid fa-bowl-food text-white text-[10px]"></i></div></div>
-                    <div class="img-container"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400" class="w-full h-full object-cover"><div class="box-overlay"></div></div>
-                </div>
+            </div>
+        </aside>
+
+        <main class="content-right">
+            <div class="section-header"><span>Shop by category</span></div>
+            <div class="circle-row">
+                <div class="circle-item"><div class="img-circle-box"><i class="fa-solid fa-grid-2 text-gray-400 text-2xl"></i></div><p>View All</p></div>
+                <div class="circle-item"><div class="img-circle-box"><img src="https://i.postimg.cc/02LNsdFH/istockphoto-2196140224-612x612.jpg"></div><p>Atamfa</p></div>
+                <div class="circle-item"><div class="img-circle-box"><img src="https://i.postimg.cc/pT5n7Xh8/wedding-1.jpg"></div><p>Laces</p></div>
+                <div class="circle-item"><div class="img-circle-box"><img src="https://i.postimg.cc/Y0P2spNJ/image-1.jpg"></div><p>Shadda</p></div>
+                <div class="circle-item"><div class="img-circle-box"><img src="https://i.postimg.cc/j2V5zhch/IMG-20260122-WA0044(1).jpg"></div><p>Yadi</p></div>
+                <div class="circle-item"><div class="img-circle-box"><img src="https://i.postimg.cc/GtRJvx6H/IMG-20260123-WA0031(1).jpg"></div><p>Lifaya</p></div>
+            </div>
+
+            <div class="section-header"><span>Trending items</span><span class="text-[11px] text-gray-400">Sort by <i class="fa-solid fa-chevron-down"></i></span></div>
+            <div class="trending-row">
+                <script>
+                    const items = [
+                        {img: 'https://i.postimg.cc/JzcXcxTS/IMG-20260124-WA0029.jpg', price: '3,207', sold: '45'},
+                        {img: 'https://i.postimg.cc/GtRJvx6H/IMG-20260123-WA0031(1).jpg', price: '26,424', sold: '166'},
+                        {img: 'https://i.postimg.cc/pT5n7Xh8/wedding-1.jpg', price: '15,000', sold: '89'},
+                        {img: 'https://i.postimg.cc/Y0P2spNJ/image-1.jpg', price: '8,500', sold: '230'},
+                        {img: 'https://i.postimg.cc/02LNsdFH/istockphoto-2196140224-612x612.jpg', price: '4,200', sold: '1.2k'},
+                        {img: 'https://i.postimg.cc/j2V5zhch/IMG-20260122-WA0044(1).jpg', price: '12,300', sold: '56'},
+                        {img: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=300', price: '2,500', sold: '400'},
+                        {img: 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=300', price: '1,200', sold: '1k'},
+                        {img: 'https://i.postimg.cc/JzcXcxTS/IMG-20260124-WA0029.jpg', price: '5,000', sold: '15'},
+                        {img: 'https://i.postimg.cc/pT5n7Xh8/wedding-1.jpg', price: '35,000', sold: '20'},
+                        {img: 'https://i.postimg.cc/Y0P2spNJ/image-1.jpg', price: '9,900', sold: '300'},
+                        {img: 'https://i.postimg.cc/GtRJvx6H/IMG-20260123-WA0031(1).jpg', price: '18,700', sold: '90'},
+                        {img: 'https://i.postimg.cc/02LNsdFH/istockphoto-2196140224-612x612.jpg', price: '6,400', sold: '45'},
+                        {img: 'https://i.postimg.cc/j2V5zhch/IMG-20260122-WA0044(1).jpg', price: '11,000', sold: '10'}
+                    ];
+                    items.forEach(item => {
+                        document.write(`
+                            <div class="trend-item">
+                                <div class="trend-img-box"><img src="${item.img}"><div class="cart-icon"><i class="fa-solid fa-cart-shopping"></i></div></div>
+                                <div class="trend-meta"><div class="star-text"><i class="fa-solid fa-star text-[8px]"></i> 4.8 | ${item.sold} sold</div><div class="price-bold">₦${item.price}</div></div>
+                            </div>
+                        `);
+                    });
+                </script>
             </div>
         </main>
     </div>
 
-    <!-- FOOTER WITH CONNECTED LINKS -->
+    <!-- FOOTER EXACTLY FROM DASHBOARD -->
     <nav class="depth-dock">
-        <div class="depth-item active" onclick="activate(this)">
+        <div class="depth-item" onclick="window.location.href='index.html'">
             <i class="fa-solid fa-house"></i>
             <span class="depth-label">Home</span>
         </div>
-        <div class="depth-item" onclick="window.location.href='mdcategories.html'">
+        <div class="depth-item active" onclick="window.location.href='mdcategories.html'">
             <i class="fa-solid fa-list-ul"></i>
             <span class="depth-label">Categories</span>
         </div>
@@ -218,22 +219,18 @@
     </nav>
 
     <script>
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const welcome = document.getElementById('welcome-screen');
-                const main = document.getElementById('main-content');
-                welcome.classList.add('screen-exit');
-                setTimeout(() => {
-                    welcome.style.display = 'none';
-                    main.classList.add('show');
-                }, 1500); 
-            }, 5000); 
-        });
-        function activate(el) {
-            document.querySelectorAll('.depth-item').forEach(item => item.classList.remove('active'));
-            el.classList.add('active');
+        function toggleSideMenu(element) {
+            const dropdown = element.nextElementSibling;
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            document.querySelectorAll('.side-dropdown').forEach(d => {
+                if (d !== dropdown && !d.classList.contains('marketplace-fixed')) d.style.display = 'none';
+            });
+            if (dropdown && !dropdown.classList.contains('marketplace-fixed')) {
+                dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+            }
         }
     </script>
 </body>
-    </html>
-                                                                                                                                                                 
+                </html>
+    
