@@ -238,17 +238,117 @@
             </div>
         </header>
 
-        <!-- ELITE PREMIUM TICKER -->
-<div class="ticker-wrap" style="background: rgba(10, 10, 10, 0.95); border-top: 1px solid var(--gold-glow); border-bottom: 1px solid var(--gold-glow); box-shadow: 0 0 15px rgba(212, 175, 55, 0.1); padding: 12px 0;">
-    <div class="ticker-move" style="font-family: 'Syncopate', sans-serif; font-size: 10px; letter-spacing: 3px; color: var(--gold-glow); text-shadow: 0 0 8px rgba(212, 175, 55, 0.4);">
-        <i class="fa-solid fa-shield-halved mr-2"></i> SECURITY PROTOCOL ACTIVE • 
-        <i class="fa-solid fa-bolt mr-2"></i> SABBIN KAYA SUN ISO A KASUWA • 
-        <i class="fa-solid fa-crown mr-2"></i> WELCOME SADIQ (PREMIUM MEMBER) • 
-        <i class="fa-solid fa-circle-nodes mr-2"></i> SYNERGY NETWORK UPDATED •
-        <i class="fa-solid fa-shield-halved mr-2"></i> SECURITY PROTOCOL ACTIVE • 
-        <i class="fa-solid fa-bolt mr-2"></i> SABBIN KAYA SUN ISO A KASUWA • 
+        <!-- ULTRA-ATTENTION NOTIFICATION SYSTEM -->
+<div id="urgent-ticker" class="cyber-alert">
+    <div class="alert-status">
+        <span class="status-dot"></span>
+        LIVE UPDATES
+    </div>
+    <div class="ticker-content">
+        <div class="ticker-move">
+            <span>*** SECURITY PROTOCOL ACTIVE ***</span>
+            <span>SABBIN KAYA SUN ISO A KASUWA - DUBA YANZU!</span>
+            <span>WELCOME SADIQ (PREMIUM MEMBER)</span>
+            <span>SYNERGY NETWORK UPDATED 2026</span>
+            <span>*** SECURITY PROTOCOL ACTIVE ***</span>
+        </div>
     </div>
 </div>
+
+<style>
+    /* CYBER ALERT DESIGN */
+    .cyber-alert {
+        width: 100%;
+        background: #000;
+        display: flex;
+        align-items: center;
+        border-top: 1px solid #D4AF37;
+        border-bottom: 2px solid #D4AF37;
+        height: 45px;
+        overflow: hidden;
+        position: relative;
+        /* Blinking Background Effect */
+        animation: bg-pulse 1.5s infinite alternate;
+    }
+
+    .alert-status {
+        background: #D4AF37;
+        color: #000;
+        font-family: 'Syncopate', sans-serif;
+        font-size: 9px;
+        font-weight: 800;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0 15px;
+        z-index: 10;
+        clip-path: polygon(0 0, 90% 0, 100% 100%, 0% 100%);
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        background: #ff0000;
+        border-radius: 50%;
+        margin-right: 8px;
+        animation: blink 0.6s infinite;
+    }
+
+    .ticker-content {
+        flex: 1;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .ticker-move {
+        display: flex;
+        gap: 50px;
+        white-space: nowrap;
+        animation: ticker-slide 15s linear infinite;
+    }
+
+    .ticker-move span {
+        font-family: 'Syncopate', sans-serif;
+        color: #D4AF37;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    }
+
+    /* ANIMATIONS */
+    @keyframes ticker-slide {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.3; transform: scale(1.2); }
+    }
+
+    @keyframes bg-pulse {
+        0% { background: #000; box-shadow: inset 0 0 0px rgba(212, 175, 55, 0); }
+        100% { background: #1a1608; box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.2); }
+    }
+
+    /* Scanner light effect across the ticker */
+    .cyber-alert::after {
+        content: '';
+        position: absolute;
+        top: 0; left: -100%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+        animation: scanner 3s linear infinite;
+    }
+
+    @keyframes scanner {
+        0% { left: -100%; }
+        100% { left: 200%; }
+    }
+</style>
+        
 
 <style>
     /* Karashen gyaran santsin tafiyar ticker */
