@@ -231,284 +231,179 @@
 
     <!-- MAIN DASHBOARD CONTENT -->
     <div id="main-content">
-        <!-- CLEAN PROFESSIONAL HEADER -->
-        <header class="py-5 px-6 sticky top-0 z-50 backdrop-blur-md" style="background: #111; background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); border-bottom: 2px solid var(--gold-glow);">
-            <div class="max-w-7xl mx-auto flex justify-center items-center">
-                <h1 class="text-lg md:text-xl font-bold text-white tracking-widest uppercase text-center" style="font-family: 'Syncopate', sans-serif;">Member Dashboard</h1>
-            </div>
-        </header>
-
-
         
-        <!-- THE ELITE PROTOCOL TICKER -->
-<div class="command-ticker">
-    <div class="alert-badge">
-        <span class="pulse-red"></span>
-        <p>SYSTEM ALERT</p>
-    </div>
-    
-    <div class="scrolling-data">
-        <div class="data-track">
-            <span class="glitch-text" data-text="*** ACCESS GRANTED: SADIQ ***">*** ACCESS GRANTED: SADIQ ***</span>
-            <span class="emergency-txt">ATTENTION: SABBIN KAYA SUN ISO A KASUWA!</span>
-            <span>SYNERGY NETWORK: ONLINE [300+ NODES]</span>
-            <span class="emergency-txt">MAFINA DUBU: NEW EXPERTS ADDED</span>
-            <span class="glitch-text" data-text="*** STATUS: SECURE ***">*** STATUS: SECURE ***</span>
-            <span class="emergency-txt">ATTENTION: SABBIN KAYA SUN ISO A KASUWA!</span>
+     
+        <!-- FUTURISTIC NAVIGATION HUB (NEW HEADER) -->
+<header class="floating-header">
+    <div class="search-container">
+        <!-- Brand Logo/Icon -->
+        <div class="hub-logo">
+            <i class="fa-solid fa-microchip"></i>
+        </div>
+
+        <!-- The Futuristic Search Bar -->
+        <div class="neo-search-bar">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" placeholder="Nemi komai a Mafita Dubu..." id="main-search">
+            <div class="search-scan-line"></div>
+            <button class="voice-cmd">
+                <i class="fa-solid fa-microphone-lines"></i>
+            </button>
+        </div>
+
+        <!-- Quick Action Profile -->
+        <div class="user-status">
+            <div class="status-ring"></div>
+            <img src="https://ui-avatars.com/api/?name=Sadiq&background=D4AF37&color=fff" alt="User">
         </div>
     </div>
-
-    <!-- Scanner Line Overlay -->
-    <div class="scanner-line"></div>
-</div>
+</header>
 
 <style>
-    :root {
-        --alert-red: #ff0000;
-        --elite-gold: #D4AF37;
-    }
-
-    .command-ticker {
-        width: 100%;
-        height: 50px;
-        background: #080808; /* Deep dark for contrast */
-        border-top: 1px solid rgba(212, 175, 55, 0.4);
-        border-bottom: 3px solid var(--elite-gold);
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-        position: relative;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(255, 0, 0, 0.1);
-    }
-
-    /* Left Side Badge */
-    .alert-badge {
-        background: #000;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        padding: 0 12px;
-        border-right: 2px solid var(--elite-gold);
-        z-index: 5;
-    }
-
-    .alert-badge p {
-        font-family: 'Syncopate', sans-serif;
-        font-size: 8px;
-        font-weight: 900;
-        color: #fff;
-        letter-spacing: 1px;
-    }
-
-    /* The Blinking Red Dot */
-    .pulse-red {
-        width: 8px;
-        height: 8px;
-        background: var(--alert-red);
-        border-radius: 50%;
-        margin-right: 8px;
-        box-shadow: 0 0 10px var(--alert-red);
-        animation: blink-red 0.5s infinite alternate;
-    }
-
-    @keyframes blink-red {
-        from { opacity: 1; transform: scale(1); }
-        to { opacity: 0.2; transform: scale(1.3); }
-    }
-
-    /* Scrolling Section */
-    .scrolling-data {
-        flex: 1;
-        overflow: hidden;
-    }
-
-    .data-track {
-        display: flex;
-        gap: 60px;
-        white-space: nowrap;
-        animation: scroll-left 18s linear infinite;
-    }
-
-    .data-track span {
-        font-family: 'Syncopate', sans-serif;
-        font-size: 11px;
-        font-weight: 700;
-        color: var(--elite-gold);
-        letter-spacing: 2px;
-        text-transform: uppercase;
-    }
-
-    /* Special Red Attention Text */
-    .emergency-txt {
-        color: #fff !important;
-        background: var(--alert-red);
-        padding: 2px 8px;
-        border-radius: 4px;
-        animation: flash-bg 0.8s infinite;
-    }
-
-    @keyframes flash-bg {
-        0%, 100% { background: var(--alert-red); }
-        50% { background: #000; color: var(--alert-red) !important; }
-    }
-
-    /* Animation for the Scroll */
-    @keyframes scroll-left {
-        0% { transform: translateX(100%); }
-        100% { transform: translateX(-150%); }
-    }
-
-    /* Glitch Effect for the "Access Granted" text */
-    .glitch-text {
-        position: relative;
-    }
-    .glitch-text::before, .glitch-text::after {
-        content: attr(data-text);
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        opacity: 0.8;
-    }
-    .glitch-text::before { color: #0ff; z-index: -1; animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite; }
-    .glitch-text::after { color: #f0f; z-index: -2; animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) reverse both infinite; }
-
-    @keyframes glitch {
-        0% { transform: translate(0); }
-        20% { transform: translate(-2px, 2px); }
-        40% { transform: translate(-2px, -2px); }
-        60% { transform: translate(2px, 2px); }
-        80% { transform: translate(2px, -2px); }
-        100% { transform: translate(0); }
-    }
-
-    /* Vertical Scanner Line */
-    .scanner-line {
-        position: absolute;
+    /* FLOATING HEADER CORE */
+    .floating-header {
+        position: sticky;
         top: 0;
-        left: 0;
-        width: 2px;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.4);
-        box-shadow: 0 0 15px #fff;
-        animation: scan-move 4s linear infinite;
-        z-index: 10;
-        pointer-events: none;
+        z-index: 1000;
+        padding: 15px 10px;
+        background: rgba(5, 5, 5, 0.85); /* Dark Glass */
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(212, 175, 55, 0.3);
     }
 
-    @keyframes scan-move {
-        0% { left: 0%; }
-        100% { left: 100%; }
-    }
-            </style>
-        
-
-<style>
-    /* CYBER ALERT DESIGN */
-    .cyber-alert {
-        width: 100%;
-        background: #000;
+    .search-container {
+        max-width: 1200px;
+        margin: 0 auto;
         display: flex;
         align-items: center;
-        border-top: 1px solid #D4AF37;
-        border-bottom: 2px solid #D4AF37;
-        height: 45px;
-        overflow: hidden;
-        position: relative;
-        /* Blinking Background Effect */
-        animation: bg-pulse 1.5s infinite alternate;
+        gap: 12px;
     }
 
-    .alert-status {
-        background: #D4AF37;
+    .hub-logo {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #D4AF37, #b58900);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         color: #000;
-        font-family: 'Syncopate', sans-serif;
-        font-size: 9px;
-        font-weight: 800;
-        height: 100%;
+        font-size: 1.2rem;
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+    }
+
+    /* NEO SEARCH BAR */
+    .neo-search-bar {
+        flex: 1;
+        height: 48px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        border-radius: 15px;
         display: flex;
         align-items: center;
         padding: 0 15px;
-        z-index: 10;
-        clip-path: polygon(0 0, 90% 0, 100% 100%, 0% 100%);
-    }
-
-    .status-dot {
-        width: 8px;
-        height: 8px;
-        background: #ff0000;
-        border-radius: 50%;
-        margin-right: 8px;
-        animation: blink 0.6s infinite;
-    }
-
-    .ticker-content {
-        flex: 1;
-        overflow: hidden;
         position: relative;
+        overflow: hidden;
+        transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    .ticker-move {
-        display: flex;
-        gap: 50px;
-        white-space: nowrap;
-        animation: ticker-slide 15s linear infinite;
+    .neo-search-bar:focus-within {
+        border-color: #D4AF37;
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        background: rgba(255, 255, 255, 0.08);
     }
 
-    .ticker-move span {
-        font-family: 'Syncopate', sans-serif;
+    .search-icon {
         color: #D4AF37;
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 2px;
-        text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        margin-right: 12px;
+        font-size: 0.9rem;
     }
 
-    /* ANIMATIONS */
-    @keyframes ticker-slide {
-        0% { transform: translateX(100%); }
-        100% { transform: translateX(-100%); }
+    .neo-search-bar input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #fff;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        width: 100%;
     }
 
-    @keyframes blink {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.3; transform: scale(1.2); }
+    .neo-search-bar input::placeholder {
+        color: rgba(212, 175, 55, 0.5);
     }
 
-    @keyframes bg-pulse {
-        0% { background: #000; box-shadow: inset 0 0 0px rgba(212, 175, 55, 0); }
-        100% { background: #1a1608; box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.2); }
+    /* Voice Command Button */
+    .voice-cmd {
+        background: transparent;
+        border: none;
+        color: #D4AF37;
+        cursor: pointer;
+        padding: 5px;
+        transition: 0.3s;
     }
 
-    /* Scanner light effect across the ticker */
-    .cyber-alert::after {
-        content: '';
+    .voice-cmd:hover {
+        transform: scale(1.2);
+        text-shadow: 0 0 10px #D4AF37;
+    }
+
+    /* Scanning Line Animation in Search */
+    .search-scan-line {
         position: absolute;
-        top: 0; left: -100%;
-        width: 50%;
+        top: 0;
+        left: -100%;
+        width: 30%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
-        animation: scanner 3s linear infinite;
+        background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+        animation: search-scan 3s infinite;
+        pointer-events: none;
     }
 
-    @keyframes scanner {
+    @keyframes search-scan {
         0% { left: -100%; }
-        100% { left: 200%; }
+        100% { left: 100%; }
+    }
+
+    /* User Avatar & Status */
+    .user-status {
+        position: relative;
+        width: 42px;
+        height: 42px;
+    }
+
+    .user-status img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 2px solid #D4AF37;
+        padding: 2px;
+    }
+
+    .status-ring {
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+        width: 10px;
+        height: 10px;
+        background: #00ff00; /* Online status */
+        border: 2px solid #000;
+        border-radius: 50%;
+        z-index: 2;
+        animation: pulse-green 2s infinite;
+    }
+
+    @keyframes pulse-green {
+        0% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(0, 255, 0, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0); }
     }
 </style>
         
 
-<style>
-    /* Karashen gyaran santsin tafiyar ticker */
-    .ticker-move {
-        display: inline-block;
-        white-space: nowrap;
-        animation: ticker 20s linear infinite; /* Na rage saurin don ya fi karantuwa */
-    }
-    
-    @keyframes ticker {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); } /* Domin ya zama seamless loop */
-    }
-</style>
+
         
 
         <main class="max-w-7xl mx-auto px-6 mt-8">
