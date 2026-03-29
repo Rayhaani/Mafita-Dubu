@@ -238,22 +238,168 @@
             </div>
         </header>
 
-        <!-- ULTRA-ATTENTION NOTIFICATION SYSTEM -->
-<div id="urgent-ticker" class="cyber-alert">
-    <div class="alert-status">
-        <span class="status-dot"></span>
-        LIVE UPDATES
+
+        
+        <!-- THE ELITE PROTOCOL TICKER -->
+<div class="command-ticker">
+    <div class="alert-badge">
+        <span class="pulse-red"></span>
+        <p>SYSTEM ALERT</p>
     </div>
-    <div class="ticker-content">
-        <div class="ticker-move">
-            <span>*** SECURITY PROTOCOL ACTIVE ***</span>
-            <span>SABBIN KAYA SUN ISO A KASUWA - DUBA YANZU!</span>
-            <span>WELCOME SADIQ (PREMIUM MEMBER)</span>
-            <span>SYNERGY NETWORK UPDATED 2026</span>
-            <span>*** SECURITY PROTOCOL ACTIVE ***</span>
+    
+    <div class="scrolling-data">
+        <div class="data-track">
+            <span class="glitch-text" data-text="*** ACCESS GRANTED: SADIQ ***">*** ACCESS GRANTED: SADIQ ***</span>
+            <span class="emergency-txt">ATTENTION: SABBIN KAYA SUN ISO A KASUWA!</span>
+            <span>SYNERGY NETWORK: ONLINE [300+ NODES]</span>
+            <span class="emergency-txt">MAFINA DUBU: NEW EXPERTS ADDED</span>
+            <span class="glitch-text" data-text="*** STATUS: SECURE ***">*** STATUS: SECURE ***</span>
+            <span class="emergency-txt">ATTENTION: SABBIN KAYA SUN ISO A KASUWA!</span>
         </div>
     </div>
+
+    <!-- Scanner Line Overlay -->
+    <div class="scanner-line"></div>
 </div>
+
+<style>
+    :root {
+        --alert-red: #ff0000;
+        --elite-gold: #D4AF37;
+    }
+
+    .command-ticker {
+        width: 100%;
+        height: 50px;
+        background: #080808; /* Deep dark for contrast */
+        border-top: 1px solid rgba(212, 175, 55, 0.4);
+        border-bottom: 3px solid var(--elite-gold);
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(255, 0, 0, 0.1);
+    }
+
+    /* Left Side Badge */
+    .alert-badge {
+        background: #000;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0 12px;
+        border-right: 2px solid var(--elite-gold);
+        z-index: 5;
+    }
+
+    .alert-badge p {
+        font-family: 'Syncopate', sans-serif;
+        font-size: 8px;
+        font-weight: 900;
+        color: #fff;
+        letter-spacing: 1px;
+    }
+
+    /* The Blinking Red Dot */
+    .pulse-red {
+        width: 8px;
+        height: 8px;
+        background: var(--alert-red);
+        border-radius: 50%;
+        margin-right: 8px;
+        box-shadow: 0 0 10px var(--alert-red);
+        animation: blink-red 0.5s infinite alternate;
+    }
+
+    @keyframes blink-red {
+        from { opacity: 1; transform: scale(1); }
+        to { opacity: 0.2; transform: scale(1.3); }
+    }
+
+    /* Scrolling Section */
+    .scrolling-data {
+        flex: 1;
+        overflow: hidden;
+    }
+
+    .data-track {
+        display: flex;
+        gap: 60px;
+        white-space: nowrap;
+        animation: scroll-left 18s linear infinite;
+    }
+
+    .data-track span {
+        font-family: 'Syncopate', sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--elite-gold);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    /* Special Red Attention Text */
+    .emergency-txt {
+        color: #fff !important;
+        background: var(--alert-red);
+        padding: 2px 8px;
+        border-radius: 4px;
+        animation: flash-bg 0.8s infinite;
+    }
+
+    @keyframes flash-bg {
+        0%, 100% { background: var(--alert-red); }
+        50% { background: #000; color: var(--alert-red) !important; }
+    }
+
+    /* Animation for the Scroll */
+    @keyframes scroll-left {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-150%); }
+    }
+
+    /* Glitch Effect for the "Access Granted" text */
+    .glitch-text {
+        position: relative;
+    }
+    .glitch-text::before, .glitch-text::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        opacity: 0.8;
+    }
+    .glitch-text::before { color: #0ff; z-index: -1; animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite; }
+    .glitch-text::after { color: #f0f; z-index: -2; animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) reverse both infinite; }
+
+    @keyframes glitch {
+        0% { transform: translate(0); }
+        20% { transform: translate(-2px, 2px); }
+        40% { transform: translate(-2px, -2px); }
+        60% { transform: translate(2px, 2px); }
+        80% { transform: translate(2px, -2px); }
+        100% { transform: translate(0); }
+    }
+
+    /* Vertical Scanner Line */
+    .scanner-line {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 2px;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.4);
+        box-shadow: 0 0 15px #fff;
+        animation: scan-move 4s linear infinite;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    @keyframes scan-move {
+        0% { left: 0%; }
+        100% { left: 100%; }
+    }
+            </style>
+        
 
 <style>
     /* CYBER ALERT DESIGN */
