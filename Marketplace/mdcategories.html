@@ -197,6 +197,19 @@
             });
         }
 
+        
+        db.collection('app_settings').doc('categories').get().then((doc) => {
+    if (doc.exists) {
+        alert("Na ga Categories a Database!");
+        console.log("Bayanan su ne:", doc.data());
+    } else {
+        alert("Subhanallah! Ban ga komai a 'app_settings/categories' ba.");
+    }
+}).catch((error) => {
+    alert("Kuskure wajen hadawa da Firebase: " + error.message);
+});
+
+      
         function toggleSidebarMenu(btn) {
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.side-dropdown').forEach(d => d.classList.remove('open'));
