@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRODUCT ARCHITECT | ELITE OS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Syne:wght@800&display=swap" rel="stylesheet">
+    <style>
+        :root { --accent: #ffffff; --bg: #050505; }
+        body { 
+            background-color: var(--bg); color: white; 
+            font-family: 'Quicksand', sans-serif;
+            background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
+            padding-bottom: 120px;
+            min-height: 100vh;
+        }
+        .syne { font-family: 'Syne', sans-serif; }
+        
+        /* Glass Card Style */
+        .glass-card {
+            background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(5,5,5,1));
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 40px;
+            box-shadow: 20px 20px 60px #020202;
+            position: relative;
+            margin-left: 40px;
+            margin-bottom: 40px;
+        }
+
+        .product-img-box {
+            position: absolute; left: -40px; top: 50%;
+            transform: translateY(-50%);
+            height: 80px; width: 80px;
+            background: #111;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.1);
+            z-index: 10;
+        }
+        .product-img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* SEARCH BAR EXACTLY LIKE IMAGE */
+        .search-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .search-container i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.3);
+        }
+        .search-input {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 15px 15px 15px 50px;
+            color: white;
+            width: 100%;
+            outline: none;
+            font-size: 14px;
+        }
+
+        /* FILTER BUTTONS LIKE IMAGE */
+        .filter-btn-duka { background: #000; color: white; border-radius: 100px; padding: 10px 25px; font-weight: 700; font-size: 13px; border: 1px solid #333; }
+        .filter-btn-trend { background: white; color: black; border-radius: 100px; padding: 10px 25px; font-weight: 700; font-size: 13px; }
+
+        .btn-trending { border-radius: 100px; font-weight: 800; padding: 10px 20px; font-size: 10px; text-transform: uppercase; }
+        .is-active { background: white; color: black; }
+        .is-off { border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); }
+
+        /* Dock */
+        .futuristic-dock {
+            position: fixed; bottom: 30px; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            padding: 12px 25px;
+            display: flex; gap: 20px;
+            z-index: 10000;
+        }
+        .dock-item { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: rgba(255,255,255,0.3); cursor: pointer; }
+        .dock-item.active { background: white; color: black; }
+    </style>
+</head>
+<body>
+
+    <header class="p-10 flex justify-between items-center bg-black/50 backdrop-blur-xl border-b border-white/5">
+        <div class="flex items-center gap-4">
+            <div class="h-2 w-2 bg-white rounded-full animate-ping"></div>
+            <h1 class="syne text-2xl font-black uppercase">Products<span class="opacity-30">.OS</span></h1>
+        </div>
+        <div id="stats" class="font-mono text-[10px] opacity-50 uppercase">0 NODES</div>
+    </header>
+
+    <main class="p-6 max-w-5xl mx-auto">
+        <!-- Search -->
+        <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="pSearch" placeholder="Nemo sunan kaya ko Vendor..." class="search-input" onkeyup="window.runSearch()">
+        </div>
+
+        <!-- Filter Buttons from Image -->
+        <div class="flex gap-3 mb-10">
+            <button onclick="window.filterByStatus('all')" class="filter-btn-duka">Duka</button>
+            <button onclick="window.filterByStatus('trending')" class="filter-btn-trend">Trending Kadai</button>
+        </div>
+
+        <div class="space-y-12" id="productGrid">
+            <p class="text-center opacity-30 py-20 font-mono tracking-widest">INITIALIZING LEDGER...</p>
+        </div>
+    </main>
+
+    <div class="futuristic-dock">
+        <div class="dock-item" onclick="location.href='admin_dashboard.html'"><i class="fa-solid fa-microchip"></i></div>
+        <div class="dock-item" onclick="location.href='users-database.html'"><i class="fa-solid fa-fingerprint"></i></div>
+        <div class="dock-item" onclick="location.href='categories.html'"><i class="fa-solid fa-diagram-project"></i></div>
+        <div class="dock-item active"><i class="fa-solid fa-vault"></i></div>
+    </div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
+        authDomain: "global-market-admin.firebaseapp.com",
+        projectId: "global-market-admin",
+        storageBucket: "global-market-admin.firebasestorage.app",
+        messagingSenderId: "259715265619",
+        appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let masterData = [];
+
+    onSnapshot(query(collection(db, "products"), orderBy("category", "asc")), (snap) => {
+        masterData = [];
+        const grid = document.getElementById('productGrid');
+        grid.innerHTML = "";
+        snap.forEach((d) => {
+            const p = d.data();
+            const id = d.id;
+            masterData.push({id, ...p});
+            renderProduct(id, p);
+        });
+        document.getElementById('stats').innerText = snap.size + " NODES ACTIVE";
+    });
+
+    function renderProduct(id, p) {
+        const grid = document.getElementById('productGrid');
+        const isTrending = p.isTrending === true;
+
+        grid.innerHTML += `
+        <div class="glass-card p-10 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="product-img-box">
+                <img src="${p.imageUrl || p.image || 'https://via.placeholder.com/150'}">
+            </div>
+            <div class="flex flex-col min-w-0 flex-1">
+                <h3 class="syne text-xl font-black uppercase tracking-tight">${p.name || 'UNNAMED'}</h3>
+                <p class="text-gray-500 font-mono text-[10px] mt-1 uppercase">VENDOR: ${p.vendorName || 'ANONYMOUS'}</p>
+                <div class="flex gap-2 mt-4 font-bold text-[10px]">
+                    <span class="px-3 py-1 border border-white/5 rounded-full">₦${p.price}</span>
+                    <span class="px-3 py-1 border border-white/5 rounded-full text-gray-500">${p.category}</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="window.toggleTrend('${id}', ${isTrending})" class="btn-trending ${isTrending ? 'is-active' : 'is-off'}">
+                    <i class="fa-solid fa-fire mr-1"></i> ${isTrending ? 'TRENDING' : 'PROMOTE'}
+                </button>
+                <button onclick="window.eraseProduct('${id}')" class="text-red-900/40 hover:text-red-500"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+        </div>`;
+    }
+
+    window.toggleTrend = async (id, current) => {
+        await updateDoc(doc(db, "products", id), { isTrending: !current });
+    };
+
+    window.eraseProduct = async (id) => {
+        if(confirm("Lallai kana son goge wannan?")) await deleteDoc(doc(db, "products", id));
+    };
+
+    window.filterByStatus = (type) => {
+        const grid = document.getElementById('productGrid');
+        grid.innerHTML = "";
+        const filtered = type === 'all' ? masterData : masterData.filter(p => p.isTrending === true);
+        filtered.forEach(p => renderProduct(p.id, p));
+    };
+
+    window.runSearch = () => {
+        const term = document.getElementById('pSearch').value.toLowerCase();
+        const grid = document.getElementById('productGrid');
+        grid.innerHTML = "";
+        masterData.filter(p => (p.name?.toLowerCase().includes(term) || p.vendorName?.toLowerCase().includes(term)))
+                  .forEach(p => renderProduct(p.id, p));
+    };
+</script>
+</body>
+  </html>
+  
