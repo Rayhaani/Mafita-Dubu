@@ -86,14 +86,39 @@
         </main>
     </div>
 
-    <nav class="depth-dock">
-        <div class="depth-item" onclick="location.href='member-dashboard.html'"><i class="fa-solid fa-house"></i><span class="depth-label">Home</span></div>
-        <div class="depth-item active"><i class="fa-solid fa-list-ul"></i><span class="depth-label">Categories</span></div>
-        <div class="depth-item"><i class="fa-solid fa-comment-dots"></i><span class="depth-label">Messages</span></div>
-        <div class="depth-item"><i class="fa-solid fa-basket-shopping"></i><span class="depth-label">Transactions</span></div>
-        <div class="depth-item"><i class="fa-solid fa-user"></i><span class="depth-label">You</span></div>
-    </nav>
+  
+    <!-- 1. Home (Member Dashboard) -->
+    <div class="depth-item" onclick="location.href='member-dashboard.html'" style="display: flex; flex-direction: column; align-items: center; justify-content: center; color: #555; width: 20%; height: 100%; cursor: pointer;">
+        <i class="fa-solid fa-house"></i>
+        <span class="depth-label" style="font-size: 9px; font-weight: 700; margin-top: 1px;">Home</span>
+    </div>
 
+    <!-- 2. Categories (Active State Example) -->
+    <div class="depth-item active" onclick="location.href='mdcategories.html'" style="display: flex; flex-direction: column; align-items: center; justify-content: center; color: #000; border-bottom: 3px solid #000; width: 20%; height: 100%; cursor: pointer;">
+        <i class="fa-solid fa-list-ul"></i>
+        <span class="depth-label" style="font-size: 9px; font-weight: 700; margin-top: 1px;">Categories</span>
+    </div>
+
+    <!-- 3. Messages (Pulse/Chat) -->
+    <div class="depth-item" onclick="location.href='mdchat.html'" style="display: flex; flex-direction: column; align-items: center; justify-content: center; color: #555; width: 20%; height: 100%; cursor: pointer;">
+        <i class="fa-solid fa-comment-dots"></i>
+        <span class="depth-label" style="font-size: 9px; font-weight: 700; margin-top: 1px;">Messages</span>
+    </div>
+
+    <!-- 4. Transactions -->
+    <div class="depth-item" onclick="location.href='mdtransactions.html'" style="display: flex; flex-direction: column; align-items: center; justify-content: center; color: #555; width: 20%; height: 100%; cursor: pointer;">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <span class="depth-label" style="font-size: 9px; font-weight: 700; margin-top: 1px;">Transactions</span>
+    </div>
+
+    <!-- 5. Profile (You) -->
+    <div class="depth-item" onclick="location.href='mdprofile.html'" style="display: flex; flex-direction: column; align-items: center; justify-content: center; color: #555; width: 20%; height: 100%; cursor: pointer;">
+        <i class="fa-solid fa-user"></i>
+        <span class="depth-label" style="font-size: 9px; font-weight: 700; margin-top: 1px;">You</span>
+    </div>
+
+</nav>
+    
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
