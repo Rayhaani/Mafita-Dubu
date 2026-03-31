@@ -305,43 +305,26 @@
         </div>
     </nav>
 
-    <!-- SELECT CONTACT OVERLAY (WHATSAPP STYLE) -->
 
-    <div id="searchOverlay" class="fb-search-overlay">
-    <div class="fb-search-bar-container">
-        <!-- Kibiyar hagu -->
-        <i class="fa-solid fa-chevron-left back-icon" onclick="closeSearch()"></i>
-        
-        <!-- Search bar din tsakiya -->
-        <div class="fb-input-wrapper">
-            <input type="text" placeholder="Search..." class="fb-main-input" autofocus>
-        </div>
-        
-        <!-- Gilashin bincike na dama -->
-        <i class="fa-solid fa-magnifying-glass search-icon-right"></i>
-    </div>
-</div>
-
-
+ <!-- SEARCH OVERLAY (FACEBOOK STYLE) -->
 <div id="searchOverlay" class="fb-search-overlay">
-    
-    <!-- Wannan ita ce bar din sama da muka riga muka yi -->
+    <!-- Header: Search Bar -->
     <div class="fb-search-bar-container">
         <i class="fa-solid fa-chevron-left back-icon" onclick="closeSearch()"></i>
         <div class="fb-input-wrapper">
-            <input type="text" placeholder="Search..." class="fb-main-input" autofocus>
+            <input type="text" placeholder="Search..." class="fb-main-input" id="mainSearchInput">
         </div>
         <i class="fa-solid fa-magnifying-glass search-icon-right"></i>
     </div>
 
-    <!-- NAN NE ZA KA KARA: Wurin nuna mutane (Contacts) -->
+    <!-- Body: Scrollable Contact List -->
     <div class="contact-scroll-area">
         <div class="px-5 py-3 flex justify-between items-center">
             <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Recent Searches</span>
-            <span class="text-xs text-blue-600 font-semibold">See All</span>
+            <span class="text-xs text-blue-600 font-semibold cursor-pointer">See All</span>
         </div>
 
-        <!-- Mutum na farko -->
+        <!-- Contact Rows -->
         <div class="contact-row">
             <div class="contact-avatar">
                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sadiq" alt="user">
@@ -353,7 +336,6 @@
             <i class="fa-solid fa-xmark close-recent"></i>
         </div>
 
-        <!-- Mutum na biyu -->
         <div class="contact-row">
             <div class="contact-avatar">
                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima" alt="user">
@@ -365,7 +347,6 @@
             <i class="fa-solid fa-xmark close-recent"></i>
         </div>
 
-        <!-- Mutum na uku -->
         <div class="contact-row">
             <div class="contact-avatar">
                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Abba" alt="user">
@@ -379,58 +360,6 @@
     </div>
 </div>
     
-    
-    <!-- Wurin Recent Searches (Idan kana bukata a kasa) -->
-    <div class="recent-section">
-        <div class="flex justify-between items-center px-5 py-3">
-            <span class="text-sm font-bold text-black">Recent</span>
-            <span class="text-sm text-blue-600">See all</span>
-        </div>
-    
-
-    <!-- Scrollable Contact List -->
-    <div class="contact-list-area">
-        <!-- Action Buttons -->
-        <div class="px-4 py-3">
-            <div class="action-row">
-                <div class="icon-box bg-green-600"><i class="fa-solid fa-users"></i></div>
-                <span class="action-text">New group</span>
-            </div>
-            <div class="action-row">
-                <div class="icon-box bg-green-600"><i class="fa-solid fa-user-plus"></i></div>
-                <span class="action-text">New contact</span>
-                <i class="fa-solid fa-qrcode ml-auto text-gray-400"></i>
-            </div>
-            <div class="action-row">
-                <div class="icon-box bg-green-600"><i class="fa-solid fa-user-group"></i></div>
-                <span class="action-text">New community</span>
-            </div>
-        </div>
-
-        <p class="text-[12px] font-bold text-gray-400 px-4 py-2 uppercase tracking-wider">Contacts on Mafita Dubu</p>
-
-        <!-- Contacts (Sample) -->
-        <div class="px-4">
-            <div class="contact-card">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima" alt="avatar">
-                <div class="contact-info">
-                    <h4>Fatima Salis</h4>
-                    <p>Hadin Aure • Online</p>
-                </div>
-            </div>
-
-            <div class="contact-card">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sadiq" alt="avatar">
-                <div class="contact-info">
-                    <h4>A. Sadiq</h4>
-                    <p>Marketplace Vendor</p>
-                </div>
-            </div>
-            
-            <!-- Za ka iya kara wasu cards din anan -->
-        </div>
-    </div>
-</div>
     
     <script>
 // Function din bude overlay na Select Contact
