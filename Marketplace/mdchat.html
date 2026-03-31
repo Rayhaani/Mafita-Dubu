@@ -90,118 +90,55 @@
         .depth-item.active { color: #000; }
    
     /* Overlay Main Container */
-.search-overlay {
+
+/* SABON OVERLAY NA FACEBOOK STYLE */
+.fb-search-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #fff;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #ffffff;
     z-index: 10000;
-    display: none; /* Boye yake har sai an danna icon */
+    display: none; /* A boye yake har sai an danna search icon */
     flex-direction: column;
-    animation: slideUp 0.3s ease-out;
 }
 
-@keyframes slideUp {
-    from { transform: translateY(100px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-.search-top-bar {
-    padding: 15px 20px;
-    background: #fff;
+.fb-search-bar-container {
     display: flex;
     align-items: center;
-}
-
-/* Futuristic Search Bar */
-.search-input-wrapper {
-    background: #f0f2f5;
-    border-radius: 12px;
-    padding: 8px 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid transparent;
-    transition: 0.3s;
-}
-
-.search-input-wrapper:focus-within {
+    padding: 10px 15px;
+    gap: 15px;
     background: #fff;
-    border-color: #FB7701;
-    box-shadow: 0 4px 12px rgba(251, 119, 1, 0.1);
 }
 
-.futuristic-input {
+.back-icon {
+    font-size: 22px;
+    color: #1c1e21;
+    cursor: pointer;
+}
+
+.fb-input-wrapper {
     flex: 1;
+    background: #f0f2f5; /* Kalar tokar nan ta Facebook */
+    border-radius: 50px; /* Domin ya yi round sosai kamar hoton ka */
+    padding: 8px 18px;
+    display: flex;
+    align-items: center;
+}
+
+.fb-main-input {
+    width: 100%;
     background: transparent;
     border: none;
     outline: none;
-    font-size: 15px;
-    font-family: 'Inter', sans-serif;
-}
-
-.contact-list-area {
-    flex: 1;
-    overflow-y: auto;
-}
-
-/* Action Rows */
-.action-row {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    cursor: pointer;
-}
-
-.icon-box {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
     font-size: 16px;
+    color: #050505;
 }
 
-.action-text {
-    font-weight: 700;
-    font-size: 15px;
-    color: #1c1e21;
+.search-icon-right {
+    font-size: 18px;
+    color: #050505;
+    font-weight: bold;
 }
-
-/* Contact Cards */
-.contact-card {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 12px 0;
-    border-bottom: 0.5px solid #f1f1f1;
-    cursor: pointer;
-}
-
-.contact-card img {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: #eee;
-}
-
-.contact-info h4 {
-    font-weight: 700;
-    font-size: 15px;
-    margin: 0;
-    color: #1c1e21;
-}
-
-.contact-info p {
-    font-size: 12px;
-    color: #65676b;
-    margin: 0;
-            }
         
                           
             
@@ -312,29 +249,29 @@
     </nav>
 
     <!-- SELECT CONTACT OVERLAY (WHATSAPP STYLE) -->
-<div id="searchOverlay" class="search-overlay">
-    <!-- Header Area -->
-    <div class="search-top-bar">
-        <div class="flex items-center gap-4 w-full">
-            <i class="fa-solid fa-arrow-left text-xl cursor-pointer" onclick="closeSearch()"></i>
-            <div class="flex-1">
-                <h3 class="font-bold text-[16px] leading-tight">Select contact</h3>
-                <p class="text-[11px] text-gray-500">688 contacts</p>
-            </div>
-            <div class="flex gap-5 text-gray-700">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <i class="fa-solid fa-ellipsis-vertical"></i>
-            </div>
-        </div>
-    </div>
 
-    <!-- Futuristic Search Input Area -->
-    <div class="px-4 py-2 bg-white">
-        <div class="search-input-wrapper">
-            <i class="fa-solid fa-search text-gray-400"></i>
-            <input type="text" placeholder="Search name or number..." class="futuristic-input">
+    <div id="searchOverlay" class="fb-search-overlay">
+    <div class="fb-search-bar-container">
+        <!-- Kibiyar hagu -->
+        <i class="fa-solid fa-chevron-left back-icon" onclick="closeSearch()"></i>
+        
+        <!-- Search bar din tsakiya -->
+        <div class="fb-input-wrapper">
+            <input type="text" placeholder="Search..." class="fb-main-input" autofocus>
         </div>
+        
+        <!-- Gilashin bincike na dama -->
+        <i class="fa-solid fa-magnifying-glass search-icon-right"></i>
     </div>
+</div>
+    
+    <!-- Wurin Recent Searches (Idan kana bukata a kasa) -->
+    <div class="recent-section">
+        <div class="flex justify-between items-center px-5 py-3">
+            <span class="text-sm font-bold text-black">Recent</span>
+            <span class="text-sm text-blue-600">See all</span>
+        </div>
+    
 
     <!-- Scrollable Contact List -->
     <div class="contact-list-area">
