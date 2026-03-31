@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Pulse | Mafita Dubu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Quicksand:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        :root { --gold: #FB7701; --milk: #FFFDD0; --glass: rgba(255, 253, 208, 0.7); }
+        body { font-family: 'Quicksand', sans-serif; background-color: var(--milk); margin: 0; overflow: hidden; height: 100vh; }
+        
+        /* High-End Futuristic Header */
+        .neural-header {
+            padding: 15px 20px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 9000;
+        }
+
+        .logo-text { font-family: 'Syncopate', sans-serif; font-size: 18px; letter-spacing: -1px; color: #000; }
+
+        .header-actions { display: flex; gap: 15px; align-items: center; }
+        
+        /* Circular Action Buttons */
+        .action-circle {
+            width: 42px; height: 42px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+        .action-circle:active { scale: 0.9; background: #000; color: #fff; }
+        .action-circle i { font-size: 18px; }
+
+        /* Notification Badge */
+        .neural-badge {
+            position: absolute; top: -2px; right: -2px;
+            background: #ff0000; color: white;
+            font-size: 10px; font-weight: 800;
+            padding: 2px 6px; border-radius: 10px;
+            border: 2px solid var(--milk);
+            box-shadow: 0 4px 10px rgba(255,0,0,0.3);
+        }
+
+        /* Animated Search Bar (Expands on Click) */
+        .search-container { position: relative; display: flex; align-items: center; }
+        .search-input-hidden {
+            width: 0; opacity: 0; padding: 0;
+            transition: all 0.5s ease;
+            background: white; border-radius: 25px;
+            border: 1.5px solid #000; outline: none;
+            font-size: 13px; font-family: 'Inter', sans-serif;
+        }
+        .search-container.open .search-input-hidden { width: 200px; opacity: 1; padding: 8px 15px; margin-right: 10px; }
+
+        /* Main Viewport */
+        .viewport { height: calc(100vh - 130px); overflow-y: auto; padding: 15px; }
+        .section-label { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: rgba(0,0,0,0.3); margin: 20px 0 15px 5px; }
+
+        /* Modern Chat List */
+        .pulse-card {
+            background: white; border-radius: 20px; padding: 15px;
+            margin-bottom: 12px; display: flex; align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        .avatar-ring { 
+            width: 55px; height: 55px; border-radius: 50%; 
+            padding: 3px; border: 2px solid #000;
+        }
+        .avatar-ring img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+
+        /* Footer Dock */
+        .depth-dock { position: fixed; bottom: 0; left: 0; right: 0; height: 65px; background: var(--milk); display: flex; justify-content: space-around; align-items: center; border-top: 1px solid rgba(0,0,0,0.05); z-index: 9999; }
+        .depth-item { display: flex; flex-direction: column; align-items: center; color: #aaa; transition: 0.3s; }
+        .depth-item.active { color: #000; }
+        .depth-label { font-size: 9px; font-weight: 800; margin-top: 4px; text-transform: uppercase; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <!-- Neural Header (Facebook Style but High-End) -->
+    <header class="neural-header">
+        <div class="logo-text">MAFITA.</div>
+        
+        <div class="header-actions">
+            <!-- Expandable Search -->
+            <div class="search-container" id="searchBox">
+                <input type="text" placeholder="Search Neural..." class="search-input-hidden">
+                <div class="action-circle" onclick="toggleSearch()">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+            </div>
+
+            <!-- Notifications -->
+            <div class="action-circle" onclick="switchView('notifications')">
+                <i class="fa-solid fa-bell"></i>
+                <div class="neural-badge">15+</div>
+            </div>
+
+            <!-- Menu/Profile -->
+            <div class="action-circle">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Viewport -->
+    <main class="viewport" id="mainContent">
+        
+        <div id="chats-view">
+            <h2 class="section-label">Active Connections</h2>
+            
+            <!-- Marketplace Chat -->
+            <div class="pulse-card">
+                <div class="avatar-ring" style="border-color: var(--gold);">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bature">
+                </div>
+                <div class="ml-4 flex-1">
+                    <div class="flex justify-between items-center text-[10px] font-black text-orange-500 uppercase"><span>Marketplace</span> <span>12m</span></div>
+                    <h4 class="font-bold text-[15px]">Alhaji Bature</h4>
+                    <p class="text-xs text-gray-500 truncate">Kayan sun isa Kano, yaushe zaka zo?</p>
+                </div>
+            </div>
+
+            <!-- Marriage Chat -->
+            <div class="pulse-card">
+                <div class="avatar-ring" style="border-color: #ec4899;">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima">
+                </div>
+                <div class="ml-4 flex-1">
+                    <div class="flex justify-between items-center text-[10px] font-black text-pink-500 uppercase"><span>Hadin Aure</span> <span>Just Now</span></div>
+                    <h4 class="font-bold text-[15px]">Fatima Salis</h4>
+                    <p class="text-xs text-gray-500 truncate font-extrabold text-black italic">Sent a voice note • 0:12</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification View (Hidden by default) -->
+        <div id="notif-view" class="hidden">
+            <h2 class="section-label">Neural Alerts</h2>
+            <div class="p-4 bg-white/50 rounded-3xl border border-black/5 mb-4">
+                <p class="text-xs font-bold leading-relaxed">Someone from <span class="text-blue-600">Sabon Gari</span> just viewed your product in Used Market.</p>
+                <span class="text-[9px] opacity-40 uppercase">2 minutes ago</span>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Bottom Dock -->
+    <nav class="depth-dock">
+        <div class="depth-item" onclick="location.href='index.html'"><i class="fa-solid fa-house"></i><span class="depth-label">Home</span></div>
+        <div class="depth-item" onclick="location.href='categories.html'"><i class="fa-solid fa-list-ul"></i><span class="depth-label">Shop</span></div>
+        <div class="depth-item active" onclick="switchView('chats')"><i class="fa-solid fa-comment-dots"></i><span class="depth-label">Pulse</span></div>
+        <div class="depth-item"><i class="fa-solid fa-basket-shopping"></i><span class="depth-label">Deals</span></div>
+        <div class="depth-item"><i class="fa-solid fa-user-gear"></i><span class="depth-label">You</span></div>
+    </nav>
+
+    <script>
+        function toggleSearch() {
+            document.getElementById('searchBox').classList.toggle('open');
+        }
+
+        function switchView(view) {
+            if(view === 'notifications') {
+                document.getElementById('chats-view').classList.add('hidden');
+                document.getElementById('notif-view').classList.remove('hidden');
+            } else {
+                document.getElementById('chats-view').classList.remove('hidden');
+                document.getElementById('notif-view').classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
