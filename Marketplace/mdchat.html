@@ -97,28 +97,39 @@
     width: 100%; height: 100%;
     background: #ffffff;
     z-index: 10000;
-    display: none; 
+    display: none; /* A boye yake har sai an danna search icon */
     flex-direction: column;
 }
+
+/* --- SABON TSARIN SEARCH BAR (FACEBOOK STYLE) --- */
 
 .fb-search-bar-container {
     display: flex;
     align-items: center;
-    padding: 8px 15px;
-    gap: 12px;
-    background: #fff;
-    border-bottom: 0.5px solid #ececec;
+    padding: 12px 15px;
+    gap: 10px;
+    background: #ffffff;
+    border-bottom: 1px solid #f0f2f5;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-/* Siririn Back Icon */
+/* Siririn Back Icon irin na Facebook */
 .fb-back-style {
     font-size: 22px;
     color: #1c1e21;
     cursor: pointer;
-    font-weight: 300;
+    padding: 5px;
+    transition: 0.2s;
 }
 
-/* Dogon Search Bar (Grey Pill) */
+.fb-back-style:active {
+    background: #f0f2f5;
+    border-radius: 50%;
+}
+
+/* Pill-shape input wrapper */
 .fb-input-wrapper {
     flex: 1;
     background: #f0f2f5;
@@ -133,9 +144,10 @@
     background: transparent;
     border: none;
     outline: none;
-    font-size: 15px;
+    font-size: 16px;
     color: #050505;
 }
+       
 
 /* BAKAR DA'IRA TA SEARCH ICON (EXACTLY KAMAR HOME PAGE) */
 .search-trigger-pill-overlay {
