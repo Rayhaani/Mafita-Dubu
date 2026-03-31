@@ -89,48 +89,36 @@
         .depth-label { font-size: 9px; font-weight: 700; margin-top: 1px; }
         .depth-item.active { color: #000; }
    
-    /* Overlay Main Container */
 
-/* SABON OVERLAY NA FACEBOOK STYLE */
+/* --- TSARIN HEADER NA OVERLAY --- */
 .fb-search-overlay {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
     background: #ffffff;
     z-index: 10000;
-    display: none; /* A boye yake har sai an danna search icon */
+    display: none; 
     flex-direction: column;
 }
-
-/* --- SABON TSARIN SEARCH BAR (FACEBOOK STYLE) --- */
 
 .fb-search-bar-container {
     display: flex;
     align-items: center;
-    padding: 12px 15px;
-    gap: 10px;
-    background: #ffffff;
-    border-bottom: 1px solid #f0f2f5;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    padding: 8px 15px;
+    gap: 12px;
+    background: #fff;
+    border-bottom: 0.5px solid #ececec;
 }
 
-/* Siririn Back Icon irin na Facebook */
+/* Siririn Back Icon */
 .fb-back-style {
     font-size: 22px;
     color: #1c1e21;
     cursor: pointer;
-    padding: 5px;
-    transition: 0.2s;
+    font-weight: 300;
 }
 
-.fb-back-style:active {
-    background: #f0f2f5;
-    border-radius: 50%;
-}
-
-/* Pill-shape input wrapper */
+/* Dogon Search Bar (Grey Pill) */
 .fb-input-wrapper {
     flex: 1;
     background: #f0f2f5;
@@ -145,32 +133,27 @@
     background: transparent;
     border: none;
     outline: none;
-    font-size: 16px;
+    font-size: 15px;
     color: #050505;
 }
 
-/* Bakar da'irar Search Icon (Kamar hoton Mafita Dubu) */
-.search-circle-black {
-    width: 40px;
-    height: 40px;
-    background: #000000;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
+/* BAKAR DA'IRA TA SEARCH ICON (EXACTLY KAMAR HOME PAGE) */
+.search-trigger-pill-overlay {
+    background: #000; 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
     justify-content: center;
     cursor: pointer;
-    flex-shrink: 0; /* Kar ya takura idan screen ya matse */
-    transition: 0.3s;
+    flex-shrink: 0;
 }
 
-.search-circle-black i {
-    color: #ffffff;
+.search-trigger-pill-overlay i {
+    color: #fff; 
     font-size: 16px;
-}
-
-.search-circle-black:active {
-    transform: scale(0.9);
-}
+        }
         
         
 
