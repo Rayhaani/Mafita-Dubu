@@ -96,6 +96,123 @@
         .depth-item i { font-size: 18px; margin: 0; }
         .depth-label { font-size: 9px; font-weight: 700; margin-top: 1px; }
         .depth-item.active { color: #000; }
+   
+    /* Overlay Main Container */
+.search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 10000;
+    display: none; /* Boye yake har sai an danna icon */
+    flex-direction: column;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.search-top-bar {
+    padding: 15px 20px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+}
+
+/* Futuristic Search Bar */
+.search-input-wrapper {
+    background: #f0f2f5;
+    border-radius: 12px;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid transparent;
+    transition: 0.3s;
+}
+
+.search-input-wrapper:focus-within {
+    background: #fff;
+    border-color: #FB7701;
+    box-shadow: 0 4px 12px rgba(251, 119, 1, 0.1);
+}
+
+.futuristic-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+}
+
+.contact-list-area {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Action Rows */
+.action-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
+}
+
+.action-text {
+    font-weight: 700;
+    font-size: 15px;
+    color: #1c1e21;
+}
+
+/* Contact Cards */
+.contact-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 0.5px solid #f1f1f1;
+    cursor: pointer;
+}
+
+.contact-card img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #eee;
+}
+
+.contact-info h4 {
+    font-weight: 700;
+    font-size: 15px;
+    margin: 0;
+    color: #1c1e21;
+}
+
+.contact-info p {
+    font-size: 12px;
+    color: #65676b;
+    margin: 0;
+            }
+        
+                          
+            
     </style>
 </head>
 <body>
@@ -203,6 +320,75 @@
         </div>
     </nav>
 
+    <!-- SELECT CONTACT OVERLAY (WHATSAPP STYLE) -->
+<div id="searchOverlay" class="search-overlay">
+    <!-- Header Area -->
+    <div class="search-top-bar">
+        <div class="flex items-center gap-4 w-full">
+            <i class="fa-solid fa-arrow-left text-xl cursor-pointer" onclick="closeSearch()"></i>
+            <div class="flex-1">
+                <h3 class="font-bold text-[16px] leading-tight">Select contact</h3>
+                <p class="text-[11px] text-gray-500">688 contacts</p>
+            </div>
+            <div class="flex gap-5 text-gray-700">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Futuristic Search Input Area -->
+    <div class="px-4 py-2 bg-white">
+        <div class="search-input-wrapper">
+            <i class="fa-solid fa-search text-gray-400"></i>
+            <input type="text" placeholder="Search name or number..." class="futuristic-input">
+        </div>
+    </div>
+
+    <!-- Scrollable Contact List -->
+    <div class="contact-list-area">
+        <!-- Action Buttons -->
+        <div class="px-4 py-3">
+            <div class="action-row">
+                <div class="icon-box bg-green-600"><i class="fa-solid fa-users"></i></div>
+                <span class="action-text">New group</span>
+            </div>
+            <div class="action-row">
+                <div class="icon-box bg-green-600"><i class="fa-solid fa-user-plus"></i></div>
+                <span class="action-text">New contact</span>
+                <i class="fa-solid fa-qrcode ml-auto text-gray-400"></i>
+            </div>
+            <div class="action-row">
+                <div class="icon-box bg-green-600"><i class="fa-solid fa-user-group"></i></div>
+                <span class="action-text">New community</span>
+            </div>
+        </div>
+
+        <p class="text-[12px] font-bold text-gray-400 px-4 py-2 uppercase tracking-wider">Contacts on Mafita Dubu</p>
+
+        <!-- Contacts (Sample) -->
+        <div class="px-4">
+            <div class="contact-card">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima" alt="avatar">
+                <div class="contact-info">
+                    <h4>Fatima Salis</h4>
+                    <p>Hadin Aure • Online</p>
+                </div>
+            </div>
+
+            <div class="contact-card">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sadiq" alt="avatar">
+                <div class="contact-info">
+                    <h4>A. Sadiq</h4>
+                    <p>Marketplace Vendor</p>
+                </div>
+            </div>
+            
+            <!-- Za ka iya kara wasu cards din anan -->
+        </div>
+    </div>
+</div>
+    
     <script>
         function toggleSearch() {
             document.getElementById('searchBox').classList.toggle('open');
