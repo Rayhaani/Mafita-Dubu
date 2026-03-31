@@ -108,19 +108,20 @@
     padding: 10px 15px;
     gap: 15px;
     background: #fff;
+    border-bottom: 0.5px solid #ececec; /* Dan layin nan na kasa */
 }
 
 .back-icon {
-    font-size: 22px;
+    font-size: 20px;
     color: #1c1e21;
     cursor: pointer;
 }
 
 .fb-input-wrapper {
     flex: 1;
-    background: #f0f2f5; /* Kalar tokar nan ta Facebook */
-    border-radius: 50px; /* Domin ya yi round sosai kamar hoton ka */
-    padding: 8px 18px;
+    background: #f0f2f5; /* Kalar tokar nan exactly */
+    border-radius: 50px; /* Domin ya yi round sosai kamar hoton */
+    padding: 6px 15px;
     display: flex;
     align-items: center;
 }
@@ -130,14 +131,15 @@
     background: transparent;
     border: none;
     outline: none;
-    font-size: 16px;
+    font-size: 15px;
     color: #050505;
+    padding: 4px 0;
 }
 
 .search-icon-right {
     font-size: 18px;
     color: #050505;
-    font-weight: bold;
+    margin-left: 10px;
 }
         
 
@@ -308,92 +310,81 @@
 
  <!-- SEARCH OVERLAY (FACEBOOK STYLE) -->
 <div id="searchOverlay" class="fb-search-overlay">
-    <!-- Header -->
     <div class="fb-search-bar-container">
-        <div class="flex items-center gap-4 w-full">
-            <i class="fa-solid fa-arrow-left back-icon" onclick="closeSearch()"></i>
-            <div class="flex-1">
-                <h3 class="font-bold text-[16px] leading-tight">Select contact</h3>
-                <p class="text-[11px] text-gray-500">688 contacts</p>
-            </div>
-            <div class="flex gap-5 text-gray-700">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <i class="fa-solid fa-ellipsis-vertical"></i>
-            </div>
+        <i class="fa-solid fa-arrow-left back-icon" onclick="closeSearch()"></i>
+        <div class="fb-input-wrapper">
+            <input type="text" placeholder="Search..." class="fb-main-input" id="mainSearchInput" autofocus>
+            <i class="fa-solid fa-magnifying-glass search-icon-right"></i>
         </div>
     </div>
 
     <div class="contact-scroll-area">
-        <!-- Action Buttons (New Group/Contact) -->
-        <div class="px-4 py-3">
-            <div class="flex items-center gap-4 mb-5 cursor-pointer">
-                <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white">
-                    <i class="fa-solid fa-users text-sm"></i>
+        <div class="px-5 py-4">
+            <div class="flex items-center gap-4 mb-6 cursor-pointer" onclick="alert('Bude sabon Group')">
+                <div class="w-11 h-11 bg-green-600 rounded-full flex items-center justify-center text-white shadow-sm">
+                    <i class="fa-solid fa-users text-lg"></i>
                 </div>
-                <span class="font-bold text-sm">New group</span>
+                <span class="font-bold text-[15px] color-[#1c1e21]">New group</span>
             </div>
-            <div class="flex items-center gap-4 mb-5 cursor-pointer">
-                <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white">
-                    <i class="fa-solid fa-user-plus text-sm"></i>
+
+            <div class="flex items-center gap-4 mb-4 cursor-pointer">
+                <div class="w-11 h-11 bg-green-600 rounded-full flex items-center justify-center text-white shadow-sm">
+                    <i class="fa-solid fa-user-plus text-lg"></i>
                 </div>
-                <div class="flex-1 flex justify-between items-center">
-                    <span class="font-bold text-sm">New contact</span>
-                    <i class="fa-solid fa-qrcode text-gray-400"></i>
+                <div class="flex-1 flex justify-between items-center border-b border-gray-100 pb-4">
+                    <span class="font-bold text-[15px] color-[#1c1e21]">New contact</span>
+                    <i class="fa-solid fa-qrcode text-gray-400 text-xl"></i>
                 </div>
             </div>
         </div>
 
-        <p class="text-[12px] font-bold text-gray-500 px-5 py-2 uppercase">Contacts on Mafita Dubu</p>
+        <p class="text-[12px] font-bold text-gray-500 px-5 py-2 uppercase tracking-wide">Contacts on Mafita Dubu</p>
 
-        <!-- Registered Contacts -->
         <div class="contact-row">
             <div class="contact-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sadiq"></div>
             <div class="contact-details">
                 <h4 class="contact-name">A. Sadiq</h4>
-                <p class="contact-status">Available</p>
+                <p class="contact-status">Daga Marketplace • Online</p>
             </div>
         </div>
 
-        <p class="text-[12px] font-bold text-gray-500 px-5 py-2 uppercase mt-2">Invite to Mafita Dubu</p>
+        <p class="text-[12px] font-bold text-gray-500 px-5 py-2 uppercase tracking-wide mt-4">Invite to Mafita Dubu</p>
 
-        <!-- Unregistered Contacts (Invite Section) -->
         <div class="contact-row justify-between">
             <div class="flex items-center gap-4">
-                <div class="contact-avatar bg-gray-200 flex items-center justify-center text-gray-500">
-                    <i class="fa-solid fa-user"></i>
+                <div class="contact-avatar bg-gray-200 flex items-center justify-center text-gray-400">
+                    <i class="fa-solid fa-user text-xl"></i>
                 </div>
                 <div class="contact-details">
                     <h4 class="contact-name">Ahmad Diwani</h4>
                     <p class="contact-status">+234 810 686 0608</p>
                 </div>
             </div>
-            <span class="text-green-600 font-bold text-xs uppercase cursor-pointer">Invite</span>
+            <button class="text-green-700 font-bold text-xs bg-green-50 px-3 py-1.5 rounded-md hover:bg-green-100">INVITE</button>
         </div>
     </div>
 </div>
     
-
     
     <input type="text" placeholder="Search..." class="fb-main-input" id="mainSearchInput">
     
     <script>
 // Function din bude overlay na Select Contact
-// Function din bude Overlay na WhatsApp Style
 function openSearch() {
     const overlay = document.getElementById('searchOverlay');
     overlay.style.display = 'flex';
     
-    // Muna amfani da ID maimakon class domin ya fi sauri
+    // Yana saka keyboard ya fito kai tsaye
     setTimeout(() => {
         const input = document.getElementById('mainSearchInput');
         if(input) input.focus();
     }, 300);
 }
 
-// Function din rufe Overlay
 function closeSearch() {
     document.getElementById('searchOverlay').style.display = 'none';
 }
+        
         
 
 // Function din canja views (Chats/Notifications)
