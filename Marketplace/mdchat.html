@@ -168,8 +168,6 @@
         }
         
         
-
-
         .contact-scroll-area {
     flex: 1;
     overflow-y: auto;
@@ -344,50 +342,45 @@
     </nav>
 
 
- <!-- SEARCH OVERLAY (FACEBOOK STYLE) -->
+    <!-- SEARCH OVERLAY (GYARARRE) -->
 <div id="searchOverlay" class="fb-search-overlay">
- 
-<div class="fb-search-bar-container">
-    <!-- Back Icon (Ba a taba shi ba) -->
-    <i class="fa-solid fa-chevron-left fb-back-style" onclick="closeSearch()"></i>
     
-    <!-- Search Bar Mai Bakar Border -->
-    <div class="titan-search-engine" style="flex: 1; height: 42px; display: flex; align-items: center; border-radius: 25px; padding-left: 15px; border: 1.5px solid #000; background: transparent;">
-        <input type="text" placeholder="Nemi komai a Mafita Dubu..." class="titan-input" style="flex: 1; background: transparent; border: none; outline: none; color: #333; font-size: 15px;">
+    <div class="fb-search-bar-container">
+        <!-- Back Icon -->
+        <i class="fa-solid fa-chevron-left fb-back-style" onclick="closeSearch()"></i>
         
-        <div class="temu-controls" style="display: flex; align-items: center; height: 100%;">
-            <!-- Bakar Da'irar Search Icon (Yanzu ita kadai ce a dama) -->
-            <div class="search-trigger-pill" style="background: #000; height: calc(100% - 4px); padding: 0 18px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-right: 2px;">
-                <i class="fa-solid fa-magnifying-glass" style="color: #fff; font-size: 16px;"></i>
+        <!-- Search Bar -->
+        <div class="titan-search-engine" style="flex: 1; height: 42px; display: flex; align-items: center; border-radius: 25px; padding-left: 15px; border: 1.5px solid #000; background: transparent;">
+            <input type="text" placeholder="Nemi komai a Mafita Dubu..." class="titan-input" id="mainSearchInput" style="flex: 1; background: transparent; border: none; outline: none; color: #333; font-size: 15px;">
+            <div class="temu-controls" style="display: flex; align-items: center; height: 100%;">
+                <div class="search-trigger-pill" style="background: #000; height: calc(100% - 4px); padding: 0 18px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-right: 2px;">
+                    <i class="fa-solid fa-magnifying-glass" style="color: #fff; font-size: 16px;"></i>
+                </div>
             </div>
         </div>
     </div>
-</div>
-    
-    
 
     <div class="contact-scroll-area">
+        <!-- Action Buttons -->
         <div class="px-5 py-4">
-            <div class="flex items-center gap-4 mb-6 cursor-pointer" onclick="alert('Bude sabon Group')">
+            <div class="flex items-center gap-4 mb-6 cursor-pointer">
                 <div class="w-11 h-11 bg-green-600 rounded-full flex items-center justify-center text-white shadow-sm">
                     <i class="fa-solid fa-users text-lg"></i>
                 </div>
-                <span class="font-bold text-[15px] color-[#1c1e21]">New group</span>
+                <span class="font-bold text-[15px]">New group</span>
             </div>
-
             <div class="flex items-center gap-4 mb-4 cursor-pointer">
                 <div class="w-11 h-11 bg-green-600 rounded-full flex items-center justify-center text-white shadow-sm">
                     <i class="fa-solid fa-user-plus text-lg"></i>
                 </div>
                 <div class="flex-1 flex justify-between items-center border-b border-gray-100 pb-4">
-                    <span class="font-bold text-[15px] color-[#1c1e21]">New contact</span>
+                    <span class="font-bold text-[15px]">New contact</span>
                     <i class="fa-solid fa-qrcode text-gray-400 text-xl"></i>
                 </div>
             </div>
         </div>
 
         <p class="text-[12px] font-bold text-gray-500 px-5 py-2 uppercase tracking-wide">Contacts on Mafita Dubu</p>
-
         <div class="contact-row">
             <div class="contact-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sadiq"></div>
             <div class="contact-details">
@@ -397,8 +390,7 @@
         </div>
 
         <p class="text-[12px] font-bold text-gray-500 px-5 py-2 uppercase tracking-wide mt-4">Invite to Mafita Dubu</p>
-
-        <div class="contact-row justify-between">
+        <div class="contact-row justify-between mb-2">
             <div class="flex items-center gap-4">
                 <div class="contact-avatar bg-gray-200 flex items-center justify-center text-gray-400">
                     <i class="fa-solid fa-user text-xl"></i>
@@ -408,70 +400,51 @@
                     <p class="contact-status">+234 810 686 0608</p>
                 </div>
             </div>
-            <button class="text-green-700 font-bold text-xs bg-green-50 px-3 py-1.5 rounded-md hover:bg-green-100">INVITE</button>
+            <button class="text-green-700 font-bold text-xs bg-green-50 px-3 py-1.5 rounded-md">INVITE</button>
+        </div>
+
+        <!-- PEOPLE YOU MAY KNOW (YANZU YANA CIKIN SCROLL AREA) -->
+        <div class="px-5 py-4 border-t border-gray-100 mt-2 bg-gray-50/50">
+            <div class="flex justify-between items-center mb-4">
+                <p class="text-[14px] font-bold text-gray-900">People you may know</p>
+                <button class="text-blue-600 text-xs font-bold">See all</button>
+            </div>
+
+            <div class="flex gap-3 overflow-x-auto pb-4 no-scrollbar">
+                <!-- Card 1 -->
+                <div class="min-w-[160px] max-w-[160px] bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                    <div class="h-32 w-full bg-gray-100">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Musty" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-3">
+                        <h4 class="text-[13px] font-bold text-gray-900 truncate">Mustapha Hussain</h4>
+                        <p class="text-[10px] text-gray-500 mb-3"><i class="fa-solid fa-location-dot mr-1"></i>2km away • Kano</p>
+                        <div class="flex flex-col gap-2">
+                            <button class="w-full bg-black text-white text-[11px] font-bold py-2 rounded-lg">Add Friend</button>
+                            <button class="w-full bg-gray-100 text-gray-700 text-[11px] font-bold py-2 rounded-lg">Remove</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="min-w-[160px] max-w-[160px] bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                    <div class="h-32 w-full bg-gray-100">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Hafiz" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-3">
+                        <h4 class="text-[13px] font-bold text-gray-900 truncate">Itz Hafizu Kyaure</h4>
+                        <p class="text-[10px] text-gray-500 mb-3"><i class="fa-solid fa-location-dot mr-1"></i>5km away • Kano</p>
+                        <div class="flex flex-col gap-2">
+                            <button class="w-full bg-black text-white text-[11px] font-bold py-2 rounded-lg">Add Friend</button>
+                            <button class="w-full bg-gray-100 text-gray-700 text-[11px] font-bold py-2 rounded-lg">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
     
-
-    
-    <!-- PEOPLE YOU MAY KNOW SECTION -->
-<div class="px-5 py-4 border-t border-gray-100 mt-2">
-    <div class="flex justify-between items-center mb-4">
-        <p class="text-[14px] font-bold text-gray-900">People you may know</p>
-        <button class="text-blue-600 text-xs font-bold">See all</button>
-    </div>
-
-    <!-- Scrollable Cards Container -->
-    <div class="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
-        
-        <!-- Card 1 (Near Location Example) -->
-        <div class="min-w-[160px] max-w-[160px] bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-            <div class="h-32 w-full bg-gray-100">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Musty" class="w-full h-full object-cover">
-            </div>
-            <div class="p-3">
-                <h4 class="text-[13px] font-bold text-gray-900 truncate">Mustapha Hussain</h4>
-                <p class="text-[10px] text-gray-500 mb-3"><i class="fa-solid fa-location-dot mr-1"></i>2km away • Kano</p>
-                <div class="flex flex-col gap-2">
-                    <button class="w-full bg-black text-white text-[11px] font-bold py-2 rounded-lg">Add Friend</button>
-                    <button class="w-full bg-gray-100 text-gray-700 text-[11px] font-bold py-2 rounded-lg">Remove</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="min-w-[160px] max-w-[160px] bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-            <div class="h-32 w-full bg-gray-100">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Hafiz" class="w-full h-full object-cover">
-            </div>
-            <div class="p-3">
-                <h4 class="text-[13px] font-bold text-gray-900 truncate">Itz Hafizu Kyaure</h4>
-                <p class="text-[10px] text-gray-500 mb-3"><i class="fa-solid fa-location-dot mr-1"></i>5km away • Kano</p>
-                <div class="flex flex-col gap-2">
-                    <button class="w-full bg-black text-white text-[11px] font-bold py-2 rounded-lg">Add Friend</button>
-                    <button class="w-full bg-gray-100 text-gray-700 text-[11px] font-bold py-2 rounded-lg">Remove</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="min-w-[160px] max-w-[160px] bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-            <div class="h-32 w-full bg-gray-100">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sani" class="w-full h-full object-cover">
-            </div>
-            <div class="p-3">
-                <h4 class="text-[13px] font-bold text-gray-900 truncate">Sani Dan-Musa</h4>
-                <p class="text-[10px] text-gray-500 mb-3"><i class="fa-solid fa-location-dot mr-1"></i>Nearby • Kaduna</p>
-                <div class="flex flex-col gap-2">
-                    <button class="w-full bg-black text-white text-[11px] font-bold py-2 rounded-lg">Add Friend</button>
-                    <button class="w-full bg-gray-100 text-gray-700 text-[11px] font-bold py-2 rounded-lg">Remove</button>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
     
     <script>
 // Function din bude overlay na Select Contact
