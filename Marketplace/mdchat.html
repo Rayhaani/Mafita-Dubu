@@ -102,26 +102,40 @@
     flex-direction: column;
 }
 
+/* --- SABON TSARIN SEARCH BAR (FACEBOOK STYLE) --- */
+
 .fb-search-bar-container {
     display: flex;
     align-items: center;
-    padding: 10px 15px;
-    gap: 15px;
-    background: #fff;
-    border-bottom: 0.5px solid #ececec; /* Dan layin nan na kasa */
+    padding: 12px 15px;
+    gap: 10px;
+    background: #ffffff;
+    border-bottom: 1px solid #f0f2f5;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.back-icon {
-    font-size: 20px;
+/* Siririn Back Icon irin na Facebook */
+.fb-back-style {
+    font-size: 22px;
     color: #1c1e21;
     cursor: pointer;
+    padding: 5px;
+    transition: 0.2s;
 }
 
+.fb-back-style:active {
+    background: #f0f2f5;
+    border-radius: 50%;
+}
+
+/* Pill-shape input wrapper */
 .fb-input-wrapper {
     flex: 1;
-    background: #f0f2f5; /* Kalar tokar nan exactly */
-    border-radius: 50px; /* Domin ya yi round sosai kamar hoton */
-    padding: 6px 15px;
+    background: #f0f2f5;
+    border-radius: 50px;
+    padding: 8px 18px;
     display: flex;
     align-items: center;
 }
@@ -131,16 +145,33 @@
     background: transparent;
     border: none;
     outline: none;
-    font-size: 15px;
+    font-size: 16px;
     color: #050505;
-    padding: 4px 0;
 }
 
-.search-icon-right {
-    font-size: 18px;
-    color: #050505;
-    margin-left: 10px;
+/* Bakar da'irar Search Icon (Kamar hoton Mafita Dubu) */
+.search-circle-black {
+    width: 40px;
+    height: 40px;
+    background: #000000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0; /* Kar ya takura idan screen ya matse */
+    transition: 0.3s;
 }
+
+.search-circle-black i {
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.search-circle-black:active {
+    transform: scale(0.9);
+}
+        
         
 
 
@@ -310,60 +341,22 @@
 
  <!-- SEARCH OVERLAY (FACEBOOK STYLE) -->
 <div id="searchOverlay" class="fb-search-overlay">
-    <div class="fb-search-bar-container">
-        <i class="fa-solid fa-arrow-left back-icon" onclick="closeSearch()"></i>
-        <div class="fb-input-wrapper">
-            <input type="text" placeholder="Search..." class="fb-main-input" id="mainSearchInput" autofocus>
-            <i class="fa-solid fa-magnifying-glass search-icon-right"></i>
-        </div>
+ <!-- WANNAN SHINE GYARARREN HEADER DIN -->
+<div class="fb-search-bar-container">
+    <!-- Back icon siriri irin na Facebook -->
+    <i class="fa-solid fa-chevron-left fb-back-style" onclick="closeSearch()"></i>
+    
+    <!-- Dogon Search Bar (Pill Shape) -->
+    <div class="fb-input-wrapper">
+        <input type="text" placeholder="Nemi komai a Mafita Dubu..." class="fb-main-input" id="mainSearchInput" autofocus>
     </div>
 
-    <div class="contact-scroll-area">
-        <div class="px-5 py-4">
-            <div class="flex items-center gap-4 mb-6 cursor-pointer" onclick="alert('Bude sabon Group')">
-                <div class="w-11 h-11 bg-green-600 rounded-full flex items-center justify-center text-white shadow-sm">
-                    <i class="fa-solid fa-users text-lg"></i>
-                </div>
-                <span class="font-bold text-[15px] color-[#1c1e21]">New group</span>
-            </div>
-
-            <div class="flex items-center gap-4 mb-4 cursor-pointer">
-                <div class="w-11 h-11 bg-green-600 rounded-full flex items-center justify-center text-white shadow-sm">
-                    <i class="fa-solid fa-user-plus text-lg"></i>
-                </div>
-                <div class="flex-1 flex justify-between items-center border-b border-gray-100 pb-4">
-                    <span class="font-bold text-[15px] color-[#1c1e21]">New contact</span>
-                    <i class="fa-solid fa-qrcode text-gray-400 text-xl"></i>
-                </div>
-            </div>
-        </div>
-
-        <p class="text-[12px] font-bold text-gray-500 px-5 py-2 uppercase tracking-wide">Contacts on Mafita Dubu</p>
-
-        <div class="contact-row">
-            <div class="contact-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sadiq"></div>
-            <div class="contact-details">
-                <h4 class="contact-name">A. Sadiq</h4>
-                <p class="contact-status">Daga Marketplace • Online</p>
-            </div>
-        </div>
-
-        <p class="text-[12px] font-bold text-gray-500 px-5 py-2 uppercase tracking-wide mt-4">Invite to Mafita Dubu</p>
-
-        <div class="contact-row justify-between">
-            <div class="flex items-center gap-4">
-                <div class="contact-avatar bg-gray-200 flex items-center justify-center text-gray-400">
-                    <i class="fa-solid fa-user text-xl"></i>
-                </div>
-                <div class="contact-details">
-                    <h4 class="contact-name">Ahmad Diwani</h4>
-                    <p class="contact-status">+234 810 686 0608</p>
-                </div>
-            </div>
-            <button class="text-green-700 font-bold text-xs bg-green-50 px-3 py-1.5 rounded-md hover:bg-green-100">INVITE</button>
-        </div>
+    <!-- Search icon a cikin bakar da'ira (Circle) -->
+    <div class="search-circle-black">
+        <i class="fa-solid fa-magnifying-glass"></i>
     </div>
 </div>
+    
     
     
     <input type="text" placeholder="Search..." class="fb-main-input" id="mainSearchInput">
