@@ -384,6 +384,16 @@
             </div>
         </div>
 
+        <div class="contact-row" onclick="initiateCall('PEER_ID_NA_SADIQ', 'A. Sadiq')">
+    <div class="contact-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sadiq"></div>
+    <div class="contact-details">
+        <h4 class="contact-name">A. Sadiq</h4>
+        <p class="contact-status">Daga Marketplace • Online</p>
+    </div>
+    <i class="fa-solid fa-phone text-green-600 p-3 bg-green-50 rounded-full text-sm"></i>
+        </div>
+        
+
         <!-- PEOPLE YOU MAY KNOW SECTION -->
         <div class="px-5 py-6 border-t border-gray-50 mt-4 bg-gray-50/30">
             <div class="flex justify-between items-center mb-5">
@@ -424,6 +434,28 @@
     </div>
 </div>
     
+   
+    <div id="callOverlay" class="fixed inset-0 z-[20000] bg-[#050505] hidden flex flex-col items-center justify-between py-12 px-6">
+    <div class="text-center mt-10">
+        <div class="w-28 h-28 rounded-full border-2 border-white/20 p-1 mx-auto mb-6 relative">
+            <img id="remoteAvatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" class="w-full h-full rounded-full object-cover">
+            <div class="absolute inset-0 rounded-full border-4 border-green-500 animate-ping opacity-20"></div>
+        </div>
+        <h2 id="remoteName" class="text-white text-2xl font-bold font-['Inter']">Sadiq Bature</h2>
+        <p id="callStatus" class="text-green-500 mt-2 tracking-widest text-[10px] uppercase font-black">Connecting...</p>
+    </div>
+
+    <div class="relative w-full max-w-sm aspect-[3/4] bg-gray-900 rounded-[40px] overflow-hidden border border-white/10 shadow-2xl">
+        <video id="remoteVideo" autoplay playsinline class="w-full h-full object-cover"></video>
+        <video id="localVideo" autoplay muted playsinline class="absolute bottom-4 right-4 w-28 h-40 bg-black rounded-2xl object-cover border border-white/20 shadow-lg"></video>
+    </div>
+
+    <div class="flex gap-8 items-center mb-10">
+        <button onclick="toggleMic()" class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center text-white text-xl border border-white/5"><i class="fa-solid fa-microphone"></i></button>
+        <button id="hangupBtn" onclick="endCall()" class="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center text-white text-3xl shadow-2xl shadow-red-600/30 active:scale-90 transition"><i class="fa-solid fa-phone-slash"></i></button>
+        <button onclick="toggleVideo()" class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center text-white text-xl border border-white/5"><i class="fa-solid fa-video"></i></button>
+    </div>
+    </div>
     
     <script>
 // Function din bude overlay na Select Contact
@@ -455,6 +487,55 @@ function switchView(view) {
     }
     }
         
+
+        let peer = new Peer(); // Wannan zai samar da ID
+let localStream;
+let currentCall;
+
+// 1. Lokacin da app ya bude, samu ID dinka
+peer.on('open', (id) => {
+    console.log("ID dina na kira: " + id);
+    // Nan ne zaka yi amfani da AJAX ka tura wannan 'id' din zuwa database dinka
+});
+
+// 2. Idan wani ya kira ka
+peer.on('call', (call) => {
+    if(confirm("Kira na shigowa... Kana son dauka?")) {
+        navigator.mediaDevices.getUserMedia({video: true, audio: true}).then((stream) => {
+            localStream = stream;
+            document.getElementById('localVideo').srcObject = stream;
+            document.getElementById('callOverlay').style.display = 'flex';
+            
+            call.answer(stream);
+            call.on('stream', (remoteStream) => {
+                document.getElementById('remoteVideo').srcObject = remoteStream;
+                document.getElementById('callStatus').innerText = "On Call";
+            });
+        });
+    }
+});
+
+// 3. Function na fara kira
+function initiateCall(remoteId, name) {
+    document.getElementById('remoteName').innerText = name;
+    document.getElementById('callOverlay').style.display = 'flex';
+    
+    navigator.mediaDevices.getUserMedia({video: true, audio: true}).then((stream) => {
+        localStream = stream;
+        document.getElementById('localVideo').srcObject = stream;
+        
+        const call = peer.call(remoteId, stream);
+        call.on('stream', (remoteStream) => {
+            document.getElementById('remoteVideo').srcObject = remoteStream;
+            document.getElementById('callStatus').innerText = "On Call";
+        });
+    });
+}
+
+function endCall() {
+    if(currentCall) currentCall.close();
+    location.reload(); // Hanya mafi sauki ta kashe kiran
+            }
         
     </script>
 </body>
