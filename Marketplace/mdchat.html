@@ -239,74 +239,88 @@
     scrollbar-width: none;
 }
 
-
-/* Amfani da Inter font domin yayi daidai da Contacts dinka */
+/* Futuristic Glassmorphism Card */
 .fb-style-card {
-    background: white;
-    border-radius: 8px;
-    border: 0.5px solid #e5e7eb;
+    background: rgba(255, 255, 255, 0.7); /* Glass effect */
+    backdrop-filter: blur(15px);
+    border-radius: 20px; /* More rounded */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    /* Tabbatar da cewa Inter font ne na Contacts */
-    font-family: 'Inter', sans-serif !important;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
 }
 
+.fb-style-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--gold); /* Zinari zai zagaye shi idan aka taba */
+}
+
+/* Hoton mai santsi */
 .card-image-container {
     width: 100%;
-    aspect-ratio: 1/1.05;
-    background-color: #f2f3f5;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    aspect-ratio: 1/1;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    position: relative;
 }
 
 .card-image-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
 }
 
-.card-info {
-    padding: 10px 10px;
-}
-
-/* Suna - Exact Font size da nauyi na Contacts */
+/* Sunan mutum mai girma da asali */
 .card-name {
-    font-size: 15px; 
-    font-weight: 600; /* Kamar yadda yake a contacts-name class dinka */
-    color: #050505;
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 800; /* Extra bold for futuristic look */
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    text-align: center;
+    margin-top: 10px;
 }
 
-/* New Member/Location - Exact size na contacts-status */
-.card-meta {
+/* Badge na "New Member" */
+.member-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #000;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 900;
+    padding: 4px 8px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Futuristic Connect Button */
+.add-friend-btn {
+    width: 85%;
+    margin: 15px auto;
+    background: #000;
+    color: #fff;
+    padding: 10px;
+    border-radius: 12px;
     font-size: 12px;
-    color: #65676b;
-    margin-bottom: 12px;
+    font-weight: 700;
     display: flex;
     align-items: center;
-    gap: 4px;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    transition: 0.3s;
 }
 
-/* Button - Professional size yadda yake a hoton asali */
-.add-friend-btn {
-    width: 100%;
-    background-color: #050505 !important;
-    color: #ffffff !important;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 8px 0;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
+.add-friend-btn:active {
+    scale: 0.9;
+    background: var(--gold);
 }
         
-
         
         
     </style>
@@ -562,48 +576,55 @@
     }
 
     // 5. Discover Logic (GYARARREN CONTAINER)
-    async function loadDiscoverPeople() {
+    
+async function loadDiscoverPeople() {
     const container = document.getElementById('discoverContainer');
     if (!container) return;
 
-    container.className = "grid grid-cols-2 gap-2 px-2"; 
+    container.className = "grid grid-cols-2 gap-5 px-4 py-6"; 
     container.innerHTML = '';
 
     try {
-        const querySnapshot = await db.collection("users").limit(10).get();
+        const querySnapshot = await db.collection("users").limit(12).get();
         let html = "";
 
         querySnapshot.forEach((doc) => {
             if (currentUserId && doc.id === currentUserId) return;
             const user = doc.data();
 
-            // --- ALGORITHM DINKA NA ASALI (BAN TABA KOMAI BA) ---
-            let locationText = user.location_area ? `2km away • ${user.location_area}` : "New Member";
+            // Name Logic
+            let fullName = user.fullname || user.username || "Anonymous";
             
-            // Ciro sunan mutum kai tsaye daga firestore
-            let displayName = user.fullname || user.username || "User"; 
-            // --------------------------------------------------
+            // Location Algorithm
+            let locationUI = user.location_area 
+                ? `<i class="fa-solid fa-location-arrow text-[10px]"></i> ${user.location_area}` 
+                : `<span class="opacity-50 italic">Exploring...</span>`;
 
             html += `
             <div class="fb-style-card">
+                <div class="member-badge">New</div>
                 <div class="card-image-container">
-                    <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}">
+                    <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/bottts/svg?seed=' + doc.id}">
                 </div>
-                <div class="card-info">
-                    <div class="card-name">${displayName}</div>
-                    <div class="card-meta">
-                        <i class="fa-solid fa-location-dot" style="font-size: 11px; opacity: 0.8;"></i> 
-                        ${locationText}
+                <div class="p-3 flex flex-col items-center">
+                    <div class="card-name truncate w-full">${fullName}</div>
+                    <div class="text-[10px] text-gray-400 mt-1 flex items-center gap-1">
+                        ${locationUI}
                     </div>
-                    <button class="add-friend-btn">Add Friend</button>
+                    <button class="add-friend-btn">
+                        <i class="fa-solid fa-plus text-[10px]"></i>
+                        Connect
+                    </button>
                 </div>
             </div>`;
         });
 
-        // See All Pill at the bottom (Pill Shape exactly)
+        // "See All" mai haske
         html += `
-            <div class="col-span-2 flex justify-center py-5">
-                <button class="see-all-pill" style="background:#f0f2f5; color:#050505; padding:8px 35px; border-radius:20px; font-weight:700; font-size:13px; border:none;" onclick="loadMore()">See all</button>
+            <div class="col-span-2 flex justify-center mt-6">
+                <button class="bg-black/5 backdrop-blur-md border border-black/10 px-8 py-3 rounded-full text-[12px] font-black uppercase tracking-widest hover:bg-black hover:text-white transition-all">
+                    Load More Pulse
+                </button>
             </div>`;
 
         container.innerHTML = html;
@@ -611,10 +632,9 @@
     } catch (e) { 
         console.error("Discover Error:", e); 
     }
-    }
+}
     
-
-    
+            
     
     
     // 6. UI Helpers
