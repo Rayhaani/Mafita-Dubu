@@ -239,33 +239,64 @@
     scrollbar-width: none;
 }
 
-/* Futuristic See All / Load More Button */
-.load-more-pulse-btn {
-    background: #f0f2f5; /* Light and clean */
-    color: #050505;
-    padding: 10px 40px;
-    border-radius: 30px; /* Pill shape */
+.fb-style-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #f0f0f0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 340px;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.card-image-container {
+    width: 100%;
+    height: 75%; /* Hoton ya mamaye kusan ko ina */
+    background: #f8f9fa;
+}
+
+.card-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-info {
+    padding: 10px;
+    height: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: white;
+}
+
+.card-name {
+    font-size: 14px;
     font-weight: 700;
-    font-size: 13px;
+    color: #000;
+    font-family: 'Inter', sans-serif;
+}
+
+.card-meta {
+    font-size: 11px;
+    color: #666;
+    margin-top: 2px;
+}
+
+.add-friend-btn {
+    width: 100%;
+    background: #000 !important;
+    color: #fff !important;
+    padding: 8px 0;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 700;
     border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
+        
 
-.load-more-pulse-btn:hover {
-    background: #000;
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-}
-
-.load-more-pulse-btn:active {
-    scale: 0.95;
-    }
-    
-
-      
         
     </style>
 </head>
@@ -526,44 +557,53 @@
     if (!container) return;
 
     container.className = "grid grid-cols-2 gap-3 px-3 py-4"; 
-    container.innerHTML = '<p class="col-span-2 text-center text-xs opacity-50">Loading Pulse...</p>';
+    container.innerHTML = 'Loda mambobi...'; // Loading state
 
     try {
+        // 1. Samun bayanan wanda yake login
         let currentUserData = null;
         if (currentUserId) {
             const userDoc = await db.collection("users").doc(currentUserId).get();
             if (userDoc.exists) currentUserData = userDoc.data();
         }
 
-        const querySnapshot = await db.collection("users").limit(10).get();
+        // 2. Loda sauran mambobi
+        const querySnapshot = await db.collection("users").limit(12).get();
         let html = "";
 
         querySnapshot.forEach((doc) => {
             if (currentUserId && doc.id === currentUserId) return;
             const user = doc.data();
 
-            // --- SMART MATCHING ALGORITHM (KIYAYAYYE) ---
+            // --- SMART MATCHING ALGORITHM (GYARARRE) ---
             let reasonToConnect = "New Member"; 
+
             if (currentUserData) {
+                // Duba unguwa da gari
                 if (user.location_area && user.location_area === currentUserData.location_area) {
                     reasonToConnect = `${user.location_area}, ${user.location_city || 'Kano'}`;
-                } else if (user.university && user.university === currentUserData.university) {
+                } 
+                // Duba Jami'a
+                else if (user.university && user.university === currentUserData.university) {
                     reasonToConnect = user.university;
-                } else if (user.profession && user.profession === currentUserData.profession) {
+                } 
+                // Duba Sana'a
+                else if (user.profession && user.profession === currentUserData.profession) {
                     reasonToConnect = user.profession;
                 }
             }
+            // ------------------------------------------
 
             html += `
             <div class="fb-style-card">
                 <div class="card-image-container">
-                    <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}">
+                    <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}" onerror="this.src='https://via.placeholder.com/150'">
                 </div>
                 <div class="card-info">
                     <div>
                         <div class="card-name truncate">${user.fullname || user.username || "User"}</div>
                         <div class="card-meta">
-                            <i class="fa-solid fa-users-viewfinder" style="font-size: 9px; opacity: 0.7;"></i> 
+                            <i class="fa-solid fa-users-viewfinder" style="font-size: 10px; opacity: 0.8;"></i> 
                             ${reasonToConnect}
                         </div>
                     </div>
@@ -572,21 +612,17 @@
             </div>`;
         });
 
-        // --- DAWO DA LOAD MORE BAR (SEE ALL) ---
-        html += `
-            <div class="col-span-2 flex justify-center py-6">
-                <button class="load-more-pulse-btn" onclick="loadMore()">
-                    See all
-                </button>
-            </div>`;
-
-        container.innerHTML = html;
+        if (html === "") {
+            container.innerHTML = "<p class='col-span-2 text-center py-10'>Babu sauran mambobi a halin yanzu.</p>";
+        } else {
+            container.innerHTML = html;
+        }
 
     } catch (e) { 
-        console.error("Error:", e); 
-        container.innerHTML = "<p class='col-span-2 text-center py-10 text-red-500'>Error loading members.</p>";
+        console.error("Discover Error:", e);
+        container.innerHTML = "<p class='col-span-2 text-center py-10 text-red-500'>An samu matsalar loda bayanai.</p>";
     }
-    }
+        }
     
             
             
