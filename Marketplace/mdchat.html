@@ -642,7 +642,12 @@
     }
         }
     
-            
+           // Wannan zai nuna button din a tsakiya (center) a kasan cards
+html += `
+    <div style="width: 100%; display: flex; justify-content: center; padding: 20px 0; grid-column: span 2;">
+        <button class="see-all-pill" onclick="loadMore()">See all</button>
+    </div>
+`; 
             
     
     // 6. UI Helpers
@@ -693,13 +698,6 @@ window.addEventListener('scroll', () => {
 }, true);
 
 
-            // Wannan zai nuna button din a tsakiya (center) a kasan cards
-html += `
-    <div style="width: 100%; display: flex; justify-content: center; padding: 20px 0; grid-column: span 2;">
-        <button class="see-all-pill" onclick="loadMore()">See all</button>
-    </div>
-`;
-    
     
 </script>   
 </body>
