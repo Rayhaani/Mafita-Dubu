@@ -240,33 +240,38 @@
 }
         
 
-        /* Wannan zai tilasta katinan su jera a kwance maimakon a tsaye */
-#discoverContainer {
-    display: flex !important;
-    flex-direction: row !important;
-    overflow-x: auto !important;
+        
+      #discoverContainer {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr); /* Wannan zai raba su biyu-biyu */
     gap: 12px;
     padding: 10px;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
+    overflow-y: auto; /* Zai tafi a tsaye maimakon gefe */
 }
 
-/* Boye scrollbar domin ya yi kyau */
-#discoverContainer::-webkit-scrollbar {
-    display: none;
-}
-
-/* Girman kowane kati */
 .fb-style-card {
-    flex: 0 0 160px; /* Wannan shi ne girman katin irin na hoton */
     background: white;
-    border-radius: 15px;
-    border: 1px solid #ddd;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
     overflow: hidden;
-    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
-        }
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.card-image-container {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Tabbatar da hoto ya zauna murabba'i */
+    background: #f3f4f6;
+    overflow: hidden;
+}
+
+.card-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Wannan ne zai hana yanke kan mutane */
+    background-color: #f9fafb; /* Background idan hoton bai cika wajen ba */
+}
         
         
     </style>
@@ -529,7 +534,7 @@
     const container = document.getElementById('discoverContainer');
     if (!container) return;
 
-    container.innerHTML = '<p class="text-center w-full text-gray-400 text-xs">Neman mambobi...</p>';
+    container.innerHTML = '<p class="text-center col-span-2 text-gray-400 text-xs py-10">Neman mambobi...</p>';
 
     try {
         let currentUserData = {};
@@ -538,19 +543,19 @@
             currentUserData = currentUserDoc.data() || {};
         }
 
-        const querySnapshot = await db.collection("users").limit(10).get();
+        const querySnapshot = await db.collection("users").limit(20).get();
         let html = "";
 
         querySnapshot.forEach((doc) => {
             if (currentUserId && doc.id === currentUserId) return;
             const user = doc.data();
             
-            // ALGORITHM DINKA (Kada a taba shi)
+            // ALGORITHM DINKA (Kiyaye shi)
             let reason = "Sabuwar Mamba";
             let icon = "fa-star";
 
             if (user.location_area && user.location_area === currentUserData.location_area) {
-                reason = `${user.location_area}, ${user.city || ''}`;
+                reason = `${user.location_area}`;
                 icon = "fa-location-dot";
             } else if (user.profession && user.profession === currentUserData.profession) {
                 reason = user.profession;
@@ -560,24 +565,24 @@
                 icon = "fa-graduation-cap";
             }
 
-            // SABON UI (DAIDAI DA HOTON 1000869566.jpg)
+            // SABON UI: GRID STYLE + CONNECT BUTTON
             html += `
-            <div class="fb-style-card shadow-sm">
-                <div class="w-full h-32 bg-gray-100">
+            <div class="fb-style-card">
+                <div class="card-image-container">
                     <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}" 
-                         class="w-full h-full object-cover">
+                         alt="Avatar">
                 </div>
                 
                 <div class="p-3 flex flex-col flex-1">
-                    <h4 class="text-[13px] font-bold text-gray-900 truncate">${user.fullname || 'Mamba'}</h4>
+                    <h4 class="text-[13px] font-bold text-gray-900 truncate leading-tight">${user.fullname || 'Mamba'}</h4>
                     
-                    <div class="flex items-center gap-1 mt-1 mb-3">
+                    <div class="flex items-center gap-1 mt-1 mb-3 h-4">
                         <i class="fa-solid ${icon} text-[9px] text-gray-400"></i>
                         <span class="text-[10px] text-gray-500 truncate">${reason}</span>
                     </div>
 
-                    <button class="mt-auto w-full bg-[#E4E6EB] hover:bg-gray-300 text-black text-[11px] font-bold py-2 rounded-lg transition active:scale-95">
-                        Add Friend
+                    <button class="mt-auto w-full bg-black text-white text-[11px] font-bold py-2.5 rounded-lg active:scale-95 transition-all shadow-sm">
+                        Connect
                     </button>
                 </div>
             </div>`;
@@ -585,8 +590,8 @@
         container.innerHTML = html;
     } catch (e) { console.error("Discover Error:", e); }
     }
-                                           
-                                
+    
+                          
     
     // 6. UI Helpers
     function openSearch() { document.getElementById('searchOverlay').style.display = 'flex'; }
