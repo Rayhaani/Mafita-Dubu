@@ -364,34 +364,39 @@
         </div>
     </div>
 
+    
     <div class="contact-scroll-area">
-        <!-- CONTACTS ON PLATFORM -->
         <p class="text-[12px] font-bold text-gray-400 px-5 py-4 uppercase tracking-widest">Abokan Hulda</p>
-        
-        <div class="contact-row">
-            <div class="contact-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sadiq"></div>
-            <div class="contact-details">
-                <h4 class="contact-name">A. Sadiq</h4>
-                <p class="contact-status">Daga Marketplace • Online</p>
-            </div>
-        </div>
 
-        <div class="contact-row">
-            <div class="contact-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima"></div>
-            <div class="contact-details">
-                <h4 class="contact-name">Fatima Salis</h4>
-                <p class="contact-status">Hadin Aure • Away</p>
-            </div>
+<div class="contact-row flex items-center justify-between" onclick="initiateCall('PEER_ID_NA_SADIQ', 'A. Sadiq')">
+    <div class="flex items-center gap-4">
+        <div class="contact-avatar">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sadiq">
         </div>
-
-        <div class="contact-row" onclick="initiateCall('PEER_ID_NA_SADIQ', 'A. Sadiq')">
-    <div class="contact-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sadiq"></div>
-    <div class="contact-details">
-        <h4 class="contact-name">A. Sadiq</h4>
-        <p class="contact-status">Daga Marketplace • Online</p>
+        <div class="contact-details">
+            <h4 class="contact-name">A. Sadiq</h4>
+            <p class="contact-status text-green-500">Daga Marketplace • Online</p>
+        </div>
     </div>
-    <i class="fa-solid fa-phone text-green-600 p-3 bg-green-50 rounded-full text-sm"></i>
+    <div class="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center">
+        <i class="fa-solid fa-phone text-green-600 text-sm"></i>
+    </div>
+</div>
+
+<div class="contact-row flex items-center justify-between" onclick="initiateCall('PEER_ID_NA_FATIMA', 'Fatima Salis')">
+    <div class="flex items-center gap-4">
+        <div class="contact-avatar">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima">
         </div>
+        <div class="contact-details">
+            <h4 class="contact-name">Fatima Salis</h4>
+            <p class="contact-status text-gray-400">Hadin Aure • Away</p>
+        </div>
+    </div>
+    <div class="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center">
+        <i class="fa-solid fa-phone text-green-600 text-sm"></i>
+    </div>
+</div>
         
 
         <!-- PEOPLE YOU MAY KNOW SECTION -->
