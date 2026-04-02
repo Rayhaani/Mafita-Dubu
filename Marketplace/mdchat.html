@@ -641,23 +641,38 @@ function loadDiscoverPeople() {
     // 1. Smart Algorithm Function
 async function loadDiscoverPeople() {
     const container = document.getElementById('discoverContainer');
-    if (!container || !currentUserId) return;
+    if (!container) return;
+
+    // Nuna cewa ana loading kafin bayanan su iso
+    container.innerHTML = '<p class="text-center p-10 text-gray-400 text-xs animate-pulse">Ana nemo mambobi...</p>';
 
     try {
-        const currentUserDoc = await db.collection("users").doc(currentUserId).get();
-        const currentUserData = currentUserDoc.data() || {};
+        let currentUserData = {};
+        if (currentUserId) {
+            const currentUserDoc = await db.collection("users").doc(currentUserId).get();
+            currentUserData = currentUserDoc.data() || {};
+        }
 
-        const querySnapshot = await db.collection("users").limit(12).get();
+        // Dauko mambobi 15 daga Firestore
+        const querySnapshot = await db.collection("users").limit(15).get();
         
+        if (querySnapshot.empty) {
+            container.innerHTML = '<p class="text-center p-10 text-gray-400 text-xs">Babu mambobi a halin yanzu.</p>';
+            return;
+        }
+
         let html = "";
         querySnapshot.forEach((doc) => {
-            if (doc.id === currentUserId) return;
+            // Kada mu nuna mamban da yake login a cikin Discover
+            if (currentUserId && doc.id === currentUserId) return;
 
             const user = doc.data();
-            let reason = "Mamba a MafitaDubu";
-            let icon = "fa-user-group";
+            
+            // "Default" bayanan idan babu komai a Firestore
+            let reason = "Sabuwar Mamba";
+            let icon = "fa-star";
 
-            // Algorithm don gano dalilin nuna mamban
+            // Algorithm dinmu na da
             if (user.location_area && user.location_area === currentUserData.location_area) {
                 reason = `${user.location_area}, ${user.city || ''}`;
                 icon = "fa-location-dot";
@@ -667,34 +682,37 @@ async function loadDiscoverPeople() {
             } else if (user.university && user.university === currentUserData.university) {
                 reason = user.university;
                 icon = "fa-graduation-cap";
+            } else if (user.city) {
+                reason = `Daga ${user.city}`;
+                icon = "fa-map-pin";
             }
 
-            // DAWO DA CONTAINER (CARD STYLE)
             html += `
-            <div class="bg-white p-4 rounded-[30px] border border-gray-100 shadow-sm flex items-center justify-between mb-2">
+            <div class="bg-white p-4 rounded-[30px] border border-gray-100 shadow-sm flex items-center justify-between mb-3">
                 <div class="flex items-center gap-4">
-                    <div class="w-16 h-16 rounded-2xl overflow-hidden bg-gray-50">
-                        <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}" class="w-full h-full object-cover">
+                    <div class="w-14 h-14 rounded-2xl overflow-hidden bg-gray-50 border border-gray-50">
+                        <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}" class="w-full h-full object-cover" onerror="this.src='https://ui-avatars.com/api/?name=' + encodeURIComponent('${user.fullname || 'U'}')">
                     </div>
                     <div>
-                        <h4 class="text-[15px] font-extrabold text-gray-900">${user.fullname || 'Mamba'}</h4>
+                        <h4 class="text-[14px] font-extrabold text-gray-900">${user.fullname || 'Mamban Mafita'}</h4>
                         <div class="flex items-center gap-1.5 mt-0.5">
-                            <i class="fa-solid ${icon} text-[10px] text-orange-500"></i>
-                            <span class="text-[11px] font-semibold text-gray-400">${reason}</span>
+                            <i class="fa-solid ${icon} text-[9px] text-orange-500"></i>
+                            <span class="text-[10px] font-bold text-gray-400">${reason}</span>
                         </div>
                     </div>
                 </div>
-                <button class="bg-black text-white text-[11px] font-black px-5 py-2.5 rounded-2xl active:scale-95 transition shadow-lg shadow-black/5">Connect</button>
+                <button class="bg-black text-white text-[10px] font-black px-4 py-2 rounded-2xl active:scale-95 transition">Connect</button>
             </div>`;
         });
         
         container.innerHTML = html;
 
     } catch (error) {
-        console.error("Discover Load Error:", error);
-        container.innerHTML = '<p class="text-center p-5 text-red-400 text-xs">Akwai matsalar kwaso bayanan.</p>';
+        console.error("Discover Error:", error);
+        container.innerHTML = `<p class="text-center p-5 text-red-400 text-[10px]">Matsala: ${error.message}</p>`;
     }
     }
+    
     
     
     
