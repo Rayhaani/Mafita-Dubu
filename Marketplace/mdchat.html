@@ -570,35 +570,42 @@ function initiateCall(targetPeerId, targetName) {
 // 7. KWASO MUTANE DAGA FIRESTORE (Looping)
 function loadContactsFromFirestore() {
     const container = document.getElementById('contactsContainer');
-    if(!container) return;
-
-    // Sauraren kowane canji a Firestore (Real-time)
+    
     db.collection("users").onSnapshot((querySnapshot) => {
-        container.innerHTML = '<p class="text-[12px] font-bold text-gray-400 px-5 py-4 uppercase tracking-widest">Abokan Hulda</p>';
+        if (querySnapshot.empty) {
+            container.innerHTML = '<p class="text-center p-5 text-gray-400">Babu mambobi a yanzu.</p>';
+            return;
+        }
+
+        container.innerHTML = '<p class="text-[12px] font-bold text-gray-400 px-5 py-4 uppercase tracking-widest">Dukkan Mambobi</p>';
         
         querySnapshot.forEach((doc) => {
             const user = doc.data();
-            // Kar mu nuna kanmu a jerin kiran, kuma sai wanda yake da Peer ID
-            if (doc.id !== currentUserId && user.peer_id) {
+            // Cire 'user.peer_id' na dan lokaci don ganin kowa
+            if (doc.id !== currentUserId) { 
                 container.innerHTML += `
-                    <div class="contact-row flex items-center justify-between" onclick="initiateCall('${user.peer_id}', '${user.fullname || 'Mamba'}')">
+                    <div class="contact-row flex items-center justify-between" onclick="initiateCall('${user.peer_id || ''}', '${user.username || 'User'}')">
                         <div class="flex items-center gap-4">
                             <div class="contact-avatar">
                                 <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}">
                             </div>
                             <div class="contact-details">
-                                <h4 class="contact-name">${user.fullname || 'Unknown'}</h4>
-                                <p class="contact-status text-green-500">Online</p>
+                                <h4 class="contact-name">${user.username || 'Mamba'}</h4>
+                                <p class="contact-status ${user.peer_id ? 'text-green-500' : 'text-gray-400'}">
+                                    ${user.peer_id ? 'Online' : 'Offline'}
+                                </p>
                             </div>
                         </div>
-                        <div class="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center">
-                            <i class="fa-solid fa-phone text-green-600 text-sm"></i>
-                        </div>
+                        ${user.peer_id ? `<div class="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center"><i class="fa-solid fa-phone text-green-600 text-sm"></i></div>` : ''}
                     </div>`;
             }
         });
+    }, (error) => {
+        console.error("Firestore Error:", error);
+        container.innerHTML = `<p class="text-center p-5 text-red-500">Kuskure: ${error.message}</p>`;
     });
 }
+    
 
 // 8. KASHE KIRA (Hang up)
 function endCall() {
