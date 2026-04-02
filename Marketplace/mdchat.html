@@ -461,6 +461,37 @@
         <button onclick="toggleVideo()" class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center text-white text-xl border border-white/5"><i class="fa-solid fa-video"></i></button>
     </div>
     </div>
+
+
+    <div id="callOverlay" class="fixed inset-0 z-[9999] bg-[#050505] hidden flex flex-col items-center justify-between py-12 px-6">
+    <div class="text-center mt-10">
+        <div class="w-32 h-32 rounded-full border-4 border-green-500/30 p-1 mx-auto mb-6 relative">
+            <img id="remoteAvatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" class="w-full h-full rounded-full object-cover">
+            <div id="ringAnimation" class="absolute inset-0 rounded-full border-4 border-green-500 animate-ping opacity-20"></div>
+        </div>
+        <h2 id="remoteName" class="text-white text-3xl font-bold">Sunan Mai Kira</h2>
+        <p id="callTimer" class="text-green-500 mt-2 tracking-widest text-sm font-mono">00:00</p>
+    </div>
+
+    <div class="relative w-full max-w-md aspect-[9/16] bg-gray-900 rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+        <video id="remoteVideo" autoplay playsinline class="w-full h-full object-cover"></video>
+        <video id="localVideo" autoplay muted playsinline class="absolute bottom-4 right-4 w-32 h-48 bg-black rounded-xl object-cover border-2 border-white/20 shadow-lg"></video>
+    </div>
+
+    <div class="flex gap-6 items-center mb-10">
+        <button onclick="toggleMic()" class="w-14 h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition">
+            <i id="micIcon" class="fa-solid fa-microphone"></i>
+        </button>
+        
+        <button id="hangupBtn" class="w-20 h-20 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center text-white text-3xl shadow-xl active:scale-95 transition">
+            <i class="fa-solid fa-phone-slash"></i>
+        </button>
+
+        <button onclick="toggleVideo()" class="w-14 h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition">
+            <i id="videoIcon" class="fa-solid fa-video"></i>
+        </button>
+    </div>
+    </div>
     
     <script>
 // Function din bude overlay na Select Contact
@@ -541,7 +572,58 @@ function endCall() {
     if(currentCall) currentCall.close();
     location.reload(); // Hanya mafi sauki ta kashe kiran
             }
+
+
+        let myPeerId = null;
+let localStream = null;
+let currentCall = null;
+
+// 1. Initialize PeerJS
+const peer = new Peer();
+
+// 2. Samun ID da adanawa a Database (AJAX)
+peer.on('open', (id) => {
+    myPeerId = id;
+    console.log("ID dina shine: " + id);
+    updatePeerIdInDatabase(id); // Kira function na PHP don adana ID
+});
+
+// 3. Karbar Kira (Answering)
+peer.on('call', (call) => {
+    currentCall = call;
+    // Nuna Overlay ga wanda ake kira
+    document.getElementById('callOverlay').classList.remove('hidden');
+    
+    navigator.mediaDevices.getUserMedia({video: true, audio: true}).then((stream) => {
+        localStream = stream;
+        document.getElementById('localVideo').srcObject = stream;
         
+        call.answer(stream); // Amsa kiran
+        
+        call.on('stream', (remoteStream) => {
+            document.getElementById('remoteVideo').srcObject = remoteStream;
+        });
+    });
+});
+
+// Function na kiran wani (Starting a call)
+function makeCall(remotePeerId, name) {
+    document.getElementById('remoteName').innerText = name;
+    document.getElementById('callOverlay').classList.remove('hidden');
+
+    navigator.mediaDevices.getUserMedia({video: true, audio: true}).then((stream) => {
+        localStream = stream;
+        document.getElementById('localVideo').srcObject = stream;
+        
+        const call = peer.call(remotePeerId, stream);
+        currentCall = call;
+
+        call.on('stream', (remoteStream) => {
+            document.getElementById('remoteVideo').srcObject = remoteStream;
+        });
+    });
+        }
+                
     </script>
 </body>
 </html>
