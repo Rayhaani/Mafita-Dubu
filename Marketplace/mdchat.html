@@ -239,21 +239,23 @@
     scrollbar-width: none;
 }
 
-/* Amfani da Inter font domin yayi daidai da Contacts */
+
+/* Amfani da Inter font domin yayi daidai da Contacts dinka */
 .fb-style-card {
     background: white;
-    border-radius: 10px;
-    border: 1px solid #e5e7eb; /* Siririn border */
+    border-radius: 8px;
+    border: 0.5px solid #e5e7eb;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    font-family: 'Inter', sans-serif; /* Wannan ne font din Contacts dinka */
+    /* Tabbatar da cewa Inter font ne na Contacts */
+    font-family: 'Inter', sans-serif !important;
 }
 
 .card-image-container {
     width: 100%;
-    aspect-ratio: 1/1; /* Square kamar hoton asali */
-    background-color: #F2F3F5; 
+    aspect-ratio: 1/1.05;
+    background-color: #f2f3f5;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -266,13 +268,13 @@
 }
 
 .card-info {
-    padding: 12px 10px;
+    padding: 10px 10px;
 }
 
-/* Suna - An rage shi zuwa 14px (Daidai Contacts) */
+/* Suna - Exact Font size da nauyi na Contacts */
 .card-name {
-    font-size: 14px; 
-    font-weight: 700;
+    font-size: 15px; 
+    font-weight: 600; /* Kamar yadda yake a contacts-name class dinka */
     color: #050505;
     margin-bottom: 2px;
     white-space: nowrap;
@@ -280,46 +282,31 @@
     text-overflow: ellipsis;
 }
 
-/* New Member/Location - An rage shi zuwa 12px */
+/* New Member/Location - Exact size na contacts-status */
 .card-meta {
     font-size: 12px;
     color: #65676b;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     gap: 4px;
 }
 
-/* Button - Professional size (Padding 6px) */
+/* Button - Professional size yadda yake a hoton asali */
 .add-friend-btn {
     width: 100%;
     background-color: #050505 !important;
     color: #ffffff !important;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
-    padding: 7px 0; /* Siriri kamar hoton */
+    padding: 8px 0;
     border-radius: 6px;
     border: none;
     cursor: pointer;
-    transition: background 0.2s;
+    font-family: 'Inter', sans-serif;
 }
-
-.add-friend-btn:active {
-    background-color: #333 !important;
-    scale: 0.98;
-}
-
-/* See All Button (Pill Shape) */
-.see-all-pill {
-    background-color: #f0f2f5;
-    color: #050505;
-    padding: 6px 25px;
-    border-radius: 20px;
-    font-weight: 700;
-    font-size: 12px;
-    border: none;
-    }
         
+
         
         
     </style>
