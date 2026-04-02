@@ -414,29 +414,7 @@
 </div>
     
    
-    <div id="callOverlay" class="fixed inset-0 z-[20000] bg-[#050505] hidden flex flex-col items-center justify-between py-12 px-6">
-    <div class="text-center mt-10">
-        <div class="w-28 h-28 rounded-full border-2 border-white/20 p-1 mx-auto mb-6 relative">
-            <img id="remoteAvatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" class="w-full h-full rounded-full object-cover">
-            <div class="absolute inset-0 rounded-full border-4 border-green-500 animate-ping opacity-20"></div>
-        </div>
-        <h2 id="remoteName" class="text-white text-2xl font-bold font-['Inter']">Sadiq Bature</h2>
-        <p id="callStatus" class="text-green-500 mt-2 tracking-widest text-[10px] uppercase font-black">Connecting...</p>
-    </div>
-
-    <div class="relative w-full max-w-sm aspect-[3/4] bg-gray-900 rounded-[40px] overflow-hidden border border-white/10 shadow-2xl">
-        <video id="remoteVideo" autoplay playsinline class="w-full h-full object-cover"></video>
-        <video id="localVideo" autoplay muted playsinline class="absolute bottom-4 right-4 w-28 h-40 bg-black rounded-2xl object-cover border border-white/20 shadow-lg"></video>
-    </div>
-
-    <div class="flex gap-8 items-center mb-10">
-        <button onclick="toggleMic()" class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center text-white text-xl border border-white/5"><i class="fa-solid fa-microphone"></i></button>
-        <button id="hangupBtn" onclick="endCall()" class="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center text-white text-3xl shadow-2xl shadow-red-600/30 active:scale-90 transition"><i class="fa-solid fa-phone-slash"></i></button>
-        <button onclick="toggleVideo()" class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center text-white text-xl border border-white/5"><i class="fa-solid fa-video"></i></button>
-    </div>
-    </div>
-
-
+    
     <div id="callOverlay" class="fixed inset-0 z-[9999] bg-[#050505] hidden flex flex-col items-center justify-between py-12 px-6">
     <div class="text-center mt-10">
         <div class="w-32 h-32 rounded-full border-4 border-green-500/30 p-1 mx-auto mb-6 relative">
@@ -578,6 +556,41 @@ function initiateCall(peerId, name) {
     alert("Ana kiran: " + name);
     // Nan zaka iya sanya code din callOverlay dinka
 }
+
+
+    // FUNCTION DIN DA ZAI BUDE NOTIFICATION KO CHATS
+function switchView(view) {
+    console.log("Koma zuwa: " + view); // Don mu gani a Console idan ya danna
+    const chatsView = document.getElementById('chats-view');
+    const notifView = document.getElementById('notif-view');
+
+    if (view === 'notifications') {
+        chatsView.classList.add('hidden');
+        notifView.classList.remove('hidden');
+        // Canza launin icons idan kana so (optional)
+    } else {
+        chatsView.classList.remove('hidden');
+        notifView.classList.add('hidden');
+    }
+}
+
+// KARIN GYARA: Kashe kiran waya
+function endCall() {
+    if (currentCall) currentCall.close();
+    if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+    }
+    document.getElementById('callOverlay').classList.add('hidden');
+}
+
+// UI HELPERS NA SEARCH
+function openSearch() { 
+    document.getElementById('searchOverlay').style.display = 'flex'; 
+}
+function closeSearch() { 
+    document.getElementById('searchOverlay').style.display = 'none'; 
+}
+    
 </script>
     
         
