@@ -575,13 +575,14 @@
     }
 
     // 5. Discover Logic (GYARARREN CONTAINER)
-      async function loadDiscoverPeople() {
+      
+         async function loadDiscoverPeople() {
     const container = document.getElementById('discoverContainer');
     if (!container) return;
 
-    // Grid layout dinka na asali
-    container.className = "grid grid-cols-2 gap-4 px-4 py-6"; 
-    container.innerHTML = '';
+    // Loda bayanan wanda yake login (Current User) don mu kwatanta
+    const currentUserDoc = await db.collection("users").doc(currentUserId).get();
+    const currentUserData = currentUserDoc.data();
 
     try {
         const querySnapshot = await db.collection("users").limit(10).get();
@@ -591,10 +592,19 @@
             if (currentUserId && doc.id === currentUserId) return;
             const user = doc.data();
 
-            // --- ALGORITHM DINKA (STRICTLY PRESERVED) ---
-            let displayName = user.fullname || user.username || "User";
-            let locationText = user.location_area ? `2km away • ${user.location_area}` : "Exploring...";
-            // --------------------------------------------
+            // --- SMART MATCHING ALGORITHM ---
+            let reasonToConnect = "New Member"; // Default idan babu matching
+
+            if (user.location_area && user.location_area === currentUserData.location_area) {
+                reasonToConnect = `${user.location_area}, ${user.location_city || 'Kano'}`;
+            } 
+            else if (user.university && user.university === currentUserData.university) {
+                reasonToConnect = `Studied at ${user.university}`;
+            } 
+            else if (user.profession && user.profession === currentUserData.profession) {
+                reasonToConnect = user.profession;
+            }
+            // --------------------------------
 
             html += `
             <div class="fb-style-card">
@@ -603,10 +613,10 @@
                 </div>
                 <div class="card-info">
                     <div>
-                        <div class="card-name truncate">${displayName}</div>
+                        <div class="card-name truncate">${user.fullname || user.username}</div>
                         <div class="card-meta">
-                            <i class="fa-solid fa-location-dot" style="font-size: 9px; color: #fff;"></i> 
-                            ${locationText}
+                            <i class="fa-solid fa-users-viewfinder" style="font-size: 10px; color: #fff;"></i> 
+                            ${reasonToConnect}
                         </div>
                     </div>
                     <button class="add-friend-btn">Connect</button>
@@ -614,20 +624,10 @@
             </div>`;
         });
 
-        // See All Pill (Modern Glass Style)
-        html += `
-            <div class="col-span-2 flex justify-center py-8">
-                <button class="see-all-pill" style="background:rgba(0,0,0,0.05); color:#000; padding:10px 40px; border-radius:30px; font-weight:800; font-size:12px; border:1px solid rgba(0,0,0,0.1); text-transform:uppercase; letter-spacing:1px;" onclick="loadMore()">View All Pulse</button>
-            </div>`;
-
         container.innerHTML = html;
-
-    } catch (e) { 
-        console.error("Error:", e); 
-    }
-                }
+    } catch (e) { console.error(e); }
+                              }
     
-                
             
     
     // 6. UI Helpers
