@@ -553,16 +553,22 @@
                 const user = doc.data();
                 const name = user.fullname || user.username || "Mamba";
                 if (doc.id !== currentUserId) {
-                    container.innerHTML += `
-                        <div class="contact-row flex items-center p-3 gap-3 border-b border-gray-50">
-                            <div class="contact-avatar w-10 h-10 rounded-full overflow-hidden">
-                                <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}" class="w-full h-full object-cover">
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="text-sm font-bold">${name}</h4>
-                                <p class="text-[10px] ${user.peer_id ? 'text-green-500' : 'text-gray-400'}">${user.peer_id ? 'Online' : 'Offline'}</p>
-                            </div>
-                        </div>`;
+                  
+                    // A cikin loadContactsFromFirestore, canza innerHTML din zuwa wannan:
+container.innerHTML += `
+    <div class="contact-row flex items-center p-3 gap-3 border-b border-gray-50">
+        <div class="contact-avatar w-10 h-10 rounded-full overflow-hidden">
+            <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}" class="w-full h-full object-cover">
+        </div>
+        <div class="flex-1">
+            <h4 class="text-sm font-bold">${name}</h4>
+            <p class="text-[10px] ${user.peer_id ? 'text-green-500' : 'text-gray-400'}">${user.peer_id ? 'Online' : 'Offline'}</p>
+        </div>
+        ${user.peer_id ? `
+            <button onclick="startCall('${user.peer_id}', '${name}', '${user.avatarUrl}')" class="text-green-600 p-2">
+                <i class="fa-solid fa-video"></i>
+            </button>` : ''}
+    </div>`; 
                 }
             });
         });
@@ -703,6 +709,82 @@ window.addEventListener('scroll', () => {
     }
 }, true);
 
+    let localStream;
+let currentCall;
+
+// 1. Fara Kira (Outgoing Call)
+async function startCall(remotePeerId, name, avatar) {
+    try {
+        // Kunna Kamara da Mic
+        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        document.getElementById('localVideo').srcObject = localStream;
+        
+        // Nuna Overlay
+        document.getElementById('callOverlay').classList.remove('hidden');
+        document.getElementById('remoteName').innerText = name;
+        if(avatar) document.getElementById('remoteAvatar').src = avatar;
+
+        // Fara kiran ta PeerJS
+        const call = peer.call(remotePeerId, localStream);
+        handleCall(call);
+    } catch (err) {
+        alert("Ba a samu damar amfani da kamara ba: " + err);
+    }
+}
+
+// 2. Amsa Kira (Incoming Call)
+peer.on('call', async (call) => {
+    const accept = confirm("Kira yana shigowa! Shin zaka amsa?");
+    if (accept) {
+        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        document.getElementById('localVideo').srcObject = localStream;
+        document.getElementById('callOverlay').classList.remove('hidden');
+        
+        call.answer(localStream);
+        handleCall(call);
+    } else {
+        call.close();
+    }
+});
+
+// 3. Kula da tafiyar kira
+function handleCall(call) {
+    currentCall = call;
+    
+    call.on('stream', (remoteStream) => {
+        document.getElementById('remoteVideo').srcObject = remoteStream;
+    });
+
+    call.on('close', () => {
+        endCallUI();
+    });
+}
+
+// 4. Kashe Kira
+document.getElementById('hangupBtn').onclick = () => {
+    if (currentCall) currentCall.close();
+    endCallUI();
+};
+
+function endCallUI() {
+    document.getElementById('callOverlay').classList.add('hidden');
+    if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+    }
+}
+
+// 5. Mute/Unmute Mic da Video
+function toggleMic() {
+    const audioTrack = localStream.getAudioTracks()[0];
+    audioTrack.enabled = !audioTrack.enabled;
+    document.getElementById('micIcon').className = audioTrack.enabled ? 'fa-solid fa-microphone' : 'fa-solid fa-microphone-slash text-red-500';
+}
+
+function toggleVideo() {
+    const videoTrack = localStream.getVideoTracks()[0];
+    videoTrack.enabled = !videoTrack.enabled;
+    document.getElementById('videoIcon').className = videoTrack.enabled ? 'fa-solid fa-video' : 'fa-solid fa-video-slash text-red-500';
+    }
 
     
 </script>   
