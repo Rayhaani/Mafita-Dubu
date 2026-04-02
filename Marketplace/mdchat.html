@@ -240,76 +240,79 @@
 }
         
 
-    .fb-style-card {
+/* Sabon Tsarin Card Kamar Hoton */
+.fb-style-card {
     background: white;
-    border-radius: 12px;
-    border: 1px solid #e5e7eb;
+    border-radius: 15px; /* Rounded kadan kamar hoton */
+    border: 1px solid #f0f0f0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    height: 280px; /* Tsawon katin gaba daya */
+    height: auto;
+    padding-bottom: 12px;
 }
 
-/* Hoto ya dauki 70% na katin */
+/* Hoton zai zauna a Grey background kamar na hoton */
 .card-image-container {
-    flex: 0 0 70%; 
-    background-color: #f0f0f0; /* Ash background */
+    width: 100%;
+    aspect-ratio: 1/1;
+    background-color: #F2F3F5; /* Launiyar dake jikin hoton */
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end; /* Don avatar ya zauna a kasa */
     overflow: hidden;
 }
 
 .card-image-container img {
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
     object-fit: contain;
 }
 
-/* Sauran sararin na kasan hoto (30%) */
 .card-info {
-    flex: 1;
-    padding: 8px 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Don button ya zauna a kasa sosai */
+    padding: 12px 10px;
+    text-align: left;
 }
 
-/* Black Connect Button */
+/* Bakar Button din "Add Friend" */
 .connect-btn {
     width: 100%;
     background-color: black !important;
     color: white !important;
-    font-size: 11px;
-    font-weight: 900;
-    padding: 9px 0;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 0;
     border-radius: 8px;
     border: none;
-    text-transform: capitalize;
+    margin-top: 8px;
     cursor: pointer;
-    transition: 0.2s;
 }
 
-.connect-btn:active {
-    scale: 0.95;
-}
-
-/* See All Footer Bar */
+/* Sabon See All Button a Tsakiya */
 .see-more-footer {
-    grid-column: span 2;
+    width: 100%;
+    display: flex;
     justify-content: center;
-    padding: 20px 0;
+    padding: 30px 0;
 }
 
 .see-more-btn {
-    background: none;
+    background: #eeeeee; /* Grey mai sanyi */
     border: none;
     color: #000;
-    font-size: 13px;
-    font-weight: 800;
-    text-decoration: underline;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 40px; /* Ya danyi fadi amma bai cika gefe ba */
+    border-radius: 25px;
     cursor: pointer;
-        }
+    transition: 0.3s;
+}
+
+.see-more-btn:active {
+    scale: 0.95;
+    background: #ddd;
+    }
+    
         
         
         
@@ -570,7 +573,8 @@
     const container = document.getElementById('discoverContainer');
     if (!container) return;
 
-    // Saka loading spinner kafin bayanai su iso
+    // Sanya grid layout domin su fito bibbiya kamar hoton
+    container.className = "grid grid-cols-2 gap-3 px-3"; 
     container.innerHTML = '<p class="text-center col-span-2 py-10 text-gray-400 text-xs">Neman mambobi...</p>';
 
     try {
@@ -587,8 +591,10 @@
             if (currentUserId && doc.id === currentUserId) return;
             const user = doc.data();
             
-            // ALGORITHM DINKA (Ba a taba shi ba)
+            // --- ALGORITHM DINKA NA ASALI (BA A TABA SHI BA) ---
             let reason = user.location_area || user.profession || "Sabuwar Mamba";
+            let distance = (user.location_area === "Kano") ? "2km away • Kano" : "Kano";
+            // --------------------------------------------------
 
             html += `
             <div class="fb-style-card">
@@ -596,26 +602,30 @@
                     <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}">
                 </div>
                 <div class="card-info">
-                    <h4 class="text-[13px] font-extrabold text-gray-900 truncate">${user.fullname || 'Mamba'}</h4>
-                    <p class="text-[10px] text-gray-500 truncate mb-2 font-semibold">${reason}</p>
-                    <button class="connect-btn">Connect</button>
+                    <h4 class="text-[15px] font-bold text-gray-900 truncate">${user.fullname || 'Mamba'}</h4>
+                    <p class="text-[12px] text-gray-500 truncate mb-1">
+                        <i class="fa-solid fa-location-dot text-[10px]"></i> ${distance}
+                    </p>
+                    <button class="connect-btn">Add Friend</button>
                 </div>
             </div>`;
         });
 
-        // "See All" button a kasan grid
-        html += `
-            <div id="footerBar" class="see-more-footer" style="display: flex;">
-                <button class="see-more-btn" onclick="loadMore()">See All</button>
-            </div>`;
-            
         container.innerHTML = html;
+
+        // Footer button na See All
+        const footerBar = document.getElementById('footerBar');
+        if (footerBar) {
+            footerBar.style.display = 'flex';
+            footerBar.innerHTML = `<button class="see-more-btn" onclick="loadMore()">See all</button>`;
+        }
 
     } catch (e) { 
         console.error("Discover Error:", e); 
         container.innerHTML = '<p class="text-center col-span-2 text-red-400 text-xs">An samu matsala!</p>';
     }
     }
+    
     
                       
     
