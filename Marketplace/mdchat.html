@@ -243,78 +243,85 @@
 /* Sabon Tsarin Card Kamar Hoton */
 .fb-style-card {
     background: white;
-    border-radius: 15px; /* Rounded kadan kamar hoton */
-    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    height: auto;
-    padding-bottom: 12px;
 }
 
-/* Hoton zai zauna a Grey background kamar na hoton */
+/* Wajen hoton (Ash Background) */
 .card-image-container {
     width: 100%;
     aspect-ratio: 1/1;
-    background-color: #F2F3F5; /* Launiyar dake jikin hoton */
+    background-color: #f1f2f4; /* Daidai launin dake hoton */
     display: flex;
     justify-content: center;
-    align-items: flex-end; /* Don avatar ya zauna a kasa */
-    overflow: hidden;
+    align-items: flex-end;
 }
 
 .card-image-container img {
-    width: 90%;
-    height: 90%;
+    width: 95%; /* Don ya danyi girma kadan */
+    height: 95%;
     object-fit: contain;
 }
 
+/* Bayanan kasa */
 .card-info {
-    padding: 12px 10px;
+    padding: 15px 12px;
     text-align: left;
 }
 
+/* Salon sunan (Font) */
+.card-name {
+    font-size: 18px; /* Ya danyi kauri kuma ya girma kadan */
+    font-weight: 700;
+    color: #1c1e21;
+    margin-bottom: 2px;
+}
+
+/* Default Location/Profession */
+.card-meta {
+    font-size: 14px;
+    color: #65676b; /* Grey mai duhu kadan */
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
 /* Bakar Button din "Add Friend" */
-.connect-btn {
+.add-friend-btn {
     width: 100%;
     background-color: black !important;
     color: white !important;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     padding: 10px 0;
     border-radius: 8px;
     border: none;
-    margin-top: 8px;
     cursor: pointer;
 }
 
-/* Sabon See All Button a Tsakiya */
-.see-more-footer {
-    width: 100%;
+/* See All Button a Tsakiya */
+.see-all-container {
+    grid-column: span 2;
     display: flex;
     justify-content: center;
-    padding: 30px 0;
+    padding: 25px 0;
 }
 
-.see-more-btn {
-    background: #eeeeee; /* Grey mai sanyi */
-    border: none;
-    color: #000;
-    font-size: 14px;
+.see-all-pill {
+    background-color: #f0f2f5;
+    color: #050505;
+    padding: 10px 45px;
+    border-radius: 20px;
     font-weight: 700;
-    padding: 10px 40px; /* Ya danyi fadi amma bai cika gefe ba */
-    border-radius: 25px;
+    font-size: 14px;
+    border: none;
     cursor: pointer;
-    transition: 0.3s;
 }
-
-.see-more-btn:active {
-    scale: 0.95;
-    background: #ddd;
-    }
-    
-        
-        
+          
         
     </style>
 </head>
@@ -569,31 +576,30 @@
     }
 
     // 5. Discover Logic (GYARARREN CONTAINER)
-    async function loadDiscoverPeople() {
+    
+async function loadDiscoverPeople() {
     const container = document.getElementById('discoverContainer');
     if (!container) return;
 
-    // Sanya grid layout domin su fito bibbiya kamar hoton
-    container.className = "grid grid-cols-2 gap-3 px-3"; 
+    // Grid domin katin su zauna bibbiya
+    container.className = "grid grid-cols-2 gap-4 px-3"; 
     container.innerHTML = '<p class="text-center col-span-2 py-10 text-gray-400 text-xs">Neman mambobi...</p>';
 
     try {
-        let currentUserData = {};
-        if (currentUserId) {
-            const currentUserDoc = await db.collection("users").doc(currentUserId).get();
-            currentUserData = currentUserDoc.data() || {};
-        }
-
         const querySnapshot = await db.collection("users").limit(10).get();
         let html = "";
 
         querySnapshot.forEach((doc) => {
             if (currentUserId && doc.id === currentUserId) return;
             const user = doc.data();
-            
+
             // --- ALGORITHM DINKA NA ASALI (BA A TABA SHI BA) ---
-            let reason = user.location_area || user.profession || "Sabuwar Mamba";
-            let distance = (user.location_area === "Kano") ? "2km away • Kano" : "Kano";
+            // Idan babu unguwa ko profession, sa default "New Member"
+            let locationDisplay = user.location_area || "New Member";
+            let professionDisplay = user.profession || "";
+            
+            // Haɗa su kamar yadda yake a hoton (unguwa • km)
+            let metaInfo = (user.location_area) ? `2km away • ${user.location_area}` : `New Member`;
             // --------------------------------------------------
 
             html += `
@@ -602,23 +608,23 @@
                     <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}">
                 </div>
                 <div class="card-info">
-                    <h4 class="text-[15px] font-bold text-gray-900 truncate">${user.fullname || 'Mamba'}</h4>
-                    <p class="text-[12px] text-gray-500 truncate mb-1">
-                        <i class="fa-solid fa-location-dot text-[10px]"></i> ${distance}
-                    </p>
-                    <button class="connect-btn">Add Friend</button>
+                    <div class="card-name truncate">${user.fullname || 'Mamba'}</div>
+                    <div class="card-meta">
+                        <i class="fa-solid fa-location-dot" style="font-size: 12px;"></i> 
+                        ${metaInfo}
+                    </div>
+                    <button class="add-friend-btn">Add Friend</button>
                 </div>
             </div>`;
         });
 
-        container.innerHTML = html;
+        // Saka See All Button a kasa
+        html += `
+            <div class="see-all-container">
+                <button class="see-all-pill" onclick="loadMore()">See all</button>
+            </div>`;
 
-        // Footer button na See All
-        const footerBar = document.getElementById('footerBar');
-        if (footerBar) {
-            footerBar.style.display = 'flex';
-            footerBar.innerHTML = `<button class="see-more-btn" onclick="loadMore()">See all</button>`;
-        }
+        container.innerHTML = html;
 
     } catch (e) { 
         console.error("Discover Error:", e); 
@@ -626,8 +632,8 @@
     }
     }
     
+        
     
-                      
     
     // 6. UI Helpers
     function openSearch() { document.getElementById('searchOverlay').style.display = 'flex'; }
