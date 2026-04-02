@@ -378,18 +378,22 @@
             </div>
         </div>
 
-        <div id="view-discover" class="hidden p-5">
-    <div class="flex justify-between items-center mb-5">
-        <h3 class="text-[14px] font-extrabold text-gray-900 uppercase tracking-tight">People you may know</h3>
-        <button class="text-blue-600 text-[12px] font-bold">See all</button>
+        <div id="view-discover" class="hidden relative pb-20">
+    <div class="px-5 py-4">
+        <h3 class="text-[12px] font-black uppercase tracking-[3px] text-gray-400 mb-6">Mambobi da kuka dace</h3>
+        
+        <div id="discoverContainer" class="flex flex-col gap-5">
+            </div>
     </div>
 
-    <div id="discoverContainer" class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
-        </div>
+    <div id="seeAllBar" class="fixed bottom-[70px] left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-black/80 backdrop-blur-lg border border-white/10 py-4 px-6 rounded-3xl flex justify-between items-center shadow-2xl transition-all duration-500 opacity-0 translate-y-10">
+        <p class="text-white text-[12px] font-bold">Akwai mambobi 150+ kusa da kai</p>
+        <button class="bg-orange-500 text-white text-[10px] font-black px-5 py-2 rounded-full uppercase">See All</button>
+    </div>
         </div>
         
+        
    
-    
     <div id="callOverlay" class="fixed inset-0 z-[9999] bg-[#050505] hidden flex flex-col items-center justify-between py-12 px-6">
     <div class="text-center mt-10">
         <div class="w-32 h-32 rounded-full border-4 border-green-500/30 p-1 mx-auto mb-6 relative">
@@ -632,6 +636,53 @@ function loadDiscoverPeople() {
         </div>
     `).join('');
     }
+
+
+    // 1. Smart Algorithm Function
+function loadDiscoverPeople() {
+    const container = document.getElementById('discoverContainer');
+    
+    // Misali: Bayanan da za su fito daga Firestore
+    const suggestedUsers = [
+        { name: "Mustapha Hussain", reason: "Sharada, Kano", icon: "fa-location-dot", type: "Location", seed: "Musty" },
+        { name: "Ahmad Suleiman", reason: "Graphic Designer", icon: "fa-palette", type: "Profession", seed: "Ahmad" },
+        { name: "Zainab Aliyu", reason: "Bayero University (BUK)", icon: "fa-graduation-cap", type: "Education", seed: "Zainab" }
+    ];
+
+    container.innerHTML = suggestedUsers.map(u => `
+        <div class="flex items-center gap-4 bg-white p-4 rounded-[25px] border border-gray-50 shadow-sm transition active:scale-95">
+            <div class="w-16 h-16 rounded-2xl overflow-hidden bg-gray-100 flex-shrink-0">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${u.seed}" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1">
+                <h4 class="text-[15px] font-bold text-gray-900">${u.name}</h4>
+                <div class="flex items-center gap-1.5 mt-1">
+                    <i class="fa-solid ${u.icon} text-[10px] text-orange-500"></i>
+                    <span class="text-[11px] font-medium text-gray-500">${u.reason}</span>
+                </div>
+            </div>
+            <button class="bg-black text-white text-[10px] font-bold px-4 py-2.5 rounded-xl">Connect</button>
+        </div>
+    `).join('');
+}
+
+// 2. Floating Bar Scroll Logic
+const scrollArea = document.querySelector('.contact-scroll-area');
+scrollArea.addEventListener('scroll', () => {
+    const bar = document.getElementById('seeAllBar');
+    const discoverView = document.getElementById('view-discover');
+    
+    // Idan muna kan Discover tab kuma mun yi scrolling kasa
+    if (!discoverView.classList.contains('hidden')) {
+        if (scrollArea.scrollTop > 100) {
+            bar.classList.remove('opacity-0', 'translate-y-10');
+            bar.classList.add('opacity-100', 'translate-y-0');
+        } else {
+            bar.classList.add('opacity-0', 'translate-y-10');
+            bar.classList.remove('opacity-100', 'translate-y-0');
+        }
+    }
+});
     
     
 </script>   
