@@ -322,7 +322,24 @@
     display: none !important;
 }
 
-    
+
+
+        /* Wannan zai gyara matsayin Search Icon ya zauna inda vConsole yake */
+#floatingSearch {
+    position: fixed !important;
+    bottom: 20px !important; /* Daidaita tsayin sa da vConsole */
+    right: 20px !important;
+    width: 50px !important;
+    height: 50px !important;
+    z-index: 10001 !important; /* Ya zama sama da vConsole (vConsole yawanci 9999 ne) */
+    background: #000 !important;
+    border: 2px solid #fff; /* Don ya fito daban */
+}
+
+/* Boye vConsole button na asali idan kana so Search din ne kawai ya tsaya a wurin */
+.vc-switch {
+    display: none !important;
+    }
         
     </style>
 </head>
@@ -510,11 +527,14 @@
     <i class="fa-solid fa-magnifying-glass text-xl"></i>
         </div>
     
+        
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
 
+
+     
 <script>
     // 1. Initialize VConsole
     var vConsole = new window.VConsole();
