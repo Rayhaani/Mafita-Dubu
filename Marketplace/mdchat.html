@@ -238,89 +238,88 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
-        
 
-   /* Sabon Tsarin Card Sak Kamar Hoton */
+/* Amfani da Inter font domin yayi daidai da Contacts */
 .fb-style-card {
     background: white;
-    border-radius: 8px; /* Kadan kamar yadda yake a hoton */
-    border: 0.5px solid #e0e0e0;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb; /* Siririn border */
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    font-family: 'Inter', sans-serif; /* Wannan ne font din Contacts dinka */
 }
 
-/* Wajen hoton (Launin Ash mai haske) */
 .card-image-container {
     width: 100%;
-    aspect-ratio: 1/1.1; /* Ya danyi tsayi kadan kamar hoton */
-    background-color: #f2f3f5; 
+    aspect-ratio: 1/1; /* Square kamar hoton asali */
+    background-color: #F2F3F5; 
     display: flex;
     justify-content: center;
     align-items: flex-end;
 }
 
 .card-image-container img {
-    width: 100%; 
+    width: 100%;
     height: 100%;
-    object-fit: cover; /* Don ya cika wajen yadda hoton mamba yake */
+    object-fit: cover;
 }
 
-/* Bayanan kasa (An rage padding) */
 .card-info {
-    padding: 10px 10px;
-    text-align: left;
+    padding: 12px 10px;
 }
 
-/* Sunan Mamba (Font size 15px) */
+/* Suna - An rage shi zuwa 14px (Daidai Contacts) */
 .card-name {
-    font-size: 15px; 
+    font-size: 14px; 
     font-weight: 700;
     color: #050505;
     margin-bottom: 2px;
-    letter-spacing: -0.3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* Location/New Member (Font size 13px) */
+/* New Member/Location - An rage shi zuwa 12px */
 .card-meta {
-    font-size: 13px;
+    font-size: 12px;
     color: #65676b;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
-    gap: 3px;
+    gap: 4px;
 }
 
-/* Bakar Button (Add Friend) - An rage shi don ya yi daidai da hoton */
+/* Button - Professional size (Padding 6px) */
 .add-friend-btn {
     width: 100%;
     background-color: #050505 !important;
     color: #ffffff !important;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    padding: 8px 0;
+    padding: 7px 0; /* Siriri kamar hoton */
     border-radius: 6px;
     border: none;
     cursor: pointer;
+    transition: background 0.2s;
 }
 
-/* See All Button a Kasa (Pill Shape) */
-.see-all-container {
-    grid-column: span 2;
-    display: flex;
-    justify-content: center;
-    padding: 20px 0;
+.add-friend-btn:active {
+    background-color: #333 !important;
+    scale: 0.98;
 }
 
+/* See All Button (Pill Shape) */
 .see-all-pill {
     background-color: #f0f2f5;
     color: #050505;
-    padding: 8px 30px;
+    padding: 6px 25px;
     border-radius: 20px;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 12px;
     border: none;
     }
+        
         
         
     </style>
@@ -581,8 +580,8 @@
     const container = document.getElementById('discoverContainer');
     if (!container) return;
 
-    // Grid layout kamar yadda ka nema
-    container.className = "grid grid-cols-2 gap-2 px-2"; 
+    // Grid mai gap-3 don kada cards din suyi kusa da juna da yawa
+    container.className = "grid grid-cols-2 gap-3 px-3"; 
     container.innerHTML = '';
 
     try {
@@ -594,19 +593,19 @@
             const user = doc.data();
 
             // --- ALGORITHM DINKA NA ASALI ---
-            // Nuna "New Member" a matsayin default
+            // Idan babu komai, nuna "New Member"
             let locationText = user.location_area ? `2km away • ${user.location_area}` : "New Member";
             // --------------------------------
 
             html += `
-            <div class="fb-style-card">
+            <div class="fb-style-card shadow-sm">
                 <div class="card-image-container">
                     <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}">
                 </div>
                 <div class="card-info">
-                    <div class="card-name truncate">${user.fullname || 'Mamba'}</div>
+                    <div class="card-name">${user.fullname || 'Mamba'}</div>
                     <div class="card-meta">
-                        <i class="fa-solid fa-location-dot" style="font-size: 11px; opacity: 0.7;"></i> 
+                        <i class="fa-solid fa-location-dot" style="font-size: 10px; color: #8e8e8e;"></i> 
                         ${locationText}
                     </div>
                     <button class="add-friend-btn">Add Friend</button>
@@ -614,18 +613,18 @@
             </div>`;
         });
 
-        // See All Button a tsakiya
+        // See All Pill at the bottom
         html += `
-            <div class="see-all-container">
+            <div class="col-span-2 flex justify-center py-6">
                 <button class="see-all-pill" onclick="loadMore()">See all</button>
             </div>`;
 
         container.innerHTML = html;
 
     } catch (e) { 
-        console.error("Error:", e); 
+        console.error("Discover Error:", e); 
     }
-    }
+            }
     
     
     
