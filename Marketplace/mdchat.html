@@ -493,74 +493,92 @@
     </div>
     </div>
     
-    <script>
-// Function din bude overlay na Select Contact
-function openSearch() {
-    const overlay = document.getElementById('searchOverlay');
-    overlay.style.display = 'flex';
-    
-    // Yana saka keyboard ya fito kai tsaye
-    setTimeout(() => {
-        const input = document.getElementById('mainSearchInput');
-        if(input) input.focus();
-    }, 300);
-}
 
-function closeSearch() {
-    document.getElementById('searchOverlay').style.display = 'none';
-}
-        
-        
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
-// Function din canja views (Chats/Notifications)
-function switchView(view) {
-    if(view === 'notifications') {
-        document.getElementById('chats-view').classList.add('hidden');
-        document.getElementById('notif-view').classList.remove('hidden');
+<script>
+// 2. FIREBASE CONFIGURATION (Daga Firebase Console dinka)
+const firebaseConfig = {
+    apiKey: "SAKA_API_KEY_DINKA_ANAN",
+    authDomain: "mafita-dubu.firebaseapp.com",
+    projectId: "mafita-dubu",
+    storageBucket: "mafita-dubu.appspot.com",
+    messagingSenderId: "NUMBER_DINKA",
+    appId: "APP_ID_DINKA"
+};
+
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+// Variables na Kiran Wayar
+let myPeerId = null;
+let localStream = null;
+let currentCall = null;
+let currentUserId = null;
+
+// 3. INITIALIZE PEERJS
+const peer = new Peer(); 
+
+// Bibiyar User din da yake Logged In
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        currentUserId = user.uid;
+        loadContactsFromFirestore(); // Fara kwaso abokan hira
     } else {
-        document.getElementById('chats-view').classList.remove('hidden');
-        document.getElementById('notif-view').classList.add('hidden');
+        console.log("Ba a yi login ba");
     }
-    }
-        
+});
 
-        let peer = new Peer(); // Wannan zai samar da ID
-let localStream;
-let currentCall;
-
-// 1. Lokacin da app ya bude, samu ID dinka
+// 4. LOKACIN DA PEERJS YA BUDE
 peer.on('open', (id) => {
-    console.log("ID dina na kira: " + id);
-    // Nan ne zaka yi amfani da AJAX ka tura wannan 'id' din zuwa database dinka
-});
+    myPeerId = id;
+    console.log("Peer ID dina shine: " + id);
 
-// 2. Idan wani ya kira ka
-peer.on('call', (call) => {
-    if(confirm("Kira na shigowa... Kana son dauka?")) {
-        navigator.mediaDevices.getUserMedia({video: true, audio: true}).then((stream) => {
-            localStream = stream;
-            document.getElementById('localVideo').srcObject = stream;
-            document.getElementById('callOverlay').style.display = 'flex';
-            
-            call.answer(stream);
-            call.on('stream', (remoteStream) => {
-                document.getElementById('remoteVideo').srcObject = remoteStream;
-                document.getElementById('callStatus').innerText = "On Call";
-            });
-        });
+    // Adana ID a Firestore idan user yana online
+    if (currentUserId) {
+        db.collection('members').doc(currentUserId).set({
+            peer_id: id,
+            isOnline: true,
+            lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
     }
 });
 
-// 3. Function na fara kira
-function initiateCall(remoteId, name) {
-    document.getElementById('remoteName').innerText = name;
-    document.getElementById('callOverlay').style.display = 'flex';
-    
+// 5. KARBAR KIRA (Incoming)
+peer.on('call', (call) => {
+    currentCall = call;
+    document.getElementById('callOverlay').classList.remove('hidden');
+    document.getElementById('callStatus').innerText = "Incoming Call...";
+
     navigator.mediaDevices.getUserMedia({video: true, audio: true}).then((stream) => {
         localStream = stream;
         document.getElementById('localVideo').srcObject = stream;
+        call.answer(stream);
         
-        const call = peer.call(remoteId, stream);
+        call.on('stream', (remoteStream) => {
+            document.getElementById('remoteVideo').srcObject = remoteStream;
+            document.getElementById('callStatus').innerText = "On Call";
+        });
+    });
+});
+
+// 6. FARA KIRA (Outbound)
+function initiateCall(targetPeerId, targetName) {
+    if(!targetPeerId) return alert("Wannan mamban baya online yanzu.");
+    
+    document.getElementById('remoteName').innerText = targetName;
+    document.getElementById('callOverlay').classList.remove('hidden');
+
+    navigator.mediaDevices.getUserMedia({video: true, audio: true}).then((stream) => {
+        localStream = stream;
+        document.getElementById('localVideo').srcObject = stream;
+        const call = peer.call(targetPeerId, stream);
+        currentCall = call;
+
         call.on('stream', (remoteStream) => {
             document.getElementById('remoteVideo').srcObject = remoteStream;
             document.getElementById('callStatus').innerText = "On Call";
@@ -568,62 +586,45 @@ function initiateCall(remoteId, name) {
     });
 }
 
-function endCall() {
-    if(currentCall) currentCall.close();
-    location.reload(); // Hanya mafi sauki ta kashe kiran
+// 7. KWASO MUTANE DAGA FIRESTORE (Loop)
+function loadContactsFromFirestore() {
+    const container = document.getElementById('contactsContainer');
+    if(!container) return;
+
+    db.collection("members").onSnapshot((querySnapshot) => {
+        container.innerHTML = '<p class="text-[12px] font-bold text-gray-400 px-5 py-4 uppercase tracking-widest">Abokan Hulda</p>';
+        
+        querySnapshot.forEach((doc) => {
+            const user = doc.data();
+            if (doc.id !== currentUserId && user.peer_id) {
+                container.innerHTML += `
+                    <div class="contact-row flex items-center justify-between" onclick="initiateCall('${user.peer_id}', '${user.fullname || 'User'}')">
+                        <div class="flex items-center gap-4">
+                            <div class="contact-avatar"><img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=User'}"></div>
+                            <div class="contact-details">
+                                <h4 class="contact-name">${user.fullname || 'Unknown'}</h4>
+                                <p class="contact-status text-green-500">Online</p>
+                            </div>
+                        </div>
+                        <div class="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-phone text-green-600 text-sm"></i>
+                        </div>
+                    </div>`;
             }
-
-
-        let myPeerId = null;
-let localStream = null;
-let currentCall = null;
-
-// 1. Initialize PeerJS
-const peer = new Peer();
-
-// 2. Samun ID da adanawa a Database (AJAX)
-peer.on('open', (id) => {
-    myPeerId = id;
-    console.log("ID dina shine: " + id);
-    updatePeerIdInDatabase(id); // Kira function na PHP don adana ID
-});
-
-// 3. Karbar Kira (Answering)
-peer.on('call', (call) => {
-    currentCall = call;
-    // Nuna Overlay ga wanda ake kira
-    document.getElementById('callOverlay').classList.remove('hidden');
-    
-    navigator.mediaDevices.getUserMedia({video: true, audio: true}).then((stream) => {
-        localStream = stream;
-        document.getElementById('localVideo').srcObject = stream;
-        
-        call.answer(stream); // Amsa kiran
-        
-        call.on('stream', (remoteStream) => {
-            document.getElementById('remoteVideo').srcObject = remoteStream;
         });
     });
-});
+}
 
-// Function na kiran wani (Starting a call)
-function makeCall(remotePeerId, name) {
-    document.getElementById('remoteName').innerText = name;
-    document.getElementById('callOverlay').classList.remove('hidden');
+// 8. KASHE KIRA
+function endCall() {
+    if (currentCall) currentCall.close();
+    if (localStream) localStream.getTracks().forEach(track => track.stop());
+    document.getElementById('callOverlay').classList.add('hidden');
+}
 
-    navigator.mediaDevices.getUserMedia({video: true, audio: true}).then((stream) => {
-        localStream = stream;
-        document.getElementById('localVideo').srcObject = stream;
-        
-        const call = peer.call(remotePeerId, stream);
-        currentCall = call;
-
-        call.on('stream', (remoteStream) => {
-            document.getElementById('remoteVideo').srcObject = remoteStream;
-        });
-    });
-        }
-                
-    </script>
+// UI Helpers
+function openSearch() { document.getElementById('searchOverlay').style.display = 'flex'; }
+function closeSearch() { document.getElementById('searchOverlay').style.display = 'none'; }
+</script>
 </body>
 </html>
