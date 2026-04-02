@@ -297,6 +297,24 @@
 }
         
 
+        .see-all-pill {
+    background: #f0f2f5; 
+    color: #050505;
+    padding: 10px 40px;
+    border-radius: 25px; /* Pill shape */
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.see-all-pill:active {
+    background: #e4e6eb;
+    transform: scale(0.98);
+}
+        
         
     </style>
 </head>
@@ -675,7 +693,13 @@ window.addEventListener('scroll', () => {
 }, true);
 
 
-            
+            // Wannan zai nuna button din a tsakiya (center) a kasan cards
+html += `
+    <div style="width: 100%; display: flex; justify-content: center; padding: 20px 0; grid-column: span 2;">
+        <button class="see-all-pill" onclick="loadMore()">See all</button>
+    </div>
+`;
+    
     
 </script>   
 </body>
