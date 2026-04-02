@@ -240,29 +240,32 @@
 }
         
 
-   /* Cards Grid */
+   /* Container na Grid - 2 Columns */
 #discoverContainer {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 8px;
+    gap: 10px;
     padding: 10px;
-    padding-bottom: 100px;
+    padding-bottom: 80px; /* Don bar din ta samu sarari */
 }
 
+/* Tsarin Katin Facebook Style */
 .fb-style-card {
     background: white;
     border-radius: 12px;
+    border: 1px solid #eee;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    height: 260px; /* Tsawon katin */
-    border: 1px solid #eee;
+    height: auto;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-/* Hoto ya dauki 80% */
+/* Hoto ya mamaye 80% (Ash Background) */
 .card-image-container {
-    flex: 0 0 75%; 
-    background: #f0f0f0; /* Ash colour */
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #f0f0f0; /* Ash colour */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -274,37 +277,50 @@
     object-fit: contain; /* Don kar a yanke kai */
 }
 
-/* Dan karamin sarari na bayani */
+/* Bayani a kasa (Suna da Algorithm) */
 .card-info {
-    flex: 1;
-    padding: 6px 8px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 2px;
 }
 
-/* See More Bar mai passionate look */
-#seeMoreFloatingBar {
-    position: fixed;
-    bottom: -50px; /* Boyayye a farko */
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    padding: 8px 25px;
-    border-radius: 30px;
-    color: white;
-    font-size: 11px;
+/* Ainihin Black Connect Button */
+.connect-btn {
+    width: 100%;
+    background-color: black !important;
+    color: white !important;
+    font-size: 12px;
     font-weight: bold;
-    z-index: 2000;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    padding: 10px 0;
+    border-radius: 8px;
+    border: none;
+    margin-top: 8px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
 }
 
-#seeMoreFloatingBar.active {
-    bottom: 30px; /* Zai fito idan aka yi scroll */
-                          }
+.connect-btn:active {
+    transform: scale(0.95);
+}
+
+/* Professional See All Bar a karkashin Cards */
+.see-more-footer {
+    grid-column: span 2;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.see-more-btn {
+    background: transparent;
+    color: #555;
+    font-size: 13px;
+    font-weight: bold;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+}
         
         
     </style>
@@ -573,79 +589,52 @@
     // 5. Discover Logic (GYARARREN CONTAINER)
     async function loadDiscoverPeople() {
     const container = document.getElementById('discoverContainer');
-    const seeMoreBar = document.getElementById('seeAllBar');
     if (!container) return;
 
-    container.innerHTML = '<p class="text-center col-span-2 text-gray-400 text-xs py-10">Neman mambobi...</p>';
-
     try {
-        let currentUserData = {};
-        if (currentUserId) {
-            const currentUserDoc = await db.collection("users").doc(currentUserId).get();
-            currentUserData = currentUserDoc.data() || {};
-        }
-
-        const querySnapshot = await db.collection("users").limit(12).get();
+        const querySnapshot = await db.collection("users").limit(10).get();
         let html = "";
 
         querySnapshot.forEach((doc) => {
-            if (currentUserId && doc.id === currentUserId) return;
             const user = doc.data();
-            
-            // ALGORITHM DINKA (Kiyaye shi)
-            let reason = "Sabuwar Mamba";
-            let icon = "fa-star";
+            if (currentUserId && doc.id === currentUserId) return;
 
-            if (user.location_area && user.location_area === currentUserData.location_area) {
-                reason = `${user.location_area}`;
-                icon = "fa-location-dot";
-            } else if (user.profession && user.profession === currentUserData.profession) {
-                reason = user.profession;
-                icon = "fa-briefcase";
-            } else if (user.university && user.university === currentUserData.university) {
-                reason = user.university;
-                icon = "fa-graduation-cap";
-            }
+            // Algorithm dinka yana nan daram
+            let reason = user.location_area || "New Member";
 
             html += `
-            <div class="fb-style-card shadow-sm border border-gray-100 rounded-xl bg-white overflow-hidden flex flex-col">
-                <div class="w-full aspect-square bg-gray-50 overflow-hidden">
+            <div class="fb-style-card">
+                <div style="width:100%; aspect-ratio:1/1; background:#f0f0f0;">
                     <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}" 
-                         class="w-full h-full object-contain">
+                         style="width:100%; height:100%; object-fit:contain;">
                 </div>
-                <div class="p-3 flex flex-col flex-1">
-                    <h4 class="text-[12px] font-bold text-gray-900 truncate leading-tight">${user.fullname || 'Mamba'}</h4>
-                    <div class="flex items-center gap-1 mt-1 mb-3 h-4">
-                        <i class="fa-solid ${icon} text-[8px] text-orange-500"></i>
-                        <span class="text-[9px] text-gray-500 truncate font-semibold">${reason}</span>
-                    </div>
-                    <button class="mt-auto w-full bg-black text-white text-[10px] font-black py-2.5 rounded-lg active:scale-95 transition shadow-md">
-                        Connect
-                    </button>
+                <div style="padding:10px; text-align:left;">
+                    <h4 style="font-size:13px; font-weight:bold; margin:0;">${user.fullname || 'Mamba'}</h4>
+                    <p style="font-size:10px; color:gray; margin:2px 0 8px 0;">${reason}</p>
+                    <button class="connect-btn">Connect</button>
                 </div>
             </div>`;
         });
 
+        // Saka See All Button a kasan GRID din
+        html += `
+            <div id="footerBar" class="see-more-footer">
+                <button class="see-more-btn" onclick="loadMore()">See All</button>
+            </div>`;
+            
         container.innerHTML = html;
 
-        // Kunna "See More Bar" bayan an loda bayanan
-        if (seeMoreBar) {
-            setTimeout(() => {
-                seeMoreBar.classList.add('visible');
-            }, 1000);
+        // Logic na Scroll: Sai mutum ya yi scroll sannan button din ya bayyana
+        window.addEventListener('scroll', () => {
+            const footer = document.getElementById('footerBar');
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+                footer.classList.add('visible');
+            }
+        });
+
+    } catch (e) { console.error(e); }
         }
-
-    } catch (e) { 
-        console.error("Discover Error:", e); 
-    }
-}
-
-// Function na "See More" don loda karin mutane (Infinite Scroll Simulation)
-function loadMoreDiscover() {
-    // Anan zaka iya sa logic na loda mambobi na gaba daga Firebase
-    alert("Ana kwaso karin mambobi...");
-    }
-    
+        
                           
     
     // 6. UI Helpers
