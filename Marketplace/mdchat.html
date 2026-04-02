@@ -240,75 +240,71 @@
 }
         
 
-        
-      #discoverContainer {
+   /* Cards Grid */
+#discoverContainer {
     display: grid !important;
-    grid-template-columns: repeat(2, 1fr); /* Wannan zai raba su biyu-biyu */
-    gap: 12px;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px;
     padding: 10px;
-    overflow-y: auto; /* Zai tafi a tsaye maimakon gefe */
+    padding-bottom: 100px;
 }
 
 .fb-style-card {
     background: white;
     border-radius: 12px;
-    border: 1px solid #e5e7eb;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    height: 260px; /* Tsawon katin */
+    border: 1px solid #eee;
 }
 
+/* Hoto ya dauki 80% */
 .card-image-container {
-    width: 100%;
-    aspect-ratio: 1 / 1; /* Tabbatar da hoto ya zauna murabba'i */
-    background: #f3f4f6;
-    overflow: hidden;
+    flex: 0 0 75%; 
+    background: #f0f0f0; /* Ash colour */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .card-image-container img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Wannan ne zai hana yanke kan mutane */
-    background-color: #f9fafb; /* Background idan hoton bai cika wajen ba */
+    object-fit: contain; /* Don kar a yanke kai */
 }
 
+/* Dan karamin sarari na bayani */
+.card-info {
+    flex: 1;
+    padding: 6px 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
-        /* Futuristic See More Bar */
-#seeAllBar {
+/* See More Bar mai passionate look */
+#seeMoreFloatingBar {
     position: fixed;
-    bottom: 70px;
+    bottom: -50px; /* Boyayye a farko */
     left: 50%;
     transform: translateX(-50%);
-    width: 90%;
-    max-width: 400px;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 12px 20px;
-    border-radius: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1000;
-    transition: all 0.5s ease;
-    opacity: 0;
-    pointer-events: none;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 8px 25px;
+    border-radius: 30px;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    z-index: 2000;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
-#seeAllBar.visible {
-    opacity: 1;
-    pointer-events: auto;
-    bottom: 80px;
-}
-
-/* Tabbatar da Grid din guda biyu ne */
-#discoverContainer {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px;
-    padding-bottom: 120px; /* Sarari domin bar din ya zauna */
-}
+#seeMoreFloatingBar.active {
+    bottom: 30px; /* Zai fito idan aka yi scroll */
+                          }
         
         
     </style>
@@ -468,7 +464,10 @@
     </div>
 </div>
         
-            
+            <div id="seeMoreFloatingBar" onclick="loadMore()">
+    See More
+            </div>
+        
    
     <div id="callOverlay" class="fixed inset-0 z-[9999] bg-[#050505] hidden flex flex-col items-center justify-between py-12 px-6">
     <div class="text-center mt-10">
@@ -685,7 +684,49 @@ function loadMoreDiscover() {
         }
     }
 
-        
+
+    // Function na fito da See More Bar lokacin scroll
+window.addEventListener('scroll', () => {
+    const bar = document.getElementById('seeMoreFloatingBar');
+    if (window.scrollY > 100) {
+        bar.classList.add('active');
+    } else {
+        bar.classList.remove('active');
+    }
+}, true);
+
+async function loadDiscoverPeople() {
+    const container = document.getElementById('discoverContainer');
+    if (!container) return;
+
+    try {
+        const querySnapshot = await db.collection("users").limit(12).get();
+        let html = "";
+
+        querySnapshot.forEach((doc) => {
+            const user = doc.data();
+            if (currentUserId && doc.id === currentUserId) return;
+
+            // Algorithm dinka (Kiyaye shi)
+            let reason = "Sabuwar Mamba";
+            if (user.location_area) reason = user.location_area;
+
+            html += `
+            <div class="fb-style-card shadow-sm">
+                <div class="card-image-container">
+                    <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}">
+                </div>
+                <div class="card-info text-center">
+                    <h4 class="text-[11px] font-bold text-gray-800 truncate">${user.fullname || 'Mamba'}</h4>
+                    <p class="text-[9px] text-gray-400 truncate mb-2">${reason}</p>
+                    <button class="w-full bg-black text-white text-[9px] py-1.5 rounded-md font-bold">Connect</button>
+                </div>
+            </div>`;
+        });
+        container.innerHTML = html;
+    } catch (e) { console.log(e); }
+    }
+            
     
 </script>   
 </body>
