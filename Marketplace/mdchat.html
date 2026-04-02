@@ -515,7 +515,7 @@ peer.on('open', (id) => {
 
     // Adana ID a Firestore karkashin collection na 'members'
     if (currentUserId) {
-        db.collection('members').doc(currentUserId).set({
+        db.collection('users').doc(currentUserId).set({
             peer_id: id,
             isOnline: true,
             lastSeen: firebase.firestore.FieldValue.serverTimestamp()
@@ -573,7 +573,7 @@ function loadContactsFromFirestore() {
     if(!container) return;
 
     // Sauraren kowane canji a Firestore (Real-time)
-    db.collection("members").onSnapshot((querySnapshot) => {
+    db.collection("users").onSnapshot((querySnapshot) => {
         container.innerHTML = '<p class="text-[12px] font-bold text-gray-400 px-5 py-4 uppercase tracking-widest">Abokan Hulda</p>';
         
         querySnapshot.forEach((doc) => {
