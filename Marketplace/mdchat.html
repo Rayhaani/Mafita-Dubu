@@ -240,78 +240,71 @@
 }
 
  
-   /* Futuristic Glassmorphism - Updated for 70% Image Space */
+ /* Card din yana nan a yadda yake */
 .fb-style-card {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(15px);
-    border-radius: 16px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    background: white;
+    border-radius: 8px;
+    border: 0.5px solid #e0e0e0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    height: 320px; /* Tabbatar da tsayin katin ya tsaya a haka */
-    transition: transform 0.3s ease;
+    height: 320px; /* Tsayin katin ka na asali */
 }
 
-/* 70% Space for Image */
+/* Hoton zai mamaye 70% na katin */
 .card-image-container {
     width: 100%;
-    height: 70%; /* Hoton zai mamaye kashi 70 na katin */
-    background: #f0f2f5;
-    position: relative;
-    overflow: hidden;
+    height: 70%; 
+    background-color: #f2f3f5; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .card-image-container img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Don hoton ya cika sararin da aka ba shi */
+    object-fit: cover;
 }
 
-/* 30% Space for Info (Very Compact) */
+/* Bayanan kasa sun koma kashi 30% kawai */
 .card-info {
     height: 30%;
-    padding: 8px 10px;
+    padding: 6px 10px 10px 10px; /* An rage padding na sama don su matsa kasa */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Yana raba bayanan su tafi can kasa */
-    background: white;
+    justify-content: space-between; /* Don button ya zauna a kasa pif */
 }
 
-/* Suna - Exact Font daga Contacts */
+/* Sunan Mamba (Inter Font - 600 weight) */
 .card-name {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 15px; 
+    font-weight: 600;
     color: #050505;
-    line-height: 1.2;
-    margin-bottom: 1px; /* Rage space */
+    margin-bottom: 0px; /* Babu tazarar dake bata space */
 }
 
-/* Location/Exploring - Compact */
+/* Exploring/Location */
 .card-meta {
-    font-size: 11px;
+    font-size: 12px;
     color: #65676b;
+    margin-bottom: 4px;
     display: flex;
     align-items: center;
     gap: 3px;
-    margin-bottom: 6px; /* Rage space kafin button */
 }
 
-/* Connect Button - Professional & Compact */
+/* Button dinka na asali - BAN TABA SHI BA */
 .add-friend-btn {
     width: 100%;
-    background: #000 !important;
-    color: #fff !important;
-    font-size: 12px;
+    background-color: #050505 !important;
+    color: #ffffff !important;
+    font-size: 14px;
     font-weight: 600;
-    padding: 6px 0; /* Siririn button don ya dace da space din */
-    border-radius: 8px;
+    padding: 8px 0;
+    border-radius: 6px;
     border: none;
-    cursor: pointer;
-            }
-    
-        
+}
         
         
     </style>
@@ -571,7 +564,8 @@
     const container = document.getElementById('discoverContainer');
     if (!container) return;
 
-    container.className = "grid grid-cols-2 gap-3 px-3 py-4"; 
+    // Algorithm dinka na Grid
+    container.className = "grid grid-cols-2 gap-2 px-2"; 
     container.innerHTML = '';
 
     try {
@@ -582,14 +576,13 @@
             if (currentUserId && doc.id === currentUserId) return;
             const user = doc.data();
 
-            // Algorithm na suna da location (Ba'a taba komai ba)
+            // --- ALGORITHM DINKA (BAN TABA SHI BA) ---
             let displayName = user.fullname || user.username || "User";
-            let locationUI = user.location_area 
-                ? `2km away • ${user.location_area}` 
-                : "Exploring...";
+            let locationText = user.location_area ? `2km away • ${user.location_area}` : "Exploring...";
+            // ----------------------------------------
 
             html += `
-            <div class="fb-style-card shadow-sm">
+            <div class="fb-style-card">
                 <div class="card-image-container">
                     <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}">
                 </div>
@@ -597,19 +590,19 @@
                     <div>
                         <div class="card-name truncate">${displayName}</div>
                         <div class="card-meta">
-                            <i class="fa-solid fa-location-dot" style="font-size: 9px;"></i>
-                            ${locationUI}
+                            <i class="fa-solid fa-location-dot" style="font-size: 10px; opacity: 0.7;"></i> 
+                            ${locationText}
                         </div>
                     </div>
-                    <button class="add-friend-btn">Connect</button>
+                    <button class="add-friend-btn">Add Friend</button>
                 </div>
             </div>`;
         });
 
-        // See All Pill
+        // See All Button
         html += `
-            <div class="col-span-2 flex justify-center py-4">
-                <button class="see-all-pill" style="background:#f0f2f5; color:#050505; padding:6px 25px; border-radius:20px; font-weight:700; font-size:12px; border:none;" onclick="loadMore()">See all</button>
+            <div class="col-span-2 flex justify-center py-5">
+                <button class="see-all-pill" style="background:#f0f2f5; color:#050505; padding:8px 30px; border-radius:20px; font-weight:700; font-size:13px; border:none;" onclick="loadMore()">See all</button>
             </div>`;
 
         container.innerHTML = html;
@@ -617,9 +610,8 @@
     } catch (e) { 
         console.error("Error:", e); 
     }
-        }
-                
-    
+    }
+            
     
     // 6. UI Helpers
     function openSearch() { document.getElementById('searchOverlay').style.display = 'flex'; }
