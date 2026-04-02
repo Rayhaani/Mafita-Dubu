@@ -562,13 +562,11 @@
     }
 
     // 5. Discover Logic (GYARARREN CONTAINER)
-    
-     async function loadDiscoverPeople() {
+    async function loadDiscoverPeople() {
     const container = document.getElementById('discoverContainer');
     if (!container) return;
 
-    // Grid mai gap-3 don kada cards din suyi kusa da juna da yawa
-    container.className = "grid grid-cols-2 gap-3 px-3"; 
+    container.className = "grid grid-cols-2 gap-2 px-2"; 
     container.innerHTML = '';
 
     try {
@@ -579,20 +577,22 @@
             if (currentUserId && doc.id === currentUserId) return;
             const user = doc.data();
 
-            // --- ALGORITHM DINKA NA ASALI ---
-            // Idan babu komai, nuna "New Member"
+            // --- ALGORITHM DINKA NA ASALI (BAN TABA KOMAI BA) ---
             let locationText = user.location_area ? `2km away • ${user.location_area}` : "New Member";
-            // --------------------------------
+            
+            // Ciro sunan mutum kai tsaye daga firestore
+            let displayName = user.fullname || user.username || "User"; 
+            // --------------------------------------------------
 
             html += `
-            <div class="fb-style-card shadow-sm">
+            <div class="fb-style-card">
                 <div class="card-image-container">
                     <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}">
                 </div>
                 <div class="card-info">
-                    <div class="card-name">${user.fullname || 'Mamba'}</div>
+                    <div class="card-name">${displayName}</div>
                     <div class="card-meta">
-                        <i class="fa-solid fa-location-dot" style="font-size: 10px; color: #8e8e8e;"></i> 
+                        <i class="fa-solid fa-location-dot" style="font-size: 11px; opacity: 0.8;"></i> 
                         ${locationText}
                     </div>
                     <button class="add-friend-btn">Add Friend</button>
@@ -600,10 +600,10 @@
             </div>`;
         });
 
-        // See All Pill at the bottom
+        // See All Pill at the bottom (Pill Shape exactly)
         html += `
-            <div class="col-span-2 flex justify-center py-6">
-                <button class="see-all-pill" onclick="loadMore()">See all</button>
+            <div class="col-span-2 flex justify-center py-5">
+                <button class="see-all-pill" style="background:#f0f2f5; color:#050505; padding:8px 35px; border-radius:20px; font-weight:700; font-size:13px; border:none;" onclick="loadMore()">See all</button>
             </div>`;
 
         container.innerHTML = html;
@@ -611,7 +611,9 @@
     } catch (e) { 
         console.error("Discover Error:", e); 
     }
-            }
+    }
+    
+
     
     
     
