@@ -239,87 +239,78 @@
     scrollbar-width: none;
 }
 
-/* Futuristic Glassmorphism Card */
+ 
+   /* Futuristic Glassmorphism - Updated for 70% Image Space */
 .fb-style-card {
-    background: rgba(255, 255, 255, 0.7); /* Glass effect */
+    background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(15px);
-    border-radius: 20px; /* More rounded */
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 320px; /* Tabbatar da tsayin katin ya tsaya a haka */
+    transition: transform 0.3s ease;
 }
 
-.fb-style-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.1);
-    border: 1px solid var(--gold); /* Zinari zai zagaye shi idan aka taba */
-}
-
-/* Hoton mai santsi */
+/* 70% Space for Image */
 .card-image-container {
     width: 100%;
-    aspect-ratio: 1/1;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    height: 70%; /* Hoton zai mamaye kashi 70 na katin */
+    background: #f0f2f5;
     position: relative;
+    overflow: hidden;
 }
 
 .card-image-container img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
+    object-fit: cover; /* Don hoton ya cika sararin da aka ba shi */
 }
 
-/* Sunan mutum mai girma da asali */
+/* 30% Space for Info (Very Compact) */
+.card-info {
+    height: 30%;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Yana raba bayanan su tafi can kasa */
+    background: white;
+}
+
+/* Suna - Exact Font daga Contacts */
 .card-name {
     font-family: 'Inter', sans-serif;
     font-size: 14px;
-    font-weight: 800; /* Extra bold for futuristic look */
-    color: #1a1a1a;
-    letter-spacing: -0.5px;
-    text-align: center;
-    margin-top: 10px;
-}
-
-/* Badge na "New Member" */
-.member-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #000;
-    color: #fff;
-    font-size: 9px;
-    font-weight: 900;
-    padding: 4px 8px;
-    border-radius: 50px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Futuristic Connect Button */
-.add-friend-btn {
-    width: 85%;
-    margin: 15px auto;
-    background: #000;
-    color: #fff;
-    padding: 10px;
-    border-radius: 12px;
-    font-size: 12px;
     font-weight: 700;
+    color: #050505;
+    line-height: 1.2;
+    margin-bottom: 1px; /* Rage space */
+}
+
+/* Location/Exploring - Compact */
+.card-meta {
+    font-size: 11px;
+    color: #65676b;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: none;
-    transition: 0.3s;
+    gap: 3px;
+    margin-bottom: 6px; /* Rage space kafin button */
 }
 
-.add-friend-btn:active {
-    scale: 0.9;
-    background: var(--gold);
-}
+/* Connect Button - Professional & Compact */
+.add-friend-btn {
+    width: 100%;
+    background: #000 !important;
+    color: #fff !important;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 0; /* Siririn button don ya dace da space din */
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+            }
+    
         
         
         
@@ -576,65 +567,58 @@
     }
 
     // 5. Discover Logic (GYARARREN CONTAINER)
-    
-async function loadDiscoverPeople() {
+      async function loadDiscoverPeople() {
     const container = document.getElementById('discoverContainer');
     if (!container) return;
 
-    container.className = "grid grid-cols-2 gap-5 px-4 py-6"; 
+    container.className = "grid grid-cols-2 gap-3 px-3 py-4"; 
     container.innerHTML = '';
 
     try {
-        const querySnapshot = await db.collection("users").limit(12).get();
+        const querySnapshot = await db.collection("users").limit(10).get();
         let html = "";
 
         querySnapshot.forEach((doc) => {
             if (currentUserId && doc.id === currentUserId) return;
             const user = doc.data();
 
-            // Name Logic
-            let fullName = user.fullname || user.username || "Anonymous";
-            
-            // Location Algorithm
+            // Algorithm na suna da location (Ba'a taba komai ba)
+            let displayName = user.fullname || user.username || "User";
             let locationUI = user.location_area 
-                ? `<i class="fa-solid fa-location-arrow text-[10px]"></i> ${user.location_area}` 
-                : `<span class="opacity-50 italic">Exploring...</span>`;
+                ? `2km away • ${user.location_area}` 
+                : "Exploring...";
 
             html += `
-            <div class="fb-style-card">
-                <div class="member-badge">New</div>
+            <div class="fb-style-card shadow-sm">
                 <div class="card-image-container">
-                    <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/bottts/svg?seed=' + doc.id}">
+                    <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}">
                 </div>
-                <div class="p-3 flex flex-col items-center">
-                    <div class="card-name truncate w-full">${fullName}</div>
-                    <div class="text-[10px] text-gray-400 mt-1 flex items-center gap-1">
-                        ${locationUI}
+                <div class="card-info">
+                    <div>
+                        <div class="card-name truncate">${displayName}</div>
+                        <div class="card-meta">
+                            <i class="fa-solid fa-location-dot" style="font-size: 9px;"></i>
+                            ${locationUI}
+                        </div>
                     </div>
-                    <button class="add-friend-btn">
-                        <i class="fa-solid fa-plus text-[10px]"></i>
-                        Connect
-                    </button>
+                    <button class="add-friend-btn">Connect</button>
                 </div>
             </div>`;
         });
 
-        // "See All" mai haske
+        // See All Pill
         html += `
-            <div class="col-span-2 flex justify-center mt-6">
-                <button class="bg-black/5 backdrop-blur-md border border-black/10 px-8 py-3 rounded-full text-[12px] font-black uppercase tracking-widest hover:bg-black hover:text-white transition-all">
-                    Load More Pulse
-                </button>
+            <div class="col-span-2 flex justify-center py-4">
+                <button class="see-all-pill" style="background:#f0f2f5; color:#050505; padding:6px 25px; border-radius:20px; font-weight:700; font-size:12px; border:none;" onclick="loadMore()">See all</button>
             </div>`;
 
         container.innerHTML = html;
 
     } catch (e) { 
-        console.error("Discover Error:", e); 
+        console.error("Error:", e); 
     }
-}
-    
-            
+        }
+                
     
     
     // 6. UI Helpers
