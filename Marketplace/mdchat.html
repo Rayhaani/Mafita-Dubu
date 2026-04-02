@@ -229,6 +229,7 @@
     padding: 5px;
 }
 
+    
 
         /* Boye scrollbar domin cards din suyi kyau */
 .no-scrollbar::-webkit-scrollbar {
@@ -314,7 +315,14 @@
     background: #e4e6eb;
     transform: scale(0.98);
 }
-        
+    
+
+/* Wannan ne zai gyara matsalar Overlay din */
+#callOverlay.hidden {
+    display: none !important;
+}
+
+    
         
     </style>
 </head>
@@ -468,7 +476,7 @@
         
    
     <div id="callOverlay" class="fixed inset-0 z-[9999] bg-[#050505] hidden flex flex-col items-center justify-between py-12 px-6">
-    <div class="text-center mt-10">
+        <div class="text-center mt-10">
         <div class="w-32 h-32 rounded-full border-4 border-green-500/30 p-1 mx-auto mb-6 relative">
             <img id="remoteAvatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" class="w-full h-full rounded-full object-cover">
             <div id="ringAnimation" class="absolute inset-0 rounded-full border-4 border-green-500 animate-ping opacity-20"></div>
