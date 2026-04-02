@@ -570,7 +570,7 @@
 
     // 5. Discover Logic (GYARARREN CONTAINER)
       
-        async function loadDiscoverPeople() {
+       async function loadDiscoverPeople() {
     const container = document.getElementById('discoverContainer');
     if (!container) return;
 
@@ -630,6 +630,16 @@
             </div>`;
         });
 
+        // --- NAN NE EXACT GYARAN DA AKA SHIGAR ---
+        if (html !== "") {
+            html += `
+                <div style="width: 100%; display: flex; justify-content: center; padding: 20px 0; grid-column: span 2;">
+                    <button class="see-all-pill" onclick="loadMore()">See all</button>
+                </div>
+            `;
+        }
+        // ------------------------------------------
+
         if (html === "") {
             container.innerHTML = "<p class='col-span-2 text-center py-10'>Babu sauran mambobi a halin yanzu.</p>";
         } else {
@@ -640,14 +650,10 @@
         console.error("Discover Error:", e);
         container.innerHTML = "<p class='col-span-2 text-center py-10 text-red-500'>An samu matsalar loda bayanai.</p>";
     }
-        }
+    }
     
-           // Wannan zai nuna button din a tsakiya (center) a kasan cards
-html += `
-    <div style="width: 100%; display: flex; justify-content: center; padding: 20px 0; grid-column: span 2;">
-        <button class="see-all-pill" onclick="loadMore()">See all</button>
-    </div>
-`; 
+    
+        
             
     
     // 6. UI Helpers
