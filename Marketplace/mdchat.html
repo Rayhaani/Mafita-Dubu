@@ -239,72 +239,87 @@
     scrollbar-width: none;
 }
 
- 
- /* Card din yana nan a yadda yake */
+ /* Neural Pulse 2050 Design */
 .fb-style-card {
-    background: white;
-    border-radius: 8px;
-    border: 0.5px solid #e0e0e0;
+    background: #000;
+    border-radius: 24px; /* More rounded for future look */
+    border: 1px solid rgba(255, 255, 255, 0.1);
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    height: 320px; /* Tsayin katin ka na asali */
+    height: 350px;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Hoton zai mamaye 70% na katin */
+/* Image occupies almost everything (Deep Cover) */
 .card-image-container {
     width: 100%;
-    height: 70%; 
-    background-color: #f2f3f5; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 80%; 
+    background: #111;
+    position: relative;
 }
 
 .card-image-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    filter: saturate(1.1) contrast(1.05); /* To make it pop */
 }
 
-/* Bayanan kasa sun koma kashi 30% kawai */
+/* Floating Info Box (The 2050 Vibe) */
 .card-info {
-    height: 30%;
-    padding: 6px 10px 10px 10px; /* An rage padding na sama don su matsa kasa */
+    position: absolute;
+    bottom: 12px;
+    left: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.08); /* Transparent Glass */
+    backdrop-filter: blur(20px); /* Heavy blur */
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 18px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Don button ya zauna a kasa pif */
+    gap: 8px;
 }
 
-/* Sunan Mamba (Inter Font - 600 weight) */
+/* Suna - Bold & Modern */
 .card-name {
-    font-size: 15px; 
-    font-weight: 600;
-    color: #050505;
-    margin-bottom: 0px; /* Babu tazarar dake bata space */
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.2px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-/* Exploring/Location */
+/* Exploring / Location */
 .card-meta {
-    font-size: 12px;
-    color: #65676b;
-    margin-bottom: 4px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
     display: flex;
     align-items: center;
-    gap: 3px;
+    gap: 4px;
+    font-weight: 500;
 }
 
-/* Button dinka na asali - BAN TABA SHI BA */
+/* Futuristic Connect Button (Glow Effect) */
 .add-friend-btn {
     width: 100%;
-    background-color: #050505 !important;
-    color: #ffffff !important;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 8px 0;
-    border-radius: 6px;
+    background: #ffffff !important; /* Contrast White */
+    color: #000000 !important;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 10px 0;
+    border-radius: 12px;
     border: none;
-}
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    }
+    
         
         
     </style>
@@ -564,8 +579,8 @@
     const container = document.getElementById('discoverContainer');
     if (!container) return;
 
-    // Algorithm dinka na Grid
-    container.className = "grid grid-cols-2 gap-2 px-2"; 
+    // Grid layout dinka na asali
+    container.className = "grid grid-cols-2 gap-4 px-4 py-6"; 
     container.innerHTML = '';
 
     try {
@@ -576,10 +591,10 @@
             if (currentUserId && doc.id === currentUserId) return;
             const user = doc.data();
 
-            // --- ALGORITHM DINKA (BAN TABA SHI BA) ---
+            // --- ALGORITHM DINKA (STRICTLY PRESERVED) ---
             let displayName = user.fullname || user.username || "User";
             let locationText = user.location_area ? `2km away • ${user.location_area}` : "Exploring...";
-            // ----------------------------------------
+            // --------------------------------------------
 
             html += `
             <div class="fb-style-card">
@@ -590,19 +605,19 @@
                     <div>
                         <div class="card-name truncate">${displayName}</div>
                         <div class="card-meta">
-                            <i class="fa-solid fa-location-dot" style="font-size: 10px; opacity: 0.7;"></i> 
+                            <i class="fa-solid fa-location-dot" style="font-size: 9px; color: #fff;"></i> 
                             ${locationText}
                         </div>
                     </div>
-                    <button class="add-friend-btn">Add Friend</button>
+                    <button class="add-friend-btn">Connect</button>
                 </div>
             </div>`;
         });
 
-        // See All Button
+        // See All Pill (Modern Glass Style)
         html += `
-            <div class="col-span-2 flex justify-center py-5">
-                <button class="see-all-pill" style="background:#f0f2f5; color:#050505; padding:8px 30px; border-radius:20px; font-weight:700; font-size:13px; border:none;" onclick="loadMore()">See all</button>
+            <div class="col-span-2 flex justify-center py-8">
+                <button class="see-all-pill" style="background:rgba(0,0,0,0.05); color:#000; padding:10px 40px; border-radius:30px; font-weight:800; font-size:12px; border:1px solid rgba(0,0,0,0.1); text-transform:uppercase; letter-spacing:1px;" onclick="loadMore()">View All Pulse</button>
             </div>`;
 
         container.innerHTML = html;
@@ -610,7 +625,9 @@
     } catch (e) { 
         console.error("Error:", e); 
     }
-    }
+                }
+    
+                
             
     
     // 6. UI Helpers
