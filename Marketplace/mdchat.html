@@ -240,88 +240,88 @@
 }
         
 
-/* Sabon Tsarin Card Kamar Hoton */
+   /* Sabon Tsarin Card Sak Kamar Hoton */
 .fb-style-card {
     background: white;
-    border-radius: 12px;
-    border: 1px solid #e0e0e0;
+    border-radius: 8px; /* Kadan kamar yadda yake a hoton */
+    border: 0.5px solid #e0e0e0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
-/* Wajen hoton (Ash Background) */
+/* Wajen hoton (Launin Ash mai haske) */
 .card-image-container {
     width: 100%;
-    aspect-ratio: 1/1;
-    background-color: #f1f2f4; /* Daidai launin dake hoton */
+    aspect-ratio: 1/1.1; /* Ya danyi tsayi kadan kamar hoton */
+    background-color: #f2f3f5; 
     display: flex;
     justify-content: center;
     align-items: flex-end;
 }
 
 .card-image-container img {
-    width: 95%; /* Don ya danyi girma kadan */
-    height: 95%;
-    object-fit: contain;
+    width: 100%; 
+    height: 100%;
+    object-fit: cover; /* Don ya cika wajen yadda hoton mamba yake */
 }
 
-/* Bayanan kasa */
+/* Bayanan kasa (An rage padding) */
 .card-info {
-    padding: 15px 12px;
+    padding: 10px 10px;
     text-align: left;
 }
 
-/* Salon sunan (Font) */
+/* Sunan Mamba (Font size 15px) */
 .card-name {
-    font-size: 18px; /* Ya danyi kauri kuma ya girma kadan */
+    font-size: 15px; 
     font-weight: 700;
-    color: #1c1e21;
+    color: #050505;
     margin-bottom: 2px;
+    letter-spacing: -0.3px;
 }
 
-/* Default Location/Profession */
+/* Location/New Member (Font size 13px) */
 .card-meta {
-    font-size: 14px;
-    color: #65676b; /* Grey mai duhu kadan */
-    margin-bottom: 15px;
+    font-size: 13px;
+    color: #65676b;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
 }
 
-/* Bakar Button din "Add Friend" */
+/* Bakar Button (Add Friend) - An rage shi don ya yi daidai da hoton */
 .add-friend-btn {
     width: 100%;
-    background-color: black !important;
-    color: white !important;
-    font-size: 15px;
-    font-weight: 700;
-    padding: 10px 0;
-    border-radius: 8px;
+    background-color: #050505 !important;
+    color: #ffffff !important;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 0;
+    border-radius: 6px;
     border: none;
     cursor: pointer;
 }
 
-/* See All Button a Tsakiya */
+/* See All Button a Kasa (Pill Shape) */
 .see-all-container {
     grid-column: span 2;
     display: flex;
     justify-content: center;
-    padding: 25px 0;
+    padding: 20px 0;
 }
 
 .see-all-pill {
     background-color: #f0f2f5;
     color: #050505;
-    padding: 10px 45px;
+    padding: 8px 30px;
     border-radius: 20px;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
     border: none;
-    cursor: pointer;
-}
-          
+    }
+        
         
     </style>
 </head>
@@ -577,13 +577,13 @@
 
     // 5. Discover Logic (GYARARREN CONTAINER)
     
-async function loadDiscoverPeople() {
+     async function loadDiscoverPeople() {
     const container = document.getElementById('discoverContainer');
     if (!container) return;
 
-    // Grid domin katin su zauna bibbiya
-    container.className = "grid grid-cols-2 gap-4 px-3"; 
-    container.innerHTML = '<p class="text-center col-span-2 py-10 text-gray-400 text-xs">Neman mambobi...</p>';
+    // Grid layout kamar yadda ka nema
+    container.className = "grid grid-cols-2 gap-2 px-2"; 
+    container.innerHTML = '';
 
     try {
         const querySnapshot = await db.collection("users").limit(10).get();
@@ -593,14 +593,10 @@ async function loadDiscoverPeople() {
             if (currentUserId && doc.id === currentUserId) return;
             const user = doc.data();
 
-            // --- ALGORITHM DINKA NA ASALI (BA A TABA SHI BA) ---
-            // Idan babu unguwa ko profession, sa default "New Member"
-            let locationDisplay = user.location_area || "New Member";
-            let professionDisplay = user.profession || "";
-            
-            // Haɗa su kamar yadda yake a hoton (unguwa • km)
-            let metaInfo = (user.location_area) ? `2km away • ${user.location_area}` : `New Member`;
-            // --------------------------------------------------
+            // --- ALGORITHM DINKA NA ASALI ---
+            // Nuna "New Member" a matsayin default
+            let locationText = user.location_area ? `2km away • ${user.location_area}` : "New Member";
+            // --------------------------------
 
             html += `
             <div class="fb-style-card">
@@ -610,15 +606,15 @@ async function loadDiscoverPeople() {
                 <div class="card-info">
                     <div class="card-name truncate">${user.fullname || 'Mamba'}</div>
                     <div class="card-meta">
-                        <i class="fa-solid fa-location-dot" style="font-size: 12px;"></i> 
-                        ${metaInfo}
+                        <i class="fa-solid fa-location-dot" style="font-size: 11px; opacity: 0.7;"></i> 
+                        ${locationText}
                     </div>
                     <button class="add-friend-btn">Add Friend</button>
                 </div>
             </div>`;
         });
 
-        // Saka See All Button a kasa
+        // See All Button a tsakiya
         html += `
             <div class="see-all-container">
                 <button class="see-all-pill" onclick="loadMore()">See all</button>
@@ -627,12 +623,10 @@ async function loadDiscoverPeople() {
         container.innerHTML = html;
 
     } catch (e) { 
-        console.error("Discover Error:", e); 
-        container.innerHTML = '<p class="text-center col-span-2 text-red-400 text-xs">An samu matsala!</p>';
+        console.error("Error:", e); 
     }
     }
     
-        
     
     
     // 6. UI Helpers
