@@ -350,10 +350,8 @@
 <div id="searchOverlay" class="fb-search-overlay">
     
     <div class="fb-search-bar-container">
-        <!-- Back Icon -->
         <i class="fa-solid fa-chevron-left fb-back-style" onclick="closeSearch()"></i>
         
-        <!-- Search Bar -->
         <div class="titan-search-engine" style="flex: 1; height: 42px; display: flex; align-items: center; border-radius: 25px; padding-left: 15px; border: 1.5px solid #000; background: transparent;">
             <input type="text" placeholder="Nemi abokan hira ko vendors..." class="titan-input" id="mainSearchInput" style="flex: 1; background: transparent; border: none; outline: none; color: #333; font-size: 15px;">
             <div class="temu-controls" style="display: flex; align-items: center; height: 100%;">
@@ -364,40 +362,16 @@
         </div>
     </div>
 
+    <div class="contact-scroll-area" id="contactsContainer">
+        <p class="text-[12px] font-bold text-gray-400 px-5 py-4 uppercase tracking-widest text-center">
+            <i class="fa-solid fa-spinner animate-spin mr-2"></i> Ana kwaso mambobi...
+        </p>
+    </div>
+
+    <div class="px-5 py-6 border-t border-gray-50 mt-4 bg-gray-50/30">
+        </div>
+</div>
     
-    <div class="contact-scroll-area">
-        <p class="text-[12px] font-bold text-gray-400 px-5 py-4 uppercase tracking-widest">Abokan Hulda</p>
-
-<div class="contact-row flex items-center justify-between" onclick="initiateCall('PEER_ID_NA_SADIQ', 'A. Sadiq')">
-    <div class="flex items-center gap-4">
-        <div class="contact-avatar">
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sadiq">
-        </div>
-        <div class="contact-details">
-            <h4 class="contact-name">A. Sadiq</h4>
-            <p class="contact-status text-green-500">Daga Marketplace • Online</p>
-        </div>
-    </div>
-    <div class="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center">
-        <i class="fa-solid fa-phone text-green-600 text-sm"></i>
-    </div>
-</div>
-
-<div class="contact-row flex items-center justify-between" onclick="initiateCall('PEER_ID_NA_FATIMA', 'Fatima Salis')">
-    <div class="flex items-center gap-4">
-        <div class="contact-avatar">
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima">
-        </div>
-        <div class="contact-details">
-            <h4 class="contact-name">Fatima Salis</h4>
-            <p class="contact-status text-gray-400">Hadin Aure • Away</p>
-        </div>
-    </div>
-    <div class="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center">
-        <i class="fa-solid fa-phone text-green-600 text-sm"></i>
-    </div>
-</div>
-        
 
         <!-- PEOPLE YOU MAY KNOW SECTION -->
         <div class="px-5 py-6 border-t border-gray-50 mt-4 bg-gray-50/30">
@@ -493,20 +467,20 @@
     </div>
     </div>
     
-
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
 <script>
-// 2. FIREBASE CONFIGURATION (Daga Firebase Console dinka)
+// 2. FIREBASE CONFIGURATION (Wanda ka bayar yanzu)
 const firebaseConfig = {
-    apiKey: "SAKA_API_KEY_DINKA_ANAN",
-    authDomain: "mafita-dubu.firebaseapp.com",
-    projectId: "mafita-dubu",
-    storageBucket: "mafita-dubu.appspot.com",
-    messagingSenderId: "NUMBER_DINKA",
-    appId: "APP_ID_DINKA"
+  apiKey: "AIzaSyDJfUePiQV5R1YAcnq-zvfd3ty4lbzDs1M",
+  authDomain: "global-market-admin.firebaseapp.com",
+  databaseURL: "https://global-market-admin-default-rtdb.firebaseio.com",
+  projectId: "global-market-admin",
+  storageBucket: "global-market-admin.firebasestorage.app",
+  messagingSenderId: "259715265619",
+  appId: "1:259715265619:web:313919773f57cc5fb9c2a6"
 };
 
 // Initialize Firebase
@@ -523,59 +497,66 @@ let currentUserId = null;
 // 3. INITIALIZE PEERJS
 const peer = new Peer(); 
 
-// Bibiyar User din da yake Logged In
+// Bibiyar User din da yake Logged In (Firebase Auth)
 auth.onAuthStateChanged((user) => {
     if (user) {
         currentUserId = user.uid;
+        console.log("Logged in as:", currentUserId);
         loadContactsFromFirestore(); // Fara kwaso abokan hira
     } else {
-        console.log("Ba a yi login ba");
+        console.warn("Mamba bai yi Login ba. Ba za a iya adana Peer ID ba.");
     }
 });
 
-// 4. LOKACIN DA PEERJS YA BUDE
+// 4. LOKACIN DA PEERJS YA BUDE (Open Connection)
 peer.on('open', (id) => {
     myPeerId = id;
-    console.log("Peer ID dina shine: " + id);
+    console.log("Peer ID dinka shine: " + id);
 
-    // Adana ID a Firestore idan user yana online
+    // Adana ID a Firestore karkashin collection na 'members'
     if (currentUserId) {
         db.collection('members').doc(currentUserId).set({
             peer_id: id,
             isOnline: true,
             lastSeen: firebase.firestore.FieldValue.serverTimestamp()
-        }, { merge: true });
+        }, { merge: true })
+        .then(() => console.log("An adana ID a Firestore"))
+        .catch(err => console.error("Firestore Error:", err));
     }
 });
 
-// 5. KARBAR KIRA (Incoming)
+// 5. KARBAR KIRA (Idan wani ya kira ka)
 peer.on('call', (call) => {
     currentCall = call;
+    // Nuna overlay din kiran
     document.getElementById('callOverlay').classList.remove('hidden');
     document.getElementById('callStatus').innerText = "Incoming Call...";
 
     navigator.mediaDevices.getUserMedia({video: true, audio: true}).then((stream) => {
         localStream = stream;
         document.getElementById('localVideo').srcObject = stream;
-        call.answer(stream);
+        
+        call.answer(stream); // Amsa kiran
         
         call.on('stream', (remoteStream) => {
             document.getElementById('remoteVideo').srcObject = remoteStream;
             document.getElementById('callStatus').innerText = "On Call";
         });
-    });
+    }).catch(err => alert("Kaza ba a baka damar amfani da Camera ba: " + err));
 });
 
-// 6. FARA KIRA (Outbound)
+// 6. FARA KIRA (Lokacin da ka danna icon din waya)
 function initiateCall(targetPeerId, targetName) {
     if(!targetPeerId) return alert("Wannan mamban baya online yanzu.");
     
     document.getElementById('remoteName').innerText = targetName;
     document.getElementById('callOverlay').classList.remove('hidden');
+    document.getElementById('callStatus').innerText = "Calling...";
 
     navigator.mediaDevices.getUserMedia({video: true, audio: true}).then((stream) => {
         localStream = stream;
         document.getElementById('localVideo').srcObject = stream;
+        
         const call = peer.call(targetPeerId, stream);
         currentCall = call;
 
@@ -583,24 +564,28 @@ function initiateCall(targetPeerId, targetName) {
             document.getElementById('remoteVideo').srcObject = remoteStream;
             document.getElementById('callStatus').innerText = "On Call";
         });
-    });
+    }).catch(err => alert("Ba za a iya kiran ba domin babu izinin Camera: " + err));
 }
 
-// 7. KWASO MUTANE DAGA FIRESTORE (Loop)
+// 7. KWASO MUTANE DAGA FIRESTORE (Looping)
 function loadContactsFromFirestore() {
     const container = document.getElementById('contactsContainer');
     if(!container) return;
 
+    // Sauraren kowane canji a Firestore (Real-time)
     db.collection("members").onSnapshot((querySnapshot) => {
         container.innerHTML = '<p class="text-[12px] font-bold text-gray-400 px-5 py-4 uppercase tracking-widest">Abokan Hulda</p>';
         
         querySnapshot.forEach((doc) => {
             const user = doc.data();
+            // Kar mu nuna kanmu a jerin kiran, kuma sai wanda yake da Peer ID
             if (doc.id !== currentUserId && user.peer_id) {
                 container.innerHTML += `
-                    <div class="contact-row flex items-center justify-between" onclick="initiateCall('${user.peer_id}', '${user.fullname || 'User'}')">
+                    <div class="contact-row flex items-center justify-between" onclick="initiateCall('${user.peer_id}', '${user.fullname || 'Mamba'}')">
                         <div class="flex items-center gap-4">
-                            <div class="contact-avatar"><img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=User'}"></div>
+                            <div class="contact-avatar">
+                                <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}">
+                            </div>
                             <div class="contact-details">
                                 <h4 class="contact-name">${user.fullname || 'Unknown'}</h4>
                                 <p class="contact-status text-green-500">Online</p>
@@ -615,16 +600,37 @@ function loadContactsFromFirestore() {
     });
 }
 
-// 8. KASHE KIRA
+// 8. KASHE KIRA (Hang up)
 function endCall() {
     if (currentCall) currentCall.close();
-    if (localStream) localStream.getTracks().forEach(track => track.stop());
+    if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+    }
     document.getElementById('callOverlay').classList.add('hidden');
+    // Zaka iya tura user zuwa home ko reload idan kana so
 }
 
 // UI Helpers
-function openSearch() { document.getElementById('searchOverlay').style.display = 'flex'; }
-function closeSearch() { document.getElementById('searchOverlay').style.display = 'none'; }
-</script>
+function openSearch() {
+    document.getElementById('searchOverlay').style.display = 'flex';
+}
+
+function closeSearch() {
+    document.getElementById('searchOverlay').style.display = 'none';
+}
+
+// Switch Views
+function switchView(view) {
+    if(view === 'notifications') {
+        document.getElementById('chats-view').classList.add('hidden');
+        document.getElementById('notif-view').classList.remove('hidden');
+    } else {
+        document.getElementById('chats-view').classList.remove('hidden');
+        document.getElementById('notif-view').classList.add('hidden');
+    }
+}
+                            </script>
+    
+
 </body>
 </html>
