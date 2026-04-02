@@ -379,14 +379,15 @@
         </div>
 
         <div id="view-discover" class="hidden p-5">
-            <h3 class="text-sm font-black uppercase tracking-widest text-gray-400 mb-4">Mutane kusa da kai</h3>
-            <div id="discoverContainer" class="grid grid-cols-2 gap-4">
-                </div>
-        </div>
-
+    <div class="flex justify-between items-center mb-5">
+        <h3 class="text-[14px] font-extrabold text-gray-900 uppercase tracking-tight">People you may know</h3>
+        <button class="text-blue-600 text-[12px] font-bold">See all</button>
     </div>
-</div>
-    
+
+    <div id="discoverContainer" class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+        </div>
+        </div>
+        
    
     
     <div id="callOverlay" class="fixed inset-0 z-[9999] bg-[#050505] hidden flex flex-col items-center justify-between py-12 px-6">
@@ -606,26 +607,33 @@ function shareInviteLink() {
 // 3. Load Discover People (Algorithm: Misali wadanda suke kusa)
 function loadDiscoverPeople() {
     const container = document.getElementById('discoverContainer');
-    // Anan zaka iya kiran Firestore ka tace 'users' dake gari daya da mamban
-    // Ga misalin yadda zasu fito:
-    container.innerHTML = `
-        <div class="bg-white border border-gray-100 rounded-2xl p-3 shadow-sm">
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Musa" class="w-full h-24 object-cover rounded-xl mb-2">
-            <h5 class="text-[12px] font-bold truncate">Musa Ibrahim</h5>
-            <p class="text-[10px] text-gray-400 mb-2">2km Away • Kano</p>
-            <button class="w-full py-2 bg-black text-white text-[10px] rounded-lg">Connect</button>
-        </div>
-        <div class="bg-white border border-gray-100 rounded-2xl p-3 shadow-sm">
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aisha" class="w-full h-24 object-cover rounded-xl mb-2">
-            <h5 class="text-[12px] font-bold truncate">Aisha Lawal</h5>
-            <p class="text-[10px] text-gray-400 mb-2">Office • Lagos</p>
-            <button class="w-full py-2 bg-black text-white text-[10px] rounded-lg">Connect</button>
-        </div>
-    `;
-}
     
-</script>
+    // Zaka iya lura na saka bayanan daidai da na hoton daka turo
+    const mockUsers = [
+        { name: "Mustapha Hussain", loc: "2km away • Kano", seed: "Musty" },
+        { name: "Itz Hafizu Kyaure", loc: "5km away • Kano", seed: "Hafiz" },
+        { name: "Sani Ahmad", loc: "1km away • Kano", seed: "Sani" }
+    ];
+
+    container.innerHTML = mockUsers.map(u => `
+        <div class="min-w-[170px] max-w-[170px] bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
+            <div class="h-36 w-full bg-gray-100">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${u.seed}" class="w-full h-full object-cover">
+            </div>
+            <div class="p-3">
+                <h4 class="text-[13px] font-bold text-gray-900 truncate">${u.name}</h4>
+                <p class="text-[10px] text-gray-400 mb-4">
+                    <i class="fa-solid fa-location-dot mr-1 text-[8px]"></i>${u.loc}
+                </p>
+                <button class="w-full bg-black text-white text-[11px] font-bold py-2.5 rounded-xl transition active:scale-95">
+                    Add Friend
+                </button>
+            </div>
+        </div>
+    `).join('');
+    }
     
-        
+    
+</script>   
 </body>
 </html>
