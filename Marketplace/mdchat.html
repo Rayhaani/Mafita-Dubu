@@ -639,11 +639,11 @@ function loadDiscoverPeople() {
 
 
     // 1. Smart Algorithm Function
-async function loadDiscoverPeople() {
+
+ async function loadDiscoverPeople() {
     const container = document.getElementById('discoverContainer');
     if (!container) return;
 
-    // Nuna cewa ana loading kafin bayanan su iso
     container.innerHTML = '<p class="text-center p-10 text-gray-400 text-xs animate-pulse">Ana nemo mambobi...</p>';
 
     try {
@@ -653,7 +653,6 @@ async function loadDiscoverPeople() {
             currentUserData = currentUserDoc.data() || {};
         }
 
-        // Dauko mambobi 15 daga Firestore
         const querySnapshot = await db.collection("users").limit(15).get();
         
         if (querySnapshot.empty) {
@@ -663,16 +662,12 @@ async function loadDiscoverPeople() {
 
         let html = "";
         querySnapshot.forEach((doc) => {
-            // Kada mu nuna mamban da yake login a cikin Discover
             if (currentUserId && doc.id === currentUserId) return;
 
             const user = doc.data();
-            
-            // "Default" bayanan idan babu komai a Firestore
             let reason = "Sabuwar Mamba";
             let icon = "fa-star";
 
-            // Algorithm dinmu na da
             if (user.location_area && user.location_area === currentUserData.location_area) {
                 reason = `${user.location_area}, ${user.city || ''}`;
                 icon = "fa-location-dot";
@@ -682,37 +677,41 @@ async function loadDiscoverPeople() {
             } else if (user.university && user.university === currentUserData.university) {
                 reason = user.university;
                 icon = "fa-graduation-cap";
-            } else if (user.city) {
-                reason = `Daga ${user.city}`;
-                icon = "fa-map-pin";
             }
 
+            // GYARA A NAN: Na kara "mb-4" (margin bottom) da "block" don su rarrabu
             html += `
-            <div class="bg-white p-4 rounded-[30px] border border-gray-100 shadow-sm flex items-center justify-between mb-3">
+            <div class="discover-card bg-white p-4 rounded-[28px] border border-gray-100 shadow-sm flex items-center justify-between mb-4 w-full">
                 <div class="flex items-center gap-4">
-                    <div class="w-14 h-14 rounded-2xl overflow-hidden bg-gray-50 border border-gray-50">
-                        <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}" class="w-full h-full object-cover" onerror="this.src='https://ui-avatars.com/api/?name=' + encodeURIComponent('${user.fullname || 'U'}')">
+                    <div class="w-14 h-14 rounded-2xl overflow-hidden bg-gray-50 flex-shrink-0 border border-gray-50">
+                        <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}" 
+                             class="w-full h-full object-cover" 
+                             onerror="this.src='https://ui-avatars.com/api/?name=' + encodeURIComponent('${user.fullname || 'U'}')">
                     </div>
-                    <div>
-                        <h4 class="text-[14px] font-extrabold text-gray-900">${user.fullname || 'Mamban Mafita'}</h4>
-                        <div class="flex items-center gap-1.5 mt-0.5">
-                            <i class="fa-solid ${icon} text-[9px] text-orange-500"></i>
+                    <div class="flex flex-col">
+                        <h4 class="text-[14px] font-extrabold text-gray-900 leading-tight">${user.fullname || 'Mamban Mafita'}</h4>
+                        <div class="flex items-center gap-1.5 mt-1">
+                            <div class="w-5 h-5 bg-orange-50 rounded-full flex items-center justify-center">
+                                <i class="fa-solid ${icon} text-[8px] text-orange-500"></i>
+                            </div>
                             <span class="text-[10px] font-bold text-gray-400">${reason}</span>
                         </div>
                     </div>
                 </div>
-                <button class="bg-black text-white text-[10px] font-black px-4 py-2 rounded-2xl active:scale-95 transition">Connect</button>
+                <button class="bg-black text-white text-[10px] font-black px-5 py-2.5 rounded-2xl active:scale-95 transition flex-shrink-0 ml-2">
+                    Connect
+                </button>
             </div>`;
         });
         
-        container.innerHTML = html;
+        // Mun kara "pb-20" don floating bar din karkashin "See All" ya samu sarari
+        container.innerHTML = `<div class="flex flex-col w-full pb-20 px-1">${html}</div>`;
 
     } catch (error) {
         console.error("Discover Error:", error);
         container.innerHTML = `<p class="text-center p-5 text-red-400 text-[10px]">Matsala: ${error.message}</p>`;
     }
     }
-    
     
     
     
