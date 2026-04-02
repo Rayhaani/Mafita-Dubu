@@ -429,8 +429,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
 <script>
-
-
 <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
 <script>var vConsole = new window.VConsole();</script>
 
@@ -447,7 +445,9 @@ const firebaseConfig = {
 };
 
 // B. INITIALIZE
-const app = firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 const db = firebase.firestore();
 const auth = firebase.auth();
 const peer = new Peer();
@@ -465,113 +465,106 @@ peer.on('open', (id) => {
     auth.onAuthStateChanged((user) => {
         if (user) {
             currentUserId = user.uid;
-            console.log("User Logged In:", user.uid);
-            
-            // Adana ID a Firestore (Collection: users)
             db.collection('users').doc(user.uid).set({
                 peer_id: id,
                 isOnline: true,
                 lastSeen: firebase.firestore.FieldValue.serverTimestamp()
-            }, { merge: true })
-            .then(() => console.log("An adana Peer ID a Firestore!"))
-            .catch(err => console.error("Firestore Save Error:", err));
-        } else {
-            console.warn("Ba a yi Login ba, amma za mu kwaso mutane...");
+            }, { merge: true });
         }
-        loadContactsFromFirestore(); // Kira mutane komai yanayin
+        loadContactsFromFirestore();
     });
 });
 
-// D. KWASO MUTANE (Sunaye sun dace da Firestore dinka)
+// D. CONTACTS LOGIC
 function loadContactsFromFirestore() {
     const container = document.getElementById('contactsContainer');
     if(!container) return;
 
     db.collection("users").onSnapshot((querySnapshot) => {
-        console.log("Mambobi nawa aka samu?:", querySnapshot.size);
-        
-        if (querySnapshot.empty) {
-            container.innerHTML = '<p class="text-center p-5 text-gray-400">Babu mambobi a yanzu.</p>';
-            return;
-        }
-
         container.innerHTML = '<p class="text-[12px] font-bold text-gray-400 px-5 py-4 uppercase tracking-widest text-center">Abokan Hulda</p>';
-        
         querySnapshot.forEach((doc) => {
             const user = doc.data();
-            // GYARA: Mun yi amfani da fullname ko username
             const nameToDisplay = user.fullname || user.username || "Mamba #" + doc.id.slice(0,4);
-            
             if (doc.id !== currentUserId) {
                 container.innerHTML += `
-                    <div class="contact-row flex items-center justify-between" onclick="initiateCall('${user.peer_id || ''}', '${nameToDisplay}')">
-                        <div class="flex items-center gap-4">
-                            <div class="contact-avatar">
-                                <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}">
-                            </div>
-                            <div class="contact-details">
-                                <h4 class="contact-name">${nameToDisplay}</h4>
-                                <p class="contact-status ${user.peer_id ? 'text-green-500 font-bold' : 'text-gray-400'}">
-                                    ${user.peer_id ? '• Online' : 'Offline'}
-                                </p>
-                            </div>
+                    <div class="contact-row" onclick="initiateCall('${user.peer_id || ''}', '${nameToDisplay}')">
+                        <div class="contact-avatar">
+                            <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}">
                         </div>
-                        ${user.peer_id ? `<div class="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center"><i class="fa-solid fa-phone text-green-600 text-sm"></i></div>` : ''}
+                        <div class="contact-details">
+                            <h4 class="contact-name">${nameToDisplay}</h4>
+                            <p class="contact-status ${user.peer_id ? 'text-green-500 font-bold' : 'text-gray-400'}">
+                                ${user.peer_id ? '• Online' : 'Offline'}
+                            </p>
+                        </div>
                     </div>`;
             }
         });
-    }, (error) => {
-        console.error("Snapshot Error:", error);
-        container.innerHTML = `<p class="text-center p-5 text-red-500">Error: ${error.message}</p>`;
     });
 }
 
-// E. CALL LOGIC (Sauran Functions dinka)
+// E. SMART DISCOVER LOGIC (Wannan ne mai Containers)
+async function loadDiscoverPeople() {
+    const container = document.getElementById('discoverContainer');
+    if (!container) return;
+
+    container.innerHTML = '<p class="text-center p-10 text-gray-400 text-xs animate-pulse">Ana nemo mambobi...</p>';
+
+    try {
+        let currentUserData = {};
+        if (currentUserId) {
+            const currentUserDoc = await db.collection("users").doc(currentUserId).get();
+            currentUserData = currentUserDoc.data() || {};
+        }
+
+        const querySnapshot = await db.collection("users").limit(10).get();
+        let html = "";
+
+        querySnapshot.forEach((doc) => {
+            if (currentUserId && doc.id === currentUserId) return;
+            const user = doc.data();
+            
+            let reason = "Sabuwar Mamba";
+            let icon = "fa-star";
+
+            if (user.location_area && user.location_area === currentUserData.location_area) {
+                reason = `${user.location_area}, ${user.city || ''}`;
+                icon = "fa-location-dot";
+            } else if (user.profession && user.profession === currentUserData.profession) {
+                reason = user.profession;
+                icon = "fa-briefcase";
+            } else if (user.university && user.university === currentUserData.university) {
+                reason = user.university;
+                icon = "fa-graduation-cap";
+            }
+
+            html += `
+            <div class="bg-white p-4 rounded-[28px] border border-gray-100 shadow-sm flex items-center justify-between mb-4 w-full">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-2xl overflow-hidden bg-gray-50 flex-shrink-0 border border-gray-100">
+                        <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex flex-col">
+                        <h4 class="text-[14px] font-extrabold text-gray-900">${user.fullname || 'Mamba'}</h4>
+                        <div class="flex items-center gap-1.5 mt-1">
+                            <div class="w-5 h-5 bg-orange-50 rounded-full flex items-center justify-center">
+                                <i class="fa-solid ${icon} text-[8px] text-orange-500"></i>
+                            </div>
+                            <span class="text-[10px] font-bold text-gray-400">${reason}</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="bg-black text-white text-[10px] font-black px-5 py-2.5 rounded-2xl active:scale-95 transition">Connect</button>
+            </div>`;
+        });
+        container.innerHTML = html;
+    } catch (e) { console.error(e); }
+}
+
+// F. UI CONTROLS
 function openSearch() { document.getElementById('searchOverlay').style.display = 'flex'; }
 function closeSearch() { document.getElementById('searchOverlay').style.display = 'none'; }
 
-function initiateCall(peerId, name) {
-    if(!peerId) return alert("Wannan baya online (Bashi da Peer ID).");
-    alert("Ana kiran: " + name);
-    // Nan zaka iya sanya code din callOverlay dinka
-}
-
-
-    // FUNCTION DIN DA ZAI BUDE NOTIFICATION KO CHATS
-function switchView(view) {
-    console.log("Koma zuwa: " + view); // Don mu gani a Console idan ya danna
-    const chatsView = document.getElementById('chats-view');
-    const notifView = document.getElementById('notif-view');
-
-    if (view === 'notifications') {
-        chatsView.classList.add('hidden');
-        notifView.classList.remove('hidden');
-        // Canza launin icons idan kana so (optional)
-    } else {
-        chatsView.classList.remove('hidden');
-        notifView.classList.add('hidden');
-    }
-}
-
-// KARIN GYARA: Kashe kiran waya
-function endCall() {
-    if (currentCall) currentCall.close();
-    if (localStream) {
-        localStream.getTracks().forEach(track => track.stop());
-    }
-    document.getElementById('callOverlay').classList.add('hidden');
-}
-
-// UI HELPERS NA SEARCH
-function openSearch() { 
-    document.getElementById('searchOverlay').style.display = 'flex'; 
-}
-function closeSearch() { 
-    document.getElementById('searchOverlay').style.display = 'none'; 
-}
-
-
-    // 1. Sauyawa tsakanin Contacts da Discover
 function toggleSearchTab(tab) {
     const contactsView = document.getElementById('view-contacts');
     const discoverView = document.getElementById('view-discover');
@@ -588,132 +581,33 @@ function toggleSearchTab(tab) {
         discoverView.classList.remove('hidden');
         tabD.className = "flex-1 py-3 text-[13px] font-bold border-b-2 border-black";
         tabC.className = "flex-1 py-3 text-[13px] font-bold text-gray-400";
-        loadDiscoverPeople(); // Kira mutanen da za a iya sani
+        loadDiscoverPeople();
     }
 }
 
-// 2. Gayyatar Abokai (Invite Link)
-function shareInviteLink() {
-    const inviteText = "Sannu! Ina amfani da MafitaDubu don kiran waya kyauta da samun mambobi. Zo mu hadu a nan: https://mafita-dubu.vercel.app";
-    
-    if (navigator.share) {
-        navigator.share({
-            title: 'MafitaDubu Invite',
-            text: inviteText,
-            url: window.location.href
-        }).catch(err => console.log("Error sharing", err));
+function switchView(view) {
+    const chatsView = document.getElementById('chats-view');
+    const notifView = document.getElementById('notif-view');
+    if (view === 'notifications') {
+        chatsView.classList.add('hidden');
+        notifView.classList.remove('hidden');
     } else {
-        // Idan browser bata da Share API (Kamar wasu tsofaffin wayoyi)
+        chatsView.classList.remove('hidden');
+        notifView.classList.add('hidden');
+    }
+}
+
+function shareInviteLink() {
+    const inviteText = "Sannu! Zo mu hadu a MafitaDubu: https://mafita-dubu.vercel.app";
+    if (navigator.share) {
+        navigator.share({ title: 'MafitaDubu', text: inviteText, url: window.location.href });
+    } else {
         window.open(`https://wa.me/?text=${encodeURIComponent(inviteText)}`, '_blank');
     }
 }
 
-// 3. Load Discover People (Algorithm: Misali wadanda suke kusa)
-function loadDiscoverPeople() {
-    const container = document.getElementById('discoverContainer');
-    
-    // Zaka iya lura na saka bayanan daidai da na hoton daka turo
-    const mockUsers = [
-        { name: "Mustapha Hussain", loc: "2km away • Kano", seed: "Musty" },
-        { name: "Itz Hafizu Kyaure", loc: "5km away • Kano", seed: "Hafiz" },
-        { name: "Sani Ahmad", loc: "1km away • Kano", seed: "Sani" }
-    ];
-
-    container.innerHTML = mockUsers.map(u => `
-        <div class="min-w-[170px] max-w-[170px] bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-            <div class="h-36 w-full bg-gray-100">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${u.seed}" class="w-full h-full object-cover">
-            </div>
-            <div class="p-3">
-                <h4 class="text-[13px] font-bold text-gray-900 truncate">${u.name}</h4>
-                <p class="text-[10px] text-gray-400 mb-4">
-                    <i class="fa-solid fa-location-dot mr-1 text-[8px]"></i>${u.loc}
-                </p>
-                <button class="w-full bg-black text-white text-[11px] font-bold py-2.5 rounded-xl transition active:scale-95">
-                    Add Friend
-                </button>
-            </div>
-        </div>
-    `).join('');
-    }
-
-
-    // 1. Smart Algorithm Function
-
- async function loadDiscoverPeople() {
-    const container = document.getElementById('discoverContainer');
-    if (!container) return;
-
-    container.innerHTML = '<p class="text-center p-10 text-gray-400 text-xs animate-pulse">Ana nemo mambobi...</p>';
-
-    try {
-        let currentUserData = {};
-        if (currentUserId) {
-            const currentUserDoc = await db.collection("users").doc(currentUserId).get();
-            currentUserData = currentUserDoc.data() || {};
-        }
-
-        const querySnapshot = await db.collection("users").limit(15).get();
         
-        if (querySnapshot.empty) {
-            container.innerHTML = '<p class="text-center p-10 text-gray-400 text-xs">Babu mambobi a halin yanzu.</p>';
-            return;
-        }
 
-        let html = "";
-        querySnapshot.forEach((doc) => {
-            if (currentUserId && doc.id === currentUserId) return;
-
-            const user = doc.data();
-            let reason = "Sabuwar Mamba";
-            let icon = "fa-star";
-
-            if (user.location_area && user.location_area === currentUserData.location_area) {
-                reason = `${user.location_area}, ${user.city || ''}`;
-                icon = "fa-location-dot";
-            } else if (user.profession && user.profession === currentUserData.profession) {
-                reason = user.profession;
-                icon = "fa-briefcase";
-            } else if (user.university && user.university === currentUserData.university) {
-                reason = user.university;
-                icon = "fa-graduation-cap";
-            }
-
-            // GYARA A NAN: Na kara "mb-4" (margin bottom) da "block" don su rarrabu
-            html += `
-            <div class="discover-card bg-white p-4 rounded-[28px] border border-gray-100 shadow-sm flex items-center justify-between mb-4 w-full">
-                <div class="flex items-center gap-4">
-                    <div class="w-14 h-14 rounded-2xl overflow-hidden bg-gray-50 flex-shrink-0 border border-gray-50">
-                        <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}" 
-                             class="w-full h-full object-cover" 
-                             onerror="this.src='https://ui-avatars.com/api/?name=' + encodeURIComponent('${user.fullname || 'U'}')">
-                    </div>
-                    <div class="flex flex-col">
-                        <h4 class="text-[14px] font-extrabold text-gray-900 leading-tight">${user.fullname || 'Mamban Mafita'}</h4>
-                        <div class="flex items-center gap-1.5 mt-1">
-                            <div class="w-5 h-5 bg-orange-50 rounded-full flex items-center justify-center">
-                                <i class="fa-solid ${icon} text-[8px] text-orange-500"></i>
-                            </div>
-                            <span class="text-[10px] font-bold text-gray-400">${reason}</span>
-                        </div>
-                    </div>
-                </div>
-                <button class="bg-black text-white text-[10px] font-black px-5 py-2.5 rounded-2xl active:scale-95 transition flex-shrink-0 ml-2">
-                    Connect
-                </button>
-            </div>`;
-        });
-        
-        // Mun kara "pb-20" don floating bar din karkashin "See All" ya samu sarari
-        container.innerHTML = `<div class="flex flex-col w-full pb-20 px-1">${html}</div>`;
-
-    } catch (error) {
-        console.error("Discover Error:", error);
-        container.innerHTML = `<p class="text-center p-5 text-red-400 text-[10px]">Matsala: ${error.message}</p>`;
-    }
-    }
-    
-    
     
 </script>   
 </body>
