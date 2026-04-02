@@ -323,23 +323,31 @@
 }
 
 
-
-        /* Wannan zai gyara matsayin Search Icon ya zauna inda vConsole yake */
+/* Wannan zai tabbatar Search Icon ya fito radau */
 #floatingSearch {
     position: fixed !important;
-    bottom: 20px !important; /* Daidaita tsayin sa da vConsole */
+    bottom: 25px !important; /* Matsayin vConsole */
     right: 20px !important;
-    width: 50px !important;
-    height: 50px !important;
-    z-index: 10001 !important; /* Ya zama sama da vConsole (vConsole yawanci 9999 ne) */
-    background: #000 !important;
-    border: 2px solid #fff; /* Don ya fito daban */
+    width: 56px !important;
+    height: 56px !important;
+    background-color: #000000 !important; /* Baki wuluk */
+    color: #ffffff !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4) !important;
+    z-index: 2147483647 !important; /* Max Z-index don ya doke kowa */
+    cursor: pointer !important;
+    border: 2px solid #fff !important;
 }
 
-/* Boye vConsole button na asali idan kana so Search din ne kawai ya tsaya a wurin */
+/* Tabbatar vConsole baya damun mu */
 .vc-switch {
     display: none !important;
+    visibility: hidden !important;
     }
+        
         
     </style>
 </head>
