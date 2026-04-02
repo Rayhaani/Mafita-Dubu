@@ -239,7 +239,22 @@
     scrollbar-width: none;
 }
         
-            
+
+        #discoverContainer {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    padding: 10px 5px;
+    -webkit-overflow-scrolling: touch;
+}
+#discoverContainer::-webkit-scrollbar { display: none; } /* Boye scrollbar */
+
+.discovery-card {
+    flex: 0 0 160px; /* Girman katin */
+    scroll-snap-align: start;
+}
+        
     </style>
 </head>
 <body>
@@ -497,57 +512,64 @@
 
     // 5. Discover Logic (GYARARREN CONTAINER)
     async function loadDiscoverPeople() {
-        const container = document.getElementById('discoverContainer');
-        if (!container) return;
+    const container = document.getElementById('discoverContainer');
+    if (!container) return;
 
-        container.innerHTML = '<p class="text-center p-10 text-gray-400 text-xs animate-pulse">Ana nemo mambobi...</p>';
+    container.innerHTML = '<p class="text-center w-full text-gray-400 text-xs animate-pulse">Neman mambobi...</p>';
 
-        try {
-            let currentUserData = {};
-            if (currentUserId) {
-                const currentUserDoc = await db.collection("users").doc(currentUserId).get();
-                currentUserData = currentUserDoc.data() || {};
+    try {
+        let currentUserData = {};
+        if (currentUserId) {
+            const currentUserDoc = await db.collection("users").doc(currentUserId).get();
+            currentUserData = currentUserDoc.data() || {};
+        }
+
+        const querySnapshot = await db.collection("users").limit(15).get();
+        let html = "";
+
+        querySnapshot.forEach((doc) => {
+            if (currentUserId && doc.id === currentUserId) return;
+            const user = doc.data();
+            
+            // ALGORITHM DINKA (Ba a taba shi ba)
+            let reason = "Sabuwar Mamba";
+            let icon = "fa-star";
+
+            if (user.location_area && user.location_area === currentUserData.location_area) {
+                reason = `${user.location_area}, ${user.city || ''}`;
+                icon = "fa-location-dot";
+            } else if (user.profession && user.profession === currentUserData.profession) {
+                reason = user.profession;
+                icon = "fa-briefcase";
+            } else if (user.university && user.university === currentUserData.university) {
+                reason = user.university;
+                icon = "fa-graduation-cap";
             }
 
-            const querySnapshot = await db.collection("users").limit(15).get();
-            let html = "";
+            // SABON UI (Horizontal Card irin na Facebook)
+            html += `
+            <div class="discovery-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col items-center p-3 text-center">
+                <div class="w-20 h-20 rounded-full overflow-hidden mb-3 border-2 border-orange-50">
+                    <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}" class="w-full h-full object-cover">
+                </div>
+                
+                <h4 class="text-[13px] font-extrabold text-gray-900 truncate w-full mb-1">${user.fullname || 'Mamba'}</h4>
+                
+                <div class="flex items-center justify-center gap-1 mb-4 h-8">
+                    <i class="fa-solid ${icon} text-[9px] text-orange-500"></i>
+                    <span class="text-[10px] font-bold text-gray-400 leading-tight">${reason}</span>
+                </div>
 
-            querySnapshot.forEach((doc) => {
-                if (currentUserId && doc.id === currentUserId) return;
-                const user = doc.data();
-                let reason = "Mamba a Mafita";
-                let icon = "fa-user-group";
-
-                if (user.location_area && user.location_area === currentUserData.location_area) {
-                    reason = user.location_area;
-                    icon = "fa-location-dot";
-                } else if (user.profession && user.profession === currentUserData.profession) {
-                    reason = user.profession;
-                    icon = "fa-briefcase";
-                }
-
-                // CIKAKKEN CONTAINER MAI SHADOW DA MARGIN
-                html += `
-                <div class="bg-white p-4 rounded-[25px] border border-gray-100 shadow-md flex items-center justify-between w-full mb-4">
-                    <div class="flex items-center gap-4">
-                        <div class="w-14 h-14 rounded-2xl overflow-hidden bg-gray-50 flex-shrink-0 border border-gray-100">
-                            <img src="${user.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + doc.id}" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex flex-col">
-                            <h4 class="text-[14px] font-extrabold text-gray-900">${user.fullname || 'Mamba'}</h4>
-                            <div class="flex items-center gap-1.5 mt-1">
-                                <i class="fa-solid ${icon} text-[9px] text-orange-500"></i>
-                                <span class="text-[10px] font-bold text-gray-400">${reason}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="bg-black text-white text-[10px] font-black px-4 py-2.5 rounded-xl active:scale-95 transition">Connect</button>
-                </div>`;
-            });
-            container.innerHTML = html || '<p class="text-center text-gray-400">Babu kowa yanzu.</p>';
-        } catch (e) { console.error("Discover Error:", e); }
-    }
-
+                <button class="w-full bg-black text-white text-[10px] font-black py-2 rounded-xl active:scale-95 transition shadow-sm">
+                    Add Friend
+                </button>
+            </div>`;
+        });
+        container.innerHTML = html;
+    } catch (e) { console.error("Discover Error:", e); }
+            }
+                                
+    
     // 6. UI Helpers
     function openSearch() { document.getElementById('searchOverlay').style.display = 'flex'; }
     function closeSearch() { document.getElementById('searchOverlay').style.display = 'none'; }
