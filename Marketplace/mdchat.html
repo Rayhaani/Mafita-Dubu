@@ -348,68 +348,42 @@
 
 <!-- SEARCH OVERLAY (CLEAN VERSION) -->
 <div id="searchOverlay" class="fb-search-overlay">
-    
     <div class="fb-search-bar-container">
         <i class="fa-solid fa-chevron-left fb-back-style" onclick="closeSearch()"></i>
+        <div class="fb-input-wrapper">
+             <input type="text" placeholder="Nemi abokan hira ko mambobi..." class="fb-main-input" id="mainSearchInput">
+        </div>
+    </div>
+
+    <div class="flex border-b border-gray-100 bg-white">
+        <button onclick="toggleSearchTab('contacts')" id="tab-contacts" class="flex-1 py-3 text-[13px] font-bold border-b-2 border-black">Contacts</button>
+        <button onclick="toggleSearchTab('discover')" id="tab-discover" class="flex-1 py-3 text-[13px] font-bold text-gray-400">Discover</button>
+    </div>
+
+    <div class="contact-scroll-area no-scrollbar">
         
-        <div class="titan-search-engine" style="flex: 1; height: 42px; display: flex; align-items: center; border-radius: 25px; padding-left: 15px; border: 1.5px solid #000; background: transparent;">
-            <input type="text" placeholder="Nemi abokan hira ko vendors..." class="titan-input" id="mainSearchInput" style="flex: 1; background: transparent; border: none; outline: none; color: #333; font-size: 15px;">
-            <div class="temu-controls" style="display: flex; align-items: center; height: 100%;">
-                <div class="search-trigger-pill" style="background: #000; height: calc(100% - 4px); padding: 0 18px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-right: 2px;">
-                    <i class="fa-solid fa-magnifying-glass" style="color: #fff; font-size: 16px;"></i>
+        <div id="view-contacts">
+            <div id="contactsContainer">
+                <p class="text-center p-10 text-gray-400 text-xs">Ana kwaso abokan hira...</p>
+            </div>
+
+            <div class="p-5 mt-4 bg-orange-50/50 border-y border-orange-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="text-sm font-bold text-orange-800">Babu wanda kake nema?</h4>
+                        <p class="text-[11px] text-orange-600">Gayyato abokanka su shigo MafitaDubu</p>
+                    </div>
+                    <button onclick="shareInviteLink()" class="bg-orange-500 text-white px-4 py-2 rounded-lg text-[11px] font-bold shadow-sm active:scale-95">Invite Now</button>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="contact-scroll-area" id="contactsContainer">
-        <p class="text-[12px] font-bold text-gray-400 px-5 py-4 uppercase tracking-widest text-center">
-            <i class="fa-solid fa-spinner animate-spin mr-2"></i> Ana kwaso mambobi...
-        </p>
-    </div>
-
-    <div class="px-5 py-6 border-t border-gray-50 mt-4 bg-gray-50/30">
-        </div>
-</div>
-    
-
-        <!-- PEOPLE YOU MAY KNOW SECTION -->
-        <div class="px-5 py-6 border-t border-gray-50 mt-4 bg-gray-50/30">
-            <div class="flex justify-between items-center mb-5">
-                <p class="text-[14px] font-extrabold text-gray-900">People you may know</p>
-                <button class="text-black text-[11px] font-black uppercase tracking-tight">See all</button>
-            </div>
-
-            <div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
-                <!-- Card 1 -->
-                <div class="min-w-[170px] max-w-[170px] bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-                    <div class="h-36 w-full bg-gray-200">
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Musty" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-3">
-                        <h4 class="text-[13px] font-bold text-gray-900 truncate">Mustapha Hussain</h4>
-                        <p class="text-[10px] text-gray-400 mb-4"><i class="fa-solid fa-location-dot mr-1"></i>2km away • Kano</p>
-                        <div class="flex flex-col gap-2">
-                            <button class="w-full bg-black text-white text-[11px] font-bold py-2.5 rounded-xl transition active:scale-95">Add Friend</button>
-                        </div>
-                    </div>
+        <div id="view-discover" class="hidden p-5">
+            <h3 class="text-sm font-black uppercase tracking-widest text-gray-400 mb-4">Mutane kusa da kai</h3>
+            <div id="discoverContainer" class="grid grid-cols-2 gap-4">
                 </div>
-
-                <!-- Card 2 -->
-                <div class="min-w-[170px] max-w-[170px] bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-                    <div class="h-36 w-full bg-gray-200">
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Hafiz" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-3">
-                        <h4 class="text-[13px] font-bold text-gray-900 truncate">Itz Hafizu Kyaure</h4>
-                        <p class="text-[10px] text-gray-400 mb-4"><i class="fa-solid fa-location-dot mr-1"></i>5km away • Kano</p>
-                        <div class="flex flex-col gap-2">
-                            <button class="w-full bg-black text-white text-[11px] font-bold py-2.5 rounded-xl transition active:scale-95">Add Friend</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
+
     </div>
 </div>
     
@@ -589,6 +563,65 @@ function openSearch() {
 }
 function closeSearch() { 
     document.getElementById('searchOverlay').style.display = 'none'; 
+}
+
+
+    // 1. Sauyawa tsakanin Contacts da Discover
+function toggleSearchTab(tab) {
+    const contactsView = document.getElementById('view-contacts');
+    const discoverView = document.getElementById('view-discover');
+    const tabC = document.getElementById('tab-contacts');
+    const tabD = document.getElementById('tab-discover');
+
+    if(tab === 'contacts') {
+        contactsView.classList.remove('hidden');
+        discoverView.classList.add('hidden');
+        tabC.className = "flex-1 py-3 text-[13px] font-bold border-b-2 border-black";
+        tabD.className = "flex-1 py-3 text-[13px] font-bold text-gray-400";
+    } else {
+        contactsView.classList.add('hidden');
+        discoverView.classList.remove('hidden');
+        tabD.className = "flex-1 py-3 text-[13px] font-bold border-b-2 border-black";
+        tabC.className = "flex-1 py-3 text-[13px] font-bold text-gray-400";
+        loadDiscoverPeople(); // Kira mutanen da za a iya sani
+    }
+}
+
+// 2. Gayyatar Abokai (Invite Link)
+function shareInviteLink() {
+    const inviteText = "Sannu! Ina amfani da MafitaDubu don kiran waya kyauta da samun mambobi. Zo mu hadu a nan: https://mafita-dubu.vercel.app";
+    
+    if (navigator.share) {
+        navigator.share({
+            title: 'MafitaDubu Invite',
+            text: inviteText,
+            url: window.location.href
+        }).catch(err => console.log("Error sharing", err));
+    } else {
+        // Idan browser bata da Share API (Kamar wasu tsofaffin wayoyi)
+        window.open(`https://wa.me/?text=${encodeURIComponent(inviteText)}`, '_blank');
+    }
+}
+
+// 3. Load Discover People (Algorithm: Misali wadanda suke kusa)
+function loadDiscoverPeople() {
+    const container = document.getElementById('discoverContainer');
+    // Anan zaka iya kiran Firestore ka tace 'users' dake gari daya da mamban
+    // Ga misalin yadda zasu fito:
+    container.innerHTML = `
+        <div class="bg-white border border-gray-100 rounded-2xl p-3 shadow-sm">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Musa" class="w-full h-24 object-cover rounded-xl mb-2">
+            <h5 class="text-[12px] font-bold truncate">Musa Ibrahim</h5>
+            <p class="text-[10px] text-gray-400 mb-2">2km Away • Kano</p>
+            <button class="w-full py-2 bg-black text-white text-[10px] rounded-lg">Connect</button>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-2xl p-3 shadow-sm">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aisha" class="w-full h-24 object-cover rounded-xl mb-2">
+            <h5 class="text-[12px] font-bold truncate">Aisha Lawal</h5>
+            <p class="text-[10px] text-gray-400 mb-2">Office • Lagos</p>
+            <button class="w-full py-2 bg-black text-white text-[10px] rounded-lg">Connect</button>
+        </div>
+    `;
 }
     
 </script>
