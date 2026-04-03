@@ -544,9 +544,10 @@
     <!-- Content Viewport -->
     <main class="viewport" id="mainContent">
         
-        <div id="chats-view">
-            <h2 class="section-label">Active Connections</h2>
-            
+        <div id="home-view"> 
+    <h2 class="section-label">Active Connections</h2>
+        </div>
+        
             <!-- Marketplace Chat -->
             <div class="pulse-card">
                 <div class="avatar-ring" style="border-color: var(--gold);">
@@ -1030,26 +1031,24 @@ function toggleVideo() {
     document.getElementById('videoIcon').className = videoTrack.enabled ? 'fa-solid fa-video' : 'fa-solid fa-video-slash text-red-500';
     }
 
-
-    function switchView(view) {
-    const chatsView = document.getElementById('chats-view');
+function switchView(view) {
+    const homeView = document.getElementById('home-view');
     const notifView = document.getElementById('notif-view');
-    const historyView = document.getElementById('history-view'); // Tabbatar kana da wannan div din
 
-    // Boye kowa
-    chatsView.classList.add('hidden');
-    notifView.classList.add('hidden');
-    if(historyView) historyView.classList.add('hidden');
+    // 1. Boye dukkan shafukan (Muna saka musu 'hidden')
+    if (homeView) homeView.classList.add('hidden');
+    if (notifView) notifView.classList.add('hidden');
 
-    // Nuna wanda ake bukata
+    // 2. Nuna shafin da aka danna (Muna cire 'hidden')
     if (view === 'notifications') {
-        notifView.classList.remove('hidden');
-    } else if (view === 'history') {
-        if(historyView) historyView.classList.remove('hidden');
+        if (notifView) notifView.classList.remove('hidden');
     } else {
-        chatsView.classList.remove('hidden');
+        // Default shi ne ya nuna home-view
+        if (homeView) homeView.classList.remove('hidden');
     }
-}
+    }
+    
+    
 
     function manageHeader(pageLevel) {
     const header = document.querySelector('.global-header');
