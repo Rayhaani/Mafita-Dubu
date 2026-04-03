@@ -393,23 +393,22 @@
      }
 
 
-/* FORCE UNIFORM HEADER LAYOUT */
-header {
+/* RESET & UNIFORMITY */
+.professional-header {
     display: flex !important;
-    align-items: center !important;
-    justify-content: space-around !important; /* Raba su gida 7 daidai */
     width: 100% !important;
     height: 60px !important;
-    background: #FFFDD0 !important;
-    border-bottom: 1px solid rgba(0,0,0,0.08) !important;
-    padding: 0 5px !important;
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 9999 !important;
+    background-color: #FFFDD0 !important; /* Background din kalar takarda */
+    border-bottom: 1px solid #e0e0e0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    align-items: center !important;
+    justify-content: space-between !important;
 }
 
-.nav-box {
-    flex: 1 !important; /* Kowanne ya dauki fadin kansa daidai */
+/* Kowane daki na icon ya zama fadin guri daya */
+.nav-item {
+    flex: 1 !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
@@ -417,40 +416,43 @@ header {
     position: relative !important;
 }
 
-.nav-box i {
-    font-size: 20px !important;
-    color: #1a1a1a !important;
+/* Icon Styles - Tabbatar duk girmansu daya */
+.nav-item i {
+    font-size: 22px !important; /* Uniform Size */
+    color: #444 !important;
+    transition: 0.2s;
 }
 
-/* Orange/Black Square don Create Post (+) */
-.create-square {
-    background: #000 !important;
-    width: 35px !important;
-    height: 35px !important;
-    border-radius: 10px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+/* Wajen hoton Profile don ya yi daidai da icons */
+.profile-frame {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    border: 1.5px solid #000 !important;
+    overflow: hidden !important;
 }
 
-.create-square i {
-    color: #FB7701 !important;
-    font-size: 22px !important;
+.profile-frame img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
 }
 
-/* Notification Red Badge */
-.badge-red {
+/* Notification Badge - Kamar na Facebook */
+.fb-badge {
     position: absolute !important;
-    top: 8px;
-    right: 5px;
-    background: #ff0000;
-    color: white;
-    font-size: 9px;
-    font-weight: 900;
-    padding: 2px 5px;
-    border-radius: 10px;
-    border: 2px solid #FFFDD0;
-    }
+    top: 10px !important;
+    right: 15% !important;
+    background: #ff0000 !important;
+    color: white !important;
+    font-size: 10px !important;
+    font-weight: bold !important;
+    padding: 1px 4px !important;
+    border-radius: 8px !important;
+    border: 2px solid #FFFDD0 !important;
+    line-height: 1 !important;
+}
+        
         
         
         
@@ -461,41 +463,39 @@ header {
     <!-- Neural Header (Facebook Style but High-End) -->
     <header class="neural-header">
         
-
-    <div class="nav-box" onclick="showPage('home')">
+<header class="professional-header">
+    <div class="nav-item">
         <i class="fa-solid fa-house"></i>
     </div>
 
-    <div class="nav-box" onclick="switchView('notifications')">
-        <i class="fa-solid fa-bell"></i>
-        <span class="badge-red">15+</span>
+    <div class="nav-item">
+        <i class="fa-solid fa-user-group"></i>
     </div>
 
-    <div class="nav-box" onclick="switchView('history')">
+    <div class="nav-item">
+        <i class="fa-solid fa-bell"></i>
+        <span class="fb-badge">15+</span>
+    </div>
+
+    <div class="nav-item">
+        <i class="fa-solid fa-circle-play"></i>
+    </div>
+
+    <div class="nav-item">
         <i class="fa-solid fa-clock-rotate-left"></i>
     </div>
 
-    <div class="nav-box" onclick="showPage('create-post')">
-        <div class="create-square">
-            <i class="fa-solid fa-plus"></i>
-        </div>
+    <div class="nav-item">
+        <i class="fa-solid fa-store"></i>
     </div>
 
-    <div class="nav-box" onclick="showPage('status')">
-        <i class="fa-solid fa-circle-notch"></i>
-    </div>
-
-    <div class="nav-box" onclick="showPage('reels')">
-        <i class="fa-solid fa-clapperboard"></i>
-    </div>
-
-    <div class="nav-box" onclick="showPage('profile')">
-        <div style="width: 35px; height: 35px; border-radius: 50%; border: 2px solid #000; overflow: hidden; position: relative;">
-            <img src="hoton_hawaye.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-            <span style="position: absolute; bottom: 0; right: 0; width: 8px; height: 8px; background: #22c55e; border-radius: 50%; border: 1.5px solid #fff;"></span>
+    <div class="nav-item">
+        <div class="profile-frame">
+            <img src="hoton_hawaye.jpg" alt="You">
         </div>
     </div>
 </header>
+        
 
 
     <!-- Content Viewport -->
