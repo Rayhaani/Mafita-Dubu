@@ -393,56 +393,66 @@
      }
 
 
-        /* Futuristic Icon Container */
-.header-hub {
+     /* Futuristic Professional Header Layout */
+.ultra-header {
     display: flex !important;
     align-items: center !important;
-    justify-content: space-between !important; /* Wannan ne zai raba su cif-cif */
+    justify-content: space-between !important; /* Wannan ne zai raba su bakwai daidai */
     width: 100% !important;
-    padding: 10px 5px !important;
-    background: #FFFDD0 !important; /* Background din app dinka */
+    padding: 12px 8px !important;
+    background: #FFFDD0 !important;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
-.nav-item {
+/* Wannan div din ne zai rike kowane icon don su zama uniform */
+.nav-box {
+    flex: 1 !important; /* kowanne zai dauki space daya */
     display: flex !important;
-    align-items: center !important;
     justify-content: center !important;
-    width: 42px !important; /* Uniform width */
-    height: 42px !important; /* Uniform height */
-    border-radius: 50% !important;
-    background: rgba(0, 0, 0, 0.03) !important; /* Light futuristic circle */
-    cursor: pointer !important;
-    transition: all 0.3s ease !important;
+    align-items: center !important;
+    height: 45px !important;
     position: relative !important;
 }
 
-.nav-item i {
-    font-size: 20px !important; /* Daidaitaccen girman icon */
-    color: #000 !important;
+/* Futuristic Icons Styles */
+.nav-box i {
+    font-size: 20px !important; /* Uniform size */
+    color: #1a1a1a !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease;
 }
 
-/* Kalar musamman ga Create Post */
-.nav-item.create-btn {
+/* Create Post (+) Icon na musamman */
+.create-hex {
     background: #000 !important;
-}
-.nav-item.create-btn i {
-    color: #FB7701 !important;
-    font-size: 24px !important;
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 12px !important; /* Squircle look */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 10px rgba(251, 119, 1, 0.3) !important;
 }
 
-/* Badge din Notification */
-.neural-badge {
-    position: absolute !important;
-    top: -2px !important;
-    right: -2px !important;
-    background: #ff0000 !important;
-    color: white !important;
-    font-size: 9px !important;
-    font-weight: 800 !important;
-    padding: 2px 5px !important;
-    border-radius: 10px !important;
-    border: 2px solid #FFFDD0 !important;
+.create-hex i {
+    color: #FB7701 !important;
+    font-size: 22px !important;
 }
+
+/* Notification Badge */
+.header-badge {
+    position: absolute !important;
+    top: 5px;
+    right: 5px;
+    background: #ff0000;
+    color: white;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 2px 5px;
+    border-radius: 20px;
+    border: 2px solid #FFFDD0;
+}
+        
         
     </style>
 </head>
@@ -455,39 +465,44 @@
         <div class="header-actions">
           
             <!-- Expandable Search -->
-   <div class="header-hub">
+   
+    <header class="ultra-header">
     
-    <div class="nav-item" onclick="showPage('home')">
+    <div class="nav-box" onclick="showPage('home')">
         <i class="fa-solid fa-house-chimney-window"></i>
     </div>
 
-    <div class="nav-item" onclick="switchView('notifications')">
+    <div class="nav-box" onclick="switchView('notifications')">
         <i class="fa-solid fa-bell"></i>
-        <div class="neural-badge">15+</div>
+        <span class="header-badge">15+</span>
     </div>
 
-    <div class="nav-item" onclick="switchView('history')">
+    <div class="nav-box" onclick="switchView('history')">
         <i class="fa-solid fa-clock-rotate-left"></i>
     </div>
 
-    <div class="nav-item create-btn" onclick="showPage('create-post')">
-        <i class="fa-solid fa-plus-large" style="font-weight: 900;">+</i>
+    <div class="nav-box" onclick="showPage('create-post')">
+        <div class="create-hex">
+            <i class="fa-solid fa-plus"></i>
+        </div>
     </div>
 
-    <div class="nav-item" onclick="showPage('status')">
+    <div class="nav-box" onclick="showPage('status')">
         <i class="fa-solid fa-circle-notch"></i>
     </div>
 
-    <div class="nav-item" onclick="showPage('reels')">
+    <div class="nav-box" onclick="showPage('reels')">
         <i class="fa-solid fa-clapperboard"></i>
     </div>
 
-    <div onclick="showPage('profile')" style="position: relative; cursor: pointer; width: 42px; height: 42px; flex-shrink: 0;">
-        <img src="hoton_hawaye.jpg" alt="" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #000;">
-        <span style="position: absolute; bottom: 0; right: 0; width: 10px; height: 10px; background: #22c55e; border: 2px solid #FFFDD0; border-radius: 50%;"></span>
+    <div class="nav-box" onclick="showPage('profile')">
+        <div style="width: 38px; height: 38px; position: relative;">
+            <img src="hoton_hawaye.jpg" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #000;">
+            <span style="position: absolute; bottom: 0; right: 0; width: 10px; height: 10px; background: #22c55e; border: 2px solid #FFFDD0; border-radius: 50%;"></span>
+        </div>
     </div>
 
-   </div>
+
             
     </header>
 
