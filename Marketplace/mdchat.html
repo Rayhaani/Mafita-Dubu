@@ -390,7 +390,59 @@
 /* Boye shi a sauran wurare ta hanyar amfani da Class */
 .hidden-icon {
     display: none !important;
-                        }
+     }
+
+
+        /* Futuristic Icon Container */
+.header-hub {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important; /* Wannan ne zai raba su cif-cif */
+    width: 100% !important;
+    padding: 10px 5px !important;
+    background: #FFFDD0 !important; /* Background din app dinka */
+}
+
+.nav-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 42px !important; /* Uniform width */
+    height: 42px !important; /* Uniform height */
+    border-radius: 50% !important;
+    background: rgba(0, 0, 0, 0.03) !important; /* Light futuristic circle */
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+}
+
+.nav-item i {
+    font-size: 20px !important; /* Daidaitaccen girman icon */
+    color: #000 !important;
+}
+
+/* Kalar musamman ga Create Post */
+.nav-item.create-btn {
+    background: #000 !important;
+}
+.nav-item.create-btn i {
+    color: #FB7701 !important;
+    font-size: 24px !important;
+}
+
+/* Badge din Notification */
+.neural-badge {
+    position: absolute !important;
+    top: -2px !important;
+    right: -2px !important;
+    background: #ff0000 !important;
+    color: white !important;
+    font-size: 9px !important;
+    font-weight: 800 !important;
+    padding: 2px 5px !important;
+    border-radius: 10px !important;
+    border: 2px solid #FFFDD0 !important;
+}
         
     </style>
 </head>
@@ -401,34 +453,41 @@
         <div class="logo-text"></div>
         
         <div class="header-actions">
-            <!-- Expandable Search -->
-   
-            <i onclick="showPage('home')" class="fa-solid fa-house-chimney" style="font-size: 22px; color: #000; cursor: pointer;"></i>
-            
-            <!-- Notifications -->
-            <div class="action-circle" onclick="switchView('notifications')">
-                <i class="fa-solid fa-bell"></i>
-                <div class="neural-badge">15+</div>
-            </div>
-
-            <!-- Sabon Call History na Overlay-->
-            <div class="action-circle" onclick="switchView('history')">
-    <i class="fa-solid fa-clock-rotate-left"></i>
-            </div>
-
-            
-            <i onclick="showPage('status')" class="fa-solid fa-circle-notch" style="font-size: 22px; color: #000; cursor: pointer;"></i>
-
-            <i onclick="showPage('create-post')" class="fa-solid fa-square-plus" style="font-size: 25px; color: #FB7701; cursor: pointer;"></i>
           
-            <i onclick="showPage('reels')" class="fa-solid fa-clapperboard" style="font-size: 22px; color: #000; cursor: pointer;"></i>
-            
-            <!-- Menu/Profile -->
+            <!-- Expandable Search -->
+   <div class="header-hub">
+    
+    <div class="nav-item" onclick="showPage('home')">
+        <i class="fa-solid fa-house-chimney-window"></i>
+    </div>
 
-       <div onclick="showPage('profile')" style="position: relative; cursor: pointer; width: 42px; height: 42px; flex-shrink: 0;">
-    <img src="hoton_hawaye.jpg" alt="" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #000;">
-    <span style="position: absolute; bottom: 0; right: 0; width: 10px; height: 10px; background: #22c55e; border: 2px solid #FFFDD0; border-radius: 50%;"></span>
-       </div>
+    <div class="nav-item" onclick="switchView('notifications')">
+        <i class="fa-solid fa-bell"></i>
+        <div class="neural-badge">15+</div>
+    </div>
+
+    <div class="nav-item" onclick="switchView('history')">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+    </div>
+
+    <div class="nav-item create-btn" onclick="showPage('create-post')">
+        <i class="fa-solid fa-plus-large" style="font-weight: 900;">+</i>
+    </div>
+
+    <div class="nav-item" onclick="showPage('status')">
+        <i class="fa-solid fa-circle-notch"></i>
+    </div>
+
+    <div class="nav-item" onclick="showPage('reels')">
+        <i class="fa-solid fa-clapperboard"></i>
+    </div>
+
+    <div onclick="showPage('profile')" style="position: relative; cursor: pointer; width: 42px; height: 42px; flex-shrink: 0;">
+        <img src="hoton_hawaye.jpg" alt="" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #000;">
+        <span style="position: absolute; bottom: 0; right: 0; width: 10px; height: 10px; background: #22c55e; border: 2px solid #FFFDD0; border-radius: 50%;"></span>
+    </div>
+
+   </div>
             
     </header>
 
