@@ -490,7 +490,12 @@
 }
 
 
-      
+
+      /* Wannan zai sa Header da Footer su hade da background din page din */
+.chat-header, .chat-footer {
+    background-color: #fdfdc9 !important;
+          }
+          
     </style>
 </head>
 <body>  
@@ -580,6 +585,21 @@
             </div>
           
 
+
+         
+          <div class="chat-footer flex items-center p-2">
+    <div class="flex-1 bg-white rounded-full flex items-center px-4 py-2 shadow-sm border border-gray-200">
+        <i class="far fa-smile text-gray-500 mr-2"></i>
+        <input type="text" id="chatInput" placeholder="Assalamu Alaykum" class="flex-1 outline-none text-sm" oninput="toggleIcons()">
+        <i class="fas fa-paperclip text-gray-500 ml-2"></i>
+    </div>
+
+    <button id="actionBtn" class="ml-2 bg-[#25D366] text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md">
+        <i id="micIcon" class="fas fa-microphone"></i>
+        <i id="sendIcon" class="fas fa-paper-plane hidden"></i>
+    </button>
+          </div>
+          
   
         <!-- NOTIFICATION SECTION -->
         <div id="notif-view" class="hidden">
@@ -1124,6 +1144,24 @@ function closeChat() {
 function closeChat() {
     // Rufe shafin chat din
     document.getElementById('individual-chat-view').classList.add('hidden');
+  }
+
+
+
+  function toggleIcons() {
+    const input = document.getElementById('chatInput');
+    const micIcon = document.getElementById('micIcon');
+    const sendIcon = document.getElementById('sendIcon');
+
+    if (input.value.trim() !== "") {
+        // Idan akwai rubutu, boye mic, nuna send
+        micIcon.classList.add('hidden');
+        sendIcon.classList.remove('hidden');
+    } else {
+        // Idan babu rubutu, nuna mic, boye send
+        micIcon.classList.remove('hidden');
+        sendIcon.classList.add('hidden');
+    }
   }
   
     
