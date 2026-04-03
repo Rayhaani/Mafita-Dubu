@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ha">
 <head>
     <meta charset="UTF-8">
@@ -478,19 +478,11 @@
 
     
       
+      /* Wannan na shafin Notifications ne kawai */
 #notif-view {
-    position: relative !important;
-    display: block !important; /* Cire hidden idan JS ya kira shi */
-    padding-top: 20px !important; 
-    z-index: 1 !important;
-    min-height: 100vh !important; /* Tabbatar ya mamaye filin */
+    padding-top: 45px !important; /* Wannan zai tura shi ƙasa don ya fito daga bayan header */
+    padding-bottom: 20px !important; /* Saboda kar ya shige bayan footer */
 }
-
-/* Wannan zai gyara viewport din gaba daya */
-.viewport {
-    overflow-y: scroll !important; /* Bada damar yin scrolling */
-  }
-      
 
 /* Tabbatar sauran views ba su da wannan padding din idan ba ka so */
 #chats-view {
@@ -506,8 +498,7 @@
 
 
 
-.hidden { display: none !important; }
-  
+
       
     </style>
 </head>
@@ -593,11 +584,7 @@
         <p class="text-xs text-gray-500 truncate font-extrabold text-black italic">Sent a voice note • 0:12</p>
     </div>
             </div>
-
-
-
-                      </div> </div> <div id="notif-view" class="hidden">
-                        
+          
   
         <!-- NOTIFICATION SECTION -->
         <div id="notif-view" class="hidden">
@@ -1167,7 +1154,6 @@ function toggleIcons() {
     
 </script>   
 </body>
-</html>
-
-
+    </html>
+      
         
