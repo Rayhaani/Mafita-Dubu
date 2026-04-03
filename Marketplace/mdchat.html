@@ -478,11 +478,19 @@
 
     
       
-      /* Wannan na shafin Notifications ne kawai */
 #notif-view {
-    padding-top: 45px !important; /* Wannan zai tura shi ƙasa don ya fito daga bayan header */
-    padding-bottom: 20px !important; /* Saboda kar ya shige bayan footer */
+    position: relative !important;
+    display: block !important; /* Cire hidden idan JS ya kira shi */
+    padding-top: 20px !important; 
+    z-index: 1 !important;
+    min-height: 100vh !important; /* Tabbatar ya mamaye filin */
 }
+
+/* Wannan zai gyara viewport din gaba daya */
+.viewport {
+    overflow-y: scroll !important; /* Bada damar yin scrolling */
+  }
+      
 
 /* Tabbatar sauran views ba su da wannan padding din idan ba ka so */
 #chats-view {
