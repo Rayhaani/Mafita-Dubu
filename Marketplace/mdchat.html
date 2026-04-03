@@ -507,19 +507,21 @@
        
 
 
-            #notif-view {
+        /* Wannan zai sa shi boyuwa a gidan hira (Chat) */
+#notif-view.hidden {
+    display: none !important;
+}
+
+/* Wannan ne zai sa shi fitowa KAWAI idan an danna icon din Notification */
+#notif-view {
+    display: block; 
     position: relative !important;
-    display: none !important; /* Da farko ya kasance a boye */
-    padding-top: 20px !important; 
-    z-index: 1 !important;
+    padding-top: 80px !important; /* Na kara sarari don kar Header ta danne shi */
+    z-index: 100 !important;
     min-height: 100vh !important;
     background-color: #FFFDD0 !important;
 }
-
-/* Wannan layin shi ne zai tilasta shi fitowa idan an danna icon */
-#notif-view:not(.hidden) {
-    display: block !important;
-}
+        
         
       
     </style>
