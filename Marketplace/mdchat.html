@@ -1139,17 +1139,16 @@ function toggleIcons() {
     const micIcon = document.getElementById('micIcon');
     const sendIcon = document.getElementById('sendIcon');
 
-    if (input && input.value.trim() !== "") {
-        // Idan an fara typing, nuna kibiya (Send), boye mic
+    if (input.value.trim() !== "") {
+        // Idan akwai rubutu, boye mic, nuna send
         micIcon.classList.add('hidden');
         sendIcon.classList.remove('hidden');
-    } else if (input) {
-        // Idan babu komai, nuna mic, boye kibiya
+    } else {
+        // Idan babu rubutu, nuna mic, boye send
         micIcon.classList.remove('hidden');
         sendIcon.classList.add('hidden');
     }
   }
-  
   
   
     
