@@ -363,6 +363,34 @@
     pointer-events: none !important;
 }
 
+
+
+        #homeFloatingIcon {
+    position: fixed !important;
+    bottom: 90px !important; /* Matsayin vConsole */
+    right: 20px !important;
+    width: 65px !important;
+    height: 65px !important;
+    background: #000 !important;
+    color: #fff !important;
+    border-radius: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 1000 !important;
+    border: 2px solid #FB7701 !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    cursor: pointer;
+}
+
+#homeFloatingIcon i { font-size: 20px; }
+#homeFloatingIcon span { font-size: 9px; font-weight: bold; text-transform: uppercase; }
+
+/* Boye shi a sauran wurare ta hanyar amfani da Class */
+.hidden-icon {
+    display: none !important;
+                        }
         
     </style>
 </head>
@@ -448,6 +476,13 @@
                 </div>
             </div>
         </div>
+
+        <div id="homeFloatingIcon" onclick="openSearch()" style="display: flex;">
+    <i class="fa-solid fa-house-signal"></i>
+    <span>Explore</span>
+    <div class="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full border-2 border-black animate-pulse"></div>
+        </div>
+        
 
     </main>
 
@@ -548,13 +583,6 @@
             <i id="videoIcon" class="fa-solid fa-video"></i>
         </button>
     </div>
-    </div>
-
-
-    <div id="floatingSearch" onclick="openSearch()">
-    <i class="fa-solid fa-house-signal"></i>
-    <span>Explore</span>
-    <div class="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full border-2 border-black animate-pulse"></div>
     </div>
     
         
@@ -766,6 +794,28 @@ container.innerHTML += `
         }
     }
 
+    function updateIconVisibility(currentPage) {
+    const icon = document.getElementById('homeFloatingIcon');
+    if (!icon) return;
+
+    // Idan shafin ne na Home (inda Active Connections suke), nuna shi
+    if (currentPage === 'home') {
+        icon.style.setProperty('display', 'flex', 'important');
+    } else {
+        // Idan aka taba Contacts, Discover, ko sauran shafuka, a boye shi
+        icon.style.setProperty('display', 'none', 'important');
+    }
+}
+
+// Misali: Idan kana da function din canza page
+function showPage(pageName) {
+    // ... tsohon code dinka na canza page ...
+    
+    // Kira wannan function din don gyara icon din
+    updateIconVisibility(pageName);
+    }
+
+    
 
     // Function na fito da See More Bar lokacin scroll
 window.addEventListener('scroll', () => {
