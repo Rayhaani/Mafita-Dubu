@@ -626,18 +626,21 @@
     <div id="message-container" class="flex-1 overflow-y-auto p-4 space-y-4 bg-opacity-50" style="background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');">
         </div>
 
-    <div class="p-3 bg-[#FFFDD0] flex items-center gap-2">
-        <div class="flex-1 bg-white rounded-full px-4 py-2 flex items-center shadow-sm border border-gray-200">
-            <i class="fa-regular fa-face-smile text-gray-500 mr-2"></i>
-            <input type="text" placeholder="Message..." class="flex-1 outline-none text-sm">
-            <i class="fa-solid fa-paperclip text-gray-500 ml-2"></i>
-        </div>
-        <button class="bg-green-600 w-10 h-10 rounded-full flex items-center justify-center text-white">
-            <i class="fa-solid fa-microphone"></i>
-        </button>
+<div class="p-3 flex items-center gap-2 sticky bottom-0" style="background-color: #fdfdc9;">
+    <div class="flex-1 bg-white rounded-full flex items-center px-4 py-2 shadow-sm border border-gray-200">
+        <i class="fa-regular fa-face-smile text-gray-500 mr-2 text-xl"></i>
+        <input type="text" id="chatInput" placeholder="Assalamu Alaykum" 
+               class="flex-1 outline-none text-sm bg-transparent" 
+               oninput="toggleIcons()">
+        <i class="fa-solid fa-paperclip text-gray-500 ml-2 rotate-45"></i>
     </div>
-      </div>
-      
+
+    <button id="actionBtn" class="bg-[#25D366] w-10 h-10 rounded-full flex items-center justify-center text-white shadow-md active:scale-90 transition-transform">
+        <i id="micIcon" class="fa-solid fa-microphone text-lg"></i>
+        <i id="sendIcon" class="fa-solid fa-paper-plane text-lg hidden"></i>
+    </button>
+</div>
+        
         
       <div id="homeFloatingIcon" onclick="openSearch()" style="display: flex;">
     <i class="fa-solid fa-house-signal"></i>
@@ -1131,22 +1134,23 @@ function closeChat() {
   }
 
 
-
-  function toggleIcons() {
+function toggleIcons() {
     const input = document.getElementById('chatInput');
     const micIcon = document.getElementById('micIcon');
     const sendIcon = document.getElementById('sendIcon');
 
-    if (input.value.trim() !== "") {
-        // Idan akwai rubutu, boye mic, nuna send
+    if (input && input.value.trim() !== "") {
+        // Idan an fara typing, nuna kibiya (Send), boye mic
         micIcon.classList.add('hidden');
         sendIcon.classList.remove('hidden');
-    } else {
-        // Idan babu rubutu, nuna mic, boye send
+    } else if (input) {
+        // Idan babu komai, nuna mic, boye kibiya
         micIcon.classList.remove('hidden');
         sendIcon.classList.add('hidden');
     }
   }
+  
+  
   
     
 </script>   
