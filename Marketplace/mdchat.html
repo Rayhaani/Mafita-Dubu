@@ -392,70 +392,37 @@
     display: none !important;
      }
 
-/* FIX FOR HORIZONTAL ALIGNMENT */
 .global-header {
-    display: flex !important;
-    flex-direction: row !important; /* Tilasta jeri a kwance */
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
     width: 100% !important;
     height: 70px !important;
     background: #FFFDD0 !important;
-    border-bottom: 1px solid rgba(0,0,0,0.1) !important;
+    display: flex !important;
+    flex-direction: row !important;
     align-items: center !important;
     justify-content: space-around !important;
+    z-index: 9999 !important;
+    border-bottom: 1px solid rgba(0,0,0,0.1) !important;
     padding: 0 5px !important;
-    margin: 0 !important;
 }
 
-/* Tabbatar kowane fili (slot) yana da fadi daya */
-.nav-slot {
-    flex: 1 !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-}
-
-/* Wannan ita ce da'irar (Circle) */
-.action-circle {
-    width: 42px !important;
-    height: 42px !important;
-    background: rgba(0, 0, 0, 0.04) !important; /* Inuwa kadan */
-    border-radius: 50% !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    position: relative !important;
-}
-
-/* Icon din kansa */
-.action-circle i {
-    font-size: 18px !important;
-    color: #222 !important;
-}
-
-/* Notification Badge */
-.neural-badge {
-    position: absolute !important;
-    top: -2px !important;
-    right: -2px !important;
-    background: #ff0000 !important;
-    color: white !important;
-    font-size: 9px !important;
-    font-weight: bold !important;
-    padding: 2px 4px !important;
-    border-radius: 8px !important;
-    border: 1.5px solid #FFFDD0 !important;
-    z-index: 10 !important;
-}
-
-/* Profile Circle */
-.nav-profile-img {
-    width: 38px !important;
-    height: 38px !important;
-    border-radius: 50% !important;
-    border: 2px solid #000 !important;
-    object-fit: cover !important;
+.main-content-area, #home-view, #notif-view {
+    margin-top: 80px !important; /* Wannan zai gyara hoton da ka tura inda content ya shige karkashin header */
 }
         
+
+        /* Wannan zai tabbatar Header ba ta danne komai ba */
+#home-view, #notif-view {
+    padding-top: 80px !important;
+    width: 100%;
+}
+
+/* Wannan ne zai boye shafin da ba a so */
+.hidden {
+    display: none !important;
+}
         
 
         
