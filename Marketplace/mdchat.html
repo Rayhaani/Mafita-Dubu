@@ -868,8 +868,6 @@ container.innerHTML += `
     }
     
     
-        
-            
     
     // 6. UI Helpers
     function openSearch() {
@@ -902,17 +900,7 @@ container.innerHTML += `
         }
     }
 
-    function switchView(view) {
-        const chatsView = document.getElementById('chats-view');
-        const notifView = document.getElementById('notif-view');
-        if (view === 'notifications') {
-            chatsView.classList.add('hidden');
-            notifView.classList.remove('hidden');
-        } else {
-            chatsView.classList.remove('hidden');
-            notifView.classList.add('hidden');
-        }
-    }
+    
 
     function updateIconVisibility(currentPage) {
     const icon = document.getElementById('homeFloatingIcon');
@@ -1024,26 +1012,23 @@ function toggleVideo() {
     document.getElementById('videoIcon').className = videoTrack.enabled ? 'fa-solid fa-video' : 'fa-solid fa-video-slash text-red-500';
     }
 
-
-    function switchView(view) {
+function switchView(view) {
     const chatsView = document.getElementById('chats-view');
     const notifView = document.getElementById('notif-view');
-    const historyView = document.getElementById('history-view'); // Tabbatar kana da wannan div din
 
     // Boye kowa
-    chatsView.classList.add('hidden');
-    notifView.classList.add('hidden');
-    if(historyView) historyView.classList.add('hidden');
+    if(chatsView) chatsView.classList.add('hidden');
+    if(notifView) notifView.classList.add('hidden');
 
     // Nuna wanda ake bukata
     if (view === 'notifications') {
-        notifView.classList.remove('hidden');
-    } else if (view === 'history') {
-        if(historyView) historyView.classList.remove('hidden');
+        if(notifView) notifView.classList.remove('hidden');
     } else {
-        chatsView.classList.remove('hidden');
+        if(chatsView) chatsView.classList.remove('hidden');
     }
 }
+  
+
 
     function manageHeader(pageLevel) {
     const header = document.querySelector('.global-header');
