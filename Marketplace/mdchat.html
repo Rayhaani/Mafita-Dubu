@@ -504,18 +504,25 @@
         
 
 
-        #notif-view {
+       #notif-view {
     position: relative !important;
-    display: block !important; /* Cire hidden idan JS ya kira shi */
+    /* Mun cire 'display: block' mun dawo da shi 'none' don ya boyu idan ba a danna ba */
+    display: none; 
     padding-top: 20px !important; 
     z-index: 1 !important;
-    min-height: 100vh !important; /* Tabbatar ya mamaye filin */
+    min-height: 100vh !important;
+    background-color: #FFFDD0 !important; /* Don ya rufe hirar dake karkashi */
 }
 
-/* Wannan zai gyara viewport din gaba daya */
-.viewport {
-    overflow-y: scroll !important; /* Bada damar yin scrolling */
+/* Wannan ne zai sa shi bayyana KAWAI idan JS ya kira shi */
+#notif-view:not(.hidden) {
+    display: block !important;
 }
+
+.viewport {
+    overflow-y: auto !important;
+    }
+        
         
       
     </style>
