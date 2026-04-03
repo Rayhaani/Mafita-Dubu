@@ -393,22 +393,24 @@
      }
 
 
-/* RESET & UNIFORMITY */
-.professional-header {
+/* CLEAN SLATE FOR HEADER */
+.main-app-header {
     display: flex !important;
     width: 100% !important;
-    height: 60px !important;
-    background-color: #FFFDD0 !important; /* Background din kalar takarda */
-    border-bottom: 1px solid #e0e0e0 !important;
+    height: 56px !important; /* Standard height kamar Facebook */
+    background: #FFFDD0 !important;
+    border-bottom: 1px solid rgba(0,0,0,0.1) !important;
     padding: 0 !important;
     margin: 0 !important;
     align-items: center !important;
-    justify-content: space-between !important;
+    justify-content: space-around !important; /* Wannan ne zai raba su */
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
 }
 
-/* Kowane daki na icon ya zama fadin guri daya */
-.nav-item {
-    flex: 1 !important;
+.header-tab {
+    flex: 1 !important; /* Kowanne zai dauki kashi 1 cikin 7 na fadin screen */
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
@@ -416,41 +418,40 @@
     position: relative !important;
 }
 
-/* Icon Styles - Tabbatar duk girmansu daya */
-.nav-item i {
-    font-size: 22px !important; /* Uniform Size */
-    color: #444 !important;
-    transition: 0.2s;
+/* UNIFORM ICON SIZE */
+.header-tab i {
+    font-size: 20px !important; /* Uniform size don kowa */
+    color: #4b4b4b !important;
 }
 
-/* Wajen hoton Profile don ya yi daidai da icons */
-.profile-frame {
-    width: 32px !important;
-    height: 32px !important;
-    border-radius: 50% !important;
-    border: 1.5px solid #000 !important;
-    overflow: hidden !important;
-}
-
-.profile-frame img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-}
-
-/* Notification Badge - Kamar na Facebook */
-.fb-badge {
+/* PROFESSIONAL NOTIFICATION BADGE */
+.tab-badge {
     position: absolute !important;
-    top: 10px !important;
+    top: 8px !important;
     right: 15% !important;
     background: #ff0000 !important;
-    color: white !important;
+    color: #fff !important;
     font-size: 10px !important;
     font-weight: bold !important;
     padding: 1px 4px !important;
-    border-radius: 8px !important;
+    border-radius: 10px !important;
     border: 2px solid #FFFDD0 !important;
     line-height: 1 !important;
+}
+
+/* PROFILE ICON FRAME */
+.header-profile-circle {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    border: 1.5px solid #333 !important;
+    overflow: hidden !important;
+}
+
+.header-profile-circle img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
 }
         
         
@@ -460,40 +461,43 @@
 </head>
 <body>
 
-    <!-- Neural Header (Facebook Style but High-End) -->
-    <header class="neural-header">
         
-<header class="professional-header">
-    <div class="nav-item">
+<header class="main-app-header">
+    
+    <div class="header-tab">
         <i class="fa-solid fa-house"></i>
     </div>
 
-    <div class="nav-item">
+    <div class="header-tab">
         <i class="fa-solid fa-user-group"></i>
     </div>
 
-    <div class="nav-item">
-        <i class="fa-solid fa-bell"></i>
-        <span class="fb-badge">15+</span>
+    <div class="header-tab">
+        <i class="fa-brands fa-facebook-messenger"></i>
+        <span class="tab-badge">2</span>
     </div>
 
-    <div class="nav-item">
+    <div class="header-tab">
         <i class="fa-solid fa-circle-play"></i>
+        <span class="tab-badge">15+</span>
     </div>
 
-    <div class="nav-item">
-        <i class="fa-solid fa-clock-rotate-left"></i>
+    <div class="header-tab">
+        <i class="fa-solid fa-bell"></i>
+        <span class="tab-badge">15+</span>
     </div>
 
-    <div class="nav-item">
+    <div class="header-tab">
         <i class="fa-solid fa-store"></i>
     </div>
 
-    <div class="nav-item">
-        <div class="profile-frame">
-            <img src="hoton_hawaye.jpg" alt="You">
+    <div class="header-tab">
+        <div class="header-profile-circle">
+            <img src="hoton_hawaye.jpg" alt="Profile">
         </div>
     </div>
+
+
 </header>
         
 
