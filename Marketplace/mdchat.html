@@ -490,27 +490,6 @@
 }
 
 
-
-      /* Wannan zai rage baki da fadin button din baki daya */
-.explore-btn { 
-    width: 60px !important;    /* Mun rage shi zuwa 60px */
-    height: 60px !important;   /* Mun rage tsawon zuwa 60px */
-    border-radius: 15px !important; /* Mun rage kwanar (curve) din */
-    padding: 8px !important;    /* Tazarar ciki */
-}
-
-/* Wannan zai rage girman Icon (Gidan) dake ciki */
-.explore-btn i {
-    font-size: 16px !important; /* Rage girman icon din */
-}
-
-/* Wannan kuma zai rage girman kalmar 'EXPLORE' */
-.explore-btn span {
-    font-size: 7px !important;  /* Rubutun ya zama karami sosai */
-    margin-top: 2px !important;
-  }
-
-
       
     </style>
 </head>
@@ -618,10 +597,17 @@
 
         <div id="homeFloatingIcon" onclick="openSearch()" style="display: flex;">
     <i class="fa-solid fa-house-signal"></i>
-    <span>Explore</span>
-    <div class="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full border-2 border-black animate-pulse"></div>
-        </div>
-        
+  
+          <span>Explore</span>
+    <div class="fixed bottom-20 right-5 w-14 h-14 bg-black rounded-2xl flex flex-col items-center justify-center text-white shadow-2xl z-50 cursor-pointer">
+    
+    <i class="fa-solid fa-house-signal text-lg mb-0.5"></i>
+    
+    <span class="text-[9px] font-bold uppercase tracking-tighter">Explore</span>
+    
+    <div class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-orange-500 rounded-full border-2 border-black animate-pulse"></div>
+    </div>
+          
 
     </main>
 
