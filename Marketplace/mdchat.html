@@ -475,6 +475,18 @@
     margin-top: 65px !important;
 }
         
+    /* --- GYARAN NOTIFICATION VIEW KAWAI --- */
+#notif-view {
+    padding-top: 80px !important; /* Wannan ne zai turo shi kasa daga boye */
+    padding-bottom: 20px !important;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Wannan kuma zai gyara tazarar dake tsakanin rows din */
+#notif-view .notif-row:first-child {
+    margin-top: 10px !important;
+            }
         
     </style>
 </head>
@@ -560,9 +572,10 @@
             </div>
         </div>
 
-        <!-- Notification View (Hidden by default) -->
+        
         <!-- NOTIFICATION SECTION -->
-        <div id="notif-view" class="hidden">
+        <div id="notif-view" class="hidden flex flex-col">
+            
             <div class="notif-row">
                 <i class="fa-solid fa-circle-check text-green-600 mt-1"></i>
                 <div>
