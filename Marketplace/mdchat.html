@@ -393,21 +393,23 @@
      }
 
 
-/* RESET & FORCE UNIFORMITY */
-.neural-header {
+/* FORCE UNIFORM HEADER LAYOUT */
+header {
     display: flex !important;
-    flex-direction: row !important;
     align-items: center !important;
-    justify-content: space-between !important; /* Raba su gida 7 daidai */
+    justify-content: space-around !important; /* Raba su gida 7 daidai */
     width: 100% !important;
-    height: 65px !important;
-    padding: 0 10px !important;
+    height: 60px !important;
     background: #FFFDD0 !important;
-    border-bottom: 1px solid rgba(0,0,0,0.1) !important;
+    border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+    padding: 0 5px !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
 }
 
 .nav-box {
-    flex: 1 !important;
+    flex: 1 !important; /* Kowanne ya dauki fadin kansa daidai */
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
@@ -415,41 +417,40 @@
     position: relative !important;
 }
 
-/* Icon Uniformity */
 .nav-box i {
-    font-size: 22px !important; /* Girman kowanne ya zama daya */
+    font-size: 20px !important;
     color: #1a1a1a !important;
-    cursor: pointer !important;
 }
 
-/* Specific Style for Create Post (+) */
-.create-plus-box {
+/* Orange/Black Square don Create Post (+) */
+.create-square {
     background: #000 !important;
-    width: 40px !important;
-    height: 40px !important;
-    border-radius: 12px !important;
+    width: 35px !important;
+    height: 35px !important;
+    border-radius: 10px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
 }
-.create-plus-box i {
+
+.create-square i {
     color: #FB7701 !important;
-    font-size: 24px !important;
+    font-size: 22px !important;
 }
 
-/* Badge for Notification */
-.notif-badge-new {
+/* Notification Red Badge */
+.badge-red {
     position: absolute !important;
-    top: 12px !important;
-    right: 5px !important;
-    background: #ff0000 !important;
-    color: #fff !important;
-    font-size: 9px !important;
-    font-weight: 800 !important;
-    padding: 2px 5px !important;
-    border-radius: 10px !important;
-    border: 2px solid #FFFDD0 !important;
-}
+    top: 8px;
+    right: 5px;
+    background: #ff0000;
+    color: white;
+    font-size: 9px;
+    font-weight: 900;
+    padding: 2px 5px;
+    border-radius: 10px;
+    border: 2px solid #FFFDD0;
+    }
         
         
         
@@ -466,15 +467,14 @@
             <!-- Expandable Search -->
    
 
-<header class="neural-header">
-    
+<header>
     <div class="nav-box" onclick="showPage('home')">
-        <i class="fa-solid fa-house-chimney"></i>
+        <i class="fa-solid fa-house"></i>
     </div>
 
     <div class="nav-box" onclick="switchView('notifications')">
         <i class="fa-solid fa-bell"></i>
-        <span class="notif-badge-new">15+</span>
+        <span class="badge-red">15+</span>
     </div>
 
     <div class="nav-box" onclick="switchView('history')">
@@ -482,7 +482,7 @@
     </div>
 
     <div class="nav-box" onclick="showPage('create-post')">
-        <div class="create-plus-box">
+        <div class="create-square">
             <i class="fa-solid fa-plus"></i>
         </div>
     </div>
@@ -496,14 +496,13 @@
     </div>
 
     <div class="nav-box" onclick="showPage('profile')">
-        <div style="width: 40px; height: 40px; position: relative; border-radius: 50%; overflow: hidden; border: 2px solid #000;">
+        <div style="width: 35px; height: 35px; border-radius: 50%; border: 2px solid #000; overflow: hidden; position: relative;">
             <img src="hoton_hawaye.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-            <span style="position: absolute; bottom: 2px; right: 2px; width: 10px; height: 10px; background: #22c55e; border-radius: 50%; border: 1.5px solid #fff;"></span>
+            <span style="position: absolute; bottom: 0; right: 0; width: 8px; height: 8px; background: #22c55e; border-radius: 50%; border: 1.5px solid #fff;"></span>
         </div>
     </div>
-
 </header>
-        
+
 
     <!-- Content Viewport -->
     <main class="viewport" id="mainContent">
