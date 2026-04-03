@@ -392,101 +392,27 @@
     display: none !important;
      }
 
-
-/* FIX FOR HORIZONTAL ALIGNMENT */
 .global-header {
-    display: flex !important;
-    flex-direction: row !important; /* Tilasta jeri a kwance */
-    width: 100% !important;
-    height: 70px !important;
-    background: #FFFDD0 !important;
-    border-bottom: 1px solid rgba(0,0,0,0.1) !important;
-    align-items: center !important;
-    justify-content: space-around !important;
-    padding: 0 5px !important;
-    margin: 0 !important;
-}
-
-/* Tabbatar kowane fili (slot) yana da fadi daya */
-.nav-slot {
-    flex: 1 !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-}
-
-/* Wannan ita ce da'irar (Circle) */
-.action-circle {
-    width: 42px !important;
-    height: 42px !important;
-    background: rgba(0, 0, 0, 0.04) !important; /* Inuwa kadan */
-    border-radius: 50% !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    position: relative !important;
-}
-
-/* Icon din kansa */
-.action-circle i {
-    font-size: 18px !important;
-    color: #222 !important;
-}
-
-/* Notification Badge */
-.neural-badge {
-    position: absolute !important;
-    top: -2px !important;
-    right: -2px !important;
-    background: #ff0000 !important;
-    color: white !important;
-    font-size: 9px !important;
-    font-weight: bold !important;
-    padding: 2px 4px !important;
-    border-radius: 8px !important;
-    border: 1.5px solid #FFFDD0 !important;
-    z-index: 10 !important;
-}
-
-/* Profile Circle */
-.nav-profile-img {
-    width: 38px !important;
-    height: 38px !important;
-    border-radius: 50% !important;
-    border: 2px solid #000 !important;
-    object-fit: cover !important;
-}
-        
-
-        .global-header {
-    position: fixed !important; /* Tana nan daram ba ta gudu */
+    position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;
-    z-index: 9999 !important; /* Tafi kowane shafi tsawo */
-    display: flex !important;
+    height: 70px !important;
     background: #FFFDD0 !important;
-    height: 60px !important;
-    /* Sauran styles dinka na baya... */
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    z-index: 9999 !important;
+    border-bottom: 1px solid rgba(0,0,0,0.1) !important;
+    padding: 0 5px !important;
 }
 
-/* Ka tabbatar shafukan kasa suna da sarari daga sama don kar header ta danne su */
-.main-content-area {
-    margin-top: 65px !important;
+.main-content-area, #home-view, #notif-view {
+    margin-top: 80px !important; /* Wannan zai gyara hoton da ka tura inda content ya shige karkashin header */
 }
         
-    /* --- GYARAN NOTIFICATION VIEW KAWAI --- */
-#notif-view {
-    padding-top: 45px !important; /* Wannan ne zai turo shi kasa daga boye */
-    padding-bottom: 20px !important;
-    display: flex;
-    flex-direction: column;
-}
 
-/* Wannan kuma zai gyara tazarar dake tsakanin rows din */
-#notif-view .notif-row:first-child {
-    margin-top: 10px !important;
-            }
         
     </style>
 </head>
@@ -544,9 +470,23 @@
     <!-- Content Viewport -->
     <main class="viewport" id="mainContent">
         
-        <div id="home-view"> 
-    <h2 class="section-label">Active Connections</h2>
+        <main class="viewport">
+    <div id="home-view">
+        <h2 class="section-label">Active Connections</h2>
         </div>
+
+    <div id="notif-view" class="hidden">
+        <h2 class="section-label">Notifications</h2>
+        <div class="notif-row">
+            <i class="fa-solid fa-circle-check text-green-600"></i>
+            <div>
+                <h5 class="text-xs font-bold">Order Confirmed</h5>
+                <p class="text-[11px]">An amince da sayayyar ka.</p>
+            </div>
+        </div>
+        </div>
+        </main>
+        
         
             <!-- Marketplace Chat -->
             <div class="pulse-card">
@@ -1031,23 +971,22 @@ function toggleVideo() {
     document.getElementById('videoIcon').className = videoTrack.enabled ? 'fa-solid fa-video' : 'fa-solid fa-video-slash text-red-500';
     }
 
-function switchView(view) {
+
+ function switchView(view) {
     const homeView = document.getElementById('home-view');
     const notifView = document.getElementById('notif-view');
 
-    // 1. Boye dukkan shafukan (Muna saka musu 'hidden')
-    if (homeView) homeView.classList.add('hidden');
-    if (notifView) notifView.classList.add('hidden');
-
-    // 2. Nuna shafin da aka danna (Muna cire 'hidden')
     if (view === 'notifications') {
-        if (notifView) notifView.classList.remove('hidden');
+        // Boye Home, Nuna Notifications
+        if(homeView) homeView.classList.add('hidden');
+        if(notifView) notifView.classList.remove('hidden');
     } else {
-        // Default shi ne ya nuna home-view
-        if (homeView) homeView.classList.remove('hidden');
+        // Nuna Home, Boye Notifications
+        if(homeView) homeView.classList.remove('hidden');
+        if(notifView) notifView.classList.add('hidden');
     }
-    }
-    
+ }
+        
     
 
     function manageHeader(pageLevel) {
