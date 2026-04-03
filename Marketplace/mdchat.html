@@ -393,7 +393,21 @@
      }
 
 
-/* Wannan zai tabbatar kowane icon yana da fili daya */
+/* FIX FOR HORIZONTAL ALIGNMENT */
+.global-header {
+    display: flex !important;
+    flex-direction: row !important; /* Tilasta jeri a kwance */
+    width: 100% !important;
+    height: 70px !important;
+    background: #FFFDD0 !important;
+    border-bottom: 1px solid rgba(0,0,0,0.1) !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    padding: 0 5px !important;
+    margin: 0 !important;
+}
+
+/* Tabbatar kowane fili (slot) yana da fadi daya */
 .nav-slot {
     flex: 1 !important;
     display: flex !important;
@@ -401,106 +415,98 @@
     align-items: center !important;
 }
 
-/* Wannan ita ce da'irar */
+/* Wannan ita ce da'irar (Circle) */
 .action-circle {
-    width: 40px !important; /* Girman da'irar */
-    height: 40px !important;
-    background: rgba(0, 0, 0, 0.05); /* Kalar shadow kadan */
+    width: 42px !important;
+    height: 42px !important;
+    background: rgba(0, 0, 0, 0.04) !important; /* Inuwa kadan */
     border-radius: 50% !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
     position: relative !important;
-    cursor: pointer;
 }
 
-/* Girman Icons din a cikin da'ira */
+/* Icon din kansa */
 .action-circle i {
     font-size: 18px !important;
-    color: #333 !important;
+    color: #222 !important;
 }
 
-/* Badge na Notifications */
+/* Notification Badge */
 .neural-badge {
     position: absolute !important;
-    top: -5px !important;
-    right: -5px !important;
+    top: -2px !important;
+    right: -2px !important;
     background: #ff0000 !important;
     color: white !important;
     font-size: 9px !important;
-    padding: 2px 5px !important;
-    border-radius: 10px !important;
-    border: 2px solid #FFFDD0 !important;
+    font-weight: bold !important;
+    padding: 2px 4px !important;
+    border-radius: 8px !important;
+    border: 1.5px solid #FFFDD0 !important;
+    z-index: 10 !important;
 }
 
-/* Hoton Profile a cikin da'irar */
+/* Profile Circle */
 .nav-profile-img {
-    width: 100% !important;
-    height: 100% !important;
+    width: 38px !important;
+    height: 38px !important;
     border-radius: 50% !important;
+    border: 2px solid #000 !important;
     object-fit: cover !important;
 }
-
-.profile-border {
-    border: 1.5px solid #000 !important;
-    padding: 2px;
-}
         
-
-        
-        
+           
         
     </style>
 </head>
-<body>
-
-    <header class="global-header">
+<body>  
+    
+<header class="global-header">
     
     <div class="nav-slot">
-        <div class="action-circle" onclick="showPage('chats')">
+        <div class="action-circle">
             <i class="fa-solid fa-comment-dots"></i>
         </div>
     </div>
 
     <div class="nav-slot">
-        <div class="action-circle" onclick="showPage('connections')">
+        <div class="action-circle">
             <i class="fa-solid fa-user-group"></i>
         </div>
     </div>
 
     <div class="nav-slot">
-        <div class="action-circle" onclick="showPage('reels')">
+        <div class="action-circle">
             <i class="fa-solid fa-play"></i>
             <span class="neural-badge">9+</span>
         </div>
     </div>
 
     <div class="nav-slot">
-        <div class="action-circle" style="background: #000;" onclick="showPage('create')">
-            <i class="fa-solid fa-plus" style="color: #FB7701;"></i>
+        <div class="action-circle" style="background: #000 !important;">
+            <i class="fa-solid fa-plus" style="color: #FB7701 !important;"></i>
         </div>
     </div>
 
     <div class="nav-slot">
-        <div class="action-circle" onclick="switchView('notifications')">
+        <div class="action-circle">
             <i class="fa-solid fa-bell"></i>
             <span class="neural-badge">15+</span>
         </div>
     </div>
 
     <div class="nav-slot">
-        <div class="action-circle" onclick="showPage('market')">
+        <div class="action-circle">
             <i class="fa-solid fa-store"></i>
         </div>
     </div>
 
     <div class="nav-slot">
-        <div class="action-circle profile-border">
-            <img src="hoton_hawaye.jpg" class="nav-profile-img">
-        </div>
+        <img src="hoton_hawaye.jpg" class="nav-profile-img">
     </div>
-
-
+        
     
 
 </header>
