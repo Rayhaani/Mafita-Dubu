@@ -392,111 +392,50 @@
     display: none !important;
      }
 
-/* FIX FOR HORIZONTAL ALIGNMENT */
+
+
 .global-header {
+    position: fixed !important;
+    top: 0; left: 0;
+    width: 100%;
+    height: 70px;
+    background: #FFFDD0;
     display: flex !important;
-    flex-direction: row !important; /* Tilasta jeri a kwance */
-    width: 100% !important;
-    height: 70px !important;
-    background: #FFFDD0 !important;
-    border-bottom: 1px solid rgba(0,0,0,0.1) !important;
-    align-items: center !important;
-    justify-content: space-around !important;
-    padding: 0 5px !important;
-    margin: 0 !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-around;
+    z-index: 10000;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding: 0 10px;
 }
 
-/* Tabbatar kowane fili (slot) yana da fadi daya */
+/* Wannan zai gyara yadda icons din suke jeri */
 .nav-slot {
-    flex: 1 !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-}
-
-/* Wannan ita ce da'irar (Circle) */
-.action-circle {
-    width: 42px !important;
-    height: 42px !important;
-    background: rgba(0, 0, 0, 0.04) !important; /* Inuwa kadan */
-    border-radius: 50% !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    position: relative !important;
-}
-
-/* Icon din kansa */
-.action-circle i {
-    font-size: 18px !important;
-    color: #222 !important;
-}
-
-/* Notification Badge */
-.neural-badge {
-    position: absolute !important;
-    top: -2px !important;
-    right: -2px !important;
-    background: #ff0000 !important;
-    color: white !important;
-    font-size: 9px !important;
-    font-weight: bold !important;
-    padding: 2px 4px !important;
-    border-radius: 8px !important;
-    border: 1.5px solid #FFFDD0 !important;
-    z-index: 10 !important;
-}
-
-/* Profile Circle */
-.nav-profile-img {
-    width: 38px !important;
-    height: 38px !important;
-    border-radius: 50% !important;
-    border: 2px solid #000 !important;
-    object-fit: cover !important;
-}
-        
-
-        .global-header {
-    position: fixed !important; /* Tana nan daram ba ta gudu */
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    z-index: 9999 !important; /* Tafi kowane shafi tsawo */
-    display: flex !important;
-    background: #FFFDD0 !important;
-    height: 60px !important;
-    /* Sauran styles dinka na baya... */
-}
-
-/* Ka tabbatar shafukan kasa suna da sarari daga sama don kar header ta danne su */
-.main-content-area {
-    margin-top: 65px !important;
-}
-        
-    /* --- GYARAN NOTIFICATION VIEW KAWAI --- */
-#notif-view {
-    padding-top: 45px !important; /* Wannan ne zai turo shi kasa daga boye */
-    padding-bottom: 20px !important;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Wannan kuma zai gyara tazarar dake tsakanin rows din */
-#notif-view .notif-row:first-child {
-    margin-top: 10px !important;
-            }
+/* Wannan class din ne zai rika boye shafukan */
+.hidden {
+    display: none !important;
+}
 
-
+/* Sarari don kar header ta danne content */
+.viewport {
+    margin-top: 80px !important;
+    height: calc(100vh - 140px);
+    overflow-y: auto;
+}
         
-
+        
         
     </style>
 </head>
 <body>  
     
  
- <header class="global-header">
+<header class="global-header">
     
     <div class="nav-slot">
         <div class="action-circle">
@@ -523,13 +462,13 @@
         </div>
     </div>
 
-    <main class="viewport">
-    <div id="home-view">
-        <h2 class="section-label">Active Connections</h2>
+    <div class="nav-slot">
+        <div class="action-circle">
+            <i class="fa-solid fa-bell"></i>
+            <span class="neural-badge">15+</span>
         </div>
+    </div>
 
-    
-     
     <div class="nav-slot">
         <div class="action-circle">
             <i class="fa-solid fa-store"></i>
@@ -539,7 +478,7 @@
     <div class="nav-slot">
         <img src="hoton_hawaye.jpg" class="nav-profile-img">
     </div>
-
+    
  
 
 </header>
