@@ -393,66 +393,70 @@
      }
 
 
-/* CLEAN SLATE FOR HEADER */
-.main-app-header {
+/* MAFITADUBU ULTRA-MODERN HEADER */
+.nexus-header {
     display: flex !important;
     width: 100% !important;
-    height: 56px !important; /* Standard height kamar Facebook */
-    background: #FFFDD0 !important;
-    border-bottom: 1px solid rgba(0,0,0,0.1) !important;
-    padding: 0 !important;
-    margin: 0 !important;
+    height: 65px !important;
+    background: #FFFDD0 !important; /* Kalar takardar da kake so */
+    border-bottom: 2px solid #000 !important;
     align-items: center !important;
-    justify-content: space-around !important; /* Wannan ne zai raba su */
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 1000 !important;
+    justify-content: space-around !important;
+    padding: 0 10px !important;
 }
 
-.header-tab {
-    flex: 1 !important; /* Kowanne zai dauki kashi 1 cikin 7 na fadin screen */
+.nexus-item {
+    flex: 1 !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
     height: 100% !important;
-    position: relative !important;
+    transition: all 0.3s ease;
 }
 
-/* UNIFORM ICON SIZE */
-.header-tab i {
-    font-size: 20px !important; /* Uniform size don kowa */
-    color: #4b4b4b !important;
+/* Wannan zai ba kowane icon "glow" idan aka taba */
+.nexus-item:hover i {
+    color: #FB7701 !important;
+    transform: scale(1.2);
 }
 
-/* PROFESSIONAL NOTIFICATION BADGE */
-.tab-badge {
-    position: absolute !important;
-    top: 8px !important;
-    right: 15% !important;
-    background: #ff0000 !important;
-    color: #fff !important;
-    font-size: 10px !important;
-    font-weight: bold !important;
-    padding: 1px 4px !important;
-    border-radius: 10px !important;
-    border: 2px solid #FFFDD0 !important;
-    line-height: 1 !important;
+.nexus-item i {
+    font-size: 22px !important;
+    color: #1a1a1a !important;
 }
 
-/* PROFILE ICON FRAME */
-.header-profile-circle {
-    width: 32px !important;
-    height: 32px !important;
+/* Center Piece (+) - Wannan zai nuna bambanci */
+.hex-create {
+    background: #000 !important;
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 12px !important; /* Square with rounded corners */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 10px rgba(251, 119, 1, 0.3) !important;
+}
+
+.hex-create i {
+    color: #FB7701 !important;
+}
+
+/* Custom Profile Frame */
+.profile-orbital {
+    width: 36px !important;
+    height: 36px !important;
+    border: 2px solid #FB7701 !important; /* Orange border don brand dinka */
     border-radius: 50% !important;
-    border: 1.5px solid #333 !important;
-    overflow: hidden !important;
+    padding: 2px !important;
 }
 
-.header-profile-circle img {
+.profile-orbital img {
     width: 100% !important;
     height: 100% !important;
+    border-radius: 50% !important;
     object-fit: cover !important;
-}
+                     }
+    
         
         
         
@@ -461,45 +465,42 @@
 </head>
 <body>
 
-        
-<header class="main-app-header">
+<header class="nexus-header">
     
-    <div class="header-tab">
-        <i class="fa-solid fa-house"></i>
+    <div class="nexus-item">
+        <i class="fa-solid fa-globe"></i>
     </div>
 
-    <div class="header-tab">
-        <i class="fa-solid fa-user-group"></i>
+    <div class="nexus-item">
+        <i class="fa-solid fa-users-rays"></i>
     </div>
 
-    <div class="header-tab">
-        <i class="fa-brands fa-facebook-messenger"></i>
-        <span class="tab-badge">2</span>
+    <div class="nexus-item">
+        <i class="fa-solid fa-bolt-lightning"></i>
     </div>
 
-    <div class="header-tab">
-        <i class="fa-solid fa-circle-play"></i>
-        <span class="tab-badge">15+</span>
-    </div>
-
-    <div class="header-tab">
-        <i class="fa-solid fa-bell"></i>
-        <span class="tab-badge">15+</span>
-    </div>
-
-    <div class="header-tab">
-        <i class="fa-solid fa-store"></i>
-    </div>
-
-    <div class="header-tab">
-        <div class="header-profile-circle">
-            <img src="hoton_hawaye.jpg" alt="Profile">
+    <div class="nexus-item">
+        <div class="hex-create">
+            <i class="fa-solid fa-plus"></i>
         </div>
     </div>
 
+    <div class="nexus-item">
+        <i class="fa-solid fa-microchip"></i>
+    </div>
+
+    <div class="nexus-item">
+        <i class="fa-solid fa-box-archive"></i>
+    </div>
+
+    <div class="nexus-item">
+        <div class="profile-orbital">
+            <img src="hoton_hawaye.jpg" alt="Me">
+        </div>
+    </div>
 
 </header>
-        
+
 
 
     <!-- Content Viewport -->
