@@ -551,31 +551,36 @@
             <h2 class="section-label">Active Connections</h2>
             
             <!-- Marketplace Chat -->
-            <div class="pulse-card">
-                <div class="avatar-ring" style="border-color: var(--gold);">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bature">
-                </div>
-                <div class="ml-4 flex-1">
-                    <div class="flex justify-between items-center text-[10px] font-black text-orange-500 uppercase"><span>Marketplace</span> <span>12m</span></div>
-                    <h4 class="font-bold text-[15px]">Alhaji Bature</h4>
-                    <p class="text-xs text-gray-500 truncate">Kayan sun isa Kano, yaushe zaka zo?</p>
-                </div>
+            <div class="pulse-card" onclick="openChat('Alhaji Bature', 'https://api.dicebear.com/7.x/avataaars/svg?seed=Bature')">
+    <div class="avatar-ring" style="border-color: var(--gold);">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bature">
+    </div>
+    <div class="ml-4 flex-1">
+        <div class="flex justify-between items-center text-[10px] font-black text-orange-500 uppercase">
+            <span>Marketplace</span> <span>12m</span>
+        </div>
+        <h4 class="font-bold text-[15px]">Alhaji Bature</h4>
+        <p class="text-xs text-gray-500 truncate">Kayan sun isa Kano, yaushe zaka zo?</p>
+    </div>
             </div>
+          
 
             <!-- Marriage Chat -->
-            <div class="pulse-card">
-                <div class="avatar-ring" style="border-color: #ec4899;">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima">
-                </div>
-                <div class="ml-4 flex-1">
-                    <div class="flex justify-between items-center text-[10px] font-black text-pink-500 uppercase"><span>Hadin Aure</span> <span>Just Now</span></div>
-                    <h4 class="font-bold text-[15px]">Fatima Salis</h4>
-                    <p class="text-xs text-gray-500 truncate font-extrabold text-black italic">Sent a voice note • 0:12</p>
-                </div>
-            </div>
+            <div class="pulse-card" onclick="openChat('Fatima Salis', 'https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima')">
+    <div class="avatar-ring" style="border-color: #ec4899;">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima">
+    </div>
+    <div class="ml-4 flex-1">
+        <div class="flex justify-between items-center text-[10px] font-black text-pink-500 uppercase">
+            <span>Hadin Aure</span> <span>Just Now</span>
         </div>
+        <h4 class="font-bold text-[15px]">Fatima Salis</h4>
+        <p class="text-xs text-gray-500 truncate font-extrabold text-black italic">Sent a voice note • 0:12</p>
+    </div>
+            </div>
+          
 
-        <!-- Notification View (Hidden by default) -->
+  
         <!-- NOTIFICATION SECTION -->
         <div id="notif-view" class="hidden">
             <div class="notif-row">
@@ -595,6 +600,40 @@
             </div>
         </div>
 
+      <div id="individual-chat-view" class="hidden fixed inset-0 bg-[#FFFDD0] z-[20000] flex flex-col">
+    <div class="flex items-center p-4 bg-[#FFFDD0] border-b border-gray-200">
+        <button onclick="closeChat()" class="mr-3 text-xl">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <div class="w-10 h-10 rounded-full border-2 border-black overflow-hidden mr-3">
+            <img id="chat-user-img" src="" alt="" class="w-full h-full object-cover">
+        </div>
+        <div class="flex-1">
+            <h4 id="chat-user-name" class="font-bold text-sm">Sunan Member</h4>
+            <p class="text-[10px] text-green-600">Online</p>
+        </div>
+        <div class="flex gap-4 text-gray-700">
+            <i class="fa-solid fa-video"></i>
+            <i class="fa-solid fa-phone"></i>
+        </div>
+    </div>
+
+        
+    <div id="message-container" class="flex-1 overflow-y-auto p-4 space-y-4 bg-opacity-50" style="background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');">
+        </div>
+
+    <div class="p-3 bg-[#FFFDD0] flex items-center gap-2">
+        <div class="flex-1 bg-white rounded-full px-4 py-2 flex items-center shadow-sm border border-gray-200">
+            <i class="fa-regular fa-face-smile text-gray-500 mr-2"></i>
+            <input type="text" placeholder="Message..." class="flex-1 outline-none text-sm">
+            <i class="fa-solid fa-paperclip text-gray-500 ml-2"></i>
+        </div>
+        <button class="bg-green-600 w-10 h-10 rounded-full flex items-center justify-center text-white">
+            <i class="fa-solid fa-microphone"></i>
+        </button>
+    </div>
+      </div>
+      
         
       <div id="homeFloatingIcon" onclick="openSearch()" style="display: flex;">
     <i class="fa-solid fa-house-signal"></i>
@@ -1054,7 +1093,39 @@ function goBackToMain() {
     manageHeader(1);
     // Sauran code na dawo wa...
         }
+
+
+  function openChat(name, img) {
+    const chatView = document.getElementById('individual-chat-view');
+    document.getElementById('chat-user-name').innerText = name;
+    document.getElementById('chat-user-img').src = img;
     
+    chatView.classList.remove('hidden');
+}
+
+function closeChat() {
+    document.getElementById('individual-chat-view').classList.add('hidden');
+      }
+
+
+
+  function openChat(name, img) {
+    // 1. Nemo shafin chat din (Wanda na baka a baya)
+    const chatView = document.getElementById('individual-chat-view');
+    
+    // 2. Saka sunan mutumin da hotonsa a Header din chat din
+    document.getElementById('chat-user-name').innerText = name;
+    document.getElementById('chat-user-img').src = img;
+    
+    // 3. Nuna shafin chat din
+    chatView.classList.remove('hidden');
+}
+
+function closeChat() {
+    // Rufe shafin chat din
+    document.getElementById('individual-chat-view').classList.add('hidden');
+  }
+  
     
 </script>   
 </body>
