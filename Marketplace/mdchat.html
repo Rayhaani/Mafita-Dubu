@@ -393,56 +393,60 @@
      }
 
 
-
- .global-header {
-    display: flex !important;
-    width: 100% !important;
-    height: 60px !important;
-    background: #FFFDD0 !important;
-    border-bottom: 1px solid #ddd !important;
-    align-items: center !important;
-    justify-content: center !important; /* Tabbatar suna tsakiya */
-    padding: 0 !important;
-}
-
+/* Wannan zai tabbatar kowane icon yana da fili daya */
 .nav-slot {
-    flex: 1 !important; /* Wannan ne sirrin equal size din */
+    flex: 1 !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    height: 100% !important;
-    position: relative !important;
 }
 
-/* Icons: Global Standards */
-.nav-slot i {
-    font-size: 22px !important; /* Standard size kamar na FB */
+/* Wannan ita ce da'irar */
+.action-circle {
+    width: 40px !important; /* Girman da'irar */
+    height: 40px !important;
+    background: rgba(0, 0, 0, 0.05); /* Kalar shadow kadan */
+    border-radius: 50% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    position: relative !important;
+    cursor: pointer;
+}
+
+/* Girman Icons din a cikin da'ira */
+.action-circle i {
+    font-size: 18px !important;
     color: #333 !important;
 }
 
-/* Red Badge: Identical to World Apps */
-.global-badge {
+/* Badge na Notifications */
+.neural-badge {
     position: absolute !important;
-    top: 10px !important;
-    right: 18% !important;
+    top: -5px !important;
+    right: -5px !important;
     background: #ff0000 !important;
     color: white !important;
-    font-size: 10px !important;
+    font-size: 9px !important;
     padding: 2px 5px !important;
     border-radius: 10px !important;
     border: 2px solid #FFFDD0 !important;
-    font-weight: bold !important;
 }
 
-/* Profile: Equal to Icon Size */
+/* Hoton Profile a cikin da'irar */
 .nav-profile-img {
-    width: 32px !important;
-    height: 32px !important;
+    width: 100% !important;
+    height: 100% !important;
     border-radius: 50% !important;
-    border: 1.5px solid #000 !important;
     object-fit: cover !important;
 }
+
+.profile-border {
+    border: 1.5px solid #000 !important;
+    padding: 2px;
+}
         
+
         
         
         
@@ -450,38 +454,52 @@
 </head>
 <body>
 
-<header class="global-header">
+    <header class="global-header">
     
     <div class="nav-slot">
-        <i class="fa-solid fa-comment-dots"></i>
+        <div class="action-circle" onclick="showPage('chats')">
+            <i class="fa-solid fa-comment-dots"></i>
+        </div>
     </div>
 
     <div class="nav-slot">
-        <i class="fa-solid fa-user-group"></i>
+        <div class="action-circle" onclick="showPage('connections')">
+            <i class="fa-solid fa-user-group"></i>
+        </div>
     </div>
 
     <div class="nav-slot">
-        <i class="fa-solid fa-play"></i>
-        <span class="global-badge">9+</span>
+        <div class="action-circle" onclick="showPage('reels')">
+            <i class="fa-solid fa-play"></i>
+            <span class="neural-badge">9+</span>
+        </div>
     </div>
 
     <div class="nav-slot">
-        <i class="fa-solid fa-square-plus" style="font-size: 26px !important; color: #FB7701 !important;"></i>
-    </div>
-
-        <!-- Notifications -->
-            <div class="action-circle" onclick="switchView('notifications')">
-                <i class="fa-solid fa-bell"></i>
-                <div class="neural-badge">15+</div>
-            </div>
-
-    <div class="nav-slot">
-        <i class="fa-solid fa-store"></i>
+        <div class="action-circle" style="background: #000;" onclick="showPage('create')">
+            <i class="fa-solid fa-plus" style="color: #FB7701;"></i>
+        </div>
     </div>
 
     <div class="nav-slot">
-        <img src="hoton_hawaye.jpg" class="nav-profile-img">
+        <div class="action-circle" onclick="switchView('notifications')">
+            <i class="fa-solid fa-bell"></i>
+            <span class="neural-badge">15+</span>
+        </div>
     </div>
+
+    <div class="nav-slot">
+        <div class="action-circle" onclick="showPage('market')">
+            <i class="fa-solid fa-store"></i>
+        </div>
+    </div>
+
+    <div class="nav-slot">
+        <div class="action-circle profile-border">
+            <img src="hoton_hawaye.jpg" class="nav-profile-img">
+        </div>
+    </div>
+
 
     
 
