@@ -899,16 +899,26 @@ container.innerHTML += `
     }
 
     function switchView(view) {
-        const chatsView = document.getElementById('chats-view');
-        const notifView = document.getElementById('notif-view');
-        if (view === 'notifications') {
-            chatsView.classList.add('hidden');
-            notifView.classList.remove('hidden');
-        } else {
-            chatsView.classList.remove('hidden');
-            notifView.classList.add('hidden');
-        }
+    const chatsView = document.getElementById('chats-view');
+    const notifView = document.getElementById('notif-view');
+    const homeView = document.getElementById('home-view'); // Ko duk sunan ID din babban shafinka
+
+    // 1. Da farko, boye dukkan shafukan (Hidden)
+    if (chatsView) chatsView.classList.add('hidden');
+    if (notifView) notifView.classList.add('hidden');
+    if (homeView) homeView.classList.add('hidden');
+
+    // 2. Sannan ka nuna shafin da aka danna kawai
+    if (view === 'notifications') {
+        notifView.classList.remove('hidden');
+    } else if (view === 'chats') {
+        chatsView.classList.remove('hidden');
+    } else {
+        // Idan ba notifications ko chats ba, to nuna home
+        if (homeView) homeView.classList.remove('hidden');
     }
+    }
+    
 
     function updateIconVisibility(currentPage) {
     const icon = document.getElementById('homeFloatingIcon');
