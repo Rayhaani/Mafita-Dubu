@@ -393,70 +393,55 @@
      }
 
 
-/* MAFITADUBU ULTRA-MODERN HEADER */
-.nexus-header {
+
+ .global-header {
     display: flex !important;
     width: 100% !important;
-    height: 65px !important;
-    background: #FFFDD0 !important; /* Kalar takardar da kake so */
-    border-bottom: 2px solid #000 !important;
+    height: 60px !important;
+    background: #FFFDD0 !important;
+    border-bottom: 1px solid #ddd !important;
     align-items: center !important;
-    justify-content: space-around !important;
-    padding: 0 10px !important;
+    justify-content: center !important; /* Tabbatar suna tsakiya */
+    padding: 0 !important;
 }
 
-.nexus-item {
-    flex: 1 !important;
+.nav-slot {
+    flex: 1 !important; /* Wannan ne sirrin equal size din */
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
     height: 100% !important;
-    transition: all 0.3s ease;
+    position: relative !important;
 }
 
-/* Wannan zai ba kowane icon "glow" idan aka taba */
-.nexus-item:hover i {
-    color: #FB7701 !important;
-    transform: scale(1.2);
+/* Icons: Global Standards */
+.nav-slot i {
+    font-size: 22px !important; /* Standard size kamar na FB */
+    color: #333 !important;
 }
 
-.nexus-item i {
-    font-size: 22px !important;
-    color: #1a1a1a !important;
+/* Red Badge: Identical to World Apps */
+.global-badge {
+    position: absolute !important;
+    top: 10px !important;
+    right: 18% !important;
+    background: #ff0000 !important;
+    color: white !important;
+    font-size: 10px !important;
+    padding: 2px 5px !important;
+    border-radius: 10px !important;
+    border: 2px solid #FFFDD0 !important;
+    font-weight: bold !important;
 }
 
-/* Center Piece (+) - Wannan zai nuna bambanci */
-.hex-create {
-    background: #000 !important;
-    width: 42px !important;
-    height: 42px !important;
-    border-radius: 12px !important; /* Square with rounded corners */
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    box-shadow: 0 4px 10px rgba(251, 119, 1, 0.3) !important;
-}
-
-.hex-create i {
-    color: #FB7701 !important;
-}
-
-/* Custom Profile Frame */
-.profile-orbital {
-    width: 36px !important;
-    height: 36px !important;
-    border: 2px solid #FB7701 !important; /* Orange border don brand dinka */
+/* Profile: Equal to Icon Size */
+.nav-profile-img {
+    width: 32px !important;
+    height: 32px !important;
     border-radius: 50% !important;
-    padding: 2px !important;
-}
-
-.profile-orbital img {
-    width: 100% !important;
-    height: 100% !important;
-    border-radius: 50% !important;
+    border: 1.5px solid #000 !important;
     object-fit: cover !important;
-                     }
-    
+}
         
         
         
@@ -465,39 +450,39 @@
 </head>
 <body>
 
-<header class="nexus-header">
+<header class="global-header">
     
-    <div class="nexus-item">
-        <i class="fa-solid fa-globe"></i>
+    <div class="nav-slot">
+        <i class="fa-solid fa-comment-dots"></i>
     </div>
 
-    <div class="nexus-item">
-        <i class="fa-solid fa-users-rays"></i>
+    <div class="nav-slot">
+        <i class="fa-solid fa-user-group"></i>
     </div>
 
-    <div class="nexus-item">
-        <i class="fa-solid fa-bolt-lightning"></i>
+    <div class="nav-slot">
+        <i class="fa-solid fa-play"></i>
+        <span class="global-badge">9+</span>
     </div>
 
-    <div class="nexus-item">
-        <div class="hex-create">
-            <i class="fa-solid fa-plus"></i>
-        </div>
+    <div class="nav-slot">
+        <i class="fa-solid fa-square-plus" style="font-size: 26px !important; color: #FB7701 !important;"></i>
     </div>
 
-    <div class="nexus-item">
-        <i class="fa-solid fa-microchip"></i>
+    <div class="nav-slot">
+        <i class="fa-solid fa-bell"></i>
+        <span class="global-badge">15+</span>
     </div>
 
-    <div class="nexus-item">
-        <i class="fa-solid fa-box-archive"></i>
+    <div class="nav-slot">
+        <i class="fa-solid fa-store"></i>
     </div>
 
-    <div class="nexus-item">
-        <div class="profile-orbital">
-            <img src="hoton_hawaye.jpg" alt="Me">
-        </div>
+    <div class="nav-slot">
+        <img src="hoton_hawaye.jpg" class="nav-profile-img">
     </div>
+
+    
 
 </header>
 
