@@ -1061,26 +1061,18 @@ function toggleVideo() {
     }
 
 
-function switchView(view) {
-    const chatsView = document.getElementById('chats-view');
-    const notifView = document.getElementById('notif-view');
-    const historyView = document.getElementById('history-view'); // Tabbatar kana da wannan div din
 
-    // Boye kowa
-    chatsView.classList.add('hidden');
-    notifView.classList.add('hidden');
-    if(historyView) historyView.classList.add('hidden');
-
-    // Nuna wanda ake bukata
-    if (view === 'notifications') {
-        notifView.classList.remove('hidden');
-    } else if (view === 'history') {
-        if(historyView) historyView.classList.remove('hidden');
-    } else {
-        chatsView.classList.remove('hidden');
-    }
+  function switchView(view) {
+        const chatsView = document.getElementById('chats-view');
+        const notifView = document.getElementById('notif-view');
+        if (view === 'notifications') {
+            chatsView.classList.add('hidden');
+            notifView.classList.remove('hidden');
+        } else {
+            chatsView.classList.remove('hidden');
+            notifView.classList.add('hidden');
+        }
   }
-  
 
 
     function manageHeader(pageLevel) {
